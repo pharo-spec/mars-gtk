@@ -1,0 +1,15 @@
+{
+	"category" : "Mars-Gtk-Application",
+	"classinstvars" : [
+		"session",
+		"handle" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkLibrary",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

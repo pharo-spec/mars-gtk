@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Core-View-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"subviews" ],
+	"name" : "MarsContainer",
+	"pools" : [
+		 ],
+	"super" : "MarsView",
+	"type" : "normal" }

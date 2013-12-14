@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Coffee-View-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "CoffeeWindow",
+	"pools" : [
+		 ],
+	"super" : "CoffeeContainer",
+	"type" : "normal" }

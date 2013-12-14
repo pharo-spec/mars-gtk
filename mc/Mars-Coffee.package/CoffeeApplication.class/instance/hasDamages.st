@@ -1,0 +1,3 @@
+testing
+hasDamages 
+	^ damagedViews notEmpty

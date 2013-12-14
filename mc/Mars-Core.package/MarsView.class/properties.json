@@ -1,0 +1,18 @@
+{
+	"category" : "Mars-Core-View",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TMarsToolkit classTrait + TMarsAnnouncer classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"platformView",
+		"superview",
+		"announcer" ],
+	"name" : "MarsView",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "TMarsToolkit + TMarsAnnouncer",
+	"type" : "normal" }

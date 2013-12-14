@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Core-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MarsToolkit",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

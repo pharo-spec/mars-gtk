@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-View",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkView",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

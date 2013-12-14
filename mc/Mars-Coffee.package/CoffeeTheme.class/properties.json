@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Coffee-Theme",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "CoffeeTheme",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

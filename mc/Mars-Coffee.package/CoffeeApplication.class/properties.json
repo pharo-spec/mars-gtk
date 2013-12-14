@@ -1,0 +1,15 @@
+{
+	"category" : "Mars-Coffee-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"runLoop",
+		"damagedViews" ],
+	"name" : "CoffeeApplication",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

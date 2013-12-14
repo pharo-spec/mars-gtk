@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Coffee-Builder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "CoffeeBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,17 @@
+{
+	"category" : "Mars-Coffee-View",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"view",
+		"theme",
+		"background",
+		"needsDisplay" ],
+	"name" : "CoffeeView",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

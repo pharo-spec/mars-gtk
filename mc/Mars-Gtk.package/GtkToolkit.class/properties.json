@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkToolkit",
+	"pools" : [
+		 ],
+	"super" : "MarsToolkit",
+	"type" : "normal" }

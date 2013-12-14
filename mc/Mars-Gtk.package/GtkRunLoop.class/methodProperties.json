@@ -1,0 +1,10 @@
+{
+	"class" : {
+		"millisecondsToWait" : "EstebanLorenzano 12/14/2013 14:42" },
+	"instance" : {
+		"gtkEventsPending" : "EstebanLorenzano 12/14/2013 14:47",
+		"initialize" : "EstebanLorenzano 12/14/2013 14:41",
+		"millisecondsToWait" : "EstebanLorenzano 12/14/2013 14:41",
+		"processEventsAndWait" : "EstebanLorenzano 12/14/2013 14:45",
+		"start" : "EstebanLorenzano 12/14/2013 14:39",
+		"stop" : "EstebanLorenzano 12/14/2013 14:41" } }

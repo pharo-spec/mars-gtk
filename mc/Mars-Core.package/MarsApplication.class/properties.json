@@ -1,0 +1,18 @@
+{
+	"category" : "Mars-Core-Application",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TMarsToolkit classTrait + TMarsAnnouncer classTrait",
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"platformApplication",
+		"windows",
+		"announcer" ],
+	"name" : "MarsApplication",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "TMarsToolkit + TMarsAnnouncer",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Core-View-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MarsLabel",
+	"pools" : [
+		 ],
+	"super" : "MarsWidget",
+	"type" : "normal" }

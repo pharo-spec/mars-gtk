@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Coffee-View-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "CoffeeLabel",
+	"pools" : [
+		 ],
+	"super" : "CoffeeView",
+	"type" : "normal" }
