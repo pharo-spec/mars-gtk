@@ -2,6 +2,7 @@
 	"category" : "Mars-Gtk-View",
 	"classinstvars" : [
 		 ],
+	"classtraitcomposition" : "TMarsApplication classTrait",
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
@@ -11,4 +12,5 @@
 	"pools" : [
 		 ],
 	"super" : "Object",
+	"traitcomposition" : "TMarsApplication",
 	"type" : "normal" }

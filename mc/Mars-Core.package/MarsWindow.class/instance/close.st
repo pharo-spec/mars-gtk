@@ -1,3 +1,3 @@
 showing
 close 
-	self platformView close.
+	self platformView hide.

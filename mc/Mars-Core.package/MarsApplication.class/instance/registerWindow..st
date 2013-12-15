@@ -1,3 +1,3 @@
 accessing
 registerWindow: aWindow
-	windows := windows copyWith: aWindow.
+	windowRegistry add: aWindow.

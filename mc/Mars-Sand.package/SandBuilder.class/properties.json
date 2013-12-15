@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Sand-Builder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SandBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,19 @@
+{
+	"category" : "Mars-Sand-View",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TMarsApplication classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"view",
+		"theme",
+		"background",
+		"needsDisplay" ],
+	"name" : "SandView",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "TMarsApplication",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Sand-Theme",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SandTheme",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

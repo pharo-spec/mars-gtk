@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Sand-View-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SandLabel",
+	"pools" : [
+		 ],
+	"super" : "SandView",
+	"type" : "normal" }

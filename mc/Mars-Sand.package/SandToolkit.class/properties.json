@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Sand-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SandToolkit",
+	"pools" : [
+		 ],
+	"super" : "MarsToolkit",
+	"type" : "normal" }

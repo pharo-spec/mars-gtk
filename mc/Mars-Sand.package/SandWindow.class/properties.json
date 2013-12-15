@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Sand-View-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"visible" ],
+	"name" : "SandWindow",
+	"pools" : [
+		 ],
+	"super" : "SandContainer",
+	"type" : "normal" }

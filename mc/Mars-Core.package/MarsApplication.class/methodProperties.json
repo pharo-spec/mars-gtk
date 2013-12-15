@@ -3,11 +3,11 @@
 		"current" : "EstebanLorenzano 12/12/2013 21:16" },
 	"instance" : {
 		"announcer" : "EstebanLorenzano 12/12/2013 22:07",
-		"closeAllWindows" : "EstebanLorenzano 12/14/2013 15:24",
-		"initialize" : "EstebanLorenzano 12/14/2013 15:22",
+		"closeAllWindows" : "EstebanLorenzano 12/14/2013 18:33",
+		"initialize" : "EstebanLorenzano 12/14/2013 18:27",
 		"platformApplication" : "EstebanLorenzano 12/12/2013 21:40",
-		"registerWindow:" : "EstebanLorenzano 12/14/2013 15:23",
+		"registerWindow:" : "EstebanLorenzano 12/14/2013 18:27",
 		"start" : "EstebanLorenzano 12/12/2013 21:50",
-		"stop" : "EstebanLorenzano 12/13/2013 09:39",
-		"unregisterWindow:" : "EstebanLorenzano 12/14/2013 15:23",
-		"windows" : "EstebanLorenzano 12/13/2013 09:39" } }
+		"stop" : "EstebanLorenzano 12/14/2013 18:45",
+		"windows" : "EstebanLorenzano 12/14/2013 18:27",
+		"windowsDo:" : "EstebanLorenzano 12/14/2013 18:32" } }

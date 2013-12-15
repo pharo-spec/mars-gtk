@@ -1,0 +1,3 @@
+opening
+open 
+	visible := true.

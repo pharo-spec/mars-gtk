@@ -2,7 +2,7 @@
 	"category" : "Mars-Core-View",
 	"classinstvars" : [
 		 ],
-	"classtraitcomposition" : "TMarsToolkit classTrait + TMarsAnnouncer classTrait",
+	"classtraitcomposition" : "TMarsToolkit classTrait + TMarsAnnouncer classTrait + TMarsApplication classTrait",
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
@@ -14,5 +14,5 @@
 	"pools" : [
 		 ],
 	"super" : "Object",
-	"traitcomposition" : "TMarsToolkit + TMarsAnnouncer",
+	"traitcomposition" : "TMarsToolkit + TMarsAnnouncer + TMarsApplication",
 	"type" : "normal" }

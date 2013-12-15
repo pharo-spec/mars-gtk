@@ -1,3 +1,3 @@
 accessing
 windows 
-	^ windows
+	^ windowRegistry keys

@@ -1,3 +1,3 @@
 accessing
 closeAllWindows
-	self windows do: #close.
+	self windowsDo: #close.

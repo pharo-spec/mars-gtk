@@ -1,3 +1,3 @@
 initialization
 createPlatformView
-	^ self platformViewClass new
+	^ self platformViewClass view: self.

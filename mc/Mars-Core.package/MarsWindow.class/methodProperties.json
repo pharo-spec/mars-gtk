@@ -2,6 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"close" : "EstebanLorenzano 12/13/2013 09:40",
+		"close" : "EstebanLorenzano 12/14/2013 19:12",
+		"finalize" : "EstebanLorenzano 12/14/2013 18:25",
+		"initialize" : "EstebanLorenzano 12/14/2013 18:43",
 		"open" : "EstebanLorenzano 12/13/2013 09:40",
 		"platformViewClass" : "EstebanLorenzano 12/13/2013 09:36" } }

@@ -1,3 +1,0 @@
-acccessing
-defaultTheme 
-	^ CoffeeTheme default

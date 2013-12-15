@@ -8,7 +8,7 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"platformApplication",
-		"windows",
+		"windowRegistry",
 		"announcer" ],
 	"name" : "MarsApplication",
 	"pools" : [

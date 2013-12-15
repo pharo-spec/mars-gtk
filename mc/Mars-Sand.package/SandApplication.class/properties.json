@@ -1,0 +1,15 @@
+{
+	"category" : "Mars-Sand-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"application",
+		"runLoop" ],
+	"name" : "SandApplication",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
