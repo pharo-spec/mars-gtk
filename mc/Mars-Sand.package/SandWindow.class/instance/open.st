@@ -1,3 +1,4 @@
 opening
 open 
-	visible := true.
+	self visible: true.
+	self setNeedsDisplay.

@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Core-Event",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MarsClickAction",
+	"pools" : [
+		 ],
+	"super" : "MarsEvent",
+	"type" : "normal" }

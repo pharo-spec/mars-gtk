@@ -5,11 +5,19 @@
 		"view:" : "EstebanLorenzano 12/13/2013 08:43",
 		"view:theme:" : "EstebanLorenzano 12/13/2013 08:44" },
 	"instance" : {
-		"displayIfNeeded" : "EstebanLorenzano 12/14/2013 13:25",
-		"initialize" : "EstebanLorenzano 12/14/2013 13:23",
+		"color" : "EstebanLorenzano 12/15/2013 18:18",
+		"color:" : "EstebanLorenzano 12/15/2013 18:18",
+		"defaultColor" : "EstebanLorenzano 12/15/2013 18:19",
+		"defaultFrame" : "EstebanLorenzano 12/15/2013 13:50",
+		"displayIfNeeded" : "EstebanLorenzano 12/15/2013 17:37",
+		"frame" : "EstebanLorenzano 12/15/2013 13:48",
+		"frame:" : "EstebanLorenzano 12/15/2013 13:49",
+		"initialize" : "EstebanLorenzano 12/15/2013 18:18",
 		"initializeView:theme:" : "EstebanLorenzano 12/13/2013 08:42",
+		"isVisible" : "EstebanLorenzano 12/15/2013 17:39",
 		"needsDisplay" : "EstebanLorenzano 12/14/2013 13:23",
 		"platformApplication" : "EstebanLorenzano 12/14/2013 13:22",
 		"setNeedsDisplay" : "EstebanLorenzano 12/14/2013 13:23",
 		"theme" : "EstebanLorenzano 12/12/2013 23:31",
-		"view" : "EstebanLorenzano 12/14/2013 13:24" } }
+		"view" : "EstebanLorenzano 12/14/2013 13:24",
+		"visible:" : "EstebanLorenzano 12/15/2013 17:39" } }

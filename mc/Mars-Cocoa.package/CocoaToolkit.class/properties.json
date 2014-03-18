@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Cocoa-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "CocoaToolkit",
+	"pools" : [
+		 ],
+	"super" : "MarsToolkit",
+	"type" : "normal" }

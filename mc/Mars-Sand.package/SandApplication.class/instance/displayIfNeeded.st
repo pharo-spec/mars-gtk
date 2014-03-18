@@ -1,3 +1,3 @@
 displaying
 displayIfNeeded
-	self windowsDo: [ :each | each displayIfNeeded ]
+	self application windowsDo: [ :each | each displayIfNeeded ]

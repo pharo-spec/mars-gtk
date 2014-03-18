@@ -1,3 +1,3 @@
 library path
 nbLibraryNameOrHandle
-	^ GtkLibrary libraryHandle.
+	^ GtkLibrary libraryHandle

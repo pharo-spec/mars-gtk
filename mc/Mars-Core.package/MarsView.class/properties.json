@@ -5,7 +5,7 @@
 	"classtraitcomposition" : "TMarsToolkit classTrait + TMarsAnnouncer classTrait + TMarsApplication classTrait",
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		"platformView",
 		"superview",

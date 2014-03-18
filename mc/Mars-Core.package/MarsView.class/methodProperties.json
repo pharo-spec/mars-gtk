@@ -1,12 +1,19 @@
 {
 	"class" : {
-		 },
+		"platformViewClass:" : "EstebanLorenzano 12/15/2013 14:38" },
 	"instance" : {
 		"announcer" : "EstebanLorenzano 12/13/2013 09:41",
+		"color" : "EstebanLorenzano 12/15/2013 18:19",
+		"color:" : "EstebanLorenzano 12/15/2013 18:19",
 		"createPlatformView" : "EstebanLorenzano 12/14/2013 18:43",
+		"frame" : "EstebanLorenzano 12/15/2013 13:41",
+		"frame:" : "EstebanLorenzano 12/15/2013 13:41",
 		"initialize" : "EstebanLorenzano 12/13/2013 09:35",
+		"initializePlatformViewClass:" : "EstebanLorenzano 12/15/2013 14:38",
+		"isVisible" : "EstebanLorenzano 12/15/2013 17:38",
 		"platformView" : "EstebanLorenzano 12/13/2013 08:40",
 		"platformViewClass" : "EstebanLorenzano 12/13/2013 09:36",
 		"removeFromSuperview" : "EstebanLorenzano 12/13/2013 09:34",
 		"superview" : "EstebanLorenzano 12/13/2013 08:41",
-		"superview:" : "EstebanLorenzano 12/13/2013 08:41" } }
+		"superview:" : "EstebanLorenzano 12/13/2013 08:41",
+		"visible:" : "EstebanLorenzano 12/15/2013 17:38" } }

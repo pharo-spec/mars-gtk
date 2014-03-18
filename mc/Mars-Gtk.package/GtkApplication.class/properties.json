@@ -7,7 +7,8 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"runLoop" ],
+		"runLoop",
+		"application" ],
 	"name" : "GtkApplication",
 	"pools" : [
 		 ],

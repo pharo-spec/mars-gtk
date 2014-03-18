@@ -1,3 +1,3 @@
 opening
 close
-	visible := false.
+	self visible: false.

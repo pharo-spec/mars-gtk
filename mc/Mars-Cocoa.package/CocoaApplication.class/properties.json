@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Cocoa-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"application" ],
+	"name" : "CocoaApplication",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

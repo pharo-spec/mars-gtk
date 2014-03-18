@@ -5,12 +5,15 @@
 	"classtraitcomposition" : "TMarsApplication classTrait",
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		"view",
 		"theme",
 		"background",
-		"needsDisplay" ],
+		"needsDisplay",
+		"frame",
+		"visible",
+		"color" ],
 	"name" : "SandView",
 	"pools" : [
 		 ],

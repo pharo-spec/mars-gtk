@@ -1,4 +1,4 @@
 initialization
 initialize 
 	super initialize.
-	visible := false.
+	self view addSubview: (MarsContainer platformViewClass: SandWindowHeader).

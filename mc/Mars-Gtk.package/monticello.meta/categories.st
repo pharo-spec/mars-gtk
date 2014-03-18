@@ -1,5 +1,4 @@
-SystemOrganization addCategory: #Application!
 SystemOrganization addCategory: #'Mars-Gtk'!
-SystemOrganization addCategory: #Tests!
-SystemOrganization addCategory: #View!
-SystemOrganization addCategory: #'View-Container'!
+SystemOrganization addCategory: 'Mars-Gtk-Application'!
+SystemOrganization addCategory: 'Mars-Gtk-View'!
+SystemOrganization addCategory: 'Mars-Gtk-View-Container'!
