@@ -1,4 +1,4 @@
 private primitives
-gtkEventsPending
+gtkMainIterationDo: blocking
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( Boolean gtk_events_pending ( void ) )
+	^ self nbCall: #( void gtk_main_iteration_do ( Boolean blocking ) )

@@ -1,5 +1,5 @@
 private
 processEventsAndWait
-	[ self eventsPending ]
-		whileTrue: [ self mainIterationDo: false ].
+	[ self gtkEventsPending ]
+		whileTrue: [ self gtkMainIterationDo: false ].
 	delay wait.
