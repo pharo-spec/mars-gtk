@@ -2,4 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		 } }
+		"createViewHandle" : "EstebanLorenzano 4/24/2014 11:42",
+		"finalize" : "EstebanLorenzano 4/24/2014 12:01",
+		"gtkWidgetDestroy:" : "EstebanLorenzano 4/24/2014 13:21",
+		"gtkWidgetHide:" : "EstebanLorenzano 4/24/2014 13:20",
+		"gtkWidgetShow:" : "EstebanLorenzano 4/24/2014 13:19",
+		"gtkWindowNew:" : "EstebanLorenzano 4/24/2014 11:43",
+		"hide" : "EstebanLorenzano 4/24/2014 13:21",
+		"show" : "EstebanLorenzano 4/24/2014 13:19" } }

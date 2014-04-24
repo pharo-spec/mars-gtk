@@ -1,3 +1,3 @@
 showing
-close 
+hide
 	self platformView hide.

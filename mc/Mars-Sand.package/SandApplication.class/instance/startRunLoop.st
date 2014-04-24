@@ -1,4 +1,0 @@
-private
-startRunLoop
-	runLoop start.
-	

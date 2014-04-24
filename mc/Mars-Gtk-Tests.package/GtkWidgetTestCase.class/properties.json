@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"oldApplication" ],
+	"name" : "GtkWidgetTestCase",
+	"pools" : [
+		 ],
+	"super" : "GtkTestCase",
+	"type" : "normal" }

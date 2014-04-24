@@ -2,15 +2,16 @@
 	"category" : "Mars-Gtk-View",
 	"classinstvars" : [
 		 ],
-	"classtraitcomposition" : "TMarsApplication classTrait",
+	"classtraitcomposition" : "TMarsApplication classTrait + TGtkLibrary classTrait",
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"view",
+		"handle" ],
 	"name" : "GtkView",
 	"pools" : [
 		 ],
 	"super" : "Object",
-	"traitcomposition" : "TMarsApplication",
+	"traitcomposition" : "TMarsApplication + TGtkLibrary",
 	"type" : "normal" }

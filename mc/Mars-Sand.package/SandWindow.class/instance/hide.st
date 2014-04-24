@@ -1,3 +1,3 @@
-opening
-close
+showing
+hide
 	self visible: false.

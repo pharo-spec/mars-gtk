@@ -1,4 +1,4 @@
 initialization
 initializePlatformViewClass: aClass
-	super initialize.
+	self initialize.
 	platformView := aClass view: self.

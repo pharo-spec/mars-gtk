@@ -1,4 +1,4 @@
 initialization
 initialize 
+	subviews := #().
 	super initialize.
-	subviews := #()

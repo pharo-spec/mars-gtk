@@ -1,0 +1,8 @@
+{
+	"class" : {
+		"isAbstract" : "EstebanLorenzano 4/24/2014 11:06" },
+	"instance" : {
+		"setUp" : "EstebanLorenzano 4/24/2014 11:02",
+		"tearDown" : "EstebanLorenzano 4/24/2014 11:02",
+		"testNew" : "EstebanLorenzano 4/24/2014 11:04",
+		"widgetClass" : "EstebanLorenzano 4/24/2014 11:04" } }

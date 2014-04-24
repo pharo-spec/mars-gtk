@@ -5,5 +5,5 @@ initialize
 		addSubview: (titleLabel := MarsLabel new);
 		addSubview: (closeButton := MarsButton new)	.
 			
-	titleLabel text: self class defaultTitle.
+	titleLabel text: MarsWindow defaultTitle.
 	closeButton when: MarsClickAction do: [ self close ].

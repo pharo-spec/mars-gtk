@@ -1,3 +1,0 @@
-private
-stopRunLoop
-	runLoop stop.

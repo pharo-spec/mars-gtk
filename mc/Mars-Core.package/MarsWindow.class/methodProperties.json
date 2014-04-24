@@ -1,9 +1,9 @@
 {
 	"class" : {
-		 },
+		"defaultTitle" : "EstebanLorenzano 4/23/2014 18:25" },
 	"instance" : {
-		"close" : "EstebanLorenzano 12/14/2013 19:12",
-		"finalize" : "EstebanLorenzano 12/14/2013 18:25",
+		"finalize" : "EstebanLorenzano 4/24/2014 11:54",
+		"hide" : "EstebanLorenzano 4/24/2014 10:49",
 		"initialize" : "EstebanLorenzano 12/14/2013 18:43",
-		"open" : "EstebanLorenzano 12/13/2013 09:40",
-		"platformViewClass" : "EstebanLorenzano 12/13/2013 09:36" } }
+		"platformViewClass" : "EstebanLorenzano 12/13/2013 09:36",
+		"show" : "EstebanLorenzano 4/24/2014 10:49" } }

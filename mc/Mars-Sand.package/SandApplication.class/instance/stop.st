@@ -1,4 +1,3 @@
 running
 stop
-	self stopRunLoop.
-	
+	running := false.

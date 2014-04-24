@@ -1,5 +1,5 @@
 running
 stop 
-	[ self closeAllWindows.
+	[ self hideAllWindows.
 	  self platformApplication stop ]
 	ensure: [ Current := nil ].

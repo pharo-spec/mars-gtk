@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MarsApplicationTest",
+	"pools" : [
+		 ],
+	"super" : "MarsTestCase",
+	"type" : "normal" }
