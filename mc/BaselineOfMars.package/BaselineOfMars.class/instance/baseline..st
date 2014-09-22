@@ -3,7 +3,7 @@ baseline: spec
 	<baseline>
 	
 	spec for: #pharo do: [
-		spec repository: 'filetree://./repository/mc'. 
+		spec repository: 'filetree://repository/mc'. 
 		
 		spec
 			package: 'Mars-Core';

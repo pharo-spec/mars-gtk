@@ -1,14 +1,14 @@
 {
-	"category" : "Mars-Core-View-Container",
+	"category" : "Mars-Core-View-Window",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"contentView" ],
 	"name" : "MarsWindow",
 	"pools" : [
 		 ],
-	"super" : "MarsContainer",
+	"super" : "MarsView",
 	"type" : "normal" }

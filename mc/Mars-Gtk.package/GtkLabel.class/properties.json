@@ -1,14 +1,14 @@
 {
-	"category" : "Mars-Core-View-Container",
+	"category" : "Mars-Gtk-View-Widget",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"subviews" ],
-	"name" : "MarsContainer",
+		 ],
+	"name" : "GtkLabel",
 	"pools" : [
 		 ],
-	"super" : "MarsView",
+	"super" : "GtkView",
 	"type" : "normal" }

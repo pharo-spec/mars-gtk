@@ -1,4 +1,3 @@
 private
-removeSubview: aView 
-	aView superview: nil.
+basicRemoveSubview: aView
 	subviews := subviews copyWithout: aView.

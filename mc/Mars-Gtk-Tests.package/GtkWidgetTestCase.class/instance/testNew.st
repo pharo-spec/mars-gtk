@@ -2,7 +2,7 @@ tests
 testNew
 	| widget |
 	
-	widget := self widgetClass new.
+	widget := self createWidget.
 	self assert: widget notNil.
-	self assert: widget platformView notNil.
-	self assert: widget platformView handle notNil.
+	self assert: widget notNil.
+	self assert: widget handle notNil.

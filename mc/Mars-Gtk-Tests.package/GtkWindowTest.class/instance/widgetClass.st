@@ -1,3 +1,3 @@
 accessing
 widgetClass
-	^ MarsWindow
+	^ GtkWindow

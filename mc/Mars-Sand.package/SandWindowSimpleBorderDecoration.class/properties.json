@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Sand-Decoration",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SandWindowSimpleBorderDecoration",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

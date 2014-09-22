@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Core-View-Container",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TMarsContainer classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 4/24/2014 19:37",
+	"instvars" : [
+		"subviews" ],
+	"name" : "MarsPanel",
+	"pools" : [
+		 ],
+	"super" : "MarsView",
+	"traitcomposition" : "TMarsContainer",
+	"type" : "normal" }
