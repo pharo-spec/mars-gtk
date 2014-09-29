@@ -1,3 +1,3 @@
 initialization
 platformViewClass 
-	^ self toolkit buttonClass.
+	^ self toolkit buttonClass

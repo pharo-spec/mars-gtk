@@ -1,4 +1,7 @@
 accessing
 contentView: anObject
-	contentView := anObject.
-	self platformView updateContentView.
+	self assert: anObject notNil description: 'contentView cannot be nil!'.
+	self platformView 
+		updateContentViewFrom: (contentView ifNotNil: [ contentView platformView ]) 
+		to: anObject platformView.
+	contentView := anObject

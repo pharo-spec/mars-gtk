@@ -1,3 +1,3 @@
 accessing
 contentView
-	^ contentView
+	^ contentView ifNil: [ contentView := self defaultContentView ]

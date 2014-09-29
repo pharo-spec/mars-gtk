@@ -1,3 +1,3 @@
 showing
 show
-	self gtkWidgetShow: self handle.
+	self gtkWidgetShowAll: self handle.

@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"callbacks" ],
 	"name" : "GtkWindow",
 	"pools" : [
 		 ],
-	"super" : "GtkView",
+	"super" : "GtkContainer",
 	"type" : "normal" }

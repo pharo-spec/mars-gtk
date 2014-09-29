@@ -2,12 +2,22 @@
 	"class" : {
 		 },
 	"instance" : {
+		"addContentView:" : "EstebanLorenzano 9/29/2014 15:05",
 		"createViewHandle" : "EstebanLorenzano 4/24/2014 11:42",
 		"finalize" : "EstebanLorenzano 4/24/2014 12:01",
 		"gtkWidgetDestroy:" : "EstebanLorenzano 4/24/2014 13:21",
 		"gtkWidgetHide:" : "EstebanLorenzano 4/24/2014 13:20",
 		"gtkWidgetShow:" : "EstebanLorenzano 4/24/2014 13:19",
+		"gtkWidgetShowAll:" : "EstebanLorenzano 9/29/2014 15:31",
+		"gtkWindow:setTitle:" : "EstebanLorenzano 9/22/2014 10:41",
+		"gtkWindowGetTitle:" : "EstebanLorenzano 9/22/2014 10:38",
 		"gtkWindowNew:" : "EstebanLorenzano 4/24/2014 11:43",
 		"hide" : "EstebanLorenzano 4/24/2014 13:21",
-		"show" : "EstebanLorenzano 4/24/2014 13:19",
-		"updateContentView" : "EstebanLorenzano 4/24/2014 17:37" } }
+		"initialize" : "EstebanLorenzano 9/22/2014 12:58",
+		"registerEvent:callback:" : "EstebanLorenzano 9/29/2014 13:38",
+		"registerEvents" : "EstebanLorenzano 9/29/2014 13:38",
+		"removeContentView:" : "EstebanLorenzano 9/29/2014 15:05",
+		"show" : "EstebanLorenzano 9/29/2014 15:31",
+		"title" : "EstebanLorenzano 9/22/2014 10:40",
+		"title:" : "EstebanLorenzano 9/22/2014 10:40",
+		"updateContentViewFrom:to:" : "EstebanLorenzano 9/29/2014 14:47" } }

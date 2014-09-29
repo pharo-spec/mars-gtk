@@ -4,6 +4,8 @@
 		"view:" : "EstebanLorenzano 4/24/2014 11:12" },
 	"instance" : {
 		"createViewHandle" : "EstebanLorenzano 4/24/2014 11:40",
+		"gSignal:connect:to:" : "EstebanLorenzano 9/29/2014 13:32",
+		"gSignal:connect:to:data:destroyData:flags:" : "EstebanLorenzano 9/29/2014 13:32",
 		"handle" : "EstebanLorenzano 4/24/2014 11:04",
 		"handle:" : "EstebanLorenzano 4/24/2014 12:01",
 		"initialize" : "EstebanLorenzano 4/24/2014 12:01",

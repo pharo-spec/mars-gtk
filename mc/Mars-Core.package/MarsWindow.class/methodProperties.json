@@ -1,11 +1,16 @@
 {
 	"class" : {
+		"defaultContentView" : "EstebanLorenzano 9/29/2014 13:45",
+		"defaultContentViewClass" : "EstebanLorenzano 9/29/2014 13:44",
 		"defaultTitle" : "EstebanLorenzano 4/23/2014 18:25" },
 	"instance" : {
-		"contentView" : "EstebanLorenzano 4/24/2014 17:36",
-		"contentView:" : "EstebanLorenzano 4/24/2014 17:37",
+		"contentView" : "EstebanLorenzano 9/29/2014 13:44",
+		"contentView:" : "EstebanLorenzano 9/29/2014 15:07",
+		"defaultContentView" : "EstebanLorenzano 9/29/2014 13:44",
 		"finalize" : "EstebanLorenzano 4/24/2014 11:54",
 		"hide" : "EstebanLorenzano 4/24/2014 10:49",
 		"initialize" : "EstebanLorenzano 12/14/2013 18:43",
 		"platformViewClass" : "EstebanLorenzano 12/13/2013 09:36",
-		"show" : "EstebanLorenzano 4/24/2014 10:49" } }
+		"show" : "EstebanLorenzano 4/24/2014 10:49",
+		"title" : "EstebanLorenzano 9/22/2014 10:36",
+		"title:" : "EstebanLorenzano 9/22/2014 10:36" } }

@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-View-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkButton",
+	"pools" : [
+		 ],
+	"super" : "GtkView",
+	"type" : "normal" }
