@@ -8,6 +8,10 @@
 		"gSignal:connect:to:data:destroyData:flags:" : "EstebanLorenzano 9/29/2014 13:32",
 		"handle" : "EstebanLorenzano 4/24/2014 11:04",
 		"handle:" : "EstebanLorenzano 4/24/2014 12:01",
-		"initialize" : "EstebanLorenzano 4/24/2014 12:01",
+		"initialize" : "EstebanLorenzano 9/29/2014 16:45",
 		"initializeView:" : "EstebanLorenzano 4/24/2014 11:12",
+		"registerAnnouncementAsEvent:" : "EstebanLorenzano 9/29/2014 17:05",
+		"registerEvent:callback:" : "EstebanLorenzano 9/29/2014 16:45",
+		"registerEvent:do:" : "EstebanLorenzano 9/29/2014 16:53",
+		"registerEvents" : "EstebanLorenzano 9/29/2014 16:45",
 		"view" : "EstebanLorenzano 4/24/2014 11:13" } }

@@ -8,7 +8,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"view",
-		"handle" ],
+		"handle",
+		"callbacks" ],
 	"name" : "GtkView",
 	"pools" : [
 		 ],

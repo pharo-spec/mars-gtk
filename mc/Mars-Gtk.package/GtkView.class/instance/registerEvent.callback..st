@@ -1,4 +1,4 @@
-initialization
+event handling
 registerEvent: eventName callback: callback
 	callbacks add: callback.
 	self 

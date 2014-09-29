@@ -13,8 +13,6 @@
 		"gtkWindowGetTitle:" : "EstebanLorenzano 9/22/2014 10:38",
 		"gtkWindowNew:" : "EstebanLorenzano 4/24/2014 11:43",
 		"hide" : "EstebanLorenzano 4/24/2014 13:21",
-		"initialize" : "EstebanLorenzano 9/22/2014 12:58",
-		"registerEvent:callback:" : "EstebanLorenzano 9/29/2014 13:38",
 		"registerEvents" : "EstebanLorenzano 9/29/2014 13:38",
 		"removeContentView:" : "EstebanLorenzano 9/29/2014 15:05",
 		"show" : "EstebanLorenzano 9/29/2014 15:31",
