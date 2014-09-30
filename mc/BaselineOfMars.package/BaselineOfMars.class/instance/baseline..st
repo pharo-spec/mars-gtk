@@ -17,7 +17,7 @@ baseline: spec
 				spec requires: #('Mars-Tests' 'Mars-Gtk') ].
 			 
 		spec 
-			group: 'default' with: #('all');
+			group: 'default' with: #('internal');
 			group: 'internal' with: #('Mars-Core' 'Mars-Sand');
 			group: 'gtk' with: #('Mars-Core' 'Mars-Gtk');
 			group: 'all' with: #('internal' 'gtk' 'tests');

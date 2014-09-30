@@ -1,0 +1,15 @@
+{
+	"category" : "Mars-Gtk-View-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTK_ORIENTATION_HORIZONTAL",
+		"GTK_ORIENTATION_VERTICAL" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"panelContainer" ],
+	"name" : "GtkPanel",
+	"pools" : [
+		 ],
+	"super" : "GtkContainer",
+	"type" : "normal" }
