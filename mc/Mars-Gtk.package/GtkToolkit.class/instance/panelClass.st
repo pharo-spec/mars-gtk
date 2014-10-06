@@ -1,0 +1,3 @@
+accessing views
+panelClass
+	^ GtkPanel

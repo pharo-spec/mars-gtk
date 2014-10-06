@@ -1,0 +1,12 @@
+{
+	"class" : {
+		"new" : "EstebanLorenzano 10/6/2014 14:19",
+		"panel:" : "EstebanLorenzano 10/6/2014 14:19" },
+	"instance" : {
+		"addSubview:" : "EstebanLorenzano 10/6/2014 15:59",
+		"createLayout" : "EstebanLorenzano 10/6/2014 14:21",
+		"gtkContainer:remove:" : "EstebanLorenzano 10/6/2014 16:59",
+		"initializePanel:" : "EstebanLorenzano 10/6/2014 14:19",
+		"panel" : "EstebanLorenzano 10/6/2014 14:20",
+		"panelHandle" : "EstebanLorenzano 10/6/2014 16:14",
+		"removeSubview:" : "EstebanLorenzano 10/6/2014 16:13" } }

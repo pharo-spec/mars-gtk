@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Gtk-Layout",
+	"classinstvars" : [
+		"horizontal",
+		"vertical" ],
+	"classvars" : [
+		"GTK_ORIENTATION_HORIZONTAL",
+		"GTK_ORIENTATION_VERTICAL" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"value" ],
+	"name" : "GtkBoxOrientation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,4 +1,4 @@
 accessing
 removeSubview: aView 
 	aView superview: nil.
-	self basicRemoveSubview: aView
+	^ self basicRemoveSubview: aView

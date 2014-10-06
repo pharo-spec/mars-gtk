@@ -1,10 +1,8 @@
 {
 	"class" : {
-		"initialize" : "EstebanLorenzano 9/29/2014 18:25",
-		"initializeConstants" : "EstebanLorenzano 9/29/2014 18:26" },
+		"defaultLayoutClass" : "EstebanLorenzano 10/6/2014 14:26" },
 	"instance" : {
-		"addSubview:" : "EstebanLorenzano 9/29/2014 18:19",
-		"createLayout" : "EstebanLorenzano 9/29/2014 18:26",
-		"createViewHandle" : "EstebanLorenzano 9/29/2014 18:22",
-		"gtkBoxNew:spacing:" : "EstebanLorenzano 9/29/2014 18:24",
-		"removeSubview:" : "EstebanLorenzano 9/29/2014 18:19" } }
+		"addSubview:" : "EstebanLorenzano 10/6/2014 16:09",
+		"initializeHandle" : "EstebanLorenzano 10/6/2014 14:26",
+		"layout" : "EstebanLorenzano 10/6/2014 14:47",
+		"removeSubview:" : "EstebanLorenzano 10/6/2014 16:09" } }

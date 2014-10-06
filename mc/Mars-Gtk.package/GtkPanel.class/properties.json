@@ -3,11 +3,11 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		"GTK_ORIENTATION_HORIZONTAL",
-		"GTK_ORIENTATION_VERTICAL" ],
+		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"panelContainer" ],
+		"panelContainer",
+		"layout" ],
 	"name" : "GtkPanel",
 	"pools" : [
 		 ],

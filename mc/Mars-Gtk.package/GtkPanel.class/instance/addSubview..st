@@ -1,5 +1,4 @@
 accessing
 addSubview: aView 
-	self  
-		gtkContainer: self handle 
-		add: aView
+	self layout addSubview: aView.
+	^ aView

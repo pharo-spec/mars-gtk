@@ -1,3 +1,3 @@
 accessing
 removeFromSuperview 
-	self superview removeSubview: self.
+	self superview removeSubview: self

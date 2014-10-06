@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkPanelTest",
+	"pools" : [
+		 ],
+	"super" : "GtkWidgetTestCase",
+	"type" : "normal" }

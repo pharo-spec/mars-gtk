@@ -1,6 +1,6 @@
 initialization
 initialize
 	super initialize.
-	self handle: self createViewHandle.
+	self initializeHandle.
 	callbacks := Set new. "I have to keep callbacks alive"
 	self registerEvents	

@@ -2,7 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"basicAddSubview:" : "EstebanLorenzano 9/29/2014 18:04",
-		"basicRemoveSubview:" : "EstebanLorenzano 9/29/2014 18:04",
+		"basicAddSubview:" : "EstebanLorenzano 10/6/2014 16:09",
+		"basicRemoveSubview:" : "EstebanLorenzano 10/6/2014 16:10",
 		"initialize" : "EstebanLorenzano 4/23/2014 18:18",
+		"platformViewClass" : "EstebanLorenzano 10/6/2014 16:25",
 		"subviews" : "EstebanLorenzano 12/13/2013 08:37" } }

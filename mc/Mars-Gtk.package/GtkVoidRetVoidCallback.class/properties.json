@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Callback",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkVoidRetVoidCallback",
+	"pools" : [
+		 ],
+	"super" : "NBFFICallback",
+	"type" : "normal" }

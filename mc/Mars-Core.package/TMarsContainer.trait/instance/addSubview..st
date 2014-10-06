@@ -1,4 +1,4 @@
 accessing
 addSubview: aView 
 	aView superview: self.
-	self basicAddSubview: aView
+	^ self basicAddSubview: aView

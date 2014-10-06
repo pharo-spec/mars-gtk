@@ -1,14 +1,14 @@
 {
-	"category" : "Mars-Gtk-Callback",
+	"category" : "Mars-Gtk-Layout",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
-	"name" : "GtkVoidVoidCallback",
+		"orientation" ],
+	"name" : "GtkBoxLayout",
 	"pools" : [
 		 ],
-	"super" : "NBFFICallback",
+	"super" : "GtkLayout",
 	"type" : "normal" }

@@ -1,5 +1,4 @@
 accessing
-removeSubview: aView
-	self  
-		gtkContainer: self handle 
-		remove: aView
+removeSubview: aView 
+	self layout removeSubview: aView.
+	^ aView
