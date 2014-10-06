@@ -1,0 +1,3 @@
+accessing
+platformLayoutClass
+	^ self subclassResponsibility

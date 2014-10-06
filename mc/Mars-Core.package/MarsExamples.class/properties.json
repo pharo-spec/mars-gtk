@@ -1,14 +1,14 @@
 {
-	"category" : "Mars-Gtk-View-Container",
+	"category" : "Mars-Core-Examples",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"layout" ],
-	"name" : "GtkPanel",
+		 ],
+	"name" : "MarsExamples",
 	"pools" : [
 		 ],
-	"super" : "GtkContainer",
+	"super" : "Object",
 	"type" : "normal" }

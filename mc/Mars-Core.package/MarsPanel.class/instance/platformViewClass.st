@@ -1,3 +1,3 @@
-as yet unclassified
+initialization
 platformViewClass 
 	^ self toolkit panelClass

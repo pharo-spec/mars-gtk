@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Core-Layout",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TMarsToolkit classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"platformLayout" ],
+	"name" : "MarsLayout",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "TMarsToolkit",
+	"type" : "normal" }

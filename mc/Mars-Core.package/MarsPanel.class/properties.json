@@ -7,7 +7,8 @@
 		 ],
 	"commentStamp" : "EstebanLorenzano 4/24/2014 19:37",
 	"instvars" : [
-		"subviews" ],
+		"subviews",
+		"layout" ],
 	"name" : "MarsPanel",
 	"pools" : [
 		 ],

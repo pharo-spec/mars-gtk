@@ -1,0 +1,3 @@
+accessing layouts
+horizontalLayout
+	self subclassResponsibility

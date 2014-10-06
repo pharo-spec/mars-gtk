@@ -1,9 +1,11 @@
 {
 	"class" : {
-		 },
+		"defaultLayoutClass" : "EstebanLorenzano 10/6/2014 19:28" },
 	"instance" : {
 		"basicAddSubview:" : "EstebanLorenzano 10/6/2014 16:09",
 		"basicRemoveSubview:" : "EstebanLorenzano 10/6/2014 16:10",
-		"initialize" : "EstebanLorenzano 4/23/2014 18:18",
+		"initialize" : "EstebanLorenzano 10/6/2014 19:27",
+		"layout" : "EstebanLorenzano 10/6/2014 19:27",
+		"layout:" : "EstebanLorenzano 10/6/2014 19:26",
 		"platformViewClass" : "EstebanLorenzano 10/6/2014 16:25",
 		"subviews" : "EstebanLorenzano 12/13/2013 08:37" } }
