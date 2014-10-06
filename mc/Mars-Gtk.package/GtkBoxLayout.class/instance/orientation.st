@@ -1,3 +1,3 @@
 accessing
 orientation
-	^ orientation
+	^ self subclassResponsibility

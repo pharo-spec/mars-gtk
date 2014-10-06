@@ -1,0 +1,3 @@
+accessing
+orientation
+	^ GtkBoxOrientation horizontal

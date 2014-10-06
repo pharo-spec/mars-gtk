@@ -1,8 +1,8 @@
 {
 	"class" : {
-		"defaultLayoutClass" : "EstebanLorenzano 10/6/2014 14:26" },
+		"defaultLayoutClass" : "EstebanLorenzano 10/6/2014 18:11" },
 	"instance" : {
-		"addSubview:" : "EstebanLorenzano 10/6/2014 16:09",
+		"addSubview:" : "EstebanLorenzano 10/6/2014 18:22",
 		"initializeHandle" : "EstebanLorenzano 10/6/2014 14:26",
-		"layout" : "EstebanLorenzano 10/6/2014 14:47",
+		"layout" : "EstebanLorenzano 10/6/2014 18:09",
 		"removeSubview:" : "EstebanLorenzano 10/6/2014 16:09" } }

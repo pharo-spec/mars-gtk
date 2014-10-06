@@ -1,3 +1,3 @@
-initialization
+factory
 createLayout
 	^ self subclassResponsibility

@@ -1,12 +1,11 @@
 {
 	"class" : {
-		"defaultOrientation" : "EstebanLorenzano 10/6/2014 14:37" },
+		 },
 	"instance" : {
 		"addSubview:" : "EstebanLorenzano 10/6/2014 16:14",
-		"createLayout" : "EstebanLorenzano 10/6/2014 14:36",
+		"createLayout" : "EstebanLorenzano 10/6/2014 18:12",
 		"gtkBox:packStart:expand:fill:padding:" : "EstebanLorenzano 10/6/2014 16:23",
 		"gtkBoxNew:spacing:" : "EstebanLorenzano 10/6/2014 14:48",
-		"initialize" : "EstebanLorenzano 10/6/2014 14:37",
 		"isHorizontal" : "EstebanLorenzano 10/6/2014 14:36",
 		"isVertical" : "EstebanLorenzano 10/6/2014 14:36",
-		"orientation" : "EstebanLorenzano 10/6/2014 14:47" } }
+		"orientation" : "EstebanLorenzano 10/6/2014 18:09" } }

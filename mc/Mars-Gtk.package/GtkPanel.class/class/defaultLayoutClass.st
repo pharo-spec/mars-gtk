@@ -1,4 +1,4 @@
 accessing
-defaultLayoutClass 
+defaultLayoutClass
 	"Answers default layout to use in panel"
-	^ GtkBoxLayout
+	^ GtkVerticalBoxLayout

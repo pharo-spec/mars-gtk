@@ -1,4 +1,4 @@
-initialization
+factory
 createLayout 
 	^ self 
 		gtkBoxNew: self orientation value

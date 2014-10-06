@@ -7,6 +7,8 @@
 		"gSignal:connect:to:" : "EstebanLorenzano 9/29/2014 13:32",
 		"gSignal:connect:to:data:destroyData:flags:" : "EstebanLorenzano 9/29/2014 13:32",
 		"gtkWidget:setSizeRequestWidth:height:" : "EstebanLorenzano 9/29/2014 17:52",
+		"gtkWidgetHide:" : "EstebanLorenzano 10/6/2014 17:53",
+		"gtkWidgetShow:" : "EstebanLorenzano 10/6/2014 17:38",
 		"handle" : "EstebanLorenzano 4/24/2014 11:04",
 		"handle:" : "EstebanLorenzano 4/24/2014 12:01",
 		"initialize" : "EstebanLorenzano 10/6/2014 14:24",
