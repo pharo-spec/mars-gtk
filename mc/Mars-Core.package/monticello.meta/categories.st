@@ -6,5 +6,6 @@ SystemOrganization addCategory: 'Mars-Core-Layout'!
 SystemOrganization addCategory: 'Mars-Core-Util'!
 SystemOrganization addCategory: 'Mars-Core-View'!
 SystemOrganization addCategory: 'Mars-Core-View-Container'!
+SystemOrganization addCategory: 'Mars-Core-View-Menu'!
 SystemOrganization addCategory: 'Mars-Core-View-Widget'!
 SystemOrganization addCategory: 'Mars-Core-View-Window'!

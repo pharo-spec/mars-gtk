@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Core-View-Menu",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MarsMenu",
+	"pools" : [
+		 ],
+	"super" : "MarsMenuContainer",
+	"type" : "normal" }

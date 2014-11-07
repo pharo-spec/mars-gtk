@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Core-View-Menu",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TMarsContainer classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"subviews" ],
+	"name" : "MarsMenuContainer",
+	"pools" : [
+		 ],
+	"super" : "MarsWidget",
+	"traitcomposition" : "TMarsContainer",
+	"type" : "normal" }

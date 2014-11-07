@@ -3,7 +3,7 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"ToolkitClass" ],
 	"commentStamp" : "",
 	"instvars" : [
 		"oldToolkit" ],

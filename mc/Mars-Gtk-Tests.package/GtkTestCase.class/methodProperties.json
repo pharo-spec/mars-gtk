@@ -2,5 +2,7 @@
 	"class" : {
 		"isAbstract" : "EstebanLorenzano 4/24/2014 11:05" },
 	"instance" : {
+		"collectSubviewHandles:" : "EstebanLorenzano 10/23/2014 16:43",
+		"gtkContainer:foreach:data:" : "EstebanLorenzano 10/23/2014 16:41",
 		"setUp" : "EstebanLorenzano 4/24/2014 11:00",
 		"tearDown" : "EstebanLorenzano 4/24/2014 11:00" } }

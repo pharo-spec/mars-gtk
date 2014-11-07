@@ -1,6 +1,6 @@
 examples
 example1
-	"self new example1"
+	"Shows a simple window with a panel inside (using vertical layout)"
 	GtkToolkit useToolkit.
 	MarsApplication new start.
 	MarsWindow new 

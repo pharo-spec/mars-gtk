@@ -2,8 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"collectSubviewHandles:" : "EstebanLorenzano 10/6/2014 17:07",
-		"gtkContainer:foreach:data:" : "EstebanLorenzano 10/6/2014 16:55",
-		"testAddSubview" : "EstebanLorenzano 10/6/2014 16:42",
-		"testRemoveSubview" : "EstebanLorenzano 10/6/2014 16:59",
+		"testAddSubview" : "EstebanLorenzano 10/20/2014 19:21",
+		"testRemoveSubview" : "EstebanLorenzano 10/20/2014 19:21",
 		"widgetClass" : "EstebanLorenzano 10/6/2014 14:43" } }

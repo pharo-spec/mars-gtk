@@ -1,6 +1,7 @@
 examples
 example2
-	"self new example1"
+	"Show a simple window with a panel inside (using horizontal layout). 
+	 Show also a window composed by two panels"
 	GtkToolkit useToolkit.
 	MarsApplication new start.
 	MarsWindow new 
