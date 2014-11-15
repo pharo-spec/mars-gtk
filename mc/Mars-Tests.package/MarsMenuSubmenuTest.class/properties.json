@@ -1,14 +1,14 @@
 {
-	"category" : "Mars-Core-View-Menu",
+	"category" : "Mars-Tests",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"items" ],
-	"name" : "MarsMenuContainer",
+		 ],
+	"name" : "MarsMenuSubmenuTest",
 	"pools" : [
 		 ],
-	"super" : "MarsWidget",
+	"super" : "MarsWidgetTestCase",
 	"type" : "normal" }

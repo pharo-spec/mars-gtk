@@ -1,5 +1,5 @@
 private
-basicRemoveSubview: aView
+remove: aView
 	self platformView removeSubview: aView platformView.
-	subviews := subviews copyWithout: aView.
+	items := items copyWithout: aView.
 	^ aView

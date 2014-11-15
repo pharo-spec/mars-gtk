@@ -1,6 +1,13 @@
 accessing
-menuBar: aMenubar
+menuBar: aMenuBar
 	self view menuBar 
 		ifNotNil: [ :menubarView | menubarView removeFromSuperview ].
-	self gtkContainer: self handle add: aMenubar handle.
-	^ aMenubar
+	
+	self contentLayout 
+		gtkBox: self contentHandle 
+		packStart: aMenuBar handle
+		expand: false
+		fill: false
+		padding: 0.
+			
+	^ aMenuBar

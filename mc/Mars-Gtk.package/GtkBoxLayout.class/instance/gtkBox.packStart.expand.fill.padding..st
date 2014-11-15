@@ -8,4 +8,4 @@ gtkBox: box packStart: child expand: expand fill: fill padding: padding
 		"gboolean" 		Boolean expand,
 		"gboolean" 		Boolean fill,
 		"guint" 			uint padding ))
-		options: #( coerceBoolToInt )
+		options: #( optCoerceNilToNull )

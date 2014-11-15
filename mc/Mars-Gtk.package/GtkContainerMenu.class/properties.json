@@ -10,5 +10,5 @@
 	"name" : "GtkContainerMenu",
 	"pools" : [
 		 ],
-	"super" : "GtkContainer",
+	"super" : "GtkView",
 	"type" : "normal" }

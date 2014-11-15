@@ -1,4 +1,9 @@
-private
+accessing
 addContentView: aPlatformView
-	self gtkContainer: self handle add: aPlatformView handle.
+	self contentLayout 
+		gtkBox: self contentHandle 
+		packStart: aPlatformView handle
+		expand: true
+		fill: true
+		padding: 0.
 	^ aPlatformView

@@ -2,9 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
+		"appendTo:" : "EstebanLorenzano 11/15/2014 15:10",
 		"createViewHandle" : "EstebanLorenzano 10/24/2014 16:03",
 		"gtkMenu:setTitle:" : "EstebanLorenzano 10/24/2014 16:48",
 		"gtkMenuGetTitle:" : "EstebanLorenzano 10/24/2014 16:50",
+		"gtkMenuItem:setSubmenu:" : "EstebanLorenzano 11/15/2014 15:09",
 		"gtkMenuNew" : "EstebanLorenzano 10/24/2014 16:04",
 		"label" : "EstebanLorenzano 10/24/2014 16:46",
 		"label:" : "EstebanLorenzano 10/24/2014 16:50" } }

@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"items" ],
-	"name" : "MarsMenuContainer",
+		"submenu" ],
+	"name" : "MarsMenuSubmenu",
 	"pools" : [
 		 ],
-	"super" : "MarsWidget",
+	"super" : "MarsMenuItem",
 	"type" : "normal" }

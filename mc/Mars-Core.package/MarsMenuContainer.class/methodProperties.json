@@ -2,7 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"basicAddSubview:" : "EstebanLorenzano 10/24/2014 15:57",
-		"basicRemoveSubview:" : "EstebanLorenzano 10/24/2014 15:57",
-		"initialize" : "EstebanLorenzano 10/24/2014 15:57",
-		"subviews" : "EstebanLorenzano 10/24/2014 15:57" } }
+		"add:" : "EstebanLorenzano 11/15/2014 14:20",
+		"initialize" : "EstebanLorenzano 11/15/2014 14:20",
+		"items" : "EstebanLorenzano 11/15/2014 14:20",
+		"remove:" : "EstebanLorenzano 11/15/2014 14:20" } }

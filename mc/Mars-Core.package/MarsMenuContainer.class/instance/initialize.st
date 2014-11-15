@@ -1,4 +1,4 @@
 initialization
 initialize
-	subviews := #().
+	items := #().
 	super initialize
