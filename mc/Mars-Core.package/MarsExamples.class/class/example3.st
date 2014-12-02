@@ -16,7 +16,7 @@ example3
 			add: ((MarsMenuSubmenu label: 'Window')
 				submenu: (MarsMenu new 
 					add: (MarsMenuItem label: 'Minimize');
-					add: (MarsMenuItem label: 'Zoom');
+					add: (MarsMenuItem label: 'Zoom');	
 					add: (MarsMenuItem label: 'Bring all to front');
 					yourself);
 				yourself);
