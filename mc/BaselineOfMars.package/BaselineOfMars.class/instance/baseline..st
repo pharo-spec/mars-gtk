@@ -7,18 +7,15 @@ baseline: spec
 		
 		spec
 			package: 'Mars-Core';
-			package: 'Mars-Sand' with: [ 
-				spec requires: #('Mars-Core') ];
 			package: 'Mars-Gtk' with: [ 
 				spec requires: #('Mars-Core') ];
 			package: 'Mars-Tests' with: [ 
-				spec requires: #('Mars-Core' 'Mars-Sand') ];
+				spec requires: #('Mars-Core' 'Mars-Gtk') ];
 			package: 'Mars-Gtk-Tests' with: [ 
 				spec requires: #('Mars-Tests' 'Mars-Gtk') ].
 			 
 		spec 
-			group: 'default' with: #('internal');
-			group: 'internal' with: #('Mars-Core' 'Mars-Sand');
+			group: 'default' with: #('gtk');
 			group: 'gtk' with: #('Mars-Core' 'Mars-Gtk');
-			group: 'all' with: #('internal' 'gtk' 'tests');
+			group: 'all' with: #('gtk' 'tests');
 			group: 'tests' with: #('Mars-Tests' 'Mars-Gtk-Tests') ]
