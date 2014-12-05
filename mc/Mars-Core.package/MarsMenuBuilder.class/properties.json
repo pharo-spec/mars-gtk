@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Core-View-Menu",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"items" ],
+	"name" : "MarsMenuBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

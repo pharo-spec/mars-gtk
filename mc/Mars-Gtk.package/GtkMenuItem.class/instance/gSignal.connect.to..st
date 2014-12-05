@@ -6,4 +6,4 @@ gSignal: instance connect: signalName to: callbackHandler
 		to: callbackHandler 
 		data: nil
 		destroyData: nil
-		flags: G_CONNECT_AFTER
+		flags: G_CONNECT_SWAPPED

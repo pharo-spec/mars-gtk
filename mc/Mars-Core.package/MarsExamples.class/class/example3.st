@@ -10,14 +10,23 @@ example3
 		menuBar: (MarsMenuBar new 
 			add: ((MarsMenuSubmenu label: 'File')
 				submenu: (MarsMenu new 
-					add: (MarsMenuItem label: 'Edit...');
-					add: (MarsMenuItem label: 'Exit' action: [ window close ]);
+					add: (MarsMenuItem label: 'New' action: [ self inform: 'New pressed!' ]);
+					add: (MarsMenuItem label: 'Open...' action: [ self inform: 'Open pressed!' ]);
+					add: MarsMenuSeparator new;	
+					add: (MarsMenuItem label: 'Exit' action: [ window hide ]);
+					yourself);
+				yourself);
+			add: ((MarsMenuSubmenu label: 'Edit')
+				submenu: (MarsMenu new 
+					add: (MarsMenuItem label: 'Undo');
+					add: (MarsMenuItem label: 'Redo');	
 					yourself);
 				yourself);
 			add: ((MarsMenuSubmenu label: 'Window')
 				submenu: (MarsMenu new 
 					add: (MarsMenuItem label: 'Minimize');
 					add: (MarsMenuItem label: 'Zoom');	
+					add: MarsMenuSeparator new;	
 					add: (MarsMenuItem label: 'Bring all to front');
 					yourself);
 				yourself);

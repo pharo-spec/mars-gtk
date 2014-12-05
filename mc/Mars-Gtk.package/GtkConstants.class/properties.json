@@ -1,0 +1,15 @@
+{
+	"category" : "Mars-Gtk-Application",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"G_CONNECT_AFTER",
+		"G_CONNECT_SWAPPED" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkConstants",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

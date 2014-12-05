@@ -1,4 +1,4 @@
-private
+accessing
 add: aView 
 	self 
 		assert: aView isMenu

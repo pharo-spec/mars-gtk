@@ -1,8 +1,9 @@
 {
 	"class" : {
-		 },
+		"make:" : "EstebanLorenzano 12/5/2014 15:15" },
 	"instance" : {
 		"add:" : "EstebanLorenzano 11/15/2014 14:20",
+		"addAll:" : "EstebanLorenzano 12/5/2014 15:12",
 		"initialize" : "EstebanLorenzano 11/15/2014 14:20",
 		"items" : "EstebanLorenzano 11/15/2014 14:20",
 		"remove:" : "EstebanLorenzano 11/15/2014 14:20" } }
