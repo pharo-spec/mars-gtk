@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"action" ],
 	"name" : "MarsMenuItem",
 	"pools" : [
 		 ],
-	"super" : "MarsWidget",
+	"super" : "MarsMenuBaseItem",
 	"type" : "normal" }
