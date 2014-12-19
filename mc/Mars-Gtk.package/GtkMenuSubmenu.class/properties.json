@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-View-Menu",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkMenuSubmenu",
+	"pools" : [
+		 ],
+	"super" : "GtkMenuItem",
+	"type" : "normal" }

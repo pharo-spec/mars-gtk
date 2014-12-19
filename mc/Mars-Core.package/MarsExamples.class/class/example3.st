@@ -13,7 +13,9 @@ example3
 					add: (MarsMenuItem label: 'New' action: [ self inform: 'New pressed!' ]);
 					add: (MarsMenuItem label: 'Open...' action: [ self inform: 'Open pressed!' ]);
 					add: MarsMenuSeparator new;	
-					add: (MarsMenuItem label: 'Exit' action: [ window hide ]);
+					add: (((MarsMenuItem label: 'Exit' action: [ window hide ]))
+						shortcut: $q command;
+						yourself);
 					yourself);
 				yourself);
 			add: ((MarsMenuSubmenu label: 'Edit')

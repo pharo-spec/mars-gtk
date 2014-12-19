@@ -9,5 +9,10 @@ menuBar: aMenuBar
 		expand: false
 		fill: false
 		padding: 0.
+		
+	"install shortcuts"
+	aMenuBar installShortcutOn: self.
+	accelGroupHandle ifNotNil: [ 
+		self gtkWindow: self handle addAccelGroup: accelGroupHandle ].
 			
 	^ aMenuBar

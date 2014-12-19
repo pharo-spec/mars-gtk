@@ -1,0 +1,3 @@
+private
+createAccelGroupHandle
+	^ self gtkAccelGroupNew

@@ -7,7 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"contentLayout",
-		"contentHandle" ],
+		"contentHandle",
+		"accelGroupHandle" ],
 	"name" : "GtkWindow",
 	"pools" : [
 		 ],

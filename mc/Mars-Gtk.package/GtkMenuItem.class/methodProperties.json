@@ -1,6 +1,11 @@
 {
 	"class" : {
-		 },
+		"modifierAlt" : "EstebanLorenzano 12/10/2014 17:10",
+		"modifierCommand" : "EstebanLorenzano 12/10/2014 17:11",
+		"modifierControl" : "EstebanLorenzano 12/10/2014 17:11",
+		"modifierMeta" : "EstebanLorenzano 12/10/2014 17:11",
+		"modifierNone" : "EstebanLorenzano 12/10/2014 17:11",
+		"modifierShift" : "EstebanLorenzano 12/10/2014 17:11" },
 	"instance" : {
 		"action:" : "EstebanLorenzano 12/5/2014 14:19",
 		"createViewHandle" : "EstebanLorenzano 10/23/2014 17:45",
@@ -8,5 +13,8 @@
 		"gtkMenuItem:setLabel:" : "EstebanLorenzano 10/24/2014 16:05",
 		"gtkMenuItemGetLabel:" : "EstebanLorenzano 10/24/2014 16:05",
 		"gtkMenuItemNew" : "EstebanLorenzano 10/23/2014 17:57",
+		"gtkWidgetAddAccelerator:signal:group:key:modifiers:flags:" : "EstebanLorenzano 12/19/2014 17:14",
+		"installShortcutOn:" : "EstebanLorenzano 12/19/2014 17:23",
 		"label" : "EstebanLorenzano 10/24/2014 13:52",
-		"label:" : "EstebanLorenzano 10/24/2014 13:50" } }
+		"label:" : "EstebanLorenzano 10/24/2014 13:50",
+		"shortcut:" : "EstebanLorenzano 12/19/2014 17:22" } }

@@ -11,19 +11,19 @@ example4
 			builder 
 				item: 'File' submenu: [
 					builder 
-						item: 'New' do: [ self inform: 'New pressed' ];
-						item: 'Edit...' do: [ ];
+						item: 'New' shortcut: $n command do: [ self inform: 'New pressed' ];
+						item: 'Edit...' do: [ self inform: 'Edit pressed' ];
 						separator;
-						item: 'Quit' do: [ window hide ] ];
+						item: 'Quit' shortcut: $q command do: [ window hide ] ];
 				item: 'Edit' submenu: [
 					builder 
-						item: 	'Undo' do: [  ];
-						item: 	'Redo' do: [  ] ];
+						item: 	'Undo' do: [ self inform: 'Undo pressed' ];
+						item: 	'Redo' do: [ self inform: 'Redo pressed' ] ];
 				item: 'Window' submenu: [ 
 					builder
-						item: 'Minimize' do: [  ];
-						item: 'Zoom' do: [  ];
+						item: 'Minimize' do: [ self inform: 'Minimize pressed' ];
+						item: 'Zoom' do: [ self inform: 'Zoom pressed' ];
 						separator;
-						item: 'Bring All to Front' do: [  ] ] ]);
+						item: 'Bring All to Front' do: [ self inform: 'Bring All to Front pressed' ] ] ]);
 		contentView: MarsPanel new;
 		show
