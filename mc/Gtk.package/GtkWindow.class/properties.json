@@ -1,0 +1,15 @@
+{
+	"category" : "Gtk-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkWindow",
+	"pools" : [
+		"GtkWindowPosition",
+		"GtkWindowType" ],
+	"super" : "GtkContainer",
+	"type" : "normal" }

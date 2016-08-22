@@ -1,0 +1,16 @@
+{
+	"category" : "Gtk-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"gboolean",
+		"gchar",
+		"gpointer" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkTypes",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

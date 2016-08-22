@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"drawCallback" ],
+	"name" : "GtkDrawingArea",
+	"pools" : [
+		 ],
+	"super" : "GtkWidget",
+	"type" : "normal" }

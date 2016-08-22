@@ -1,0 +1,17 @@
+{
+	"category" : "Gtk-Base",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classtraitcomposition" : "TGtkLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"runLoop",
+		"initialized" ],
+	"name" : "GtkApplication",
+	"pools" : [
+		"GtkTypes" ],
+	"super" : "Object",
+	"traitcomposition" : "TGtkLibrary",
+	"type" : "normal" }

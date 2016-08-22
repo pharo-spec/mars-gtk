@@ -1,0 +1,14 @@
+{
+	"class" : {
+		"ffiLibraryName" : "",
+		"millisecondsToWait" : "EstebanLorenzano 8/22/2016 14:42" },
+	"instance" : {
+		"ffiLibraryName" : "",
+		"getEventsPending" : "EstebanLorenzano 8/22/2016 14:43",
+		"initialize" : "EstebanLorenzano 8/22/2016 14:43",
+		"isRunning" : "EstebanLorenzano 8/22/2016 14:44",
+		"mainIterationDo:" : "EstebanLorenzano 8/22/2016 14:44",
+		"millisecondsToWait" : "EstebanLorenzano 8/22/2016 14:42",
+		"processEventsAndWait" : "EstebanLorenzano 8/22/2016 14:43",
+		"start" : "EstebanLorenzano 8/22/2016 14:44",
+		"stop" : "EstebanLorenzano 8/22/2016 14:44" } }

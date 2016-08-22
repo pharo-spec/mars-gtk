@@ -1,0 +1,16 @@
+{
+	"category" : "Gtk-Widgets",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGtkLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"handle" ],
+	"name" : "GtkWidget",
+	"pools" : [
+		"GtkTypes" ],
+	"super" : "Object",
+	"traitcomposition" : "TGtkLibrary",
+	"type" : "normal" }

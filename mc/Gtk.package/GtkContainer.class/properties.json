@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkContainer",
+	"pools" : [
+		 ],
+	"super" : "GtkWidget",
+	"type" : "normal" }

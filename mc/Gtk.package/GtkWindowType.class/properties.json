@@ -1,0 +1,15 @@
+{
+	"category" : "Gtk-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTK_WINDOW_POPUP",
+		"GTK_WINDOW_TOPLEVEL" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkWindowType",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

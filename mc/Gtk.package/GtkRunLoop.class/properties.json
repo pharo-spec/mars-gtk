@@ -1,0 +1,17 @@
+{
+	"category" : "Gtk-Base",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGtkLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"running",
+		"delay" ],
+	"name" : "GtkRunLoop",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "TGtkLibrary",
+	"type" : "normal" }
