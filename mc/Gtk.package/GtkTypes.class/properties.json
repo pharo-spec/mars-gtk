@@ -6,6 +6,7 @@
 		"GCallback",
 		"gboolean",
 		"gchar",
+		"gint",
 		"gpointer",
 		"gulong" ],
 	"commentStamp" : "",

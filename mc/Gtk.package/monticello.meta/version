@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.3' message 'add morph area' id '3ea8591b-e91a-4d71-8219-0534b0cf5b4e' date '23 August 2016' time '11:25:59.304274 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.2' message 'working on signals (kind of events) and in drawing area (to draw morphs)
-' id '2ca99ac1-76db-5ef6-bd67-00ad581706dd' date '23 August 2016' time '11:12:38 am' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.4' message 'add GtkWidget>>#sizeRequest:' id 'f43bd2cf-2407-4719-940c-b1fa1d6eed07' date '23 August 2016' time '11:34:40.358972 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.3' message 'add morph area
+' id '05f99eab-7f2b-53f9-97ef-0e7cd51b11aa' date '23 August 2016' time '11:26:07 am' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
