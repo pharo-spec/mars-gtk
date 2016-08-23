@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.14' message 'working on making draw of morphs more robust' id 'ef79b0bd-3dee-4fa6-8b1b-c5551e052860' date '23 August 2016' time '5:40:31.321071 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.13' message 'refactor tags
+(name 'Gtk-EstebanLorenzano.14' message 'set minimum size as the morph size' id '473ec47f-fb7a-4147-a1c6-2daa16e36697' date '23 August 2016' time '5:57:40.72544 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.13' message 'refactor tags
 ' id '6ddf1ee4-4911-5d49-9223-2a3e8d38886c' date '23 August 2016' time '5:31:37 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
