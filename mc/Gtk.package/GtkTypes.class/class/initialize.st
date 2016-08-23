@@ -2,4 +2,6 @@ class initialization
 initialize
 	gchar 	:= #char.
 	gpointer := #'void *'.
-	gboolean := #Boolean
+	gboolean := #Boolean.
+	gulong :=  #ulong.
+	GCallback := #FFICallback.

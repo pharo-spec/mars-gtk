@@ -1,8 +1,9 @@
-as yet unclassified
+initialization
 initialize
 	super initialize.
-	drawCallback := FFICallback 
+	self 
+		connect: 'draw' 
 		signature: #( Boolean (void *widget, void *cr, void *data) ) 
-		block: [ :widget :cr :data |
+		do: [ :widget :cr :data | 
 			self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).
 			true ]

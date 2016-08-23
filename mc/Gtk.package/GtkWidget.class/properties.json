@@ -7,9 +7,11 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"handle" ],
+		"handle",
+		"callbacks" ],
 	"name" : "GtkWidget",
 	"pools" : [
+		"GConnectFlags",
 		"GtkTypes" ],
 	"super" : "Object",
 	"traitcomposition" : "TGtkLibrary",

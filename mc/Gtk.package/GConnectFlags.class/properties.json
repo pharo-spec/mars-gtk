@@ -1,0 +1,15 @@
+{
+	"category" : "Gtk-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"G_CONNECT_AFTER",
+		"G_CONNECT_SWAPPED" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GConnectFlags",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

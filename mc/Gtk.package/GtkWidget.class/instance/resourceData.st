@@ -1,3 +1,3 @@
-initialization
+external resource management
 resourceData
 	^ handle

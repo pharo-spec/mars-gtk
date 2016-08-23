@@ -3,9 +3,11 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
+		"GCallback",
 		"gboolean",
 		"gchar",
-		"gpointer" ],
+		"gpointer",
+		"gulong" ],
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
