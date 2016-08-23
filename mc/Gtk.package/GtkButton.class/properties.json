@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkButton",
+	"pools" : [
+		 ],
+	"super" : "GtkWidget",
+	"type" : "normal" }
