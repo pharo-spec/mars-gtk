@@ -1,4 +1,4 @@
 drawing
 drawOnAthensCanvas: aCanvas
-	[ morph drawOnAthensCanvas: aCanvas ]
-	on: Error fork: [ :e | e debug ]
+	"just forward to the morph"
+	morph drawOnAthensCanvas: aCanvas

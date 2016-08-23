@@ -1,4 +1,7 @@
 *Gtk
 fromHandle: aHandle
+	| target |
 	handle := aHandle.
-	surface := self getTarget.
+	target := self getTarget.
+	self surface: target.
+	self initializeWithSurface: target
