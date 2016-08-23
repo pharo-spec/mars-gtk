@@ -1,18 +1,16 @@
 {
 	"class" : {
-		"ffiLibraryName" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"initialize" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"new" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"shutDown:" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"startUp:" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"uniqueInstance" : "EstebanLorenzano 8/22/2016 16:19:35" },
+		"initialize" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"new" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"shutDown:" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"startUp:" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"uniqueInstance" : "EstebanLorenzano 8/23/2016 11:12:38" },
 	"instance" : {
-		"ffiLibraryName" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"initArgC:argV:" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"initGtk3" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"initialize" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"isRunning" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"shutDown" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"start" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"startUp" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"stop" : "EstebanLorenzano 8/22/2016 16:19:35" } }
+		"initArgC:argV:" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"initGtk3" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"initialize" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"isRunning" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"shutDown" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"start" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"startUp" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"stop" : "EstebanLorenzano 8/23/2016 11:12:38" } }

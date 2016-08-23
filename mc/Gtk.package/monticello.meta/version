@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.2' message 'working on signals (kind of events) and in drawing area (to draw morphs)' id 'b5a4f77b-f014-4d07-ac4e-d2751d1ca0c2' date '23 August 2016' time '11:12:37.676917 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.1' message 'start new version (just api bindings this time)
-' id '1bb2de75-c8f3-5777-a3a6-9fd29d85208a' date '22 August 2016' time '4:19:35 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.3' message 'add morph area' id '3ea8591b-e91a-4d71-8219-0534b0cf5b4e' date '23 August 2016' time '11:25:59.304274 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.2' message 'working on signals (kind of events) and in drawing area (to draw morphs)
+' id '2ca99ac1-76db-5ef6-bd67-00ad581706dd' date '23 August 2016' time '11:12:38 am' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

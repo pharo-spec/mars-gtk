@@ -1,3 +1,3 @@
 drawing
 drawOnAthensCanvas: aCanvas
-	self subclassResponsibility
+	morph drawOnAthensCanvas: aCanvas

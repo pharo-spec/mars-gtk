@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
-	"name" : "GtkDrawingArea",
+		"morph" ],
+	"name" : "GtkMorphArea",
 	"pools" : [
 		 ],
-	"super" : "GtkWidget",
+	"super" : "GtkDrawingArea",
 	"type" : "normal" }

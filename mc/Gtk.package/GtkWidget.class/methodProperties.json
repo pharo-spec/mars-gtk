@@ -1,13 +1,13 @@
 {
 	"class" : {
-		"asExternalTypeOn:" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"ffiLibraryName" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"finalizeResourceData:" : "EstebanLorenzano 8/22/2016 16:19:35" },
+		"asExternalTypeOn:" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"ffiLibraryName" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"finalizeResourceData:" : "EstebanLorenzano 8/23/2016 11:12:38" },
 	"instance" : {
-		"autoRelease" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"connect:signature:do:" : "EstebanLorenzano 8/23/2016 10:58",
-		"ffiLibraryName" : "EstebanLorenzano 8/22/2016 16:19:35",
-		"registerCallback:" : "EstebanLorenzano 8/23/2016 11:01",
-		"resourceData" : "EstebanLorenzano 8/23/2016 10:58",
-		"signal:connect:data:" : "EstebanLorenzano 8/23/2016 11:11",
-		"signal:connect:data:flags:" : "EstebanLorenzano 8/23/2016 10:54" } }
+		"autoRelease" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"connect:signature:do:" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"ffiLibraryName" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"registerCallback:" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"resourceData" : "EstebanLorenzano 8/23/2016 11:12:38",
+		"signal:connect:data:" : "EstebanLorenzano 8/23/2016 11:21",
+		"signal:connect:data:flags:" : "EstebanLorenzano 8/23/2016 11:21" } }
