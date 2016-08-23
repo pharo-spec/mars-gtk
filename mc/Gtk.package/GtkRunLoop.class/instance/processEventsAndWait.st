@@ -1,5 +1,6 @@
 private
 processEventsAndWait
-	[ self getEventsPending ]
+	[	self checkSession. 
+		self getEventsPending ]
 		whileTrue: [ self mainIterationDo: false ].
 	delay wait.

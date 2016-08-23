@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 add: widget
-	self ffiCall: #( void gtk_container_add ( self, GtkWidget widget ) )
+	self ffiCall: #(void gtk_container_add (self, GtkWidget widget ))

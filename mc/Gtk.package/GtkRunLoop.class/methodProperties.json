@@ -1,12 +1,13 @@
 {
 	"class" : {
-		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 11:12:38" },
+		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 11:34:42" },
 	"instance" : {
-		"getEventsPending" : "EstebanLorenzano 8/23/2016 11:12:38",
-		"initialize" : "EstebanLorenzano 8/23/2016 11:12:38",
-		"isRunning" : "EstebanLorenzano 8/23/2016 11:12:38",
-		"mainIterationDo:" : "EstebanLorenzano 8/23/2016 11:12:38",
-		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 11:12:38",
-		"processEventsAndWait" : "EstebanLorenzano 8/23/2016 11:12:38",
-		"start" : "EstebanLorenzano 8/23/2016 11:12:38",
-		"stop" : "EstebanLorenzano 8/23/2016 11:12:38" } }
+		"checkSession" : "EstebanLorenzano 8/23/2016 11:51",
+		"getEventsPending" : "EstebanLorenzano 8/23/2016 11:34:42",
+		"initialize" : "EstebanLorenzano 8/23/2016 11:34:42",
+		"isRunning" : "EstebanLorenzano 8/23/2016 11:34:42",
+		"mainIterationDo:" : "EstebanLorenzano 8/23/2016 11:34:42",
+		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 11:34:42",
+		"processEventsAndWait" : "EstebanLorenzano 8/23/2016 11:51",
+		"start" : "EstebanLorenzano 8/23/2016 11:52",
+		"stop" : "EstebanLorenzano 8/23/2016 11:34:42" } }
