@@ -1,4 +1,5 @@
 drawing
 drawOnAthensCanvas: aCanvas
 	"just forward to the morph"
-	morph drawOnAthensCanvas: aCanvas
+	aCanvas surface drawDuring: [ :theCanvas |
+		morph fullDrawOnAthensCanvas: theCanvas ]

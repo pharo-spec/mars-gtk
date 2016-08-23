@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.8' message 'fix on canvas initialisation' id '53a37903-d5c8-4645-8426-73e6d91dfaef' date '23 August 2016' time '2:24:50.034273 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.7' message 'checkSession answers true/false to allow event loop to go out
-' id 'c1204034-7cb4-5b16-abb7-38706c853cdd' date '23 August 2016' time '12:47:52 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.9' message 'using #drawDuring while drawing morphs' id '7b1b95d0-ad12-410d-9473-89c5a0b174a4' date '23 August 2016' time '2:33:41.748999 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.8' message 'fix on canvas initialisation
+' id '6907d5bf-2e6c-59ec-8aff-236c744c0d37' date '23 August 2016' time '2:25:08 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
