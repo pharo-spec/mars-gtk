@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.5' message 'add some session validation to event loop.' id '5d774248-f183-4df7-80db-a9ebcefe7fd7' date '23 August 2016' time '12:03:06.31715 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.4' message 'add GtkWidget>>#sizeRequest:
-' id '110ebe85-c05c-5ca0-a2e4-481b0121c3b4' date '23 August 2016' time '11:34:42 am' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.6' message 'a bit more security in the run loopmoving on with morph area' id '8a9405d5-3632-45aa-80b9-61997bc534d3' date '23 August 2016' time '12:44:59.05416 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.5' message 'add some session validation to event loop.
+' id '7327bcff-a2ff-5e05-8b31-31c0d17c8c11' date '23 August 2016' time '12:03:30 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

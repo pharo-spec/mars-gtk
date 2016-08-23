@@ -1,5 +1,5 @@
-as yet unclassified
+accessing
 morph: aMorph
-	^ self basicNew 
-		initializeMorph: aMorph;
+	^ self new 
+		morph: aMorph;
 		yourself

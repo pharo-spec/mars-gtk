@@ -1,13 +1,15 @@
 {
 	"class" : {
-		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 11:34:42" },
+		"ffiLibraryName" : "EstebanLorenzano 8/23/2016 12:40",
+		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 12:03:30" },
 	"instance" : {
-		"checkSession" : "EstebanLorenzano 8/23/2016 11:51",
-		"getEventsPending" : "EstebanLorenzano 8/23/2016 11:34:42",
-		"initialize" : "EstebanLorenzano 8/23/2016 11:34:42",
-		"isRunning" : "EstebanLorenzano 8/23/2016 11:34:42",
-		"mainIterationDo:" : "EstebanLorenzano 8/23/2016 11:34:42",
-		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 11:34:42",
-		"processEventsAndWait" : "EstebanLorenzano 8/23/2016 11:51",
-		"start" : "EstebanLorenzano 8/23/2016 11:52",
-		"stop" : "EstebanLorenzano 8/23/2016 11:34:42" } }
+		"checkSession" : "EstebanLorenzano 8/23/2016 12:40",
+		"ffiLibraryName" : "EstebanLorenzano 8/23/2016 12:40",
+		"getEventsPending" : "EstebanLorenzano 8/23/2016 12:03:30",
+		"initialize" : "EstebanLorenzano 8/23/2016 12:03:30",
+		"isRunning" : "EstebanLorenzano 8/23/2016 12:03:30",
+		"mainIterationDo:" : "EstebanLorenzano 8/23/2016 12:03:30",
+		"millisecondsToWait" : "EstebanLorenzano 8/23/2016 12:03:30",
+		"processEventsAndWait" : "EstebanLorenzano 8/23/2016 12:43",
+		"start" : "EstebanLorenzano 8/23/2016 12:44",
+		"stop" : "EstebanLorenzano 8/23/2016 12:03:30" } }
