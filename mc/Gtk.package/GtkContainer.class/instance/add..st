@@ -1,4 +1,4 @@
 accessing
 add: widget
-	widgets add: widget.
+	widgets := widgets copyWith: widget.
 	self basicAdd: widget

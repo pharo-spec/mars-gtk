@@ -1,4 +1,4 @@
 accessing
 remove: widget
 	self basicRemove: widget.
-	widgets remove: widget
+	widgets := widgets copyWithout: widget
