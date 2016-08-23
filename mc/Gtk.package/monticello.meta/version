@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.13' message 'refactor tags ' id 'a6ebf85a-9e36-4f6d-b3eb-ebe31a44a5dc' date '23 August 2016' time '5:31:35.914907 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.12' message 'add a GtkButton skeleton
-' id 'c208c88d-8285-5fe8-ad45-07ca307cf368' date '23 August 2016' time '5:24:49 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.14' message 'working on making draw of morphs more robust' id 'ef79b0bd-3dee-4fa6-8b1b-c5551e052860' date '23 August 2016' time '5:40:31.321071 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.13' message 'refactor tags
+' id '6ddf1ee4-4911-5d49-9223-2a3e8d38886c' date '23 August 2016' time '5:31:37 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

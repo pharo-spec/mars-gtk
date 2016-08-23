@@ -6,4 +6,4 @@ initialize
 		signature: #( Boolean (void *widget, void *cr, void *data) ) 
 		do: [ :widget :cr :data |
 			self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).
-			true ]
+			false ]
