@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.14' message 'set minimum size as the morph size' id '473ec47f-fb7a-4147-a1c6-2daa16e36697' date '23 August 2016' time '5:57:40.72544 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.13' message 'refactor tags
-' id '6ddf1ee4-4911-5d49-9223-2a3e8d38886c' date '23 August 2016' time '5:31:37 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.16' message 'drawing just once (preventing repetition)resising morph too' id 'b18b7c44-cf94-4707-ab87-f5eaa32453ac' date '24 August 2016' time '11:34:19.013563 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.15' message 'set minimum size as the morph size
+' id 'e4cd9584-b8ed-5cef-a952-042ba0440a76' date '23 August 2016' time '5:57:42 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
