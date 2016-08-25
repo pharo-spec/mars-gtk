@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.18' message 'experiments to get a non-crashing image (when using callbacks)' id '69b473ff-5982-41d2-94f6-3a33d9877059' date '25 August 2016' time '5:50:23.933557 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.17' message 'working on trying displaying of morphs to not crash... and failing (for now)
-' id 'c50e7234-c380-5a84-9ab2-731d7b32f9ff' date '25 August 2016' time '8:03:33 am' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.19' message 'some cleanup' id '5dad759d-19b5-4010-97f4-36b1c0a007e8' date '25 August 2016' time '5:54:39.918311 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.18' message 'experiments to get a non-crashing image (when using callbacks)
+' id 'e83b1b3c-6173-53de-b550-d91489cc8971' date '25 August 2016' time '5:50:27 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

@@ -1,3 +1,0 @@
-running
-stopRunLoop
-	runLoop stop.

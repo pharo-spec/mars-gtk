@@ -1,4 +1,4 @@
 as yet unclassified
-suspendLoopWhile: aBlock
+suspendRunLoopWhile: aBlock
 	runLoop suspend.	 
 	aBlock ensure: [ runLoop resume ]

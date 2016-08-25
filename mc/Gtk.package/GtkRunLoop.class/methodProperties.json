@@ -1,10 +1,8 @@
 {
 	"class" : {
-		"ffiLibraryName" : "EstebanLorenzano 8/23/2016 12:45:15",
 		"millisecondsToWait" : "EstebanLorenzano 8/25/2016 07:55" },
 	"instance" : {
 		"checkSession" : "EstebanLorenzano 8/23/2016 12:47",
-		"ffiLibraryName" : "EstebanLorenzano 8/23/2016 12:45:15",
 		"getEventsPending" : "EstebanLorenzano 8/25/2016 14:21",
 		"initialize" : "EstebanLorenzano 8/25/2016 17:44",
 		"isRunning" : "EstebanLorenzano 8/25/2016 17:38",
