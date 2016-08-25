@@ -1,6 +1,5 @@
 private
 processEventsAndWait
-	self checkSession ifFalse: [ ^ self stop ]. 
 	[ self isRunning 
 		ifTrue: [ self getEventsPending ]
 		ifFalse: [ false ] ]

@@ -9,6 +9,6 @@ initialize
 		name: 'Gtk run loop';
 		yourself.
 	extraIdleProcess := [ ProcessorScheduler idleProcess ] newProcess
-		priority: Processor userSchedulingPriority;
+		priority: Processor lowestPriority;
 		name: 'Extra idle processor (callback support)';
 		yourself.

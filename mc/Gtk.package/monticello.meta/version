@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.20' message 'fix process initialisation' id '640355fb-d0ab-4f94-b997-2105e6415963' date '25 August 2016' time '5:56:37.259528 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.19' message 'some cleanup
-' id '6e7edc0b-b1d9-5a77-bf42-bc68c52e5ae1' date '25 August 2016' time '5:54:41 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.21' message 'fix on run loop (idle process has to run in lowest priority)recategorisations' id '54b46f34-f84b-4961-999c-9bf4c87f81ee' date '25 August 2016' time '6:06:26.973268 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.20' message 'fix process initialisation
+' id 'd8713056-6d18-59af-a771-33104dafed80' date '25 August 2016' time '5:56:39 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
