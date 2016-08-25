@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.16' message 'drawing just once (preventing repetition)resising morph too' id 'b18b7c44-cf94-4707-ab87-f5eaa32453ac' date '24 August 2016' time '11:34:19.013563 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.15' message 'set minimum size as the morph size
-' id 'e4cd9584-b8ed-5cef-a952-042ba0440a76' date '23 August 2016' time '5:57:42 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.17' message 'working on trying displaying of morphs to not crash... and failing (for now)' id '00dfa648-5df2-4f51-80a0-218c7db41243' date '25 August 2016' time '8:03:31.385431 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.16' message 'drawing just once (preventing repetition)resising morph too
+' id 'db42bf97-e98f-5cad-af8b-bb09249d48cb' date '24 August 2016' time '11:34:21 am' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

@@ -4,7 +4,10 @@ initialize
 	drawing := false.
 	self 
 		connect: 'draw' 
-		signature: #( Boolean (void *widget, void *cr, void *data) ) 
+		signature: #( int (void *widget, void *cr, void *data) ) 
 		do: [ :widget :cr :data |
-			"self doJustOnce: [ self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr) ]."
-			false ]
+			self doJustOnce: [ 
+				self cairoSave: cr.
+				self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).
+				self cairoRestore: cr ].
+			0 ]

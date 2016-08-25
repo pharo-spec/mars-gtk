@@ -3,6 +3,8 @@
 		"drawingAreaNew" : "EstebanLorenzano 8/23/2016 12:45:15",
 		"new" : "EstebanLorenzano 8/23/2016 12:45:15" },
 	"instance" : {
-		"doJustOnce:" : "EstebanLorenzano 8/24/2016 11:19",
+		"cairoRestore:" : "EstebanLorenzano 8/24/2016 12:21",
+		"cairoSave:" : "EstebanLorenzano 8/24/2016 12:21",
+		"doJustOnce:" : "EstebanLorenzano 8/24/2016 11:58",
 		"drawOnAthensCanvas:" : "EstebanLorenzano 8/23/2016 12:45:15",
-		"initialize" : "EstebanLorenzano 8/24/2016 09:16" } }
+		"initialize" : "EstebanLorenzano 8/24/2016 12:26" } }
