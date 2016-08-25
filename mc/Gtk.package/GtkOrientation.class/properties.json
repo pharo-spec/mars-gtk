@@ -1,0 +1,15 @@
+{
+	"category" : "Gtk-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTK_ORIENTATION_HORIZONTAL",
+		"GTK_ORIENTATION_VERTICAL" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkOrientation",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.21' message 'fix on run loop (idle process has to run in lowest priority)recategorisations' id '54b46f34-f84b-4961-999c-9bf4c87f81ee' date '25 August 2016' time '6:06:26.973268 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.20' message 'fix process initialisation
-' id 'd8713056-6d18-59af-a771-33104dafed80' date '25 August 2016' time '5:56:39 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.22' message 'adding GtkBox' id '62f4a196-0a11-44b7-9a0c-dd6bcef60879' date '25 August 2016' time '6:49:23.153261 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.21' message 'fix on run loop (idle process has to run in lowest priority)recategorisations
+' id 'c837a08d-928c-558a-aa7d-0dabbae37cb5' date '25 August 2016' time '6:06:29 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

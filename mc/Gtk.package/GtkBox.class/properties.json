@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkBox",
+	"pools" : [
+		"GtkOrientation" ],
+	"super" : "GtkContainer",
+	"type" : "normal" }
