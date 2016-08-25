@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.19' message 'some cleanup' id '5dad759d-19b5-4010-97f4-36b1c0a007e8' date '25 August 2016' time '5:54:39.918311 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.18' message 'experiments to get a non-crashing image (when using callbacks)
-' id 'e83b1b3c-6173-53de-b550-d91489cc8971' date '25 August 2016' time '5:50:27 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.20' message 'fix process initialisation' id '640355fb-d0ab-4f94-b997-2105e6415963' date '25 August 2016' time '5:56:37.259528 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.19' message 'some cleanup
+' id '6e7edc0b-b1d9-5a77-bf42-bc68c52e5ae1' date '25 August 2016' time '5:54:41 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
