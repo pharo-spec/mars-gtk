@@ -1,3 +1,5 @@
 running
 stop 
-	running := false
+	running := false.
+	runLoop terminate.
+	extraIdleProcess terminate.

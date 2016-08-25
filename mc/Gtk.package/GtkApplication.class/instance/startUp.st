@@ -1,4 +1,4 @@
 system startup
 startUp
 	initialized := false.
-	self start
+	"self start"

@@ -1,3 +1,3 @@
 running
 isRunning
-	^ running
+	^ running and: [ suspended not ]

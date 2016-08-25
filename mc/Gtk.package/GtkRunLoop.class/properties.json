@@ -9,10 +9,13 @@
 	"instvars" : [
 		"running",
 		"delay",
-		"session" ],
+		"session",
+		"suspended",
+		"runLoop",
+		"extraIdleProcess" ],
 	"name" : "GtkRunLoop",
 	"pools" : [
-		 ],
+		"GtkTypes" ],
 	"super" : "Object",
 	"traitcomposition" : "TGtkLibrary",
 	"type" : "normal" }

@@ -4,4 +4,4 @@ signal: aString connect: callback data: data
 		signal: aString  
 		connect: callback 
 		data: data
-		flags: G_CONNECT_AFTER
+		flags: G_CONNECT_NONE

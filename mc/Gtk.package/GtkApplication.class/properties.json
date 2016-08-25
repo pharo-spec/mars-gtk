@@ -8,7 +8,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"runLoop",
-		"initialized" ],
+		"initialized",
+		"mutex" ],
 	"name" : "GtkApplication",
 	"pools" : [
 		"GtkTypes" ],

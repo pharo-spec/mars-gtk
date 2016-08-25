@@ -6,8 +6,6 @@ initialize
 		connect: 'draw' 
 		signature: #( int (void *widget, void *cr, void *data) ) 
 		do: [ :widget :cr :data |
-			self doJustOnce: [ 
-				self cairoSave: cr.
-				self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).
-				self cairoRestore: cr ].
+			GtkApplication uniqueInstance suspendLoopWhile: [ 
+				self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).].
 			0 ]

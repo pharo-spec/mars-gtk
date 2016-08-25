@@ -4,9 +4,5 @@ start
 	
 	running := true.
 	session := Smalltalk session. 
-	[ [ self isRunning ] 
-		whileTrue: [ 
-			self checkSession 
-				ifTrue: [ self processEventsAndWait ]
-				ifFalse: [ self stop ] ] ] 
-	forkNamed: 'Gtk run loop'
+	extraIdleProcess forkAt: Processor userSchedulingPriority named: 'Extra idle process'.
+	runLoop forkAt: Processor userSchedulingPriority named: 'Gtk run loop'.

@@ -2,4 +2,7 @@ initialization
 initialize 
 	super initialize.
 	running := false.
-	delay := Delay forMilliseconds: self millisecondsToWait	
+	suspended := false.
+	delay := Delay forMilliseconds: self millisecondsToWait	.
+	runLoop := [ self runLoop ] newProcess.
+	extraIdleProcess := [ ProcessorScheduler idleProcess ] newProcess.
