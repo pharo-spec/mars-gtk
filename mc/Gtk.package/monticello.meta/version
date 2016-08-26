@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.22' message 'adding GtkBox' id '62f4a196-0a11-44b7-9a0c-dd6bcef60879' date '25 August 2016' time '6:49:23.153261 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.21' message 'fix on run loop (idle process has to run in lowest priority)recategorisations
-' id 'c837a08d-928c-558a-aa7d-0dabbae37cb5' date '25 August 2016' time '6:06:29 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.23' message 'add some more fuctions to widget (most for demo)' id '6686d6d8-f604-49f9-bf12-6048943b5426' date '26 August 2016' time '10:17:08.887166 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.22' message 'adding GtkBox
+' id '394429e6-599b-55e7-bf8d-6b5277172562' date '25 August 2016' time '6:49:25 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

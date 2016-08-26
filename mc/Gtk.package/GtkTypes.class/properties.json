@@ -6,8 +6,10 @@
 		"GCallback",
 		"gboolean",
 		"gchar",
+		"gdouble",
 		"gint",
 		"gpointer",
+		"guint",
 		"gulong" ],
 	"commentStamp" : "",
 	"instvars" : [

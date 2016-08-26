@@ -5,4 +5,6 @@ initialize
 	gboolean := #Boolean.
 	gulong :=  #ulong.
 	gint := #int.
+	guint := #uint.
+	gdouble := #double.
 	GCallback := #FFICallback.

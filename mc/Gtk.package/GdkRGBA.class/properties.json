@@ -1,5 +1,5 @@
 {
-	"category" : "Gtk-Widget",
+	"category" : "Gtk-Base",
 	"classinstvars" : [
 		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
@@ -7,14 +7,10 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"handle",
-		"callbacks" ],
-	"name" : "GtkWidget",
+		 ],
+	"name" : "GdkRGBA",
 	"pools" : [
-		"GConnectFlags",
-		"GtkStateFlags",
-		"GtkStateType",
 		"GtkTypes" ],
-	"super" : "Object",
+	"super" : "FFIExternalStructure",
 	"traitcomposition" : "TGtkLibrary",
 	"type" : "normal" }

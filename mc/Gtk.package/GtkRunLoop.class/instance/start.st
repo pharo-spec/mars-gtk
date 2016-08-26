@@ -4,5 +4,7 @@ start
 	
 	running := true.
 	session := Smalltalk session. 
-	extraIdleProcess resume.
-	runLoop resume.
+	runLoop := [ self runLoop ] newProcess
+		priority: Processor userSchedulingPriority;
+		name: 'Gtk run loop';
+		resume

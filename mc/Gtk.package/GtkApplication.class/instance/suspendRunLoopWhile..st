@@ -1,4 +1,4 @@
 as yet unclassified
 suspendRunLoopWhile: aBlock
-	runLoop suspend.	 
-	aBlock ensure: [ runLoop resume ]
+	self stop.
+	^ aBlock ensure: [ self start ]
