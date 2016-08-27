@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Glamour",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkRenderer",
+	"pools" : [
+		 ],
+	"super" : "GLMRenderer",
+	"type" : "normal" }
