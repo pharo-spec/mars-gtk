@@ -1,3 +1,3 @@
 instance creation
 newVertical
-	^ self newVerticalWithSpacing: 0
+	^ self newVerticalSpacing: 0

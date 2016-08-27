@@ -1,3 +1,3 @@
 instance creation
-newHorizontalWithSpacing: spacing
+newHorizontalSpacing: spacing
 	^ (self boxNewOrientation: GTK_ORIENTATION_HORIZONTAL spacing: spacing) initialize

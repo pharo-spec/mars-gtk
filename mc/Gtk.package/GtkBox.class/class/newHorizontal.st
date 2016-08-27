@@ -1,3 +1,3 @@
 instance creation
 newHorizontal
-	^ self newHorizontalWithSpacing: 0
+	^ self newHorizontalSpacing: 0

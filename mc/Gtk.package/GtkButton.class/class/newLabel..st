@@ -1,3 +1,3 @@
 instance creation
-newWithLabel: aString
+newLabel: aString
 	^ (self buttonNewWithLabel: aString) initialize

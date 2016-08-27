@@ -1,5 +1,5 @@
 instance creation
-withMorph: aMorph
+newMorph: aMorph
 	^ self new 
 		morph: aMorph;
 		yourself
