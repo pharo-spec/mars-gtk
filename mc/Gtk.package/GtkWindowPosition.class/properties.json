@@ -8,7 +8,7 @@
 		"GTK_WIN_POS_CENTER_ON_PARENT",
 		"GTK_WIN_POS_MOUSE",
 		"GTK_WIN_POS_NONE" ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GtkWindowPosition",

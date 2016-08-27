@@ -5,7 +5,7 @@
 	"classvars" : [
 		"GTK_ORIENTATION_HORIZONTAL",
 		"GTK_ORIENTATION_VERTICAL" ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GtkOrientation",

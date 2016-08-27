@@ -6,7 +6,7 @@
 		"G_CONNECT_AFTER",
 		"G_CONNECT_NONE",
 		"G_CONNECT_SWAPPED" ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GConnectFlags",

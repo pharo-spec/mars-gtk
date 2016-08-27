@@ -5,7 +5,7 @@
 	"classtraitcomposition" : "TGtkLibrary classTrait",
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		"handle",
 		"callbacks" ],

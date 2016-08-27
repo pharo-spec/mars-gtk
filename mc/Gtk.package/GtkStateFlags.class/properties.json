@@ -17,7 +17,7 @@
 		"GTK_STATE_FLAG_PRELIGHT",
 		"GTK_STATE_FLAG_SELECTED",
 		"GTK_STATE_FLAG_VISITED" ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GtkStateFlags",

@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.23' message 'add some more fuctions to widget (most for demo)' id '6686d6d8-f604-49f9-bf12-6048943b5426' date '26 August 2016' time '10:17:08.887166 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.22' message 'adding GtkBox
-' id '394429e6-599b-55e7-bf8d-6b5277172562' date '25 August 2016' time '6:49:25 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.24' message 'add convenience to convert Color to GtkRGBAadd comments to classes' id 'a2b81319-907a-4ecd-bb92-953208db8ae2' date '27 August 2016' time '8:22:31.198461 am' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.23' message 'add some more fuctions to widget (most for demo)
+' id '31f09cbc-01f7-5a78-a1d8-8c946d3445a8' date '26 August 2016' time '10:17:11 am' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

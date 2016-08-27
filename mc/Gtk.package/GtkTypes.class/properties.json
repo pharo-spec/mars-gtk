@@ -11,7 +11,7 @@
 		"gpointer",
 		"guint",
 		"gulong" ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GtkTypes",

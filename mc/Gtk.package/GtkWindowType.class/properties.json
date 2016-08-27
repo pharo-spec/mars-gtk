@@ -5,7 +5,7 @@
 	"classvars" : [
 		"GTK_WINDOW_POPUP",
 		"GTK_WINDOW_TOPLEVEL" ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GtkWindowType",
