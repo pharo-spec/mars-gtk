@@ -1,3 +1,0 @@
-factory
-createLayout
-	^ self subclassResponsibility

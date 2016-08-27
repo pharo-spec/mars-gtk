@@ -1,3 +1,0 @@
-initialization
-platformViewClass
-	^ self subclassResponsibility

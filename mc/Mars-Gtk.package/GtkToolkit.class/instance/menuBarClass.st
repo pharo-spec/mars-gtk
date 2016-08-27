@@ -1,3 +1,0 @@
-accessing menus
-menuBarClass 
-	^ GtkMenuBar

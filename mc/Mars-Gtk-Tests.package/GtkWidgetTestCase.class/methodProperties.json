@@ -1,9 +1,0 @@
-{
-	"class" : {
-		"isAbstract" : "EstebanLorenzano 4/24/2014 11:06" },
-	"instance" : {
-		"createWidget" : "EstebanLorenzano 7/4/2014 16:37",
-		"setUp" : "EstebanLorenzano 4/24/2014 11:02",
-		"tearDown" : "EstebanLorenzano 4/24/2014 11:02",
-		"testNew" : "EstebanLorenzano 10/20/2014 19:21",
-		"widgetClass" : "EstebanLorenzano 4/24/2014 11:04" } }

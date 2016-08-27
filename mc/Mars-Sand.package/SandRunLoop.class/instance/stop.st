@@ -1,3 +1,0 @@
-running
-stop 
-	running := false.

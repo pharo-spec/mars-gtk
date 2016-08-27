@@ -1,3 +1,0 @@
-accessing
-orientation
-	^ GtkBoxOrientation vertical

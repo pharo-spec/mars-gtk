@@ -1,9 +1,0 @@
-SystemOrganization addCategory: #'Mars-Sand'!
-SystemOrganization addCategory: 'Mars-Sand-Application'!
-SystemOrganization addCategory: 'Mars-Sand-Builder'!
-SystemOrganization addCategory: 'Mars-Sand-Decoration'!
-SystemOrganization addCategory: 'Mars-Sand-Theme'!
-SystemOrganization addCategory: 'Mars-Sand-View'!
-SystemOrganization addCategory: 'Mars-Sand-View-Container'!
-SystemOrganization addCategory: 'Mars-Sand-View-Widget'!
-SystemOrganization addCategory: 'Mars-Sand-View-Window'!

@@ -1,3 +1,0 @@
-accessing layouts
-horizontalLayout
-	^ GtkHorizontalBoxLayout

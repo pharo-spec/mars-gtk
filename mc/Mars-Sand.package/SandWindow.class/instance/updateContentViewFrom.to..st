@@ -1,2 +1,0 @@
-updating
-updateContentViewFrom: oldPlatformView to: newPlatformView

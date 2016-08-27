@@ -1,3 +1,0 @@
-private
-createViewHandle
-	^ self subclassResponsibility

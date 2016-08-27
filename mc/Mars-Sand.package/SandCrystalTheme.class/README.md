@@ -1,1 +1,0 @@
-I'm crystal, a lightweight theme for Sand.

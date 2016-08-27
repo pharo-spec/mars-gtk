@@ -1,1 +1,0 @@
-I'm a base theme for Sand.

@@ -1,3 +1,0 @@
-accessing menus
-menuSeparatorClass 
-	^ GtkMenuSeparator
