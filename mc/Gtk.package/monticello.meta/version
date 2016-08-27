@@ -1,2 +1,2 @@
-(name 'Gtk-EstebanLorenzano.27' message 'refactor in add for containeradd packStart: logic for boxes' id '08c2706a-0a35-4da6-a3e4-0f07732fda71' date '27 August 2016' time '3:52:05.313988 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.26' message 'working on notebookssome refactors
-' id '6c32b489-59af-544c-ad0d-2f536f265d21' date '27 August 2016' time '3:40:20 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
+(name 'Gtk-EstebanLorenzano.28' message 'add window resize: and modal: protocolsstart to work on glamour renderWindow:' id '6d3eeb88-16a3-4af8-8426-fcefa3b46d27' date '27 August 2016' time '4:17:20.480396 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.27' message 'refactor in add for containeradd packStart: logic for boxes
+' id '47616426-6534-5256-af28-728b369c2eee' date '27 August 2016' time '3:52:08 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())
