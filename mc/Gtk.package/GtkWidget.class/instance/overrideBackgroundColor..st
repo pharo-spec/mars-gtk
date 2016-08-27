@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 overrideBackgroundColor: color
 	^ self 
 		overrideBackgroundState: GTK_STATE_FLAG_NORMAL 

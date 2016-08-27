@@ -1,15 +1,13 @@
 {
 	"category" : "Gtk-Base",
 	"classinstvars" : [
-		"uniqueInstance" ],
+		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
 	"classvars" : [
-		 ],
+		"Current" ],
 	"commentStamp" : "",
 	"instvars" : [
-		"runLoop",
-		"initialized",
-		"mutex" ],
+		"runLoop" ],
 	"name" : "GtkApplication",
 	"pools" : [
 		"GtkTypes" ],

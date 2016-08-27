@@ -10,9 +10,7 @@
 		"running",
 		"delay",
 		"session",
-		"suspended",
-		"runLoop",
-		"extraIdleProcess" ],
+		"runLoop" ],
 	"name" : "GtkRunLoop",
 	"pools" : [
 		"GtkTypes" ],
