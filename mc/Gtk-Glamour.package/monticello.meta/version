@@ -1,1 +1,2 @@
-(name 'Gtk-Glamour-EstebanLorenzano.1' message 'Importing package Gtk-Glamour' id '8a583bff-9cb0-4d77-998c-e42db5727bb3' date '27 August 2016' time '3:39:25.719267 pm' author 'EstebanLorenzano' ancestors () stepChildren ())
+(name 'Gtk-Glamour-EstebanLorenzano.2' message 'add window resize: and modal: protocolsstart to work on glamour renderWindow:' id '71c7aaf4-46da-459d-bfba-a3dfda422bb6' date '27 August 2016' time '4:17:23.387514 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-Glamour-EstebanLorenzano.1' message 'Importing package Gtk-Glamour
+' id '7d76123b-c413-51da-9a16-4fb38631fcef' date '27 August 2016' time '3:39:26 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

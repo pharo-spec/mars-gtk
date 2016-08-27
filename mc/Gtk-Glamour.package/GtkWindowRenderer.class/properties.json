@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Glamour",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"window" ],
+	"name" : "GtkWindowRenderer",
+	"pools" : [
+		 ],
+	"super" : "GtkWidgetRenderer",
+	"type" : "normal" }
