@@ -9,6 +9,7 @@
 		 ],
 	"name" : "GtkToolbar",
 	"pools" : [
+		"GtkIconSize",
 		"GtkToolbarStyle" ],
 	"super" : "GtkContainer",
 	"type" : "normal" }

@@ -9,7 +9,8 @@ exampleToolbar
 		resize: 500@200;
 		add: (GtkBox newVertical
 			packStart: (GtkToolbar new
-					beBoth; "beIcon or beText"
+					beIconSizeSmallToolbar;
+					beIcons; "beIcons, beText, beBoth"
 					add: (GtkToolButton newIcon: (GtkImage newStock: 'gtk-ok') label: 'Ok');
 					add: (GtkToolButton newIcon: (GtkImage newStock: 'gtk-cancel') label: 'Cancel');
 					yourself)
