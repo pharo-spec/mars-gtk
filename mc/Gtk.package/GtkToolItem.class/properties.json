@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkToolItem",
+	"pools" : [
+		 ],
+	"super" : "GtkWidget",
+	"type" : "normal" }

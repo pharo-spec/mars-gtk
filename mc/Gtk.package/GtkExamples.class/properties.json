@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

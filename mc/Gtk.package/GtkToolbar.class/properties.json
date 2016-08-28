@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GtkToolbar",
+	"pools" : [
+		"GtkToolbarStyle" ],
+	"super" : "GtkContainer",
+	"type" : "normal" }
