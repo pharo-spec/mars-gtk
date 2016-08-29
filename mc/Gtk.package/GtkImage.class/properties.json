@@ -9,6 +9,7 @@
 		 ],
 	"name" : "GtkImage",
 	"pools" : [
+		"AthensCairoDefs",
 		"GtkIconSize" ],
 	"super" : "GtkWidget",
 	"type" : "normal" }

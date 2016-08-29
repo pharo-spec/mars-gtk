@@ -1,4 +1,4 @@
-connecting events
+private signaling
 connect: aString signature: signature do: aBlock
 	| callback |
 	callback := FFICallback signature: signature block: aBlock.

@@ -1,4 +1,4 @@
-private
+private signaling
 signal: signalName connect: callback data: data flags: connectFlags
 	^ self ffiCall: #( gulong g_signal_connect_data ( 
 		self,
