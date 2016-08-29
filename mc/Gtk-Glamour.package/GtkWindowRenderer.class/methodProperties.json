@@ -2,6 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"newGtkWindow:" : "EstebanLorenzano 8/27/2016 16:10",
-		"render:" : "EstebanLorenzano 8/28/2016 10:39",
+		"buildToolbarFor:" : "EstebanLorenzano 8/29/2016 11:34",
+		"buildWindow:" : "EstebanLorenzano 8/29/2016 11:54",
+		"ensureBox:inWindow:" : "EstebanLorenzano 8/29/2016 12:00",
+		"render:" : "EstebanLorenzano 8/29/2016 11:54",
 		"titleFor:" : "EstebanLorenzano 8/28/2016 10:38" } }

@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Glamour",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkGlamourExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

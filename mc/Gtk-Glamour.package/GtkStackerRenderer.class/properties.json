@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Glamour",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkStackerRenderer",
+	"pools" : [
+		 ],
+	"super" : "GtkWidgetRenderer",
+	"type" : "normal" }
