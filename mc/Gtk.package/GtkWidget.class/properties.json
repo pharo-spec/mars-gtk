@@ -8,7 +8,8 @@
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		"handle",
-		"callbacks" ],
+		"callbacks",
+		"model" ],
 	"name" : "GtkWidget",
 	"pools" : [
 		"GConnectFlags",
