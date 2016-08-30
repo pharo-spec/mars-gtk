@@ -1,3 +1,3 @@
 private handler
 getEventsHandler
-	^ self ffiCall: #(void *getEventsHandler()) module: 'EventsHandler'
+	^ self ffiCall: #(void *getEventsHandler()) module: 'EventsHandlerPlugin'

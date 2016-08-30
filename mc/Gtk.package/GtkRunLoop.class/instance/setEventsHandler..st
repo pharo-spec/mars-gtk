@@ -1,3 +1,3 @@
 private handler
 setEventsHandler: aHandler
-	^ self ffiCall: #(void setEventsHandler(void *aHandler)) module: 'EventsHandler'
+	^ self ffiCall: #(void setEventsHandler(FFICallback aHandler)) module: 'EventsHandlerPlugin'
