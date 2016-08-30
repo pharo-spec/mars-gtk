@@ -7,8 +7,8 @@
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
-	"name" : "GtkToolButton",
+	"name" : "GtkEntry",
 	"pools" : [
 		 ],
-	"super" : "GtkToolItem",
+	"super" : "GtkWidget",
 	"type" : "normal" }
