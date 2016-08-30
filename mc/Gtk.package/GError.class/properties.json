@@ -1,5 +1,5 @@
 {
-	"category" : "Gtk-Base",
+	"category" : "Gtk-Misc",
 	"classinstvars" : [
 		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
@@ -7,14 +7,10 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"running",
-		"delay",
-		"session",
-		"runLoop",
-		"oldRunLoop" ],
-	"name" : "GtkRunLoop",
+		 ],
+	"name" : "GError",
 	"pools" : [
 		"GtkTypes" ],
-	"super" : "Object",
+	"super" : "FFIExternalStructure",
 	"traitcomposition" : "TGtkLibrary",
 	"type" : "normal" }

@@ -4,12 +4,16 @@
 		 ],
 	"classvars" : [
 		"GCallback",
+		"GQuark",
 		"gboolean",
 		"gchar",
 		"gdouble",
 		"gint",
 		"gpointer",
+		"gsize",
+		"gssize",
 		"guint",
+		"guint32",
 		"gulong" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [

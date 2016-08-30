@@ -4,7 +4,13 @@ start
 	
 	running := true.
 	session := Smalltalk session. 
-	runLoop := [ self runLoop ] newProcess
+	"runLoop := [ self runLoop ] newProcess
 		priority: Processor highIOPriority;
 		name: 'Gtk run loop';
-		resume
+		resume"
+	oldRunLoop := self getEventsHandler.
+	runLoop := FFICallback 
+		signature: #(void ()) 
+		block: [ self processEvents ].
+	self setEventsHandler: runLoop thunk.
+		
