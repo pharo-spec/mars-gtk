@@ -1,0 +1,14 @@
+{
+	"category" : "Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GtkTextView",
+	"pools" : [
+		 ],
+	"super" : "GtkWidget",
+	"type" : "normal" }
