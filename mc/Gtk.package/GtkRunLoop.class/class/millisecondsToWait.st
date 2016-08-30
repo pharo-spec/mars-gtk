@@ -1,3 +1,0 @@
-accessing
-millisecondsToWait
-	^ 10

@@ -5,8 +5,8 @@
 		"finalizeResourceData:" : "EstebanLorenzano 8/23/2016 12:45:15" },
 	"instance" : {
 		"autoRelease" : "EstebanLorenzano 8/23/2016 12:45:15",
-		"connect:do:" : "EstebanLorenzano 8/30/2016 16:38",
-		"connect:signature:do:" : "EstebanLorenzano 8/23/2016 12:45:15",
+		"connect:do:" : "EstebanLorenzano 8/30/2016 18:58",
+		"connect:signature:do:" : "EstebanLorenzano 8/30/2016 18:45",
 		"connectClicked:" : "EstebanLorenzano 8/29/2016 11:09",
 		"connectHide:" : "EstebanLorenzano 8/30/2016 04:21",
 		"connectShow:" : "EstebanLorenzano 8/30/2016 04:20",
@@ -15,6 +15,7 @@
 		"grabFocus" : "EstebanLorenzano 8/30/2016 07:36",
 		"isFocus" : "EstebanLorenzano 8/30/2016 07:35",
 		"isSensitive" : "EstebanLorenzano 8/29/2016 20:22",
+		"isVisible" : "EstebanLorenzano 8/30/2016 20:24",
 		"model" : "EstebanLorenzano 8/29/2016 17:42",
 		"model:" : "EstebanLorenzano 8/29/2016 17:43",
 		"overrideBackgroundColor:" : "EstebanLorenzano 8/27/2016 07:24",

@@ -1,6 +1,6 @@
 running
 stop 
-	running := false.
-	"runLoop terminate."
+	self isRunning ifFalse: [ ^ self ].
 	self setDefaultEventsHandler.
 	runLoop := nil.
+	running := false

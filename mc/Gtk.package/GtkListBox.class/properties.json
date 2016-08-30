@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "EstebanLorenzano 8/30/2016 20:15",
 	"instvars" : [
 		 ],
-	"name" : "GtkLabel",
+	"name" : "GtkListBox",
 	"pools" : [
 		 ],
-	"super" : "GtkWidget",
+	"super" : "GtkContainer",
 	"type" : "normal" }

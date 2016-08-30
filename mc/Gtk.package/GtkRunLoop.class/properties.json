@@ -7,11 +7,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"running",
-		"delay",
 		"session",
-		"runLoop",
-		"oldRunLoop" ],
+		"running",
+		"runLoop" ],
 	"name" : "GtkRunLoop",
 	"pools" : [
 		"GtkTypes" ],
