@@ -1,2 +1,0 @@
-(name 'Gtk-EstebanLorenzano.37' message '- add GtkListBox (just the stub)- enhanced message for connect:do:- run loop clean up- more on providers (still not working, at all)' id 'c6e8e55a-9e2e-4ab3-8533-baf3be522298' date '30 August 2016' time '8:50:45.801456 pm' author 'EstebanLorenzano' ancestors ((name 'Gtk-EstebanLorenzano.36' message 'rename GtkPlugin to a generic \"EventsHandlerPlugin\"
-' id '6877c62d-f7cd-5ce8-aeb3-29f815c887c7' date '30 August 2016' time '5:26:46 pm' author 'EstebanLorenzano' ancestors () stepChildren ())) stepChildren ())

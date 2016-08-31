@@ -8,6 +8,4 @@ connect: aString do: aBlock
 	^ self 
 		connect: aString 
 		signature: #(void (void *widget, void * data))  
- 		do: [ :widget :data | 
-			[ aBlock value ] 
-			on: Error fork: [:e| e debug ] ]
+ 		do: [ :widget :data | [ aBlock value ] fork ]

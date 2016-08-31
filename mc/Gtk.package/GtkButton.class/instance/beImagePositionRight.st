@@ -1,0 +1,3 @@
+accessing
+beImagePositionRight
+	self imagePosition: GTK_POS_RIGHT

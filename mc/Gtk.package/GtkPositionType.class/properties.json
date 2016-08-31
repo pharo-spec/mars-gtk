@@ -1,0 +1,17 @@
+{
+	"category" : "Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTK_POS_BOTTOM",
+		"GTK_POS_LEFT",
+		"GTK_POS_RIGHT",
+		"GTK_POS_TOP" ],
+	"commentStamp" : "EstebanLorenzano 8/31/2016 08:26",
+	"instvars" : [
+		 ],
+	"name" : "GtkPositionType",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

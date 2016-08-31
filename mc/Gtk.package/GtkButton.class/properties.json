@@ -9,6 +9,6 @@
 		 ],
 	"name" : "GtkButton",
 	"pools" : [
-		 ],
+		"GtkPositionType" ],
 	"super" : "GtkWidget",
 	"type" : "normal" }
