@@ -6,6 +6,8 @@ initialize
 		connect: 'draw' 
 		signature: #( int (void *widget, void *cr, void *data) ) 
 		do: [ :widget :cr :data |
-			GtkApplication uniqueInstance suspendRunLoopWhile: [ 
-				self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).].
+			"I need to be sure this process will not be highjacked by another 
+			 so I need to execute it unpreemptively (otherwise it will crash 
+			 the vm)"
+			[ self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr) ] valueUnpreemptively.
 			0 ]
