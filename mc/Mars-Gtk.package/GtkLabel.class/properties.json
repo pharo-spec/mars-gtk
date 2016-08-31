@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GtkLabel",
+	"pools" : [
+		 ],
+	"super" : "GtkWidget",
+	"type" : "normal" }

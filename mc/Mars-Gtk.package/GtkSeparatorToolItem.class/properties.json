@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkSeparatorToolItem",
+	"pools" : [
+		 ],
+	"super" : "GtkToolItem",
+	"type" : "normal" }

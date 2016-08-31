@@ -1,0 +1,3 @@
+accessing
+beImagePositionBottom
+	self imagePosition: GTK_POS_BOTTOM

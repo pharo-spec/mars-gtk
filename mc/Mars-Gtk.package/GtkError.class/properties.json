@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,0 +1,18 @@
+{
+	"category" : "Mars-Gtk-Base",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGtkLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"session",
+		"running",
+		"runLoop" ],
+	"name" : "GtkRunLoop",
+	"pools" : [
+		"GtkTypes" ],
+	"super" : "Object",
+	"traitcomposition" : "TGtkLibrary",
+	"type" : "normal" }

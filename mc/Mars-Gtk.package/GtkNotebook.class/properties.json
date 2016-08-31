@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"pages" ],
+	"name" : "GtkNotebook",
+	"pools" : [
+		"GtkOrientation" ],
+	"super" : "GtkContainer",
+	"type" : "normal" }

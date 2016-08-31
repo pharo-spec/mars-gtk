@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGtkLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkCssProvider",
+	"pools" : [
+		"GtkTypes" ],
+	"super" : "FFIExternalObject",
+	"traitcomposition" : "TGtkLibrary",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GtkToolButton",
+	"pools" : [
+		 ],
+	"super" : "GtkToolItem",
+	"type" : "normal" }

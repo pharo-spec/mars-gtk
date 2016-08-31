@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"drawing" ],
+	"name" : "GtkDrawingArea",
+	"pools" : [
+		 ],
+	"super" : "GtkWidget",
+	"type" : "normal" }

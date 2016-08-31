@@ -1,0 +1,18 @@
+{
+	"category" : "Mars-Gtk-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTK_WIN_POS_CENTER",
+		"GTK_WIN_POS_CENTER_ALWAYS",
+		"GTK_WIN_POS_CENTER_ON_PARENT",
+		"GTK_WIN_POS_MOUSE",
+		"GTK_WIN_POS_NONE" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GtkWindowPosition",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

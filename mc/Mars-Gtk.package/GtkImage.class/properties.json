@@ -1,0 +1,15 @@
+{
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkImage",
+	"pools" : [
+		"AthensCairoDefs",
+		"GtkIconSize" ],
+	"super" : "GtkWidget",
+	"type" : "normal" }

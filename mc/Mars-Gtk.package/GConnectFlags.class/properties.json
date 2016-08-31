@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"G_CONNECT_AFTER",
+		"G_CONNECT_NONE",
+		"G_CONNECT_SWAPPED" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GConnectFlags",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

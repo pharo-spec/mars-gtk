@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Gtk-Base",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGtkLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GdkRGBA",
+	"pools" : [
+		"GtkTypes" ],
+	"super" : "FFIExternalStructure",
+	"traitcomposition" : "TGtkLibrary",
+	"type" : "normal" }

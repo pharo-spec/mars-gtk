@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"morph" ],
+	"name" : "GtkMorphArea",
+	"pools" : [
+		 ],
+	"super" : "GtkDrawingArea",
+	"type" : "normal" }
