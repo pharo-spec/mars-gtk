@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GtkListBoxRow",
+	"pools" : [
+		 ],
+	"super" : "GtkContainer",
+	"type" : "normal" }

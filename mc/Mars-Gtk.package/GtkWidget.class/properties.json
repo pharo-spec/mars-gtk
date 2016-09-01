@@ -9,7 +9,7 @@
 	"instvars" : [
 		"handle",
 		"callbacks",
-		"model" ],
+		"data" ],
 	"name" : "GtkWidget",
 	"pools" : [
 		"GConnectFlags",

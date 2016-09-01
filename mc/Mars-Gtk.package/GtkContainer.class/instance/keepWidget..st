@@ -1,4 +1,4 @@
 private
 keepWidget: widget
-	widgets := widgets copyWith: widget.
+	children := children copyWith: widget.
 

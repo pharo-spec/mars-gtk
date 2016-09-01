@@ -10,7 +10,7 @@
 		"GTK_STATE_NORMAL",
 		"GTK_STATE_PRELIGHT",
 		"GTK_STATE_SELECTED" ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GtkStateType",

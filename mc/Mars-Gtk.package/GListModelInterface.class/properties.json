@@ -1,0 +1,16 @@
+{
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"get_item_type",
+		"get_n_items",
+		"get_item" ],
+	"name" : "GListModelInterface",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalStructure",
+	"type" : "normal" }

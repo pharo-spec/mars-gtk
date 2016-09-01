@@ -1,0 +1,3 @@
+private
+getNumberOfItems
+	self subclassResponsibility

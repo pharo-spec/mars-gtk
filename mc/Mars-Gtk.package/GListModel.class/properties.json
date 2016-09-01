@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"interface" ],
+	"name" : "GListModel",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "EstebanLorenzano 8/27/2016 08:14",
 	"instvars" : [
-		"widgets" ],
+		"children" ],
 	"name" : "GtkContainer",
 	"pools" : [
 		 ],

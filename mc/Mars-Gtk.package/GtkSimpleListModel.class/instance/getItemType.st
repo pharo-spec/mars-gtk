@@ -1,0 +1,3 @@
+private
+getItemType
+	^ 0

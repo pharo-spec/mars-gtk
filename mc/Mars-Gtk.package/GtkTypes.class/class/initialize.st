@@ -10,5 +10,6 @@ initialize
 	gdouble := #double.
 	GCallback := #FFICallback.
 	GQuark := #guint32.
+	GType := #gsize.
 	gssize := #long.
 	gsize := #ulong.

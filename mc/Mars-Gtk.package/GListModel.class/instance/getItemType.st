@@ -1,0 +1,3 @@
+private
+getItemType
+	self subclassResponsibility

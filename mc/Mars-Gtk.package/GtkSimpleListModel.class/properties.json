@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"items" ],
+	"name" : "GtkSimpleListModel",
+	"pools" : [
+		 ],
+	"super" : "GListModel",
+	"type" : "normal" }

@@ -5,6 +5,7 @@
 	"classvars" : [
 		"GCallback",
 		"GQuark",
+		"GType",
 		"gboolean",
 		"gchar",
 		"gdouble",
