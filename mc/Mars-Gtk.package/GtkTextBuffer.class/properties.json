@@ -1,19 +1,16 @@
 {
-	"category" : "Mars-Gtk-Base",
+	"category" : "Mars-Gtk-Misc",
 	"classinstvars" : [
 		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "EstebanLorenzano 9/6/2016 08:20",
 	"instvars" : [
-		"session",
-		"running",
-		"runLoop",
-		"executing" ],
-	"name" : "GtkRunLoop",
+		 ],
+	"name" : "GtkTextBuffer",
 	"pools" : [
-		"GtkTypes" ],
-	"super" : "Object",
+		 ],
+	"super" : "FFIExternalObject",
 	"traitcomposition" : "TGtkLibrary",
 	"type" : "normal" }

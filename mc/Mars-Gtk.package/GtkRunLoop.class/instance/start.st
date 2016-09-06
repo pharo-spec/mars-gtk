@@ -6,5 +6,5 @@ start
 	session := Smalltalk session. 
 	runLoop := FFICallback 
 		signature: #(void (void)) 
-		block: [ self processEvents ].
+		block: [self processEvents].
 	self setEventsHandler: runLoop

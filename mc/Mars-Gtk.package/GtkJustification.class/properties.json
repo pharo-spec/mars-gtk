@@ -3,12 +3,15 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"GTK_JUSTIFY_CENTER",
+		"GTK_JUSTIFY_FILL",
+		"GTK_JUSTIFY_LEFT",
+		"GTK_JUSTIFY_RIGHT" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
-	"name" : "GtkLabel",
+	"name" : "GtkJustification",
 	"pools" : [
-		"GtkJustification" ],
-	"super" : "GtkWidget",
+		 ],
+	"super" : "FFIExternalEnumeration",
 	"type" : "normal" }
