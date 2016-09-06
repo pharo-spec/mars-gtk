@@ -34,5 +34,5 @@ exampleToolbar
 			packStart: (GtkLabel newLabel: 'panel');
 			yourself);
 		center;
-		show;
+		showAll;
 		inspect

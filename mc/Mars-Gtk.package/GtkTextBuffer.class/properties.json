@@ -10,7 +10,7 @@
 		 ],
 	"name" : "GtkTextBuffer",
 	"pools" : [
-		 ],
+		"GtkTypes" ],
 	"super" : "FFIExternalObject",
 	"traitcomposition" : "TGtkLibrary",
 	"type" : "normal" }

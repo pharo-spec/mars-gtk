@@ -15,5 +15,5 @@ exampleNotebook
 			append: (GtkLabel newLabel: 'panel 2') label: (GtkLabel newLabel: 'page 2');
 		yourself);
 		center;
-		show;
+		showAll;
 		inspect
