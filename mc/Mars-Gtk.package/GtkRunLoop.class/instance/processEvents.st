@@ -1,8 +1,7 @@
 private
 processEvents
-	[ self doNotOverlap: [
+	self doNotOverlap: [
 		[ (self isRunning and: [ self checkSession ])
 			ifTrue: [ self getEventsPending ]
 			ifFalse: [ false ] ]
-		whileTrue: [ self mainIterationDo: false ] ] ]
-	forkAt: Processor highIOPriority
+		whileTrue: [ self mainIterationDo: false ] ] 

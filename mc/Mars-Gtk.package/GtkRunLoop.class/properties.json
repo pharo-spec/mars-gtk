@@ -10,7 +10,8 @@
 		"session",
 		"running",
 		"runLoop",
-		"executing" ],
+		"executing",
+		"mutex" ],
 	"name" : "GtkRunLoop",
 	"pools" : [
 		"GtkTypes" ],
