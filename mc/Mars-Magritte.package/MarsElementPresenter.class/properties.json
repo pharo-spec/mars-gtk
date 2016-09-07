@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Magritte",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MarsElementPresenter",
+	"pools" : [
+		 ],
+	"super" : "MarsDescriptionPresenter",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+*Mars-Magritte
+defaultPresenterClass
+	^ MarsMemoPresenter

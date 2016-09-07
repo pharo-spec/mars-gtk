@@ -1,0 +1,17 @@
+{
+	"category" : "Mars-Magritte",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"memento",
+		"description",
+		"parent",
+		"widget" ],
+	"name" : "MarsDescriptionPresenter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
