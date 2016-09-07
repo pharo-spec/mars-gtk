@@ -1,0 +1,14 @@
+{
+	"category" : "Mars-Gtk-Container",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 9/7/2016 05:51",
+	"instvars" : [
+		 ],
+	"name" : "GtkScrolledWindow",
+	"pools" : [
+		 ],
+	"super" : "GtkContainer",
+	"type" : "normal" }

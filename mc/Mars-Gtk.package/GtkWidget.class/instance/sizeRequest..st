@@ -1,3 +1,3 @@
 geometry
 sizeRequest: aPoint
-	self sizeRequestX: aPoint x y: aPoint y
+	self sizeRequestWidth: aPoint x height: aPoint y
