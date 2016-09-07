@@ -1,0 +1,18 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTK_ALIGN_BASELINE",
+		"GTK_ALIGN_CENTER",
+		"GTK_ALIGN_END",
+		"GTK_ALIGN_FILL",
+		"GTK_ALIGN_START" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GtkAlign",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

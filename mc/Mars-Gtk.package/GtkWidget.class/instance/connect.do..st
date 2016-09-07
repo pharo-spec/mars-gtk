@@ -7,5 +7,5 @@ connect: aString do: aBlock
 	 otherwise you will crash your image (event processing happens in VM event loop, so is fragile)"
 	^ self 
 		connect: aString 
-		signature: #(void (void *widget, void * data))  
- 		do: [ :widget :data | [ aBlock value ] fork ]
+		signature: #(void (void *widget, void *aData))  
+ 		do: [ :widget :aData | [ aBlock value ] fork ]

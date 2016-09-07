@@ -1,0 +1,19 @@
+{
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"G_SIGNAL_MATCH_CLOSURE",
+		"G_SIGNAL_MATCH_DATA",
+		"G_SIGNAL_MATCH_DETAIL",
+		"G_SIGNAL_MATCH_FUNC",
+		"G_SIGNAL_MATCH_ID",
+		"G_SIGNAL_MATCH_UNBLOCKED" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GSignalMatchType",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

@@ -1,7 +1,7 @@
 private signaling
-signal: aString connect: callback data: data
+signal: aString connect: callback data: aData
 	^ self 
 		signal: aString  
 		connect: callback 
-		data: data
+		data: aData
 		flags: G_CONNECT_NONE

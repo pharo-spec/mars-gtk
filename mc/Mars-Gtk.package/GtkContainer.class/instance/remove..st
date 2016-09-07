@@ -4,5 +4,4 @@ remove: widget
 	 took a reference explicitly, which we are not doing now). 
 	 See https://developer.gnome.org/gtk3/stable/GtkContainer.html#gtk-container-remove"
 	self basicRemove: widget.
-	children := children copyWithout: widget.
-	"widget autoRelease" 
+	children := children copyWithout: widget

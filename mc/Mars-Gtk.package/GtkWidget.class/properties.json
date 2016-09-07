@@ -13,6 +13,8 @@
 	"name" : "GtkWidget",
 	"pools" : [
 		"GConnectFlags",
+		"GSignalMatchType",
+		"GtkAlign",
 		"GtkStateFlags",
 		"GtkStateType",
 		"GtkTypes" ],
