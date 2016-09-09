@@ -1,4 +1,4 @@
-private
+private building
 buildChildren
 	^ Array streamContents: [ :stream |
 		self magritteDescription do: [ :each |

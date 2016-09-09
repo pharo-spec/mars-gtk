@@ -1,0 +1,3 @@
+private
+acceptEdition
+	self subclassResponsibility

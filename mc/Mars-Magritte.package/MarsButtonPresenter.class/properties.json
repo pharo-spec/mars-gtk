@@ -6,9 +6,12 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"innerEditorWidget" ],
-	"name" : "MarsMemoPresenter",
+		"widget",
+		"icon",
+		"label",
+		"action" ],
+	"name" : "MarsButtonPresenter",
 	"pools" : [
 		 ],
-	"super" : "MarsElementPresenter",
+	"super" : "Object",
 	"type" : "normal" }

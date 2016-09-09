@@ -1,3 +1,0 @@
-geometry
-defaultLineHeight
-	^ 15

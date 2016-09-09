@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"innerEditorWidget" ],
-	"name" : "MarsMemoPresenter",
+		 ],
+	"name" : "MarsMultiSelectListPresenter",
 	"pools" : [
 		 ],
-	"super" : "MarsElementPresenter",
+	"super" : "MarsListPresenter",
 	"type" : "normal" }

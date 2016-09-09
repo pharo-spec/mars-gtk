@@ -1,5 +1,5 @@
 finalization
 finalize
-	self getHandle isNull ifTrue: [ ^ self ].
+	(self getHandle isNil or: [ self getHandle isNull ]) ifTrue: [ ^ self ].
 	self disconnectAll.
 	self class widgetDestroy: self getHandle
