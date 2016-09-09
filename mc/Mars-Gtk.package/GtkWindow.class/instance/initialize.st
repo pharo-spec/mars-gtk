@@ -1,4 +1,5 @@
 initialization
 initialize
 	super initialize.
-	"self connectDestroy: [ self disconnectAll ]"
+	"I need to ensure the handle is null when destroy, to prevent double free"
+	self connectDestroy: [ handle beNull ]

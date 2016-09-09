@@ -3,7 +3,7 @@ buildWidget
 	^ GtkBox newHorizontal
 		packStart: (self buildLabelWidget sizeRequest: self class defaultLabelWidth@(-1)) 
 			expand: false
-			fill: true 
+			fill: false
 			padding: 0;
 		packStart: (editorWidget := (self magritteDescription isReadonly
 			ifTrue: [ self buildViewWidget ]

@@ -1,7 +1,7 @@
 accessing
 text
-	self ffiCall: #(gchar *gtk_text_buffer_get_text (
-		self,
-      "const GtkTextIter *start" 0,
-      "const GtkTextIter *end" 0,
-      "gboolean include_hidden_chars" 1))
+	| start end |
+	self startIter: (start := ExternalAddress new).
+	self endIter: (end := ExternalAddress new).
+	^ self textStart: (start pointerAt: 1) end: (end pointerAt: 1) includeHiddenChars: false 
+	
