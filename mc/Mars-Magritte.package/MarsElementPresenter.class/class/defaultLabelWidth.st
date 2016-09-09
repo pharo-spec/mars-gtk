@@ -1,3 +1,3 @@
 accessing
 defaultLabelWidth
-	^ 150
+	^ 120
