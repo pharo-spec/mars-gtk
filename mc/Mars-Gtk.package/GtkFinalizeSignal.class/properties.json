@@ -1,0 +1,15 @@
+{
+	"category" : "Mars-Gtk-Signal",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"target",
+		"handle" ],
+	"name" : "GtkFinalizeSignal",
+	"pools" : [
+		 ],
+	"super" : "GtkSignal",
+	"type" : "normal" }
