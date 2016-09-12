@@ -1,0 +1,2 @@
+I'm a presenter for memo texts (text areas... I'm not sure my name is accurate or just a remaining of ancient times (memo comes from html).
+Anyway, identity name problems aside, I show an editable text area.

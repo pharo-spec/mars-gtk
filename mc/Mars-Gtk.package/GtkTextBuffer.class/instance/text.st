@@ -1,7 +1,7 @@
 accessing
 text
 	| start end |
-	self startIter: (start := ExternalAddress new).
-	self endIter: (end := ExternalAddress new).
+	self startIter: (start := ExternalAddress newPointer) autoRelease.
+	self endIter: (end := ExternalAddress newPointer) autoRelease.
 	^ self textStart: start end: end includeHiddenChars: false 
 	
