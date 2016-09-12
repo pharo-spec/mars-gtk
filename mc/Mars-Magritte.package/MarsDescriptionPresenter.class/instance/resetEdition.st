@@ -1,0 +1,3 @@
+private
+resetEdition
+	self subclassResponsibility

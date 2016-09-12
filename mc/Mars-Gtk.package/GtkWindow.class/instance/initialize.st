@@ -2,6 +2,8 @@ initialization
 initialize
 	super initialize.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
+	finalizeMutex := Mutex new.
 	self connectDestroy: [ 
-		GtkDestroySignal emitWidget: self.
-		handle := nil ]
+		finalizeMutex critical: [  
+			GtkDestroySignal emitWidget: self.
+			handle := nil ] ]

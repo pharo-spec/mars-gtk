@@ -1,6 +1,9 @@
 private building
 buildEditorWidget
-	^ GtkListBox new 
+	^ GtkScrolledWindow new 
 		sizeRequest: -1@(self class defaultLineHeight * self class defaultOptionsCount);
-		addAll: (self options collect: [ :object | self buildLabelFor: object]);
+		borderWidth: self class defaultBorderWidth;		
+		add: (GtkListBox new 
+			addAll: (self options collect: [ :object | self buildLabelFor: object]);
+			yourself);
 		yourself

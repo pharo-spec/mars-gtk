@@ -1,11 +1,11 @@
 {
-	"category" : "Mars-Gtk-Base",
+	"category" : "Mars-Gtk-Misc",
 	"classinstvars" : [
 		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "EstebanLorenzano 9/12/2016 12:59",
 	"instvars" : [
 		 ],
 	"name" : "GdkRGBA",
