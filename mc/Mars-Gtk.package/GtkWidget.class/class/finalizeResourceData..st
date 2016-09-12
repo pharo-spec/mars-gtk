@@ -1,5 +1,5 @@
 finalization
 finalizeResourceData: widget
 	(widget isNil or: [ widget isNull ]) ifTrue: [ ^ self ].
-	GtkFinalizeSignal logTarget: self handle: widget.
+	GtkFinalizeSignal emitTarget: self handle: widget.
 	self widgetDestroy: widget
