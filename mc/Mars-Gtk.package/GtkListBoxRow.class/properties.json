@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "GtkListBoxRow",
 	"pools" : [
 		 ],
-	"super" : "GtkContainer",
+	"super" : "GtkBin",
 	"type" : "normal" }

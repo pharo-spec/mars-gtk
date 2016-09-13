@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "EstebanLorenzano 9/7/2016 05:51",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
-	"name" : "GtkScrolledWindow",
+	"name" : "GtkBin",
 	"pools" : [
-		 ],
-	"super" : "GtkBin",
+		"GtkOrientation" ],
+	"super" : "GtkContainer",
 	"type" : "normal" }

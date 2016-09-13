@@ -4,4 +4,4 @@ loadFromData: data length: length error: error
 		self,
 		const gchar *data,
 		gssize length,
-		0))
+		GError *error))

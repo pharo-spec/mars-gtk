@@ -2,6 +2,7 @@ accessing
 loadFromData: aString
 	| error |
 	error := GError externalNew autoRelease.
-	(self loadFromData: aString length: aString size error: 0)
+	error message: FFIExternalArray newPointer autoRelease.
+	(self loadFromData: aString length: aString size error: error)
 		ifFalse: [ ^ GtkError signal ].
 	 
