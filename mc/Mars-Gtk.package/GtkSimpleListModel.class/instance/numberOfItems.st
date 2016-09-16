@@ -1,3 +1,3 @@
 private
-getNumberOfItems
+numberOfItems
 	^ self items size

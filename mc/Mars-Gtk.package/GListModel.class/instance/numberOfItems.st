@@ -1,3 +1,3 @@
-private
-getNumberOfItems
+accessing
+numberOfItems
 	self subclassResponsibility

@@ -11,6 +11,6 @@
 	"name" : "GtkTextBuffer",
 	"pools" : [
 		"GtkTypes" ],
-	"super" : "FFIExternalObject",
+	"super" : "FFIOpaqueObject",
 	"traitcomposition" : "TGtkLibrary",
 	"type" : "normal" }

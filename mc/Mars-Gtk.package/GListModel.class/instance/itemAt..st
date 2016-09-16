@@ -1,3 +1,3 @@
-private
-getItemAt: position
+accessing
+itemAt: position
 	self subclassResponsibility

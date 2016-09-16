@@ -1,3 +1,0 @@
-private
-getItemType
-	self subclassResponsibility

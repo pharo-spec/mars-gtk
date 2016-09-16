@@ -2,4 +2,4 @@ private
 getItemTypeFn
 	^ FFICallback 
 		signature: #(ulong (void *list)) 
-		block: [ :list | self getItemType ]
+		block: [ :list | self itemType ]
