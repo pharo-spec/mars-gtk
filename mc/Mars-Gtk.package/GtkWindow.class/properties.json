@@ -6,7 +6,7 @@
 		"GtkWindowRegistry" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		"finalizeMutex" ],
+		 ],
 	"name" : "GtkWindow",
 	"pools" : [
 		"GtkWindowPosition",

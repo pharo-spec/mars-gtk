@@ -1,6 +1,3 @@
 *Mars-Magritte
 asPresenterOn: anObject
-	^ self presenterClass  
-		memento: (anObject mementoClass
-			model: anObject
-			description: self)
+	^ self presenterClass memento: (anObject mementoWith: self)
