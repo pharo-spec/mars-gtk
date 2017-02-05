@@ -1,23 +1,24 @@
 {
-	"category" : "Mars-Gtk-Widget",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classvars" : [ ],
 	"instvars" : [
 		"handle",
 		"callbacks",
-		"data" ],
+		"data"
+	],
 	"name" : "GtkWidget",
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"traitcomposition" : "TGtkLibrary",
+	"type" : "normal",
+	"classinstvars" : [ ],
 	"pools" : [
 		"GConnectFlags",
 		"GSignalMatchType",
 		"GtkAlign",
 		"GtkStateFlags",
 		"GtkStateType",
-		"GtkTypes" ],
-	"super" : "Object",
-	"traitcomposition" : "TGtkLibrary",
-	"type" : "normal" }
+		"GtkTypes"
+	],
+	"category" : "Mars-Gtk-Widget"
+}

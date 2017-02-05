@@ -1,15 +1,14 @@
 {
-	"category" : "Mars-Gtk-Container",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GtkToolbar",
+	"super" : "GtkContainer",
+	"category" : "Mars-Gtk-Container",
+	"classinstvars" : [ ],
 	"pools" : [
 		"GtkIconSize",
-		"GtkToolbarStyle" ],
-	"super" : "GtkContainer",
-	"type" : "normal" }
+		"GtkToolbarStyle"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtkToolbar",
+	"type" : "normal"
+}

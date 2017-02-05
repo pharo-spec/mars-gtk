@@ -1,16 +1,19 @@
 {
-	"category" : "Mars-Gtk-Base",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
 	"classvars" : [
-		"Current" ],
-	"commentStamp" : "",
+		"Current"
+	],
 	"instvars" : [
-		"runLoop" ],
+		"runLoop"
+	],
 	"name" : "GtkApplication",
-	"pools" : [
-		"GtkTypes" ],
+	"commentStamp" : "",
 	"super" : "Object",
 	"traitcomposition" : "TGtkLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [
+		"GtkTypes"
+	],
+	"category" : "Mars-Gtk-Base"
+}

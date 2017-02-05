@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalEnumeration",
 	"category" : "Mars-Gtk-Misc",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GTK_ICON_SIZE_BUTTON",
 		"GTK_ICON_SIZE_DIALOG",
@@ -9,12 +11,9 @@
 		"GTK_ICON_SIZE_INVALID",
 		"GTK_ICON_SIZE_LARGE_TOOLBAR",
 		"GTK_ICON_SIZE_MENU",
-		"GTK_ICON_SIZE_SMALL_TOOLBAR" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"GTK_ICON_SIZE_SMALL_TOOLBAR"
+	],
+	"instvars" : [ ],
 	"name" : "GtkIconSize",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalEnumeration",
-	"type" : "normal" }
+	"type" : "normal"
+}

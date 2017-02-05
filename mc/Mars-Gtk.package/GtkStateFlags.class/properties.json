@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalEnumeration",
 	"category" : "Mars-Gtk-Widget",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GTK_STATE_FLAG_ACTIVE",
 		"GTK_STATE_FLAG_BACKDROP",
@@ -16,12 +18,9 @@
 		"GTK_STATE_FLAG_NORMAL",
 		"GTK_STATE_FLAG_PRELIGHT",
 		"GTK_STATE_FLAG_SELECTED",
-		"GTK_STATE_FLAG_VISITED" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"GTK_STATE_FLAG_VISITED"
+	],
+	"instvars" : [ ],
 	"name" : "GtkStateFlags",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalEnumeration",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "GtkRunLoop",
+	"category" : "Mars-Gtk-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"inputSemaphore",
+		"semaIndex"
+	],
+	"name" : "GtkPluginRunLoop",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalEnumeration",
 	"category" : "Mars-Gtk-Container",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GTK_ORIENTATION_HORIZONTAL",
-		"GTK_ORIENTATION_VERTICAL" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"GTK_ORIENTATION_VERTICAL"
+	],
+	"instvars" : [ ],
 	"name" : "GtkOrientation",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalEnumeration",
-	"type" : "normal" }
+	"type" : "normal"
+}

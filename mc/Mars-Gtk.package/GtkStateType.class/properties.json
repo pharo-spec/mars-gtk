@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalEnumeration",
 	"category" : "Mars-Gtk-Widget",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GTK_STATE_ACTIVE",
 		"GTK_STATE_FOCUSED",
@@ -9,12 +11,9 @@
 		"GTK_STATE_INSENSITIVE",
 		"GTK_STATE_NORMAL",
 		"GTK_STATE_PRELIGHT",
-		"GTK_STATE_SELECTED" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"GTK_STATE_SELECTED"
+	],
+	"instvars" : [ ],
 	"name" : "GtkStateType",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalEnumeration",
-	"type" : "normal" }
+	"type" : "normal"
+}

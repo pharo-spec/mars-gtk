@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GtkRunLoop",
+	"category" : "Mars-Gtk-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"runLoop"
+	],
+	"name" : "GtkEventHandlerRunLoop",
+	"type" : "normal"
+}

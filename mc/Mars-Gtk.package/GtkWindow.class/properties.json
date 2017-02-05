@@ -1,15 +1,16 @@
 {
-	"category" : "Mars-Gtk-Container",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"GtkWindowRegistry" ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GtkWindow",
+	"super" : "GtkContainer",
+	"category" : "Mars-Gtk-Container",
+	"classinstvars" : [ ],
 	"pools" : [
 		"GtkWindowPosition",
-		"GtkWindowType" ],
-	"super" : "GtkContainer",
-	"type" : "normal" }
+		"GtkWindowType"
+	],
+	"classvars" : [
+		"GtkWindowRegistry"
+	],
+	"instvars" : [ ],
+	"name" : "GtkWindow",
+	"type" : "normal"
+}

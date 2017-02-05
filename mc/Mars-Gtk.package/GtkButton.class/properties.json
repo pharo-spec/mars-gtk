@@ -1,14 +1,13 @@
 {
-	"category" : "Mars-Gtk-Widget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GtkButton",
-	"pools" : [
-		"GtkPositionType" ],
 	"super" : "GtkWidget",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [ ],
+	"pools" : [
+		"GtkPositionType"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtkButton",
+	"type" : "normal"
+}

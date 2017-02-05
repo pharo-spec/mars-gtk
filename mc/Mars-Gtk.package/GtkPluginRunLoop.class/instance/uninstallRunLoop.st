@@ -1,0 +1,3 @@
+private installing
+uninstallRunLoop
+	self primDisableGtk3EventHandler

@@ -1,14 +1,11 @@
 {
-	"category" : "Mars-Gtk-Signal",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GtkSignal",
-	"pools" : [
-		 ],
 	"super" : "BeaconSignal",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Signal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtkSignal",
+	"type" : "normal"
+}

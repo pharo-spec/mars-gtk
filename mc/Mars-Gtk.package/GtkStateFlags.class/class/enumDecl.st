@@ -1,4 +1,4 @@
-as yet unclassified
+enum declaration
 enumDecl
 	^ {
   #GTK_STATE_FLAG_NORMAL.  			0.

@@ -1,14 +1,11 @@
 {
-	"category" : "Mars-Gtk-Widget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GtkListBoxRow",
-	"pools" : [
-		 ],
 	"super" : "GtkBin",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Widget",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtkListBoxRow",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Mars-Gtk-Misc",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTypeInterface",
-	"pools" : [
-		"GtkTypes" ],
 	"super" : "FFIExternalStructure",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [ ],
+	"pools" : [
+		"GtkTypes"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTypeInterface",
+	"type" : "normal"
+}

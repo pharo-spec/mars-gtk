@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalEnumeration",
 	"category" : "Mars-Gtk-Widget",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GTK_JUSTIFY_CENTER",
 		"GTK_JUSTIFY_FILL",
 		"GTK_JUSTIFY_LEFT",
-		"GTK_JUSTIFY_RIGHT" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"GTK_JUSTIFY_RIGHT"
+	],
+	"instvars" : [ ],
 	"name" : "GtkJustification",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalEnumeration",
-	"type" : "normal" }
+	"type" : "normal"
+}

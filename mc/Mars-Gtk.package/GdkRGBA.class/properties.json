@@ -1,16 +1,15 @@
 {
-	"category" : "Mars-Gtk-Misc",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "EstebanLorenzano 9/12/2016 12:59",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "GdkRGBA",
-	"pools" : [
-		"GtkTypes" ],
+	"commentStamp" : "EstebanLorenzano 9/12/2016 12:59",
 	"super" : "FFIExternalStructure",
 	"traitcomposition" : "TGtkLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [
+		"GtkTypes"
+	],
+	"category" : "Mars-Gtk-Misc"
+}

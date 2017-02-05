@@ -1,14 +1,11 @@
 {
-	"category" : "Mars-Gtk-Container",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GtkGrid",
-	"pools" : [
-		 ],
 	"super" : "GtkContainer",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Container",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtkGrid",
+	"type" : "normal"
+}

@@ -1,4 +1,4 @@
-as yet unclassified
+enum declaration
 enumDecl
 	^ #(
   GTK_STATE_NORMAL 			0

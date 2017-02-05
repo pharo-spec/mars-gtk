@@ -1,17 +1,18 @@
 {
-	"category" : "Mars-Gtk-Misc",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGtkLibrary classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
+	"classvars" : [ ],
 	"instvars" : [
 		"interface",
-		"itemType" ],
+		"itemType"
+	],
 	"name" : "GListModel",
-	"pools" : [
-		"GtkTypes" ],
+	"commentStamp" : "",
 	"super" : "Object",
 	"traitcomposition" : "TGtkLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [
+		"GtkTypes"
+	],
+	"category" : "Mars-Gtk-Misc"
+}

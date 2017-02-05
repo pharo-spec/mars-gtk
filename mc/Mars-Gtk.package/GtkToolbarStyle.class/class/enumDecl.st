@@ -1,4 +1,4 @@
-as yet unclassified
+enum declaration
 enumDecl
 	^ #(
 	GTK_TOOLBAR_ICONS 	0

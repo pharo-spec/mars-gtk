@@ -1,15 +1,14 @@
 {
-	"category" : "Mars-Gtk-Misc",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GtkImage",
+	"super" : "GtkWidget",
+	"category" : "Mars-Gtk-Misc",
+	"classinstvars" : [ ],
 	"pools" : [
 		"AthensCairoDefs",
-		"GtkIconSize" ],
-	"super" : "GtkWidget",
-	"type" : "normal" }
+		"GtkIconSize"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtkImage",
+	"type" : "normal"
+}

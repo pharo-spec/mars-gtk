@@ -1,3 +1,3 @@
 private
 mainIterationDo: blocking
-	^ self ffiCall: #(void g_main_context_iteration (0, gboolean blocking))
+	^ self ffiCall: #( void gtk_main_iteration_do ( gboolean blocking ) )

@@ -1,4 +1,4 @@
 initialization
 initialize
 	super initialize.
-	runLoop := GtkRunLoop new
+	runLoop := GtkRunLoop current

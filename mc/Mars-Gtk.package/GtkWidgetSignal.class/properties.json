@@ -1,14 +1,13 @@
 {
-	"category" : "Mars-Gtk-Signal",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"widget" ],
-	"name" : "GtkWidgetSignal",
-	"pools" : [
-		 ],
 	"super" : "GtkSignal",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Signal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"widget"
+	],
+	"name" : "GtkWidgetSignal",
+	"type" : "normal"
+}

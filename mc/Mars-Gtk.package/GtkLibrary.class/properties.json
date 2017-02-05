@@ -1,14 +1,11 @@
 {
-	"category" : "Mars-Gtk-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GtkLibrary",
-	"pools" : [
-		 ],
 	"super" : "FFILibrary",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GtkLibrary",
+	"type" : "normal"
+}

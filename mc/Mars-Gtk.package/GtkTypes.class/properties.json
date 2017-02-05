@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "SharedPool",
 	"category" : "Mars-Gtk-Base",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GCallback",
 		"GQuark",
@@ -15,12 +17,9 @@
 		"gssize",
 		"guint",
 		"guint32",
-		"gulong" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"gulong"
+	],
+	"instvars" : [ ],
 	"name" : "GtkTypes",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Mars-Gtk-Container",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 8/27/2016 08:14",
-	"instvars" : [
-		"children" ],
-	"name" : "GtkContainer",
-	"pools" : [
-		 ],
 	"super" : "GtkWidget",
-	"type" : "normal" }
+	"category" : "Mars-Gtk-Container",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"children"
+	],
+	"name" : "GtkContainer",
+	"type" : "normal"
+}

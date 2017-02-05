@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalEnumeration",
 	"category" : "Mars-Gtk-Container",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GTK_TOOLBAR_BOTH",
 		"GTK_TOOLBAR_BOTH_HORIZ",
 		"GTK_TOOLBAR_ICONS",
-		"GTK_TOOLBAR_TEXT" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"GTK_TOOLBAR_TEXT"
+	],
+	"instvars" : [ ],
 	"name" : "GtkToolbarStyle",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalEnumeration",
-	"type" : "normal" }
+	"type" : "normal"
+}
