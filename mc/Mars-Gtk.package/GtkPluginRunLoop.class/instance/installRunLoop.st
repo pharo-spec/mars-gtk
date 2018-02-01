@@ -4,9 +4,5 @@ installRunLoop
 	self primEnableGtk3EventHandler: semaIndex.
 	[
 		[ inputSemaphore wait; consumeAllSignals. session == Smalltalk session ] 
-		whileTrue: [ 
-			Stdio stdout << 'Processing >>'; cr; lf.
-			self processEvents.
-			World doOneCycle.
-			Stdio stdout << 'Processing <<'; cr; lf ]
+		whileTrue: [ self processEvents ]
 	] ensure:  [ Smalltalk unregisterExternalObject: inputSemaphore ]

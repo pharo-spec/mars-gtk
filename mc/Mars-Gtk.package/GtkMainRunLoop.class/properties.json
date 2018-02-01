@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "GtkPluginRunLoop2",
+	"name" : "GtkMainRunLoop",
 	"type" : "normal"
 }
