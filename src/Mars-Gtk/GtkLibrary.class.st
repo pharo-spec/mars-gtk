@@ -13,3 +13,8 @@ GtkLibrary >> macModuleName [
 GtkLibrary >> unix32ModuleName [ 
 	^ '/usr/lib/i386-linux-gnu/libgtk-3.so.0'
 ]
+
+{ #category : #'accessing platform' }
+GtkLibrary >> unix64ModuleName [ 
+	^ '/usr/lib/x86_64-linux-gnu/libgtk-3.so.0'
+]
