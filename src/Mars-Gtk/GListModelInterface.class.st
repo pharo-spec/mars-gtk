@@ -6,6 +6,12 @@ Class {
 		'get_n_items',
 		'get_item'
 	],
+	#classVars : [
+		'OFFSET_GET_ITEM',
+		'OFFSET_GET_ITEM_TYPE',
+		'OFFSET_GET_N_ITEMS',
+		'OFFSET_G_IFACE'
+	],
 	#category : #'Mars-Gtk-Misc'
 }
 
@@ -31,47 +37,62 @@ GListModelInterface class >> rebuildFieldAccessors [
 { #category : #'accessing structure variables' }
 GListModelInterface >> g_iface [
 	"This method was automatically generated"
-	^GTypeInterface fromHandle: (handle referenceStructAt: 1 length: 8)
+	^ GTypeInterface fromHandle: (handle referenceStructAt: OFFSET_G_IFACE length: GTypeInterface byteSize)
 ]
 
 { #category : #'accessing structure variables' }
 GListModelInterface >> g_iface: anObject [
 	"This method was automatically generated"
-	handle structAt: 1 put: anObject getHandle length: 8.
+	handle structAt: OFFSET_G_IFACE put: anObject getHandle length: GTypeInterface byteSize
 ]
 
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_item [
 	"This method was automatically generated"
-	^FFICallback forAddress: (handle unsignedLongAt: 17)
+	^FFICallback forAddress: ((handle pointerAt: OFFSET_GET_ITEM) asInteger)
 ]
 
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_item: aCallback [
+	
 	get_item := aCallback.
-	handle unsignedLongAt: 17 put: aCallback thunk address
+	handle 
+		pointerAt: OFFSET_GET_ITEM
+		put: (aCallback 
+			ifNotNil: [ ExternalAddress fromAddress: aCallback thunk address ]
+			ifNil: [ ExternalAddress null ])
 ]
 
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_item_type [
 	"This method was automatically generated"
-	^FFICallback forAddress: (handle unsignedLongAt: 9)
+	^FFICallback forAddress: ((handle pointerAt: OFFSET_GET_ITEM_TYPE) asInteger)
 ]
 
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_item_type: aCallback [
+
 	get_item_type := aCallback.
-	handle unsignedLongAt: 9 put: aCallback thunk address
+	handle 
+		pointerAt: OFFSET_GET_ITEM_TYPE
+		put: (aCallback 
+			ifNotNil: [ ExternalAddress fromAddress: aCallback thunk address ]
+			ifNil: [ ExternalAddress null ])
 ]
 
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_n_items [
 	"This method was automatically generated"
-	^FFICallback forAddress: (handle unsignedLongAt: 13)
+	^FFICallback forAddress: ((handle pointerAt: OFFSET_GET_N_ITEMS) asInteger)
 ]
 
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_n_items: aCallback [
+
 	get_n_items := aCallback.
-	handle unsignedLongAt: 13 put: aCallback thunk address
+	handle 
+		pointerAt: OFFSET_GET_N_ITEMS
+		put: (aCallback 
+			ifNotNil: [ ExternalAddress fromAddress: aCallback thunk address ]
+			ifNil: [ ExternalAddress null ])
 ]
