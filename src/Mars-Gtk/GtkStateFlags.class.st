@@ -5,7 +5,7 @@ https://developer.gnome.org/gtk3/stable/gtk3-Standard-Enumerations.html#GtkState
 "
 Class {
 	#name : #GtkStateFlags,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_STATE_FLAG_ACTIVE',
 		'GTK_STATE_FLAG_BACKDROP',
@@ -22,7 +22,7 @@ Class {
 		'GTK_STATE_FLAG_SELECTED',
 		'GTK_STATE_FLAG_VISITED'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #'enum declaration' }

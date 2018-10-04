@@ -5,7 +5,7 @@ https://developer.gnome.org/gtk2/stable/gtk2-Standard-Enumerations.html#GtkState
 "
 Class {
 	#name : #GtkStateType,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_STATE_ACTIVE',
 		'GTK_STATE_FOCUSED',
@@ -15,7 +15,7 @@ Class {
 		'GTK_STATE_PRELIGHT',
 		'GTK_STATE_SELECTED'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #'enum declaration' }

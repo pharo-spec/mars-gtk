@@ -5,7 +5,7 @@ https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkAlign
 "
 Class {
 	#name : #GtkAlign,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_ALIGN_BASELINE',
 		'GTK_ALIGN_CENTER',
@@ -13,7 +13,7 @@ Class {
 		'GTK_ALIGN_FILL',
 		'GTK_ALIGN_START'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #'accessing enum' }

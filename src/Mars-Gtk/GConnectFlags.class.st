@@ -5,13 +5,13 @@ https://developer.gnome.org/gobject/unstable/gobject-Signals.html#GConnectFlags
 "
 Class {
 	#name : #GConnectFlags,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'G_CONNECT_AFTER',
 		'G_CONNECT_NONE',
 		'G_CONNECT_SWAPPED'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #'as yet unclassified' }

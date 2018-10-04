@@ -4,14 +4,14 @@ Describes which edge of a widget a certain feature is positioned at, e.g. the ta
 "
 Class {
 	#name : #GtkPositionType,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_POS_BOTTOM',
 		'GTK_POS_LEFT',
 		'GTK_POS_RIGHT',
 		'GTK_POS_TOP'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #'enum declaration' }

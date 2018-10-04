@@ -5,7 +5,7 @@ https://developer.gnome.org/gobject/unstable/gobject-Signals.html#GSignalMatchTy
 "
 Class {
 	#name : #GSignalMatchType,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'G_SIGNAL_MATCH_CLOSURE',
 		'G_SIGNAL_MATCH_DATA',
@@ -14,7 +14,7 @@ Class {
 		'G_SIGNAL_MATCH_ID',
 		'G_SIGNAL_MATCH_UNBLOCKED'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #'enum declaration' }
