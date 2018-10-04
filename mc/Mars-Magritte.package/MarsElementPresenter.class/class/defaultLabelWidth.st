@@ -1,3 +1,0 @@
-accessing
-defaultLabelWidth
-	^ 120

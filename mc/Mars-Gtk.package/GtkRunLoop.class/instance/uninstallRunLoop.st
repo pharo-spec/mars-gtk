@@ -1,3 +1,0 @@
-private installing
-uninstallRunLoop
-	self subclassResponsibility

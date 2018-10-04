@@ -1,3 +1,0 @@
-accessing
-beImagePositionLeft
-	self imagePosition: GTK_POS_LEFT

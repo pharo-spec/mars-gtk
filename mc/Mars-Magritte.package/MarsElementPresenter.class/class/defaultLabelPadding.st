@@ -1,3 +1,0 @@
-accessing
-defaultLabelPadding
-	^ 5

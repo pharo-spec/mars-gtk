@@ -1,3 +1,0 @@
-accessing
-defaultChildPadding
-	^ 2

@@ -1,3 +1,0 @@
-*Mars-Magritte
-defaultPresenterClass
-	^ MarsElementPresenter

@@ -1,3 +1,0 @@
-geometry
-defaultBorderWidth
-	^ 4

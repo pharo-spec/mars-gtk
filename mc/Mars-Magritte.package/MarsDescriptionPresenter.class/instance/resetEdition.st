@@ -1,3 +1,0 @@
-private
-resetEdition
-	self subclassResponsibility

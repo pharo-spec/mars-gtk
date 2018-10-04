@@ -1,3 +1,0 @@
-accessing
-beImagePositionTop
-	self imagePosition: GTK_POS_TOP
