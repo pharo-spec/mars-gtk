@@ -5,12 +5,12 @@ https://developer.gnome.org/gtk3/stable/gtk3-Standard-Enumerations.html#GtkOrien
 "
 Class {
 	#name : #GtkOrientation,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_ORIENTATION_HORIZONTAL',
 		'GTK_ORIENTATION_VERTICAL'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Container'
 }
 
 { #category : #'enum declaration' }

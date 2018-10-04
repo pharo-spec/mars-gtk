@@ -7,10 +7,10 @@ Class {
 	#name : #GtkImage,
 	#superclass : #GtkWidget,
 	#pools : [
-		'AthensCairoDefs',
+		'AthensCairoDefinitions',
 		'GtkIconSize'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #private }

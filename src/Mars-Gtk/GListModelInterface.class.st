@@ -1,12 +1,12 @@
 Class {
 	#name : #GListModelInterface,
-	#superclass : #FFIExternalStructure,
+	#superclass : #GtkStructure,
 	#instVars : [
 		'get_item_type',
 		'get_n_items',
 		'get_item'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #'field definition' }

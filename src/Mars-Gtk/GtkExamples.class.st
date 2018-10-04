@@ -7,6 +7,7 @@ Class {
 { #category : #examples }
 GtkExamples class >> exampleNotebook [
 	<example>
+
 	GtkApplication new run.
 	GtkWindow new 
 		autoRelease;

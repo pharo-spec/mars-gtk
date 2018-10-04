@@ -5,14 +5,14 @@ https://developer.gnome.org/gtk3/stable/gtk3-Standard-Enumerations.html#GtkToolb
 "
 Class {
 	#name : #GtkToolbarStyle,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_TOOLBAR_BOTH',
 		'GTK_TOOLBAR_BOTH_HORIZ',
 		'GTK_TOOLBAR_ICONS',
 		'GTK_TOOLBAR_TEXT'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Container'
 }
 
 { #category : #'enum declaration' }

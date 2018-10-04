@@ -1,10 +1,14 @@
 Class {
 	#name : #GTypeInterface,
-	#superclass : #FFIExternalStructure,
+	#superclass : #GtkStructure,
+	#classVars : [
+		'OFFSET_G_INSTANCE_TYPE',
+		'OFFSET_G_TYPE'
+	],
 	#pools : [
 		'GtkTypes'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #'field definition' }
@@ -18,23 +22,23 @@ GTypeInterface class >> fieldsDesc [
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_instance_type [
 	"This method was automatically generated"
-	^handle unsignedLongAt: 5
+	^handle platformUnsignedLongAt: OFFSET_G_INSTANCE_TYPE
 ]
 
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_instance_type: anObject [
 	"This method was automatically generated"
-	handle unsignedLongAt: 5 put: anObject
+	^handle platformUnsignedLongAt: OFFSET_G_INSTANCE_TYPE put: anObject
 ]
 
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_type [
 	"This method was automatically generated"
-	^handle unsignedLongAt: 1
+	^handle platformUnsignedLongAt: OFFSET_G_TYPE
 ]
 
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_type: anObject [
 	"This method was automatically generated"
-	handle unsignedLongAt: 1 put: anObject
+	^handle platformUnsignedLongAt: OFFSET_G_TYPE put: anObject
 ]

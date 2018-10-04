@@ -5,13 +5,19 @@ https://developer.gnome.org/gdk3/stable/gdk3-RGBA-Colors.html
 "
 Class {
 	#name : #GdkRGBA,
-	#superclass : #FFIExternalStructure,
+	#superclass : #GtkStructure,
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
+	#classVars : [
+		'OFFSET_ALPHA',
+		'OFFSET_BLUE',
+		'OFFSET_GREEN',
+		'OFFSET_RED'
+	],
 	#pools : [
 		'GtkTypes'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #'library path' }
@@ -33,13 +39,13 @@ GdkRGBA class >> fieldsDesc [
 { #category : #'accessing structure variables' }
 GdkRGBA >> alpha [
 	"This method was automatically generated"
-	^handle doubleAt: 25
+	^handle doubleAt: OFFSET_ALPHA
 ]
 
 { #category : #'accessing structure variables' }
 GdkRGBA >> alpha: anObject [
 	"This method was automatically generated"
-	handle doubleAt: 25 put: anObject
+	handle doubleAt: OFFSET_ALPHA put: anObject
 ]
 
 { #category : #converting }
@@ -50,13 +56,13 @@ GdkRGBA >> asString [
 { #category : #'accessing structure variables' }
 GdkRGBA >> blue [
 	"This method was automatically generated"
-	^handle doubleAt: 17
+	^handle doubleAt: OFFSET_BLUE
 ]
 
 { #category : #'accessing structure variables' }
 GdkRGBA >> blue: anObject [
 	"This method was automatically generated"
-	handle doubleAt: 17 put: anObject
+	handle doubleAt: OFFSET_BLUE put: anObject
 ]
 
 { #category : #'library path' }
@@ -67,23 +73,23 @@ GdkRGBA >> ffiLibraryName [
 { #category : #'accessing structure variables' }
 GdkRGBA >> green [
 	"This method was automatically generated"
-	^handle doubleAt: 9
+	^handle doubleAt: OFFSET_GREEN
 ]
 
 { #category : #'accessing structure variables' }
 GdkRGBA >> green: anObject [
 	"This method was automatically generated"
-	handle doubleAt: 9 put: anObject
+	handle doubleAt: OFFSET_GREEN put: anObject
 ]
 
 { #category : #'accessing structure variables' }
 GdkRGBA >> red [
 	"This method was automatically generated"
-	^handle doubleAt: 1
+	^handle doubleAt: OFFSET_RED
 ]
 
 { #category : #'accessing structure variables' }
 GdkRGBA >> red: anObject [
 	"This method was automatically generated"
-	handle doubleAt: 1 put: anObject
+	handle doubleAt: OFFSET_RED put: anObject
 ]

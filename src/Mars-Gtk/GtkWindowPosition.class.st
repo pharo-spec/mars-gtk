@@ -5,7 +5,7 @@ https://developer.gnome.org/gtk3/stable/GtkWindow.html#GtkWindowPosition
 "
 Class {
 	#name : #GtkWindowPosition,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_WIN_POS_CENTER',
 		'GTK_WIN_POS_CENTER_ALWAYS',
@@ -13,7 +13,7 @@ Class {
 		'GTK_WIN_POS_MOUSE',
 		'GTK_WIN_POS_NONE'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Container'
 }
 
 { #category : #'enum declaration' }

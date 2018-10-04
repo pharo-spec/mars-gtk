@@ -5,12 +5,12 @@ https://developer.gnome.org/gtk3/stable/GtkWindow.html#GtkWindowType
 "
 Class {
 	#name : #GtkWindowType,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_WINDOW_POPUP',
 		'GTK_WINDOW_TOPLEVEL'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Container'
 }
 
 { #category : #'enum declaration' }

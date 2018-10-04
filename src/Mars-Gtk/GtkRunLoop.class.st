@@ -8,30 +8,40 @@ Class {
 		'running',
 		'executing'
 	],
+	#classVars : [
+		'Current'
+	],
 	#pools : [
 		'GtkTypes'
 	],
 	#classInstVars : [
-		'current',
 		'uniqueInstance'
 	],
-	#category : 'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #accessing }
 GtkRunLoop class >> current [
-	^ current ifNil: [ current := self defaultRunLoopClass uniqueInstance ]
+	^ Current ifNil: [ Current := self defaultRunLoopClass uniqueInstance ]
 ]
 
 { #category : #accessing }
 GtkRunLoop class >> current: aRunLoop [
-	current ifNotNil: [ current stop ].
-	current := aRunLoop
+	Current ifNotNil: [ Current stop ].
+	Current := aRunLoop
 ]
 
 { #category : #private }
 GtkRunLoop class >> defaultRunLoopClass [
 	^ GtkPluginRunLoop
+]
+
+{ #category : #accessing }
+GtkRunLoop class >> install [
+
+	self = GtkRunLoop ifTrue: [ 
+		self error: 'I''m an abstract class. You need to install one of my subclasses.' ].
+	^ self current: self uniqueInstance
 ]
 
 { #category : #'instance creation' }

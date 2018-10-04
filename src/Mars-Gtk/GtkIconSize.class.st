@@ -5,7 +5,7 @@ https://developer.gnome.org/gtk3/stable/gtk3-Themeable-Stock-Images.html#GtkIcon
 "
 Class {
 	#name : #GtkIconSize,
-	#superclass : #FFIExternalEnumeration,
+	#superclass : #GtkEnumeration,
 	#classVars : [
 		'GTK_ICON_SIZE_BUTTON',
 		'GTK_ICON_SIZE_DIALOG',
@@ -15,7 +15,7 @@ Class {
 		'GTK_ICON_SIZE_MENU',
 		'GTK_ICON_SIZE_SMALL_TOOLBAR'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #'accessing enum' }
