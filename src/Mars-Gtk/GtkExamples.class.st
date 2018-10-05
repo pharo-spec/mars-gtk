@@ -27,6 +27,21 @@ GtkExamples class >> exampleNotebook [
 ]
 
 { #category : #examples }
+GtkExamples class >> exampleTextView [
+	<example>
+
+	GtkApplication new run.
+	GtkWindow new 
+		autoRelease;
+		title: 'TextView example';
+		resize: 500@200;
+		add: (GtkScrolledWindow newWidget: GtkTextView new);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
 GtkExamples class >> exampleToolbar [
 	<example>
 	| toolBar |
