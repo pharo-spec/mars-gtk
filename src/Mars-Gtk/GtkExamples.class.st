@@ -29,38 +29,47 @@ GtkExamples class >> exampleNotebook [
 { #category : #examples }
 GtkExamples class >> exampleToolbar [
 	<example>
-	
+	| toolBar |
+
 	GtkApplication new run.
-	GtkWindow new 
+	
+	toolBar := GtkToolbar new
+		beIconSizeSmallToolbar;
+		beIcons; "beIcons, beText, beBoth"
+		add: ((GtkToolButton
+			newIcon: (GtkImage newStock: 'gtk-ok')
+			label: 'Ok form stock')
+			tooltipText: 'Ok from stock';
+			connectClicked: [ self inform: 'Ok from stock' ];
+			yourself);
+		add: ((GtkToolButton
+			newIcon: (GtkImage newStock: 'gtk-cancel')
+			label: 'Cancel from stock')
+			tooltipText: 'Cancel from stock';
+			connectClicked: [ self inform: 'Cancel from stock' ];
+			yourself);
+		add: ((GtkToolButton
+			newIcon: (GtkImage newForm: (self iconNamed: #smallOk))
+			label: 'Ok from Pharo')
+			tooltipText: 'Ok from Pharo';
+			connectClicked: [ self inform: 'Ok from Pharo' ];
+			yourself);
+		add: ((GtkToolButton
+			newIcon: (GtkImage newForm: (self iconNamed: #smallCancel))
+			label: 'Cancel from Pharo')
+			tooltipText: 'Cancel from Pharo';
+			connectClicked: [ self inform: 'Cancel from Pharo' ];
+			yourself);
+		yourself.
+	
+	GtkWindow new
 		autoRelease;
 		title: 'Toolbar example';
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: (GtkToolbar new
-					beIconSizeSmallToolbar;
-					beIcons; "beIcons, beText, beBoth"
-					add: ((GtkToolButton newIcon: (GtkImage newStock: 'gtk-ok') label: 'Ok form stock')
-						tooltipText: 'Ok form stock';
-						connectClicked: [ self inform: 'Ok from stock' ];
-						yourself);
-					add: ((GtkToolButton newIcon: (GtkImage newStock: 'gtk-cancel') label: 'Cancel from stock')
-						tooltipText: 'Cancel from stock';
-						connectClicked: [ self inform: 'Cancel from stock' ];
-						yourself);
-					add: ((GtkToolButton newIcon: (GtkImage newForm: #smallOk asIcon) label: 'Ok from Pharo')
-						tooltipText: 'Ok from Pharo';
-						connectClicked: [ self inform: 'Ok from Pharo' ];
-						yourself);
-					add: ((GtkToolButton newIcon: (GtkImage newForm: #smallCancel asIcon) label: 'Cancel from Pharo')
-						tooltipText: 'Cancel from Pharo';
-						connectClicked: [ self inform: 'Cancel from Pharo' ];
-						yourself);
-					yourself)
-				expand: false 
-				fill: false 
-				padding: 5;
+		add:(GtkBox newVertical
+			packStart: toolBar expand: false fill: false padding: 5;
 			packStart: (GtkLabel newLabel: 'panel');
 			yourself);
+		resize: 700 @ 200;
 		center;
 		showAll;
 		inspect
