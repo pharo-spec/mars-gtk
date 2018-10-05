@@ -2,21 +2,21 @@
 I'm a widget to display morphs. 
 "
 Class {
-	#name : #GtkMorphArea,
+	#name : #GtkMorphView,
 	#superclass : #GtkDrawingArea,
 	#instVars : [
 		'morph'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #private }
-GtkMorphArea class >> drawingAreaNew [
-	^ self ffiCall: #( GtkMorphArea *gtk_drawing_area_new () )
+GtkMorphView class >> drawingAreaNew [
+	^ self ffiCall: #( #GtkMorphView *gtk_drawing_area_new () )
 ]
 
 { #category : #'instance creation' }
-GtkMorphArea class >> newMorph: aMorph [
+GtkMorphView class >> newMorph: aMorph [
 	^ self new 
 		morph: aMorph;
 		yourself
@@ -24,7 +24,7 @@ GtkMorphArea class >> newMorph: aMorph [
 ]
 
 { #category : #drawing }
-GtkMorphArea >> drawOnAthensCanvas: aCanvas [
+GtkMorphView >> drawOnAthensCanvas: aCanvas [
 	"just forward to the morph"
 	morph extent: self getAllocatedWidth @ self getAllocatedHeight.
 	aCanvas surface drawDuring: [ :theCanvas |
@@ -32,22 +32,22 @@ GtkMorphArea >> drawOnAthensCanvas: aCanvas [
 ]
 
 { #category : #private }
-GtkMorphArea >> getAllocatedHeight [
+GtkMorphView >> getAllocatedHeight [
 	^ self ffiCall: #(int gtk_widget_get_allocated_height (self))
 ]
 
 { #category : #private }
-GtkMorphArea >> getAllocatedWidth [
+GtkMorphView >> getAllocatedWidth [
 	^ self ffiCall: #(int gtk_widget_get_allocated_width (self))
 ]
 
 { #category : #accessing }
-GtkMorphArea >> morph [ 
+GtkMorphView >> morph [ 
 	^ morph
 ]
 
 { #category : #private }
-GtkMorphArea >> morph: aMorph [
+GtkMorphView >> morph: aMorph [
 	morph := aMorph.
 	self sizeRequest: aMorph extent.
 ]

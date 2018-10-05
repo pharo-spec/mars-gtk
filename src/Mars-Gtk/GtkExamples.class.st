@@ -5,6 +5,23 @@ Class {
 }
 
 { #category : #examples }
+GtkExamples class >> exampleMorphView [
+	<example>
+
+	GtkApplication new run.
+	GtkWindow new 
+		autoRelease;
+		title: 'MorphView example';
+		resize: 500@200;
+		add: (GtkMorphView newMorph: (ButtonPresenter new 
+			label: 'Button!';
+			buildWithSpec));
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
 GtkExamples class >> exampleNotebook [
 	<example>
 
