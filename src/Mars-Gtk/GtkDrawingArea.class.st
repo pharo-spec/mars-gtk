@@ -33,11 +33,11 @@ GtkDrawingArea >> initialize [
 	drawing := false.
 	self 
 		connect: 'draw' 
-		signature: #( int (void *widget, void *cr, void *data) ) 
-		do: [ :widget :cr :data |
+		signature: #( int (void *widget, void *cr, void *payload) ) 
+		do: [ :widget :cr :payload |
 			"I need to be sure this process will not be highjacked by another 
 			 so I need to execute it unpreemptively (otherwise it will crash 
 			 the vm)"
-			[ self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr) ] valueUnpreemptively.
+			"[ "self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr)" ] valueUnpreemptively".
 			0 ]
 ]
