@@ -4,7 +4,8 @@ Class {
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#instVars : [
-		'runLoop'
+		'runLoop',
+		'windowRegistry'
 	],
 	#classVars : [
 		'Current'
@@ -12,7 +13,7 @@ Class {
 	#pools : [
 		'GtkTypes'
 	],
-	#category : 'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #accessing }
@@ -49,12 +50,19 @@ GtkApplication >> initGtk3 [
 { #category : #initialization }
 GtkApplication >> initialize [
 	super initialize.
+	windowRegistry := Set new.
 	runLoop := GtkRunLoop current
 ]
 
 { #category : #testing }
 GtkApplication >> isRunning [ 
 	^ runLoop isRunning
+]
+
+{ #category : #registry }
+GtkApplication >> registerWindow: aWindow [
+
+	windowRegistry add: aWindow
 ]
 
 { #category : #running }
@@ -70,7 +78,7 @@ GtkApplication >> run [
 GtkApplication >> start [ 
 	self isRunning ifTrue: [ self stop ].
 	self initGtk3.
-	runLoop start
+	"runLoop start"
 ]
 
 { #category : #'private running' }
@@ -83,4 +91,12 @@ GtkApplication >> stop [
 GtkApplication >> suspendRunLoopWhile: aBlock [
 	self stop.
 	^ aBlock ensure: [ self start ]
+]
+
+{ #category : #registry }
+GtkApplication >> unregisterWindow: aWindow [
+
+	windowRegistry 
+		remove: aWindow 
+		ifAbsent: [ ]
 ]
