@@ -52,6 +52,12 @@ GtkWidget class >> widgetDestroy: widget [
 	self ffiCall: #(void gtk_widget_destroy ("GtkWidget *" void *widget))
 ]
 
+{ #category : #accessing }
+GtkWidget >> application [
+
+	^ GtkApplication current
+]
+
 { #category : #converting }
 GtkWidget >> asListBoxRow [
 	^ GtkListBoxRow newWidget: self
