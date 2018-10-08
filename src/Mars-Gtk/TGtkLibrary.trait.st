@@ -10,5 +10,5 @@ TGtkLibrary classSide >> ffiLibraryName [
 
 { #category : #'library path' }
 TGtkLibrary >> ffiLibraryName [
-	^ self class ffiLibraryName
+	^ GtkLibrary
 ]

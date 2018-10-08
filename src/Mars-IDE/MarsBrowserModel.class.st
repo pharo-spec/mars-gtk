@@ -66,7 +66,7 @@ MarsBrowserModel >> buildWindow [
 { #category : #accessing }
 MarsBrowserModel >> initialExtent [
 
-	^ 100@850
+	^ 900@750
 ]
 
 { #category : #showing }
