@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #'Mars-IDE'
+	#category : #'Mars-Tools'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'window'
 	],
-	#category : #'Mars-IDE'
+	#category : #'Mars-Tools'
 }
 
 { #category : #building }

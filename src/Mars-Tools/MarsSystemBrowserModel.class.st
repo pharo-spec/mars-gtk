@@ -1,7 +1,7 @@
 Class {
 	#name : #MarsSystemBrowserModel,
 	#superclass : #MarsModel,
-	#category : #'Mars-IDE'
+	#category : #'Mars-Tools'
 }
 
 { #category : #accessing }

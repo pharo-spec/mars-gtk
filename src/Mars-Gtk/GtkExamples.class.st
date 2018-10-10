@@ -13,9 +13,7 @@ GtkExamples class >> exampleMorphView [
 		autoRelease;
 		title: 'MorphView example';
 		resize: 500@200;
-		add: (GtkMorphView newMorph: (ButtonPresenter new 
-			label: 'Button!';
-			buildWithSpec));
+		add: (GtkMorphView newMorph: (Morph new));
 		center;
 		showAll;
 		inspect
