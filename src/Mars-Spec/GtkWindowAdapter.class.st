@@ -14,6 +14,17 @@ GtkWindowAdapter >> addModelIn: aWindow withSpecLayout: aSpec [
 { #category : #building }
 GtkWindowAdapter >> buildWidget [
 
-	^ GtkWindow new
-	
+	^ GtkWindow new autoRelease
+]
+
+{ #category : #'as yet unclassified' }
+GtkWindowAdapter >> open [
+
+	self model window show
+]
+
+{ #category : #'as yet unclassified' }
+GtkWindowAdapter >> title: aString [ 
+
+	^ self widgetDo: [ :this | this title: aString ]
 ]

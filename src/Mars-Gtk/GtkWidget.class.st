@@ -73,6 +73,12 @@ GtkWidget >> beHAlignStart [
 	self hAlign: GTK_ALIGN_START
 ]
 
+{ #category : #TOREMOVE }
+GtkWidget >> bindKeyCombination: aShortcut toAction: aBlock [
+ 
+	self flag: #TODO.
+]
+
 { #category : #'private signaling' }
 GtkWidget >> connect: aString do: aBlock [
 	"this is the basic signaling (for IO events), who share signature along them... of course 
@@ -305,6 +311,12 @@ GtkWidget >> sizeRequest: aPoint [
 { #category : #private }
 GtkWidget >> sizeRequestWidth: width height: height [
 	^ self ffiCall: #(void gtk_widget_set_size_request ( self, gint width, gint height ) )
+]
+
+{ #category : #TOREMOVE }
+GtkWidget >> takeKeyboardFocus [
+	
+	self flag: #TODO.
 ]
 
 { #category : #accessing }
