@@ -7,11 +7,12 @@ Class {
 { #category : #protocol }
 GtkContainerAdapter >> add: anAdapter [ 
 	
-	self widgetDo: [ :this | this add: anAdapter asWidget ]
+	self widgetDo: [ :this | 
+		this packStart: anAdapter asWidget ]
 ]
 
 { #category : #building }
 GtkContainerAdapter >> buildWidget [
 
-	^ GtkBin new
+	^ GtkBox newVertical
 ]

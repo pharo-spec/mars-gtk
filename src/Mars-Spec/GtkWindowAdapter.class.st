@@ -6,9 +6,11 @@ Class {
 
 { #category : #accessing }
 GtkWindowAdapter >> addModelIn: aWindow withSpecLayout: aSpec [
-
-	self flag: #todo. "'self model model'? how ugly"
-	aWindow add: (self model model buildWithSpecLayout: aSpec)
+	| contentWidget |
+	
+	self flag: #todo. "'self model model'? can this be uglier?"
+	contentWidget := self model model buildWithSpecLayout: aSpec.
+	aWindow add: contentWidget
 ]
 
 { #category : #building }
@@ -20,7 +22,7 @@ GtkWindowAdapter >> buildWidget [
 { #category : #'as yet unclassified' }
 GtkWindowAdapter >> open [
 
-	self model window show
+	self model window showAll
 ]
 
 { #category : #'as yet unclassified' }
