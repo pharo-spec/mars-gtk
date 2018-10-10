@@ -1,18 +1,49 @@
 Class {
 	#name : #MarsPresenter,
-	#superclass : #Object,
+	#superclass : #ComposablePresenter,
 	#instVars : [
-		'model'
+		'menuHolder',
+		'toolbarHolder',
+		'statusBarHolder'
 	],
 	#category : #'Mars-Tools'
 }
 
-{ #category : #accessing }
-MarsPresenter >> model [
-	^ model
+{ #category : #'initialization - private' }
+MarsPresenter >> initializePrivateValueHolders [
+
+	super initializePrivateValueHolders.	
+	menuHolder := nil asValueHolder.
+	toolbarHolder := nil asValueHolder.
+	statusBarHolder := nil asValueHolder
 ]
 
-{ #category : #accessing }
-MarsPresenter >> model: anObject [
-	model := anObject
+{ #category : #api }
+MarsPresenter >> menu [
+	^ menuHolder value
+]
+
+{ #category : #api }
+MarsPresenter >> menu: aPresenter [
+	menuHolder value: aPresenter
+]
+
+{ #category : #api }
+MarsPresenter >> statusBar [
+	^ toolbarHolder value
+]
+
+{ #category : #api }
+MarsPresenter >> statusBar: aPresenter [
+	toolbarHolder value: aPresenter
+]
+
+{ #category : #api }
+MarsPresenter >> toolbar [
+	^ toolbarHolder value
+]
+
+{ #category : #api }
+MarsPresenter >> toolbar: aPresenter [
+	toolbarHolder value: aPresenter
 ]

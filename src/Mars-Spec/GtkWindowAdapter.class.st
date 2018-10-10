@@ -16,7 +16,10 @@ GtkWindowAdapter >> addModelIn: aWindow withSpecLayout: aSpec [
 { #category : #building }
 GtkWindowAdapter >> buildWidget [
 
-	^ GtkWindow new autoRelease
+	^ GtkWindow new 
+		autoRelease
+		resize: self model initialExtent;
+		yourself
 ]
 
 { #category : #'as yet unclassified' }
