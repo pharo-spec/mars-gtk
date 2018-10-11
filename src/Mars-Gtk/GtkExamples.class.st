@@ -8,7 +8,9 @@ Class {
 GtkExamples class >> exampleMorphView [
 	<example>
 
-	GtkApplication new run.
+	GtkApplication isRunning ifFalse: [ 
+		GtkApplication new run ].
+
 	GtkWindow new 
 		autoRelease;
 		title: 'MorphView example';
@@ -23,7 +25,9 @@ GtkExamples class >> exampleMorphView [
 GtkExamples class >> exampleNotebook [
 	<example>
 
-	GtkApplication new run.
+	GtkApplication isRunning ifFalse: [ 
+		GtkApplication new run ].
+	
 	GtkWindow new 
 		autoRelease;
 		title: 'Notebook example';
@@ -47,7 +51,9 @@ GtkExamples class >> exampleNotebook [
 GtkExamples class >> exampleTextView [
 	<example>
 
-	GtkApplication new run.
+	GtkApplication isRunning ifFalse: [ 
+		GtkApplication new run ].
+
 	GtkWindow new 
 		autoRelease;
 		title: 'TextView example';
@@ -63,7 +69,8 @@ GtkExamples class >> exampleToolbar [
 	<example>
 	| toolBar |
 
-	GtkApplication new run.
+	GtkApplication isRunning ifFalse: [ 
+		GtkApplication new run ].
 	
 	toolBar := GtkToolbar new
 		beIconSizeSmallToolbar;

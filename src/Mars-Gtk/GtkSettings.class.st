@@ -27,7 +27,7 @@ GtkSettings >> initialize [
 ]
 
 { #category : #'accessing convenience' }
-GtkSettings >> isPreferDarkTheme [
+GtkSettings >> preferDarkTheme [
 
 	^ self propertyBoolean: 'gtk-application-prefer-dark-theme'
 ]

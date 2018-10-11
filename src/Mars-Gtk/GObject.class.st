@@ -4,10 +4,62 @@ Class {
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#pools : [
+		'GConnectFlags',
+		'GSignalMatchType',
+		'GtkAlign',
+		'GtkStateFlags',
+		'GtkStateType',
 		'GtkTypes'
 	],
-	#category : #'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Base'
 }
+
+{ #category : #'private signaling' }
+GObject >> connect: aString do: aBlock [
+	"this is the basic signaling (for IO events), who share signature along them... of course 
+	 this is not correct in all cases (like for example 'draw'), then you need to use the method
+	 #connect:signature:do:
+	 BEWARE when installing callbacks to gtk... you HAVE TO catch and fork any error happening, 
+	 otherwise you will crash your image (event processing happens in VM event loop, so is fragile)"
+	^ self 
+		connect: aString 
+		signature: #(void (void *widget, void *aData))  
+ 		do: [ :widget :aData | [ aBlock value ] fork ]
+]
+
+{ #category : #'private signaling' }
+GObject >> connect: aString signature: signature do: aBlock [
+	"BEWARE when installing callbacks to gtk... you HAVE TO catch and fork any error happening, 
+	 otherwise you will crash your image (event processing happens in VM event loop, so is fragile)"
+	| callback |
+	callback := FFICallback signature: signature block: aBlock.
+	self registerCallback: callback.
+	self signal: aString connect: callback data: ExternalAddress null
+]
+
+{ #category : #'private signaling' }
+GObject >> disconnectByFunc: func [
+
+	^ self 
+		disconnectMatchedMask: G_SIGNAL_MATCH_FUNC 
+		signal: 0 
+		detail: 0 
+		closure: ExternalAddress null
+		func: func 
+		data: ExternalAddress null
+]
+
+{ #category : #'private signaling' }
+GObject >> disconnectMatchedMask: mask signal: signal_id detail: detail closure: closure func: func data: aData [
+	^ self ffiCall: #(guint g_signal_handlers_disconnect_matched (
+		self,
+		GSignalMatchType mask,
+		guint signal_id,
+		GQuark detail,
+		"GClosure *" void *closure,
+		FFICallback func,
+      gpointer aData))
+]
 
 { #category : #'private primitives' }
 GObject >> gFree: aPointer [
@@ -36,5 +88,37 @@ GObject >> gObjectSet: aName toBoolean: aBoolean [
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toString: aString [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, gchar *aString) )	
+	self ffiCall: #(void g_object_set (self, const gchar *aName, gchar *aString, 0) )	
+]
+
+{ #category : #private }
+GObject >> objectReference [
+	self ffiCall: #(gpointer g_object_ref (self))
+]
+
+{ #category : #private }
+GObject >> objectUnreference [
+	self ffiCall: #(gpointer g_object_unref (self))
+]
+
+{ #category : #'private signaling' }
+GObject >> signal: aString connect: callback data: aData [
+
+	^ self 
+		signal: aString  
+		connect: callback 
+		data: aData
+		flags: G_CONNECT_NONE
+]
+
+{ #category : #'private signaling' }
+GObject >> signal: signalName connect: callback data: aData flags: connectFlags [
+	^ self ffiCall: #( gulong g_signal_connect_data ( 
+		self,
+		const gchar *signalName,
+		GCallback callback,
+		gpointer 	aData,
+		0,
+		GConnectFlags connectFlags ) )
+		
 ]

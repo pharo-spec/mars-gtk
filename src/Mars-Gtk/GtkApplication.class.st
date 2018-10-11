@@ -26,6 +26,13 @@ GtkApplication class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
 ]
 
+{ #category : #testing }
+GtkApplication class >> isRunning [ 
+	
+	^ self current notNil 
+		and: [ self current isRunning ]
+]
+
 { #category : #'system startup' }
 GtkApplication class >> shutDown: quitting [
 	"ensure Gtk is stop when shutting down"
