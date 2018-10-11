@@ -13,11 +13,6 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
-{ #category : #converting }
-GtkWidget class >> asExternalTypeOn: generator [
-	^ FFIOpaqueObjectType objectClass: self
-]
-
 { #category : #'library path' }
 GtkWidget class >> ffiLibraryName [
 	^ GtkLibrary

@@ -91,6 +91,12 @@ GObject >> gObjectSet: aName toString: aString [
 	self ffiCall: #(void g_object_set (self, const gchar *aName, gchar *aString, 0) )	
 ]
 
+{ #category : #initialization }
+GObject >> initialize [
+	"cancel chain because superclass attempts to setHandle: 
+	 (which is incorrect, probably I should patch UFFI)"
+]
+
 { #category : #private }
 GObject >> objectReference [
 	self ffiCall: #(gpointer g_object_ref (self))

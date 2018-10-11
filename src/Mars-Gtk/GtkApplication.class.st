@@ -21,6 +21,13 @@ GtkApplication class >> current [
 	^ Current
 ]
 
+{ #category : #accessing }
+GtkApplication class >> ensureRunning [ 
+
+	self isRunning ifTrue: [ ^ self ]. 
+	self new run
+]
+
 { #category : #'class initialization' }
 GtkApplication class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
