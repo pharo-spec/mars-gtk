@@ -36,7 +36,8 @@ GtkApplication class >> initialize [
 { #category : #testing }
 GtkApplication class >> isRunning [ 
 	
-	^ self current notNil
+	^ self current notNil 
+		and: [ self current isRunning ]
 ]
 
 { #category : #'system startup' }
@@ -88,9 +89,15 @@ GtkApplication >> run [
 ]
 
 { #category : #'private running' }
+GtkApplication >> setupTheme [
+	"Override this with the appropriate Gtk3 theme to use."
+]
+
+{ #category : #'private running' }
 GtkApplication >> start [ 
 	self isRunning ifTrue: [ self stop ].
 	self initGtk3.
+	self setupTheme
 	"runLoop start"
 ]
 
