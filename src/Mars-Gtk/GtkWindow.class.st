@@ -6,20 +6,12 @@ https://developer.gnome.org/gtk3/stable/GtkWindow.html
 Class {
 	#name : #GtkWindow,
 	#superclass : #GtkContainer,
-	#classVars : [
-		'GtkWindowRegistry'
-	],
 	#pools : [
 		'GtkWindowPosition',
 		'GtkWindowType'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Container'
 }
-
-{ #category : #'class initialization' }
-GtkWindow class >> initialize [
-	GtkWindowRegistry := EphemeronRegistry new
-]
 
 { #category : #'instance creation' }
 GtkWindow class >> new [ 
@@ -37,7 +29,8 @@ GtkWindow >> autoRelease [
 	 I can have strong references to self in callbacks (due to the events registered). 
 	 Therefore, I need a better mechanism and this is well handled by EphemeronRegistry. 
 	 This will call the regular #finalize method from this object"
-	GtkWindowRegistry at: self put: nil
+	self flag: #TODO. "Verify this"
+	super autoRelease
 ]
 
 { #category : #accessing }
