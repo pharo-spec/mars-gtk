@@ -36,8 +36,7 @@ GtkApplication class >> initialize [
 { #category : #testing }
 GtkApplication class >> isRunning [ 
 	
-	^ self current notNil 
-		and: [ self current isRunning ]
+	^ self current notNil
 ]
 
 { #category : #'system startup' }
