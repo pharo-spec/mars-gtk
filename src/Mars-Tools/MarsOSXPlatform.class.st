@@ -10,7 +10,7 @@ MarsOSXPlatform class >> isAvailable [
 	^ Smalltalk os isMacOS
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MarsOSXPlatform >> defaultTheme [
 
 	^ 'Sierra-dark'

@@ -41,7 +41,7 @@ MarsPlayground >> initialize [
 { #category : #initialization }
 MarsPlayground >> initializeWidgets [
 	
-	text := self newText
+	text := self newText beForCode
 ]
 
 { #category : #'accessing ui' }

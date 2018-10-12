@@ -56,8 +56,7 @@ GtkApplication >> initArgC: argc argV: argv [
 { #category : #private }
 GtkApplication >> initGtk3 [
 	"Initialize Gtk3"
-	self flag: #todo. "This is a temporal hack to ensure library is found (I need to review the VM)."
-	"DynamicLoader loadLibrary: GtkLibrary uniqueInstance moduleName.  "
+
 	self initArgC: 0 argV: 0
 ]
 
@@ -89,15 +88,9 @@ GtkApplication >> run [
 ]
 
 { #category : #'private running' }
-GtkApplication >> setupTheme [
-	"Override this with the appropriate Gtk3 theme to use."
-]
-
-{ #category : #'private running' }
 GtkApplication >> start [ 
 	self isRunning ifTrue: [ self stop ].
 	self initGtk3.
-	self setupTheme
 	"runLoop start"
 ]
 

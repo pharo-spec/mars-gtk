@@ -10,7 +10,7 @@ MarsWinPlatform class >> isAvailable [
 	^ Smalltalk os isWindows
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MarsWinPlatform >> defaultTheme [
 
 	^ 'Windows10'

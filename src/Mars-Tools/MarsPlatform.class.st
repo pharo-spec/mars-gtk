@@ -16,7 +16,7 @@ MarsPlatform class >> newForPlatform [
 	^ (self allSubclasses detect: #isAvailable) new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MarsPlatform >> defaultTheme [
 
 	^ self subclassResponsibility
