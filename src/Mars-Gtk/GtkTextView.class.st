@@ -32,6 +32,18 @@ GtkTextView >> isEditable [
 ]
 
 { #category : #accessing }
+GtkTextView >> monospace [
+	
+	^ self ffiCall: #(gboolean gtk_text_view_get_monospace (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> monospace: aBoolean [
+
+	^ self ffiCall: #(void gtk_text_view_set_monospace (self, gboolean aBoolean))
+]
+
+{ #category : #accessing }
 GtkTextView >> text [
 	^ self textBuffer text
 ]

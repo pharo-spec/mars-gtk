@@ -6,6 +6,10 @@ Class {
 
 { #category : #building }
 GtkTextAdapter >> buildWidget [
+	| textView |
 
-	^ GtkScrolledWindow newWidget: GtkTextView new
+	textView := GtkTextView new.
+	self model isForSmalltalkCode ifTrue: [ 
+		textView monospace: true  ].
+	^ GtkScrolledWindow newWidget: textView
 ]

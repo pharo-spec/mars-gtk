@@ -7,9 +7,8 @@ Class {
 { #category : #accessing }
 GtkWindowAdapter >> addModelIn: aWindow withSpecLayout: aSpec [
 	| contentWidget |
-	
-	self flag: #todo. "'self model model'? can this be uglier?"
-	contentWidget := self model model buildWithSpecLayout: aSpec.
+	self flag: #todo.	"'self model model'? can this be uglier?"
+	contentWidget := self model presenter buildWithSpecLayout: aSpec.
 	aWindow add: contentWidget
 ]
 
