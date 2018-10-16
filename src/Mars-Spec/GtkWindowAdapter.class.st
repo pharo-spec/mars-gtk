@@ -11,11 +11,17 @@ GtkWindowAdapter >> addMenuTo: aGtkWindow [
 ]
 
 { #category : #accessing }
-GtkWindowAdapter >> addModelIn: aWindow withSpecLayout: aSpec [
+GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 	| contentWidget |
-	self flag: #todo.	"'self model model'? can this be uglier?"
+		
+		
+	self model hasMenu ifTrue: [ self addMenuTo: gtkWindow ].
+	self model hasToolbar ifTrue: [ self addToolbarTo: gtkWindow ].
+	
 	contentWidget := self model presenter buildWithSpecLayout: aSpec.
-	aWindow add: contentWidget
+	gtkWindow add: contentWidget.
+
+	self model hasStatusbar ifTrue: [ self addStatusbarTo: gtkWindow ]
 ]
 
 { #category : #building }
@@ -29,18 +35,11 @@ GtkWindowAdapter >> addToolbarTo: aGtkWindow [
 
 { #category : #building }
 GtkWindowAdapter >> buildWidget [
-	| gtkWindow |
 
-	gtkWindow := GtkWindow new 
+	^ GtkWindow new 
 		autoRelease
 		resize: self model initialExtent;
-		yourself.
-		
-	self model hasMenu ifTrue: [ self addMenuTo: gtkWindow ].
-	self model hasToolbar ifTrue: [ self addToolbarTo: gtkWindow ].
-	self model hasStatusbar ifTrue: [ self addStatusbarTo: gtkWindow ].
-		
-	^ gtkWindow
+		yourself
 ]
 
 { #category : #'as yet unclassified' }
