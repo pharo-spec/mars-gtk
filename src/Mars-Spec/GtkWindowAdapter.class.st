@@ -13,7 +13,7 @@ GtkWindowAdapter >> addMenuTo: gtkBox [
 		packStart: gtkMenuBar 
 		expand: false 
 		fill: false 
-		padding: 0 
+		padding: 0
 ]
 
 { #category : #accessing }
@@ -34,12 +34,27 @@ GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 ]
 
 { #category : #building }
-GtkWindowAdapter >> addStatusbarTo: aBox [
+GtkWindowAdapter >> addStatusbarTo: gtkBox [
+	| gtkStatusBar |
 	
+	gtkStatusBar := self model statusbar buildWithSpec.
+	gtkBox 
+		packStart: gtkStatusBar 
+		expand: false 
+		fill: false 
+		padding: 0	
 ]
 
 { #category : #building }
-GtkWindowAdapter >> addToolbarTo: aBox [
+GtkWindowAdapter >> addToolbarTo: gtkBox [
+	| gtkToolBar |
+	
+	gtkToolBar := self model toolbar buildWithSpec.
+	gtkBox 
+		packStart: gtkToolBar 
+		expand: false 
+		fill: false 
+		padding: 0
 ]
 
 { #category : #building }
