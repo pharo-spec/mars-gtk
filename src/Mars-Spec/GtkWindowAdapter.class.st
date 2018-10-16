@@ -5,32 +5,41 @@ Class {
 }
 
 { #category : #building }
-GtkWindowAdapter >> addMenuTo: aGtkWindow [
-
+GtkWindowAdapter >> addMenuTo: gtkBox [
+	| gtkMenuBar |
 	
+	gtkMenuBar := self model menu buildWithSpec.
+	gtkBox 
+		packStart: gtkMenuBar 
+		expand: false 
+		fill: false 
+		padding: 0 
 ]
 
 { #category : #accessing }
 GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
-	| contentWidget |
+	| gtkBox contentWidget |
 		
-		
-	self model hasMenu ifTrue: [ self addMenuTo: gtkWindow ].
-	self model hasToolbar ifTrue: [ self addToolbarTo: gtkWindow ].
+	gtkBox := GtkBox newVertical.
+			
+	self model hasMenu ifTrue: [ self addMenuTo: gtkBox ].
+	self model hasToolbar ifTrue: [ self addToolbarTo: gtkBox ].
 	
 	contentWidget := self model presenter buildWithSpecLayout: aSpec.
-	gtkWindow add: contentWidget.
+	gtkBox packStart: contentWidget.
 
-	self model hasStatusbar ifTrue: [ self addStatusbarTo: gtkWindow ]
+	self model hasStatusbar ifTrue: [ self addStatusbarTo: gtkBox ].
+	
+	gtkWindow add: gtkBox
 ]
 
 { #category : #building }
-GtkWindowAdapter >> addStatusbarTo: aGtkWindow [
+GtkWindowAdapter >> addStatusbarTo: aBox [
 	
 ]
 
 { #category : #building }
-GtkWindowAdapter >> addToolbarTo: aGtkWindow [
+GtkWindowAdapter >> addToolbarTo: aBox [
 ]
 
 { #category : #building }
