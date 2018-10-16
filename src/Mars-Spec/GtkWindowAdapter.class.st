@@ -23,21 +23,21 @@ GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 	gtkBox := GtkBox newVertical.
 			
 	self model hasMenu ifTrue: [ self addMenuTo: gtkBox ].
-	self model hasToolbar ifTrue: [ self addToolbarTo: gtkBox ].
+	self model hasToolBar ifTrue: [ self addToolBarTo: gtkBox ].
 	
 	contentWidget := self model presenter buildWithSpecLayout: aSpec.
 	gtkBox packStart: contentWidget.
 
-	self model hasStatusbar ifTrue: [ self addStatusbarTo: gtkBox ].
+	self model hasStatusBar ifTrue: [ self addStatusBarTo: gtkBox ].
 	
 	gtkWindow add: gtkBox
 ]
 
 { #category : #building }
-GtkWindowAdapter >> addStatusbarTo: gtkBox [
+GtkWindowAdapter >> addStatusBarTo: gtkBox [
 	| gtkStatusBar |
 	
-	gtkStatusBar := self model statusbar buildWithSpec.
+	gtkStatusBar := self model statusBar buildWithSpec.
 	gtkBox 
 		packStart: gtkStatusBar 
 		expand: false 
@@ -46,10 +46,10 @@ GtkWindowAdapter >> addStatusbarTo: gtkBox [
 ]
 
 { #category : #building }
-GtkWindowAdapter >> addToolbarTo: gtkBox [
+GtkWindowAdapter >> addToolBarTo: gtkBox [
 	| gtkToolBar |
 	
-	gtkToolBar := self model toolbar buildWithSpec.
+	gtkToolBar := self model toolBar buildWithSpec.
 	gtkBox 
 		packStart: gtkToolBar 
 		expand: false 
