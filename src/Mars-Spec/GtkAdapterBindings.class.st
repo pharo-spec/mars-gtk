@@ -19,9 +19,9 @@ GtkAdapterBindings >> initializeBindings [
 		at: #FastTableAdapter			put: nil;
 		at: #ImageAdapter				put: #GtkImageAdapter;
 		at: #MultiColumnListAdapter	put: nil;
-		at: #MenuAdapter				put: nil;
-		at: #MenuGroupAdapter			put: nil;
-		at: #MenuItemAdapter			put: nil;
+		at: #MenuAdapter				put: #GtkMenuAdapter;
+		at: #MenuGroupAdapter			put: #GtkMenuGroupAdapter;
+		at: #MenuItemAdapter			put: #GtkMenuItemAdapter;
 		at: #RadioButtonAdapter		put: nil;
 		at: #SliderAdapter				put: nil;
 		at: #TabManagerAdapter		put: #GtkTabManagerAdapter;
