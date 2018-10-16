@@ -4,7 +4,7 @@ Class {
 	#category : #'Mars-Spec'
 }
 
-{ #category : #factory }
+{ #category : #building }
 GtkMenuGroupAdapter >> buildWidget [
 
 	^ GtkMenu new
