@@ -4,6 +4,12 @@ Class {
 	#category : #'Mars-Spec'
 }
 
+{ #category : #building }
+GtkWindowAdapter >> addMenuTo: aGtkWindow [
+
+	
+]
+
 { #category : #accessing }
 GtkWindowAdapter >> addModelIn: aWindow withSpecLayout: aSpec [
 	| contentWidget |
@@ -13,12 +19,28 @@ GtkWindowAdapter >> addModelIn: aWindow withSpecLayout: aSpec [
 ]
 
 { #category : #building }
-GtkWindowAdapter >> buildWidget [
+GtkWindowAdapter >> addStatusbarTo: aGtkWindow [
+	
+]
 
-	^ GtkWindow new 
+{ #category : #building }
+GtkWindowAdapter >> addToolbarTo: aGtkWindow [
+]
+
+{ #category : #building }
+GtkWindowAdapter >> buildWidget [
+	| gtkWindow |
+
+	gtkWindow := GtkWindow new 
 		autoRelease
 		resize: self model initialExtent;
-		yourself
+		yourself.
+		
+	self model hasMenu ifTrue: [ self addMenuTo: gtkWindow ].
+	self model hasToolbar ifTrue: [ self addToolbarTo: gtkWindow ].
+	self model hasStatusbar ifTrue: [ self addStatusbarTo: gtkWindow ].
+		
+	^ gtkWindow
 ]
 
 { #category : #'as yet unclassified' }
