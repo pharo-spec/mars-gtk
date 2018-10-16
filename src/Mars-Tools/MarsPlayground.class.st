@@ -72,8 +72,8 @@ MarsPlayground >> prepareWindow: aWindowPresenter [
 
 	aWindowPresenter 
 		menu: self newMenu";
-		toolbar: self newToolbar;
-		statusbar: self newStatusbar".
+		toolBar: self newToolBar;
+		statusBar: self newStatusBar".
 ]
 
 { #category : #'accessing ui' }
