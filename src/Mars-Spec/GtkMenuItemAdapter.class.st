@@ -1,5 +1,11 @@
 Class {
 	#name : #GtkMenuItemAdapter,
-	#superclass : #GtkAdapter,
+	#superclass : #GtkMenuBaseAdapter,
 	#category : #'Mars-Spec'
 }
+
+{ #category : #accessing }
+GtkMenuItemAdapter >> gtkClass [
+
+	^ GtkMenuItem
+]

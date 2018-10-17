@@ -128,11 +128,11 @@ GtkExamples class >> exampleToolBar [
 	GtkWindow new
 		autoRelease;
 		title: 'Toolbar example';
+		resize: 700 @ 200;
 		add:(GtkBox newVertical
 			packStart: toolBar expand: false fill: false padding: 5;
 			packStart: (GtkLabel newLabel: 'panel');
 			yourself);
-		resize: 700 @ 200;
 		center;
 		showAll;
 		inspect

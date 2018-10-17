@@ -1,11 +1,11 @@
 Class {
 	#name : #GtkMenuAdapter,
-	#superclass : #GtkAdapter,
+	#superclass : #GtkMenuBaseAdapter,
 	#category : #'Mars-Spec'
 }
 
-{ #category : #building }
-GtkMenuAdapter >> buildWidget [
+{ #category : #accessing }
+GtkMenuAdapter >> gtkClass [
 
-	^ GtkMenuBar new
+	^ GtkMenu
 ]

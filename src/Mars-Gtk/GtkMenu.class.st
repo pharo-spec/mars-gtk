@@ -21,13 +21,6 @@ GtkMenu class >> new [
 	^ self menuNew initialize
 ]
 
-{ #category : #'as yet unclassified' }
-GtkMenu >> adaptFromSpec: aMenuPresenter [
-
-		
-	super adaptFromSpec: aMenuPresenter
-]
-
 { #category : #accessing }
 GtkMenu >> title [
 
