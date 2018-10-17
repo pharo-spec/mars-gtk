@@ -13,22 +13,31 @@ GtkMenuItemAdapter class >> defaultSpacing [
 { #category : #building }
 GtkMenuItemAdapter >> addModelTo: gtkWidget [
 
+	"label (and icon if there)"
 	self model icon 
 		ifNotNil: [
 			gtkWidget add: ((GtkBox newHorizontalSpacing: self class defaultSpacing)
-				packStart: (GtkImage newForm: (self model icon)) 
+				packStart: (GtkImage newForm: (self model icon)) beVAlignCenter 
 					expand: false 
 					fill: false 
 					padding: 0;
-				packStart: ((GtkLabel newLabel: self model name)
-					vAlign: GtkAlign GTK_ALIGN_CENTER;
-					yourself);
+				packStart: ((GtkLabel newLabel: self model name) beVAlignCenter);
 				yourself) ]
 		ifNil: [ 	
 				gtkWidget label: self model name ].
-			
+	
+	"accel"
+	self model shortcut ifNotNil: [ :shortcut | 
+		gtkWidget 
+			addAccelerator: 'activate' 
+			group: self shortcutGroup 
+			shortcut: shortcut ].
+
+	"action"		
 	self model action ifNotNil: [ :actionBlock |
 		gtkWidget connectActivate: actionBlock ].
+	
+	"submenu"
 	self model subMenu ifNotNil: [ :menuPresenter |
 		gtkWidget submenu: menuPresenter buildWithSpec ]
 ]
@@ -37,4 +46,15 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 GtkMenuItemAdapter >> gtkClass [
 
 	^ GtkMenuItem
+]
+
+{ #category : #building }
+GtkMenuItemAdapter >> shortcutGroup [ 
+	| root |
+	
+	root := self model root.
+	^ root shortcutGroup ifNil: [ | group |
+		group := GtkAccelGroup new.
+		root shortcutGroup: group.
+		group ]
 ]

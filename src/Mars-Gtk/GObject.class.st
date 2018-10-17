@@ -6,6 +6,8 @@ Class {
 	#pools : [
 		'GConnectFlags',
 		'GSignalMatchType',
+		'GdkModifierType',
+		'GtkAccelFlags',
 		'GtkAlign',
 		'GtkStateFlags',
 		'GtkStateType',

@@ -37,6 +37,18 @@ GtkWidget class >> widgetDestroy: widget [
 ]
 
 { #category : #accessing }
+GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
+
+	self 
+		widgetAddAccelerator: aString 
+		group: anAccelGroup 
+		key: 0
+		modifiers: 0
+		accelFlags: GTK_ACCEL_VISIBLE
+		
+]
+
+{ #category : #accessing }
 GtkWidget >> application [
 
 	^ GtkApplication current
@@ -53,9 +65,39 @@ GtkWidget >> autoRelease [
 ]
 
 { #category : #accessing }
+GtkWidget >> beHAlignCenter [
+
+	self hAlign: GTK_ALIGN_CENTER
+]
+
+{ #category : #accessing }
+GtkWidget >> beHAlignEnd [
+
+	self hAlign: GTK_ALIGN_END
+]
+
+{ #category : #accessing }
 GtkWidget >> beHAlignStart [
 
 	self hAlign: GTK_ALIGN_START
+]
+
+{ #category : #accessing }
+GtkWidget >> beVAlignCenter [
+
+	self vAlign: GTK_ALIGN_CENTER
+]
+
+{ #category : #accessing }
+GtkWidget >> beVAlignEnd [
+
+	self vAlign: GTK_ALIGN_END
+]
+
+{ #category : #accessing }
+GtkWidget >> beVAlignStart [
+
+	self vAlign: GTK_ALIGN_START
 ]
 
 { #category : #TOREMOVE }
@@ -236,6 +278,18 @@ GtkWidget >> vAlign [
 { #category : #accessing }
 GtkWidget >> vAlign: align [
 	^ self ffiCall: #(void gtk_widget_set_valign (self, GtkAlign align))
+]
+
+{ #category : #private }
+GtkWidget >> widgetAddAccelerator: accel_signal group: accel_group key: accel_key modifiers: accel_mods accelFlags: accel_flags [
+
+	^ self ffiCall: #(void gtk_widget_add_accelerator (
+		self,
+ 		const gchar *accel_signal,
+		GtkAccelGroup *accel_group,
+		guint accel_key,
+		GdkModifierType accel_mods,
+		GtkAccelFlags accel_flags))
 ]
 
 { #category : #private }

@@ -51,7 +51,11 @@ MarsPlayground >> newFileMenu [
 		addGroup: [ :group | 
 			group 
 				addItem: [ :item | item name: 'Settings'; icon: (self iconNamed: #configuration) ];
-				addItem: [ :item | item name: 'Save'; icon: (self iconNamed: #smallSave) ];
+				addItem: [ :item | 
+					item 
+						name: 'Save'; 
+						icon: (self iconNamed: #smallSave); 
+						shortcut: $s shift meta ];
 				addItem: [ :item | item name: 'Save as...'; icon: (self iconNamed: #smallSaveAs) ];
 				addItem: [ :item | item name: 'Save and quit'; icon: (self iconNamed: #smallQuit) ];
 				addItem: [ :item | item name: 'Quit'; icon: (self iconNamed: #smallQuit) ] ].
