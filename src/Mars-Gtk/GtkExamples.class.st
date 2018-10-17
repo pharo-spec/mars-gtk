@@ -5,6 +5,34 @@ Class {
 }
 
 { #category : #examples }
+GtkExamples class >> exampleMenuBar [
+	<example>
+	| menuBar fileMenu fileMenuItem quitMenuItem |
+
+	GtkApplication ensureRunning.
+		
+	menuBar := GtkMenuBar new.
+	fileMenu := GtkMenu new.
+	fileMenuItem := GtkMenuItem newLabel: 'File'.
+
+	fileMenuItem submenu: fileMenu.
+	quitMenuItem := GtkMenuItem newLabel: 'Quit'.
+	quitMenuItem connectActivate: [ self inform: 'No way!' ].
+	fileMenu add: quitMenuItem.
+
+	menuBar add: fileMenuItem.
+
+	GtkWindow new
+		resize: 600@400;
+		add: (GtkBox newVertical
+			packStart: menuBar expand: false fill: false padding: 0;
+			yourself);
+		inspect;
+		showAll.
+
+]
+
+{ #category : #examples }
 GtkExamples class >> exampleMorphView [
 	<example>
 
@@ -62,7 +90,7 @@ GtkExamples class >> exampleTextView [
 ]
 
 { #category : #examples }
-GtkExamples class >> exampleToolbar [
+GtkExamples class >> exampleToolBar [
 	<example>
 	| toolBar |
 

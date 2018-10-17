@@ -6,7 +6,7 @@ https://developer.gnome.org/gtk3/stable/GtkMenu.html
 Class {
 	#name : #GtkMenu,
 	#superclass : #GtkMenuShell,
-	#category : #'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Menu'
 }
 
 { #category : #private }
@@ -19,6 +19,13 @@ GtkMenu class >> menuNew [
 GtkMenu class >> new [
 
 	^ self menuNew initialize
+]
+
+{ #category : #'as yet unclassified' }
+GtkMenu >> adaptFromSpec: aMenuPresenter [
+
+		
+	super adaptFromSpec: aMenuPresenter
 ]
 
 { #category : #accessing }

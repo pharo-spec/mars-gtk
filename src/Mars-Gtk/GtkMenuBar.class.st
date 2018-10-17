@@ -6,7 +6,7 @@ https://developer.gnome.org/gtk3/stable/GtkMenuBar.html
 Class {
 	#name : #GtkMenuBar,
 	#superclass : #GtkMenuShell,
-	#category : #'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Menu'
 }
 
 { #category : #private }
