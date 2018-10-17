@@ -5,11 +5,16 @@ Class {
 }
 
 { #category : #building }
+GtkMenuBaseAdapter >> addModelTo: gtkWidget [
+	self subclassResponsibility
+]
+
+{ #category : #building }
 GtkMenuBaseAdapter >> buildWidget [
 	| gtkWidget |
 
 	gtkWidget := self gtkClass new.
-	gtkWidget adaptFromSpec: self model.
+	self addModelTo: gtkWidget.
 	^ gtkWidget
 ]
 

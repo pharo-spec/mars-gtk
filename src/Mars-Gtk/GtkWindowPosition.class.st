@@ -13,7 +13,7 @@ Class {
 		'GTK_WIN_POS_MOUSE',
 		'GTK_WIN_POS_NONE'
 	],
-	#category : #'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #'enum declaration' }

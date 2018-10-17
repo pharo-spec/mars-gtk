@@ -11,7 +11,7 @@ Class {
 	#pools : [
 		'GtkOrientation'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #private }

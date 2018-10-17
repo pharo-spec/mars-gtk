@@ -8,7 +8,7 @@ https://developer.gnome.org/gtk3/stable/GtkGrid.html
 Class {
 	#name : #GtkGrid,
 	#superclass : #GtkContainer,
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #private }

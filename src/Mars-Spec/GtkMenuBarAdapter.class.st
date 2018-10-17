@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkMenuBarAdapter,
-	#superclass : #GtkMenuBaseAdapter,
+	#superclass : #GtkMenuAdapter,
 	#category : #'Mars-Spec'
 }
 

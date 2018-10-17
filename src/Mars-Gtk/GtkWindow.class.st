@@ -10,7 +10,7 @@ Class {
 		'GtkWindowPosition',
 		'GtkWindowType'
 	],
-	#category : #'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #'instance creation' }

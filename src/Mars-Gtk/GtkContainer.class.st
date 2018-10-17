@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'children'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html
 Class {
 	#name : #GtkScrolledWindow,
 	#superclass : #GtkBin,
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #'instance creation' }

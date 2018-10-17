@@ -10,7 +10,7 @@ Class {
 		'GtkIconSize',
 		'GtkToolbarStyle'
 	],
-	#category : 'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #'instance creation' }

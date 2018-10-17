@@ -10,7 +10,7 @@ Class {
 		'GTK_ORIENTATION_HORIZONTAL',
 		'GTK_ORIENTATION_VERTICAL'
 	],
-	#category : #'Mars-Gtk-Container'
+	#category : #'Mars-Gtk-Widget-Container'
 }
 
 { #category : #'enum declaration' }
