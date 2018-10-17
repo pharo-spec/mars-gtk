@@ -23,6 +23,12 @@ GtkWindow class >> windowNew: type [
 	^ self ffiCall: #( GtkWindow *gtk_window_new ( GtkWindowType type ) )
 ]
 
+{ #category : #accessing }
+GtkWindow >> addAcceleratorGroup: accel_group [
+
+	^ self ffiCall: #(void gtk_window_add_accel_group (self, GtkAccelGroup *accel_group))
+]
+
 { #category : #'external resource management' }
 GtkWindow >> autoRelease [
 	"autoReleasing windows is more complicated than the usual WeakRegistry mechanism, since 

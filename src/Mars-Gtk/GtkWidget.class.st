@@ -38,12 +38,16 @@ GtkWidget class >> widgetDestroy: widget [
 
 { #category : #accessing }
 GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
+	| charValue modifiers |
 
+	charValue := aShortcut character key asciiValue.
+	modifiers := aShortcut modifier asGdkModifierType.
+		
 	self 
 		widgetAddAccelerator: aString 
 		group: anAccelGroup 
-		key: 0
-		modifiers: 0
+		key: charValue
+		modifiers: modifiers
 		accelFlags: GTK_ACCEL_VISIBLE
 		
 ]

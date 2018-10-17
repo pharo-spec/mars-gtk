@@ -16,6 +16,11 @@ Class {
 	#category : #'Mars-Gtk-Base'
 }
 
+{ #category : #'library path' }
+GObject class >> ffiLibraryName [
+	^ GtkLibrary
+]
+
 { #category : #'private signaling' }
 GObject >> connect: aString do: aBlock [
 	"this is the basic signaling (for IO events), who share signature along them... of course 

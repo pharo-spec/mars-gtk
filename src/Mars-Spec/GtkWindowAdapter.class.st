@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #building }
-GtkWindowAdapter >> addMenuTo: gtkBox [
+GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 	| gtkMenuBar |
 	
 	gtkMenuBar := self model menu buildWithSpec.
@@ -13,7 +13,10 @@ GtkWindowAdapter >> addMenuTo: gtkBox [
 		packStart: gtkMenuBar 
 		expand: false 
 		fill: false 
-		padding: 0
+		padding: 0.
+
+	self model menu shortcutGroup ifNotNil: [ :accelGroup | 
+		gtkWindow addAcceleratorGroup: accelGroup ]
 ]
 
 { #category : #accessing }
@@ -22,7 +25,7 @@ GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 		
 	gtkBox := GtkBox newVertical.
 			
-	self model hasMenu ifTrue: [ self addMenuTo: gtkBox ].
+	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
 	self model hasToolBar ifTrue: [ self addToolBarTo: gtkBox ].
 	
 	contentWidget := self model presenter buildWithSpecLayout: aSpec.
