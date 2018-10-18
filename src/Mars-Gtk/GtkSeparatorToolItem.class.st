@@ -19,6 +19,12 @@ GtkSeparatorToolItem >> draw: draw [
 	^ self ffiCall: #(void gtk_separator_tool_item_set_draw (self, gboolean draw))
 ]
 
+{ #category : #initialization }
+GtkSeparatorToolItem >> initialize [ 
+	super initialize.
+	self draw: true
+]
+
 { #category : #testing }
 GtkSeparatorToolItem >> isDraw [
 	^ self ffiCall: #(gboolean gtk_separator_tool_item_get_draw (self))
