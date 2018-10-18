@@ -6,6 +6,9 @@ https://developer.gnome.org/gtk3/stable/GtkWindow.html
 Class {
 	#name : #GtkWindow,
 	#superclass : #GtkContainer,
+	#instVars : [
+		'acceleratorGroups'
+	],
 	#pools : [
 		'GtkWindowPosition',
 		'GtkWindowType'
@@ -24,9 +27,12 @@ GtkWindow class >> windowNew: type [
 ]
 
 { #category : #accessing }
-GtkWindow >> addAcceleratorGroup: accel_group [
+GtkWindow >> addAcceleratorGroup: anAcceleratorGroup [
 
-	^ self ffiCall: #(void gtk_window_add_accel_group (self, GtkAccelGroup *accel_group))
+	acceleratorGroups ifNil: [ acceleratorGroups := Set new ].
+	acceleratorGroups add: anAcceleratorGroup.
+	self windowAddAccelGroup: anAcceleratorGroup.
+
 ]
 
 { #category : #'external resource management' }
@@ -104,4 +110,10 @@ GtkWindow >> title [
 { #category : #accessing }
 GtkWindow >> title: title [
 	^ self ffiCall: #(void gtk_window_set_title (self, const gchar *title))
+]
+
+{ #category : #private }
+GtkWindow >> windowAddAccelGroup: accel_group [
+
+	^ self ffiCall: #(void gtk_window_add_accel_group (self, GtkAccelGroup *accel_group))
 ]

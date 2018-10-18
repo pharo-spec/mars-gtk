@@ -4,7 +4,7 @@ Class {
 	#category : #'Mars-Spec'
 }
 
-{ #category : #building }
+{ #category : #private }
 GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 	| gtkMenuBar |
 	
@@ -36,7 +36,7 @@ GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 	gtkWindow add: gtkBox
 ]
 
-{ #category : #building }
+{ #category : #private }
 GtkWindowAdapter >> addStatusBarTo: gtkBox [
 	| gtkStatusBar |
 	
@@ -48,7 +48,7 @@ GtkWindowAdapter >> addStatusBarTo: gtkBox [
 		padding: 0	
 ]
 
-{ #category : #building }
+{ #category : #private }
 GtkWindowAdapter >> addToolBarTo: gtkBox [
 	| gtkToolBar |
 	
