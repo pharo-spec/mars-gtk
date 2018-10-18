@@ -41,7 +41,8 @@ MarsPlayground >> initialize [
 { #category : #initialization }
 MarsPlayground >> initializeWidgets [
 	
-	text := self newText beForCode
+	text := self newText beForCode.
+	self focusOrder add: text
 ]
 
 { #category : #'as yet unclassified' }

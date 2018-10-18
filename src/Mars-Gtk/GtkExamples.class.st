@@ -5,6 +5,23 @@ Class {
 }
 
 { #category : #examples }
+GtkExamples class >> exampleForm [
+	<example>
+
+	GtkApplication ensureRunning.
+		
+	GtkWindow new
+		autoRelease;
+		title: 'Toolbar example';
+		resize: 400 @ 400;
+		add:(GtkGrid new
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
 GtkExamples class >> exampleMenuBar [
 	<example>
 	| menuBar fileMenu fileMenuItem quitMenuItem |

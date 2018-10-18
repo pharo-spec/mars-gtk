@@ -8,6 +8,7 @@ Class {
 GtkToolBarAdapter >> addModelTo: gtkToolBar [
 	| needsSeparator |
 
+	self flag: #TODO. "This needs to come from the presenter"
 	gtkToolBar beBoth.
 
 	needsSeparator := false.
@@ -21,7 +22,7 @@ GtkToolBarAdapter >> addModelTo: gtkToolBar [
 		ifPresent: [ :items |
 			needsSeparator ifTrue: [ 
 				gtkToolBar add: GtkSeparatorToolItem new ]. 
-			items do: [ :each |
+			items reverseDo: [ :each |
 				gtkToolBar add: each buildWithSpec ] ]
 ]
 

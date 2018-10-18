@@ -14,3 +14,9 @@ GtkAdapter >> layout: aSpecLayoutFrame [
 	
 	self flag: #TODO.
 ]
+
+{ #category : #protocol }
+GtkAdapter >> takeKeyboardFocus [
+	
+	self widgetDo: [ :w | w grabFocus ]
+]
