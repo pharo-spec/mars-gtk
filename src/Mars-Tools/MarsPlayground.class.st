@@ -45,51 +45,15 @@ MarsPlayground >> initializeWidgets [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newFileMenu [
-
-	^ MenuPresenter new
-		addGroup: [ :group | 
-			group 
-				addItem: [ :item | item name: 'Settings'; icon: (self iconNamed: #configuration) ];
-				addItem: [ :item | 
-					item 
-						name: 'Save'; 
-						shortcut: $s meta shift;
-						action: [  self inform: 'Test' ] ];
-				addItem: [ :item | 
-					item 
-						name: 'Save'; 
-						icon: (self iconNamed: #smallSave); 
-						shortcut: $s meta shift;
-						action: [  self inform: 'Test' ] ];
-				addItem: [ :item | item name: 'Save as...'; icon: (self iconNamed: #smallSaveAs) ];
-				addItem: [ :item | item name: 'Save and quit'; icon: (self iconNamed: #smallQuit) ];
-				addItem: [ :item | item name: 'Quit'; icon: (self iconNamed: #smallQuit) ] ].
-		
-]
-
-{ #category : #'as yet unclassified' }
 MarsPlayground >> newMenu [
+	| menuSpec |
 	
-	^ MenuBarPresenter new 
-		addGroup: [ :group | 
-			group 
-				addItem: [ :item | item name: 'File'; subMenu: self newFileMenu ]";
-				addItem: [ :item | item name: 'Tools'; subMenu: self newToolsMenu ]" ]
-]
-
-{ #category : #'as yet unclassified' }
-MarsPlayground >> newToolsMenu [
-
-	^ MenuPresenter new
-		addGroup: [ :group | 
-			group 
-				addItem: [ :item | item name: 'Settings'; icon: (self iconNamed: #configuration) ];
-				addItem: [ :item | item name: 'Save'; icon: (self iconNamed: #smallSave) ];
-				addItem: [ :item | item name: 'Save as...'; icon: (self iconNamed: #smallSaveAs) ];
-				addItem: [ :item | item name: 'Save and quit'; icon: (self iconNamed: #smallQuit) ];
-				addItem: [ :item | item name: 'Quit'; icon: (self iconNamed: #smallQuit) ] ].
-		
+	menuSpec := (PragmaMenuBuilder 
+		pragmaKeyword: WorldState discoveredMenuPragmaKeyword 
+		model: self)
+		menuSpec.
+	^ menuSpec asMenuBarPresenter
+	
 ]
 
 { #category : #api }

@@ -20,11 +20,12 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 	
 	"accel"
 	self model shortcut ifNotNil: [ :shortcut | 
-		gtkWidget 
-			addAccelerator: 'activate' 
-			group: self shortcutGroup 
-			shortcut: shortcut ].
-
+		shortcut currentCharacter asString ifNotEmpty: [ 
+			gtkWidget 
+				addAccelerator: 'activate' 
+				group: self shortcutGroup 
+				shortcut: shortcut ] ].
+	
 	"action"		
 	self model action ifNotNil: [ :actionBlock |
 		gtkWidget connectActivate: actionBlock ].
@@ -53,11 +54,12 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 		yourself.
 		
 	self model shortcut ifNotNil: [ :shortcut |
-		gtkBox 
-			packEnd: (GtkAccelLabel newLabel: shortcut asString) 
-			expand: false 
-			fill: false 
-			padding: 0 ].
+		shortcut currentCharacter asString size > 0 ifTrue: [ 
+			gtkBox 
+				packEnd: (GtkAccelLabel newLabel: shortcut asString) 
+				expand: false 
+				fill: false 
+				padding: 0 ] ].
 		
 	^ gtkBox
 ]
