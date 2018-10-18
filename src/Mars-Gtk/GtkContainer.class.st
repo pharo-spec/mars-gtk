@@ -61,6 +61,7 @@ GtkContainer >> findChildByHandle: anExternalAddress [
 { #category : #'GT-Inspector-Extension' }
 GtkContainer >> gtInspectorWidgetsIn: composite [
 	<gtInspectorPresentationOrder: 80>  
+
 	composite tree 
 		title: 'Widgets';
 		rootsExpanded;

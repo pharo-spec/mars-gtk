@@ -22,11 +22,28 @@ GtkGrid class >> new [
 ]
 
 { #category : #accessing }
-GtkGrid >> attach: child at: aPoint [ 
-	^ self attach: child left: aPoint x top: aPoint y width: 1 height: 1
+GtkGrid >> attach: child at: aPoint [
+
+	^ self 
+		attach: child 
+		left: aPoint x 
+		top: aPoint y 
+		width: 1 
+		height: 1
 ]
 
 { #category : #accessing }
+GtkGrid >> attach: child at: aPoint span: spanPoint [
+	
+	^ self 
+		attach: child 
+		left: aPoint x
+		top: aPoint y 
+		width: spanPoint x 
+		height: spanPoint y
+]
+
+{ #category : #private }
 GtkGrid >> attach: child left: left top: top width: width height: height [
 	self ffiCall: #(void gtk_grid_attach (
 		self, 
@@ -35,4 +52,52 @@ GtkGrid >> attach: child left: left top: top width: width height: height [
 		gint top, 
 		gint width, 
 		gint height))
+]
+
+{ #category : #accessing }
+GtkGrid >> columnHomogeneous: homogeneous [
+
+	self ffiCall: #(void gtk_grid_set_column_homogeneous (self, gboolean homogeneous))
+]
+
+{ #category : #accessing }
+GtkGrid >> columnSpacing [
+
+	^ self ffiCall: #(guint gtk_grid_get_column_spacing (self))
+]
+
+{ #category : #accessing }
+GtkGrid >> columnSpacing: spacing [
+
+	self ffiCall: #(void gtk_grid_set_column_spacing (self, guint spacing))
+]
+
+{ #category : #testing }
+GtkGrid >> isColumnHomogeneous [
+
+	^ self ffiCall: #(gboolean gtk_grid_get_column_homogeneous (self))
+]
+
+{ #category : #testing }
+GtkGrid >> isRowHomogeneous [
+
+	^ self ffiCall: #(gboolean gtk_grid_get_row_homogeneous (self))
+]
+
+{ #category : #accessing }
+GtkGrid >> rowHomogeneous: homogeneous [
+
+	self ffiCall: #(void gtk_grid_set_row_homogeneous (self, gboolean homogeneous))
+]
+
+{ #category : #accessing }
+GtkGrid >> rowSpacing [
+
+	^ self ffiCall: #(guint gtk_grid_get_row_spacing (self))
+]
+
+{ #category : #accessing }
+GtkGrid >> rowSpacing: spacing [
+
+	self ffiCall: #(void gtk_grid_set_row_spacing (self, guint spacing))
 ]

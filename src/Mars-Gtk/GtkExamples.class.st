@@ -15,6 +15,13 @@ GtkExamples class >> exampleForm [
 		title: 'Toolbar example';
 		resize: 400 @ 400;
 		add:(GtkGrid new
+			borderWidth: 10;
+			columnSpacing: 10;
+			attach: (GtkLabel newLabel: 'Text input') at: 1@1;
+			attach: (GtkEntry new 
+					placeHolderText: 'Something interesting';
+					yourself) 
+				at: 2@1;
 			yourself);
 		center;
 		showAll;
