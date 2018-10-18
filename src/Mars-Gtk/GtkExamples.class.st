@@ -17,11 +17,19 @@ GtkExamples class >> exampleForm [
 		add:(GtkGrid new
 			borderWidth: 10;
 			columnSpacing: 10;
+			"field one"
 			attach: (GtkLabel newLabel: 'Text input') at: 1@1;
 			attach: (GtkEntry new 
 					placeHolderText: 'Something interesting';
 					yourself) 
 				at: 2@1;
+			"field two"
+			attach: (GtkLabel newLabel: 'Number input') at: 1@2;
+			attach: (GtkEntry new 
+					beNumber;
+					placeHolderText: '42';
+					yourself) 
+				at: 2@2;
 			yourself);
 		center;
 		showAll;

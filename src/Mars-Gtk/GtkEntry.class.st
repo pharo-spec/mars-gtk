@@ -6,7 +6,10 @@ https://developer.gnome.org/gtk3/stable/GtkEntry.html
 Class {
 	#name : #GtkEntry,
 	#superclass : #GtkWidget,
-	#category : 'Mars-Gtk-Widget'
+	#pools : [
+		'GtkInputPurpose'
+	],
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #private }
@@ -17,6 +20,36 @@ GtkEntry class >> entryNew [
 { #category : #'instance creation' }
 GtkEntry class >> new [ 
 	^ self entryNew initialize
+]
+
+{ #category : #testing }
+GtkEntry >> activatesDefault [
+
+	^ self ffiCall: #(gboolean gtk_entry_get_activates_default (self))
+]
+
+{ #category : #accessing }
+GtkEntry >> activatesDefault: setting [
+
+	self ffiCall: #(void gtk_entry_set_activates_default (self, gboolean setting))
+]
+
+{ #category : #accessing }
+GtkEntry >> beNumber [
+
+	self inputPurpose: GTK_INPUT_PURPOSE_NUMBER
+]
+
+{ #category : #accessing }
+GtkEntry >> inputPurpose [
+	
+	^ self ffiCall: #(GtkInputPurpose gtk_entry_get_input_purpose (self))
+]
+
+{ #category : #private }
+GtkEntry >> inputPurpose: purpose [
+	
+	^ self ffiCall: #(void gtk_entry_set_input_purpose (self, GtkInputPurpose purpose))
 ]
 
 { #category : #accessing }
