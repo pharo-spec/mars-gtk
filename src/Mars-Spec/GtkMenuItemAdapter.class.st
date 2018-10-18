@@ -20,6 +20,7 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 	
 	"accel"
 	self model shortcut ifNotNil: [ :shortcut | 
+		self flag: #HACK. "this is to ensure is not a key combination (gtk does not allows them)"
 		shortcut currentCharacter asString ifNotEmpty: [ 
 			gtkWidget 
 				addAccelerator: 'activate' 
@@ -54,7 +55,8 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 		yourself.
 		
 	self model shortcut ifNotNil: [ :shortcut |
-		shortcut currentCharacter asString size > 0 ifTrue: [ 
+		self flag: #HACK. "this is to ensure is not a key combination (gtk does not allows them)"
+		shortcut currentCharacter asString ifNotEmpty: [ 
 			gtkBox 
 				packEnd: (GtkAccelLabel newLabel: shortcut asString) 
 				expand: false 

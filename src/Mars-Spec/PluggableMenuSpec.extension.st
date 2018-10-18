@@ -11,9 +11,12 @@ PluggableMenuSpec >> asMenuBarPresenter [
 
 { #category : #'*Mars-Spec' }
 PluggableMenuSpec >> asMenuPresenter [
+	| presenter |
 	
-	^ MenuPresenter new
-		addGroup: [ :group |
-			self items do: [ :each |
-				group addMenuItem: each asMenuItemPresenter ] ]
+	presenter := MenuPresenter new.
+	(self items groupByRuns: [ :each | each separator = true ]) do: [ :eachGroup |
+		presenter addGroup: [ :group |
+			eachGroup do: [  :each |
+				group addMenuItem: each asMenuItemPresenter ] ] ].
+	^ presenter
 ]
