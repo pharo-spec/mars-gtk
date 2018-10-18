@@ -54,8 +54,14 @@ MarsPlayground >> newFileMenu [
 				addItem: [ :item | 
 					item 
 						name: 'Save'; 
+						shortcut: $s meta shift;
+						action: [  self inform: 'Test' ] ];
+				addItem: [ :item | 
+					item 
+						name: 'Save'; 
 						icon: (self iconNamed: #smallSave); 
-						shortcut: $s shift meta ];
+						shortcut: $s meta shift;
+						action: [  self inform: 'Test' ] ];
 				addItem: [ :item | item name: 'Save as...'; icon: (self iconNamed: #smallSaveAs) ];
 				addItem: [ :item | item name: 'Save and quit'; icon: (self iconNamed: #smallQuit) ];
 				addItem: [ :item | item name: 'Quit'; icon: (self iconNamed: #smallQuit) ] ].
