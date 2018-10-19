@@ -7,9 +7,10 @@ Class {
 	#name : #GtkButton,
 	#superclass : #GtkWidget,
 	#pools : [
-		'GtkPositionType'
+		'GtkPositionType',
+		'GtkReliefStyle'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #private }
@@ -99,4 +100,28 @@ GtkButton >> label [
 GtkButton >> label: aString [
 
 	^ self gtk_button_set_label: aString utf8Encoded
+]
+
+{ #category : #accessing }
+GtkButton >> reliefStyle [
+
+	^ self ffiCall: #(GtkReliefStyle gtk_button_get_relief (self))
+]
+
+{ #category : #accessing }
+GtkButton >> reliefStyle: relief [
+
+	^ self ffiCall: #(void gtk_button_set_relief (self, GtkReliefStyle relief))
+]
+
+{ #category : #accessing }
+GtkButton >> setNoRelief [
+
+	self reliefStyle: GTK_RELIEF_NONE
+]
+
+{ #category : #accessing }
+GtkButton >> setNormalRelief [
+
+	self reliefStyle: GTK_RELIEF_NORMAL
 ]
