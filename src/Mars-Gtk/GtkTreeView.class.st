@@ -25,10 +25,29 @@ GtkTreeView class >> new [
 	^ self basicNewTreeView initialize
 ]
 
+{ #category : #private }
+GtkTreeView >> addExpanderColumn [
+
+	self ffiCall: #(void gtk_tree_view_set_expander_column(self, 0))
+]
+
 { #category : #accessing }
 GtkTreeView >> appendColumn: column [
 	
 	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
+]
+
+{ #category : #private }
+GtkTreeView >> enableTreeLines [
+
+	self enableTreeLines: true
+]
+
+{ #category : #private }
+GtkTreeView >> enableTreeLines: enabled [
+
+	self ffiCall: #(void gtk_tree_view_set_enable_tree_lines (self,
+                                     gboolean enabled))
 ]
 
 { #category : #accessing }
@@ -51,6 +70,12 @@ GtkTreeView >> newColumn [
 	column := GtkTreeViewColumn new.
 	self appendColumn: column.
 	^ column
+]
+
+{ #category : #private }
+GtkTreeView >> setExpanderColumn: aColumn [
+
+	self ffiCall: #(void gtk_tree_view_set_expander_column(self, GtkTreeViewColumn *aColumn))
 ]
 
 { #category : #private }

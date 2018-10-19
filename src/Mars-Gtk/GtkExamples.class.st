@@ -361,6 +361,9 @@ GtkExamples class >> exampleTreeView [
 		title: 'Another Column アイウエオ';
 		renderer: renderer;
 		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+		
+	tree addExpanderColumn.
+	tree enableTreeLines.
 
 	GtkWindow new 
 		autoRelease;
