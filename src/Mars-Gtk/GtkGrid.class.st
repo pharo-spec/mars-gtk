@@ -26,15 +26,14 @@ GtkGrid >> attach: child at: aPoint [
 
 	^ self 
 		attach: child 
-		left: aPoint x 
-		top: aPoint y 
-		width: 1 
-		height: 1
+		at: aPoint
+		span: 1@1
 ]
 
 { #category : #accessing }
 GtkGrid >> attach: child at: aPoint span: spanPoint [
 	
+	self keepWidget: child.
 	^ self 
 		attach: child 
 		left: aPoint x
