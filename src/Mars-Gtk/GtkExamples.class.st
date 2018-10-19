@@ -7,7 +7,7 @@ Class {
 { #category : #examples }
 GtkExamples class >> exampleForm [
 	<example>
-	| grid actionBar |
+	| grid actionBar textInput numberInput textArea |
 
 	GtkApplication ensureRunning.
 
@@ -18,29 +18,40 @@ GtkExamples class >> exampleForm [
 		rowSpacing: 5;
 		"field one"
 		attach: (GtkLabel newLabel: 'Text input') at: 1@1;
-		attach: (GtkEntry new 
-				hExpand: true;
+		attach: ((textInput := GtkEntry new)
+				hExpand: true; "just one is needed, the other components follow"
+				activatesDefault: true;
 				placeHolderText: 'Something interesting';
 				yourself) 
 			at: 2@1;
 		"field two"
 		attach: (GtkLabel newLabel: 'Number input') at: 1@2;
-		attach: ((GtkSpinButton 
+		attach: ((numberInput := GtkSpinButton 
 					newAdjustment: (GtkAdjustment newDefault)
 					climbRate: 1.0 
 					digits: 0)
 				beNumber;
+				activatesDefault: true;
 				placeHolderText: '42';
 				yourself) 
 			at: 2@2;
 		"field three"
 		attach: (GtkLabel newLabel: 'Text area') at: 1@3;
-		attach: (GtkScrolledWindow newWidget: GtkTextView new) at: 2@3 span: 1@2;
+		attach: (GtkScrolledWindow newWidget: (textArea := GtkTextView new)) at: 2@3 span: 1@2;
 		yourself.
 		
 	actionBar := GtkActionBar new
-		packEnd: (GtkButton newLabel: 'Cancel');
-		packEnd: (GtkButton newLabel: 'Accept') grabDefault;
+		packEnd: ((GtkButton newLabel: 'Cancel')
+			connectClicked: [ self inform: 'Cancelled!' ];
+			yourself);
+		packEnd: ((GtkButton newLabel: 'Accept')
+			grabDefault;
+			connectClicked: [ 
+				self inform: ('Accepted: {1}, {2}, {3}' format: { 
+					textInput text. 
+					numberInput valueAsInt.
+					textArea text }) ];
+			yourself);
 		yourself.
 		
 	GtkWindow new
