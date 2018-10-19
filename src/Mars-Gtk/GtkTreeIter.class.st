@@ -13,54 +13,26 @@
 "
 Class {
 	#name : #GtkTreeIter,
-	#superclass : #FFIExternalStructure,
-	#traits : 'TGtkLibrary',
-	#classTraits : 'TGtkLibrary classTrait',
-	#instVars : [
-		'listStore'
-	],
-	#classVars : [
-		'OFFSET_STAMP',
-		'OFFSET_USER_DATA',
-		'OFFSET_USER_DATA2',
-		'OFFSET_USER_DATA3'
-	],
-	#pools : [
-		'GtkTypes'
-	],
-	#category : #'Mars-Gtk-Widget-List'
+	#superclass : #GtkAbstractIter,
+	#category : #'Mars-Gtk-Widget-Tree'
 }
-
-{ #category : #'field definition' }
-GtkTreeIter class >> fieldsDesc [
-	"self compileFields"
-	^ #(
-		gint stamp;
-		gpointer user_data;
-		gpointer user_data2;
-		gpointer user_data3;)
-]
 
 { #category : #accessing }
 GtkTreeIter >> atColumnIndex: index setValue: aValue [
 
-	 self ffiCall: #(void gtk_list_store_set (GtkListStore* listStore, self, uint index, void* aValue, -1))
+	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore* store, self, uint index, void* aValue, -1))
 ]
 
 { #category : #accessing }
-GtkTreeIter >> listStore [
-	^ listStore
-]
+GtkTreeIter >> newChild [
 
-{ #category : #accessing }
-GtkTreeIter >> listStore: anObject [
-	listStore := anObject
+	^ store appendChildInParent: self
 ]
 
 { #category : #accessing }
 GtkTreeIter >> setValues: aValueArray [
 
-	^ self ffiCall: #(void gtk_list_store_set_valist (GtkListStore* listStore,
+	^ self ffiCall: #(void gtk_tree_store_set_valist (GtkTreeStore* #store,
                           self,
                           void *aValueArray))
 ]

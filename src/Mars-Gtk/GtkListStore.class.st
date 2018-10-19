@@ -29,8 +29,8 @@ GtkListStore class >> newWithColumnTypes: columnTypes [
 GtkListStore >> appendRow [
 
 	| iterator |
-	iterator := GtkTreeIter externalNew autoRelease.
-	iterator listStore: self.
+	iterator := GtkListIter externalNew autoRelease.
+	iterator store: self.
 	self gtkListStoreAppend: iterator.
 	^ iterator
 ]
@@ -38,14 +38,5 @@ GtkListStore >> appendRow [
 { #category : #private }
 GtkListStore >> gtkListStoreAppend: anIterator [
 
-	^ self ffiCall: #(void gtk_list_store_append (self, GtkTreeIter *anIterator))
-]
-
-{ #category : #iterating }
-GtkListStore >> gtkListStoreWithIter: iter atIndex: index setValue: value [
-
-	^ self ffiCall: #(void gtk_list_store_set_value (GtkListStore* listStore,
-                          self,
-                          gint index,
-                          void *aValue))
+	^ self ffiCall: #(void gtk_list_store_append (self, GtkListIter* anIterator))
 ]

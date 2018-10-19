@@ -168,7 +168,7 @@ GtkExamples class >> exampleListView [
 		store appendRow atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
 			atColumnIndex: 1 setValue: '3' utf8Encoded. ].
 	
-	list := GtkListView new.
+	list := GtkTreeView new.
 	list model: store.
 
 	renderer := GtkCellTextRenderer new.
@@ -184,7 +184,7 @@ GtkExamples class >> exampleListView [
 	GtkWindow new 
 		autoRelease;
 		title: 'Simple List Example';
-		resize: 500@200;
+		resize: 500@500;
 		add: (GtkScrolledWindow newWidget: list);
 		center;
 		showAll;
@@ -320,6 +320,53 @@ GtkExamples class >> exampleToolBar [
 			packStart: toolBar expand: false fill: false padding: 5;
 			packStart: (GtkLabel newLabel: 'panel');
 			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
+GtkExamples class >> exampleTreeView [
+	<example>
+	| store tree renderer |
+	
+	GtkApplication ensureRunning.
+	
+	store := GtkTreeStore newWithColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+
+	100 timesRepeat: [ | row |
+		row := store appendRow
+			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
+			atColumnIndex: 1 setValue: '1' utf8Encoded;
+			yourself.
+		row newChild
+			atColumnIndex: 0 setValue: 'Childddd' utf8Encoded;
+			atColumnIndex: 1 setValue: '11321' utf8Encoded.
+		row newChild
+			atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
+			atColumnIndex: 1 setValue: '2' utf8Encoded.
+		row newChild
+			atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
+			atColumnIndex: 1 setValue: '3' utf8Encoded.].
+	
+	tree := GtkTreeView new.
+	tree model: store.
+
+	renderer := GtkCellTextRenderer new.
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Example Column Tìtlé';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Another Column アイウエオ';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Simple List Example';
+		resize: 500@500;
+		add: (GtkScrolledWindow newWidget: tree);
 		center;
 		showAll;
 		inspect

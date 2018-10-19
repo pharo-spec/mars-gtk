@@ -7,7 +7,7 @@ https://developer.gnome.org/gtk3/stable/GtkTreeViewColumn.html
 Class {
 	#name : #GtkTreeViewColumn,
 	#superclass : #GObject,
-	#category : #'Mars-Gtk-Widget-List'
+	#category : #'Mars-Gtk-Widget-Tree'
 }
 
 { #category : #'instance creation' }
