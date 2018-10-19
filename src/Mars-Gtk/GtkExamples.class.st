@@ -7,35 +7,49 @@ Class {
 { #category : #examples }
 GtkExamples class >> exampleForm [
 	<example>
+	| grid actionBar |
 
 	GtkApplication ensureRunning.
+
+	grid := GtkGrid new
+		"rowHomogeneous: true;"
+		borderWidth: 20;
+		columnSpacing: 10;
+		rowSpacing: 5;
+		"field one"
+		attach: (GtkLabel newLabel: 'Text input') at: 1@1;
+		attach: (GtkEntry new 
+				hExpand: true;
+				placeHolderText: 'Something interesting';
+				yourself) 
+			at: 2@1;
+		"field two"
+		attach: (GtkLabel newLabel: 'Number input') at: 1@2;
+		attach: ((GtkSpinButton 
+					newAdjustment: (GtkAdjustment newDefault)
+					climbRate: 1.0 
+					digits: 0)
+				beNumber;
+				placeHolderText: '42';
+				yourself) 
+			at: 2@2;
+		"field three"
+		attach: (GtkLabel newLabel: 'Text area') at: 1@3;
+		attach: (GtkScrolledWindow newWidget: GtkTextView new) at: 2@3 span: 1@2;
+		yourself.
+		
+	actionBar := GtkActionBar new
+		packEnd: (GtkButton newLabel: 'Cancel');
+		packEnd: (GtkButton newLabel: 'Accept') grabDefault;
+		yourself.
 		
 	GtkWindow new
 		autoRelease;
 		title: 'Toolbar example';
 		resize: 400 @ 400;
-		add:(GtkGrid new
-			"rowHomogeneous: true;"
-			borderWidth: 20;
-			columnSpacing: 10;
-			rowSpacing: 5;
-			"field one"
-			attach: (GtkLabel newLabel: 'Text input') at: 1@1;
-			attach: (GtkEntry new 
-					hExpand: true;
-					placeHolderText: 'Something interesting';
-					yourself) 
-				at: 2@1;
-			"field two"
-			attach: (GtkLabel newLabel: 'Number input') at: 1@2;
-			attach: ((GtkSpinButton 
-						newAdjustment: (GtkAdjustment newDefault)
-						climbRate: 1.0 
-						digits: 0)
-					beNumber;
-					placeHolderText: '42';
-					yourself) 
-				at: 2@2;
+		add:(GtkBox newVertical 
+			packStart: grid;
+			packEnd: actionBar expand: false fill: false padding: 0;
 			yourself);
 		center;
 		showAll;
