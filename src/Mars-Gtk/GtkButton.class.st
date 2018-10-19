@@ -29,7 +29,7 @@ GtkButton class >> new [
 
 { #category : #'instance creation' }
 GtkButton class >> newLabel: aString [
-	^ (self buttonNewWithLabel: aString) initialize
+	^ (self buttonNewWithLabel: aString utf8Encoded) initialize
 ]
 
 { #category : #accessing }
@@ -58,6 +58,18 @@ GtkButton >> beImagePositionTop [
 ]
 
 { #category : #accessing }
+GtkButton >> gtk_button_get_label [
+
+	^ self ffiCall: #(gchar* gtk_button_get_label(self))
+]
+
+{ #category : #accessing }
+GtkButton >> gtk_button_set_label: utf8EncodedBytes [
+
+	^ self ffiCall: #(void gtk_button_set_label(self, gchar * utf8EncodedBytes))
+]
+
+{ #category : #accessing }
 GtkButton >> image [ 
 	^ self ffiCall: #(GtkImage *gtk_button_get_image (self))
 ]
@@ -75,4 +87,16 @@ GtkButton >> imagePosition: position [
 { #category : #testing }
 GtkButton >> isAlwaysShowImage [
 	^ self ffiCall: #(void gtk_button_get_always_show_image (self))
+]
+
+{ #category : #accessing }
+GtkButton >> label [
+
+	^ self gtk_button_get_label asByteArray utf8Decoded
+]
+
+{ #category : #accessing }
+GtkButton >> label: aString [
+
+	^ self gtk_button_set_label: aString utf8Encoded
 ]

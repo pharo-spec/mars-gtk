@@ -5,6 +5,26 @@ Class {
 }
 
 { #category : #examples }
+GtkExamples class >> exampleButton [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkButton newLabel: 'Hello'.
+	button connectClicked: [ button label: button label, ' 今' ].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Button example';
+		resize: 500@200;
+		add: button;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
 GtkExamples class >> exampleForm [
 	<example>
 	| grid actionBar textInput numberInput textArea |
