@@ -34,8 +34,19 @@ GtkButton class >> newLabel: aString [
 ]
 
 { #category : #accessing }
+GtkButton >> alwaysShowImage [
+
+	^ self alwaysShowImage: true
+]
+
+{ #category : #accessing }
 GtkButton >> alwaysShowImage: always_show [
 	^ self ffiCall: #(void gtk_button_set_always_show_image (self, gboolean always_show))
+]
+
+{ #category : #accessing }
+GtkButton >> alwaysShowsImage [
+	^ self ffiCall: #(gboolean gtk_button_get_always_show_image (self))
 ]
 
 { #category : #accessing }
