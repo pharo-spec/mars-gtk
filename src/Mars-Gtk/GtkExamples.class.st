@@ -67,6 +67,25 @@ GtkExamples class >> exampleButtonWithUnderline [
 		inspect
 ]
 
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleCheckButton [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkCheckButton newLabel: 'Hello'.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Toggle Button example';
+		resize: 500@200;
+		add: button;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #examples }
 GtkExamples class >> exampleForm [
 	<example>
