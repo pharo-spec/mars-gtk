@@ -279,6 +279,31 @@ GtkExamples class >> exampleNotebook [
 		inspect
 ]
 
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleRadioButton [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkRadioButton newLabel: 'Option 1'.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Toggle Button example';
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: button;
+			packStart: (GtkRadioButton
+				buttonNewInSameGroupAs: button withLabel: 'Option 2');
+			packStart: (GtkRadioButton
+				buttonNewInSameGroupAs: button withLabel: 'Option 3');
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #examples }
 GtkExamples class >> exampleTextView [
 	<example>

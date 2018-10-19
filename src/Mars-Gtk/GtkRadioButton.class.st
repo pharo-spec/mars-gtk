@@ -13,7 +13,7 @@ Class {
 { #category : #private }
 GtkRadioButton class >> buttonNew [
 
-	^ self buttonNewInGroup: ExternalAddress null
+	^ self buttonNewInGroup: GtkRadioButtonGroup new
 ]
 
 { #category : #private }
@@ -21,7 +21,7 @@ GtkRadioButton class >> buttonNewInGroup: aGroup [
 
 	"aGroup should be an existing radio button group, or NULL if you are creating a new group"
 
-	^ self ffiCall: #(GtkRadioButton gtk_radio_button_new (GtkRadioButtonGroup *aGroup))
+	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new (GtkRadioButtonGroup *aGroup))
 ]
 
 { #category : #private }
@@ -29,25 +29,19 @@ GtkRadioButton class >> buttonNewInGroup: aGroup withLabel: utf8EncodedString [
 
 	"aGroup should be an existing radio button group, or NULL if you are creating a new group"
 
-	^ self ffiCall: #(GtkRadioButton gtk_radio_button_new_with_label (GtkRadioButtonGroup *aGroup, const gchar *utf8EncodedString))
+	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_with_label (GtkRadioButtonGroup *aGroup, gchar *utf8EncodedString))
 ]
 
 { #category : #private }
 GtkRadioButton class >> buttonNewInSameGroupAs: aRadioButton [
 
-	^ self ffiCall: #(GtkRadioButton gtk_radio_button_new_from_widget (GtkRadioButton *aRadioButton))
+	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_from_widget (GtkRadioButton *aRadioButton))
 ]
 
 { #category : #private }
 GtkRadioButton class >> buttonNewInSameGroupAs: aRadioButton withLabel: utf8EncodedString [
 
-	^ self ffiCall: #(GtkRadioButton gtk_radio_button_new_with_label_from_widget (GtkRadioButton *aRadioButton, const gchar *label))
-]
-
-{ #category : #private }
-GtkRadioButton class >> buttonNewWithLabel: utf8EncodedString [
-
-	^ self buttonNewInGroup: ExternalAddress null withLabel: utf8EncodedString
+	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_with_label_from_widget (GtkRadioButton *aRadioButton, const gchar *utf8EncodedString))
 ]
 
 { #category : #'instance creation' }
@@ -80,6 +74,12 @@ GtkRadioButton class >> newInSameGroupAs: aRadioButton withLabel: aLabel [
 	^ (self buttonNewInSameGroupAs: aRadioButton withLabel: aLabel utf8Encoded)
 		initialize;
 		yourself
+]
+
+{ #category : #private }
+GtkRadioButton class >> newLabel: aString [
+
+	^ self newInGroup: GtkRadioButtonGroup new withLabel: aString
 ]
 
 { #category : #events }
