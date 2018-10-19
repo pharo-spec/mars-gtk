@@ -32,8 +32,8 @@ GtkExamples class >> exampleForm [
 						newAdjustment: (GtkAdjustment newDefault)
 						climbRate: 1.0 
 						digits: 0)
-					"beNumber;
-					placeHolderText: '42';"
+					beNumber;
+					placeHolderText: '42';
 					yourself) 
 				at: 2@2;
 			yourself);

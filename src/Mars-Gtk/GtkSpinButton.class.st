@@ -62,3 +62,46 @@ GtkSpinButton class >> spinButtonNewAdjustment: adjustment climbRate: climb_rate
 		gdouble climb_rate,
  		guint digits))
 ]
+
+{ #category : #accessing }
+GtkSpinButton >> beNumber [ 
+
+	super beNumber.
+	self numeric: true
+]
+
+{ #category : #testing }
+GtkSpinButton >> isNumeric [
+
+	self ffiCall: #(gboolean gtk_spin_button_get_numeric (self))
+]
+
+{ #category : #accessing }
+GtkSpinButton >> numeric: numeric [
+
+	self ffiCall: #(void gtk_spin_button_set_numeric (self, gboolean numeric))
+]
+
+{ #category : #private }
+GtkSpinButton >> setValue: value [
+
+	self ffiCall: #(void gtk_spin_button_set_value (self, gdouble value))
+]
+
+{ #category : #accessing }
+GtkSpinButton >> value: aFloat [
+
+	^ self setValue: aFloat asFloat
+]
+
+{ #category : #accessing }
+GtkSpinButton >> valueAsFloat [
+
+	^ self ffiCall: #(gdouble gtk_spin_button_get_value (self))
+]
+
+{ #category : #accessing }
+GtkSpinButton >> valueAsInt [
+
+	^ self ffiCall: #(gint gtk_spin_button_get_value_as_int (self))
+]
