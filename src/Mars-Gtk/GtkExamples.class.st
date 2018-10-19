@@ -130,6 +130,25 @@ GtkExamples class >> exampleForm [
 		inspect
 ]
 
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleLinkButton [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkLinkButton newWithUri: 'https://pharo.org' withLabel: 'go to pharo.org'.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Link Button example';
+		resize: 500@200;
+		add: button;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #examples }
 GtkExamples class >> exampleListBox [
 	<example>
