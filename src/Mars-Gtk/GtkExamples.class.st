@@ -276,6 +276,45 @@ GtkExamples class >> exampleTextView [
 		inspect
 ]
 
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleToggleButton [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkToggleButton newLabel: 'Hello'.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Toggle Button example';
+		resize: 500@200;
+		add: button;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleToggleButtonWithoutIndicator [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkToggleButton newLabel: 'Hello'.
+	button doNotDrawIndicator.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Toggle Button example';
+		resize: 500@200;
+		add: button;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #examples }
 GtkExamples class >> exampleToolBar [
 	<example>
