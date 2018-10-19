@@ -12,6 +12,11 @@ MarsOSXPlatform class >> isAvailable [
 
 { #category : #accessing }
 MarsOSXPlatform >> defaultTheme [
+	"There are several available: 
+		- Sierra-light
+		- Sierra-dark
+		- McOS-MJV-Light-1.1
+		- McOS-MJV-Dark-1.1"
 
-	^ 'Sierra-dark'
+	^ 'McOS-MJV-Dark-1.1'
 ]

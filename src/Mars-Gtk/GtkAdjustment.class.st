@@ -5,17 +5,18 @@ https://developer.gnome.org/gtk3/stable/GtkAdjustment.html
 "
 Class {
 	#name : #GtkAdjustment,
-	#superclass : #FFIExternalObject,
+	#superclass : #GObject,
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#pools : [
 		'GtkTypes'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #private }
-GtkAdjustment class >> adjustementValue: value lower: lower upper: upper stepIncrement: step_increment pageIncrement: page_increment pageSize: page_size [  
+GtkAdjustment class >> adjustementValue: value lower: lower upper: upper stepIncrement: step_increment pageIncrement: page_increment pageSize: page_size [
+
 	^ self ffiCall: #(GtkAdjustment *gtk_adjustment_new (
 		gdouble value,
 		gdouble lower,
@@ -26,6 +27,26 @@ GtkAdjustment class >> adjustementValue: value lower: lower upper: upper stepInc
 ]
 
 { #category : #'instance creation' }
+GtkAdjustment class >> newDefault [ 
+	
+	^ self 
+		newValue: 0 
+		lower: 0 
+		upper: 100 
+		stepIncrement: 1 
+		pageIncrement: 0 
+		pageSize: 0
+]
+
+{ #category : #'instance creation' }
 GtkAdjustment class >> newValue: value lower: lower upper: upper stepIncrement: step_increment pageIncrement: page_increment pageSize: page_size [
-	^ (self adjustementValue: value lower: lower upper: upper stepIncrement: step_increment pageIncrement: page_increment pageSize: page_size) initialize
+
+	^ (self 
+		adjustementValue: value 
+		lower: lower 
+		upper: upper 
+		stepIncrement: step_increment 
+		pageIncrement: page_increment 
+		pageSize: page_size) 
+		initialize
 ]

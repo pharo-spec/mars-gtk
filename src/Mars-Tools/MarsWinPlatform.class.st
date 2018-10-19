@@ -13,5 +13,5 @@ MarsWinPlatform class >> isAvailable [
 { #category : #accessing }
 MarsWinPlatform >> defaultTheme [
 
-	^ 'Windows10'
+	^ 'Windows-10-master'
 ]

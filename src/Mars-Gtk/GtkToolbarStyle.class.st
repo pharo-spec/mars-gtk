@@ -12,7 +12,7 @@ Class {
 		'GTK_TOOLBAR_ICONS',
 		'GTK_TOOLBAR_TEXT'
 	],
-	#category : #'Mars-Gtk-Widget-Container'
+	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
 { #category : #'enum declaration' }

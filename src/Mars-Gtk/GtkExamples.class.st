@@ -15,19 +15,25 @@ GtkExamples class >> exampleForm [
 		title: 'Toolbar example';
 		resize: 400 @ 400;
 		add:(GtkGrid new
-			borderWidth: 10;
+			"rowHomogeneous: true;"
+			borderWidth: 20;
 			columnSpacing: 10;
+			rowSpacing: 5;
 			"field one"
 			attach: (GtkLabel newLabel: 'Text input') at: 1@1;
 			attach: (GtkEntry new 
+					hExpand: true;
 					placeHolderText: 'Something interesting';
 					yourself) 
 				at: 2@1;
 			"field two"
 			attach: (GtkLabel newLabel: 'Number input') at: 1@2;
-			attach: (GtkEntry new 
-					beNumber;
-					placeHolderText: '42';
+			attach: ((GtkSpinButton 
+						newAdjustment: (GtkAdjustment newDefault)
+						climbRate: 1.0 
+						digits: 0)
+					"beNumber;
+					placeHolderText: '42';"
 					yourself) 
 				at: 2@2;
 			yourself);

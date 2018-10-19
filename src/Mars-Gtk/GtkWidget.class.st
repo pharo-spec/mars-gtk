@@ -180,6 +180,12 @@ GtkWidget >> hAlign: align [
 	^ self ffiCall: #(void gtk_widget_set_halign (self, GtkAlign align))
 ]
 
+{ #category : #accessing }
+GtkWidget >> hExpand: expand [
+
+	self ffiCall: #(void gtk_widget_set_hexpand (self, gboolean expand))
+]
+
 { #category : #showing }
 GtkWidget >> hide [
 	self ffiCall: #( void gtk_widget_hide (self))
@@ -191,9 +197,21 @@ GtkWidget >> isFocus [
 ]
 
 { #category : #testing }
+GtkWidget >> isHExpand [
+
+	self ffiCall: #(gboolean gtk_widget_get_hexpand (self))
+]
+
+{ #category : #testing }
 GtkWidget >> isSensitive [
 	"Returns the widget’s effective sensitivity, which means it is sensitive itself and also its parent widget is sensitive"
 	^ self ffiCall: #(gboolean gtk_widget_is_sensitive (self))
+]
+
+{ #category : #testing }
+GtkWidget >> isVExpand [
+
+	self ffiCall: #(gboolean gtk_widget_get_vexpand (self))
 ]
 
 { #category : #testing }
@@ -282,6 +300,12 @@ GtkWidget >> vAlign [
 { #category : #accessing }
 GtkWidget >> vAlign: align [
 	^ self ffiCall: #(void gtk_widget_set_valign (self, GtkAlign align))
+]
+
+{ #category : #accessing }
+GtkWidget >> vExpand: expand [
+
+	self ffiCall: #(void gtk_widget_set_vexpand (self, gboolean expand))
 ]
 
 { #category : #private }

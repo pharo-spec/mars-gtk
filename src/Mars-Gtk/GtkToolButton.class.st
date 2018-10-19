@@ -6,7 +6,7 @@ https://developer.gnome.org/gtk3/stable/GtkToolButton.html
 Class {
 	#name : #GtkToolButton,
 	#superclass : #GtkToolItem,
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
 { #category : #'instance creation' }

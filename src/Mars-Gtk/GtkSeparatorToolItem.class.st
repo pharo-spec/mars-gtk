@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkSeparatorToolItem,
 	#superclass : #GtkToolItem,
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
 { #category : #'instance creation' }

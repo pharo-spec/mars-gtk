@@ -10,7 +10,7 @@ Class {
 		'GTK_WINDOW_POPUP',
 		'GTK_WINDOW_TOPLEVEL'
 	],
-	#category : #'Mars-Gtk-Widget-Container'
+	#category : #'Mars-Gtk-Widget-Window'
 }
 
 { #category : #'enum declaration' }
