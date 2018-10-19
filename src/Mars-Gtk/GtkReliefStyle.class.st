@@ -14,6 +14,18 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #'accessing enum' }
+GtkReliefStyle class >> GTK_RELIEF_NONE [
+	"This method was automatically generated"
+	^ GTK_RELIEF_NONE
+]
+
+{ #category : #'accessing enum' }
+GtkReliefStyle class >> GTK_RELIEF_NORMAL [
+	"This method was automatically generated"
+	^ GTK_RELIEF_NORMAL
+]
+
 { #category : #'enum declaration' }
 GtkReliefStyle class >> enumDecl [
 	^ #(
