@@ -7,9 +7,10 @@ Class {
 	#name : #GtkButton,
 	#superclass : #GtkWidget,
 	#pools : [
-		'GtkPositionType'
+		'GtkPositionType',
+		'GtkReliefStyle'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #private }
@@ -33,8 +34,19 @@ GtkButton class >> newLabel: aString [
 ]
 
 { #category : #accessing }
+GtkButton >> alwaysShowImage [
+
+	^ self alwaysShowImage: true
+]
+
+{ #category : #accessing }
 GtkButton >> alwaysShowImage: always_show [
 	^ self ffiCall: #(void gtk_button_set_always_show_image (self, gboolean always_show))
+]
+
+{ #category : #accessing }
+GtkButton >> alwaysShowsImage [
+	^ self ffiCall: #(gboolean gtk_button_get_always_show_image (self))
 ]
 
 { #category : #accessing }
@@ -80,6 +92,11 @@ GtkButton >> image: image [
 ]
 
 { #category : #accessing }
+GtkButton >> imagePosition [
+	^ self ffiCall: #(GtkPositionType gtk_button_get_image_position (self))
+]
+
+{ #category : #accessing }
 GtkButton >> imagePosition: position [
 	^ self ffiCall: #(void gtk_button_set_image_position (self, GtkPositionType position))
 ]
@@ -99,4 +116,52 @@ GtkButton >> label [
 GtkButton >> label: aString [
 
 	^ self gtkButtonSetLabel: aString utf8Encoded
+]
+
+{ #category : #accessing }
+GtkButton >> reliefStyle [
+
+	^ self ffiCall: #(GtkReliefStyle gtk_button_get_relief (self))
+]
+
+{ #category : #accessing }
+GtkButton >> reliefStyle: relief [
+
+	^ self ffiCall: #(void gtk_button_set_relief (self, GtkReliefStyle relief))
+]
+
+{ #category : #accessing }
+GtkButton >> setNoRelief [
+
+	self reliefStyle: GTK_RELIEF_NONE
+]
+
+{ #category : #accessing }
+GtkButton >> setNormalRelief [
+
+	self reliefStyle: GTK_RELIEF_NORMAL
+]
+
+{ #category : #accessing }
+GtkButton >> useNoUnderline [
+
+	^ self useUnderline: false
+]
+
+{ #category : #accessing }
+GtkButton >> useUnderline [
+
+	^ self useUnderline: true
+]
+
+{ #category : #accessing }
+GtkButton >> useUnderline: aBoolean [
+
+	^ self ffiCall: #(void gtk_button_set_use_underline (self, gboolean aBoolean))
+]
+
+{ #category : #accessing }
+GtkButton >> usesUnderline [
+
+	^ self ffiCall: #(gboolean gtk_button_get_use_underline ())
 ]

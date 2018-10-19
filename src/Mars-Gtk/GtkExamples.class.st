@@ -16,6 +16,49 @@ GtkExamples class >> exampleButton [
 
 	GtkWindow new 
 		autoRelease;
+		title: 'Button example with no relief';
+		resize: 500@200;
+		add: button;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
+GtkExamples class >> exampleButtonWithNoRelief [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkButton newLabel: 'Hello'.
+	button setNoRelief.
+	button connectClicked: [ button label: button label, ' 今' ].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Button example';
+		resize: 500@200;
+		add: button;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
+GtkExamples class >> exampleButtonWithUnderline [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	button := GtkButton new.
+	button useUnderline.
+	button label: '_Hello'.
+	button connectClicked: [ button label: button label, ' 今' ].
+
+	GtkWindow new 
+		autoRelease;
 		title: 'Button example';
 		resize: 500@200;
 		add: button;
