@@ -125,3 +125,27 @@ GtkButton >> setNormalRelief [
 
 	self reliefStyle: GTK_RELIEF_NORMAL
 ]
+
+{ #category : #accessing }
+GtkButton >> useNoUnderline [
+
+	^ self useUnderline: false
+]
+
+{ #category : #accessing }
+GtkButton >> useUnderline [
+
+	^ self useUnderline: true
+]
+
+{ #category : #accessing }
+GtkButton >> useUnderline: aBoolean [
+
+	^ self ffiCall: #(void gtk_button_set_use_underline (self, gboolean aBoolean))
+]
+
+{ #category : #accessing }
+GtkButton >> usesUnderline [
+
+	^ self ffiCall: #(gboolean gtk_button_get_use_underline ())
+]
