@@ -60,13 +60,13 @@ GtkButton >> beImagePositionTop [
 { #category : #private }
 GtkButton >> gtkButtonGetLabel [
 
-	^ self ffiCall: #(gchar* #gtkButtonGetLabel(self))
+	^ self ffiCall: #(gchar *gtk_button_get_label(self))
 ]
 
 { #category : #private }
 GtkButton >> gtkButtonSetLabel: utf8EncodedBytes [
 
-	^ self ffiCall: #(void gtk_button_set_label(self, gchar * utf8EncodedBytes))
+	self ffiCall: #(void gtk_button_set_label(self, gchar *utf8EncodedBytes))
 ]
 
 { #category : #accessing }
