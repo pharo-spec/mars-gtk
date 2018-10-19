@@ -92,6 +92,11 @@ GtkButton >> image: image [
 ]
 
 { #category : #accessing }
+GtkButton >> imagePosition [
+	^ self ffiCall: #(GtkPositionType gtk_button_get_image_position (self))
+]
+
+{ #category : #accessing }
 GtkButton >> imagePosition: position [
 	^ self ffiCall: #(void gtk_button_set_image_position (self, GtkPositionType position))
 ]
