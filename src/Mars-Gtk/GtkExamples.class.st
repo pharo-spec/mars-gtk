@@ -200,6 +200,48 @@ GtkExamples class >> exampleNotebook [
 ]
 
 { #category : #examples }
+GtkExamples class >> exampleStringList [
+	<example>
+	| store list renderer |
+	GtkApplication ensureRunning.
+	
+	store := GtkListStore newWithColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+
+	100 timesRepeat: [
+		store appendRow
+			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
+			atColumnIndex: 1 setValue: '1' utf8Encoded.
+		store appendRow atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
+			atColumnIndex: 1 setValue: '2' utf8Encoded.
+		store appendRow atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
+			atColumnIndex: 1 setValue: '3' utf8Encoded. ].
+	
+	list := GtkListView new.
+	list model: store.
+
+	renderer := GtkCellTextRenderer new.
+	list appendColumn: (GtkTreeViewColumn new
+		title: 'Example Column Tìtlé';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+	list appendColumn: (GtkTreeViewColumn new
+		title: 'Another Column アイウエオ';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+	
+	
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Simple List Example';
+		resize: 500@200;
+		add: (GtkScrolledWindow newWidget: list);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #examples }
 GtkExamples class >> exampleTextView [
 	<example>
 
