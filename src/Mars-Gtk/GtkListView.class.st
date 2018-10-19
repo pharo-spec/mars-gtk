@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/stable/GtkTreeView.html
 Class {
 	#name : #GtkListView,
 	#superclass : #GtkContainer,
+	#instVars : [
+		'listStore'
+	],
 	#category : #'Mars-Gtk-Widget-List'
 }
 
@@ -22,7 +25,7 @@ GtkListView class >> new [
 	^ self basicNewListView initialize
 ]
 
-{ #category : #'instance creation' }
+{ #category : #accessing }
 GtkListView >> appendColumn: column [
 	
 	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
@@ -37,14 +40,21 @@ GtkListView >> model [
 { #category : #accessing }
 GtkListView >> model: aListStore [
 
-	^ self ffiCall: #(void gtk_tree_view_set_model (self, GtkListStore* aListStore))
+	listStore := aListStore.
+	self setModel: aListStore 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #accessing }
 GtkListView >> newColumn [
 
 	| column |
 	column := GtkTreeViewColumn new.
 	self appendColumn: column.
 	^ column
+]
+
+{ #category : #private }
+GtkListView >> setModel: aListStore [
+
+	^ self ffiCall: #(void gtk_tree_view_set_model (self, GtkListStore* aListStore))
 ]
