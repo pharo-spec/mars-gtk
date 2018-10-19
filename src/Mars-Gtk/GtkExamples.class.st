@@ -24,7 +24,7 @@ GtkExamples class >> exampleButton [
 		inspect
 ]
 
-{ #category : #examples }
+{ #category : #'examples-buttons' }
 GtkExamples class >> exampleButtonWithNoRelief [
 	<example>
 
@@ -45,7 +45,7 @@ GtkExamples class >> exampleButtonWithNoRelief [
 		inspect
 ]
 
-{ #category : #examples }
+{ #category : #'examples-buttons' }
 GtkExamples class >> exampleButtonWithUnderline [
 	<example>
 
