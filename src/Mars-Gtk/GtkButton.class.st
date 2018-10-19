@@ -58,14 +58,14 @@ GtkButton >> beImagePositionTop [
 	self imagePosition: GTK_POS_TOP
 ]
 
-{ #category : #accessing }
-GtkButton >> gtk_button_get_label [
+{ #category : #private }
+GtkButton >> gtkButtonGetLabel [
 
-	^ self ffiCall: #(gchar* gtk_button_get_label(self))
+	^ self ffiCall: #(gchar* #gtkButtonGetLabel(self))
 ]
 
-{ #category : #accessing }
-GtkButton >> gtk_button_set_label: utf8EncodedBytes [
+{ #category : #private }
+GtkButton >> gtkButtonSetLabel: utf8EncodedBytes [
 
 	^ self ffiCall: #(void gtk_button_set_label(self, gchar * utf8EncodedBytes))
 ]
@@ -93,13 +93,13 @@ GtkButton >> isAlwaysShowImage [
 { #category : #accessing }
 GtkButton >> label [
 
-	^ self gtk_button_get_label asByteArray utf8Decoded
+	^ self gtkButtonGetLabel asByteArray utf8Decoded
 ]
 
 { #category : #accessing }
 GtkButton >> label: aString [
 
-	^ self gtk_button_set_label: aString utf8Encoded
+	^ self gtkButtonSetLabel: aString utf8Encoded
 ]
 
 { #category : #accessing }
