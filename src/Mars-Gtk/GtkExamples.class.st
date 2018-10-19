@@ -414,6 +414,26 @@ GtkExamples class >> exampleTreeView [
 		inspect
 ]
 
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleVolumeButton [
+	<example>
+
+	| button |
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Volume Button example';
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: GtkVolumeButton new;
+			packStart: GtkVolumeButton new;
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'see class side' }
 GtkExamples >> seeClassSide [
 ]
