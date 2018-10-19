@@ -44,6 +44,44 @@ GtkRadioButton class >> buttonNewInSameGroupAs: aRadioButton withLabel: utf8Enco
 	^ self ffiCall: #(GtkRadioButton gtk_radio_button_new_with_label_from_widget (GtkRadioButton *aRadioButton, const gchar *label))
 ]
 
+{ #category : #private }
+GtkRadioButton class >> buttonNewWithLabel: utf8EncodedString [
+
+	^ self buttonNewInGroup: ExternalAddress null withLabel: utf8EncodedString
+]
+
+{ #category : #'instance creation' }
+GtkRadioButton class >> newInGroup: aGroup [
+
+	^ (self buttonNewInGroup: aGroup)
+		initialize;
+		yourself
+]
+
+{ #category : #'instance creation' }
+GtkRadioButton class >> newInGroup: aGroup withLabel: aLabel [
+
+	^ (self buttonNewInGroup: aGroup withLabel: aLabel utf8Encoded)
+		initialize;
+		yourself
+]
+
+{ #category : #'instance creation' }
+GtkRadioButton class >> newInSameGroupAs: aRadioButton [
+
+	^ (self buttonNewInSameGroupAs: aRadioButton)
+		initialize;
+		yourself
+]
+
+{ #category : #'instance creation' }
+GtkRadioButton class >> newInSameGroupAs: aRadioButton withLabel: aLabel [
+
+	^ (self buttonNewInSameGroupAs: aRadioButton withLabel: aLabel utf8Encoded)
+		initialize;
+		yourself
+]
+
 { #category : #events }
 GtkRadioButton >> connectGroupChanged: aBlock [
 
