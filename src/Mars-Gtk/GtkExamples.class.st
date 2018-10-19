@@ -4,7 +4,7 @@ Class {
 	#category : 'Mars-Gtk-Examples'
 }
 
-{ #category : #examples }
+{ #category : #'examples-buttons' }
 GtkExamples class >> exampleButton [
 	<example>
 

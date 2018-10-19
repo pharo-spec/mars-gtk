@@ -10,7 +10,7 @@ Class {
 		'GtkPositionType',
 		'GtkReliefStyle'
 	],
-	#category : #'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget-Buttons'
 }
 
 { #category : #private }
@@ -67,6 +67,12 @@ GtkButton >> beImagePositionRight [
 { #category : #accessing }
 GtkButton >> beImagePositionTop [
 	self imagePosition: GTK_POS_TOP
+]
+
+{ #category : #events }
+GtkButton >> connectClicked: aBlock [
+
+	self connect: 'clicked' do: aBlock
 ]
 
 { #category : #private }
