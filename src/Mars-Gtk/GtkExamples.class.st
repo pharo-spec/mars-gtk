@@ -149,6 +149,30 @@ GtkExamples class >> exampleForm [
 		inspect
 ]
 
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleHorizontalBox [
+	<example>
+
+	| container |
+	GtkApplication ensureRunning.
+
+	container := GtkBox newHorizontal.
+
+	1 to: 5 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container add: button ].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Horizontal box';
+		resize: 500@200;
+		add: container;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleLinkButton [
 	<example>
@@ -523,6 +547,30 @@ GtkExamples class >> exampleTreeView [
 		title: 'Simple List Example';
 		resize: 500@500;
 		add: (GtkScrolledWindow newWidget: tree);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleVerticalBox [
+	<example>
+
+	| container |
+	GtkApplication ensureRunning.
+
+	container := GtkBox newVertical.
+
+	1 to: 5 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container add: button ].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Horizontal box';
+		resize: 500@200;
+		add: container;
 		center;
 		showAll;
 		inspect
