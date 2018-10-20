@@ -150,6 +150,30 @@ GtkExamples class >> exampleForm [
 ]
 
 { #category : #'examples-layouts' }
+GtkExamples class >> exampleGrid [
+	<example>
+
+	| container |
+	GtkApplication ensureRunning.
+
+	container := GtkGrid new.
+
+	1 to: 5 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container attach: button at: idx@idx ].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Horizontal box';
+		resize: 500@200;
+		add: container;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-layouts' }
 GtkExamples class >> exampleHorizontalBox [
 	<example>
 
