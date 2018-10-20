@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 GtkListIter >> atColumnIndex: index setValue: aValue [
 
-	 self ffiCall: #(void gtk_list_store_set (GtkListStore* listStore, self, uint index, void* aValue, -1))
+	 self ffiCall: #(void gtk_list_store_set (GtkListStore *store, self, uint index, void *aValue, -1))
 ]
 
 { #category : #accessing }

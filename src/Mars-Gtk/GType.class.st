@@ -36,7 +36,7 @@ Class {
 	#pools : [
 		'GtkTypes'
 	],
-	#category : #'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #'as yet unclassified' }

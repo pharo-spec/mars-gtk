@@ -32,6 +32,36 @@ GtkMenuButton >> alignMenuWithWidget: aWidget [
 ]
 
 { #category : #accessing }
+GtkMenuButton >> bePopupDirectionDown [
+
+	self popupDirection: GTK_ARROW_DOWN
+]
+
+{ #category : #accessing }
+GtkMenuButton >> bePopupDirectionLeft [
+
+	self popupDirection: GTK_ARROW_LEFT
+]
+
+{ #category : #accessing }
+GtkMenuButton >> bePopupDirectionNone [
+
+	self popupDirection: GTK_ARROW_NONE
+]
+
+{ #category : #accessing }
+GtkMenuButton >> bePopupDirectionRight [
+
+	self popupDirection: GTK_ARROW_RIGHT
+]
+
+{ #category : #accessing }
+GtkMenuButton >> bePopupDirectionUp [
+
+	self popupDirection: GTK_ARROW_UP
+]
+
+{ #category : #accessing }
 GtkMenuButton >> menuModel [
 
 	^ self ffiCall: #(GMenuModel *gtk_menu_button_get_menu_model (self))
@@ -73,7 +103,7 @@ GtkMenuButton >> popupDirection [
 	^ self ffiCall: #(GtkArrowType gtk_menu_button_get_direction (self))
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkMenuButton >> popupDirection: direction [
 
 	^ self ffiCall: #(void gtk_menu_button_set_direction (self, GtkArrowType direction))
@@ -85,7 +115,7 @@ GtkMenuButton >> usePopover: aBoolean [
 	^ self ffiCall: #(void gtk_menu_button_set_use_popover (self, gboolean aBoolean))
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 GtkMenuButton >> usesPopover [
 
 	^ self ffiCall: #(gboolean gtk_menu_button_get_use_popover (self))

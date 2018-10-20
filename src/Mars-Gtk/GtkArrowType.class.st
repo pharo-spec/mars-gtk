@@ -12,14 +12,40 @@ Class {
 		'GTK_ARROW_LEFT',
 		'GTK_ARROW_NONE',
 		'GTK_ARROW_RIGHT',
-		'GTK_ARROW_UP',
-		'GTK_POS_BOTTOM',
-		'GTK_POS_LEFT',
-		'GTK_POS_RIGHT',
-		'GTK_POS_TOP'
+		'GTK_ARROW_UP'
 	],
 	#category : #'Mars-Gtk-Widget'
 }
+
+{ #category : #'accessing enum' }
+GtkArrowType class >> GTK_ARROW_DOWN [
+	"This method was automatically generated"
+	^ GTK_ARROW_DOWN
+]
+
+{ #category : #'accessing enum' }
+GtkArrowType class >> GTK_ARROW_LEFT [
+	"This method was automatically generated"
+	^ GTK_ARROW_LEFT
+]
+
+{ #category : #'accessing enum' }
+GtkArrowType class >> GTK_ARROW_NONE [
+	"This method was automatically generated"
+	^ GTK_ARROW_NONE
+]
+
+{ #category : #'accessing enum' }
+GtkArrowType class >> GTK_ARROW_RIGHT [
+	"This method was automatically generated"
+	^ GTK_ARROW_RIGHT
+]
+
+{ #category : #'accessing enum' }
+GtkArrowType class >> GTK_ARROW_UP [
+	"This method was automatically generated"
+	^ GTK_ARROW_UP
+]
 
 { #category : #'enum declaration' }
 GtkArrowType class >> enumDecl [
