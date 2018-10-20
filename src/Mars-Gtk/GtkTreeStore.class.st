@@ -34,6 +34,20 @@ GtkTreeStore class >> newColumnTypes: columnTypes [
 	^ (self gtkTreeStoreNewWithNumberOfColums: columnTypes size andTypes: columnTypesExternalArray) initialize
 ]
 
+{ #category : #'instance creation' }
+GtkTreeStore class >> newStrings: aCollection [
+	"convenience method to create a store of strings"
+	| store |
+	
+	store := self newColumnTypes: { G_TYPE_STRING }.
+	aCollection do: [ :each |
+		store appendRow
+			atColumnIndex: 0 
+			setValue: 'Hey!' utf8Encoded ].
+
+	^ store
+]
+
 { #category : #iterating }
 GtkTreeStore >> appendChildInParent: aParent [
 

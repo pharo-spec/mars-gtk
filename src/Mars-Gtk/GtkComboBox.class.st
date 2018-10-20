@@ -6,6 +6,9 @@ https://developer.gnome.org/gtk3/stable/GtkComboBox.html
 Class {
 	#name : #GtkComboBox,
 	#superclass : #GtkBin,
+	#instVars : [
+		'model'
+	],
 	#category : #'Mars-Gtk-Widget'
 }
 
@@ -19,4 +22,23 @@ GtkComboBox class >> comboBoxNew [
 GtkComboBox class >> new [
 
 	^ self comboBoxNew initialize
+]
+
+{ #category : #'instance creation' }
+GtkComboBox class >> newModel: aTreeModel [
+
+	^ self new model: aTreeModel
+]
+
+{ #category : #accessing }
+GtkComboBox >> model: aTreeModel [
+
+	model := aTreeModel.
+	self setModel: aTreeModel
+]
+
+{ #category : #accessing }
+GtkComboBox >> setModel: aTreeModel [
+
+	^ self ffiCall: #(void gtk_combo_box_set_model (self, GObject *aTreeModel))
 ]
