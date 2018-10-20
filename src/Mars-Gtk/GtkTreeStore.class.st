@@ -7,21 +7,30 @@ https://developer.gnome.org/gtk3/stable/GtkTreeStore.html
 Class {
 	#name : #GtkTreeStore,
 	#superclass : #GObject,
+	#pools : [
+		'GType'
+	],
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 
-{ #category : #accessing }
+{ #category : #private }
 GtkTreeStore class >> gtkTreeStoreNewWithNumberOfColums: numberoOfColumns andTypes: types [
 
 	^ self ffiCall: #(GtkTreeStore * gtk_tree_store_newv (gint numberoOfColumns, void *types))
 ]
 
-{ #category : #accessing }
-GtkTreeStore class >> newWithColumnTypes: columnTypes [
-	| columnTypesExternalArray |
-	columnTypesExternalArray := ExternalAddress allocate: columnTypes size * FFIArchitecture forCurrentArchitecture longTypeSize.
-	columnTypes
-		withIndexDo: [ :value :index | columnTypesExternalArray platformUnsignedLongAt: 1 + ((index - 1) * FFIArchitecture forCurrentArchitecture longTypeSize) put: value ].
+{ #category : #'instance creation' }
+GtkTreeStore class >> newColumnTypes: columnTypes [
+	| columnTypesExternalArray longSize |
+	
+	longSize := FFIArchitecture forCurrentArchitecture longTypeSize.
+	columnTypesExternalArray := ByteArray new: columnTypes size * longSize.
+	
+	columnTypes withIndexDo: [ :value :index | 
+		columnTypesExternalArray 
+			platformUnsignedLongAt: 1 + ((index - 1) * longSize) 
+			put: value ].
+		
 	^ (self gtkTreeStoreNewWithNumberOfColums: columnTypes size andTypes: columnTypesExternalArray) initialize
 ]
 

@@ -17,7 +17,7 @@ GtkListStore class >> gtkListStoreNewWithNumberOfColums: numberoOfColumns andTyp
 ]
 
 { #category : #accessing }
-GtkListStore class >> newWithColumnTypes: columnTypes [
+GtkListStore class >> newColumnTypes: columnTypes [
 	| columnTypesExternalArray |
 	columnTypesExternalArray := ExternalAddress allocate: columnTypes size * FFIArchitecture forCurrentArchitecture longTypeSize.
 	columnTypes
