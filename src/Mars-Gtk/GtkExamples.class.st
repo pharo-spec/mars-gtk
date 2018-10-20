@@ -403,6 +403,57 @@ GtkExamples class >> exampleRadioButton [
 		inspect
 ]
 
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleRevealer [
+	<example>
+
+	| container rightRevealer leftRevealer |
+	GtkApplication ensureRunning.
+
+	container := GtkBox newHorizontal.
+	container add: (leftRevealer := GtkRevealer
+		newWithChild: ((GtkButton newLabel: 'Hide me')
+			connectClicked: [ 
+				leftRevealer hideChild.
+				rightRevealer revealChild ];
+			yourself)).
+	container add: (rightRevealer := GtkRevealer
+		newWithChild: (GtkBox newHorizontal
+			add: ((GtkButton newLabel: 'Slide Down')
+				connectClicked: [ 
+					leftRevealer
+						setSlideDownTransition;
+						revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Slide Up')
+				connectClicked: [ leftRevealer setSlideUpTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Slide Left')
+				connectClicked: [ leftRevealer setSlideLeftTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Slide Right')
+				connectClicked: [ leftRevealer setSlideRightTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Crossfade')
+				connectClicked: [ leftRevealer setCrossfadeTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			yourself)) revealChild.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Revealer';
+		resize: 500@200;
+		add: container;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleSwitch [
 	<example>
