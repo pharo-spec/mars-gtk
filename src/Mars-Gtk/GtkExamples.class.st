@@ -513,16 +513,14 @@ GtkExamples class >> exampleTreeView [
 GtkExamples class >> exampleVolumeButton [
 	<example>
 
-	| button |
 	GtkApplication ensureRunning.
 
 	GtkWindow new 
 		autoRelease;
 		title: 'Volume Button example';
 		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: GtkVolumeButton new;
-			packStart: GtkVolumeButton new;
+		add: (GtkGrid new
+			attach: GtkVolumeButton new left: 0 top: 0 width: 1 height: 1;
 			yourself);
 		center;
 		showAll;
