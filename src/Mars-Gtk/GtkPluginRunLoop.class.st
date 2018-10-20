@@ -43,6 +43,11 @@ GtkPluginRunLoop >> primEnableGtk3EventHandler: index [
 	self primitiveFailed
 ]
 
+{ #category : #initialization }
+GtkPluginRunLoop >> start [
+	"Do nothing"
+]
+
 { #category : #'private installing' }
 GtkPluginRunLoop >> uninstallRunLoop [
 	self primDisableGtk3EventHandler
