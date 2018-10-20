@@ -18,7 +18,7 @@ GtkToggleButton class >> buttonNew [
 { #category : #private }
 GtkToggleButton class >> buttonNewWithLabel: utf8EncodedString [
 
-	^ self ffiCall: #(GtkToggleButton *gtk_toggle_button_new_with_label (const gchar *utf8EncodedString))
+	^ self ffiCall: #(GtkToggleButton *gtk_toggle_button_new_with_label (String utf8EncodedString))
 ]
 
 { #category : #accessing }

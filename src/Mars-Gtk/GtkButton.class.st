@@ -20,7 +20,7 @@ GtkButton class >> buttonNew [
 
 { #category : #private }
 GtkButton class >> buttonNewWithLabel: label [
-	^ self ffiCall: #(GtkButton *gtk_button_new_with_label (const gchar *label))
+	^ self ffiCall: #(GtkButton *gtk_button_new_with_label (String label))
 ]
 
 { #category : #'instance creation' }

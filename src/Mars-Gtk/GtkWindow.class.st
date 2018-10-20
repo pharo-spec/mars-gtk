@@ -50,6 +50,16 @@ GtkWindow >> center [
 	self setPosition: GTK_WIN_POS_CENTER
 ]
 
+{ #category : #geometry }
+GtkWindow >> defaultSize: aPoint [
+	self defaultSizeWidth: aPoint x height: aPoint y
+]
+
+{ #category : #private }
+GtkWindow >> defaultSizeWidth: width height: height [
+	^ self ffiCall: #(void gtk_window_set_default_size (self, gint width, gint height))
+]
+
 { #category : #finalization }
 GtkWindow >> finalize [
 	(self getHandle isNil or: [ self getHandle isNull ]) ifTrue: [ ^ self ].

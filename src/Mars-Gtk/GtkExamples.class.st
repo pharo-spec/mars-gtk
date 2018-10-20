@@ -151,6 +151,31 @@ GtkExamples class >> exampleCheckButton [
 		inspect
 ]
 
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleFixed [
+	<example>
+	
+	| container |
+	GtkApplication ensureRunning.
+
+	container := GtkFixed new.
+	3 timesRepeat: [ | button |
+		button := GtkButton newLabel: 'Click me'.
+		button connectClicked: [ container moveChild: button to: 200@200 atRandom ].
+		container putChild: button at: 50@50 atRandom].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Layout';
+		defaultSize: 500@200;
+		add: (GtkBox newHorizontal
+			packStart: container;
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #examples }
 GtkExamples class >> exampleForm [
 	<example>
@@ -278,6 +303,32 @@ GtkExamples class >> exampleHorizontalBox [
 		autoRelease;
 		title: 'Horizontal box';
 		resize: 500@200;
+		add: container;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleLayout [
+	<example>
+	
+	| container |
+	GtkApplication ensureRunning.
+
+	container := GtkLayout new.
+
+	3 timesRepeat: [ | button |
+		button := GtkButton newLabel: 'Click me'.
+		button connectClicked: [ container moveChild: button to: 500@200 atRandom ].
+		container
+			putChild: button at: 500@200 atRandom;
+			yourself ].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Layout';
+		defaultSize: 500@200;
 		add: container;
 		center;
 		showAll;
