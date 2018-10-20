@@ -6,7 +6,7 @@ https://developer.gnome.org/gtk3/stable/GtkCellRendererText.html#gtk-cell-render
 "
 Class {
 	#name : #GtkCellRendererText,
-	#superclass : #GObject,
+	#superclass : #GtkCellRenderer,
 	#category : #'Mars-Gtk-Widget-CellRenderers'
 }
 

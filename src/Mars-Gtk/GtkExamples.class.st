@@ -119,7 +119,7 @@ GtkExamples class >> exampleForm [
 			at: 2@2;
 		"combo box"
 		attach: (GtkLabel newLabel: 'Text area') at: 1@3;
-		attach: (GtkComboBox newModel: (GtkTreeStore newStrings: #('one' 'two' 'three'))) at: 2@3;
+		attach: (GtkComboBox newModel: (GtkTreeStore newStrings: #('one' 'two' 'three'))) beText at: 2@3;
 		"text area"
 		attach: (GtkLabel newLabel: 'Text area') at: 1@4;
 		attach: (GtkScrolledWindow newWidget: (textArea := GtkTextView new)) at: 2@4 span: 1@3;
