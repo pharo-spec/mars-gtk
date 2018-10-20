@@ -568,7 +568,7 @@ GtkExamples class >> exampleVerticalBox [
 
 	GtkWindow new 
 		autoRelease;
-		title: 'Horizontal box';
+		title: 'Vertical box';
 		resize: 500@200;
 		add: container;
 		center;
