@@ -91,7 +91,7 @@ GtkApplication >> run [
 GtkApplication >> start [ 
 	self isRunning ifTrue: [ self stop ].
 	self initGtk3.
-	runLoop start
+	"runLoop start"
 ]
 
 { #category : #'private running' }

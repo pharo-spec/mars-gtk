@@ -17,12 +17,20 @@ GtkListStore class >> gtkListStoreNewWithNumberOfColums: numberoOfColumns andTyp
 ]
 
 { #category : #accessing }
-GtkListStore class >> newWithColumnTypes: columnTypes [
-	| columnTypesExternalArray |
-	columnTypesExternalArray := ExternalAddress allocate: columnTypes size * FFIArchitecture forCurrentArchitecture longTypeSize.
-	columnTypes
-		withIndexDo: [ :value :index | columnTypesExternalArray platformUnsignedLongAt: 1 + ((index - 1) * FFIArchitecture forCurrentArchitecture longTypeSize) put: value ].
-	^ (self gtkListStoreNewWithNumberOfColums: columnTypes size andTypes: columnTypesExternalArray) initialize
+GtkListStore class >> newColumnTypes: columnTypes [
+	| columnTypesExternalArray longSize |
+
+	longSize := FFIArchitecture forCurrentArchitecture longTypeSize.
+	columnTypesExternalArray := ByteArray new: columnTypes size * longSize.
+	columnTypes withIndexDo: [ :value :index | 
+		columnTypesExternalArray 
+			platformUnsignedLongAt: 1 + ((index - 1) * longSize) 
+			put: value ].
+	
+	^ (self 
+		gtkListStoreNewWithNumberOfColums: columnTypes size 
+		andTypes: columnTypesExternalArray) 
+		initialize
 ]
 
 { #category : #iterating }

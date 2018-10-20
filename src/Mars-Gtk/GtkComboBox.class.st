@@ -6,6 +6,12 @@ https://developer.gnome.org/gtk3/stable/GtkComboBox.html
 Class {
 	#name : #GtkComboBox,
 	#superclass : #GtkBin,
+	#traits : 'TGtkCellLayout',
+	#classTraits : 'TGtkCellLayout classTrait',
+	#instVars : [
+		'model',
+		'columns'
+	],
 	#category : #'Mars-Gtk-Widget'
 }
 
@@ -19,4 +25,35 @@ GtkComboBox class >> comboBoxNew [
 GtkComboBox class >> new [
 
 	^ self comboBoxNew initialize
+]
+
+{ #category : #'instance creation' }
+GtkComboBox class >> newModel: aTreeModel [
+
+	^ self new model: aTreeModel
+]
+
+{ #category : #TOREFACTOR }
+GtkComboBox >> beText [
+	"I'm assuming there is just one column. 
+	 And that it will be a text column. 
+	 I'm asuming a lot of things :P"
+	| cell |
+	
+	cell := GtkCellRendererText new.
+	self cellLayoutPackStart: cell expand: true.
+	self cellLayoutAddAttribute: cell attribute: 'text' column: 0
+]
+
+{ #category : #accessing }
+GtkComboBox >> model: aTreeModel [
+
+	model := aTreeModel.
+	self setModel: aTreeModel
+]
+
+{ #category : #private }
+GtkComboBox >> setModel: aTreeModel [
+
+	^ self ffiCall: #(void gtk_combo_box_set_model (self, GObject *aTreeModel))
 ]

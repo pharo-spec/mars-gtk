@@ -117,9 +117,12 @@ GtkExamples class >> exampleForm [
 				placeHolderText: '42';
 				yourself) 
 			at: 2@2;
-		"field three"
-		attach: (GtkLabel newLabel: 'Text area') at: 1@3;
-		attach: (GtkScrolledWindow newWidget: (textArea := GtkTextView new)) at: 2@3 span: 1@2;
+		"combo box"
+		attach: (GtkLabel newLabel: 'Combo box') at: 1@3;
+		attach: (GtkComboBox newModel: (GtkTreeStore newStrings: #('one' 'two' 'three' 'four'))) beText at: 2@3;
+		"text area"
+		attach: (GtkLabel newLabel: 'Text area') at: 1@4;
+		attach: (GtkScrolledWindow newWidget: (textArea := GtkTextView new)) at: 2@4 span: 1@3;
 		yourself.
 		
 	actionBar := GtkActionBar new
@@ -262,7 +265,7 @@ GtkExamples class >> exampleListView [
 	
 	GtkApplication ensureRunning.
 	
-	store := GtkListStore newWithColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [
 		store appendRow
@@ -276,7 +279,7 @@ GtkExamples class >> exampleListView [
 	list := GtkTreeView new.
 	list model: store.
 
-	renderer := GtkCellTextRenderer new.
+	renderer := GtkCellRendererText new.
 	list appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
 		renderer: renderer;
@@ -665,7 +668,7 @@ GtkExamples class >> exampleTreeView [
 	
 	GtkApplication ensureRunning.
 	
-	store := GtkTreeStore newWithColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [ | row |
 		row := store appendRow
@@ -685,7 +688,7 @@ GtkExamples class >> exampleTreeView [
 	tree := GtkTreeView new.
 	tree model: store.
 
-	renderer := GtkCellTextRenderer new.
+	renderer := GtkCellRendererText new.
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
 		renderer: renderer;
