@@ -353,7 +353,7 @@ GtkExamples class >> exampleMorphView [
 		inspect
 ]
 
-{ #category : #examples }
+{ #category : #'examples-layouts' }
 GtkExamples class >> exampleNotebook [
 	<example>
 
@@ -449,6 +449,37 @@ GtkExamples class >> exampleRevealer [
 		title: 'Revealer';
 		resize: 500@200;
 		add: container;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleStackWithStackSwitcher [
+	<example>
+
+	| stack |
+	GtkApplication ensureRunning.
+	
+	stack := GtkStack new 
+			addChild: ((GtkBox newVerticalSpacing: 5) 
+					packStart: (GtkLabel newLabel: 'panel 1');
+					packStart: ((GtkButton newLabel: 'test button 1')
+						connectClicked: [ self inform: 'Ok!' ];
+						yourself);
+					yourself) 
+			withTitle: 'page 1';
+			addChild: (GtkLabel newLabel: 'panel 2') withTitle: 'page 2';
+		yourself.
+	
+	GtkWindow new 
+		autoRelease;
+		title: 'Stack example';
+		resize: 500@200;
+		add: (GtkBox newVertical
+			add: (GtkStackSwitcher forStack: stack);
+			add: stack;
+			yourself);
 		center;
 		showAll;
 		inspect
