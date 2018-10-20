@@ -243,7 +243,7 @@ GtkExamples class >> exampleListView [
 	
 	GtkApplication ensureRunning.
 	
-	store := GtkListStore newWithColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [
 		store appendRow
@@ -584,7 +584,7 @@ GtkExamples class >> exampleTreeView [
 	
 	GtkApplication ensureRunning.
 	
-	store := GtkTreeStore newWithColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [ | row |
 		row := store appendRow
