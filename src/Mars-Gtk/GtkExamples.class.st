@@ -455,6 +455,37 @@ GtkExamples class >> exampleRevealer [
 ]
 
 { #category : #'examples-layouts' }
+GtkExamples class >> exampleStackWithStackSidebar [
+	<example>
+
+	| stack |
+	GtkApplication ensureRunning.
+	
+	stack := GtkStack new 
+			addChild: ((GtkBox newVerticalSpacing: 5) 
+					packStart: (GtkLabel newLabel: 'panel 1');
+					packStart: ((GtkButton newLabel: 'test button 1')
+						connectClicked: [ self inform: 'Ok!' ];
+						yourself);
+					yourself) 
+			withTitle: 'page 1';
+			addChild: (GtkLabel newLabel: 'panel 2') withTitle: 'page 2';
+		yourself.
+	
+	GtkWindow new 
+		autoRelease;
+		title: 'Stack example';
+		resize: 500@200;
+		add: (GtkBox newHorizontal
+			add: (GtkStackSidebar forStack: stack);
+			add: stack;
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-layouts' }
 GtkExamples class >> exampleStackWithStackSwitcher [
 	<example>
 
