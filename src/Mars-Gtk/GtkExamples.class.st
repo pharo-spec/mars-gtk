@@ -24,6 +24,71 @@ GtkExamples class >> exampleButton [
 		inspect
 ]
 
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleButtonBoxDoing: aBlock [
+	| container |
+	GtkApplication ensureRunning.
+
+	container := GtkButtonBox newHorizontal.
+	aBlock value: container.
+
+	1 to: 3 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container packStart: button ].
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Button box';
+		resize: 500@200;
+		add: container;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleButtonBoxExpandToFill [
+	<example>
+
+	self exampleButtonBoxDoing: [ :box | box expandToFill ]
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleButtonBoxPlaceAtCenter [
+	<example>
+
+	self exampleButtonBoxDoing: [ :box | box placeAtCenter ]
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleButtonBoxPlaceAtEdges [
+	<example>
+
+	self exampleButtonBoxDoing: [ :box | box placeAtEdges ]
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleButtonBoxPlaceAtEnd [
+	<example>
+
+	self exampleButtonBoxDoing: [ :box | box placeAtEnd ]
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleButtonBoxPlaceAtStart [
+	<example>
+
+	self exampleButtonBoxDoing: [ :box | box placeAtStart ]
+]
+
+{ #category : #'examples-layouts' }
+GtkExamples class >> exampleButtonBoxSpreadEvenly [
+	<example>
+
+	self exampleButtonBoxDoing: [ :box | box spreadEvenly ]
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleButtonWithNoRelief [
 	<example>
