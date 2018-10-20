@@ -6,6 +6,8 @@ https://developer.gnome.org/gtk3/stable/GtkComboBox.html
 Class {
 	#name : #GtkComboBox,
 	#superclass : #GtkBin,
+	#traits : 'TGtkCellLayout',
+	#classTraits : 'TGtkCellLayout classTrait',
 	#instVars : [
 		'model',
 		'columns'
@@ -36,15 +38,11 @@ GtkComboBox >> beText [
 	"I'm assuming there is just one column. 
 	 And that it will be a text column. 
 	 I'm asuming a lot of things :P"
+	| cell |
 	
-	columns := { GtkCellRendererText new }.
-	self cellLayoutPackStart: columns first expand: true
-]
-
-{ #category : #TOREFACTOR }
-GtkComboBox >> cellLayoutPackStart: cell expand: expand [
-
-	self ffiCall: #(void gtk_cell_layout_pack_start (self, GtkCellRenderer *cell, gboolean expand))
+	cell := GtkCellRendererText new.
+	self cellLayoutPackStart: cell expand: true.
+	self cellLayoutAddAttribute: cell attribute: 'text' column: 0
 ]
 
 { #category : #accessing }

@@ -43,7 +43,7 @@ GtkTreeStore class >> newStrings: aCollection [
 	aCollection do: [ :each |
 		store appendRow
 			atColumnIndex: 0 
-			setValue: 'Hey!' utf8Encoded ].
+			setValue: each asString utf8Encoded ].
 
 	^ store
 ]
