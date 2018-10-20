@@ -174,6 +174,25 @@ GtkExamples class >> exampleGrid [
 ]
 
 { #category : #'examples-layouts' }
+GtkExamples class >> exampleHeaderBar [
+	<example>
+
+	GtkApplication ensureRunning.
+	
+	GtkWindow new 
+		autoRelease;
+		resize: 500@200;
+		titleBar: (GtkHeaderBar new
+			title: 'Window with title';
+			subtitle: 'and subtitle';
+			packStart: (GtkButton newLabel: 'And button');
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-layouts' }
 GtkExamples class >> exampleHorizontalBox [
 	<example>
 

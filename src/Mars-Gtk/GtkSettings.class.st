@@ -76,6 +76,6 @@ GtkSettings >> themeName [
 
 { #category : #'accessing convenience' }
 GtkSettings >> themeName: aString [
-
+	"GtkSettings default themeName: 'McOS-MJV-Light-1.2'"
 	self property: 'gtk-theme-name' toString: aString
 ]
