@@ -260,7 +260,7 @@ GtkExamples class >> exampleListView [
 	list := GtkTreeView new.
 	list model: store.
 
-	renderer := GtkCellTextRenderer new.
+	renderer := GtkCellRendererText new.
 	list appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
 		renderer: renderer;
@@ -607,7 +607,7 @@ GtkExamples class >> exampleTreeView [
 	tree := GtkTreeView new.
 	tree model: store.
 
-	renderer := GtkCellTextRenderer new.
+	renderer := GtkCellRendererText new.
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
 		renderer: renderer;
