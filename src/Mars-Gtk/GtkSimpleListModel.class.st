@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtkSimpleListModel class >> items: aSequenceableCollection [
+GtkSimpleListModel class >> newItems: aSequenceableCollection [
 	^ self new items: aSequenceableCollection
 ]
 
