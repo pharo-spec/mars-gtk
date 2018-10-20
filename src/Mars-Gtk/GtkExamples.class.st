@@ -355,6 +355,25 @@ GtkExamples class >> exampleRadioButton [
 		inspect
 ]
 
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleSwitch [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Switch example';
+		resize: 500@200;
+		add: (GtkGrid new
+			attach: GtkSwitch new left: 0 top: 0 width: 1 height: 1;
+			attach: GtkSwitch new left: 0 top: 1 width: 1 height: 1;
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #examples }
 GtkExamples class >> exampleTextView [
 	<example>
