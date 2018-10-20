@@ -168,7 +168,7 @@ GtkExamples class >> exampleLinkButton [
 		inspect
 ]
 
-{ #category : #examples }
+{ #category : #'examples-lists' }
 GtkExamples class >> exampleListBox [
 	<example>
 
@@ -188,7 +188,7 @@ GtkExamples class >> exampleListBox [
 		inspect
 ]
 
-{ #category : #examples }
+{ #category : #'examples-lists' }
 GtkExamples class >> exampleListView [
 	<example>
 	| store list renderer |
@@ -478,7 +478,7 @@ GtkExamples class >> exampleToolBar [
 		inspect
 ]
 
-{ #category : #examples }
+{ #category : #'examples-lists' }
 GtkExamples class >> exampleTreeView [
 	<example>
 	| store tree renderer |
