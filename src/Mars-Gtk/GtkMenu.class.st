@@ -40,15 +40,3 @@ GtkMenu >> reserveToggleSize: reserve_toggle_size [
 		self,
 		gboolean reserve_toggle_size))
 ]
-
-{ #category : #accessing }
-GtkMenu >> title [
-
-	^ self ffiCall: #(const gchar *gtk_menu_get_title (self))
-]
-
-{ #category : #accessing }
-GtkMenu >> title: title [
-
-	^ self ffiCall: #(void gtk_menu_set_title (self, const gchar *title))
-]

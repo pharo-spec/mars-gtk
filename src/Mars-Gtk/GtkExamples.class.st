@@ -257,6 +257,38 @@ GtkExamples class >> exampleMenuBar [
 
 ]
 
+{ #category : #'examples-buttons' }
+GtkExamples class >> exampleMenuButtonWithMenu [
+	<example>
+	| menuButton fileMenu saveMenuItem quitMenuItem |
+
+	GtkApplication ensureRunning.
+		
+	menuButton := GtkMenuButton new.
+	fileMenu := GtkMenu new.
+	
+	saveMenuItem := GtkMenuItem newLabel: 'Save'.
+	saveMenuItem connectActivate: [ self inform: 'HAHA!' ].
+	fileMenu add: saveMenuItem.
+	
+	quitMenuItem := GtkMenuItem newLabel: 'Quit'.
+	quitMenuItem connectActivate: [ self inform: 'No way!' ].
+	fileMenu add: quitMenuItem.
+
+	fileMenu showAll.
+	menuButton popUp: fileMenu.
+
+	GtkWindow new
+		resize: 600@400;
+		title: 'Example menu button with menu';
+		add: (GtkGrid new
+			attach: menuButton left: 0 top: 0 width: 1 height: 1;
+			yourself);
+		inspect;
+		showAll.
+
+]
+
 { #category : #examples }
 GtkExamples class >> exampleMorphView [
 	<example>

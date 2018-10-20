@@ -70,7 +70,7 @@ GtkMenuButton >> menuModel [
 { #category : #accessing }
 GtkMenuButton >> menuModel: aMenuModel [
 
-	self ffiCall: #(void gtk_menu_button_set_menu_model (self, GMenuModel *aMenuModel))
+	self ffiCall: #(void gtk_menu_button_set_menu_model (self, GtkMenu *aMenuModel))
 ]
 
 { #category : #accessing }
