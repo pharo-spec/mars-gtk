@@ -21,6 +21,21 @@ GObject class >> ffiLibraryName [
 	^ GtkLibrary
 ]
 
+{ #category : #finalization }
+GObject class >> finalizeResourceData: handle [
+	"when marking for autoRelease, g-objects needs to be freed in a particular way."
+
+	handle isNull ifTrue: [ ^ self ].
+	self objectUnref: handle.
+	handle beNull
+]
+
+{ #category : #private }
+GObject class >> objectUnref: handle [
+	
+	^ self ffiCall: #(gpointer g_object_unref (void *handle))
+]
+
 { #category : #'private signaling' }
 GObject >> connect: aString do: aBlock [
 	"this is the basic signaling (for IO events), who share signature along them... of course 

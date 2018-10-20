@@ -69,3 +69,10 @@ GtkTreeStore >> gtkTreeStoreAppend: anIterator withParent: aParentIterator [
 
 	^ self ffiCall: #(void gtk_tree_store_append (self, GtkTreeIter *anIterator, GtkTreeIter *aParentIterator))
 ]
+
+{ #category : #initialization }
+GtkTreeStore >> initialize [ 
+	super initialize.
+	"Stores needs to be unreferenced after set"
+	self autoRelease 
+]
