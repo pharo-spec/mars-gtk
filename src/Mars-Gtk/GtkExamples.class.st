@@ -520,6 +520,26 @@ GtkExamples class >> exampleLayout [
 		inspect
 ]
 
+{ #category : #'example-basic' }
+GtkExamples class >> exampleLevelBar [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: (GtkLevelBar new
+				value: 0.7;
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleLinkButton [
 	<example>
