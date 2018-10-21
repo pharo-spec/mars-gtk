@@ -953,6 +953,28 @@ GtkExamples class >> exampleStackWithStackSwitcher [
 		inspect
 ]
 
+{ #category : #'example-basic' }
+GtkExamples class >> exampleStatusBar [
+	<example>
+
+	| statusBar |
+	GtkApplication ensureRunning.
+
+	statusBar := GtkStatusBar new.
+	(statusBar contextNamed: 'default')
+		pushMessage: 'First message that I cannot see';
+		pushMessage: 'les élèves français'.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Spinner';
+		resize: 500@200;
+		add: statusBar;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleSwitch [
 	<example>
