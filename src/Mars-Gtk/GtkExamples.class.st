@@ -1050,6 +1050,125 @@ GtkExamples class >> exampleRevealer [
 		inspect
 ]
 
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleScaleHorizontal [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleScaleNotDrawingValue [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
+	entry drawValue: false.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleScaleValueAtLeft [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
+	entry valueAtLeft.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleScaleValueAtTop [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
+	entry valueAtTop.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleScaleVertical [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkScale newVerticalMin: 0.0 max: 10.0 step: 1.0.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleScaleWithMarks [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
+	entry addMarkAtValue: 2.0 withPosition: GtkPositionType GTK_POS_TOP withText: 'text1'.
+	entry addMarkAtValue: 7.5 withPosition: GtkPositionType GTK_POS_BOTTOM.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-basic' }
 GtkExamples class >> exampleSpinner [
 	<example>

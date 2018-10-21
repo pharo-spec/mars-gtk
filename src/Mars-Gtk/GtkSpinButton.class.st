@@ -9,7 +9,7 @@ Class {
 	#pools : [
 		'GtkInputPurpose'
 	],
-	#category : #'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget-Entry'
 }
 
 { #category : #accessing }

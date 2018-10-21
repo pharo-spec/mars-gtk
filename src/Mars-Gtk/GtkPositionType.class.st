@@ -14,6 +14,30 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #'accessing enum' }
+GtkPositionType class >> GTK_POS_BOTTOM [
+	"This method was automatically generated"
+	^ GTK_POS_BOTTOM
+]
+
+{ #category : #'accessing enum' }
+GtkPositionType class >> GTK_POS_LEFT [
+	"This method was automatically generated"
+	^ GTK_POS_LEFT
+]
+
+{ #category : #'accessing enum' }
+GtkPositionType class >> GTK_POS_RIGHT [
+	"This method was automatically generated"
+	^ GTK_POS_RIGHT
+]
+
+{ #category : #'accessing enum' }
+GtkPositionType class >> GTK_POS_TOP [
+	"This method was automatically generated"
+	^ GTK_POS_TOP
+]
+
 { #category : #'enum declaration' }
 GtkPositionType class >> enumDecl [
 	^ #(
