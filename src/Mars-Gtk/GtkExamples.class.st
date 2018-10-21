@@ -701,6 +701,50 @@ GtkExamples class >> exampleNotebook [
 		inspect
 ]
 
+{ #category : #'example-basic' }
+GtkExamples class >> exampleProgressBar [
+	<example>
+
+	| bar |
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: (bar := GtkProgressBar new);
+			packStart: ((GtkButton newLabel: 'Progress!')
+				connectClicked: [ bar pulse ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
+GtkExamples class >> exampleProgressBarInverted [
+	<example>
+
+	| bar |
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: (bar := GtkProgressBar new beInverted; yourself);
+			packStart: ((GtkButton newLabel: 'Progress!')
+				connectClicked: [ bar pulse ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleRadioButton [
 	<example>
