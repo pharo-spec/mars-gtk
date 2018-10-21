@@ -335,7 +335,7 @@ GtkExamples class >> exampleImageFromThemeIcon [
 
 	GtkWindow new 
 		autoRelease;
-		title: 'Label';
+		title: 'Image from Theme icon';
 		resize: 500@200;
 		add: (GtkBox newVertical
 			packStart: (GtkImage newIconForMenuNamed: 'document-save-as');
