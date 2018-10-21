@@ -652,6 +652,31 @@ GtkExamples class >> exampleRevealer [
 		inspect
 ]
 
+{ #category : #'example-basic' }
+GtkExamples class >> exampleSpinner [
+	<example>
+
+	| spinner toggle |
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Spinner';
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: (spinner := GtkSpinner new);
+			packStart: ((toggle := GtkToggleButton newLabel: 'Spin')
+				connectToggled: [ 
+					toggle isActive
+						ifTrue: [ spinner start ]
+						ifFalse: [ spinner stop ] ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-layouts' }
 GtkExamples class >> exampleStackWithStackSidebar [
 	<example>
