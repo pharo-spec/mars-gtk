@@ -4,6 +4,28 @@ Class {
 	#category : 'Mars-Gtk-Examples'
 }
 
+{ #category : #'example-basic' }
+GtkExamples class >> exampleAccelLabel [
+	<example>
+
+	| label |
+	GtkApplication ensureRunning.
+
+	label := GtkAccelLabel newLabel: '"Hello 今"'.
+	label
+		accelLabelSetAccelKey: 3
+		modifiers: GdkModifierType GDK_CONTROL_MASK.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Label';
+		resize: 500@200;
+		add: label;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleButton [
 	<example>

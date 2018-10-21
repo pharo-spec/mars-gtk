@@ -6,13 +6,13 @@ https://developer.gnome.org/gtk3/stable/GtkAccelLabel.html
 Class {
 	#name : #GtkAccelLabel,
 	#superclass : #GtkLabel,
-	#category : #'Mars-Gtk-Widget-Menu'
+	#category : #'Mars-Gtk-Widget-Display'
 }
 
 { #category : #private }
 GtkAccelLabel class >> accelLabelNew: string [
 
-	^ self ffiCall: #(GtkAccelLabel* gtk_accel_label_new (const gchar *string))
+	^ self ffiCall: #(GtkAccelLabel* gtk_accel_label_new (String string))
 ]
 
 { #category : #'instance creation' }
@@ -24,7 +24,7 @@ GtkAccelLabel class >> new [
 { #category : #'instance creation' }
 GtkAccelLabel class >> newLabel: aString [
 
-	^ (self accelLabelNew: aString) initialize
+	^ (self accelLabelNew: aString utf8Encoded asString) initialize
 ]
 
 { #category : #private }
