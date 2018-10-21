@@ -141,6 +141,12 @@ GtkWidget >> data: anObject [
 	data := anObject
 ]
 
+{ #category : #accessing }
+GtkWidget >> destroy [
+	
+	^ self ffiCall: #(void gtk_widget_destroy (self))
+]
+
 { #category : #signaling }
 GtkWidget >> disconnectAll [
 	callbacks ifNil: [ ^ self ].
