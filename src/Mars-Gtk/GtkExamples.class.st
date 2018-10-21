@@ -351,6 +351,131 @@ GtkExamples class >> exampleImageFromThemeIcon [
 ]
 
 { #category : #'example-basic' }
+GtkExamples class >> exampleInfoBar [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: GtkTextView new;
+			packStart: (GtkInfoBar new
+				beInfo;
+				addButtonWithLabel: 'Answer 1' withId: 1;
+				addButtonWithLabel: 'Answer 2' withId: 2;
+				addButtonWithLabel: 'Answer 3' withId: 3;
+				connectResponse: [ :response | self inform: 'Got: ', response asString ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
+GtkExamples class >> exampleInfoBarDefault [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: GtkTextView new;
+			packStart: (GtkInfoBar new
+				addButtonWithLabel: 'Answer 1' withId: 1;
+				addButtonWithLabel: 'Answer 2' withId: 2;
+				addButtonWithLabel: 'Answer 3' withId: 3;
+				connectResponse: [ :response | self inform: 'Got: ', response asString ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
+GtkExamples class >> exampleInfoBarError [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: GtkTextView new;
+			packStart: (GtkInfoBar new
+				beError;
+				addButtonWithLabel: 'Answer 1' withId: 1;
+				addButtonWithLabel: 'Answer 2' withId: 2;
+				addButtonWithLabel: 'Answer 3' withId: 3;
+				connectResponse: [ :response | self inform: 'Got: ', response asString ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
+GtkExamples class >> exampleInfoBarQuestion [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: GtkTextView new;
+			packStart: (GtkInfoBar new
+				addButtonWithLabel: 'Answer 1' withId: 1;
+				addButtonWithLabel: 'Answer 2' withId: 2;
+				addButtonWithLabel: 'Answer 3' withId: 3;
+				connectResponse: [ :response | self inform: 'Got: ', response asString ];
+				beQuestion;
+				showAll;
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
+GtkExamples class >> exampleInfoBarWarning [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: GtkTextView new;
+			packStart: (GtkInfoBar new
+				beWarning;
+				addButtonWithLabel: 'Answer 1' withId: 1;
+				addButtonWithLabel: 'Answer 2' withId: 2;
+				addButtonWithLabel: 'Answer 3' withId: 3;
+				connectResponse: [ :response | self inform: 'Got: ', response asString ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
 GtkExamples class >> exampleLabel [
 	<example>
 
