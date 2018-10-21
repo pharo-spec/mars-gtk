@@ -19,11 +19,6 @@ GtkImage class >> imageNewFromIconName: iconNameString size: aSize [
 ]
 
 { #category : #private }
-GtkImage class >> imageNewFromStock: stock_id [
-	^ self ffiCall: #(GtkImage *gtk_image_new_from_stock (const gchar *stock_id))
-]
-
-{ #category : #private }
 GtkImage class >> imageNewFromSurface: surface [
 	^ self ffiCall: #(GtkWidget *gtk_image_new_from_surface (AthensCairoSurface surface))
 ]
@@ -71,11 +66,6 @@ GtkImage class >> newIconNamed: aString withSize: aSize [
 { #category : #'instance creation' }
 GtkImage class >> newMorph: anImageMorph [
 	^ self imageNewFromSurface: (self surfaceFor: anImageMorph)
-]
-
-{ #category : #'instance creation' }
-GtkImage class >> newStock: aString [
-	^ self imageNewFromStock: aString
 ]
 
 { #category : #private }

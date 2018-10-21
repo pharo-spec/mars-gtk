@@ -781,13 +781,13 @@ GtkExamples class >> exampleToolBar [
 		beIconSizeSmallToolbar;
 		beIcons; "beIcons, beText, beBoth"
 		add: ((GtkToolButton
-			newIcon: (GtkImage newStock: 'gtk-ok')
+			newIcon: (GtkImage newIconForLargeToolbarNamed: 'gtk-ok')
 			label: 'Ok form stock')
 			tooltipText: 'Ok from stock';
 			connectClicked: [ self inform: 'Ok from stock' ];
 			yourself);
 		add: ((GtkToolButton
-			newIcon: (GtkImage newStock: 'gtk-cancel')
+			newIcon: (GtkImage newIconForLargeToolbarNamed: 'gtk-cancel')
 			label: 'Cancel from stock')
 			tooltipText: 'Cancel from stock';
 			connectClicked: [ self inform: 'Cancel from stock' ];
