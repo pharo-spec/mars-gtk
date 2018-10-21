@@ -310,6 +310,24 @@ GtkExamples class >> exampleHorizontalBox [
 ]
 
 { #category : #'example-basic' }
+GtkExamples class >> exampleImageFromMorph [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Image from Morph';
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: (GtkImage newMorph: SimpleSwitchMorph new);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
 GtkExamples class >> exampleImageFromThemeIcon [
 	<example>
 
