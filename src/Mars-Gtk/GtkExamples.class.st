@@ -4,7 +4,7 @@ Class {
 	#category : 'Mars-Gtk-Examples'
 }
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleAccelLabel [
 	<example>
 
@@ -355,7 +355,7 @@ GtkExamples class >> exampleHorizontalBox [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleImageFromMorph [
 	<example>
 
@@ -373,7 +373,7 @@ GtkExamples class >> exampleImageFromMorph [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleImageFromThemeIcon [
 	<example>
 
@@ -396,7 +396,7 @@ GtkExamples class >> exampleImageFromThemeIcon [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBar [
 	<example>
 
@@ -421,7 +421,7 @@ GtkExamples class >> exampleInfoBar [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarDefault [
 	<example>
 
@@ -445,7 +445,7 @@ GtkExamples class >> exampleInfoBarDefault [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarError [
 	<example>
 
@@ -470,7 +470,7 @@ GtkExamples class >> exampleInfoBarError [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarQuestion [
 	<example>
 
@@ -496,7 +496,7 @@ GtkExamples class >> exampleInfoBarQuestion [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarWarning [
 	<example>
 
@@ -521,7 +521,7 @@ GtkExamples class >> exampleInfoBarWarning [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleLabel [
 	<example>
 
@@ -566,7 +566,7 @@ GtkExamples class >> exampleLayout [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleLevelBar [
 	<example>
 
@@ -767,7 +767,7 @@ GtkExamples class >> exampleNotebook [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleProgressBar [
 	<example>
 
@@ -789,7 +789,7 @@ GtkExamples class >> exampleProgressBar [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleProgressBarInverted [
 	<example>
 
@@ -811,7 +811,7 @@ GtkExamples class >> exampleProgressBarInverted [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleProgressBarWithText [
 	<example>
 
@@ -912,7 +912,7 @@ GtkExamples class >> exampleRevealer [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleSpinner [
 	<example>
 
@@ -999,7 +999,7 @@ GtkExamples class >> exampleStackWithStackSwitcher [
 		inspect
 ]
 
-{ #category : #'example-basic' }
+{ #category : #'examples-basic' }
 GtkExamples class >> exampleStatusBar [
 	<example>
 
