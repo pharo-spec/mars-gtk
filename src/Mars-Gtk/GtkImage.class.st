@@ -10,8 +10,13 @@ Class {
 		'AthensCairoDefinitions',
 		'GtkIconSize'
 	],
-	#category : #'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Widget-Display'
 }
+
+{ #category : #private }
+GtkImage class >> imageNewFromIconName: iconNameString size: aSize [
+	^ self ffiCall: #(GtkImage *gtk_image_new_from_icon_name (String iconNameString, GtkIconSize aSize))
+]
 
 { #category : #private }
 GtkImage class >> imageNewFromStock: stock_id [
@@ -26,6 +31,41 @@ GtkImage class >> imageNewFromSurface: surface [
 { #category : #'instance creation' }
 GtkImage class >> newForm: aForm [
 	^ self newMorph: aForm asMorph
+]
+
+{ #category : #'instance creation' }
+GtkImage class >> newIconForButtonNamed: aString [
+	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_BUTTON
+]
+
+{ #category : #'instance creation' }
+GtkImage class >> newIconForDialogNamed: aString [
+	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_DIALOG
+]
+
+{ #category : #'instance creation' }
+GtkImage class >> newIconForDragAndDropNamed: aString [
+	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_DND
+]
+
+{ #category : #'instance creation' }
+GtkImage class >> newIconForLargeToolbarNamed: aString [
+	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_LARGE_TOOLBAR
+]
+
+{ #category : #'instance creation' }
+GtkImage class >> newIconForMenuNamed: aString [
+	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_MENU
+]
+
+{ #category : #'instance creation' }
+GtkImage class >> newIconForSmallToolbarNamed: aString [
+	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_SMALL_TOOLBAR
+]
+
+{ #category : #'instance creation' }
+GtkImage class >> newIconNamed: aString withSize: aSize [
+	^ self imageNewFromIconName: aString size: aSize
 ]
 
 { #category : #'instance creation' }

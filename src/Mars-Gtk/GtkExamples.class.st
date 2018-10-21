@@ -310,6 +310,29 @@ GtkExamples class >> exampleHorizontalBox [
 ]
 
 { #category : #'example-basic' }
+GtkExamples class >> exampleImageFromThemeIcon [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Label';
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: (GtkImage newIconForMenuNamed: 'document-save-as');
+			packStart: (GtkImage newIconForSmallToolbarNamed: 'document-save-as');
+			packStart: (GtkImage newIconForLargeToolbarNamed: 'document-save-as');
+			packStart: (GtkImage newIconForButtonNamed: 'document-save-as');
+			packStart: (GtkImage newIconForDragAndDropNamed: 'document-save-as');
+			packStart: (GtkImage newIconForDialogNamed: 'document-save-as');
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'example-basic' }
 GtkExamples class >> exampleLabel [
 	<example>
 
