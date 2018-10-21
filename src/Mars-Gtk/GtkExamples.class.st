@@ -4,6 +4,34 @@ Class {
 	#category : 'Mars-Gtk-Examples'
 }
 
+{ #category : #'examples-windows' }
+GtkExamples class >> exampleAboutDialow [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: ((GtkButton newLabel: 'Show Dialog')
+			connectClicked: [ | dialog |
+				dialog := GtkAboutDialog new
+					comments: 'Comments';
+					licence: 'MIT';
+					programName: 'Pharo Gtk Bindings';
+					version: '0.1.2-alpha';
+					website: 'http://pharo.org';
+					websiteLabel: 'http://pharo.org';
+					copyright: 'The Pharo Community';
+					run;
+					destroy ];
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-basic' }
 GtkExamples class >> exampleAccelLabel [
 	<example>
