@@ -121,5 +121,5 @@ GtkProgressBar >> text [
 { #category : #accessing }
 GtkProgressBar >> text: aString [
 
-	self basicText: aString utf8Encoded
+	self basicText: aString utf8Encoded asString
 ]

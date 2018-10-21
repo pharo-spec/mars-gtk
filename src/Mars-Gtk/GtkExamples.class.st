@@ -745,6 +745,31 @@ GtkExamples class >> exampleProgressBarInverted [
 		inspect
 ]
 
+{ #category : #'example-basic' }
+GtkExamples class >> exampleProgressBarWithText [
+	<example>
+
+	| bar |
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: ((bar := GtkProgressBar new)
+				showText;
+				text: 'Making progress!';
+				yourself);
+			packStart: ((GtkButton newLabel: 'Progress!')
+				connectClicked: [ bar pulse ];
+				yourself);
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleRadioButton [
 	<example>
