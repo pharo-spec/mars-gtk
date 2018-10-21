@@ -211,7 +211,7 @@ GtkExamples class >> exampleDialow [
 		autoRelease;
 		title: thisContext method selector asString;
 		resize: 500@200;
-		add: ((GtkButton newLabel: 'Add Dialog')
+		add: ((GtkButton newLabel: 'Show Dialog')
 			connectClicked: [ | dialog |
 				dialog := GtkDialog new
 					addButtonWithLabel: 'Yes' withResponseId: 1;
