@@ -9,7 +9,7 @@ Trait {
 }
 
 { #category : #private }
-TGtkCellLayout >> cellLayoutAddAttribute: cell attribute: attribute column: column [
+TGtkCellLayout >> addAttribute: cell attribute: attribute column: column [
 
 	self ffiCall: #(void gtk_cell_layout_add_attribute (self,
 		GtkCellRenderer *cell,
@@ -18,7 +18,7 @@ TGtkCellLayout >> cellLayoutAddAttribute: cell attribute: attribute column: colu
 ]
 
 { #category : #private }
-TGtkCellLayout >> cellLayoutPackStart: cell expand: expand [
+TGtkCellLayout >> packStart: cell expand: expand [
 
 	self ffiCall: #(void gtk_cell_layout_pack_start (self, GtkCellRenderer *cell, gboolean expand))
 ]
