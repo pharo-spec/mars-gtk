@@ -41,8 +41,8 @@ GtkComboBox >> beText [
 	| cell |
 	
 	cell := GtkCellRendererText new.
-	self cellLayoutPackStart: cell expand: true.
-	self cellLayoutAddAttribute: cell attribute: 'text' column: 0
+	self packStart: cell expand: true.
+	self addAttribute: cell attribute: 'text' column: 0
 ]
 
 { #category : #accessing }
