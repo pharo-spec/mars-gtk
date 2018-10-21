@@ -225,6 +225,116 @@ GtkExamples class >> exampleDialow [
 		inspect
 ]
 
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleEntry [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkEntry new.
+	entry text: 'Les élèves français'.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleEntryPassword [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkEntry new.
+	entry text: 'Les élèves français'.
+	entry visibility: false.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleEntryPasswordWithDifferentInvisibleCharacter [
+	<example>
+
+	| entry character |
+	GtkApplication ensureRunning.
+
+	entry := GtkEntry new.
+	entry text: 'Les élèves français'.
+	entry visibility: false.
+
+	character := '今'.
+	entry invisibleCharacter: character.
+	self assert: character = entry invisibleCharacter.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleEntryPasswordWithMaxLength [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkEntry new.
+	entry text: 'Les élèves français'.
+	entry maxLength: entry text size + 4.
+
+	
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleEntryPasswordWithProgress [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkEntry new.
+	entry text: 'Les élèves français'.
+	entry progress: 0.4.
+
+	
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-layouts' }
 GtkExamples class >> exampleFixed [
 	<example>

@@ -17,9 +17,10 @@ Class {
 		'gssize',
 		'guint',
 		'guint32',
-		'gulong'
+		'gulong',
+		'gunichar'
 	],
-	#category : 'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #'class initialization' }
@@ -37,4 +38,6 @@ GtkTypes class >> initialize [
 	GType := #gsize.
 	gssize := #long.
 	gsize := #ulong.
+	
+	gunichar := #guint32.
 ]
