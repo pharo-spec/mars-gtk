@@ -11,22 +11,33 @@ Class {
 	#pools : [
 		'GtkJustification'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget-Display'
 }
 
 { #category : #private }
 GtkLabel class >> labelNew: str [
-	^ self ffiCall: #(GtkLabel *gtk_label_new (const gchar *str))
+	^ self ffiCall: #(GtkLabel *gtk_label_new (String str))
 ]
 
 { #category : #'instance creation' }
 GtkLabel class >> new [
-	^ self newLabel: nil
+	^ (self labelNew: nil) initialize
 ]
 
 { #category : #'instance creation' }
 GtkLabel class >> newLabel: aString [
-	^ (self labelNew: aString) initialize
+	^ (self labelNew: aString utf8Encoded) initialize
+]
+
+{ #category : #private }
+GtkLabel >> basicText [
+	^ self ffiCall: #(String gtk_label_get_text (self))
+]
+
+{ #category : #private }
+GtkLabel >> basicText: utf8EncodedString [
+
+	^ self ffiCall: #(void gtk_label_set_text (self, String utf8EncodedString))
 ]
 
 { #category : #accessing }
@@ -56,17 +67,19 @@ GtkLabel >> initialize [
 	self beVAlignCenter
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GtkLabel >> justify: jtype [ 
 	self ffiCall: #(void gtk_label_set_justify (self, GtkJustification jtype))
 ]
 
 { #category : #accessing }
 GtkLabel >> text [
-	^ self ffiCall: #(const gchar *gtk_label_get_text (self))
+	
+	^ self basicText asByteArray utf8Decoded
 ]
 
 { #category : #accessing }
 GtkLabel >> text: str [
-	^ self ffiCall: #(void gtk_label_set_text (self, const gchar *str))
+	
+	self basicText: str utf8Encoded
 ]

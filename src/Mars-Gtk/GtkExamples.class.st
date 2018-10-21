@@ -309,6 +309,25 @@ GtkExamples class >> exampleHorizontalBox [
 		inspect
 ]
 
+{ #category : #'example-basic' }
+GtkExamples class >> exampleLabel [
+	<example>
+
+	| label |
+	GtkApplication ensureRunning.
+
+	label := GtkLabel newLabel: 'Hello 今'.
+
+	GtkWindow new 
+		autoRelease;
+		title: 'Label';
+		resize: 500@200;
+		add: label;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-layouts' }
 GtkExamples class >> exampleLayout [
 	<example>
