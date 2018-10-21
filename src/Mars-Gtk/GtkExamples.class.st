@@ -173,6 +173,30 @@ GtkExamples class >> exampleCheckButton [
 		inspect
 ]
 
+{ #category : #'examples-windows' }
+GtkExamples class >> exampleDialow [
+	<example>
+
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: ((GtkButton newLabel: 'Add Dialog')
+			connectClicked: [ | dialog |
+				dialog := GtkDialog new
+					addButtonWithLabel: 'Yes' withResponseId: 1;
+					addButtonWithLabel: 'No' withResponseId: 2;
+					yourself.
+				self inform: dialog run asString.
+				dialog destroy ];
+			yourself);
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-layouts' }
 GtkExamples class >> exampleFixed [
 	<example>
