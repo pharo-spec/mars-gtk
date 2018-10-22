@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/unstable/GtkMenuButton.html
 Class {
 	#name : #GtkMenuButton,
 	#superclass : #GtkToggleButton,
+	#instVars : [
+		'children'
+	],
 	#pools : [
 		'GtkArrowType'
 	],
@@ -29,6 +32,12 @@ GtkMenuButton class >> buttonNewWithLabel: utf8EncodedString [
 GtkMenuButton >> alignMenuWithWidget: aWidget [
 
 	^ self ffiCall: #(void gtk_menu_button_set_align_widget (self, GtkWidget *aWidget))
+]
+
+{ #category : #private }
+GtkMenuButton >> basicPopUp: aMenu [
+
+	self ffiCall: #(void gtk_menu_button_set_popup (self, GtkMenu *aMenu))
 ]
 
 { #category : #accessing }
@@ -62,6 +71,12 @@ GtkMenuButton >> bePopupDirectionUp [
 ]
 
 { #category : #accessing }
+GtkMenuButton >> initialize [
+	super initialize.
+	children := Set new
+]
+
+{ #category : #accessing }
 GtkMenuButton >> menuModel [
 
 	^ self ffiCall: #(GMenuModel *gtk_menu_button_get_menu_model (self))
@@ -69,7 +84,9 @@ GtkMenuButton >> menuModel [
 
 { #category : #accessing }
 GtkMenuButton >> menuModel: aMenuModel [
-
+	self halt: #doNotUse.
+	"We do not have menu models implemented.
+	Also, we should keep track of children"
 	self ffiCall: #(void gtk_menu_button_set_menu_model (self, GtkMenu *aMenuModel))
 ]
 
@@ -81,7 +98,9 @@ GtkMenuButton >> popOver [
 
 { #category : #accessing }
 GtkMenuButton >> popOver: aPopover [
-
+	self halt: #doNotUse.
+	"We do not have menu models implemented.
+	Also, we should keep track of children"
 	self ffiCall: #(void gtk_menu_button_set_popover (self, GtkPopover *aPopover))
 ]
 
@@ -94,7 +113,8 @@ GtkMenuButton >> popUp [
 { #category : #accessing }
 GtkMenuButton >> popUp: aMenu [
 
-	self ffiCall: #(void gtk_menu_button_set_popup (self, GtkMenu *aMenu))
+	children add: aMenu.
+	self basicPopUp: aMenu
 ]
 
 { #category : #accessing }
