@@ -26,7 +26,7 @@ GtkLabel class >> new [
 
 { #category : #'instance creation' }
 GtkLabel class >> newLabel: aString [
-	^ (self labelNew: aString utf8Encoded) initialize
+	^ (self labelNew: aString utf8Encoded asString) initialize
 ]
 
 { #category : #private }
@@ -81,5 +81,5 @@ GtkLabel >> text [
 { #category : #accessing }
 GtkLabel >> text: str [
 	
-	self basicText: str utf8Encoded
+	self basicText: str utf8Encoded asString
 ]
