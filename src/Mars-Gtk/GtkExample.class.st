@@ -5,7 +5,8 @@ Class {
 		'method',
 		'widget',
 		'title',
-		'category'
+		'category',
+		'layoutBlock'
 	],
 	#category : #'Mars-Gtk-Examples'
 }
@@ -45,8 +46,63 @@ GtkExample >> category [
 ]
 
 { #category : #accessing }
+GtkExample >> category: aString [ 
+	category := aString asString
+]
+
+{ #category : #accessing }
+GtkExample >> gtkExample [
+	"I implement gtk examples"
+	^ self
+]
+
+{ #category : #opening }
+GtkExample >> initialize [
+
+	super initialize.
+	self layoutGridSimple
+]
+
+{ #category : #layout }
+GtkExample >> layoutFillContainer [
+	
+	layoutBlock := [ :widgetToLayout |
+		GtkBox newVertical
+			packStart: widgetToLayout expand: true fill: true padding: 0;
+			yourself ]
+]
+
+{ #category : #layout }
+GtkExample >> layoutGridSimple [
+	
+	layoutBlock := [ :widgetToLayout |
+		GtkGrid new
+			attach: widgetToLayout at: 0@0;
+			yourself ]
+]
+
+{ #category : #layout }
+GtkExample >> layoutHorizontalBoxNoFill [
+	
+	layoutBlock := [ :widgetToLayout |
+		GtkBox newHorizontal
+			packStart: widgetToLayout expand: false fill: false padding: 0;
+			yourself ]
+]
+
+{ #category : #layout }
+GtkExample >> layoutVerticalBoxNoFill [
+	
+	layoutBlock := [ :widgetToLayout |
+		GtkBox newVertical
+			packStart: widgetToLayout expand: false fill: false padding: 0;
+			yourself ]
+]
+
+{ #category : #accessing }
 GtkExample >> method: aCollection [ 
-	method := aCollection
+	method := aCollection.
+	method pragmas do: [ :each | each message sendTo: self ]
 ]
 
 { #category : #opening }
@@ -78,6 +134,11 @@ GtkExample >> title [
 ]
 
 { #category : #accessing }
+GtkExample >> title: aString [ 
+	title := aString asString
+]
+
+{ #category : #accessing }
 GtkExample >> widget [
-	^ widget ifNil: [ widget := method valueWithReceiver: method methodClass instanceSide arguments: #() ]
+	^ widget ifNil: [ widget := layoutBlock value: (method valueWithReceiver: method methodClass instanceSide arguments: #()) ]
 ]
