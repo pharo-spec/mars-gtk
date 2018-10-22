@@ -36,22 +36,7 @@ GtkExamples class >> exampleAboutDialow [
 GtkExamples class >> exampleAccelLabel [
 	<example>
 
-	| label |
-	GtkApplication ensureRunning.
-
-	label := GtkAccelLabel newLabel: '"Hello 今"'.
-	label
-		accelLabelSetAccelKey: 3
-		modifiers: GdkModifierType GDK_CONTROL_MASK.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Label';
-		resize: 500@200;
-		add: label;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
@@ -350,185 +335,56 @@ GtkExamples class >> exampleHorizontalBox [
 GtkExamples class >> exampleImageFromMorph [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Image from Morph';
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: (GtkImage newMorph: SimpleSwitchMorph new);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleImageFromThemeIcon [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Image from Theme icon';
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: (GtkImage newIconForMenuNamed: 'document-save-as');
-			packStart: (GtkImage newIconForSmallToolbarNamed: 'document-save-as');
-			packStart: (GtkImage newIconForLargeToolbarNamed: 'document-save-as');
-			packStart: (GtkImage newIconForButtonNamed: 'document-save-as');
-			packStart: (GtkImage newIconForDragAndDropNamed: 'document-save-as');
-			packStart: (GtkImage newIconForDialogNamed: 'document-save-as');
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBar [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: GtkTextView new;
-			packStart: (GtkInfoBar new
-				beInfo;
-				addButtonWithLabel: 'Answer 1' withId: 1;
-				addButtonWithLabel: 'Answer 2' withId: 2;
-				addButtonWithLabel: 'Answer 3' withId: 3;
-				connectResponse: [ :response | self inform: 'Got: ', response asString ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarDefault [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: GtkTextView new;
-			packStart: (GtkInfoBar new
-				addButtonWithLabel: 'Answer 1' withId: 1;
-				addButtonWithLabel: 'Answer 2' withId: 2;
-				addButtonWithLabel: 'Answer 3' withId: 3;
-				connectResponse: [ :response | self inform: 'Got: ', response asString ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarError [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: GtkTextView new;
-			packStart: (GtkInfoBar new
-				beError;
-				addButtonWithLabel: 'Answer 1' withId: 1;
-				addButtonWithLabel: 'Answer 2' withId: 2;
-				addButtonWithLabel: 'Answer 3' withId: 3;
-				connectResponse: [ :response | self inform: 'Got: ', response asString ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarQuestion [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: GtkTextView new;
-			packStart: (GtkInfoBar new
-				addButtonWithLabel: 'Answer 1' withId: 1;
-				addButtonWithLabel: 'Answer 2' withId: 2;
-				addButtonWithLabel: 'Answer 3' withId: 3;
-				connectResponse: [ :response | self inform: 'Got: ', response asString ];
-				beQuestion;
-				showAll;
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleInfoBarWarning [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: GtkTextView new;
-			packStart: (GtkInfoBar new
-				beWarning;
-				addButtonWithLabel: 'Answer 1' withId: 1;
-				addButtonWithLabel: 'Answer 2' withId: 2;
-				addButtonWithLabel: 'Answer 3' withId: 3;
-				connectResponse: [ :response | self inform: 'Got: ', response asString ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleLabel [
 	<example>
 
-	| label |
-	GtkApplication ensureRunning.
-
-	label := GtkLabel newLabel: 'Hello 今'.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Label';
-		resize: 500@200;
-		add: label;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-containers' }
@@ -561,20 +417,7 @@ GtkExamples class >> exampleLayout [
 GtkExamples class >> exampleLevelBar [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: (GtkLevelBar new
-				value: 0.7;
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
@@ -725,69 +568,21 @@ GtkExamples class >> exampleNotebook [
 GtkExamples class >> exampleProgressBar [
 	<example>
 
-	| bar |
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: (bar := GtkProgressBar new);
-			packStart: ((GtkButton newLabel: 'Progress!')
-				connectClicked: [ bar pulse ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleProgressBarInverted [
 	<example>
 
-	| bar |
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: (bar := GtkProgressBar new beInverted; yourself);
-			packStart: ((GtkButton newLabel: 'Progress!')
-				connectClicked: [ bar pulse ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
 GtkExamples class >> exampleProgressBarWithText [
 	<example>
 
-	| bar |
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: ((bar := GtkProgressBar new)
-				showText;
-				text: 'Making progress!';
-				yourself);
-			packStart: ((GtkButton newLabel: 'Progress!')
-				connectClicked: [ bar pulse ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
@@ -908,25 +703,7 @@ GtkExamples class >> exampleSearchEntry [
 GtkExamples class >> exampleSpinner [
 	<example>
 
-	| spinner toggle |
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Spinner';
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: (spinner := GtkSpinner new);
-			packStart: ((toggle := GtkToggleButton newLabel: 'Spin')
-				connectToggled: [ 
-					toggle isActive
-						ifTrue: [ spinner start ]
-						ifFalse: [ spinner stop ] ];
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-containers' }
@@ -995,22 +772,7 @@ GtkExamples class >> exampleStackWithStackSwitcher [
 GtkExamples class >> exampleStatusBar [
 	<example>
 
-	| statusBar |
-	GtkApplication ensureRunning.
-
-	statusBar := GtkStatusBar new.
-	(statusBar contextNamed: 'default')
-		pushMessage: 'First message that I cannot see';
-		pushMessage: 'les élèves français'.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Spinner';
-		resize: 500@200;
-		add: statusBar;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
@@ -1178,6 +940,18 @@ GtkExamples class >> exampleVolumeButton [
 	<example>
 
 	self runExampleFromSender
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtExampleAccelLabel [
+	<gtkExample>
+
+	| label |
+	label := GtkAccelLabel newLabel: 'Hello 今'.
+	label
+		accelLabelSetAccelKey: 3
+		modifiers: GdkModifierType GDK_CONTROL_MASK.
+	^ label
 ]
 
 { #category : #'private-examples-buttons' }
@@ -1363,19 +1137,23 @@ GtkExamples class >> gtkExampleEntryWithMaxLength [
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleFixed [
 	<gtkExample>
+	<title: 'Fixed'>
+	<category: #Containers>
 	
 	| container |
 	container := GtkFixed new.
 	3 timesRepeat: [ | button |
 		button := GtkButton newLabel: 'Click me'.
-		button connectClicked: [ container moveChild: button to: 200@200 atRandom ].
-		container putChild: button at: 50@50 atRandom].
+		button connectClicked: [ container moveChild: button to: 50 atRandom@50 atRandom ].
+		container putChild: button at: 50 atRandom@50 atRandom].
 	^ container
 ]
 
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleGrid [
 	<gtkExample>
+	<title: 'Grid'>
+	<category: #Containers>
 
 	| container |
 	container := GtkGrid new.
@@ -1389,6 +1167,8 @@ GtkExamples class >> gtkExampleGrid [
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleHeaderBar [
 	<gtkExample>
+	<title: 'Window with HeaderBar'>
+	<category: #Containers>
 	
 	^ (GtkButton newLabel: 'Click to open window')
 		connectClicked: [ 
@@ -1409,6 +1189,8 @@ GtkExamples class >> gtkExampleHeaderBar [
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleHorizontalBox [
 	<gtkExample>
+	<title: 'Box Horizontal'>
+	<category: #Containers>
 
 	| container |
 	container := GtkBox newHorizontal.
@@ -1419,9 +1201,88 @@ GtkExamples class >> gtkExampleHorizontalBox [
 	^ container
 ]
 
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleImageFromMorph [
+	<gtkExample>
+
+	^ GtkImage newMorph: SimpleSwitchMorph new
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleImageFromThemeIcon [
+	<gtkExample>
+
+	^ GtkBox newHorizontal
+			packStart: (GtkImage newIconForMenuNamed: 'document-save-as');
+			packStart: (GtkImage newIconForSmallToolbarNamed: 'document-save-as');
+			packStart: (GtkImage newIconForLargeToolbarNamed: 'document-save-as');
+			packStart: (GtkImage newIconForButtonNamed: 'document-save-as');
+			packStart: (GtkImage newIconForDragAndDropNamed: 'document-save-as');
+			packStart: (GtkImage newIconForDialogNamed: 'document-save-as');
+			yourself
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleInfoBar [
+	<gtkExample>
+
+	^ self gtkExampleInfoBarWith: [ :infobar | infobar beInfo ]
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleInfoBarDefault [
+	<gtkExample>
+
+	^ self gtkExampleInfoBarWith: [ :infobar | "Nothing" ]
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleInfoBarError [
+	<gtkExample>
+
+	^ self gtkExampleInfoBarWith: [ :infobar | infobar beError ]
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleInfoBarQuestion [
+	<gtkExample>
+
+	^ self gtkExampleInfoBarWith: [ :infobar | infobar beQuestion ]
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleInfoBarWarning [
+	<gtkExample>
+
+	^ self gtkExampleInfoBarWith: [ :infobar | infobar beWarning ]
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleInfoBarWith: aBlock [
+
+	| bar |
+	bar := GtkInfoBar new.
+	aBlock value: bar.
+	^ bar
+		addButtonWithLabel: 'Answer 1' withId: 1;
+		addButtonWithLabel: 'Answer 2' withId: 2;
+		addButtonWithLabel: 'Answer 3' withId: 3;
+		connectResponse: [ :response | self inform: 'Got: ', response asString ];
+		yourself
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleLabel [
+	<gtkExample>
+
+	^ GtkLabel newLabel: 'Hello 今'
+]
+
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleLayout [
 	<gtkExample>
+	<title: 'Layout'>
+	<category: #Containers>
 	
 	| container |
 	container := GtkLayout new.
@@ -1432,6 +1293,15 @@ GtkExamples class >> gtkExampleLayout [
 			putChild: button at: (300 atRandom@200atRandom);
 			yourself ].
 	^ container
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleLevelBar [
+	<gtkExample>
+
+	^ GtkLevelBar new
+		value: 0.7;
+		yourself
 ]
 
 { #category : #'private-examples-buttons' }
@@ -1470,6 +1340,8 @@ GtkExamples class >> gtkExampleMenuButtonWithMenu [
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleNotebook [
 	<gtkExample>
+	<title: 'Notebook'>
+	<category: #Containers>
 
 	^ GtkNotebook new 
 			append: ((GtkBox newVerticalSpacing: 5) 
@@ -1480,6 +1352,48 @@ GtkExamples class >> gtkExampleNotebook [
 					yourself) 
 				label: (GtkLabel newLabel: 'page 1');
 			append: (GtkLabel newLabel: 'panel 2') label: (GtkLabel newLabel: 'page 2');
+		yourself
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleProgressBar [
+	<gtkExample>
+
+	| bar |
+	^ GtkBox newVertical
+		packStart: (bar := GtkProgressBar new);
+		packStart: ((GtkButton newLabel: 'Progress!')
+			connectClicked: [ bar pulse ];
+			yourself);
+		yourself
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleProgressBarInverted [
+	<gtkExample>
+
+	| bar |
+	^ GtkBox newVertical
+		packStart: (bar := GtkProgressBar new beInverted; yourself);
+		packStart: ((GtkButton newLabel: 'Progress!')
+			connectClicked: [ bar pulse ];
+			yourself);
+		yourself
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleProgressBarWithText [
+	<gtkExample>
+
+	| bar |
+	^ GtkBox newVertical
+		packStart: ((bar := GtkProgressBar new)
+			showText;
+			text: 'Making progress!';
+			yourself);
+		packStart: ((GtkButton newLabel: 'Progress!')
+			connectClicked: [ bar pulse ];
+			yourself);
 		yourself
 ]
 
@@ -1501,6 +1415,8 @@ GtkExamples class >> gtkExampleRadioButton [
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleRevealer [
 	<gtkExample>
+	<title: 'Revealer'>
+	<category: #Containers>
 
 	| container rightRevealer leftRevealer |
 	container := GtkBox newHorizontal.
@@ -1634,9 +1550,27 @@ GtkExamples class >> gtkExampleSearchEntry [
 	^ GtkSearchEntry new
 ]
 
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleSpinner [
+	<gtkExample>
+
+	| spinner toggle |
+	^ GtkBox newVertical
+		packStart: (spinner := GtkSpinner new);
+		packStart: ((toggle := GtkToggleButton newLabel: 'Spin')
+			connectToggled: [ 
+				toggle isActive
+					ifTrue: [ spinner start ]
+					ifFalse: [ spinner stop ] ];
+			yourself);
+		yourself
+]
+
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleStackWithStackSidebar [
 	<gtkExample>
+	<title: 'Stack with Sidebar'>
+	<category: #Containers>
 
 	| stack |
 	stack := GtkStack new 
@@ -1659,6 +1593,8 @@ GtkExamples class >> gtkExampleStackWithStackSidebar [
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleStackWithStackSwitcher [
 	<gtkExample>
+	<title: 'Stack with Switcher'>
+	<category: #Containers>
 
 	| stack |
 	stack := GtkStack new 
@@ -1676,6 +1612,18 @@ GtkExamples class >> gtkExampleStackWithStackSwitcher [
 		add: (GtkStackSwitcher forStack: stack);
 		add: stack;
 		yourself
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleStatusBar [
+	<gtkExample>
+
+	| statusBar |
+	statusBar := GtkStatusBar new.
+	(statusBar contextNamed: 'default')
+		pushMessage: 'First message that I cannot see';
+		pushMessage: 'les élèves français'.
+	^ statusBar
 ]
 
 { #category : #'private-examples-buttons' }
@@ -1713,6 +1661,8 @@ GtkExamples class >> gtkExampleToggleButtonWithoutIndicator [
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleVerticalBox [
 	<gtkExample>
+	<title: 'Box Vertical'>
+	<category: #Containers>
 
 	| container |
 	container := GtkBox newVertical.
