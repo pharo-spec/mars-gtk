@@ -973,6 +973,15 @@ GtkExamples class >> gtkExampleCheckButton [
 	^ GtkCheckButton newLabel: 'Hello'
 ]
 
+{ #category : #'private-examples-menues' }
+GtkExamples class >> gtkExampleComboBoxText [
+	<gtkExample>
+	<title: 'ComboBoxText'>
+	<category: #Entries>
+
+	^ GtkComboBoxText newModel: (GtkTreeStore newStrings: #('one' 'two' 'three' 'four'))
+]
+
 { #category : #'private-examples-windows' }
 GtkExamples class >> gtkExampleDialog [
 	<gtkExample>
