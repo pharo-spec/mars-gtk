@@ -1,35 +1,21 @@
+"
+Gtk examples.
+
+See class side.
+
+Private example methods are meant to be used in the GtkExampleBrowser. They require the pragma <gtkExample> and optionally the pragmas <title: 'Dialog'> and <category: #Windows>.
+"
 Class {
 	#name : #GtkExamples,
 	#superclass : #Object,
-	#category : 'Mars-Gtk-Examples'
+	#category : #'Mars-Gtk-Examples'
 }
 
 { #category : #'examples-windows' }
-GtkExamples class >> exampleAboutDialow [
+GtkExamples class >> exampleAboutDialog [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: ((GtkButton newLabel: 'Show Dialog')
-			connectClicked: [ | dialog |
-				dialog := GtkAboutDialog new
-					comments: 'Comments';
-					licence: 'MIT';
-					programName: 'Pharo Gtk Bindings';
-					version: '0.1.2-alpha';
-					website: 'http://pharo.org';
-					websiteLabel: 'http://pharo.org';
-					copyright: 'The Pharo Community';
-					run;
-					destroy ];
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
@@ -110,27 +96,10 @@ GtkExamples class >> exampleCheckButton [
 ]
 
 { #category : #'examples-windows' }
-GtkExamples class >> exampleDialow [
+GtkExamples class >> exampleDialog [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: ((GtkButton newLabel: 'Show Dialog')
-			connectClicked: [ | dialog |
-				dialog := GtkDialog new
-					addButtonWithLabel: 'Yes' withResponseId: 1;
-					addButtonWithLabel: 'No' withResponseId: 2;
-					yourself.
-				self inform: dialog run asString.
-				dialog destroy ];
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
@@ -431,61 +400,14 @@ GtkExamples class >> exampleLinkButton [
 GtkExamples class >> exampleListBox [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'ListBox example';
-		resize: 500@200;
-		add: (GtkBox newVertical 
-			packStart: (GtkListBox new
-				listModel: (GtkSimpleListModel newItems: #('One' 'Two' 'Three'));
-				yourself);
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-lists' }
 GtkExamples class >> exampleListView [
 	<example>
-	| store list renderer |
 	
-	GtkApplication ensureRunning.
-	
-	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
-
-	100 timesRepeat: [
-		store appendRow
-			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
-			atColumnIndex: 1 setValue: '1' utf8Encoded.
-		store appendRow atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
-			atColumnIndex: 1 setValue: '2' utf8Encoded.
-		store appendRow atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
-			atColumnIndex: 1 setValue: '3' utf8Encoded. ].
-	
-	list := GtkTreeView new.
-	list model: store.
-
-	renderer := GtkCellRendererText new.
-	list appendColumn: (GtkTreeViewColumn new
-		title: 'Example Column Tìtlé';
-		renderer: renderer;
-		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
-	list appendColumn: (GtkTreeViewColumn new
-		title: 'Another Column アイウエオ';
-		renderer: renderer;
-		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Simple List Example';
-		resize: 500@500;
-		add: (GtkScrolledWindow newWidget: list);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #examples }
@@ -864,51 +786,8 @@ GtkExamples class >> exampleToolBar [
 { #category : #'examples-lists' }
 GtkExamples class >> exampleTreeView [
 	<example>
-	| store tree renderer |
 	
-	GtkApplication ensureRunning.
-	
-	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
-
-	100 timesRepeat: [ | row |
-		row := store appendRow
-			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
-			atColumnIndex: 1 setValue: '1' utf8Encoded;
-			yourself.
-		row newChild
-			atColumnIndex: 0 setValue: 'Childddd' utf8Encoded;
-			atColumnIndex: 1 setValue: '11321' utf8Encoded.
-		row newChild
-			atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
-			atColumnIndex: 1 setValue: '2' utf8Encoded.
-		row newChild
-			atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
-			atColumnIndex: 1 setValue: '3' utf8Encoded.].
-	
-	tree := GtkTreeView new.
-	tree model: store.
-
-	renderer := GtkCellRendererText new.
-	tree appendColumn: (GtkTreeViewColumn new
-		title: 'Example Column Tìtlé';
-		renderer: renderer;
-		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
-	tree appendColumn: (GtkTreeViewColumn new
-		title: 'Another Column アイウエオ';
-		renderer: renderer;
-		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
-		
-	tree addExpanderColumn.
-	tree enableTreeLines.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Simple List Example';
-		resize: 500@500;
-		add: (GtkScrolledWindow newWidget: tree);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-containers' }
@@ -945,6 +824,8 @@ GtkExamples class >> exampleVolumeButton [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtExampleAccelLabel [
 	<gtkExample>
+	<title: 'Accelerator Label'>
+	<category: #Basic>
 
 	| label |
 	label := GtkAccelLabel newLabel: 'Hello 今'.
@@ -952,6 +833,27 @@ GtkExamples class >> gtExampleAccelLabel [
 		accelLabelSetAccelKey: 3
 		modifiers: GdkModifierType GDK_CONTROL_MASK.
 	^ label
+]
+
+{ #category : #'private-examples-windows' }
+GtkExamples class >> gtkExampleAboutDialog [
+	<gtkExample>
+	<title: 'About Dialog'>
+	<category: #Windows>
+
+	^ (GtkButton newLabel: 'Show Dialog')
+		connectClicked: [ | dialog |
+			dialog := GtkAboutDialog new
+				comments: 'Comments';
+				licence: 'MIT';
+				programName: 'Pharo Gtk Bindings';
+				version: '0.1.2-alpha';
+				website: 'http://pharo.org';
+				websiteLabel: 'http://pharo.org';
+				copyright: 'The Pharo Community';
+				run;
+				destroy ];
+		yourself
 ]
 
 { #category : #'private-examples-buttons' }
@@ -1069,6 +971,23 @@ GtkExamples class >> gtkExampleCheckButton [
 	<category: #Buttons>
 
 	^ GtkCheckButton newLabel: 'Hello'
+]
+
+{ #category : #'private-examples-windows' }
+GtkExamples class >> gtkExampleDialog [
+	<gtkExample>
+	<title: 'Dialog'>
+	<category: #Windows>
+
+	^ (GtkButton newLabel: 'Show Dialog')
+		connectClicked: [ | dialog |
+			dialog := GtkDialog new
+				addButtonWithLabel: 'Yes' withResponseId: 1;
+				addButtonWithLabel: 'No' withResponseId: 2;
+				yourself.
+			self inform: dialog run asString.
+			dialog destroy ];
+		yourself
 ]
 
 { #category : #'private-examples-entries' }
@@ -1204,13 +1123,17 @@ GtkExamples class >> gtkExampleHorizontalBox [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleImageFromMorph [
 	<gtkExample>
+	<title: 'Image from Morph'>
+	<category: #Basic>
 
-	^ GtkImage newMorph: SimpleSwitchMorph new
+	^ GtkImage newMorph: ((PNGReadWriter on: (ZnBase64Encoder new decode: PolymorphSystemSettings pharoLogoContents) readStream) nextImage asMorph)
 ]
 
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleImageFromThemeIcon [
 	<gtkExample>
+	<title: 'Image from Theme Icon'>
+	<category: #Basic>
 
 	^ GtkBox newHorizontal
 			packStart: (GtkImage newIconForMenuNamed: 'document-save-as');
@@ -1225,6 +1148,8 @@ GtkExamples class >> gtkExampleImageFromThemeIcon [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleInfoBar [
 	<gtkExample>
+	<title: 'Info Bar - Info'>
+	<category: #Basic>
 
 	^ self gtkExampleInfoBarWith: [ :infobar | infobar beInfo ]
 ]
@@ -1232,6 +1157,8 @@ GtkExamples class >> gtkExampleInfoBar [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleInfoBarDefault [
 	<gtkExample>
+	<title: 'Info Bar - Default'>
+	<category: #Basic>
 
 	^ self gtkExampleInfoBarWith: [ :infobar | "Nothing" ]
 ]
@@ -1239,6 +1166,8 @@ GtkExamples class >> gtkExampleInfoBarDefault [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleInfoBarError [
 	<gtkExample>
+	<title: 'Info Bar - Error'>
+	<category: #Basic>
 
 	^ self gtkExampleInfoBarWith: [ :infobar | infobar beError ]
 ]
@@ -1246,6 +1175,8 @@ GtkExamples class >> gtkExampleInfoBarError [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleInfoBarQuestion [
 	<gtkExample>
+	<title: 'Info Bar - Question'>
+	<category: #Basic>
 
 	^ self gtkExampleInfoBarWith: [ :infobar | infobar beQuestion ]
 ]
@@ -1253,6 +1184,8 @@ GtkExamples class >> gtkExampleInfoBarQuestion [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleInfoBarWarning [
 	<gtkExample>
+	<title: 'Info Bar - Warning'>
+	<category: #Basic>
 
 	^ self gtkExampleInfoBarWith: [ :infobar | infobar beWarning ]
 ]
@@ -1274,6 +1207,8 @@ GtkExamples class >> gtkExampleInfoBarWith: aBlock [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleLabel [
 	<gtkExample>
+	<title: 'Label'>
+	<category: #Basic>
 
 	^ GtkLabel newLabel: 'Hello 今'
 ]
@@ -1298,6 +1233,8 @@ GtkExamples class >> gtkExampleLayout [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleLevelBar [
 	<gtkExample>
+	<title: 'Level Bar'>
+	<category: #Basic>
 
 	^ GtkLevelBar new
 		value: 0.7;
@@ -1311,6 +1248,54 @@ GtkExamples class >> gtkExampleLinkButton [
 	<category: #Buttons>
 
 	^ GtkLinkButton newWithUri: 'https://pharo.org' withLabel: 'go to pharo.org'
+]
+
+{ #category : #'private-examples-lists' }
+GtkExamples class >> gtkExampleListBox [
+	<gtkExample>
+	<title: 'List Box'>
+	<category: #Lists>
+
+	^ GtkBox newVertical 
+		packStart: (GtkListBox new
+			listModel: (GtkSimpleListModel newItems: #('One' 'Two' 'Three'));
+			yourself);
+		yourself
+]
+
+{ #category : #'private-examples-lists' }
+GtkExamples class >> gtkExampleListView [
+	<gtkExample>
+	<title: 'List View'>
+	<category: #Lists>
+	
+	| store list renderer |
+	
+	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+
+	100 timesRepeat: [
+		store appendRow
+			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
+			atColumnIndex: 1 setValue: '1' utf8Encoded.
+		store appendRow atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
+			atColumnIndex: 1 setValue: '2' utf8Encoded.
+		store appendRow atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
+			atColumnIndex: 1 setValue: '3' utf8Encoded. ].
+	
+	list := GtkTreeView new.
+	list model: store.
+
+	renderer := GtkCellRendererText new.
+	list appendColumn: (GtkTreeViewColumn new
+		title: 'Example Column Tìtlé';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+	list appendColumn: (GtkTreeViewColumn new
+		title: 'Another Column アイウエオ';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+
+	^ list
 ]
 
 { #category : #'private-examples-buttons' }
@@ -1358,6 +1343,8 @@ GtkExamples class >> gtkExampleNotebook [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleProgressBar [
 	<gtkExample>
+	<title: 'Progress Bar'>
+	<category: #Basic>
 
 	| bar |
 	^ GtkBox newVertical
@@ -1371,6 +1358,8 @@ GtkExamples class >> gtkExampleProgressBar [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleProgressBarInverted [
 	<gtkExample>
+	<title: 'Progress Bar Inverted'>
+	<category: #Basic>
 
 	| bar |
 	^ GtkBox newVertical
@@ -1384,6 +1373,8 @@ GtkExamples class >> gtkExampleProgressBarInverted [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleProgressBarWithText [
 	<gtkExample>
+	<title: 'Progress Bar with Text'>
+	<category: #Basic>
 
 	| bar |
 	^ GtkBox newVertical
@@ -1553,6 +1544,8 @@ GtkExamples class >> gtkExampleSearchEntry [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleSpinner [
 	<gtkExample>
+	<title: 'Spinner'>
+	<category: #Basic>
 
 	| spinner toggle |
 	^ GtkBox newVertical
@@ -1617,6 +1610,8 @@ GtkExamples class >> gtkExampleStackWithStackSwitcher [
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleStatusBar [
 	<gtkExample>
+	<title: 'Status Bar'>
+	<category: #Basic>
 
 	| statusBar |
 	statusBar := GtkStatusBar new.
@@ -1658,6 +1653,50 @@ GtkExamples class >> gtkExampleToggleButtonWithoutIndicator [
 		yourself
 ]
 
+{ #category : #'private-examples-lists' }
+GtkExamples class >> gtkExampleTreeView [
+	<gtkExample>
+	<title: 'Tree View'>
+	<category: #Lists>
+	
+	| store tree renderer |
+	
+	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+
+	100 timesRepeat: [ | row |
+		row := store appendRow
+			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
+			atColumnIndex: 1 setValue: '1' utf8Encoded;
+			yourself.
+		row newChild
+			atColumnIndex: 0 setValue: 'Childddd' utf8Encoded;
+			atColumnIndex: 1 setValue: '11321' utf8Encoded.
+		row newChild
+			atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
+			atColumnIndex: 1 setValue: '2' utf8Encoded.
+		row newChild
+			atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
+			atColumnIndex: 1 setValue: '3' utf8Encoded.].
+	
+	tree := GtkTreeView new.
+	tree model: store.
+
+	renderer := GtkCellRendererText new.
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Example Column Tìtlé';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Another Column アイウエオ';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+		
+	tree addExpanderColumn.
+	tree enableTreeLines.
+
+	^ tree
+]
+
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleVerticalBox [
 	<gtkExample>
@@ -1682,7 +1721,7 @@ GtkExamples class >> gtkExampleVolumeButton [
 	^ GtkVolumeButton new
 ]
 
-{ #category : #'examples-buttons' }
+{ #category : #examples }
 GtkExamples class >> runExampleFromSender [
 	
 	GtkApplication ensureRunning.

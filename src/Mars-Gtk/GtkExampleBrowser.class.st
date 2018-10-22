@@ -57,7 +57,7 @@ GtkExampleBrowser >> show [
 	GtkWindow new
 		autoRelease;
 		title: 'Gtk Example Browser';
-		resize: 500@200;
+		resize: 800@600;
 		add: mainContainer;
 		center;
 		showAll;

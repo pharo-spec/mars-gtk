@@ -21,7 +21,7 @@ GtkExampleBrowserCategory >> addExample: example [
 	stack
 		addChild: (GtkNotebook new
 			append: (GtkGrid new
-				attach: example widget left: 0 top: 0 width: 1 height: 1;
+				attach: (GtkScrolledWindow newWidget: example widget) left: 0 top: 0 width: 1 height: 1;
 				yourself)
 			label: (GtkLabel newLabel: 'Widget');
 			append: (GtkTextView new
