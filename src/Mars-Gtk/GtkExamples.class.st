@@ -58,151 +58,74 @@ GtkExamples class >> exampleAccelLabel [
 GtkExamples class >> exampleButton [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkButton newLabel: 'Hello'.
-	button connectClicked: [ button label: button label, ' 今' ].
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Button example with no relief';
-		resize: 500@200;
-		add: button;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
-{ #category : #'examples-layouts' }
-GtkExamples class >> exampleButtonBoxDoing: aBlock [
-	| container |
-	GtkApplication ensureRunning.
-
-	container := GtkButtonBox newHorizontal.
-	aBlock value: container.
-
-	1 to: 3 do: [ :idx | | button |
-		button := GtkButton newLabel: 'Hello ',  idx asString.
-		button connectClicked: [ button label: button label, ' 今' ].
-		container packStart: button ].
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Button box';
-		resize: 500@200;
-		add: container;
-		center;
-		showAll;
-		inspect
-]
-
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleButtonBoxExpandToFill [
 	<example>
 
-	self exampleButtonBoxDoing: [ :box | box expandToFill ]
+	self gtkExampleButtonBoxDoing: [ :box | box expandToFill ]
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleButtonBoxPlaceAtCenter [
 	<example>
 
-	self exampleButtonBoxDoing: [ :box | box placeAtCenter ]
+	self gtkExampleButtonBoxDoing: [ :box | box placeAtCenter ]
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleButtonBoxPlaceAtEdges [
 	<example>
 
-	self exampleButtonBoxDoing: [ :box | box placeAtEdges ]
+	self gtkExampleButtonBoxDoing: [ :box | box placeAtEdges ]
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleButtonBoxPlaceAtEnd [
 	<example>
 
-	self exampleButtonBoxDoing: [ :box | box placeAtEnd ]
+	self gtkExampleButtonBoxDoing: [ :box | box placeAtEnd ]
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleButtonBoxPlaceAtStart [
 	<example>
 
-	self exampleButtonBoxDoing: [ :box | box placeAtStart ]
+	self gtkExampleButtonBoxDoing: [ :box | box placeAtStart ]
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleButtonBoxSpreadEvenly [
 	<example>
 
-	self exampleButtonBoxDoing: [ :box | box spreadEvenly ]
+	self gtkExampleButtonBoxDoing: [ :box | box spreadEvenly ]
 ]
 
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleButtonWithNoRelief [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkButton newLabel: 'Hello'.
-	button setNoRelief.
-	button connectClicked: [ button label: button label, ' 今' ].
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Button example';
-		resize: 500@200;
-		add: button;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleButtonWithUnderline [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkButton new.
-	button useUnderline.
-	button label: '_Hello'.
-	button connectClicked: [ button label: button label, ' 今' ].
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Button example';
-		resize: 500@200;
-		add: button;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleCheckButton [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkCheckButton newLabel: 'Hello'.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Toggle Button example';
-		resize: 500@200;
-		add: button;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-windows' }
-GtkExamples class >> exampleDialog [
+GtkExamples class >> exampleDialow [
 	<example>
 
 	GtkApplication ensureRunning.
@@ -212,12 +135,10 @@ GtkExamples class >> exampleDialog [
 		title: thisContext method selector asString;
 		resize: 500@200;
 		add: ((GtkButton newLabel: 'Show Dialog')
-			connectClicked: [ 
-				| dialog |
+			connectClicked: [ | dialog |
 				dialog := GtkDialog new
 					addButtonWithLabel: 'Yes' withResponseId: 1;
 					addButtonWithLabel: 'No' withResponseId: 2;
-					center;
 					yourself.
 				self inform: dialog run asString.
 				dialog destroy ];
@@ -231,113 +152,38 @@ GtkExamples class >> exampleDialog [
 GtkExamples class >> exampleEntry [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkEntry new.
-	entry text: 'Les élèves français'.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleEntryPassword [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkEntry new.
-	entry text: 'Les élèves français'.
-	entry visibility: false.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleEntryPasswordWithDifferentInvisibleCharacter [
 	<example>
 
-	| entry character |
-	GtkApplication ensureRunning.
-
-	entry := GtkEntry new.
-	entry text: 'Les élèves français'.
-	entry visibility: false.
-
-	character := '今'.
-	entry invisibleCharacter: character.
-	self assert: character = entry invisibleCharacter.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleEntryPasswordWithMaxLength [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkEntry new.
-	entry text: 'Les élèves français'.
-	entry maxLength: entry text size + 4.
-
-	
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleEntryPasswordWithProgress [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkEntry new.
-	entry text: 'Les élèves français'.
-	entry progress: 0.4.
-
-	
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleFixed [
 	<example>
 	
@@ -428,7 +274,7 @@ GtkExamples class >> exampleForm [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleGrid [
 	<example>
 
@@ -452,7 +298,7 @@ GtkExamples class >> exampleGrid [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleHeaderBar [
 	<example>
 
@@ -471,7 +317,7 @@ GtkExamples class >> exampleHeaderBar [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleHorizontalBox [
 	<example>
 
@@ -680,7 +526,7 @@ GtkExamples class >> exampleLabel [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleLayout [
 	<example>
 	
@@ -730,19 +576,7 @@ GtkExamples class >> exampleLevelBar [
 GtkExamples class >> exampleLinkButton [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkLinkButton newWithUri: 'https://pharo.org' withLabel: 'go to pharo.org'.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Link Button example';
-		resize: 500@200;
-		add: button;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-lists' }
@@ -837,33 +671,8 @@ GtkExamples class >> exampleMenuBar [
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleMenuButtonWithMenu [
 	<example>
-	| menuButton fileMenu saveMenuItem quitMenuItem |
-
-	GtkApplication ensureRunning.
-		
-	menuButton := GtkMenuButton new.
-	fileMenu := GtkMenu new.
 	
-	saveMenuItem := GtkMenuItem newLabel: 'Save'.
-	saveMenuItem connectActivate: [ self inform: 'HAHA!' ].
-	fileMenu add: saveMenuItem.
-	
-	quitMenuItem := GtkMenuItem newLabel: 'Quit'.
-	quitMenuItem connectActivate: [ self inform: 'No way!' ].
-	fileMenu add: quitMenuItem.
-
-	fileMenu showAll.
-	menuButton popUp: fileMenu.
-
-	GtkWindow new
-		resize: 600@400;
-		title: 'Example menu button with menu';
-		add: (GtkGrid new
-			attach: menuButton left: 0 top: 0 width: 1 height: 1;
-			yourself);
-		inspect;
-		showAll.
-
+	self runExampleFromSender
 ]
 
 { #category : #examples }
@@ -882,7 +691,7 @@ GtkExamples class >> exampleMorphView [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleNotebook [
 	<example>
 
@@ -980,28 +789,10 @@ GtkExamples class >> exampleProgressBarWithText [
 GtkExamples class >> exampleRadioButton [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkRadioButton newLabel: 'Option 1'.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Toggle Button example';
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: button;
-			packStart: (GtkRadioButton
-				buttonNewInSameGroupAs: button withLabel: 'Option 2');
-			packStart: (GtkRadioButton
-				buttonNewInSameGroupAs: button withLabel: 'Option 3');
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleRevealer [
 	<example>
 
@@ -1056,168 +847,56 @@ GtkExamples class >> exampleRevealer [
 GtkExamples class >> exampleScaleHorizontal [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleScaleNotDrawingValue [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
-	entry drawValue: false.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleScaleValueAtLeft [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
-	entry valueAtLeft.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleScaleValueAtTop [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
-	entry valueAtTop.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleScaleVertical [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkScale newVerticalMin: 0.0 max: 10.0 step: 1.0.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleScaleWithMarks [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0.
-	entry addMarkAtValue: 2.0 withPosition: GtkPositionType GTK_POS_TOP withText: 'text1'.
-	entry addMarkAtValue: 7.5 withPosition: GtkPositionType GTK_POS_BOTTOM.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleSearchBar [
 	<example>
 
-	| entry bar box |
-	GtkApplication ensureRunning.
-
-	box := GtkBox newHorizontal
-		packStart: (entry := GtkSearchEntry new);
-		packStart: (GtkButton newLabel: 'key');
-		yourself.
-
-	bar := GtkSearchBar new.
-	bar add: box.
-	bar connectEntry: entry.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: (GtkBox newVertical
-			packStart: bar;
-			packStart: (GtkLabel newLabel: 'Type on this window!');
-			yourself);
-		connectKeyPressEvent: [ :event | bar handleEvent: event ];
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-entries' }
 GtkExamples class >> exampleSearchEntry [
 	<example>
 
-	| entry |
-	GtkApplication ensureRunning.
-
-	entry := GtkSearchEntry new.
-
-	GtkWindow new 
-		autoRelease;
-		title: thisContext method selector asString;
-		resize: 500@200;
-		add: entry;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-basic' }
@@ -1245,7 +924,7 @@ GtkExamples class >> exampleSpinner [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleStackWithStackSidebar [
 	<example>
 
@@ -1276,7 +955,7 @@ GtkExamples class >> exampleStackWithStackSidebar [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleStackWithStackSwitcher [
 	<example>
 
@@ -1333,19 +1012,7 @@ GtkExamples class >> exampleStatusBar [
 GtkExamples class >> exampleSwitch [
 	<example>
 
-	GtkApplication ensureRunning.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Switch example';
-		resize: 500@200;
-		add: (GtkGrid new
-			attach: GtkSwitch new left: 0 top: 0 width: 1 height: 1;
-			attach: GtkSwitch new left: 0 top: 1 width: 1 height: 1;
-			yourself);
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #examples }
@@ -1368,39 +1035,14 @@ GtkExamples class >> exampleTextView [
 GtkExamples class >> exampleToggleButton [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkToggleButton newLabel: 'Hello'.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Toggle Button example';
-		resize: 500@200;
-		add: button;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
 GtkExamples class >> exampleToggleButtonWithoutIndicator [
 	<example>
 
-	| button |
-	GtkApplication ensureRunning.
-
-	button := GtkToggleButton newLabel: 'Hello'.
-	button doNotDrawIndicator.
-
-	GtkWindow new 
-		autoRelease;
-		title: 'Toggle Button example';
-		resize: 500@200;
-		add: button;
-		center;
-		showAll;
-		inspect
+	self runExampleFromSender
 ]
 
 { #category : #examples }
@@ -1502,7 +1144,7 @@ GtkExamples class >> exampleTreeView [
 		inspect
 ]
 
-{ #category : #'examples-layouts' }
+{ #category : #'examples-containers' }
 GtkExamples class >> exampleVerticalBox [
 	<example>
 
@@ -1530,18 +1172,566 @@ GtkExamples class >> exampleVerticalBox [
 GtkExamples class >> exampleVolumeButton [
 	<example>
 
-	GtkApplication ensureRunning.
+	self runExampleFromSender
+]
 
-	GtkWindow new 
-		autoRelease;
-		title: 'Volume Button example';
-		resize: 500@200;
-		add: (GtkGrid new
-			attach: GtkVolumeButton new left: 0 top: 0 width: 1 height: 1;
-			yourself);
-		center;
-		showAll;
-		inspect
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleButton [
+	<gtkExample>
+	<title: 'Button'>
+	<category: #Buttons>
+
+	| button |
+	button := GtkButton newLabel: 'Hello'.
+	button connectClicked: [ self inform: 'tu vieja' ].
+	^ button
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleButtonBoxDoing: aBlock [
+	
+	| container |
+	container := GtkButtonBox newHorizontal.
+	aBlock value: container.
+
+	1 to: 3 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container packStart: button ].
+
+	^ container
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleButtonBoxExpandToFill [
+	<gtkExample>
+	<title: 'ButtonBox expand to fill'>
+	<category: #Containers>
+
+	^ self gtkExampleButtonBoxDoing: [ :box | box expandToFill ]
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleButtonBoxPlaceAtCenter [
+	<gtkExample>
+	<title: 'ButtonBox place at center'>
+	<category: #Containers>
+
+	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtCenter ]
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleButtonBoxPlaceAtEdges [
+	<gtkExample>
+	<title: 'ButtonBox place at edges'>
+	<category: #Containers>
+
+	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtEdges ]
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleButtonBoxPlaceAtEnd [
+	<gtkExample>
+	<title: 'ButtonBox place at end'>
+	<category: #Containers>
+
+	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtEnd ]
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleButtonBoxPlaceAtStart [
+	<gtkExample>
+	<title: 'ButtonBox place at start'>
+	<category: #Containers>
+
+	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtStart ]
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleButtonBoxSpreadEvenly [
+	<gtkExample>
+	<title: 'ButtonBox spread evenly'>
+	<category: #Containers>
+
+	^ self gtkExampleButtonBoxDoing: [ :box | box spreadEvenly ]
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleButtonWithNoRelief [
+	<gtkExample>
+	<title: 'Button with no relief'>
+	<category: #Buttons>
+	
+	| button |
+	button := GtkButton newLabel: 'Hello'.
+	button setNoRelief.
+	button connectClicked: [ button label: button label, ' 今' ].
+	^ button
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleButtonWithUnderline [
+	<gtkExample>
+	<title: 'Button with Underline'>
+	<category: #Buttons>
+	
+	| button |
+	button := GtkButton new.
+	button useUnderline.
+	button label: '_Hello'.
+	button connectClicked: [ button label: button label, ' 今' ].
+	^ button
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleCheckButton [
+	<gtkExample>
+	<title: 'Check button'>
+	<category: #Buttons>
+
+	^ GtkCheckButton newLabel: 'Hello'
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleEntry [
+	<gtkExample>
+	<title: 'Entry'>
+	<category: #Entries>
+
+	| entry |
+	entry := GtkEntry new.
+	entry text: 'Les élèves français'.
+	^ entry
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleEntryPassword [
+	<gtkExample>
+	<title: 'Password'>
+	<category: #Entries>
+
+	| entry |
+	entry := self gtkExampleEntry.
+	entry visibility: false.
+	^ entry
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleEntryPasswordWithDifferentInvisibleCharacter [
+	<gtkExample>
+	<title: 'Password with Different Chararcter'>
+	<category: #Entries>
+
+	| entry character |
+	entry := self gtkExampleEntryPassword.
+
+	character := '今'.
+	entry invisibleCharacter: character.
+	self assert: character = entry invisibleCharacter.
+	^ entry
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleEntryPasswordWithProgress [
+	<gtkExample>
+	<title: 'Entry with Progress'>
+	<category: #Entries>
+
+	| entry |
+	entry := self gtkExampleEntry.
+	entry progress: 0.4.
+	^ entry
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleEntryWithMaxLength [
+	<gtkExample>
+	<title: 'Entry with Max Length'>
+	<category: #Entries>
+
+	| entry |
+	entry := self gtkExampleEntry.
+	entry maxLength: entry text size + 4.
+	^ entry
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleFixed [
+	<gtkExample>
+	
+	| container |
+	container := GtkFixed new.
+	3 timesRepeat: [ | button |
+		button := GtkButton newLabel: 'Click me'.
+		button connectClicked: [ container moveChild: button to: 200@200 atRandom ].
+		container putChild: button at: 50@50 atRandom].
+	^ container
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleGrid [
+	<gtkExample>
+
+	| container |
+	container := GtkGrid new.
+	1 to: 5 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container attach: button at: idx@idx ].
+	^ container
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleHeaderBar [
+	<gtkExample>
+	
+	^ (GtkButton newLabel: 'Click to open window')
+		connectClicked: [ 
+			GtkWindow new 
+				autoRelease;
+				resize: 500@200;
+				titleBar: (GtkHeaderBar new
+					title: 'Window with title';
+					subtitle: 'and subtitle';
+					packStart: (GtkButton newLabel: 'And button');
+					yourself);
+				center;
+				showAll;
+				inspect ];
+		yourself
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleHorizontalBox [
+	<gtkExample>
+
+	| container |
+	container := GtkBox newHorizontal.
+	1 to: 5 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container add: button ].
+	^ container
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleLayout [
+	<gtkExample>
+	
+	| container |
+	container := GtkLayout new.
+	1 to: 3 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Click me ', idx asString.
+		button connectClicked: [ container moveChild: button to: (300 atRandom@200atRandom) ].
+		container
+			putChild: button at: (300 atRandom@200atRandom);
+			yourself ].
+	^ container
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleLinkButton [
+	<gtkExample>
+	<title: 'Link Button'>
+	<category: #Buttons>
+
+	^ GtkLinkButton newWithUri: 'https://pharo.org' withLabel: 'go to pharo.org'
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleMenuButtonWithMenu [
+	<gtkExample>
+	<title: 'Menu Button'>
+	<category: #Buttons>
+	
+	| menuButton fileMenu saveMenuItem quitMenuItem |
+	menuButton := GtkMenuButton new.
+	fileMenu := GtkMenu new.
+	
+	saveMenuItem := GtkMenuItem newLabel: 'Save'.
+	saveMenuItem connectActivate: [ self inform: 'HAHA!' ].
+	fileMenu add: saveMenuItem.
+	
+	quitMenuItem := GtkMenuItem newLabel: 'Quit'.
+	quitMenuItem connectActivate: [ self inform: 'No way!' ].
+	fileMenu add: quitMenuItem.
+
+	fileMenu showAll.
+	menuButton popUp: fileMenu.
+
+	^ menuButton
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleNotebook [
+	<gtkExample>
+
+	^ GtkNotebook new 
+			append: ((GtkBox newVerticalSpacing: 5) 
+					packStart: (GtkLabel newLabel: 'panel 1');
+					packStart: ((GtkButton newLabel: 'test button 1')
+						connectClicked: [ self inform: 'Ok!' ];
+						yourself);
+					yourself) 
+				label: (GtkLabel newLabel: 'page 1');
+			append: (GtkLabel newLabel: 'panel 2') label: (GtkLabel newLabel: 'page 2');
+		yourself
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleRadioButton [
+	<gtkExample>
+	<title: 'Radio Button'>
+	<category: #Buttons>
+
+	| button |
+	button := GtkRadioButton newLabel: 'Option 1'.
+	^ GtkBox newVertical
+		packStart: button;
+		packStart: (GtkRadioButton buttonNewInSameGroupAs: button withLabel: 'Option 2');
+		packStart: (GtkRadioButton buttonNewInSameGroupAs: button withLabel: 'Option 3');
+		yourself
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleRevealer [
+	<gtkExample>
+
+	| container rightRevealer leftRevealer |
+	container := GtkBox newHorizontal.
+	container add: (leftRevealer := GtkRevealer
+		newWithChild: ((GtkButton newLabel: 'Hide me')
+			connectClicked: [ 
+				leftRevealer hideChild.
+				rightRevealer revealChild ];
+			yourself)).
+	container add: (rightRevealer := GtkRevealer
+		newWithChild: (GtkBox newHorizontal
+			add: ((GtkButton newLabel: 'Slide Down')
+				connectClicked: [ 
+					leftRevealer
+						setSlideDownTransition;
+						revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Slide Up')
+				connectClicked: [ leftRevealer setSlideUpTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Slide Left')
+				connectClicked: [ leftRevealer setSlideLeftTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Slide Right')
+				connectClicked: [ leftRevealer setSlideRightTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			add: ((GtkButton newLabel: 'Crossfade')
+				connectClicked: [ leftRevealer setCrossfadeTransition; revealChild.
+					rightRevealer hideChild ];
+				yourself);
+			yourself)) revealChild.
+	^ container
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleScaleHorizontal [
+	<gtkExample>
+	<title: 'Scale Horizontal'>
+	<category: #Entries>
+
+	^ GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleScaleNotDrawingValue [
+	<gtkExample>
+	<title: 'Scale no value'>
+	<category: #Entries>
+
+	^ self gtkExampleScaleHorizontal
+		drawValue: false;
+		yourself
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleScaleValueAtLeft [
+	<gtkExample>
+	<title: 'Scale value at left'>
+	<category: #Entries>
+
+	^ self gtkExampleScaleHorizontal
+		valueAtLeft;
+		yourself
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleScaleValueAtTop [
+	<gtkExample>
+	<title: 'Scale value at top'>
+	<category: #Entries>
+
+	^ self gtkExampleScaleHorizontal
+		valueAtTop;
+		yourself
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleScaleVertical [
+	<gtkExample>
+	<title: 'Scale vertical'>
+	<category: #Entries>
+
+	^ GtkScale newVerticalMin: 0.0 max: 10.0 step: 1.0
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleScaleWithMarks [
+	<gtkExample>
+	<title: 'Scale with Marks'>
+	<category: #Entries>
+
+	| entry |
+	entry := self gtkExampleScaleHorizontal.
+	entry addMarkAtValue: 2.0 withPosition: GtkPositionType GTK_POS_TOP withText: 'text1'.
+	entry addMarkAtValue: 7.5 withPosition: GtkPositionType GTK_POS_BOTTOM.
+	^ entry
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleSearchBar [
+	<gtkExample>
+	<title: 'Search Bar'>
+	<category: #Entries>
+
+	| entry bar box |
+	box := GtkBox newHorizontal
+		packStart: (entry := GtkSearchEntry new);
+		packStart: (GtkButton newLabel: 'key');
+		yourself.
+
+	bar := GtkSearchBar new.
+	bar add: box.
+	bar connectEntry: entry.
+
+	^ GtkBox newVertical
+			packStart: bar;
+			packStart: (GtkLabel newLabel: 'Type on this window!');
+			yourself
+]
+
+{ #category : #'private-examples-entries' }
+GtkExamples class >> gtkExampleSearchEntry [
+	<gtkExample>
+	<title: 'Search Entry'>
+	<category: #Entries>
+
+	^ GtkSearchEntry new
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleStackWithStackSidebar [
+	<gtkExample>
+
+	| stack |
+	stack := GtkStack new 
+			addChild: ((GtkBox newVerticalSpacing: 5) 
+					packStart: (GtkLabel newLabel: 'panel 1');
+					packStart: ((GtkButton newLabel: 'test button 1')
+						connectClicked: [ self inform: 'Ok!' ];
+						yourself);
+					yourself) 
+			withTitle: 'page 1';
+			addChild: (GtkLabel newLabel: 'panel 2') withTitle: 'page 2';
+		yourself.
+	
+	^ GtkBox newHorizontal
+		add: (GtkStackSidebar forStack: stack);
+		add: stack;
+		yourself
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleStackWithStackSwitcher [
+	<gtkExample>
+
+	| stack |
+	stack := GtkStack new 
+			addChild: ((GtkBox newVerticalSpacing: 5) 
+					packStart: (GtkLabel newLabel: 'panel 1');
+					packStart: ((GtkButton newLabel: 'test button 1')
+						connectClicked: [ self inform: 'Ok!' ];
+						yourself);
+					yourself) 
+			withTitle: 'page 1';
+			addChild: (GtkLabel newLabel: 'panel 2') withTitle: 'page 2';
+		yourself.
+	
+	^ GtkBox newVertical
+		add: (GtkStackSwitcher forStack: stack);
+		add: stack;
+		yourself
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleSwitch [
+	<gtkExample>
+	<title: 'Switch'>
+	<category: #Buttons>
+
+	^ GtkGrid new
+		attach: GtkSwitch new left: 0 top: 0 width: 1 height: 1;
+		attach: GtkSwitch new left: 0 top: 1 width: 1 height: 1;
+		yourself
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleToggleButton [
+	<gtkExample>
+	<title: 'Toggle Button'>
+	<category: #Buttons>
+
+	^ GtkToggleButton newLabel: 'Hello'
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleToggleButtonWithoutIndicator [
+	<gtkExample>
+	<title: 'Toggle Button without Indicator'>
+	<category: #Buttons>
+
+	^ (GtkToggleButton newLabel: 'Hello')
+		doNotDrawIndicator;
+		yourself
+]
+
+{ #category : #'private-examples-containers' }
+GtkExamples class >> gtkExampleVerticalBox [
+	<gtkExample>
+
+	| container |
+	container := GtkBox newVertical.
+	1 to: 5 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Hello ',  idx asString.
+		button connectClicked: [ button label: button label, ' 今' ].
+		container add: button ].
+	^ container
+]
+
+{ #category : #'private-examples-buttons' }
+GtkExamples class >> gtkExampleVolumeButton [
+	<gtkExample>
+	<title: 'Volume Button'>
+	<category: #Buttons>
+
+	^ GtkVolumeButton new
+]
+
+{ #category : #'examples-buttons' }
+GtkExamples class >> runExampleFromSender [
+	
+	GtkApplication ensureRunning.
+	(GtkExample on: (self classSide >> ('gtk', thisContext sender selector capitalized) asSymbol)) openInGtkWindow.
 ]
 
 { #category : #'see class side' }
