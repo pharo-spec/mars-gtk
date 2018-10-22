@@ -21,6 +21,22 @@ GtkSwitch class >> new [
 	^ self buttonNew initialize
 ]
 
+{ #category : #'instance creation' }
+GtkSwitch class >> off [
+
+	^ self new
+		beNonActive;
+		yourself
+]
+
+{ #category : #'instance creation' }
+GtkSwitch class >> on [
+
+	^ self new
+		beActive;
+		yourself
+]
+
 { #category : #accessing }
 GtkSwitch >> active: aBoolean [
 

@@ -162,7 +162,7 @@ GtkExamples class >> exampleFixed [
 		inspect
 ]
 
-{ #category : #examples }
+{ #category : #'examples-menues' }
 GtkExamples class >> exampleForm [
 	<example>
 	| window grid actionBar textInput numberInput textArea |
@@ -410,32 +410,11 @@ GtkExamples class >> exampleListView [
 	self runExampleFromSender
 ]
 
-{ #category : #examples }
+{ #category : #'examples-menues' }
 GtkExamples class >> exampleMenuBar [
 	<example>
-	| menuBar fileMenu fileMenuItem quitMenuItem |
 
-	GtkApplication ensureRunning.
-		
-	menuBar := GtkMenuBar new.
-	fileMenu := GtkMenu new.
-	fileMenuItem := GtkMenuItem newLabel: 'File'.
-
-	fileMenuItem submenu: fileMenu.
-	quitMenuItem := GtkMenuItem newLabel: 'Quit'.
-	quitMenuItem connectActivate: [ self inform: 'No way!' ].
-	fileMenu add: quitMenuItem.
-
-	menuBar add: fileMenuItem.
-
-	GtkWindow new
-		resize: 600@400;
-		add: (GtkBox newVertical
-			packStart: menuBar expand: false fill: false padding: 0;
-			yourself);
-		inspect;
-		showAll.
-
+	self runExampleFromSender
 ]
 
 { #category : #'examples-buttons' }
@@ -445,7 +424,7 @@ GtkExamples class >> exampleMenuButtonWithMenu [
 	self runExampleFromSender
 ]
 
-{ #category : #examples }
+{ #category : #'examples-menues' }
 GtkExamples class >> exampleMorphView [
 	<example>
 
@@ -704,7 +683,7 @@ GtkExamples class >> exampleSwitch [
 	self runExampleFromSender
 ]
 
-{ #category : #examples }
+{ #category : #'examples-menues' }
 GtkExamples class >> exampleTextView [
 	<example>
 
@@ -734,7 +713,7 @@ GtkExamples class >> exampleToggleButtonWithoutIndicator [
 	self runExampleFromSender
 ]
 
-{ #category : #examples }
+{ #category : #'examples-menues' }
 GtkExamples class >> exampleToolBar [
 	<example>
 	| toolBar |
@@ -840,6 +819,7 @@ GtkExamples class >> gtkExampleAboutDialog [
 	<gtkExample>
 	<title: 'About Dialog'>
 	<category: #Windows>
+	<layoutGridSimple>
 
 	^ (GtkButton newLabel: 'Show Dialog')
 		connectClicked: [ | dialog |
@@ -888,6 +868,7 @@ GtkExamples class >> gtkExampleButtonBoxExpandToFill [
 	<gtkExample>
 	<title: 'ButtonBox expand to fill'>
 	<category: #Containers>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleButtonBoxDoing: [ :box | box expandToFill ]
 ]
@@ -897,6 +878,7 @@ GtkExamples class >> gtkExampleButtonBoxPlaceAtCenter [
 	<gtkExample>
 	<title: 'ButtonBox place at center'>
 	<category: #Containers>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtCenter ]
 ]
@@ -906,6 +888,7 @@ GtkExamples class >> gtkExampleButtonBoxPlaceAtEdges [
 	<gtkExample>
 	<title: 'ButtonBox place at edges'>
 	<category: #Containers>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtEdges ]
 ]
@@ -915,6 +898,7 @@ GtkExamples class >> gtkExampleButtonBoxPlaceAtEnd [
 	<gtkExample>
 	<title: 'ButtonBox place at end'>
 	<category: #Containers>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtEnd ]
 ]
@@ -924,6 +908,7 @@ GtkExamples class >> gtkExampleButtonBoxPlaceAtStart [
 	<gtkExample>
 	<title: 'ButtonBox place at start'>
 	<category: #Containers>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleButtonBoxDoing: [ :box | box placeAtStart ]
 ]
@@ -933,6 +918,7 @@ GtkExamples class >> gtkExampleButtonBoxSpreadEvenly [
 	<gtkExample>
 	<title: 'ButtonBox spread evenly'>
 	<category: #Containers>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleButtonBoxDoing: [ :box | box spreadEvenly ]
 ]
@@ -1020,6 +1006,7 @@ GtkExamples class >> gtkExampleDialog [
 	<gtkExample>
 	<title: 'Dialog'>
 	<category: #Windows>
+	<layoutGridSimple>
 
 	^ (GtkButton newLabel: 'Show Dialog')
 		connectClicked: [ | dialog |
@@ -1115,6 +1102,7 @@ GtkExamples class >> gtkExampleGrid [
 	<gtkExample>
 	<title: 'Grid'>
 	<category: #Containers>
+	<layoutFillContainer>
 
 	| container |
 	container := GtkGrid new.
@@ -1297,6 +1285,7 @@ GtkExamples class >> gtkExampleListBox [
 	<gtkExample>
 	<title: 'List Box'>
 	<category: #Lists>
+	<layoutFillContainer>
 
 	^ GtkBox newVertical 
 		packStart: (GtkListBox new
@@ -1310,6 +1299,7 @@ GtkExamples class >> gtkExampleListView [
 	<gtkExample>
 	<title: 'List View'>
 	<category: #Lists>
+	<layoutFillContainer>
 	
 	| store list renderer |
 	
@@ -1338,6 +1328,48 @@ GtkExamples class >> gtkExampleListView [
 		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
 
 	^ list
+]
+
+{ #category : #'private-examples-menues' }
+GtkExamples class >> gtkExampleMenu [
+	<gtkExample>
+	<title: 'Menu - See Menu bar'>
+	<category: #Menues>
+
+	| fileMenu homeMenuItem sushiMenuItem pizzaMenuItem quitMenuItem |
+	fileMenu := GtkMenu new.
+	
+	homeMenuItem := GtkCheckMenuItem newLabel: 'Going Home'.
+	fileMenu add: homeMenuItem.
+	fileMenu add: GtkSeparatorMenuItem new.
+	
+	sushiMenuItem := GtkRadioMenuItem newLabel: 'Buying Sushi'.
+	fileMenu add: sushiMenuItem.
+	pizzaMenuItem := GtkRadioMenuItem newLabel: 'Buying Pizza' fromWidget: sushiMenuItem.
+	fileMenu add: pizzaMenuItem.
+	
+	fileMenu add: GtkSeparatorMenuItem new.
+
+	quitMenuItem := GtkMenuItem newLabel: 'Quit'.
+	quitMenuItem connectActivate: [ self inform: 'No way!' ].
+	fileMenu add: quitMenuItem.
+	^ fileMenu
+]
+
+{ #category : #'private-examples-menues' }
+GtkExamples class >> gtkExampleMenuBar [
+	<gtkExample>
+	<title: 'Menu'>
+	<category: #Menues>
+	<layoutVerticalBoxNoFill>
+	| menuBar fileMenu fileMenuItem |
+
+	menuBar := GtkMenuBar new.
+	fileMenuItem := GtkMenuItem newLabel: 'File'.
+	fileMenu := self gtkExampleMenu.
+	fileMenuItem submenu: fileMenu.
+	menuBar add: fileMenuItem.
+	^ menuBar
 ]
 
 { #category : #'private-examples-buttons' }
@@ -1369,6 +1401,7 @@ GtkExamples class >> gtkExampleNotebook [
 	<gtkExample>
 	<title: 'Notebook'>
 	<category: #Containers>
+	<layoutFillContainer>
 
 	^ GtkNotebook new 
 			append: ((GtkBox newVerticalSpacing: 5) 
@@ -1450,6 +1483,7 @@ GtkExamples class >> gtkExampleRevealer [
 	<gtkExample>
 	<title: 'Revealer'>
 	<category: #Containers>
+	<layoutFillContainer>
 
 	| container rightRevealer leftRevealer |
 	container := GtkBox newHorizontal.
@@ -1493,6 +1527,7 @@ GtkExamples class >> gtkExampleScaleHorizontal [
 	<gtkExample>
 	<title: 'Scale Horizontal'>
 	<category: #Entries>
+	<layoutVerticalBoxNoFill>
 
 	^ GtkScale newHorizontalMin: 0.0 max: 10.0 step: 1.0
 ]
@@ -1502,6 +1537,7 @@ GtkExamples class >> gtkExampleScaleNotDrawingValue [
 	<gtkExample>
 	<title: 'Scale no value'>
 	<category: #Entries>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleScaleHorizontal
 		drawValue: false;
@@ -1513,6 +1549,7 @@ GtkExamples class >> gtkExampleScaleValueAtLeft [
 	<gtkExample>
 	<title: 'Scale value at left'>
 	<category: #Entries>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleScaleHorizontal
 		valueAtLeft;
@@ -1524,6 +1561,7 @@ GtkExamples class >> gtkExampleScaleValueAtTop [
 	<gtkExample>
 	<title: 'Scale value at top'>
 	<category: #Entries>
+	<layoutVerticalBoxNoFill>
 
 	^ self gtkExampleScaleHorizontal
 		valueAtTop;
@@ -1535,6 +1573,7 @@ GtkExamples class >> gtkExampleScaleVertical [
 	<gtkExample>
 	<title: 'Scale vertical'>
 	<category: #Entries>
+	<layoutHorizontalBoxNoFill>
 
 	^ GtkScale newVerticalMin: 0.0 max: 10.0 step: 1.0
 ]
@@ -1544,6 +1583,7 @@ GtkExamples class >> gtkExampleScaleWithMarks [
 	<gtkExample>
 	<title: 'Scale with Marks'>
 	<category: #Entries>
+	<layoutVerticalBoxNoFill>
 
 	| entry |
 	entry := self gtkExampleScaleHorizontal.
@@ -1616,6 +1656,7 @@ GtkExamples class >> gtkExampleStackWithStackSidebar [
 	<gtkExample>
 	<title: 'Stack with Sidebar'>
 	<category: #Containers>
+	<layoutFillContainer>
 
 	| stack |
 	stack := GtkStack new 
@@ -1640,6 +1681,7 @@ GtkExamples class >> gtkExampleStackWithStackSwitcher [
 	<gtkExample>
 	<title: 'Stack with Switcher'>
 	<category: #Containers>
+	<layoutFillContainer>
 
 	| stack |
 	stack := GtkStack new 
@@ -1680,8 +1722,8 @@ GtkExamples class >> gtkExampleSwitch [
 	<category: #Buttons>
 
 	^ GtkGrid new
-		attach: GtkSwitch new left: 0 top: 0 width: 1 height: 1;
-		attach: GtkSwitch new left: 0 top: 1 width: 1 height: 1;
+		attach: GtkSwitch on left: 0 top: 0 width: 1 height: 1;
+		attach: GtkSwitch off left: 0 top: 1 width: 1 height: 1;
 		yourself
 ]
 
@@ -1710,6 +1752,7 @@ GtkExamples class >> gtkExampleTreeView [
 	<gtkExample>
 	<title: 'Tree View'>
 	<category: #Lists>
+	<layoutFillContainer>
 	
 	| store tree renderer |
 	
@@ -1773,7 +1816,7 @@ GtkExamples class >> gtkExampleVolumeButton [
 	^ GtkVolumeButton new
 ]
 
-{ #category : #examples }
+{ #category : #'examples-menues' }
 GtkExamples class >> runExampleFromSender [
 	
 	GtkApplication ensureRunning.
