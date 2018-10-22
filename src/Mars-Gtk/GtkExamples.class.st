@@ -1169,6 +1169,25 @@ GtkExamples class >> exampleScaleWithMarks [
 		inspect
 ]
 
+{ #category : #'examples-entries' }
+GtkExamples class >> exampleSearchEntry [
+	<example>
+
+	| entry |
+	GtkApplication ensureRunning.
+
+	entry := GtkSearchEntry new.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: entry;
+		center;
+		showAll;
+		inspect
+]
+
 { #category : #'examples-basic' }
 GtkExamples class >> exampleSpinner [
 	<example>
