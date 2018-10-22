@@ -24,7 +24,7 @@ GtkStack class >> new [
 { #category : #adding }
 GtkStack >> addChild: child withTitle: aTitle [
 	self keepWidget: child.
-	self basicAddChild: child named: aTitle utf8Encoded titled: aTitle utf8Encoded
+	self basicAddChild: child named: aTitle utf8Encoded asString titled: aTitle utf8Encoded asString
 ]
 
 { #category : #adding }

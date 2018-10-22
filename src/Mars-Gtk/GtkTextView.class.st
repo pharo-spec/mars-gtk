@@ -50,7 +50,7 @@ GtkTextView >> text [
 
 { #category : #accessing }
 GtkTextView >> text: aString [
-	self textBuffer text: aString
+	self textBuffer text: aString utf8Encoded asString
 ]
 
 { #category : #accessing }
