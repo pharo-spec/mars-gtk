@@ -7,7 +7,7 @@ https://developer.gnome.org/gtk3/stable/GtkSearchEntry.html
 Class {
 	#name : #GtkSearchEntry,
 	#superclass : #GtkEntry,
-	#category : #'Mars-Gtk-Widget-Entry'
+	#category : #'Mars-Gtk-Widget-Input'
 }
 
 { #category : #private }

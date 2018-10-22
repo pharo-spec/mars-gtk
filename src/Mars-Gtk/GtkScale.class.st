@@ -11,7 +11,7 @@ Class {
 		'GtkOrientation',
 		'GtkPositionType'
 	],
-	#category : #'Mars-Gtk-Widget-Entry'
+	#category : #'Mars-Gtk-Widget-Input'
 }
 
 { #category : #private }

@@ -7,7 +7,7 @@ https://developer.gnome.org/gtk3/stable/GtkSearchBar.html
 Class {
 	#name : #GtkSearchBar,
 	#superclass : #GtkBin,
-	#category : #'Mars-Gtk-Widget-Entry'
+	#category : #'Mars-Gtk-Widget-Input'
 }
 
 { #category : #private }

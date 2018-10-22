@@ -12,7 +12,7 @@ Class {
 		'model',
 		'columns'
 	],
-	#category : #'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget-Input'
 }
 
 { #category : #private }
