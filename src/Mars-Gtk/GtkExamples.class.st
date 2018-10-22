@@ -1515,21 +1515,31 @@ GtkExamples class >> gtkExampleSearchBar [
 	<gtkExample>
 	<title: 'Search Bar'>
 	<category: #Entries>
+	
+	^ (GtkButton newLabel: 'Open Window With Search')
+		connectClicked: [ 
+			| entry bar box |
+			box := GtkBox newHorizontal
+				packStart: (entry := GtkSearchEntry new);
+				packStart: (GtkButton newLabel: 'key');
+				yourself.
 
-	| entry bar box |
-	box := GtkBox newHorizontal
-		packStart: (entry := GtkSearchEntry new);
-		packStart: (GtkButton newLabel: 'key');
-		yourself.
-
-	bar := GtkSearchBar new.
-	bar add: box.
-	bar connectEntry: entry.
-
-	^ GtkBox newVertical
-			packStart: bar;
-			packStart: (GtkLabel newLabel: 'Type on this window!');
-			yourself
+			bar := GtkSearchBar new.
+			bar add: box.
+			bar connectEntry: entry.
+			GtkWindow new 
+				autoRelease;
+				title: thisContext method selector asString;
+				resize: 500@200;
+				add: (GtkBox newVertical
+					packStart: bar;
+					packStart: (GtkLabel newLabel: 'Type on this window!');
+					yourself);
+				connectKeyPressEvent: [ :event | bar handleEvent: event ];
+				center;
+				showAll;
+				inspect ];
+		yourself
 ]
 
 { #category : #'private-examples-entries' }
