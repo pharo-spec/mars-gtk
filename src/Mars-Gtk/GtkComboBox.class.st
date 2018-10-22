@@ -21,6 +21,12 @@ GtkComboBox class >> comboBoxNew [
 	^ self ffiCall: #(GtkComboBox *gtk_combo_box_new (void))
 ]
 
+{ #category : #private }
+GtkComboBox class >> comboBoxNewWithEntry [
+
+	^ self ffiCall: #(GtkComboBox *GtkWidget *gtk_combo_box_new_with_entry (void))
+]
+
 { #category : #'instance creation' }
 GtkComboBox class >> new [
 
@@ -31,6 +37,48 @@ GtkComboBox class >> new [
 GtkComboBox class >> newModel: aTreeModel [
 
 	^ self new model: aTreeModel
+]
+
+{ #category : #'instance creation' }
+GtkComboBox class >> newWithEntry [
+
+	^ self comboBoxNewWithEntry initialize
+]
+
+{ #category : #accessing }
+GtkComboBox >> activeId [
+
+	^ self basicActiveId asByteArray utf8Decoded
+]
+
+{ #category : #accessing }
+GtkComboBox >> activeId: anIdString [
+
+	^ self basicActiveId: anIdString utf8Encoded asString
+]
+
+{ #category : #accessing }
+GtkComboBox >> activeIndex [
+
+	^ self ffiCall: #(gint gtk_combo_box_get_active (self))
+]
+
+{ #category : #accessing }
+GtkComboBox >> activeIndex: index [
+
+	^ self ffiCall: #(void gtk_combo_box_set_active (self, gint index))
+]
+
+{ #category : #private }
+GtkComboBox >> basicActiveId [
+
+	^ self ffiCall: #(String gtk_combo_box_get_active_id (self))
+]
+
+{ #category : #private }
+GtkComboBox >> basicActiveId: utf8EncodedId [
+
+	^ self ffiCall: #(gboolean gtk_combo_box_set_active_id (self, String utf8EncodedId))
 ]
 
 { #category : #TOREFACTOR }
@@ -45,6 +93,30 @@ GtkComboBox >> beText [
 	self addAttribute: cell attribute: 'text' column: 0
 ]
 
+{ #category : #accessing }
+GtkComboBox >> columnId [
+
+	^ self ffiCall: #(gint gtk_combo_box_get_id_column (self))
+]
+
+{ #category : #accessing }
+GtkComboBox >> columnId: columnId [
+
+	^ self ffiCall: #(void gtk_combo_box_set_id_column (self, gint columnId))
+]
+
+{ #category : #accessing }
+GtkComboBox >> columnSpanColumn [
+
+	^ self ffiCall: #(gint gtk_combo_box_get_column_span_column (self))
+]
+
+{ #category : #accessing }
+GtkComboBox >> columnSpanColumn: columnSpan [
+
+	^ self ffiCall: #(void gtk_combo_box_set_column_span_column (self, gint columnSpan))
+]
+
 { #category : #events }
 GtkComboBox >> connectChanged: aBlock [
 
@@ -54,14 +126,68 @@ GtkComboBox >> connectChanged: aBlock [
 ]
 
 { #category : #accessing }
+GtkComboBox >> entryTextColumn [
+
+	^ self ffiCall: #(gint gtk_combo_box_get_entry_text_column (self))
+]
+
+{ #category : #accessing }
+GtkComboBox >> entryTextColumn: columnId [
+
+	self ffiCall: #(void gtk_combo_box_set_entry_text_column (self, gint columnId))
+]
+
+{ #category : #accessing }
+GtkComboBox >> fixedWidth [
+
+	^ self ffiCall: #(gboolean gtk_combo_box_get_popup_fixed_width (self))
+]
+
+{ #category : #accessing }
+GtkComboBox >> fixedWidth: aBoolean [
+
+	^ self ffiCall: #(void gtk_combo_box_set_popup_fixed_width (self, gboolean aBoolean))
+]
+
+{ #category : #accessing }
+GtkComboBox >> hasEntry [
+
+	^ self ffiCall: #(gboolean gtk_combo_box_get_has_entry (self))
+]
+
+{ #category : #accessing }
 GtkComboBox >> model: aTreeModel [
 
 	model := aTreeModel.
 	self setModel: aTreeModel
 ]
 
+{ #category : #accessing }
+GtkComboBox >> rowSpanColumn [
+
+	^ self ffiCall: #(gint gtk_combo_box_get_row_span_column (self))
+]
+
+{ #category : #accessing }
+GtkComboBox >> rowSpanColumn: rowSpan [
+
+	^ self ffiCall: #(void gtk_combo_box_set_row_span_column (self, gint rowSpan))
+]
+
 { #category : #private }
 GtkComboBox >> setModel: aTreeModel [
 
 	^ self ffiCall: #(void gtk_combo_box_set_model (self, GObject *aTreeModel))
+]
+
+{ #category : #accessing }
+GtkComboBox >> wrapWidth [
+
+	^ self ffiCall: #(gint gtk_combo_box_get_wrap_width (self))
+]
+
+{ #category : #accessing }
+GtkComboBox >> wrapWidth: width [
+
+	self ffiCall: #(void gtk_combo_box_set_wrap_width (self, gint width))
 ]
