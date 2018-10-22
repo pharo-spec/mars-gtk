@@ -23,6 +23,7 @@ GtkExampleBrowserCategory >> addExample: example [
 			append: (GtkScrolledWindow newWidget: example widget)
 			label: (GtkLabel newLabel: 'Widget');
 			append: (GtkTextView new
+				monospace: true;
 				text: example sourceCode;
 				yourself)
 			label: (GtkLabel newLabel: 'SourceCode'))
