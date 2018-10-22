@@ -979,7 +979,40 @@ GtkExamples class >> gtkExampleComboBoxText [
 	<title: 'ComboBoxText'>
 	<category: #Entries>
 
-	^ GtkComboBoxText newModel: (GtkTreeStore newStrings: #('one' 'two' 'three' 'four'))
+	| label combo |
+	^ GtkGrid new
+		attach: (combo := GtkComboBoxText new
+			append: 'Option 1';
+			append: 'Option 2';
+			append: 'Option 3';
+			append: 'Option 4';
+			connectChanged: [ label text: combo activeText ];
+			yourself)
+		at: 1@1;
+		attach: (label := GtkLabel newLabel: '')
+		at: 1@2;
+		yourself
+]
+
+{ #category : #'private-examples-menues' }
+GtkExamples class >> gtkExampleComboBoxTextWithEntry [
+	<gtkExample>
+	<title: 'ComboBoxText with entry'>
+	<category: #Entries>
+
+	| label combo |
+	^ GtkGrid new
+		attach: (combo := GtkComboBoxText newWithEntry
+			append: 'Option 1';
+			append: 'Option 2';
+			append: 'Option 3';
+			append: 'Option 4';
+			connectChanged: [ label text: combo activeText ];
+			yourself)
+		at: 1@1;
+		attach: (label := GtkLabel newLabel: '')
+		at: 1@2;
+		yourself
 ]
 
 { #category : #'private-examples-windows' }

@@ -45,6 +45,14 @@ GtkComboBox >> beText [
 	self addAttribute: cell attribute: 'text' column: 0
 ]
 
+{ #category : #events }
+GtkComboBox >> connectChanged: aBlock [
+
+	self
+		connect: 'changed'
+		do: aBlock
+]
+
 { #category : #accessing }
 GtkComboBox >> model: aTreeModel [
 
