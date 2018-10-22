@@ -32,7 +32,7 @@ GtkTreeViewColumn >> gtkTreeViewColumnGetTitle [
 GtkTreeViewColumn >> gtkTreeViewColumnPackStart: aRenderer andExpand: aBoolean [
 
 	self ffiCall: #(void gtk_tree_view_column_pack_start (self,
-                                 GtkCellRenderer *aRenderer,
+                                 GtkCellTextRenderer *aRenderer,
                                  gboolean aBoolean))
 ]
 
@@ -52,7 +52,7 @@ GtkTreeViewColumn >> renderer: aRenderer [
 GtkTreeViewColumn >> setAttribute: attribute toColumAtIndex: column forRenderer: aRenderer [
 
 	self ffiCall: #(void gtk_tree_view_column_add_attribute (self,
-                                    GtkCellRenderer *aRenderer,
+                                    GtkCellTextRenderer *aRenderer,
                                     const gchar *attribute,
                                     gint column))
 ]
