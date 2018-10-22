@@ -98,6 +98,7 @@ GtkRunLoop >> isRunning [
 
 { #category : #private }
 GtkRunLoop >> mainIterationDo: blocking [
+	
 	^ self ffiCall: #( void gtk_main_iteration_do ( gboolean blocking ) )
 ]
 

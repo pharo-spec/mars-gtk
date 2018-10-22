@@ -20,8 +20,7 @@ GtkSimpleRunLoop >> installRunLoop [
 	process := [
 		[ self isRunning and: [ session == Smalltalk session ] ] 
 		whileTrue: [
-			self processEvents.
-			(Delay forMilliseconds: 5) wait ] ]
+			self processEvents ] ]
 		forkAt: Processor highIOPriority 
 		named: 'GtkRunLoop'
 ]
@@ -30,7 +29,8 @@ GtkSimpleRunLoop >> installRunLoop [
 GtkSimpleRunLoop >> processEvents [
 	self doNotOverlap: [
 		[ self getEventsPending ]
-		whileTrue: [ self mainIterationDo: false ] ]
+		whileTrue: [ self mainIterationDo: true ].
+		5 milliSeconds wait ]
 ]
 
 { #category : #'private installing' }

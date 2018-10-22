@@ -687,11 +687,11 @@ GtkExamples class >> exampleLayout [
 
 	container := GtkLayout new.
 
-	3 timesRepeat: [ | button |
-		button := GtkButton newLabel: 'Click me'.
-		button connectClicked: [ container moveChild: button to: 500@200 atRandom ].
+	1 to: 3 do: [ :idx | | button |
+		button := GtkButton newLabel: 'Click me ', idx asString.
+		button connectClicked: [ container moveChild: button to: (300 atRandom@200atRandom) ].
 		container
-			putChild: button at: 500@200 atRandom;
+			putChild: button at: (300 atRandom@200atRandom);
 			yourself ].
 
 	GtkWindow new 
