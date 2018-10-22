@@ -55,7 +55,7 @@ GtkRadioButton class >> newInGroup: aGroup [
 { #category : #'instance creation' }
 GtkRadioButton class >> newInGroup: aGroup withLabel: aLabel [
 
-	^ (self buttonNewInGroup: aGroup withLabel: aLabel utf8Encoded)
+	^ (self buttonNewInGroup: aGroup withLabel: aLabel utf8Encoded asString)
 		initialize;
 		yourself
 ]
@@ -71,7 +71,7 @@ GtkRadioButton class >> newInSameGroupAs: aRadioButton [
 { #category : #'instance creation' }
 GtkRadioButton class >> newInSameGroupAs: aRadioButton withLabel: aLabel [
 
-	^ (self buttonNewInSameGroupAs: aRadioButton withLabel: aLabel utf8Encoded)
+	^ (self buttonNewInSameGroupAs: aRadioButton withLabel: aLabel utf8Encoded asString)
 		initialize;
 		yourself
 ]
