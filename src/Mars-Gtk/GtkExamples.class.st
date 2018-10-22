@@ -211,10 +211,14 @@ GtkExamples class >> exampleFixed [
 { #category : #examples }
 GtkExamples class >> exampleForm [
 	<example>
-	| grid actionBar textInput numberInput textArea |
+	| window grid actionBar textInput numberInput textArea |
 
 	GtkApplication ensureRunning.
 
+	"The window"
+	window := GtkWindow new autoRelease.
+
+	"The grid"
 	grid := GtkGrid new
 		"rowHomogeneous: true;"
 		borderWidth: 20;
@@ -241,15 +245,16 @@ GtkExamples class >> exampleForm [
 			at: 2@2;
 		"combo box"
 		attach: (GtkLabel newLabel: 'Combo box') at: 1@3;
-		attach: (GtkComboBox newModel: (GtkTreeStore newStrings: #('one' 'two' 'three' 'four'))) beText at: 2@3;
+		attach: (GtkComboBoxText newModel: (GtkTreeStore newStrings: #('one' 'two' 'three' 'four')))  at: 2@3;
 		"text area"
 		attach: (GtkLabel newLabel: 'Text area') at: 1@4;
 		attach: (GtkScrolledWindow newWidget: (textArea := GtkTextView new)) at: 2@4 span: 1@3;
 		yourself.
 		
+	"The buttons"
 	actionBar := GtkActionBar new
 		packEnd: ((GtkButton newLabel: 'Cancel')
-			connectClicked: [ self inform: 'Cancelled!' ];
+			connectClicked: [ window hide ];
 			yourself);
 		packEnd: ((GtkButton newLabel: 'Accept')
 			grabDefault;
@@ -261,8 +266,8 @@ GtkExamples class >> exampleForm [
 			yourself);
 		yourself.
 		
-	GtkWindow new
-		autoRelease;
+	"Show window"
+	window
 		title: 'Toolbar example';
 		resize: 400 @ 400;
 		add:(GtkBox newVertical 
