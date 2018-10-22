@@ -46,7 +46,7 @@ GObject >> connect: aString do: aBlock [
 	^ self 
 		connect: aString 
 		signature: #(void (void *widget, void *aData))  
- 		do: [ :widget :aData | [ aBlock value ] forkAt: Processor highIOPriority ]
+ 		do: [ :widget :aData | [ aBlock value ] fork"At: Processor lowIOPriority" ]
 ]
 
 { #category : #'private signaling' }
