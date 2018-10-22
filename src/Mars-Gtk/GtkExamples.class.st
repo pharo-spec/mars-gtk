@@ -1170,6 +1170,36 @@ GtkExamples class >> exampleScaleWithMarks [
 ]
 
 { #category : #'examples-entries' }
+GtkExamples class >> exampleSearchBar [
+	<example>
+
+	| entry bar box |
+	GtkApplication ensureRunning.
+
+	box := GtkBox newHorizontal
+		packStart: (entry := GtkSearchEntry new);
+		packStart: (GtkButton newLabel: 'key');
+		yourself.
+
+	bar := GtkSearchBar new.
+	bar add: box.
+	bar connectEntry: entry.
+
+	GtkWindow new 
+		autoRelease;
+		title: thisContext method selector asString;
+		resize: 500@200;
+		add: (GtkBox newVertical
+			packStart: bar;
+			packStart: (GtkLabel newLabel: 'Type on this window!');
+			yourself);
+		connectKeyPressEvent: [ :event | bar handleEvent: event ];
+		center;
+		showAll;
+		inspect
+]
+
+{ #category : #'examples-entries' }
 GtkExamples class >> exampleSearchEntry [
 	<example>
 

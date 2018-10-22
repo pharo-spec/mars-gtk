@@ -126,6 +126,15 @@ GtkWidget >> connectHide: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectKeyPressEvent: aBlock [
+
+	^ self 
+		connect: 'key-press-event'
+		signature: #(int (void *widget, void* event, void *aData))  
+ 		do: [ :widget :event :aData | aBlock value: event ]
+]
+
+{ #category : #signaling }
 GtkWidget >> connectShow: aBlock [
 	self connect: 'show' do: aBlock
 ]
