@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkMenuAdapter,
 	#superclass : #GtkMenuBaseAdapter,
-	#category : #'Mars-Spec'
+	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #building }

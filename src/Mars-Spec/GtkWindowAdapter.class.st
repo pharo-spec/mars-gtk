@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkWindowAdapter,
 	#superclass : #GtkAdapter,
-	#category : #'Mars-Spec'
+	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #private }

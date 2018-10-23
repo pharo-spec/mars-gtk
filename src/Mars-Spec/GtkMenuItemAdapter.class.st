@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkMenuItemAdapter,
 	#superclass : #GtkMenuBaseAdapter,
-	#category : #'Mars-Spec'
+	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #'as yet unclassified' }
