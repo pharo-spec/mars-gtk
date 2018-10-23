@@ -1415,6 +1415,25 @@ GtkExamples class >> gtkExampleNotebook [
 		yourself
 ]
 
+{ #category : #'private-examples-menues' }
+GtkExamples class >> gtkExamplePopover [
+	<gtkExample>
+	<title: 'Popover'>
+	<category: #Menues>
+	<layoutVerticalBoxNoFill>
+	| button popover |
+
+	button := GtkButton newLabel: 'Show popover'.
+	button connectClicked: [ popover popup ].
+
+	popover := GtkPopover newRelativeTo: button.
+	popover add: ((GtkButton newLabel: 'Thanks for coming')
+		connectClicked: [ popover popdown ];
+		showAll;
+		yourself).
+	^ button
+]
+
 { #category : #'private-examples-basic' }
 GtkExamples class >> gtkExampleProgressBar [
 	<gtkExample>
