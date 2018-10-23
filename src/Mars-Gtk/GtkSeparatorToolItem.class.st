@@ -1,3 +1,9 @@
+"
+GtkSeparatorToolItem
+GtkSeparatorToolItem — A toolbar item that separates groups of other toolbar items
+
+https://developer.gnome.org/gtk3/stable/GtkSeparatorToolItem.html
+"
 Class {
 	#name : #GtkSeparatorToolItem,
 	#superclass : #GtkToolItem,

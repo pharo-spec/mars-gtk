@@ -1747,6 +1747,63 @@ GtkExamples class >> gtkExampleToggleButtonWithoutIndicator [
 		yourself
 ]
 
+{ #category : #'private-examples-menues' }
+GtkExamples class >> gtkExampleToolBar [
+	<gtkExample>
+	<title: 'Toolbar'>
+	<category: #Menues>
+	<layoutVerticalBoxNoFill>
+	
+	| firstRadio |
+	^ GtkToolbar new
+		beIconSizeSmallToolbar;
+		beIcons; "beIcons, beText, beBoth"
+		add: ((GtkToolButton
+			newIcon: (GtkImage newIconForLargeToolbarNamed: 'gtk-ok')
+			label: 'Ok form stock')
+			tooltipText: 'Ok from stock';
+			connectClicked: [ self inform: 'Ok from stock' ];
+			yourself);
+		add: ((GtkToolButton
+			newIcon: (GtkImage newIconForLargeToolbarNamed: 'gtk-cancel')
+			label: 'Cancel from stock')
+			tooltipText: 'Cancel from stock';
+			connectClicked: [ self inform: 'Cancel from stock' ];
+			yourself);
+		add: GtkSeparatorToolItem new;
+		add: ((GtkToolButton
+			newIcon: (GtkImage newForm: (self iconNamed: #smallOk))
+			label: 'Ok from Pharo')
+			tooltipText: 'Ok from Pharo';
+			connectClicked: [ self inform: 'Ok from Pharo' ];
+			yourself);
+		add: ((GtkToolButton
+			newIcon: (GtkImage newForm: (self iconNamed: #smallCancel))
+			label: 'Cancel from Pharo')
+			tooltipText: 'Cancel from Pharo';
+			connectClicked: [ self inform: 'Cancel from Pharo' ];
+			yourself);
+		add: GtkSeparatorToolItem new;
+		add: ((GtkMenuToolButton
+			newIcon: (GtkImage newForm: (self iconNamed: #testGreen))
+			label: 'Run')
+			tooltipText: 'Choose how to Run';
+			arrowTooltipText: 'Arror tooltip';
+			menu: self gtkExampleMenu showAll;
+			yourself);
+		add: (GtkToggleToolButton new
+			label: 'Check me';
+			yourself);
+		add: GtkSeparatorToolItem new;
+		add: (firstRadio := GtkRadioToolButton new
+			label: 'Option 1';
+			yourself);
+		add: ((GtkRadioToolButton newInSameGroupAs: firstRadio)
+			label: 'Option 2';
+			yourself);
+		yourself.
+]
+
 { #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleTreeView [
 	<gtkExample>

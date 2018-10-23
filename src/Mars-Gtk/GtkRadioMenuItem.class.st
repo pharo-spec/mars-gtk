@@ -49,7 +49,7 @@ GtkRadioMenuItem >> group [
 { #category : #'menu protocol' }
 GtkRadioMenuItem >> group: aGroup [
 
-	self ffiCall: #(void gtk_radio_menu_item_set_group (self, void *group))
+	self ffiCall: #(void gtk_radio_menu_item_set_group (self, void *aGroup))
 ]
 
 { #category : #'menu protocol' }
