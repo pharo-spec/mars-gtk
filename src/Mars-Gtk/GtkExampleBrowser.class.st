@@ -17,6 +17,13 @@ Class {
 	#category : #'Mars-Gtk-Examples'
 }
 
+{ #category : #accessing }
+GtkExampleBrowser class >> show [ 
+	<script>
+	
+	self new show
+]
+
 { #category : #'examples-windows' }
 GtkExampleBrowser >> buildCategoryStack [
 		
