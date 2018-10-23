@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkContainerAdapter,
 	#superclass : #GtkAdapter,
-	#category : #'Mars-Spec'
+	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #protocol }
