@@ -11,6 +11,7 @@ GtkAdapterBindings >> initializeBindings [
 		at: #ButtonAdapter				put: #GtkButtonAdapter;
 		at: #CheckBoxAdapter			put: nil;
 		at: #ContainerAdapter			put: #GtkContainerAdapter;
+		at: #GridAdapter				put: #GtkGridAdapter;
 		at: #DiffAdapter				put: nil;
 		at: #DropListAdapter			put: nil;
 		at: #LabelAdapter				put: #GtkLabelAdapter;
