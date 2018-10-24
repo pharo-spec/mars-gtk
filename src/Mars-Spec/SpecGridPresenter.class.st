@@ -1,5 +1,5 @@
 Class {
-	#name : #GridPresenter,
+	#name : #SpecGridPresenter,
 	#superclass : #AbstractWidgetPresenter,
 	#instVars : [
 		'contents'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #specs }
-GridPresenter class >> adapterName [
+SpecGridPresenter class >> adapterName [
 	
 	^ #GridAdapter
 ]
 
 { #category : #adding }
-GridPresenter >> add: anAssociation [ 
+SpecGridPresenter >> add: anAssociation [ 
 	
 	self 
 		add: anAssociation key 
@@ -22,7 +22,7 @@ GridPresenter >> add: anAssociation [
 ]
 
 { #category : #adding }
-GridPresenter >> add: aPresenterOrSymbol constraints: aSpecGridConstraint [
+SpecGridPresenter >> add: aPresenterOrSymbol constraints: aSpecGridConstraint [
 
 	contents 
 		at: aPresenterOrSymbol 
@@ -30,7 +30,7 @@ GridPresenter >> add: aPresenterOrSymbol constraints: aSpecGridConstraint [
 ]
 
 { #category : #initialization }
-GridPresenter >> initialize [ 
+SpecGridPresenter >> initialize [ 
 
 	super initialize.
 	contents := OrderedDictionary new
