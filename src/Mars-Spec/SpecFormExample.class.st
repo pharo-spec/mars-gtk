@@ -48,12 +48,14 @@ SpecFormExample class >> gridSpec [
 	<spec: #grid>
 	
 	^ SpecGridLayout new 
-		add: #textInputLabel at: 1@1;
-		add: #textInput at: 2@1;
-		add: #numberInputLabel at: 1@2;
-		add: #numberInput at: 2@2;
-		add: #textAreaLabel at: 1@3;
-		add: #textArea at: 2@3 span: 1@2;
+		add: #textInputLabel 				at: 1@1;
+		add: #textInput 					at: 2@1;
+		add: #numberInputLabel 			at: 1@2;
+		add: #numberInput 					at: 2@2;
+		add: #textAreaLabel 				at: 1@3;
+		add: #textArea 						at: 2@3 span: 1@2;
+		add: #checkBoxLabel 				at: 1@5;
+		add: #checkBox 						at: 2@5;
 		yourself
 ]
 
