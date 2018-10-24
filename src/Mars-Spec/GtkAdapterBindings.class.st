@@ -26,6 +26,7 @@ GtkAdapterBindings >> initializeBindings [
 		at: #TabAdapter					put: #GtkTabAdapter;
 		at: #TextAdapter				put: #GtkTextAdapter;
 		at: #TextInputFieldAdapter	put: #GtkTextInputFieldAdapter;
+		at: #NumberInputFieldAdapter put: #GtkNumberInputFieldAdapter;
 		at: #TransferAdapter			put: nil;
 		at: #TreeAdapter				put: nil;
 		at: #TreeColumnAdapter		put: nil;

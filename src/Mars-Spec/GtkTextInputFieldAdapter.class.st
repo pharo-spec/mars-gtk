@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #building }
-GtkTextInputFieldAdapter >> addModelTo: gtkEntry [ 
+GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 
 	self model ghostText ifNotNil: [ :text | 
 		gtkEntry placeHolderText: text ]
@@ -13,9 +13,15 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 
 { #category : #building }
 GtkTextInputFieldAdapter >> buildWidget [
-	| gtkEntry |
+	| gtkWidget |
 	
-	gtkEntry := GtkEntry new.
-	self addModelTo: gtkEntry.
-	^ gtkEntry
+	gtkWidget := self gtkWidgetClass new.
+	self addModelTo: gtkWidget.
+	^ gtkWidget
+]
+
+{ #category : #private }
+GtkTextInputFieldAdapter >> gtkWidgetClass [
+
+	^ GtkEntry
 ]

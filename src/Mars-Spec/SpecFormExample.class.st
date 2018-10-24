@@ -5,7 +5,11 @@ Class {
 		'textInputLabel',
 		'textInput',
 		'numberInputLabel',
-		'numberInput'
+		'numberInput',
+		'textAreaLabel',
+		'textArea',
+		'checkBoxLabel',
+		'checkBox'
 	],
 	#category : #'Mars-Spec-Examples'
 }
@@ -27,14 +31,16 @@ SpecFormExample class >> defaultSpec [
 						newColumn: #numberInputLabel;
 						newColumn: #numberInput ]
 					height: 25;
+				newRow: [ :row |
+					row 
+						newColumn: #textAreaLabel;
+						newColumn: #textArea ];
+				newRow: [ :row |
+					row 
+						newColumn: #checkBoxLabel;
+						newColumn: #checkBox ]
+					height: 25;
 				addSpacer ]
-	
-	"^ SpecGridLayout new 
-		add: #textInputLabel at: 1@1;
-		add: #textInput at: 2@1;
-		add: #numberInputLabel at: 1@2;
-		add: #numberInput at: 2@2;
-		yourself"
 ]
 
 { #category : #specs }
@@ -46,6 +52,8 @@ SpecFormExample class >> gridSpec [
 		add: #textInput at: 2@1;
 		add: #numberInputLabel at: 1@2;
 		add: #numberInput at: 2@2;
+		add: #textAreaLabel at: 1@3;
+		add: #textArea at: 2@3 span: 1@2;
 		yourself
 ]
 
@@ -62,9 +70,29 @@ SpecFormExample class >> showWithGtk [
 	
 	SpecBindings 
 		value: GtkAdapterBindings
-		during: [ self new openWithSpec": #gridSpec" ].
+		during: [ self new openWithSpec: #gridSpec ].
 
 
+]
+
+{ #category : #'accessing ui' }
+SpecFormExample >> checkBox [
+	^ checkBox
+]
+
+{ #category : #'accessing ui' }
+SpecFormExample >> checkBox: anObject [
+	checkBox := anObject
+]
+
+{ #category : #'accessing ui' }
+SpecFormExample >> checkBoxLabel [
+	^ checkBoxLabel
+]
+
+{ #category : #'accessing ui' }
+SpecFormExample >> checkBoxLabel: anObject [
+	checkBoxLabel := anObject
 ]
 
 { #category : #initialization }
@@ -75,47 +103,80 @@ SpecFormExample >> initializeWidgets [
 		ghostText: 'a ghost text'.
 		
 	numberInputLabel := self newLabel label: 'Number input'.
-	numberInput := self newTextInput 
-		ghostText: 'a ghost text for number'.
+	numberInput := self newNumberInput 
+		ghostText: 'a ghost number';
+		beFloat.
 
+	textAreaLabel := self newLabel label: 'Text area'.
+	textArea := self newText.
+
+	checkBoxLabel := self newLabel label: 'Check box'.
+	checkBox := self newCheckBox
+		label: 'Mark this'.
+	
+	self focusOrder 
+		add: self textInput;
+		add: self numberInput;
+		add: self textArea;
+		add: self checkBox
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
 SpecFormExample >> numberInput [
 	^ numberInput
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
 SpecFormExample >> numberInput: anObject [
 	numberInput := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
 SpecFormExample >> numberInputLabel [
 	^ numberInputLabel
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
 SpecFormExample >> numberInputLabel: anObject [
 	numberInputLabel := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
+SpecFormExample >> textArea [
+	^ textArea
+]
+
+{ #category : #'accessing ui' }
+SpecFormExample >> textArea: anObject [
+	textArea := anObject
+]
+
+{ #category : #'accessing ui' }
+SpecFormExample >> textAreaLabel [
+	^ textAreaLabel
+]
+
+{ #category : #'accessing ui' }
+SpecFormExample >> textAreaLabel: anObject [
+	textAreaLabel := anObject
+]
+
+{ #category : #'accessing ui' }
 SpecFormExample >> textInput [
 	^ textInput
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
 SpecFormExample >> textInput: anObject [
 	textInput := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
 SpecFormExample >> textInputLabel [
 	^ textInputLabel
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing ui' }
 SpecFormExample >> textInputLabel: anObject [
 	textInputLabel := anObject
 ]

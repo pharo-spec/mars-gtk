@@ -2,10 +2,31 @@ Class {
 	#name : #SpecGridLayout,
 	#superclass : #Object,
 	#instVars : [
-		'presenters'
+		'presenters',
+		'borderWidth',
+		'columnSpacing',
+		'rowSpacing'
 	],
 	#category : #'Mars-Spec-Examples'
 }
+
+{ #category : #initialization }
+SpecGridLayout class >> defaultBorderWidth [
+
+	^ 20
+]
+
+{ #category : #initialization }
+SpecGridLayout class >> defaultColumnSpacing [
+
+	^ 10
+]
+
+{ #category : #initialization }
+SpecGridLayout class >> defaultRowSpacing [
+
+	^ 5
+]
 
 { #category : #adding }
 SpecGridLayout >> add: aPresenterOrSymbol at: aPoint [
@@ -40,15 +61,44 @@ SpecGridLayout >> add: aPresenterOrSymbol withConstraints: aBlock [
 
 { #category : #converting }
 SpecGridLayout >> asArray [
-	| array |
+
+	self error: 'Should not arrive here. This layout is executable then it will not be interpreted.'
+]
+
+{ #category : #accessing }
+SpecGridLayout >> borderWidth [
+
+	^ borderWidth ifNil: [ self class defaultBorderWidth ]
+]
+
+{ #category : #accessing }
+SpecGridLayout >> borderWidth: anObject [
+	borderWidth := anObject
+]
+
+{ #category : #building }
+SpecGridLayout >> buildAdapterFor: aModel bindings: bindings [
+	| adapter |
+
+	adapter := (bindings adapterClass: #GridAdapter) adapt: aModel.
+	adapter layout: self.
+	presenters keysAndValuesDo: [ :selector :constraints |
+		adapter 
+			add: (aModel perform: selector) 
+			constraints: constraints ].
 	
-	array := OrderedCollection with: #GridPresenter.
-	presenters keysAndValuesDo: [ :presenter :constraints |
-		array 
-			add: #add:;
-			add: { presenter -> constraints } ].
-	
-	^ array asArray
+	^ adapter
+]
+
+{ #category : #accessing }
+SpecGridLayout >> columnSpacing [
+
+	^ columnSpacing ifNil: [ self class defaultColumnSpacing ]
+]
+
+{ #category : #accessing }
+SpecGridLayout >> columnSpacing: anObject [
+	columnSpacing := anObject
 ]
 
 { #category : #initialization }
@@ -59,7 +109,34 @@ SpecGridLayout >> initialize [
 ]
 
 { #category : #testing }
+SpecGridLayout >> isExecutable [
+
+	^ true
+]
+
+{ #category : #testing }
 SpecGridLayout >> isSpecLayout [
 
 	^ true
+]
+
+{ #category : #accessing }
+SpecGridLayout >> presenters [
+	^ presenters
+]
+
+{ #category : #accessing }
+SpecGridLayout >> presenters: anObject [
+	presenters := anObject
+]
+
+{ #category : #accessing }
+SpecGridLayout >> rowSpacing [
+
+	^ rowSpacing ifNil: [ self class defaultRowSpacing ]
+]
+
+{ #category : #accessing }
+SpecGridLayout >> rowSpacing: anObject [
+	rowSpacing := anObject
 ]

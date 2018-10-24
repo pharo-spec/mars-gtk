@@ -70,6 +70,24 @@ GtkSpinButton >> beNumber [
 	self numeric: true
 ]
 
+{ #category : #accessing }
+GtkSpinButton >> digits [
+
+	^ self ffiCall: #(guint gtk_spin_button_get_digits (self))
+]
+
+{ #category : #accessing }
+GtkSpinButton >> digits: digits [
+
+	^ self ffiCall: #(void gtk_spin_button_set_digits (self, guint digits))
+]
+
+{ #category : #private }
+GtkSpinButton >> getRangeMin: min max: max [
+	
+	self ffiCall: #(void gtk_spin_button_get_range (self, gdouble *min, gdouble *max))
+]
+
 { #category : #testing }
 GtkSpinButton >> isNumeric [
 
@@ -80,6 +98,35 @@ GtkSpinButton >> isNumeric [
 GtkSpinButton >> numeric: numeric [
 
 	self ffiCall: #(void gtk_spin_button_set_numeric (self, gboolean numeric))
+]
+
+{ #category : #accessing }
+GtkSpinButton >> range [
+	| type min max |
+	
+	type := FFICallout new 
+		requestor: self class; 
+		resolveType: 'gdouble'.
+	min := type newBuffer.
+	max := type newBuffer.
+	self getRangeMin: min max: max.
+	^ (min floatAt: 1) @ (max floatAt: 1)
+	
+]
+
+{ #category : #accessing }
+GtkSpinButton >> rangeMinimum: minFloat maximum: maxFloat [
+
+	self 
+		setRangeMin: minFloat asFloat 
+		max: maxFloat asFloat 
+]
+
+{ #category : #private }
+GtkSpinButton >> setRangeMin: min max: max [
+
+	^ self ffiCall: #(void gtk_spin_button_set_range (self, gdouble min, gdouble max))
+	 
 ]
 
 { #category : #private }
