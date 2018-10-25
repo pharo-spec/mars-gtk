@@ -7,7 +7,6 @@ Class {
 	#name : #GtkWidget,
 	#superclass : #GObject,
 	#instVars : [
-		'callbacks',
 		'data'
 	],
 	#category : #'Mars-Gtk-Widget'
@@ -156,15 +155,6 @@ GtkWidget >> destroy [
 	^ self ffiCall: #(void gtk_widget_destroy (self))
 ]
 
-{ #category : #signaling }
-GtkWidget >> disconnectAll [
-	callbacks ifNil: [ ^ self ].
-	callbacks copy do: [ :each | 
-		self assert: (self disconnectByFunc: each) ~= 0.
-		callbacks remove: each ].
-	
-]
-
 { #category : #'library path' }
 GtkWidget >> ffiLibraryName [
 	^ self class ffiLibraryName
@@ -264,12 +254,6 @@ GtkWidget >> path [
 GtkWidget >> queueDraw [
 
 	^ self ffiCall: #(void gtk_widget_queue_draw (self))
-]
-
-{ #category : #private }
-GtkWidget >> registerCallback: aCallback [
-	callbacks ifNil: [ callbacks := Set new ].
-	callbacks add: aCallback
 ]
 
 { #category : #'external resource management' }

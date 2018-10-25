@@ -48,3 +48,9 @@ GtkListStore >> gtkListStoreAppend: anIterator [
 
 	^ self ffiCall: #(void gtk_list_store_append (self, GtkListIter* anIterator))
 ]
+
+{ #category : #initialization }
+GtkListStore >> initialize [ 
+	super initialize.
+	"self autoRelease"
+]

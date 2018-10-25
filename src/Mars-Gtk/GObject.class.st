@@ -3,6 +3,9 @@ Class {
 	#superclass : #FFIOpaqueObject,
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
+	#instVars : [
+		'callbacks'
+	],
 	#pools : [
 		'GConnectFlags',
 		'GSignalMatchType',
@@ -54,9 +57,22 @@ GObject >> connect: aString signature: signature do: aBlock [
 	"BEWARE when installing callbacks to gtk... you HAVE TO catch and fork any error happening, 
 	 otherwise you will crash your image (event processing happens in VM event loop, so is fragile)"
 	| callback |
+
 	callback := FFICallback signature: signature block: aBlock.
 	self registerCallback: callback.
-	self signal: aString connect: callback data: ExternalAddress null
+	self 
+		signal: aString 
+		connect: callback 
+		data: ExternalAddress null
+]
+
+{ #category : #signaling }
+GObject >> disconnectAll [
+	callbacks ifNil: [ ^ self ].
+	callbacks copy do: [ :each | 
+		self assert: (self disconnectByFunc: each) ~= 0.
+		callbacks remove: each ].
+	
 ]
 
 { #category : #'private signaling' }
@@ -127,6 +143,12 @@ GObject >> objectReference [
 { #category : #private }
 GObject >> objectUnreference [
 	self ffiCall: #(gpointer g_object_unref (self))
+]
+
+{ #category : #private }
+GObject >> registerCallback: aCallback [
+	callbacks ifNil: [ callbacks := Set new ].
+	callbacks add: aCallback
 ]
 
 { #category : #'private signaling' }

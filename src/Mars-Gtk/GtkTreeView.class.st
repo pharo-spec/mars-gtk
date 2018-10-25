@@ -41,10 +41,17 @@ GtkTreeView >> appendColumn: column [
 GtkTreeView >> connectRowSelected: aBlock [
 
 	self 
-		connect: 'row-selected' 
+		connect: 'row-activated' 
 		signature: #(void (void *treeView, void *path, void *column, void *userData))
-		do: [ :treeView :path :column :userData |
-			aBlock value: (GtkTreePath fromHandle: path) ]
+		do: [ :treeView :path :column :userData | 
+			| indexPath |
+			self flag: #TODO. "This is temporal (I hope if does not lasts until future me finds 
+			this five years from now ;). 
+			The fact is that Gtk3 is destroying the path after using it... and I do not want to 
+			process this inside the callback (I want to fork it) so I need to take the values 
+			now."
+			indexPath := ((GtkTreePath fromHandle: path) toString substrings: ':') collect: #asNumber.
+			[ aBlock value: indexPath ] fork ]
 ]
 
 { #category : #private }

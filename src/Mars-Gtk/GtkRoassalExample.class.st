@@ -3,11 +3,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'window',
-		'actionBar',
-		'baseMorph',
-		'editorView',
 		'listView',
-		'athensView'
+		'athensView',
+		'listStore',
+		'examples'
 	],
 	#category : #'Mars-Gtk-Examples'
 }
@@ -22,9 +21,7 @@ GtkRoassalExample class >> show [
 { #category : #accessing }
 GtkRoassalExample >> allExamples [
 
-	^ ((RTAbstractExample allSubclasses collect: #new) 
-		sortedAs: #label)
-		asArray
+	^ examples ifNil: [ examples := self collectExamples ] 
 ]
 
 { #category : #building }
@@ -35,24 +32,17 @@ GtkRoassalExample >> buildAthensView [
 
 { #category : #building }
 GtkRoassalExample >> buildListView [
-	| store list renderer |
-	
-	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING }.
+	|  list renderer |
 
-	self allExamples do: [ :each |
-		store appendRow
-			atColumnIndex: 0 
-			setValue: each label utf8Encoded ].
-	
 	list := GtkTreeView new.
-	list model: store.
+	list model: (listStore := self newListStore).
 
 	renderer := GtkCellRendererText new.
 	list appendColumn: (GtkTreeViewColumn new
 		renderer: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
 		
-	list connectRowSelected: [ :path | path toString crLog ].
+	list connectRowSelected: [ :path | (self allExamples at: path first) crLog ].
 
 	^ list
 ]
@@ -71,12 +61,34 @@ GtkRoassalExample >> buildWindow [
 		yourself
 ]
 
+{ #category : #private }
+GtkRoassalExample >> collectExamples [
+	
+	^ ((RTAbstractExample allSubclasses collect: #new) 
+		sortedAs: #label)
+		asArray
+]
+
+{ #category : #building }
+GtkRoassalExample >> newListStore [
+	| store |
+	
+	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING }.
+	self allExamples do: [ :each |
+		store appendRow
+			atColumnIndex: 0 
+			setValue: each label utf8Encoded ].
+	^ store
+
+]
+
 { #category : #showing }
 GtkRoassalExample >> show [ 
 
 	GtkApplication ensureRunning.
 	window := self buildWindow.
 	window 
+		data: self; "using 'data' to keep a reference alive. Do I need the concept of 'model'"
 		center;
 		showAll
 ]
