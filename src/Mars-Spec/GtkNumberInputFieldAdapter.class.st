@@ -16,7 +16,9 @@ GtkNumberInputFieldAdapter >> addModelTo: gtkSpinButton [
 		ifTrue: [ 
 			gtkSpinButton 
 				rangeMinimum: (self model minimum ifNil: [ 0.0 ]) 
-				maximum: (self model maximum ifNil: [ 0.0 ]) ]
+				maximum: (self model maximum ifNil: [ 0.0 ]) ].
+	self model climbRate ifNotNil: [ 
+		gtkSpinButton climbRate: self model climbRate ]
 ]
 
 { #category : #building }

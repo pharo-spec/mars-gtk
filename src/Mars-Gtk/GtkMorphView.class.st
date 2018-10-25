@@ -26,19 +26,12 @@ GtkMorphView class >> newMorph: aMorph [
 { #category : #drawing }
 GtkMorphView >> drawOnAthensCanvas: aCanvas [
 	"just forward to the morph"
-	morph extent: self getAllocatedWidth @ self getAllocatedHeight.
+	| allocRect |
+	
+	allocRect := self allocation. 
+	morph extent: allocRect extent.
 	aCanvas surface drawDuring: [ :theCanvas |
 		morph fullDrawOnAthensCanvas: theCanvas ]
-]
-
-{ #category : #private }
-GtkMorphView >> getAllocatedHeight [
-	^ self ffiCall: #(int gtk_widget_get_allocated_height (self))
-]
-
-{ #category : #private }
-GtkMorphView >> getAllocatedWidth [
-	^ self ffiCall: #(int gtk_widget_get_allocated_width (self))
 ]
 
 { #category : #accessing }

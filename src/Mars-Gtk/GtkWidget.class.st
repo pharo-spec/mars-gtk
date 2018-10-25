@@ -261,6 +261,12 @@ GtkWidget >> path [
 ]
 
 { #category : #private }
+GtkWidget >> queueDraw [
+
+	^ self ffiCall: #(void gtk_widget_queue_draw (self))
+]
+
+{ #category : #private }
 GtkWidget >> registerCallback: aCallback [
 	callbacks ifNil: [ callbacks := Set new ].
 	callbacks add: aCallback

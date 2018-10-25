@@ -189,7 +189,7 @@ GtkExamples class >> exampleForm [
 		"field two"
 		attach: (GtkLabel newLabel: 'Number input') at: 1@2;
 		attach: ((numberInput := GtkSpinButton 
-					newAdjustment: (GtkAdjustment newDefault)
+					newAdjustment: GtkAdjustment newDefault
 					climbRate: 1.0 
 					digits: 0)
 				beNumber;
@@ -222,7 +222,7 @@ GtkExamples class >> exampleForm [
 		
 	"Show window"
 	window
-		title: 'Toolbar example';
+		title: 'Form example';
 		resize: 400 @ 400;
 		add:(GtkBox newVertical 
 			packStart: grid;
@@ -434,7 +434,9 @@ GtkExamples class >> exampleMorphView [
 		autoRelease;
 		title: 'MorphView example';
 		resize: 500@200;
-		add: (GtkMorphView newMorph: (Morph new));
+		add: (GtkScrolledWindow newWidget: (GtkMorphView newMorph: (SimpleButtonMorph new
+			label: 'Hello from Morphic';
+			yourself)));
 		center;
 		showAll;
 		inspect
@@ -1394,6 +1396,18 @@ GtkExamples class >> gtkExampleMenuButtonWithMenu [
 	menuButton popUp: fileMenu.
 
 	^ menuButton
+]
+
+{ #category : #'private-examples-basic' }
+GtkExamples class >> gtkExampleMorph [
+	<gtkExample>
+	<title: 'Morph'>
+	<category: #Basic>
+	<layoutVerticalBoxNoFill>
+
+	^ GtkScrolledWindow newWidget: (GtkMorphView newMorph: (SimpleButtonMorph new
+		label: 'Hello from Morphic';
+		yourself))
 ]
 
 { #category : #'private-examples-containers' }

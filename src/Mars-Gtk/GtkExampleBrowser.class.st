@@ -21,6 +21,7 @@ Class {
 GtkExampleBrowser class >> show [ 
 	<script>
 	
+	GtkApplication ensureRunning.
 	self new show
 ]
 

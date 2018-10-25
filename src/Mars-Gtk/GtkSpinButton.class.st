@@ -125,7 +125,7 @@ GtkSpinButton >> rangeMinimum: minFloat maximum: maxFloat [
 { #category : #private }
 GtkSpinButton >> setRangeMin: min max: max [
 
-	^ self ffiCall: #(void gtk_spin_button_set_range (self, gdouble min, gdouble max))
+	self ffiCall: #(void gtk_spin_button_set_range (self, gdouble min, gdouble max))
 	 
 ]
 

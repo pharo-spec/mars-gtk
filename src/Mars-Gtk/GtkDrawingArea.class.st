@@ -22,9 +22,35 @@ GtkDrawingArea class >> new [
 	^ self drawingAreaNew initialize
 ]
 
+{ #category : #accessing }
+GtkDrawingArea >> allocation [
+	| allocation |
+	
+	allocation := GtkAllocation new.
+	self getAllocation: allocation.
+	^ allocation asRectangle
+]
+
 { #category : #drawing }
 GtkDrawingArea >> drawOnAthensCanvas: aCanvas [
 	self subclassResponsibility
+]
+
+{ #category : #private }
+GtkDrawingArea >> getAllocatedHeight [
+	^ self ffiCall: #(int gtk_widget_get_allocated_height (self))
+]
+
+{ #category : #private }
+GtkDrawingArea >> getAllocatedWidth [
+	^ self ffiCall: #(int gtk_widget_get_allocated_width (self))
+]
+
+{ #category : #private }
+GtkDrawingArea >> getAllocation: allocation [
+
+	self ffiCall: #(void gtk_widget_get_allocation (self, GtkAllocation *allocation))
+	
 ]
 
 { #category : #initialization }
@@ -40,4 +66,10 @@ GtkDrawingArea >> initialize [
 			 the vm)"
 			"[ "self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr)" ] valueUnpreemptively".
 			0 ]
+]
+
+{ #category : #private }
+GtkDrawingArea >> setSizeRequestWidth: width height: height [
+	
+	self ffiCall: #(void gtk_widget_set_size_request (self, gint width, gint height))
 ]

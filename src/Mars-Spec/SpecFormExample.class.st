@@ -107,7 +107,8 @@ SpecFormExample >> initializeWidgets [
 	numberInputLabel := self newLabel label: 'Number input'.
 	numberInput := self newNumberInput 
 		ghostText: 'a ghost number';
-		beFloat.
+		beFloat;
+		rangeMinimum: 0 maximum: 1000000.
 
 	textAreaLabel := self newLabel label: 'Text area'.
 	textArea := self newText.
