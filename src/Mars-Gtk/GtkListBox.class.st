@@ -50,6 +50,7 @@ GtkListBox >> bindModel: aListModel [
 
 { #category : #signaling }
 GtkListBox >> connectRowSelected: aBlock [
+
 	self 
 		connect: 'row-selected' 
 		signature: #(void (void *box, void *row, void *user_data))

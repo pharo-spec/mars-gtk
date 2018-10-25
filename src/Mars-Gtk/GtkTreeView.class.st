@@ -37,6 +37,16 @@ GtkTreeView >> appendColumn: column [
 	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
 ]
 
+{ #category : #signals }
+GtkTreeView >> connectRowSelected: aBlock [
+
+	self 
+		connect: 'row-selected' 
+		signature: #(void (void *treeView, void *path, void *column, void *userData))
+		do: [ :treeView :path :column :userData |
+			aBlock value: (GtkTreePath fromHandle: path) ]
+]
+
 { #category : #private }
 GtkTreeView >> enableTreeLines [
 
