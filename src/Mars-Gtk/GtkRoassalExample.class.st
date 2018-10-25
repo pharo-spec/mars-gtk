@@ -27,22 +27,22 @@ GtkRoassalExample >> allExamples [
 { #category : #building }
 GtkRoassalExample >> buildAthensView [
 		
-	^ GtkScrolledWindow new
+	^ GtkScrolledWindow newWidget: (GtkLabel newLabel: 'Select an example!')
 ]
 
 { #category : #building }
 GtkRoassalExample >> buildListView [
 	|  list renderer |
 
-	list := GtkTreeView new.
-	list model: (listStore := self newListStore).
-
+	(list := GtkTreeView new)
+		headersVisible: false;
+		model: (listStore := self newListStore);
+		connectSelectionChanged: [ self selectExample: list allSelected first ].
+		
 	renderer := GtkCellRendererText new.
 	list appendColumn: (GtkTreeViewColumn new
 		renderer: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
-		
-	list connectRowSelected: [ :path | (self allExamples at: path first) crLog ].
 
 	^ list
 ]
@@ -53,9 +53,9 @@ GtkRoassalExample >> buildWindow [
 	^ GtkWindow new 
 		autoRelease;
 		title: 'Athens example';
-		resize: 400 @ 400;
-		add:(GtkPaned newVertical
-			pack1: (listView := self buildListView);
+		resize: 800 @ 400;
+		add:(GtkPaned newHorizontal
+			pack1: (GtkScrolledWindow newWidget: (listView := self buildListView));
 			pack2: (athensView := self buildAthensView);
 			yourself);
 		yourself
@@ -80,6 +80,12 @@ GtkRoassalExample >> newListStore [
 			setValue: each label utf8Encoded ].
 	^ store
 
+]
+
+{ #category : #actions }
+GtkRoassalExample >> selectExample: aPath [
+
+	self inform: aPath asString 
 ]
 
 { #category : #showing }

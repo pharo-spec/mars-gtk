@@ -8,7 +8,8 @@ Class {
 	#name : #GtkTreeView,
 	#superclass : #GtkContainer,
 	#instVars : [
-		'listStore'
+		'listStore',
+		'selection'
 	],
 	#category : #'Mars-Gtk-Widget-Tree'
 }
@@ -25,10 +26,22 @@ GtkTreeView class >> new [
 	^ self basicNewTreeView initialize
 ]
 
+{ #category : #accessing }
+GtkTreeView >> activateOnSingleClick: aBoolean [
+
+	self gObjectSet: 'activate-on-single-click' toBoolean: aBoolean
+]
+
 { #category : #private }
 GtkTreeView >> addExpanderColumn [
 
 	self ffiCall: #(void gtk_tree_view_set_expander_column(self, 0))
+]
+
+{ #category : #accessing }
+GtkTreeView >> allSelected [ 
+
+	^ self selection allSelected 
 ]
 
 { #category : #accessing }
@@ -50,8 +63,14 @@ GtkTreeView >> connectRowSelected: aBlock [
 			The fact is that Gtk3 is destroying the path after using it... and I do not want to 
 			process this inside the callback (I want to fork it) so I need to take the values 
 			now."
-			indexPath := ((GtkTreePath fromHandle: path) toString substrings: ':') collect: #asNumber.
+			indexPath := (GtkTreePath fromHandle: path) toArray.
 			[ aBlock value: indexPath ] fork ]
+]
+
+{ #category : #signals }
+GtkTreeView >> connectSelectionChanged: aBlock [
+
+	^ self selection connectChanged: aBlock
 ]
 
 { #category : #private }
@@ -65,6 +84,36 @@ GtkTreeView >> enableTreeLines: enabled [
 
 	self ffiCall: #(void gtk_tree_view_set_enable_tree_lines (self,
                                      gboolean enabled))
+]
+
+{ #category : #private }
+GtkTreeView >> getSelection [ 
+
+	^ self ffiCall: #(GtkTreeSelection *gtk_tree_view_get_selection (self))
+]
+
+{ #category : #accessing }
+GtkTreeView >> headersVisible: aBoolean [
+
+	self gObjectSet: 'headers-visible' toBoolean: aBoolean
+]
+
+{ #category : #testing }
+GtkTreeView >> isActivateOnSingleClick [
+	| buffer |
+	
+	buffer := FFIBool newBuffer.
+	self gObjectGet: 'activate-on-single-click' into: buffer.
+	^ buffer booleanAt: 1
+]
+
+{ #category : #testing }
+GtkTreeView >> isHeadersVisible [
+	| buffer |
+	
+	buffer := FFIBool newBuffer.
+	self gObjectGet: 'headers-visible' into: buffer.
+	^ buffer booleanAt: 1
 ]
 
 { #category : #accessing }
@@ -87,6 +136,12 @@ GtkTreeView >> newColumn [
 	column := GtkTreeViewColumn new.
 	self appendColumn: column.
 	^ column
+]
+
+{ #category : #accessing }
+GtkTreeView >> selection [ 
+
+	^ selection ifNil: [ selection := self getSelection initialize ]
 ]
 
 { #category : #private }
