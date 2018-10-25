@@ -2,7 +2,7 @@
 GtkPopover
 GtkPopover — Context dependent bubbles
 
-https://developer.gnome.org/gtk3/stable/GtkPopover.html#gtk-popover-new
+https://developer.gnome.org/gtk3/stable/GtkPopover.html
 "
 Class {
 	#name : #GtkPopover,
@@ -23,6 +23,12 @@ GtkPopover class >> popoverNewRelativeTo: aWidget [
 ]
 
 { #category : #specs }
+GtkPopover >> beModal [
+
+	^ self modal: true
+]
+
+{ #category : #specs }
 GtkPopover >> beRelativeTo: aWidget [
 
 	^ self ffiCall: #(void gtk_popover_set_relative_to (self, GtkWidget *aWidget))
@@ -38,6 +44,18 @@ GtkPopover >> defaultWidget [
 GtkPopover >> defaultWidget: aWidget [
 
 	^ self ffiCall: #(void gtk_popover_set_default_widget (self, GtkWidget *aWidget))
+]
+
+{ #category : #specs }
+GtkPopover >> modal [
+
+	^ self ffiCall: #(gboolean gtk_popover_get_modal (self))
+]
+
+{ #category : #specs }
+GtkPopover >> modal: aBoolean [
+
+	^ self ffiCall: #(void gtk_popover_set_modal (self, gboolean aBoolean))
 ]
 
 { #category : #specs }
