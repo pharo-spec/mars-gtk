@@ -120,9 +120,7 @@ GtkComboBox >> columnSpanColumn: columnSpan [
 { #category : #events }
 GtkComboBox >> connectChanged: aBlock [
 
-	self
-		connect: 'changed'
-		do: aBlock
+	self connect: 'changed' do: aBlock
 ]
 
 { #category : #accessing }

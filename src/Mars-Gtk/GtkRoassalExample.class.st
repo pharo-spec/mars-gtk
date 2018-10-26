@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'window',
 		'listView',
-		'athensView',
-		'listStore',
-		'examples'
+		'examples',
+		'treeStore',
+		'roassalView'
 	],
 	#category : #'Mars-Gtk-Examples'
 }
@@ -25,26 +25,31 @@ GtkRoassalExample >> allExamples [
 ]
 
 { #category : #building }
-GtkRoassalExample >> buildAthensView [
+GtkRoassalExample >> buildRoassalView [
 		
-	^ GtkScrolledWindow newWidget: (GtkLabel newLabel: 'Select an example!')
+	^ GtkRoassalExampleView new
 ]
 
 { #category : #building }
-GtkRoassalExample >> buildListView [
-	|  list renderer |
+GtkRoassalExample >> buildTreeView [
+	| tree renderer |
 
-	(list := GtkTreeView new)
+	(tree := GtkTreeView new)
 		headersVisible: false;
-		model: (listStore := self newListStore);
-		connectSelectionChanged: [ self selectExample: list allSelected first ].
+		model: (treeStore := self newTreeStore);
+		connectSelectionChanged: [ 
+			5 milliSeconds wait.
+			self selectExample: tree allSelected first ].
 		
 	renderer := GtkCellRendererText new.
-	list appendColumn: (GtkTreeViewColumn new
+	tree appendColumn: (GtkTreeViewColumn new
 		renderer: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+		
+	tree addExpanderColumn.
+	tree enableTreeLines.
 
-	^ list
+	^ tree
 ]
 
 { #category : #building }
@@ -55,37 +60,58 @@ GtkRoassalExample >> buildWindow [
 		title: 'Athens example';
 		resize: 800 @ 400;
 		add:(GtkPaned newHorizontal
-			pack1: (GtkScrolledWindow newWidget: (listView := self buildListView));
-			pack2: (athensView := self buildAthensView);
+			pack1: (GtkScrolledWindow newWidget: (listView := self buildTreeView));
+			pack2: (GtkScrolledWindow newWidget: (roassalView := self buildRoassalView));
 			yourself);
 		yourself
 ]
 
 { #category : #private }
 GtkRoassalExample >> collectExamples [
+	| dict |
 	
-	^ ((RTAbstractExample allSubclasses collect: #new) 
-		sortedAs: #label)
-		asArray
+	dict := OrderedDictionary new.
+	((RTAbstractExample allSubclasses collect: #new) sortedAs: #label) do: [ :eachGroup |
+		dict 
+			at: eachGroup 
+			put: (eachGroup class methods select: [ :each | each selector beginsWith: 'example' ]) ].
+	^ dict select: #notEmpty
 ]
 
 { #category : #building }
-GtkRoassalExample >> newListStore [
+GtkRoassalExample >> newTreeStore [
 	| store |
 	
-	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING }.
-	self allExamples do: [ :each |
-		store appendRow
-			atColumnIndex: 0 
-			setValue: each label utf8Encoded ].
+	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING }.
+	self allExamples keysAndValuesDo: [ :group :groupExamples | | row |
+		groupExamples ifNotEmpty: [ 
+			(row := store appendRow)
+				atColumnIndex: 0 
+				setValue: group label utf8Encoded.
+			groupExamples do: [ :each |
+				row newChild 
+					atColumnIndex: 0 
+					setValue: each selector utf8Encoded ] ] ].
+
 	^ store
 
 ]
 
 { #category : #actions }
 GtkRoassalExample >> selectExample: aPath [
-
-	self inform: aPath asString 
+	| group method view |
+	
+	"Root, skip"
+	aPath size = 1 ifTrue: [ ^ self ].
+	
+	group := self allExamples keyAtIndex: aPath first.
+	method := (self allExamples at: group) at: aPath second.
+	
+	view := method valueWithReceiver: group arguments: #().
+	(view isKindOf: RTView) ifFalse: [ ^ self ]. 
+	
+	roassalView view: view.
+	view inspect
 ]
 
 { #category : #showing }
