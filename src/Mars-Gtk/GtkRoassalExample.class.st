@@ -38,7 +38,7 @@ GtkRoassalExample >> buildTreeView [
 		headersVisible: false;
 		model: (treeStore := self newTreeStore);
 		connectSelectionChanged: [ 
-			5 milliSeconds wait.
+			50 milliSeconds wait.
 			self selectExample: tree allSelected first ].
 		
 	renderer := GtkCellRendererText new.
@@ -74,11 +74,11 @@ GtkRoassalExample >> collectExamples [
 	((RTAbstractExample allSubclasses collect: #new) sortedAs: #label) do: [ :eachGroup |
 		dict 
 			at: eachGroup 
-			put: (eachGroup class methods select: [ :each | each selector beginsWith: 'example' ]) ].
+			put: eachGroup class gtExamples ].
 	^ dict select: #notEmpty
 ]
 
-{ #category : #building }
+{ #category : #private }
 GtkRoassalExample >> newTreeStore [
 	| store |
 	
@@ -99,19 +99,17 @@ GtkRoassalExample >> newTreeStore [
 
 { #category : #actions }
 GtkRoassalExample >> selectExample: aPath [
-	| group method view |
+	| group example |
 	
 	"Root, skip"
 	aPath size = 1 ifTrue: [ ^ self ].
 	
+	"Not root, process view"
 	group := self allExamples keyAtIndex: aPath first.
-	method := (self allExamples at: group) at: aPath second.
+	example := (self allExamples at: group) at: aPath second.
+	example run returnValue ifNotNil: [ :return | 
+		roassalView view: return view ]
 	
-	view := method valueWithReceiver: group arguments: #().
-	(view isKindOf: RTView) ifFalse: [ ^ self ]. 
-	
-	roassalView view: view.
-	view inspect
 ]
 
 { #category : #showing }
@@ -119,6 +117,7 @@ GtkRoassalExample >> show [
 
 	GtkApplication ensureRunning.
 	window := self buildWindow.
+	roassalView inspect.
 	window 
 		data: self; "using 'data' to keep a reference alive. Do I need the concept of 'model'"
 		center;

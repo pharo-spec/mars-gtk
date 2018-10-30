@@ -165,6 +165,14 @@ GtkWidget >> getHandle [
 	^ handle
 ]
 
+{ #category : #private }
+GtkWidget >> getTopLevel [
+	"I will get the window from GtkApplication (to keep identity), so I answer just the 
+	 ExternalAddress, skiping any other object creation."
+
+	^ self ffiCall: #("GtkWidget *"void *gtk_widget_get_toplevel (self))
+]
+
 { #category : #accessing }
 GtkWidget >> grabDefault [
 	self ffiCall: #(void gtk_widget_grab_default (self))
@@ -238,6 +246,16 @@ GtkWidget >> overrideBackgroundState: state color: color [
 ]
 
 { #category : #accessing }
+GtkWidget >> parentWindow [ 
+	| windowHandle |
+	
+	windowHandle := self getTopLevel.
+	windowHandle isNull ifTrue: [ ^ nil ].
+	
+	^ GtkApplication current windowByHandle: windowHandle
+]
+
+{ #category : #accessing }
 GtkWidget >> path [
 	| length path pathReversed |
 	
@@ -295,6 +313,38 @@ GtkWidget >> sizeRequestWidth: width height: height [
 GtkWidget >> takeKeyboardFocus [
 	
 	self flag: #TODO.
+]
+
+{ #category : #accessing }
+GtkWidget >> translateCoordinates: aPoint to: aWidget [
+	| result type xBuffer yBuffer |
+	
+	type := self class resolveType: 'gint'.
+	xBuffer := type newBuffer.
+	yBuffer := type newBuffer.
+	
+	result := self 
+		translateCoordinatesTo: aWidget 
+		x: aPoint x 
+		y: aPoint y 
+		toX: xBuffer 
+		toY: yBuffer.
+	
+	^ result 
+		ifTrue: [ (xBuffer signedLongAt: 1) @ (yBuffer signedLongAt: 1) ]
+		ifFalse: [ aPoint ]
+]
+
+{ #category : #accessing }
+GtkWidget >> translateCoordinatesTo: dest_widget x: src_x y: src_y toX: dest_x toY: dest_y [
+	
+	^ self ffiCall: #(gboolean gtk_widget_translate_coordinates (
+		self,
+		GtkWidget *dest_widget,
+		gint src_x,
+		gint src_y,
+ 		gint *dest_x,
+ 		gint *dest_y))
 ]
 
 { #category : #accessing }

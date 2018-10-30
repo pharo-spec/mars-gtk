@@ -39,6 +39,14 @@ GObject class >> objectUnref: handle [
 	^ self ffiCall: #(gpointer g_object_unref (void *handle))
 ]
 
+{ #category : #private }
+GObject class >> resolveType: aType [
+
+	^ FFICallout new 
+		requestor: self class; 
+		resolveType: aType
+]
+
 { #category : #'private signaling' }
 GObject >> connect: aString do: aBlock [
 	"this is the basic signaling (for IO events), who share signature along them... of course 

@@ -31,6 +31,14 @@ GtkDrawingArea >> allocation [
 	^ allocation asRectangle
 ]
 
+{ #category : #private }
+GtkDrawingArea >> basicDraw: cr [
+	"I need to be sure this process will not be highjacked by another 
+	 so I need to execute it unpreemptively (otherwise it will crash 
+	 the vm)"
+	"[ "self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr)" ] valueUnpreemptively"		
+]
+
 { #category : #drawing }
 GtkDrawingArea >> drawOnAthensCanvas: aCanvas [
 	self subclassResponsibility
@@ -61,11 +69,16 @@ GtkDrawingArea >> initialize [
 		connect: 'draw' 
 		signature: #( int (void *widget, void *cr, void *payload) ) 
 		do: [ :widget :cr :payload |
-			"I need to be sure this process will not be highjacked by another 
-			 so I need to execute it unpreemptively (otherwise it will crash 
-			 the vm)"
-			"[ "self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr)" ] valueUnpreemptively".
+			self basicDraw: cr.
 			0 ]
+]
+
+{ #category : #drawing }
+GtkDrawingArea >> positionInTopLevel [
+
+	^ self 
+		translateCoordinates: 0@0
+		to: self parentWindow
 ]
 
 { #category : #private }

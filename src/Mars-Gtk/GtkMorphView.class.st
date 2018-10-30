@@ -26,12 +26,10 @@ GtkMorphView class >> newMorph: aMorph [
 { #category : #drawing }
 GtkMorphView >> drawOnAthensCanvas: aCanvas [
 	"just forward to the morph"
-	| allocRect |
-	
-	allocRect := self allocation. 
-	morph extent: allocRect extent.
-	aCanvas surface drawDuring: [ :theCanvas |
-		morph fullDrawOnAthensCanvas: theCanvas ]
+
+	morph extent: self allocation extent.
+	aCanvas surface directDrawDuring: [ :canvas |
+		morph fullDrawOnAthensCanvas: canvas ]
 ]
 
 { #category : #accessing }

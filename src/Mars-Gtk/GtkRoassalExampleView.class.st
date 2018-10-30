@@ -9,18 +9,16 @@ Class {
 
 { #category : #private }
 GtkRoassalExampleView class >> drawingAreaNew [
-	^ self ffiCall: #( GtkRoassalExampleView *gtk_drawing_area_new () )
+	^ self ffiCall: #(GtkRoassalExampleView *gtk_drawing_area_new ())
 ]
 
 { #category : #drawing }
-GtkRoassalExampleView >> drawEmptyOn: aCanvas [
+GtkRoassalExampleView >> drawEmptyOn: canvas [
 	
-	aCanvas surface drawDuring: [ :canvas |
-		canvas surface clear.
-		canvas pathTransform loadIdentity.	
-		canvas 
+	canvas surface directDrawDuring: [ :c |
+		canvas
 			setPaint: Color white;
-			drawShape: (0@0 corner: self allocation extent) ]
+			drawShape: (self positionInTopLevel extent: self allocation extent) ]
 ]
 
 { #category : #drawing }
@@ -33,13 +31,16 @@ GtkRoassalExampleView >> drawOnAthensCanvas: aCanvas [
 
 { #category : #drawing }
 GtkRoassalExampleView >> drawViewOn: aCanvas [
-	[| morph |
 	
-	morph := TRMorph new.
-	morph canvas: self view canvas.
-	aCanvas surface drawDuring: [ :canvas |
-		morph drawOnAthensCanvas: canvas ]]
-	on: Error fork: [ :e | e pass ]
+	[
+		aCanvas surface drawDuring: [ :canvas |
+			canvas surface clear.
+			canvas pathTransform loadIdentity.	
+			canvas 
+				setPaint: self view canvas canvas;
+				drawShape: ((self positionInTopLevel extent: self allocation extent)) ] ]
+	on: Error 
+	fork: [ :e | e pass ]
 ]
 
 { #category : #accessing }

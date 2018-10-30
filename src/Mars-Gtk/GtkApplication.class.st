@@ -113,3 +113,13 @@ GtkApplication >> unregisterWindow: aWindow [
 		remove: aWindow 
 		ifAbsent: [ ]
 ]
+
+{ #category : #accessing }
+GtkApplication >> windowByHandle: aHandle [ 
+	| numberHandle |
+
+	numberHandle := aHandle asInteger.
+	^ windowRegistry 
+		detect: [ :each | each getHandle asInteger = numberHandle ] 
+		ifNone: [ nil ]
+]

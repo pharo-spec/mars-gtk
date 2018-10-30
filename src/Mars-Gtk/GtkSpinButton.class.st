@@ -103,10 +103,9 @@ GtkSpinButton >> numeric: numeric [
 { #category : #accessing }
 GtkSpinButton >> range [
 	| type min max |
+
 	
-	type := FFICallout new 
-		requestor: self class; 
-		resolveType: 'gdouble'.
+	type := self class resolveType: 'gdouble'.
 	min := type newBuffer.
 	max := type newBuffer.
 	self getRangeMin: min max: max.
