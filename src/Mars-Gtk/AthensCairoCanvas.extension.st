@@ -38,7 +38,7 @@ AthensCairoCanvas >> getTarget [
 AthensCairoCanvas >> matrix [ 
 	| matrix |
 	
-	matrix := AthensCairoMatrix newNotInitialised.
+	matrix := AthensCairoMatrix new.
 	self getMatrix: matrix.
 	^ matrix
 ]

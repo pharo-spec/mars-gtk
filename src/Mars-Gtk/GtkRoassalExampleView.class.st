@@ -17,8 +17,8 @@ GtkRoassalExampleView >> drawEmptyOn: canvas [
 	
 	canvas surface directDrawDuring: [ :c |
 		canvas
-			setPaint: Color white;
-			drawShape: (self positionInTopLevel extent: self allocation extent) ]
+			setPaint: Color cyan;
+			drawShape: self allocation ]
 ]
 
 { #category : #drawing }
@@ -33,12 +33,10 @@ GtkRoassalExampleView >> drawOnAthensCanvas: aCanvas [
 GtkRoassalExampleView >> drawViewOn: aCanvas [
 	
 	[
-		aCanvas surface drawDuring: [ :canvas |
-			canvas surface clear.
-			canvas pathTransform loadIdentity.	
+		aCanvas surface directDrawDuring: [ :canvas |
 			canvas 
 				setPaint: self view canvas canvas;
-				drawShape: ((self positionInTopLevel extent: self allocation extent)) ] ]
+				drawShape: self allocation ] ]
 	on: Error 
 	fork: [ :e | e pass ]
 ]
