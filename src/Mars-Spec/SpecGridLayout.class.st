@@ -1,13 +1,12 @@
 Class {
 	#name : #SpecGridLayout,
-	#superclass : #Object,
+	#superclass : #SpecExecutableLayout,
 	#instVars : [
-		'presenters',
 		'borderWidth',
 		'columnSpacing',
 		'rowSpacing'
 	],
-	#category : #'Mars-Spec-Examples'
+	#category : #'Mars-Spec-Layout-Grid'
 }
 
 { #category : #initialization }
@@ -28,41 +27,30 @@ SpecGridLayout class >> defaultRowSpacing [
 	^ 5
 ]
 
+{ #category : #private }
+SpecGridLayout >> adapterName [
+
+	^ #GridAdapter
+]
+
 { #category : #adding }
-SpecGridLayout >> add: aPresenterOrSymbol at: aPoint [
+SpecGridLayout >> add: aName at: aPoint [
 
 	^ self 
-		add: aPresenterOrSymbol 
+		add: aName 
 		at: aPoint
 		span: 1@1
 ]
 
 { #category : #adding }
-SpecGridLayout >> add: aPresenterOrSymbol at: aPoint span: spanPoint [
+SpecGridLayout >> add: aName at: aPoint span: spanPoint [
 
 	^ self 
-		add: aPresenterOrSymbol 
+		add: aName 
 		withConstraints: [ :constraints |
 			constraints 
 				position: aPoint;
 				span: spanPoint ]
-]
-
-{ #category : #adding }
-SpecGridLayout >> add: aPresenterOrSymbol withConstraints: aBlock [ 
-	| constraints |
-	
-	constraints := SpecGridConstraints new.
-	aBlock value: constraints.
-	presenters 
-		at: aPresenterOrSymbol 
-		put: constraints
-]
-
-{ #category : #converting }
-SpecGridLayout >> asArray [
-
-	self error: 'Should not arrive here. This layout is executable then it will not be interpreted.'
 ]
 
 { #category : #accessing }
@@ -76,18 +64,10 @@ SpecGridLayout >> borderWidth: anObject [
 	borderWidth := anObject
 ]
 
-{ #category : #building }
-SpecGridLayout >> buildAdapterFor: aModel bindings: bindings [
-	| adapter |
+{ #category : #accessing }
+SpecGridLayout >> children [
 
-	adapter := (bindings adapterClass: #GridAdapter) adapt: aModel.
-	adapter layout: self.
-	presenters keysAndValuesDo: [ :selector :constraints |
-		adapter 
-			add: (aModel perform: selector) 
-			constraints: constraints ].
-	
-	^ adapter
+	^ children
 ]
 
 { #category : #accessing }
@@ -101,33 +81,10 @@ SpecGridLayout >> columnSpacing: anObject [
 	columnSpacing := anObject
 ]
 
-{ #category : #initialization }
-SpecGridLayout >> initialize [
+{ #category : #private }
+SpecGridLayout >> constraintsClass [
 
-	super initialize.
-	presenters := OrderedDictionary new
-]
-
-{ #category : #testing }
-SpecGridLayout >> isExecutable [
-
-	^ true
-]
-
-{ #category : #testing }
-SpecGridLayout >> isSpecLayout [
-
-	^ true
-]
-
-{ #category : #accessing }
-SpecGridLayout >> presenters [
-	^ presenters
-]
-
-{ #category : #accessing }
-SpecGridLayout >> presenters: anObject [
-	presenters := anObject
+	^ SpecGridConstraints
 ]
 
 { #category : #accessing }

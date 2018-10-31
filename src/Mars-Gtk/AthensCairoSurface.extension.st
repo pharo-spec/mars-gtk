@@ -22,5 +22,7 @@ AthensCairoSurface >> fromCanvas: aCanvas [
 	context := aCanvas.
 	builder := AthensCairoPathBuilder new.
 	builder context: context.
-	ftFontRenderer := CairoFreetypeFontRenderer new canvas: context
+	ftFontRenderer := CairoFreetypeFontRenderer new 
+		canvas: context;
+		yourself
 ]

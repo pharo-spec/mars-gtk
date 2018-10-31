@@ -13,8 +13,10 @@ GtkAdapterBindings >> allAdapters [
 { #category : #initialize }
 GtkAdapterBindings >> initializeBindings [
 	
-	GtkAdapter allSubclasses do: [ :each |
-		bindings 
-			at: each adaptingName
-			put: each name ]
+	GtkAdapter allSubclasses 
+		reject: #isAbstract
+		thenDo: [ :each |
+			bindings 
+				at: each adaptingName
+				put: each name ]
 ]

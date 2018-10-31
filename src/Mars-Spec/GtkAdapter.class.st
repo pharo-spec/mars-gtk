@@ -27,6 +27,12 @@ GtkAdapter class >> allAdapters [
 	^ self allSubclasses
 ]
 
+{ #category : #testing }
+GtkAdapter class >> isAbstract [ 
+
+	^ self = GtkAdapter
+]
+
 { #category : #'as yet unclassified' }
 GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 	"Do nothing at the moment"

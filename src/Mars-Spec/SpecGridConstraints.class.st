@@ -5,7 +5,7 @@ Class {
 		'position',
 		'span'
 	],
-	#category : #'Mars-Spec-Examples'
+	#category : #'Mars-Spec-Layout-Grid'
 }
 
 { #category : #accessing }

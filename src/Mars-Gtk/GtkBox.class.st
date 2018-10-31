@@ -80,7 +80,7 @@ GtkBox >> packEnd: child [
 ]
 
 { #category : #accessing }
-GtkBox >> packEnd: child expand: expand fill: fill padding: padding [ 
+GtkBox >> packEnd: child expand: expand fill: fill padding: padding [
 	self keepWidget: child.
 	self basicPackEnd: child expand: expand fill: fill padding: padding.
 	^ child

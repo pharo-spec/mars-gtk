@@ -434,9 +434,12 @@ GtkExamples class >> exampleMorphView [
 		autoRelease;
 		title: 'MorphView example';
 		resize: 500@200;
-		add: (GtkScrolledWindow newWidget: (GtkMorphView newMorph: (SimpleButtonMorph new
+		"add: (GtkScrolledWindow newWidget: (GtkMorphView newMorph: (SimpleButtonMorph new
 			label: 'Hello from Morphic';
-			yourself)));
+			yourself)));"
+		add: (GtkFixed new 
+			putChild: (GtkMorphView newMorph: ('Hello' asMorph color: Color black)) at: 100@100;
+			yourself);
 		center;
 		showAll;
 		inspect

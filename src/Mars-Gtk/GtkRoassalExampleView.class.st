@@ -32,11 +32,12 @@ GtkRoassalExampleView >> drawOnAthensCanvas: aCanvas [
 { #category : #drawing }
 GtkRoassalExampleView >> drawViewOn: aCanvas [
 	
-	[
+	[ | morph |
+		morph := TRMorph new.
+		morph canvas: self view canvas.
+		morph extent: self allocation extent.
 		aCanvas surface directDrawDuring: [ :canvas |
-			canvas 
-				setPaint: self view canvas canvas;
-				drawShape: self allocation ] ]
+			morph imageForm asMorph drawOnAthensCanvas: canvas ] ]
 	on: Error 
 	fork: [ :e | e pass ]
 ]

@@ -1,12 +1,6 @@
 Extension { #name : #AthensCairoCanvas }
 
 { #category : #'*Mars-Gtk' }
-AthensCairoCanvas class >> fromHandle: aHandle [
-	^ self basicNew 
-		fromHandle: aHandle
-]
-
-{ #category : #'*Mars-Gtk' }
 AthensCairoCanvas >> fromHandle: aHandle [
 	
 	handle := aHandle.
@@ -14,10 +8,18 @@ AthensCairoCanvas >> fromHandle: aHandle [
 	surface := self getTarget fromCanvas: self. 
 	pathTransform := self matrix.
 	paintTransform := pathTransform copy.
-	paintMode := AthensCairoPaintMode new canvas: self.
+	paintMode := AthensCairoPaintMode new 
+		canvas: self;
+		yourself.
 	
 	self setAA: CAIRO_ANTIALIAS_SUBPIXEL.	
 	self initializeWithSurface: surface
+]
+
+{ #category : #'*Mars-Gtk' }
+AthensCairoCanvas class >> fromHandle: aHandle [
+	^ self basicNew 
+		fromHandle: aHandle
 ]
 
 { #category : #'*Mars-Gtk' }

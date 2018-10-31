@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkGridAdapter,
-	#superclass : #GtkAdapter,
-	#category : #'Mars-Spec-Adapter'
+	#superclass : #GtkLayoutAdapter,
+	#category : #'Mars-Spec-Layout-Grid'
 }
 
 { #category : #accessing }
@@ -31,7 +31,8 @@ GtkGridAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
 
 	childWidget := aPresenter buildWithSpec.
 	self addConstraits: constraints toChild: childWidget.
-	gtkWidget attach: childWidget 
+	gtkWidget 
+		attach: childWidget 
 		at: constraints position 
 		span: constraints span
 ]
