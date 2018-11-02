@@ -1,5 +1,5 @@
 Class {
-	#name : #MarsPresenter,
+	#name : #StPresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'menuHolder',

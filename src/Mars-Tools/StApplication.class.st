@@ -1,5 +1,5 @@
 Class {
-	#name : #MarsApplication,
+	#name : #StApplication,
 	#superclass : #GtkApplication,
 	#instVars : [
 		'platform'
@@ -8,26 +8,26 @@ Class {
 }
 
 { #category : #initialization }
-MarsApplication >> initialize [
+StApplication >> initialize [
 
 	super initialize.
-	platform := MarsPlatform newForPlatform
+	platform := StPlatform newForPlatform
 ]
 
 { #category : #'private running' }
-MarsApplication >> installTheme [
+StApplication >> installTheme [
 
 	GtkSettings default themeName: self platform defaultTheme
 ]
 
 { #category : #accessing }
-MarsApplication >> platform [ 
+StApplication >> platform [ 
 
 	^ platform
 ]
 
 { #category : #'private running' }
-MarsApplication >> start [
+StApplication >> start [
 	super start.
 	self installTheme
 ]

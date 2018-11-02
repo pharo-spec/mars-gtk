@@ -1,23 +1,23 @@
 Class {
-	#name : #MarsPlatform,
+	#name : #StPlatform,
 	#superclass : #Object,
 	#category : #'Mars-Tools'
 }
 
 { #category : #testing }
-MarsPlatform class >> isAvailable [
+StPlatform class >> isAvailable [
 
 	^ false
 ]
 
 { #category : #'instance creation' }
-MarsPlatform class >> newForPlatform [
+StPlatform class >> newForPlatform [
 
 	^ (self allSubclasses detect: #isAvailable) new
 ]
 
 { #category : #accessing }
-MarsPlatform >> defaultTheme [
+StPlatform >> defaultTheme [
 
 	^ self subclassResponsibility
 ]

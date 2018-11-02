@@ -1,6 +1,6 @@
 Class {
-	#name : #MarsPlayground,
-	#superclass : #MarsPresenter,
+	#name : #StPlayground,
+	#superclass : #StPresenter,
 	#instVars : [
 		'text'
 	],
@@ -8,45 +8,45 @@ Class {
 }
 
 { #category : #accessing }
-MarsPlayground class >> defaultExtent [
+StPlayground class >> defaultExtent [
 
 	^ 600 @ 400
 ]
 
 { #category : #specs }
-MarsPlayground class >> defaultSpec [
+StPlayground class >> defaultSpec [
 
 	^ SpecLayout composed
 		newRow: #text
 ]
 
 { #category : #accessing }
-MarsPlayground class >> defaultTitle [ 
+StPlayground class >> defaultTitle [ 
 
 	^ 'Playground'
 ]
 
 { #category : #api }
-MarsPlayground >> initialExtent [ 
+StPlayground >> initialExtent [ 
 
 	^ self class defaultExtent
 ]
 
 { #category : #initialization }
-MarsPlayground >> initialize [
+StPlayground >> initialize [
 	super initialize.
 	self title: self class defaultTitle
 ]
 
 { #category : #initialization }
-MarsPlayground >> initializeWidgets [
+StPlayground >> initializeWidgets [
 	
 	text := self newText beForCode.
 	self focusOrder add: text
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newBindingsToolBarItem [
+StPlayground >> newBindingsToolBarItem [
 		
 	^ ToolBarButton new
 		label: 'Bindings';
@@ -57,7 +57,7 @@ MarsPlayground >> newBindingsToolBarItem [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newGoToolBarItem [
+StPlayground >> newGoToolBarItem [
 		
 	^ ToolBarButton new
 		label: 'Do it';
@@ -68,7 +68,7 @@ MarsPlayground >> newGoToolBarItem [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newHelpToolBarItem [
+StPlayground >> newHelpToolBarItem [
 		
 	^ ToolBarButton new
 		label: 'Help';
@@ -79,7 +79,7 @@ MarsPlayground >> newHelpToolBarItem [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newMenu [
+StPlayground >> newMenu [
 	| menuSpec |
 	
 	menuSpec := (PragmaMenuBuilder 
@@ -91,7 +91,7 @@ MarsPlayground >> newMenu [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newPagesToolBarItem [
+StPlayground >> newPagesToolBarItem [
 		
 	^ ToolBarButton new
 		label: 'Pages';
@@ -102,7 +102,7 @@ MarsPlayground >> newPagesToolBarItem [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newRemotePublishToolBarItem [
+StPlayground >> newRemotePublishToolBarItem [
 		
 	^ ToolBarButton new
 		label: 'Publish';
@@ -113,7 +113,7 @@ MarsPlayground >> newRemotePublishToolBarItem [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newSettingsToolBarItem [
+StPlayground >> newSettingsToolBarItem [
 		
 	^ ToolBarButton new
 		label: 'Settings';
@@ -124,7 +124,7 @@ MarsPlayground >> newSettingsToolBarItem [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newToolBar [
+StPlayground >> newToolBar [
 
 	^ ToolBarPresenter new 
 		addItem: self newUpdateToolBarItem position: ITItemPosition right;
@@ -138,7 +138,7 @@ MarsPlayground >> newToolBar [
 ]
 
 { #category : #'as yet unclassified' }
-MarsPlayground >> newUpdateToolBarItem [
+StPlayground >> newUpdateToolBarItem [
 		
 	^ ToolBarButton new
 		label: 'Update';
@@ -149,7 +149,7 @@ MarsPlayground >> newUpdateToolBarItem [
 ]
 
 { #category : #api }
-MarsPlayground >> prepareWindow: aWindowPresenter [
+StPlayground >> prepareWindow: aWindowPresenter [
 
 	aWindowPresenter 
 		menu: self newMenu;
@@ -158,11 +158,11 @@ MarsPlayground >> prepareWindow: aWindowPresenter [
 ]
 
 { #category : #'accessing ui' }
-MarsPlayground >> text [
+StPlayground >> text [
 	^ text
 ]
 
 { #category : #'accessing ui' }
-MarsPlayground >> text: anObject [
+StPlayground >> text: anObject [
 	text := anObject
 ]

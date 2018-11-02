@@ -1,17 +1,17 @@
 Class {
-	#name : #MarsWinPlatform,
-	#superclass : #MarsPlatform,
+	#name : #StWinPlatform,
+	#superclass : #StPlatform,
 	#category : #'Mars-Tools'
 }
 
 { #category : #testing }
-MarsWinPlatform class >> isAvailable [
+StWinPlatform class >> isAvailable [
 
 	^ Smalltalk os isWindows
 ]
 
 { #category : #accessing }
-MarsWinPlatform >> defaultTheme [
+StWinPlatform >> defaultTheme [
 
 	^ 'Windows-10-master'
 ]
