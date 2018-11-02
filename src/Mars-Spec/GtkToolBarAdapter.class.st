@@ -8,17 +8,18 @@ Class {
 GtkToolBarAdapter >> addModelTo: gtkToolBar [
 	| needsSeparator |
 
-	self flag: #TODO. "This needs to come from the presenter"
-	gtkToolBar beBoth.
+	self model isDisplayModeIcons ifTrue: [ gtkToolBar beIcons ].
+	self model isDisplayModeText ifTrue: [ gtkToolBar beText ].
+	self model isDisplayModeBoth ifTrue: [ gtkToolBar beBoth ].
 
 	needsSeparator := false.
 	self model items 
-		at: ITItemPosition left 
+		at: ToolBarItemPosition left 
 		ifPresent: [ :items |
 			items do: [ :each |  gtkToolBar add: each buildWithSpec ].
 			needsSeparator := true ].
 	self model items 
-		at: ITItemPosition right 
+		at: ToolBarItemPosition right 
 		ifPresent: [ :items |
 			needsSeparator ifTrue: [ 
 				gtkToolBar add: GtkSeparatorToolItem new ]. 

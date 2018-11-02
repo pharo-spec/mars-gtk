@@ -127,9 +127,9 @@ StPlayground >> newSettingsToolBarItem [
 StPlayground >> newToolBar [
 
 	^ ToolBarPresenter new 
-		addItem: self newUpdateToolBarItem position: ITItemPosition right;
-		addItem: self newHelpToolBarItem  position: ITItemPosition right;
-		addItem: self newSettingsToolBarItem position: ITItemPosition right;
+		addItem: self newUpdateToolBarItem position: ToolBarItemPosition right;
+		addItem: self newHelpToolBarItem  position: ToolBarItemPosition right;
+		addItem: self newSettingsToolBarItem position: ToolBarItemPosition right;
 		addItem: self newGoToolBarItem;
 		addItem: self newRemotePublishToolBarItem;
 		addItem: self newBindingsToolBarItem;
