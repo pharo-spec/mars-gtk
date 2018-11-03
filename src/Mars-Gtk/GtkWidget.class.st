@@ -7,7 +7,8 @@ Class {
 	#name : #GtkWidget,
 	#superclass : #GObject,
 	#instVars : [
-		'data'
+		'data',
+		'deferActions'
 	],
 	#category : #'Mars-Gtk-Widget'
 }
@@ -67,6 +68,12 @@ GtkWidget >> autoRelease [
 	FFIExternalResourceManager addResource: self
 ]
 
+{ #category : #private }
+GtkWidget >> basicGrabDefault [
+
+	self ffiCall: #(void gtk_widget_grab_default (self))
+]
+
 { #category : #accessing }
 GtkWidget >> beHAlignCenter [
 
@@ -109,6 +116,12 @@ GtkWidget >> bindKeyCombination: aShortcut toAction: aBlock [
 	self flag: #TODO.
 ]
 
+{ #category : #private }
+GtkWidget >> canDefault: can_default [
+
+	self ffiCall: #(void gtk_widget_set_can_default (self, gboolean can_default))
+]
+
 { #category : #signaling }
 GtkWidget >> connectClicked: aBlock [
 	self connect: 'clicked' do: aBlock
@@ -149,10 +162,29 @@ GtkWidget >> data: anObject [
 	data := anObject
 ]
 
+{ #category : #'private deferring' }
+GtkWidget >> deferAction: aBlock [
+	"Deferred actions are needed because some settings (like #grabDefault) acquire sense once a 
+	 widget is inserted into a window. Hence, we need to 'defer' this action until that moment. 
+	 NOTE: For now, because I didn't find a better place, resolution of deferred actions are made 
+	 when calling GtkWindow>>#showAll, maybe this needs to change in the future.". 
+
+	deferActions ifNil: [ deferActions := #() ].
+	deferActions := deferActions copyWith: aBlock
+]
+
 { #category : #accessing }
 GtkWidget >> destroy [
 	
 	^ self ffiCall: #(void gtk_widget_destroy (self))
+]
+
+{ #category : #'private deferring' }
+GtkWidget >> executeDeferredActions [
+
+	deferActions ifNil: [ ^ self ].
+	deferActions do: #value.
+	deferActions := nil
 ]
 
 { #category : #'library path' }
@@ -175,7 +207,10 @@ GtkWidget >> getTopLevel [
 
 { #category : #accessing }
 GtkWidget >> grabDefault [
-	self ffiCall: #(void gtk_widget_grab_default (self))
+
+	self canDefault: true.
+	self deferAction: [ 
+		self basicGrabDefault ]
 ]
 
 { #category : #accessing }
@@ -242,6 +277,7 @@ GtkWidget >> overrideBackgroundColor: color [
 
 { #category : #private }
 GtkWidget >> overrideBackgroundState: state color: color [
+
 	^ self ffiCall: #(void gtk_widget_override_background_color (self, GtkStateFlags state, const GdkRGBA *color))
 ]
 
@@ -378,4 +414,10 @@ GtkWidget >> widgetAddAccelerator: accel_signal group: accel_group key: accel_ke
 { #category : #private }
 GtkWidget >> widgetPathLength: path_length path: path reversed: path_reversed [
 	^ self ffiCall: #(void gtk_widget_path (self, guint *path_length, gchar **path, gchar **path_reversed))
+]
+
+{ #category : #'private deferring' }
+GtkWidget >> withAllChildrenDo: aBlock [
+
+	aBlock cull: self
 ]

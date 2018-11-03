@@ -7,5 +7,7 @@ Class {
 { #category : #factory }
 GtkButtonAdapter >> buildWidget [
 
-	^ GtkButton newLabel: self model label asString
+	^ (GtkButton newLabel: self model label asString)
+		connectClicked: self model action;
+		yourself
 ]

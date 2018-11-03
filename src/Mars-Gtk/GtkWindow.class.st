@@ -113,6 +113,12 @@ GtkWindow >> setPosition: position [
 ]
 
 { #category : #accessing }
+GtkWindow >> showAll [
+	self withAllChildrenDo: #executeDeferredActions.
+	super showAll
+]
+
+{ #category : #accessing }
 GtkWindow >> title [ 
 	^ self ffiCall: #(const gchar *gtk_window_get_title (self))
 ]

@@ -108,3 +108,11 @@ GtkContainer >> removeAll [
 	children do: [ :each | self basicRemove: each ].
 	children := #()
 ]
+
+{ #category : #'private deferring' }
+GtkContainer >> withAllChildrenDo: aBlock [
+
+	aBlock cull: self.
+	self children do: [ :each |
+		each withAllChildrenDo: aBlock ]
+]
