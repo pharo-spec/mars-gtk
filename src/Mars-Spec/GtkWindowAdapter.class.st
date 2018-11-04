@@ -69,13 +69,23 @@ GtkWindowAdapter >> buildWidget [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-GtkWindowAdapter >> open [
-
-	self model window showAll
+{ #category : #accessing }
+GtkWindowAdapter >> centered [
+	
+	self widgetDo: [ :w | 
+		w 
+			hide; 
+			center; 
+			showAll ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+GtkWindowAdapter >> open [
+
+	self widgetDo: [ :w | w showAll ]
+]
+
+{ #category : #accessing }
 GtkWindowAdapter >> title: aString [ 
 
 	^ self widgetDo: [ :this | this title: aString ]

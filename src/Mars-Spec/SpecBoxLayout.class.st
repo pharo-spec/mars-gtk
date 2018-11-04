@@ -2,7 +2,9 @@ Class {
 	#name : #SpecBoxLayout,
 	#superclass : #SpecExecutableLayout,
 	#instVars : [
-		'direction'
+		'direction',
+		'spacing',
+		'homogeneous'
 	],
 	#category : #'Mars-Spec-Layout-Box'
 }
@@ -81,10 +83,22 @@ SpecBoxLayout >> addLast: aName withConstraints: aBlock [
 			aBlock value: constraints ]
 ]
 
+{ #category : #accessing }
+SpecBoxLayout >> beHomogeneous [
+
+	self homogeneous: true
+]
+
 { #category : #initialization }
 SpecBoxLayout >> beHorizontal [
 
 	direction := SpecBoxLayoutDirection horizontal
+]
+
+{ #category : #accessing }
+SpecBoxLayout >> beNotHomogeneous [
+
+	self homogeneous: false
 ]
 
 { #category : #initialization }
@@ -103,4 +117,29 @@ SpecBoxLayout >> constraintsClass [
 SpecBoxLayout >> direction [ 
 
 	^ direction
+]
+
+{ #category : #private }
+SpecBoxLayout >> homogeneous: aBoolean [
+
+	homogeneous := aBoolean
+]
+
+{ #category : #initialization }
+SpecBoxLayout >> initialize [
+
+	super initialize.
+	self beNotHomogeneous
+]
+
+{ #category : #testing }
+SpecBoxLayout >> isHomogeneous [ 
+
+	^ homogeneous
+]
+
+{ #category : #accessing }
+SpecBoxLayout >> spacing: aNumber [
+
+	spacing := aNumber
 ]

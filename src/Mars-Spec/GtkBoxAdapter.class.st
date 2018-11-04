@@ -52,6 +52,7 @@ GtkBoxAdapter >> layout: aLayout [
 
 	"build of widget was differed up to here (to know what is the direction)"
 	widget := aLayout direction newWidgetOn: self.
+	widget homogeneous: aLayout isHomogeneous.
 ]
 
 { #category : #factory }

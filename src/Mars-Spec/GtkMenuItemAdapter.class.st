@@ -27,6 +27,8 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 				group: self shortcutGroup 
 				shortcut: shortcut ] ].
 	
+	gtkWidget sensitive: self model enabled.
+	
 	"action"		
 	self model action ifNotNil: [ :actionBlock |
 		gtkWidget connectActivate: actionBlock ].

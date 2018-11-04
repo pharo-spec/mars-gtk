@@ -253,6 +253,7 @@ GtkWidget >> isHExpand [
 { #category : #testing }
 GtkWidget >> isSensitive [
 	"Returns the widget’s effective sensitivity, which means it is sensitive itself and also its parent widget is sensitive"
+
 	^ self ffiCall: #(gboolean gtk_widget_is_sensitive (self))
 ]
 
@@ -317,12 +318,20 @@ GtkWidget >> resourceData [
 
 { #category : #accessing }
 GtkWidget >> sensitive: sensitive [
+	"sensitive is the gtk equivallent of enable/disable"
+
 	self ffiCall: #(void gtk_widget_set_sensitive (self, gboolean sensitive))
 ]
 
 { #category : #private }
 GtkWidget >> setHandle: aHandle [
 	handle := aHandle
+]
+
+{ #category : #private }
+GtkWidget >> setTooltipText: text [
+
+	^ self ffiCall: #(void gtk_widget_set_tooltip_text (self, const gchar *text))
 ]
 
 { #category : #showing }
@@ -349,6 +358,12 @@ GtkWidget >> sizeRequestWidth: width height: height [
 GtkWidget >> takeKeyboardFocus [
 	
 	self flag: #TODO.
+]
+
+{ #category : #accessing }
+GtkWidget >> tooltipText: aString [
+
+	self setTooltipText: aString utf8Encoded 
 ]
 
 { #category : #accessing }
