@@ -26,3 +26,10 @@ GtkNumberInputFieldAdapter >> gtkWidgetClass [
 
 	^ GtkSpinButton
 ]
+
+{ #category : #private }
+GtkNumberInputFieldAdapter >> refreshText [
+	
+	self widgetDo: [ :w |
+		w value: self model number ]
+]

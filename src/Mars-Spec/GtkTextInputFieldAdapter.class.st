@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkTextInputFieldAdapter,
-	#superclass : #GtkAdapter,
+	#superclass : #GtkTextAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -31,4 +31,11 @@ GtkTextInputFieldAdapter >> buildWidget [
 GtkTextInputFieldAdapter >> gtkWidgetClass [
 
 	^ GtkEntry
+]
+
+{ #category : #private }
+GtkTextInputFieldAdapter >> refreshText [
+	
+	self widgetDo: [ :w |
+		w text: self model text ]
 ]
