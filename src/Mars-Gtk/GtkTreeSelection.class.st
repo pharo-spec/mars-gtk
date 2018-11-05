@@ -39,11 +39,12 @@ GtkTreeSelection >> connectChanged: aBlock [
 { #category : #accessing }
 GtkTreeSelection >> selectPath: pathArray [
 	"an array to the path selected: #(1 2 3)"
-	| path pathString |
+	| path |
 	
-	"Gtk3 is zero based :("
-	pathString := (pathArray collect: [ :each | each - 1 ]) joinUsing: $:.
-	path := (GtkTreePath newFromString: pathString) autoRelease.
+	"if is already selected, skip"
+	(self allSelected includes: pathArray) ifTrue: [ ^ self ].
+	
+	path := (GtkTreePath newFromArray: pathArray) autoRelease.
 	self basicSelectPath: path
 ]
 

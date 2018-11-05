@@ -20,6 +20,13 @@ GtkTreePath class >> new [
 ]
 
 { #category : #'instance creation' }
+GtkTreePath class >> newFromArray: anArray [
+
+	"Gtk3 is zero based :("
+	^ self newFromString: ((anArray collect: [ :each | each - 1]) joinUsing: $:)
+]
+
+{ #category : #private }
 GtkTreePath class >> newFromString: aString [
 
 	^ (self treePathNewFromString: aString) initialize
@@ -51,7 +58,7 @@ GtkTreePath >> toArray [
 		collect: [ :each | each asNumber + 1 ]
 ]
 
-{ #category : #converting }
+{ #category : #private }
 GtkTreePath >> toString [ 
 
 	^ self ffiCall: #(gchar *gtk_tree_path_to_string (self))
