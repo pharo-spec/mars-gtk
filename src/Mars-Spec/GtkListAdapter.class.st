@@ -16,7 +16,7 @@ GtkListAdapter >> addModelTo: gtkList [
 	gtkList 
 		headersVisible: false;
 		appendTextColumn;
-		model: (GtkTreeStore newStrings: self modelItemsAsDisplay).
+		model: self newTreeStore
 ]
 
 { #category : #building }
@@ -25,12 +25,43 @@ GtkListAdapter >> buildWidget [
 	
 	gtkList := GtkTreeView new.
 	self addModelTo: gtkList.
-	^ gtkList			
+	^ gtkList	
 ]
 
-{ #category : #building }
+{ #category : #private }
 GtkListAdapter >> modelItemsAsDisplay [
 
 	^ self model listItems collect: [ :each | 
 		self model displayBlock value: each ]
+]
+
+{ #category : #private }
+GtkListAdapter >> newTreeStore [
+
+	^ GtkTreeStore newStrings: self modelItemsAsDisplay
+]
+
+{ #category : #private }
+GtkListAdapter >> refreshList [
+	
+	self widgetDo: [ :w | w model: self newTreeStore ]
+]
+
+{ #category : #private }
+GtkListAdapter >> refreshSelection [
+	
+	self widgetDo: [ :w |
+		w selectPath: { self model selectedIndex } ]
+]
+
+{ #category : #updating }
+GtkListAdapter >> update: aSymbol [ 
+	"Spec uses this to inform about a change in the model"
+	
+	self flag: #TODO. "Review this inform mechanism (and see ways to avoid the coupling between
+	spec and morphic)"
+	aSymbol = #listElementAt: ifTrue: [ ^ self refreshList ].
+	aSymbol = #getIndex ifTrue: [ ^ self refreshSelection ].
+
+	^ super update: aSymbol	
 ]

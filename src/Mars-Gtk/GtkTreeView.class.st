@@ -149,6 +149,12 @@ GtkTreeView >> newColumn [
 ]
 
 { #category : #accessing }
+GtkTreeView >> selectPath: pathArray [ 
+
+	self selection selectPath: pathArray
+]
+
+{ #category : #accessing }
 GtkTreeView >> selection [ 
 
 	^ selection ifNil: [ selection := self getSelection initialize ]
