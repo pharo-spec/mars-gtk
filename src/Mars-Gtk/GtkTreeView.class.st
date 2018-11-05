@@ -50,6 +50,16 @@ GtkTreeView >> appendColumn: column [
 	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
 ]
 
+{ #category : #'convenience columns' }
+GtkTreeView >> appendTextColumn [
+	| renderer |
+
+	renderer := GtkCellRendererText new.
+	self appendColumn: (GtkTreeViewColumn new
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer)
+]
+
 { #category : #signals }
 GtkTreeView >> connectRowSelected: aBlock [
 

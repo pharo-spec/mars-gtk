@@ -18,9 +18,16 @@ Class {
 }
 
 { #category : #accessing }
+GtkTreeIter >> atColumnIndex: index setString: aValue [
+	"Just a convenience method to avoid adding an extra zero to all Strings"
+
+	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore *store, self, uint index, String aValue, -1))
+]
+
+{ #category : #accessing }
 GtkTreeIter >> atColumnIndex: index setValue: aValue [
 
-	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore* store, self, uint index, void* aValue, -1))
+	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore *store, self, uint index, void* aValue, -1))
 ]
 
 { #category : #accessing }
@@ -32,7 +39,8 @@ GtkTreeIter >> newChild [
 { #category : #accessing }
 GtkTreeIter >> setValues: aValueArray [
 
-	^ self ffiCall: #(void gtk_tree_store_set_valist (GtkTreeStore* #store,
-                          self,
-                          void *aValueArray))
+	^ self ffiCall: #(void gtk_tree_store_set_valist (
+		GtkTreeStore *store,
+		self,
+		void *aValueArray))
 ]

@@ -29,6 +29,24 @@ GtkAbstractIter class >> fieldsDesc [
 ]
 
 { #category : #accessing }
+GtkAbstractIter >> at: index put: aValue [
+
+	self atColumnIndex: index setValue: aValue
+]
+
+{ #category : #accessing }
+GtkAbstractIter >> at: index putString: aValue [
+
+	self atColumnIndex: index setString: aValue
+]
+
+{ #category : #accessing }
+GtkAbstractIter >> atColumnIndex: index setString: aValue [
+
+	 self subclassResponsibility
+]
+
+{ #category : #accessing }
 GtkAbstractIter >> atColumnIndex: index setValue: aValue [
 
 	 self subclassResponsibility

@@ -42,8 +42,8 @@ GtkTreeStore class >> newStrings: aCollection [
 	store := self newColumnTypes: { G_TYPE_STRING }.
 	aCollection do: [ :each |
 		store appendRow
-			atColumnIndex: 0 
-			setValue: each asString utf8Encoded ].
+			at: 0 
+			putString: each utf8Encoded asString ].
 
 	^ store
 ]
