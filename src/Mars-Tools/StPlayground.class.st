@@ -45,7 +45,7 @@ StPlayground >> initializeWidgets [
 	self focusOrder add: text
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newBindingsToolBarItem [
 		
 	^ ToolBarButton new
@@ -56,7 +56,7 @@ StPlayground >> newBindingsToolBarItem [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newGoToolBarItem [
 		
 	^ ToolBarButton new
@@ -67,7 +67,7 @@ StPlayground >> newGoToolBarItem [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newHelpToolBarItem [
 		
 	^ ToolBarButton new
@@ -78,7 +78,7 @@ StPlayground >> newHelpToolBarItem [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newMenu [
 	| menuSpec |
 	
@@ -90,7 +90,7 @@ StPlayground >> newMenu [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newPagesToolBarItem [
 		
 	^ ToolBarButton new
@@ -101,7 +101,7 @@ StPlayground >> newPagesToolBarItem [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newRemotePublishToolBarItem [
 		
 	^ ToolBarButton new
@@ -112,7 +112,7 @@ StPlayground >> newRemotePublishToolBarItem [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newSettingsToolBarItem [
 		
 	^ ToolBarButton new
@@ -123,7 +123,13 @@ StPlayground >> newSettingsToolBarItem [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
+StPlayground >> newStatusBar [ 
+
+	^ StatusBarPresenter new
+]
+
+{ #category : #'private factory' }
 StPlayground >> newToolBar [
 
 	^ ToolBarPresenter new 
@@ -137,7 +143,7 @@ StPlayground >> newToolBar [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private factory' }
 StPlayground >> newUpdateToolBarItem [
 		
 	^ ToolBarButton new
@@ -153,8 +159,8 @@ StPlayground >> prepareWindow: aWindowPresenter [
 
 	aWindowPresenter 
 		menu: self newMenu;
-		toolBar: self newToolBar";
-		statusBar: self newStatusBar".
+		toolBar: self newToolBar;
+		statusBar: self newStatusBar
 ]
 
 { #category : #'accessing ui' }

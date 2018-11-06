@@ -53,7 +53,9 @@ GtkStatusBar >> popFromContextId: context_id [
 { #category : #'instance creation' }
 GtkStatusBar >> pushMessage: aMessage withId: anId [
 
-	self basicPush: aMessage utf8Encoded asString withId: anId
+	self 
+		basicPush: aMessage utf8Encoded asString 
+		withId: anId
 ]
 
 { #category : #'instance creation' }
