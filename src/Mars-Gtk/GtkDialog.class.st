@@ -31,19 +31,21 @@ GtkDialog >> addActionWidget: widget withResponseId: responseId [
 { #category : #accessing }
 GtkDialog >> addButtonWithLabel: aText withResponseId: aResponseId [
 
-	self basicAddButtonWithLabel: aText utf8Encoded asString withResponseId: aResponseId
+	self 
+		basicAddButtonWithLabel: aText utf8Encoded asString 
+		withResponseId: aResponseId
 ]
 
 { #category : #private }
 GtkDialog >> basicAddButtonWithLabel: utf8EncodedLabel withResponseId: aResponseId [
 
-	^ self ffiCall: #(GtkButton * gtk_dialog_add_button (self, String utf8EncodedLabel, gint aResponseId))
+	^ self ffiCall: #(GtkButton *gtk_dialog_add_button (self, String utf8EncodedLabel, gint aResponseId))
 ]
 
 { #category : #accessing }
 GtkDialog >> contentArea [
 
-	^ self ffiCall: #(GtkBox * gtk_dialog_get_content_area (self))
+	^ self ffiCall: #(GtkBox *gtk_dialog_get_content_area (self))
 ]
 
 { #category : #accessing }
