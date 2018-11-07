@@ -48,7 +48,8 @@ GtkAdapter >> layout: aSpecLayoutFrame [
 GtkAdapter >> takeKeyboardFocus [
 	
 	self widgetDo: [ :w | 
-		self model window widget
-			ifNotNil: [ w grabFocus ]
-			ifNil: [ w deferAction: [ w grabFocus ] ] ]
+		self model window ifNotNil: [ :window |
+			window widget 
+				ifNotNil: [ w grabFocus ]
+				ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
 ]
