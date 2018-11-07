@@ -2,7 +2,8 @@ Class {
 	#name : #StPlayground,
 	#superclass : #StPresenter,
 	#instVars : [
-		'text'
+		'text',
+		'statusBar'
 	],
 	#category : #'Mars-Tools'
 }
@@ -63,7 +64,7 @@ StPlayground >> newGoToolBarItem [
 		label: 'Do it';
 		icon: (self iconNamed: #glamorousGo);
 		help: 'Do it all and inspect';
-		action: [ self inform: 'TODO!' ];
+		action: [ statusBar pushMessage: 'TODO do it...' ];
 		yourself
 ]
 
@@ -160,7 +161,7 @@ StPlayground >> prepareWindow: aWindowPresenter [
 	aWindowPresenter 
 		menu: self newMenu;
 		toolBar: self newToolBar;
-		statusBar: self newStatusBar
+		statusBar: (statusBar := self newStatusBar)
 ]
 
 { #category : #'accessing ui' }
