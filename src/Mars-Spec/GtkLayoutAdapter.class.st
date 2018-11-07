@@ -10,3 +10,10 @@ GtkLayoutAdapter class >> isAbstract [
 	^ super isAbstract 
 		or: [ self = GtkLayoutAdapter ]
 ]
+
+{ #category : #'as yet unclassified' }
+GtkLayoutAdapter >> buildWithSpec [
+	"This provides some polymorphism with regular presenters to allow composition of layouts."
+	
+	^ self widget
+]

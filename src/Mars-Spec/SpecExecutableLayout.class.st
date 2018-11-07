@@ -36,9 +36,13 @@ SpecExecutableLayout >> buildAdapterFor: aModel bindings: bindings [
 
 	adapter := (bindings adapterClass: self adapterName) adapt: aModel.
 	adapter layout: self.
-	children keysAndValuesDo: [ :presenterName :constraints |
-		adapter 
-			add: (aModel readSlotNamed: presenterName)
+	children keysAndValuesDo: [ :presenterNameOrLayout :constraints |
+		"Since a layout can be composed (by other layouts), we can include a presenter 
+		 or a layout"
+		adapter
+			add: (presenterNameOrLayout isSymbol 
+				ifTrue: [ aModel readSlotNamed: presenterNameOrLayout ]
+				ifFalse: [ presenterNameOrLayout buildAdapterFor: aModel bindings: bindings ])
 			constraints: constraints ].
 	
 	^ adapter
