@@ -5,17 +5,8 @@ Class {
 }
 
 { #category : #specs }
-GtkAdapter class >> adaptingAliases [
-	"Answers an array of aliases my class can adapt."
-
-	^ #()
-
-]
-
-{ #category : #specs }
 GtkAdapter class >> adaptingName [
-	"Answers the name this component adapts. 
-	 Override me if adapter will not forllo the common pattern"
+	"Answers the name this component adapts."
 
 	"Remove the 'Gtk' part will almost always give us the adapter name"
 	^ (self name allButFirst: 3) asSymbol
