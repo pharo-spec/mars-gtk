@@ -5,13 +5,21 @@ Class {
 }
 
 { #category : #building }
-GtkTextAdapter >> buildWidget [
-	| textView |
-
-	textView := GtkTextView new.
+GtkTextAdapter >> addModelTo: gtkTextView [
+	
 	self model isForSmalltalkCode ifTrue: [ 
-		textView monospace: true  ].
-	^ GtkScrolledWindow newWidget: textView
+		gtkTextView monospace: true  ].
+	self model text ifNotNil: [ :text |
+		gtkTextView text: text asString ]
+]
+
+{ #category : #building }
+GtkTextAdapter >> buildWidget [
+	| gtkTextView |
+
+	gtkTextView := GtkTextView new.
+	self addModelTo: gtkTextView.
+	^ GtkScrolledWindow newWidget: gtkTextView
 ]
 
 { #category : #private }
