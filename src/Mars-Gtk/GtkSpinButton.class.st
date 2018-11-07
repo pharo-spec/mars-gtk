@@ -64,6 +64,18 @@ GtkSpinButton class >> spinButtonNewAdjustment: adjustment climbRate: climb_rate
 ]
 
 { #category : #accessing }
+GtkSpinButton >> adjustment [
+
+	^ self ffiCall: #(GtkAdjustment *gtk_spin_button_get_adjustment (self))
+]
+
+{ #category : #accessing }
+GtkSpinButton >> adjustment: adjustment [
+
+	^ self ffiCall: #(void gtk_spin_button_set_adjustment (self, GtkAdjustment *adjustment))
+]
+
+{ #category : #accessing }
 GtkSpinButton >> beNumber [ 
 
 	super beNumber.
