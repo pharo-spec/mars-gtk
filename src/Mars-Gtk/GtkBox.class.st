@@ -44,6 +44,13 @@ GtkBox class >> newVerticalSpacing: spacing [
 	^ (self boxNewOrientation: GTK_ORIENTATION_VERTICAL spacing: spacing) initialize
 ]
 
+{ #category : #accessing }
+GtkBox >> add: child [
+	"Add is not a valid message for boxes (they use pack* family)"
+	
+	self shouldNotImplement
+]
+
 { #category : #private }
 GtkBox >> basicPackEnd: child expand: expand fill: fill padding: padding [ 
 	^ self ffiCall: #(void gtk_box_pack_end (
