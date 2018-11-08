@@ -8,7 +8,8 @@ Class {
 	#name : #GtkDialog,
 	#superclass : #GtkWindow,
 	#instVars : [
-		'buttons'
+		'buttons',
+		'contentArea'
 	],
 	#category : #'Mars-Gtk-Widget-Window'
 }
@@ -48,10 +49,23 @@ GtkDialog >> addButtonWithLabel: aText withResponseId: aResponseId [
 		withResponseId: aResponseId
 ]
 
+{ #category : #accessing }
+GtkDialog >> addDefaultButton: aString do: aBlock [
+
+	self addButton: aString do: aBlock.
+	self defaultResponse: buttons size
+]
+
 { #category : #private }
 GtkDialog >> basicAddButtonWithLabel: utf8EncodedLabel withResponseId: aResponseId [
 
 	^ self ffiCall: #(GtkButton *gtk_dialog_add_button (self, String utf8EncodedLabel, gint aResponseId))
+]
+
+{ #category : #private }
+GtkDialog >> basicContentArea [
+
+	^ self ffiCall: #(GtkBox *gtk_dialog_get_content_area (self))
 ]
 
 { #category : #private }
@@ -63,10 +77,10 @@ GtkDialog >> basicRun [
 { #category : #accessing }
 GtkDialog >> contentArea [
 
-	^ self ffiCall: #(GtkBox *gtk_dialog_get_content_area (self))
+	^ contentArea ifNil:[ contentArea := self basicContentArea initialize ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkDialog >> defaultResponse: responseId [
 
 	^ self ffiCall: #(void gtk_dialog_set_default_response (self, gint responseId))

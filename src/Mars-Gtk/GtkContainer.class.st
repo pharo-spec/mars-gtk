@@ -79,13 +79,15 @@ GtkContainer >> hasChildren [
 ]
 
 { #category : #initialization }
-GtkContainer >> initialize [ 
+GtkContainer >> initialize [
+
 	super initialize.
 	children := #()
 ]
 
 { #category : #private }
 GtkContainer >> keepWidget: widget [
+
 	children := children copyWith: widget.
 
 

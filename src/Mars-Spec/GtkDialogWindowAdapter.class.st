@@ -4,22 +4,33 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #building }
-GtkDialogWindowAdapter >> addModelTo: gtkDialog [
+{ #category : #private }
+GtkDialogWindowAdapter >> add: gtkBox toWindow: gtkWindow [
 
-	gtkDialog contentArea 
-		packStart: self model contents
+	gtkWindow contentArea 
+		packStart: gtkBox
+]
 
+{ #category : #accessing }
+GtkDialogWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
+
+	self model isCentered 
+		ifTrue: [ gtkWindow center ].
+	super addModelIn: gtkWindow withSpecLayout: aSpec	
 ]
 
 { #category : #building }
 GtkDialogWindowAdapter >> buildWidget [
-	| gtkDialog |
 
-	gtkDialog := GtkDialog new 
+	^ GtkDialog new 
 		autoRelease
 		resize: self model initialExtent;
 		yourself.
-	self addModelTo: gtkDialog.
-	^ gtkDialog
+
+]
+
+{ #category : #private }
+GtkDialogWindowAdapter >> contentWidget: aSpec [
+
+	^ self model contents
 ]
