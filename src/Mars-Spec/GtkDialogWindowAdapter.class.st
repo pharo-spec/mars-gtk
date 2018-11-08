@@ -5,10 +5,21 @@ Class {
 }
 
 { #category : #building }
-GtkDialogWindowAdapter >> buildWidget [
+GtkDialogWindowAdapter >> addModelTo: gtkDialog [
 
-	^ GtkDialog new 
+	gtkDialog contentArea 
+		packStart: self model contents
+
+]
+
+{ #category : #building }
+GtkDialogWindowAdapter >> buildWidget [
+	| gtkDialog |
+
+	gtkDialog := GtkDialog new 
 		autoRelease
 		resize: self model initialExtent;
-		yourself
+		yourself.
+	self addModelTo: gtkDialog.
+	^ gtkDialog
 ]
