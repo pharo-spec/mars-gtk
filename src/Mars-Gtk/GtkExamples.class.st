@@ -1012,14 +1012,16 @@ GtkExamples class >> gtkExampleDialog [
 	<title: 'Dialog'>
 	<category: #Windows>
 	<layoutGridSimple>
+	| result |
 
 	^ (GtkButton newLabel: 'Show Dialog')
 		connectClicked: [ | dialog |
 			dialog := GtkDialog new
-				addButtonWithLabel: 'Yes' withResponseId: 1;
-				addButtonWithLabel: 'No' withResponseId: 2;
+				addButton: 'Yes' do: [ result := 'Yes' ];
+				addButton: 'No' do: [ result := 'No' ];
 				yourself.
-			self inform: dialog run asString.
+			dialog run.
+			self inform: result.
 			dialog destroy ];
 		yourself
 ]

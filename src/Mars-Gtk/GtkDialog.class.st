@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/stable/GtkDialog.html
 Class {
 	#name : #GtkDialog,
 	#superclass : #GtkWindow,
+	#instVars : [
+		'buttons'
+	],
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
@@ -29,6 +32,15 @@ GtkDialog >> addActionWidget: widget withResponseId: responseId [
 ]
 
 { #category : #accessing }
+GtkDialog >> addButton: aString do: aBlock [
+
+	buttons add: aBlock.
+	self 
+		addButtonWithLabel: aString 
+		withResponseId: buttons size
+]
+
+{ #category : #private }
 GtkDialog >> addButtonWithLabel: aText withResponseId: aResponseId [
 
 	self 
@@ -40,6 +52,12 @@ GtkDialog >> addButtonWithLabel: aText withResponseId: aResponseId [
 GtkDialog >> basicAddButtonWithLabel: utf8EncodedLabel withResponseId: aResponseId [
 
 	^ self ffiCall: #(GtkButton *gtk_dialog_add_button (self, String utf8EncodedLabel, gint aResponseId))
+]
+
+{ #category : #private }
+GtkDialog >> basicRun [
+
+	^ self ffiCall: #(gint gtk_dialog_run (self))
 ]
 
 { #category : #accessing }
@@ -57,11 +75,21 @@ GtkDialog >> defaultResponse: responseId [
 { #category : #accessing }
 GtkDialog >> headerBar [
 
-	^ self ffiCall: #(GtkWidget * gtk_dialog_get_header_bar (self))
+	^ self ffiCall: #(GtkWidget *gtk_dialog_get_header_bar (self))
+]
+
+{ #category : #initialization }
+GtkDialog >> initialize [
+
+	super initialize.
+	buttons := OrderedCollection new
 ]
 
 { #category : #accessing }
 GtkDialog >> run [
-
-	^ self ffiCall: #(gint gtk_dialog_run (self))
+	| result |
+	
+	result := self basicRun.
+	result = 0 ifTrue: [ ^ self ].
+	^ (buttons at: result) cull: self
 ]
