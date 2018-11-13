@@ -46,6 +46,18 @@ GtkWindow >> autoRelease [
 ]
 
 { #category : #accessing }
+GtkWindow >> beModal [
+
+	self modal: true
+]
+
+{ #category : #accessing }
+GtkWindow >> beNotModal [
+
+	self modal: false
+]
+
+{ #category : #accessing }
 GtkWindow >> center [
 	self setPosition: GTK_WIN_POS_CENTER
 ]
@@ -86,9 +98,16 @@ GtkWindow >> initialize [
 		handle := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
+GtkWindow >> isModal [ 
+
+	^ self ffiCall: #(gboolean gtk_window_get_modal (self))
+]
+
+{ #category : #private }
 GtkWindow >> modal: modal [
-	self ffiCall: #(void gtk_window_set_modal (self, gboolean modal))
+
+	^ self ffiCall: #(void gtk_window_set_modal (self, gboolean modal))
 ]
 
 { #category : #accessing }

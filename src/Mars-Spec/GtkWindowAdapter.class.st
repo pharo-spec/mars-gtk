@@ -78,10 +78,11 @@ GtkWindowAdapter >> buildWidget [
 GtkWindowAdapter >> centered [
 	
 	self widgetDo: [ :w | 
-		w 
-			hide; 
-			center; 
-			showAll ]
+		w isVisible 
+			ifFalse: [ 
+				w center ]
+			ifTrue: [ 
+				w hide; center; showAll ] ]
 ]
 
 { #category : #private }

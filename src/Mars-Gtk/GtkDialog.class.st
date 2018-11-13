@@ -11,6 +11,9 @@ Class {
 		'buttons',
 		'contentArea'
 	],
+	#pools : [
+		'GtkResponseType'
+	],
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
@@ -75,12 +78,18 @@ GtkDialog >> basicRun [
 ]
 
 { #category : #accessing }
+GtkDialog >> close [
+		
+	self halt
+]
+
+{ #category : #accessing }
 GtkDialog >> contentArea [
 
 	^ contentArea ifNil:[ contentArea := self basicContentArea initialize ]
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GtkDialog >> defaultResponse: responseId [
 
 	^ self ffiCall: #(void gtk_dialog_set_default_response (self, gint responseId))
@@ -100,10 +109,24 @@ GtkDialog >> initialize [
 ]
 
 { #category : #accessing }
+GtkDialog >> response: response_id [
+
+	self ffiCall: #(void gtk_dialog_response (self, gint response_id))
+]
+
+{ #category : #accessing }
 GtkDialog >> run [
 	| result |
 	
 	result := self basicRun.
 	result = 0 ifTrue: [ ^ self ].
-	^ (buttons at: result) cull: self
+	result < 0 ifTrue: [ ^ GtkResponseType fromInteger: result ].
+	(buttons at: result) fork
+]
+
+{ #category : #accessing }
+GtkDialog >> showAll [
+	"You need to call 'run'"
+
+	self shouldNotImplement
 ]

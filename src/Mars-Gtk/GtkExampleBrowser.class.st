@@ -42,8 +42,8 @@ GtkExampleBrowser >> categoryStackFor: categoryName [
 		newExampleStack := GtkStack new.
 		categoryStack
 			addChild: (GtkBox newHorizontal
-				add: (GtkStackSidebar forStack: newExampleStack);
-				add: newExampleStack;
+				packStart: (GtkStackSidebar forStack: newExampleStack);
+				packStart: newExampleStack;
 				yourself)
 			withTitle: categoryName.
 		GtkExampleBrowserCategory on: newExampleStack ]

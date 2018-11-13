@@ -1017,6 +1017,9 @@ GtkExamples class >> gtkExampleDialog [
 	^ (GtkButton newLabel: 'Show Dialog')
 		connectClicked: [ | dialog |
 			dialog := GtkDialog new
+				resize: 600@400;
+				center;
+				in: [ :this | this contentArea packStart: (GtkLabel newLabel: 'Dialog example') ];
 				addButton: 'Yes' do: [ result := 'Yes' ];
 				addButton: 'No' do: [ result := 'No' ];
 				yourself.
@@ -1153,7 +1156,7 @@ GtkExamples class >> gtkExampleHorizontalBox [
 	1 to: 5 do: [ :idx | | button |
 		button := GtkButton newLabel: 'Hello ',  idx asString.
 		button connectClicked: [ button label: button label, ' 今' ].
-		container add: button ].
+		container packStart: button ].
 	^ container
 ]
 
@@ -1918,7 +1921,7 @@ GtkExamples class >> gtkExampleVerticalBox [
 	1 to: 5 do: [ :idx | | button |
 		button := GtkButton newLabel: 'Hello ',  idx asString.
 		button connectClicked: [ button label: button label, ' 今' ].
-		container add: button ].
+		container packStart: button ].
 	^ container
 ]
 

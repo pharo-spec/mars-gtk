@@ -25,7 +25,7 @@ GtkPopover class >> popoverNewRelativeTo: aWidget [
 { #category : #specs }
 GtkPopover >> beModal [
 
-	^ self modal: true
+	self modal: true
 ]
 
 { #category : #specs }
@@ -46,16 +46,16 @@ GtkPopover >> defaultWidget: aWidget [
 	^ self ffiCall: #(void gtk_popover_set_default_widget (self, GtkWidget *aWidget))
 ]
 
-{ #category : #specs }
-GtkPopover >> modal [
+{ #category : #testing }
+GtkPopover >> isModal [
 
 	^ self ffiCall: #(gboolean gtk_popover_get_modal (self))
 ]
 
-{ #category : #specs }
-GtkPopover >> modal: aBoolean [
+{ #category : #private }
+GtkPopover >> modal: modal [
 
-	^ self ffiCall: #(void gtk_popover_set_modal (self, gboolean aBoolean))
+	^ self ffiCall: #(void gtk_popover_set_modal (self, gboolean modal))
 ]
 
 { #category : #specs }

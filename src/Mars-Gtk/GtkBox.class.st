@@ -48,7 +48,8 @@ GtkBox class >> newVerticalSpacing: spacing [
 GtkBox >> add: child [
 	"Add is not a valid message for boxes (they use pack* family)"
 	
-	self shouldNotImplement
+	"self shouldNotImplement"
+	self packStart: child
 ]
 
 { #category : #private }
