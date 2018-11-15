@@ -19,10 +19,11 @@ GtkWidget class >> ffiLibraryName [
 ]
 
 { #category : #finalization }
-GtkWidget class >> finalizeResourceData: widget [
-	(widget isNil or: [ widget isNull ]) ifTrue: [ ^ self ].
-	GtkFinalizeSignal emitTarget: self handle: widget.
-	self widgetDestroy: widget
+GtkWidget class >> finalizeResourceData: aHandle [
+
+	(self isValidHandle: aHandle) ifFalse: [ ^ self ].
+	GtkFinalizeSignal emitTarget: self handle: aHandle.
+	self widgetDestroy: aHandle
 ]
 
 { #category : #'instance creation' }
@@ -65,7 +66,9 @@ GtkWidget >> asListBoxRow [
 
 { #category : #'external resource management' }
 GtkWidget >> autoRelease [
-	FFIExternalResourceManager addResource: self
+
+	GtkRegisterAutoRelease emitWidget: self.
+	^ super autoRelease
 ]
 
 { #category : #private }
@@ -124,12 +127,26 @@ GtkWidget >> canDefault: can_default [
 
 { #category : #signaling }
 GtkWidget >> connectClicked: aBlock [
+
 	self connect: 'clicked' do: aBlock
 ]
 
 { #category : #signaling }
+GtkWidget >> connectDeleteEvent: aBlock [
+	"answers whether the widget can be deleted ot not"
+	
+	self 
+		connect: 'delete-event'
+		signature: #(Boolean (void *widget, void *event, void *user_data))
+		do: [ :widget :event :user_data | aBlock value ]
+]
+
+{ #category : #signaling }
 GtkWidget >> connectDestroy: aBlock [
-	self connect: 'destroy' do: aBlock
+
+	self 
+		connect: 'destroy' 
+		do: aBlock
 ]
 
 { #category : #signaling }
@@ -149,6 +166,14 @@ GtkWidget >> connectKeyPressEvent: aBlock [
 { #category : #signaling }
 GtkWidget >> connectShow: aBlock [
 	self connect: 'show' do: aBlock
+]
+
+{ #category : #signaling }
+GtkWidget >> connectUnmap: aBlock [
+
+	self 
+		connect: 'unmap' 
+		do: aBlock
 ]
 
 { #category : #accessing }
@@ -236,7 +261,15 @@ GtkWidget >> hExpand: expand [
 
 { #category : #showing }
 GtkWidget >> hide [
-	self ffiCall: #( void gtk_widget_hide (self))
+
+	self ffiCall: #(void gtk_widget_hide (self))
+]
+
+{ #category : #initialization }
+GtkWidget >> initialize [ 
+	
+	super initialize.
+	GtkCreateSignal emitWidget: self.
 ]
 
 { #category : #testing }

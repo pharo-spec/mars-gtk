@@ -1,3 +1,8 @@
+"
+Predefined values for use as response ids in gtk_dialog_add_button(). All predefined values are negative; GTK+ leaves values of 0 or greater for application-defined response ids.
+
+https://developer.gnome.org/gtk3/stable/GtkDialog.html#GtkResponseType
+"
 Class {
 	#name : #GtkResponseType,
 	#superclass : #GtkEnumeration,

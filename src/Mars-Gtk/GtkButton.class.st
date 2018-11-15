@@ -69,12 +69,6 @@ GtkButton >> beImagePositionTop [
 	self imagePosition: GTK_POS_TOP
 ]
 
-{ #category : #events }
-GtkButton >> connectClicked: aBlock [
-
-	self connect: 'clicked' do: aBlock
-]
-
 { #category : #private }
 GtkButton >> gtkButtonGetLabel [
 

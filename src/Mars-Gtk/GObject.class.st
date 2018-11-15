@@ -28,9 +28,15 @@ GObject class >> ffiLibraryName [
 GObject class >> finalizeResourceData: handle [
 	"when marking for autoRelease, g-objects needs to be freed in a particular way."
 
-	handle isNull ifTrue: [ ^ self ].
+	(self isValidHandle: handle) ifFalse: [ ^ self ].
 	self objectUnref: handle.
 	handle beNull
+]
+
+{ #category : #private }
+GObject class >> isValidHandle: handle [
+
+	^ handle notNil and: [ handle isNull not ]
 ]
 
 { #category : #private }
@@ -97,6 +103,7 @@ GObject >> disconnectByFunc: func [
 
 { #category : #'private signaling' }
 GObject >> disconnectMatchedMask: mask signal: signal_id detail: detail closure: closure func: func data: aData [
+
 	^ self ffiCall: #(guint g_signal_handlers_disconnect_matched (
 		self,
 		GSignalMatchType mask,
@@ -150,6 +157,7 @@ GObject >> objectReference [
 
 { #category : #private }
 GObject >> objectUnreference [
+
 	self ffiCall: #(gpointer g_object_unref (self))
 ]
 

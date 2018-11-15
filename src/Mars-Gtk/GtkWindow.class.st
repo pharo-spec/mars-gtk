@@ -16,6 +16,15 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #finalization }
+GtkWindow class >> finalizeResourceData: aHandle [
+
+	(self isValidHandle: aHandle) ifFalse: [ ^ self ].
+	GtkFinalizeSignal emitTarget: self handle: aHandle.
+	self widgetDestroy: aHandle.
+	aHandle beNull
+]
+
 { #category : #'instance creation' }
 GtkWindow class >> new [ 
 	^ (self windowNew: GTK_WINDOW_TOPLEVEL) initialize
@@ -23,6 +32,7 @@ GtkWindow class >> new [
 
 { #category : #private }
 GtkWindow class >> windowNew: type [ 
+
 	^ self ffiCall: #( GtkWindow *gtk_window_new ( GtkWindowType type ) )
 ]
 
@@ -74,28 +84,31 @@ GtkWindow >> defaultSizeWidth: width height: height [
 
 { #category : #finalization }
 GtkWindow >> finalize [
+	self halt. "This seems like dead code"
+	
 	(self getHandle isNil or: [ self getHandle isNull ]) ifTrue: [ ^ self ].
+
 	GtkFinalizeSignal emitTarget: self handle: self getHandle.
+
 	"self disconnectAll."
 	"It may have changed after all disconnections (some disconnect may trigger a 
 	 destroy, I'm not sure how this works...)"
-	self getHandle ifNotNil: [ 
-		"self objectUnreference."
-		self class widgetDestroy: self getHandle ]
+	self getHandle ifNotNil: [
+		self objectUnreference.
+		self class widgetDestroy: self getHandle.
+		self getHandle beNull ]
 ]
 
 { #category : #initialization }
 GtkWindow >> initialize [
+
 	super initialize.
 	"registering to prevent GC"
 	self application registerWindow: self.
 	"I retain a reference to ensure it is not destroyed until I actually want to doit"
-	"self objectReference."
+	self objectReference.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
-	self connectDestroy: [ 
-		GtkDestroySignal emitWidget: self.
-		self application unregisterWindow: self.
-		handle := nil ]
+	self connectDestroy: [ self windowDestroyed ]
 ]
 
 { #category : #testing }
@@ -163,4 +176,19 @@ GtkWindow >> titleBar: aTitleBar [
 GtkWindow >> windowAddAccelGroup: accel_group [
 
 	^ self ffiCall: #(void gtk_window_add_accel_group (self, GtkAccelGroup *accel_group))
+]
+
+{ #category : #initialization }
+GtkWindow >> windowDestroyed [
+	"This process a destroy signal"
+
+	GtkWindowDestroySignal emitWidget: self.
+	self objectUnreference.
+	"according to documentation: Signals that all holders of a reference to the widget should 
+	 release the reference that they hold. May result in finalization of the widget if all 
+	 references are released.
+	 Seems to mean if I receive the destroy signal, window no longer exist (and I do not need 
+	 to re-trigger destroy on it."	
+	handle beNull.
+	self application unregisterWindow: self.	
 ]

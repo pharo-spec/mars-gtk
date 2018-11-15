@@ -1,10 +1,13 @@
+"
+I'm a generic widget signal.
+"
 Class {
 	#name : #GtkWidgetSignal,
 	#superclass : #GtkSignal,
 	#instVars : [
 		'widget'
 	],
-	#category : 'Mars-Gtk-Signal'
+	#category : #'Mars-Gtk-Signal'
 }
 
 { #category : #'instance creation' }
@@ -19,7 +22,10 @@ GtkWidgetSignal class >> newWidget: aWidget [
 
 { #category : #printing }
 GtkWidgetSignal >> printOneLineContentsOn: stream [
-	stream print: self widget; << '('; print: self widget getHandle; << ')'
+	
+	stream
+		<< self widget className  
+		<< ' ' << self widget getHandle asString
 ]
 
 { #category : #accessing }

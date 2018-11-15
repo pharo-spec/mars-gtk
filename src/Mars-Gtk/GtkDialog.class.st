@@ -20,7 +20,7 @@ Class {
 { #category : #private }
 GtkDialog class >> gtkDialogNew [
 
-	^ self ffiCall: #(GtkDialog *gtk_dialog_new (void))
+	^ self ffiCall: #(#GtkDialog *gtk_dialog_new (void))
 ]
 
 { #category : #private }
@@ -114,19 +114,14 @@ GtkDialog >> response: response_id [
 	self ffiCall: #(void gtk_dialog_response (self, gint response_id))
 ]
 
-{ #category : #accessing }
+{ #category : #running }
 GtkDialog >> run [
-	| result |
-	
-	result := self basicRun.
-	result = 0 ifTrue: [ ^ self ].
-	result < 0 ifTrue: [ ^ GtkResponseType fromInteger: result ].
-	(buttons at: result) fork
-]
+	| runContext |
 
-{ #category : #accessing }
-GtkDialog >> showAll [
-	"You need to call 'run'"
+	self isVisible ifFalse: [ 
+		self contentArea showAll.
+		self show ]. 
 
-	self shouldNotImplement
+	runContext := GtkDialogRunContext newDialog: self.
+	^ runContext run
 ]

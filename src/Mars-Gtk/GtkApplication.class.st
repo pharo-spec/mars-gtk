@@ -62,6 +62,7 @@ GtkApplication >> initGtk3 [
 
 { #category : #initialization }
 GtkApplication >> initialize [
+
 	super initialize.
 	windowRegistry := Set new.
 	runLoop := GtkRunLoop current
@@ -75,6 +76,7 @@ GtkApplication >> isRunning [
 { #category : #registry }
 GtkApplication >> registerWindow: aWindow [
 
+	GtkWindowRegisterSignal emitWidget: aWindow.
 	windowRegistry add: aWindow
 ]
 
@@ -109,6 +111,7 @@ GtkApplication >> suspendRunLoopWhile: aBlock [
 { #category : #registry }
 GtkApplication >> unregisterWindow: aWindow [
 
+	GtkWindowUnregisterSignal emitWidget: aWindow.
 	windowRegistry 
 		remove: aWindow 
 		ifAbsent: [ ]

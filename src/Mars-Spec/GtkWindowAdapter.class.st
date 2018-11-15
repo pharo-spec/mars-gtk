@@ -85,6 +85,12 @@ GtkWindowAdapter >> centered [
 				w hide; center; showAll ] ]
 ]
 
+{ #category : #accessing }
+GtkWindowAdapter >> close [
+
+	self widgetDo: [ :w | w hide ]
+]
+
 { #category : #private }
 GtkWindowAdapter >> contentWidget: aSpec [
 

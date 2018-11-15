@@ -1,3 +1,6 @@
+"
+I'm a signal to register when a finalise data is happening.
+"
 Class {
 	#name : #GtkFinalizeSignal,
 	#superclass : #GtkSignal,
@@ -5,7 +8,7 @@ Class {
 		'target',
 		'handle'
 	],
-	#category : 'Mars-Gtk-Signal'
+	#category : #'Mars-Gtk-Signal'
 }
 
 { #category : #'instance creation' }
@@ -23,7 +26,6 @@ GtkFinalizeSignal class >> newTarget: aTarget handle: aHandle [
 	^ self new 
 		target: aTarget;
 		handle: aHandle
-	
 ]
 
 { #category : #accessing }
@@ -38,7 +40,10 @@ GtkFinalizeSignal >> handle: anObject [
 
 { #category : #printing }
 GtkFinalizeSignal >> printOneLineContentsOn: stream [
-	stream print: self target; << '('; print: self handle; << ')'
+	
+	stream
+		<< self target name  
+		<< ' ' << self handle asString
 ]
 
 { #category : #accessing }
