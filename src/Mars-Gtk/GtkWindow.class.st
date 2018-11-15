@@ -94,7 +94,7 @@ GtkWindow >> finalize [
 	"It may have changed after all disconnections (some disconnect may trigger a 
 	 destroy, I'm not sure how this works...)"
 	self getHandle ifNotNil: [
-		self objectUnreference.
+		self objectUnref.
 		self class widgetDestroy: self getHandle.
 		self getHandle beNull ]
 ]
@@ -106,7 +106,7 @@ GtkWindow >> initialize [
 	"registering to prevent GC"
 	self application registerWindow: self.
 	"I retain a reference to ensure it is not destroyed until I actually want to doit"
-	self objectReference.
+	self objectRef.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
 	self connectDestroy: [ self windowDestroyed ]
 ]
@@ -183,7 +183,7 @@ GtkWindow >> windowDestroyed [
 	"This process a destroy signal"
 
 	GtkWindowDestroySignal emitWidget: self.
-	self objectUnreference.
+	self objectUnref.
 	"according to documentation: Signals that all holders of a reference to the widget should 
 	 release the reference that they hold. May result in finalization of the widget if all 
 	 references are released.

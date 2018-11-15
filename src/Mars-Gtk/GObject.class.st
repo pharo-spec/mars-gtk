@@ -150,13 +150,14 @@ GObject >> initialize [
 	 (which is incorrect, probably I should patch UFFI)"
 ]
 
-{ #category : #private }
-GObject >> objectReference [
+{ #category : #'private referencing' }
+GObject >> objectRef [
+
 	self ffiCall: #(gpointer g_object_ref (self))
 ]
 
-{ #category : #private }
-GObject >> objectUnreference [
+{ #category : #'private referencing' }
+GObject >> objectUnref [
 
 	self ffiCall: #(gpointer g_object_unref (self))
 ]

@@ -45,17 +45,21 @@ GtkDialogRunContext >> doAfterRun [
 	wasModal ifFalse: [ self dialog beNotModal ].
 	"self dialog 
 		disconnect: 'unmap';
-		disconnect: 'delete-event'"
+		disconnect: 'delete-event'".
+	self dialog objectUnref
 ]
 
 { #category : #running }
 GtkDialogRunContext >> doBeforeRun [
 
+	"Ensure dialog is not collected while running"
+	self dialog objectRef.
+	"A dialog is modal"
 	wasModal ifFalse: [ self dialog beModal ].
+	"Connect interesting signals"
 	self dialog 
 		connectUnmap: [ self resume ];
-		connectDeleteEvent: [ self resume. 1 ].
-		
+		connectDeleteEvent: [ self resume. true ].
 	"in original code this is done here, but we are handling window destruction 
 	 in window code (to properly handle resitration), then we will hook there 
 	 instead here. Other solution would be to stack callbacks on same signal 

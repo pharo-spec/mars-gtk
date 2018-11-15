@@ -1,5 +1,5 @@
 "
-GtkDialog — Create popup windows
+GtkDialogWindow — Create popup windows
 
 https://developer.gnome.org/gtk3/stable/GtkDialog.html
 
@@ -32,6 +32,8 @@ GtkDialogWindow >> addButton: aString do: aBlock [
 	buttonBox packStart: ((GtkButton newLabel: aString)
 		connectClicked: [ 
 			aBlock value.
+			self flag: #TODO. "Is this ok? Maybe I need to give the respond control to the action.
+			In that case, a true/false will do it"
 			self respond ];
 		yourself)
 ]

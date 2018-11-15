@@ -9,7 +9,8 @@ Class {
 	#superclass : #GtkWindow,
 	#instVars : [
 		'buttons',
-		'contentArea'
+		'contentArea',
+		'runContext'
 	],
 	#pools : [
 		'GtkResponseType'
@@ -108,6 +109,19 @@ GtkDialog >> initialize [
 	buttons := OrderedCollection new
 ]
 
+{ #category : #running }
+GtkDialog >> isRunning [
+	
+	^ runContext notNil
+]
+
+{ #category : #running }
+GtkDialog >> respond [ 
+
+	self runContext resume.
+	self hide
+]
+
 { #category : #accessing }
 GtkDialog >> response: response_id [
 
@@ -116,12 +130,19 @@ GtkDialog >> response: response_id [
 
 { #category : #running }
 GtkDialog >> run [
-	| runContext |
 
+	self isRunning ifTrue: [ self error: 'Dialog is already running!' ].
+	
 	self isVisible ifFalse: [ 
 		self contentArea showAll.
-		self show ]. 
-
+		self show ].
 	runContext := GtkDialogRunContext newDialog: self.
-	^ runContext run
+	^ [ runContext run ]
+	ensure: [ runContext := nil ]
+]
+
+{ #category : #running }
+GtkDialog >> runContext [
+	
+	^ runContext
 ]

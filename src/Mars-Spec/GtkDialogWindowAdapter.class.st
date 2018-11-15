@@ -42,5 +42,9 @@ GtkDialogWindowAdapter >> contentWidget: aSpec [
 
 { #category : #accessing }
 GtkDialogWindowAdapter >> open [ 
-	self widgetDo: [ :w | w run ]
+	self widgetDo: [ :w | 
+		self flag: #TODO. "Spec has a very ugly behaviour for dialogs: They open without 
+		'stopping the word' waiting for an asnwer. To simulate this, I execute the dialog 
+		 in a fork, but this is not the best way to proceed, IMO"
+		[ w run ] fork ]
 ]
