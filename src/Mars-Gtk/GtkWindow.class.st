@@ -74,39 +74,24 @@ GtkWindow >> center [
 
 { #category : #geometry }
 GtkWindow >> defaultSize: aPoint [
+
 	self defaultSizeWidth: aPoint x height: aPoint y
 ]
 
 { #category : #private }
 GtkWindow >> defaultSizeWidth: width height: height [
+
 	^ self ffiCall: #(void gtk_window_set_default_size (self, gint width, gint height))
-]
-
-{ #category : #finalization }
-GtkWindow >> finalize [
-	self halt. "This seems like dead code"
-	
-	(self getHandle isNil or: [ self getHandle isNull ]) ifTrue: [ ^ self ].
-
-	GtkFinalizeSignal emitTarget: self handle: self getHandle.
-
-	"self disconnectAll."
-	"It may have changed after all disconnections (some disconnect may trigger a 
-	 destroy, I'm not sure how this works...)"
-	self getHandle ifNotNil: [
-		self objectUnref.
-		self class widgetDestroy: self getHandle.
-		self getHandle beNull ]
 ]
 
 { #category : #initialization }
 GtkWindow >> initialize [
 
 	super initialize.
+	"I retain a reference to ensure it is not destroyed until I actually want to doit."
+	self objectRef.
 	"registering to prevent GC"
 	self application registerWindow: self.
-	"I retain a reference to ensure it is not destroyed until I actually want to doit"
-	self objectRef.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
 	self connectDestroy: [ self windowDestroyed ]
 ]
@@ -125,7 +110,8 @@ GtkWindow >> modal: modal [
 
 { #category : #accessing }
 GtkWindow >> position: aPoint [
-	self flag: #todo.
+
+	self flag: #TODO.
 ]
 
 { #category : #geometry }
@@ -138,9 +124,10 @@ GtkWindow >> resizeWidth: width height: height [
 	^ self ffiCall: #(void gtk_window_resize (self, gint width, gint height))
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkWindow >> setPosition: position [
 	"This is how it will be positioned WHEN showing (not after)"
+
 	self ffiCall: #(void gtk_window_set_position ( self, GtkWindowPosition position ) )
 ]
 
@@ -172,23 +159,28 @@ GtkWindow >> titleBar: aTitleBar [
 	self ffiCall: #(void gtk_window_set_titlebar (self, GtkWidget *aTitleBar))
 ]
 
+{ #category : #accessing }
+GtkWindow >> transientTo: parent [
+	
+	self ffiCall: #(void gtk_window_set_transient_for (self, GtkWindow *parent))
+]
+
 { #category : #private }
 GtkWindow >> windowAddAccelGroup: accel_group [
 
 	^ self ffiCall: #(void gtk_window_add_accel_group (self, GtkAccelGroup *accel_group))
 ]
 
-{ #category : #initialization }
+{ #category : #finalization }
 GtkWindow >> windowDestroyed [
 	"This process a destroy signal"
 
-	GtkWindowDestroySignal emitWidget: self.
-	self objectUnref.
 	"according to documentation: Signals that all holders of a reference to the widget should 
 	 release the reference that they hold. May result in finalization of the widget if all 
 	 references are released.
 	 Seems to mean if I receive the destroy signal, window no longer exist (and I do not need 
 	 to re-trigger destroy on it."	
+	GtkDestroySignal emitWidget: self.
 	handle beNull.
-	self application unregisterWindow: self.	
+	self application unregisterWindow: self
 ]

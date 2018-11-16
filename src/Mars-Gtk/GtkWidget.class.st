@@ -137,7 +137,7 @@ GtkWidget >> connectDeleteEvent: aBlock [
 	
 	self 
 		connect: 'delete-event'
-		signature: #(Boolean (void *widget, void *event, void *user_data))
+		signature: #(int (void *widget, void *event, void *user_data))
 		do: [ :widget :event :user_data | aBlock value ]
 ]
 
@@ -146,7 +146,9 @@ GtkWidget >> connectDestroy: aBlock [
 
 	self 
 		connect: 'destroy' 
-		do: aBlock
+		signature: #(void (void *widget, void *aData))  
+ 		do: [ :widget :aData | aBlock value ]
+
 ]
 
 { #category : #signaling }

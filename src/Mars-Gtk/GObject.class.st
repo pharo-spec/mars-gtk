@@ -53,7 +53,7 @@ GObject class >> resolveType: aType [
 		resolveType: aType
 ]
 
-{ #category : #'private signaling' }
+{ #category : #signaling }
 GObject >> connect: aString do: aBlock [
 	"this is the basic signaling (for IO events), who share signature along them... of course 
 	 this is not correct in all cases (like for example 'draw'), then you need to use the method
@@ -66,43 +66,99 @@ GObject >> connect: aString do: aBlock [
  		do: [ :widget :aData | [ aBlock value ] fork ]
 ]
 
-{ #category : #'private signaling' }
+{ #category : #signaling }
 GObject >> connect: aString signature: signature do: aBlock [
 	"BEWARE when installing callbacks to gtk... you HAVE TO catch and fork any error happening, 
 	 otherwise you will crash your image (event processing happens in VM event loop, so is fragile)"
-	| callback |
+	| callback id |
 
-	callback := FFICallback signature: signature block: aBlock.
+	callback := GSignalCallback signal: aString signature: signature block: aBlock.
 	self registerCallback: callback.
-	self 
+	id := self 
 		signal: aString 
 		connect: callback 
-		data: ExternalAddress null
+		data: callback thunk.
+	callback registerId: id
+]
+
+{ #category : #signaling }
+GObject >> disconnect: aString [
+
+	callbacks isEmptyOrNil ifTrue: [ ^ self ].
+	"Do not use #select:thenDo: because I want explicitly the new collection 
+	 (because disconnect will remove the callback from the list)"
+	(callbacks
+		select: [ :each | each signal = aString ])
+		do: [ :each | self disconnectCallback: each ]
 ]
 
 { #category : #signaling }
 GObject >> disconnectAll [
-	callbacks ifNil: [ ^ self ].
-	callbacks copy do: [ :each | 
-		self assert: (self disconnectByFunc: each) ~= 0.
-		callbacks remove: each ].
-	
+
+	callbacks isEmptyOrNil ifTrue: [ ^ self ].
+	callbacks copy 
+		do: [ :each | self disconnectCallback: each ]
 ]
 
 { #category : #'private signaling' }
-GObject >> disconnectByFunc: func [
+GObject >> disconnectByData: pointerToData [
 
 	^ self 
-		disconnectMatchedMask: G_SIGNAL_MATCH_FUNC 
-		signal: 0 
+		disconnectMatchedMask: G_SIGNAL_MATCH_DATA 
+		signal: 0
 		detail: 0 
 		closure: ExternalAddress null
-		func: func 
+		func:  ExternalAddress null 
+		data: pointerToData
+]
+
+{ #category : #'private signaling' }
+GObject >> disconnectByFunc: pointerToFunc [
+
+	^ self 
+		disconnectMatchedMask: G_SIGNAL_MATCH_DATA 
+		signal: 0
+		detail: 0 
+		closure: ExternalAddress null
+		func:  pointerToFunc
 		data: ExternalAddress null
 ]
 
 { #category : #'private signaling' }
-GObject >> disconnectMatchedMask: mask signal: signal_id detail: detail closure: closure func: func data: aData [
+GObject >> disconnectById: anId [
+
+	^ self 
+		disconnectMatchedMask: G_SIGNAL_MATCH_ID 
+		signal: anId
+		detail: 0 
+		closure: ExternalAddress null
+		func:  ExternalAddress null 
+		data: ExternalAddress null
+]
+
+{ #category : #'private signaling' }
+GObject >> disconnectCallback: aCallback [
+	| numberDiconnected |
+
+	"#disconnectById: does not seems t be working, I will do it by data (and passing the pointer 
+	 to the thunk as data in callback registrtation). 
+	 WARNING: Also I cannot use #disconnectByFunc: as I was doing it before because the thunk id 
+	 not the begining of the callback itself but the entry-point to the callback (in the VM, this 
+	 will be wrapped by another function)"
+	numberDiconnected := self disconnectByData: aCallback thunk.
+	callbacks remove: aCallback.
+	GtkDisconnectCallbackSignal 
+		emitCallback: aCallback 
+		number: numberDiconnected
+]
+
+{ #category : #'private signaling' }
+GObject >> disconnectMatchedMask: mask 
+	signal: signal_id 
+	detail: detail 
+	closure: closure 
+	func: func 
+	data: aData [
 
 	^ self ffiCall: #(guint g_signal_handlers_disconnect_matched (
 		self,
@@ -110,7 +166,7 @@ GObject >> disconnectMatchedMask: mask signal: signal_id detail: detail closure:
 		guint signal_id,
 		GQuark detail,
 		"GClosure *" void *closure,
-		FFICallback func,
+		"FFICallback " void *func,
       gpointer aData))
 ]
 
@@ -180,6 +236,7 @@ GObject >> signal: aString connect: callback data: aData [
 
 { #category : #'private signaling' }
 GObject >> signal: signalName connect: callback data: aData flags: connectFlags [
+	
 	^ self ffiCall: #( gulong g_signal_connect_data ( 
 		self,
 		const gchar *signalName,

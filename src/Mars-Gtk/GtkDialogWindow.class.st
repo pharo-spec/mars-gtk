@@ -20,6 +20,14 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #'instance creation' }
+GtkDialogWindow class >> newParent: aWindow [
+
+	^ (self windowNew: GTK_WINDOW_TOPLEVEL) 
+		initializeParent: aWindow;
+		yourself
+]
+
 { #category : #private }
 GtkDialogWindow class >> windowNew: type [ 
 
@@ -65,6 +73,13 @@ GtkDialogWindow >> initialize [
 		yourself)
 ]
 
+{ #category : #initialization }
+GtkDialogWindow >> initializeParent: aWindow [
+
+	self initialize.
+	aWindow ifNotNil: [ self transientTo: aWindow ]
+]
+
 { #category : #testing }
 GtkDialogWindow >> isRunning [ 
 
@@ -107,7 +122,7 @@ GtkDialogWindow >> runContext [
 	^ runContext
 ]
 
-{ #category : #private }
+{ #category : #finalization }
 GtkDialogWindow >> windowDestroyed [
 
 	super windowDestroyed.

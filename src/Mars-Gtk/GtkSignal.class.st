@@ -10,6 +10,12 @@ Class {
 	#category : #'Mars-Gtk-Signal'
 }
 
+{ #category : #'instance creation' }
+GtkSignal class >> emit [ 
+	
+	^ self new emit
+]
+
 { #category : #accessing }
 GtkSignal class >> filter [
 	

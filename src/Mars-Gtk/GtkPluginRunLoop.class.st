@@ -45,7 +45,14 @@ GtkPluginRunLoop >> primEnableGtk3EventHandler: index [
 
 { #category : #initialization }
 GtkPluginRunLoop >> start [
-	"Do nothing"
+
+	running := true
+]
+
+{ #category : #initialization }
+GtkPluginRunLoop >> stop [
+
+	running := false
 ]
 
 { #category : #'private installing' }

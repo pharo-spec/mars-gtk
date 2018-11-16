@@ -30,6 +30,7 @@ GtkApplication class >> ensureRunning [
 
 { #category : #'class initialization' }
 GtkApplication class >> initialize [
+
 	SessionManager default registerSystemClassNamed: self name
 ]
 
@@ -42,10 +43,13 @@ GtkApplication class >> isRunning [
 
 { #category : #'system startup' }
 GtkApplication class >> shutDown: quitting [
-	"ensure Gtk is stop when shutting down"
+	"ensure Gtk3 is stop when shutting down"
+
 	quitting ifFalse: [ ^ self ].
+	
 	Current ifNil: [ ^ self ].
 	Current stop.
+	Current := nil
 ]
 
 { #category : #private }
@@ -76,8 +80,8 @@ GtkApplication >> isRunning [
 { #category : #registry }
 GtkApplication >> registerWindow: aWindow [
 
-	GtkWindowRegisterSignal emitWidget: aWindow.
-	windowRegistry add: aWindow
+	windowRegistry add: aWindow.
+	GtkWindowRegisterSignal emitWidget: aWindow	
 ]
 
 { #category : #running }
@@ -93,6 +97,7 @@ GtkApplication >> run [
 GtkApplication >> start [ 
 	self isRunning ifTrue: [ self stop ].
 	self initGtk3.
+	GtkApplicationStartSignal emit.
 	runLoop start
 ]
 
