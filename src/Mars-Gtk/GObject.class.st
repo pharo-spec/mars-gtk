@@ -206,10 +206,22 @@ GObject >> initialize [
 	 (which is incorrect, probably I should patch UFFI)"
 ]
 
+{ #category : #testing }
+GObject >> isFloating [ 
+
+	^ self ffiCall: #(gboolean g_object_is_floating (self))
+]
+
 { #category : #'private referencing' }
 GObject >> objectRef [
 
 	self ffiCall: #(gpointer g_object_ref (self))
+]
+
+{ #category : #'private referencing' }
+GObject >> objectRefSink [
+
+	self ffiCall: #(gpointer g_object_ref_sink (self))
 ]
 
 { #category : #'private referencing' }
@@ -245,4 +257,10 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 		0,
 		GConnectFlags connectFlags ) )
 		
+]
+
+{ #category : #'private referencing' }
+GObject >> weakRef: notify [ 
+
+	^ self ffiCall: #(void g_object_weak_ref (self, FFICallback notify, 0))
 ]

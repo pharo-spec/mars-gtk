@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/stable/GtkButtonBox.html
 Class {
 	#name : #GtkButtonBox,
 	#superclass : #GtkBox,
+	#pools : [
+		'GtkButtonBoxStyle'
+	],
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
@@ -40,7 +43,7 @@ GtkButtonBox class >> newVerticalSpacing: spacing [
 { #category : #'brick-layout' }
 GtkButtonBox >> expandToFill [
 
-	^ self layout: GtkButtonBoxStyle GTK_BUTTONBOX_EXPAND
+	^ self layout: GTK_BUTTONBOX_EXPAND
 ]
 
 { #category : #'brick-layout' }
@@ -64,23 +67,23 @@ GtkButtonBox >> placeAtCenter [
 { #category : #'brick-layout' }
 GtkButtonBox >> placeAtEdges [
 
-	^ self layout: GtkButtonBoxStyle GTK_BUTTONBOX_EDGE
+	^ self layout: GTK_BUTTONBOX_EDGE
 ]
 
 { #category : #'brick-layout' }
 GtkButtonBox >> placeAtEnd [
 
-	^ self layout: GtkButtonBoxStyle GTK_BUTTONBOX_END
+	^ self layout: GTK_BUTTONBOX_END
 ]
 
 { #category : #'brick-layout' }
 GtkButtonBox >> placeAtStart [
 
-	^ self layout: GtkButtonBoxStyle GTK_BUTTONBOX_START
+	^ self layout: GTK_BUTTONBOX_START
 ]
 
 { #category : #'brick-layout' }
 GtkButtonBox >> spreadEvenly [
 
-	^ self layout: GtkButtonBoxStyle GTK_BUTTONBOX_SPREAD
+	^ self layout: GTK_BUTTONBOX_SPREAD
 ]

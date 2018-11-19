@@ -12,9 +12,10 @@ Class {
 GtkDialogWindowAdapter >> add: gtkBox toWindow: gtkDialog [
 
 	gtkDialog contentArea packStart: gtkBox.
-	self model buttons
-		keysAndValuesDo: [ :label :action |
-			gtkDialog addButton: label do: action ].
+	self model buttons do: [ :buttonPresenter |
+		gtkDialog 
+			addButton: buttonPresenter label asString
+			do: buttonPresenter action ].
 	gtkDialog defaultResponse: self model buttons size
 ]
 
@@ -32,6 +33,12 @@ GtkDialogWindowAdapter >> buildWidget [
 		autoRelease
 		resize: self model initialExtent;
 		yourself
+]
+
+{ #category : #accessing }
+GtkDialogWindowAdapter >> close [
+
+	self widgetDo: [ :w | w respond ]
 ]
 
 { #category : #private }

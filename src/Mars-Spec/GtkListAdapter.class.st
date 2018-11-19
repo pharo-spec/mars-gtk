@@ -16,12 +16,17 @@ GtkListAdapter >> addModelTo: gtkList [
 	gtkList 
 		headersVisible: false;
 		appendTextColumn;
-		model: self newTreeStore;
-		connectSelectionChanged: [ 
-			"allSelected -> array of paths. 
-			 that's why first (path) and then first (selection)"
-			self flag: #TODO. "This will change in context of multiple selection"
-			self model setIndex: gtkList allSelected first first ]
+		model: self newTreeStore.
+		
+	self model menu ifNotNil: [ :menuPresenter | 
+		gtkList contextMenu: menuPresenter buildWithSpec ].
+
+	gtkList connectSelectionChanged: [ 
+		"allSelected -> array of paths. 
+		 that's why first (path) and then first (selection)"
+		self flag: #TODO. "This will change in context of multiple selection"
+		gtkList allSelected ifNotEmpty: [ :selectedPaths |
+		self model setIndex: selectedPaths first first ] ]
 ]
 
 { #category : #building }

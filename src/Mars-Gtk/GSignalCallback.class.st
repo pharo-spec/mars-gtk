@@ -5,6 +5,9 @@ Class {
 		'signal',
 		'registerId'
 	],
+	#pools : [
+		'GtkTypes'
+	],
 	#category : #'Mars-Gtk-Base'
 }
 

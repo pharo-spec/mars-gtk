@@ -126,6 +126,16 @@ GtkWidget >> canDefault: can_default [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectButtonPressEvent: aBlock [
+
+	^ self 
+		connect: 'button-press-event'
+		signature: #(gboolean (void *widget, void* event, void *aData))  
+ 		do: [ :widget :event :aData |
+			aBlock value: (GdkEventButton fromHandle: event) ]
+]
+
+{ #category : #signaling }
 GtkWidget >> connectClicked: aBlock [
 
 	self connect: 'clicked' do: aBlock
@@ -161,7 +171,7 @@ GtkWidget >> connectKeyPressEvent: aBlock [
 
 	^ self 
 		connect: 'key-press-event'
-		signature: #(int (void *widget, void* event, void *aData))  
+		signature: #(gboolean (void *widget, void* event, void *aData))  
  		do: [ :widget :event :aData | aBlock value: event ]
 ]
 
@@ -176,6 +186,22 @@ GtkWidget >> connectUnmap: aBlock [
 	self 
 		connect: 'unmap' 
 		do: aBlock
+]
+
+{ #category : #accessing }
+GtkWidget >> contextMenu: aGtkMenu [
+	"sets all needed to show a context menu. 
+	 this is an extension to Gtk3, but it will make our lifes easier this side :)"
+	
+	"Keep menu (it will not be GC until winget is destroyed because it will be referenced 
+	 in the signal event"
+	aGtkMenu objectRef; autoRelease.
+	self connectButtonPressEvent: [ :event |
+		event isSecondaryButton ifTrue: [ 
+				aGtkMenu
+					showAll;
+					popupAtPointer: event ].
+			false ]
 ]
 
 { #category : #accessing }

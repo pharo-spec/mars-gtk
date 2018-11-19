@@ -34,6 +34,12 @@ GtkMenu >> isReserveToggleSize [
 ]
 
 { #category : #accessing }
+GtkMenu >> popupAtPointer: trigger_event [
+
+	self ffiCall: #(void gtk_menu_popup_at_pointer (self, const GdkEvent *trigger_event))
+]
+
+{ #category : #accessing }
 GtkMenu >> reserveToggleSize: reserve_toggle_size [
 
 	self ffiCall: #(void gtk_menu_set_reserve_toggle_size (

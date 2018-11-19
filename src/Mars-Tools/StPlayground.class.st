@@ -46,6 +46,15 @@ StPlayground >> initializeWidgets [
 	self focusOrder add: text
 ]
 
+{ #category : #initialization }
+StPlayground >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter 
+		menu: self newMenu;
+		toolBar: self newToolBar;
+		statusBar: (statusBar := self newStatusBar)
+]
+
 { #category : #'private factory' }
 StPlayground >> newBindingsToolBarItem [
 		
@@ -153,15 +162,6 @@ StPlayground >> newUpdateToolBarItem [
 		help: 'Update inspect values';
 		action: [ self inform: 'TODO!' ];
 		yourself
-]
-
-{ #category : #api }
-StPlayground >> prepareWindow: aWindowPresenter [
-
-	aWindowPresenter 
-		menu: self newMenu;
-		toolBar: self newToolBar;
-		statusBar: (statusBar := self newStatusBar)
 ]
 
 { #category : #'accessing ui' }

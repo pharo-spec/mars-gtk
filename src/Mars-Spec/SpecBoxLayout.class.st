@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'direction',
 		'spacing',
+		'borderWidth',
 		'homogeneous'
 	],
 	#category : #'Mars-Spec-Layout-Box'
@@ -107,6 +108,16 @@ SpecBoxLayout >> beVertical [
 	direction := SpecBoxLayoutDirection vertical
 ]
 
+{ #category : #accessing }
+SpecBoxLayout >> borderWidth [
+	^ borderWidth
+]
+
+{ #category : #accessing }
+SpecBoxLayout >> borderWidth: anObject [
+	borderWidth := anObject
+]
+
 { #category : #private }
 SpecBoxLayout >> constraintsClass [
 
@@ -129,13 +140,20 @@ SpecBoxLayout >> homogeneous: aBoolean [
 SpecBoxLayout >> initialize [
 
 	super initialize.
-	self beNotHomogeneous
+	self beNotHomogeneous.
+	self spacing: 0.
+	self borderWidth: 0
 ]
 
 { #category : #testing }
-SpecBoxLayout >> isHomogeneous [ 
+SpecBoxLayout >> isHomogeneous [
 
 	^ homogeneous
+]
+
+{ #category : #accessing }
+SpecBoxLayout >> spacing [
+	^ spacing
 ]
 
 { #category : #accessing }

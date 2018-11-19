@@ -20,6 +20,19 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #defaults }
+GtkDialogWindow class >> defaultBorderWidth [
+
+	^ 5
+]
+
+{ #category : #defaults }
+GtkDialogWindow class >> defaultSpacing [
+	"Default space between buttons"
+
+	^ 5
+]
+
 { #category : #'instance creation' }
 GtkDialogWindow class >> newParent: aWindow [
 
@@ -38,11 +51,7 @@ GtkDialogWindow class >> windowNew: type [
 GtkDialogWindow >> addButton: aString do: aBlock [
 
 	buttonBox packStart: ((GtkButton newLabel: aString)
-		connectClicked: [ 
-			aBlock value.
-			self flag: #TODO. "Is this ok? Maybe I need to give the respond control to the action.
-			In that case, a true/false will do it"
-			self respond ];
+		connectClicked: aBlock;
 		yourself)
 ]
 
@@ -89,7 +98,11 @@ GtkDialogWindow >> isRunning [
 { #category : #'private factory' }
 GtkDialogWindow >> newButtonBox [
 
-	^ GtkButtonBox newHorizontal placeAtEnd
+	^ GtkButtonBox newHorizontal 
+		placeAtEnd;
+		spacing: self class defaultSpacing;
+		borderWidth: self class defaultBorderWidth;
+		yourself
 ]
 
 { #category : #'private factory' }

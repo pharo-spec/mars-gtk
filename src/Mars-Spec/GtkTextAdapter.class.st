@@ -4,6 +4,13 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
+{ #category : #visiting }
+GtkTextAdapter >> accept [
+
+	self widgetDo: [ :w | 
+		self model acceptText: w child text ]
+]
+
 { #category : #building }
 GtkTextAdapter >> addModelTo: gtkTextView [
 	

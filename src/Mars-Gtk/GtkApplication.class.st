@@ -41,15 +41,28 @@ GtkApplication class >> isRunning [
 		and: [ self current isRunning ]
 ]
 
+{ #category : #private }
+GtkApplication class >> reset [
+	<script>
+
+	Current ifNil: [ ^ self ].
+	Current stop.
+	Current := nil
+]
+
 { #category : #'system startup' }
 GtkApplication class >> shutDown: quitting [
 	"ensure Gtk3 is stop when shutting down"
 
 	quitting ifFalse: [ ^ self ].
+	self reset
+]
+
+{ #category : #'system startup' }
+GtkApplication class >> startUp: resuming [
 	
-	Current ifNil: [ ^ self ].
-	Current stop.
-	Current := nil
+	resuming ifFalse: [ ^ self ].
+	self reset
 ]
 
 { #category : #private }

@@ -93,7 +93,10 @@ GtkWindow >> initialize [
 	"registering to prevent GC"
 	self application registerWindow: self.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
-	self connectDestroy: [ self windowDestroyed ]
+	self connectDestroy: [ self windowDestroyed ].
+	"self weakRef: (notifyFinalize := FFICallback 
+		signature: #(void (void *aData, void *where_the_object_was)) 
+		block: [ :aData :object | Stdio stdout << 'Finalizing: ' << object printString << String lf ])"	
 ]
 
 { #category : #testing }
@@ -175,12 +178,12 @@ GtkWindow >> windowAddAccelGroup: accel_group [
 GtkWindow >> windowDestroyed [
 	"This process a destroy signal"
 
+	GtkDestroySignal emitWidget: self.
 	"according to documentation: Signals that all holders of a reference to the widget should 
 	 release the reference that they hold. May result in finalization of the widget if all 
 	 references are released.
 	 Seems to mean if I receive the destroy signal, window no longer exist (and I do not need 
 	 to re-trigger destroy on it."	
-	GtkDestroySignal emitWidget: self.
 	handle beNull.
 	self application unregisterWindow: self
 ]

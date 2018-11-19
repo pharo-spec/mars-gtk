@@ -12,6 +12,7 @@ Class {
 		'gchar',
 		'gdouble',
 		'gint',
+		'gint8',
 		'gpointer',
 		'gsize',
 		'gssize',
@@ -30,6 +31,7 @@ GtkTypes class >> initialize [
 	gboolean := #Boolean.
 	gulong :=  #ulong.
 	gint := #int.
+	gint8 := #int8.
 	guint := #uint.
 	guint32 := #uint32.
 	gdouble := #double.
