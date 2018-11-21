@@ -24,7 +24,7 @@ GtkRevealer class >> newWithChild: aChild [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtkRevealer class >> revealerNew [
 
 	^ self ffiCall: #(GtkRevealer *gtk_revealer_new (void))

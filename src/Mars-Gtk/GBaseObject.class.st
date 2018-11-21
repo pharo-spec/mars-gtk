@@ -19,9 +19,21 @@ GBaseObject class >> ffiLibraryName [
 	^ GtkLibrary
 ]
 
+{ #category : #private }
+GBaseObject class >> isValidHandle: handle [
+
+	^ handle notNil and: [ handle isNull not ]
+]
+
 { #category : #initialization }
 GBaseObject >> initialize [
 	"cancel chain because superclass attempts to setHandle: 
 	 (which is incorrect, probably I should patch UFFI)"
 
+]
+
+{ #category : #testing }
+GBaseObject >> isValidHandle [ 
+
+	^ self class isValidHandle: self getHandle
 ]

@@ -11,21 +11,32 @@ Class {
 
 { #category : #'instance creation' }
 GtkToolButton class >> newForm: aForm label: aString [
-	^ self newIcon: (GtkImage newForm: aForm) label: aString
+
+	^ self 
+		newIcon: (GtkImage newForm: aForm) 
+		label: aString
 ]
 
 { #category : #'instance creation' }
 GtkToolButton class >> newIcon: aWidget label: aString [
-	^ (self toolButtonNew: aWidget label: aString) initialize
+
+	^ (self 
+		toolButtonNew: aWidget 
+		label: aString) 
+		initialize
 ]
 
 { #category : #'instance creation' }
 GtkToolButton class >> newMorph: anImageMorph label: aString [
-	^ self newIcon: (GtkImage newMorph: anImageMorph) label: aString
+
+	^ self 
+		newIcon: (GtkImage newMorph: anImageMorph) 
+		label: aString
 ]
 
 { #category : #private }
-GtkToolButton class >> toolButtonNew: icon_widget label: label [ 
+GtkToolButton class >> toolButtonNew: icon_widget label: label [
+
 	^ self ffiCall: #(GtkToolButton *gtk_tool_button_new (
 		GtkWidget *icon_widget,
 		const gchar *label))

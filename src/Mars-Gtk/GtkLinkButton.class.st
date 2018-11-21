@@ -37,13 +37,16 @@ GtkLinkButton class >> buttonNewWithUri: utf8EncodedUrl withLabel: utf8EncodedSt
 { #category : #'instance creation' }
 GtkLinkButton class >> newWithUri: aString [
 
-	^ self buttonNewWithUri: aString utf8Encoded
+	^ (self buttonNewWithUri: aString utf8Encoded) initialize
 ]
 
 { #category : #'instance creation' }
 GtkLinkButton class >> newWithUri: aString withLabel: aLabel [
 
-	^ self buttonNewWithUri: aString utf8Encoded withLabel: aLabel utf8Encoded
+	^ (self 
+		buttonNewWithUri: aString utf8Encoded 
+		withLabel: aLabel utf8Encoded)
+		initialize
 ]
 
 { #category : #events }

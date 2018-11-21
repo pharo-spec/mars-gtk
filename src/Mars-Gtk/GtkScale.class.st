@@ -29,7 +29,7 @@ GtkScale class >> newHorizontalMin: min max: max step: step [
 	^ self newOrientation: GTK_ORIENTATION_HORIZONTAL min: min max: max step: step
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtkScale class >> newOrientation: orientation min: min max: max step: step [
 
 	^ (self gtkNewOrientation: orientation min: min max: max step: step) initialize

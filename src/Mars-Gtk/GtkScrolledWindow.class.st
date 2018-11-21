@@ -14,7 +14,7 @@ GtkScrolledWindow class >> new [
 	^ self scrolledWindowNew initialize
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtkScrolledWindow class >> scrolledWindowNew [
 	^ self ffiCall: #(GtkScrolledWindow *gtk_scrolled_window_new (0, 0))
 ]

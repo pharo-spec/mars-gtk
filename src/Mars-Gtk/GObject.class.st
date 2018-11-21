@@ -29,12 +29,6 @@ GObject class >> finalizeResourceData: handle [
 ]
 
 { #category : #private }
-GObject class >> isValidHandle: handle [
-
-	^ handle notNil and: [ handle isNull not ]
-]
-
-{ #category : #private }
 GObject class >> objectUnref: handle [
 	
 	^ self ffiCall: #(gpointer g_object_unref (void *handle))
@@ -199,12 +193,11 @@ GObject >> gObjectSet: aName toString: aString [
 GObject >> initialize [
 
 	super initialize.
-	
-	"I retain a reference to ensure it is not destroyed until I actually want to doit."
-	self objectRef.
-	
-	GtkCreateSignal emitWidget: self.
-	GtkDestroySignal installFor: self
+	self isValidHandle ifTrue: [ 
+		"I retain a reference to ensure it is not destroyed until I actually want to doit."
+		self objectRef.
+		GtkCreateSignal emitWidget: self.
+		GtkDestroySignal installFor: self	]
 ]
 
 { #category : #private }

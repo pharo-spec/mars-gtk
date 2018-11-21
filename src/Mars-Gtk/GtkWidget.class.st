@@ -380,11 +380,6 @@ GtkWidget >> sensitive: sensitive [
 ]
 
 { #category : #private }
-GtkWidget >> setHandle: aHandle [
-	handle := aHandle
-]
-
-{ #category : #private }
 GtkWidget >> setTooltipText: text [
 
 	^ self ffiCall: #(void gtk_widget_set_tooltip_text (self, const gchar *text))

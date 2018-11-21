@@ -11,15 +11,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtkTreeViewColumn class >> basicNewColumn [
-
-	^ self ffiCall: #(GtkTreeViewColumn *gtk_tree_view_column_new (void))
-]
-
-{ #category : #'instance creation' }
 GtkTreeViewColumn class >> new [
 
-	^ self basicNewColumn initialize
+	^ self treeViewColumnNew initialize
+]
+
+{ #category : #private }
+GtkTreeViewColumn class >> treeViewColumnNew [
+
+	^ self ffiCall: #(GtkTreeViewColumn *gtk_tree_view_column_new (void))
 ]
 
 { #category : #private }

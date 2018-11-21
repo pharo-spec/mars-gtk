@@ -26,6 +26,7 @@ GtkLabel class >> new [
 
 { #category : #'instance creation' }
 GtkLabel class >> newLabel: aString [
+
 	^ (self labelNew: aString utf8Encoded asString) initialize
 ]
 

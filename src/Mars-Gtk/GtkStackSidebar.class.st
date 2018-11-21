@@ -16,10 +16,10 @@ GtkStackSidebar class >> forStack: aStack [
 	^ self new stack: aStack; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtkStackSidebar class >> gtkNewStackSidebar [
 
-	^ self ffiCall: #(GtkStackSidebar * gtk_stack_sidebar_new (void))
+	^ self ffiCall: #(GtkStackSidebar *gtk_stack_sidebar_new (void))
 ]
 
 { #category : #'instance creation' }

@@ -35,7 +35,13 @@ GtkScaleButton class >> buttonNewWithLabel: utf8EncodedString [
 { #category : #'instance creation' }
 GtkScaleButton class >> newWithIconSize: size min: min max: max step: step icons: icons [
 
-	^ self basicNewWithIconSize: size min: min asFloat max: max asFloat step: step asFloat icons: icons
+	^ (self 
+		basicNewWithIconSize: size 
+		min: min asFloat 
+		max: max asFloat 
+		step: step asFloat 
+		icons: icons)
+		initialize
 ]
 
 { #category : #events }

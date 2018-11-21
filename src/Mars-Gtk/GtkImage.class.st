@@ -15,12 +15,14 @@ Class {
 
 { #category : #private }
 GtkImage class >> imageNewFromIconName: iconNameString size: aSize [
+
 	^ self ffiCall: #(GtkImage *gtk_image_new_from_icon_name (String iconNameString, GtkIconSize aSize))
 ]
 
 { #category : #private }
 GtkImage class >> imageNewFromSurface: surface [
-	^ self ffiCall: #(GtkWidget *gtk_image_new_from_surface (AthensCairoSurface surface))
+
+	^ self ffiCall: #(GtkImage *gtk_image_new_from_surface (AthensCairoSurface surface))
 ]
 
 { #category : #'instance creation' }
@@ -30,42 +32,61 @@ GtkImage class >> newForm: aForm [
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForButtonNamed: aString [
-	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_BUTTON
+
+	^ self newIconNamed: aString size: GTK_ICON_SIZE_BUTTON
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForDialogNamed: aString [
-	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_DIALOG
+
+	^ self newIconNamed: aString size: GTK_ICON_SIZE_DIALOG
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForDragAndDropNamed: aString [
-	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_DND
+
+	^ self 
+		newIconNamed: aString 
+		size: GTK_ICON_SIZE_DND
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForLargeToolbarNamed: aString [
-	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_LARGE_TOOLBAR
+
+	^ self 
+		newIconNamed: aString 
+		size: GTK_ICON_SIZE_LARGE_TOOLBAR
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForMenuNamed: aString [
-	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_MENU
+
+	^ self 
+		newIconNamed: aString 
+		size: GTK_ICON_SIZE_MENU
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForSmallToolbarNamed: aString [
-	^ self imageNewFromIconName: aString size: GtkIconSize GTK_ICON_SIZE_SMALL_TOOLBAR
+
+	^ self 
+		newIconNamed: aString 
+		size: GTK_ICON_SIZE_SMALL_TOOLBAR
 ]
 
-{ #category : #'instance creation' }
-GtkImage class >> newIconNamed: aString withSize: aSize [
-	^ self imageNewFromIconName: aString size: aSize
+{ #category : #private }
+GtkImage class >> newIconNamed: aString size: aSize [
+
+	^ (self 
+		imageNewFromIconName: aString 
+		size: aSize)
+		initialize
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newMorph: anImageMorph [
-	^ self imageNewFromSurface: (self surfaceFor: anImageMorph)
+
+	^ (self imageNewFromSurface: (self surfaceFor: anImageMorph)) initialize
 ]
 
 { #category : #private }

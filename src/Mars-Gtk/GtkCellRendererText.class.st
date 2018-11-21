@@ -10,14 +10,14 @@ Class {
 	#category : #'Mars-Gtk-Widget-CellRenderers'
 }
 
-{ #category : #'instance creation' }
-GtkCellRendererText class >> new [
-	
-	^ self newTextRenderer initialize
+{ #category : #private }
+GtkCellRendererText class >> cellRendererTextNew [
+
+	^ self ffiCall: #(#GtkCellRendererText *gtk_cell_renderer_text_new (void))
 ]
 
 { #category : #'instance creation' }
-GtkCellRendererText class >> newTextRenderer [
-
-	^ self ffiCall: #(#GtkCellRendererText *gtk_cell_renderer_text_new (void))
+GtkCellRendererText class >> new [
+	
+	^ self cellRendererTextNew initialize
 ]

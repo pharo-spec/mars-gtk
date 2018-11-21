@@ -30,6 +30,7 @@ GtkButton class >> new [
 
 { #category : #'instance creation' }
 GtkButton class >> newLabel: aString [
+
 	^ (self buttonNewWithLabel: aString utf8Encoded asString) initialize
 ]
 

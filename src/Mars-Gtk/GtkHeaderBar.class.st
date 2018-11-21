@@ -10,13 +10,15 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtkHeaderBar class >> headerBarNew [
+
 	^ self ffiCall: #(GtkHeaderBar *gtk_header_bar_new (void))
 ]
 
 { #category : #'instance creation' }
 GtkHeaderBar class >> new [
+
 	^ self headerBarNew initialize
 ]
 

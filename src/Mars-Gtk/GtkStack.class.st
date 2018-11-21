@@ -10,7 +10,7 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtkStack class >> gtkStackNew [
 
 	^ self ffiCall: #(GtkStack *gtk_stack_new (void))

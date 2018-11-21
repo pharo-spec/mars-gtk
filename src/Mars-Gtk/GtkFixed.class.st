@@ -10,7 +10,7 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
-{ #category : #primitive }
+{ #category : #private }
 GtkFixed class >> gtkFixedNew [
 
 	^ self ffiCall: #(GtkFixed *gtk_fixed_new ())
@@ -19,7 +19,7 @@ GtkFixed class >> gtkFixedNew [
 { #category : #'instance creation' }
 GtkFixed class >> new [
 
-	^ self gtkFixedNew initialize; yourself
+	^ self gtkFixedNew initialize
 ]
 
 { #category : #accessing }

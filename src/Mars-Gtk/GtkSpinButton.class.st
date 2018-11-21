@@ -30,10 +30,11 @@ GtkSpinButton class >> new [
 { #category : #'instance creation' }
 GtkSpinButton class >> newAdjustment: anAdjustment climbRate: aFloat digits: aNumber [
 
-	^ self 
+	^ (self 
 		spinButtonNewAdjustment: anAdjustment 
 		climbRate: aFloat asFloat
-		digits: aNumber
+		digits: aNumber)
+		initialize
 ]
 
 { #category : #'instance creation' }

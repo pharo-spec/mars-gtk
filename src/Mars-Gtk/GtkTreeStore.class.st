@@ -31,7 +31,10 @@ GtkTreeStore class >> newColumnTypes: columnTypes [
 			platformUnsignedLongAt: 1 + ((index - 1) * longSize) 
 			put: value ].
 		
-	^ (self gtkTreeStoreNewWithNumberOfColums: columnTypes size andTypes: columnTypesExternalArray) initialize
+	^ (self 
+		gtkTreeStoreNewWithNumberOfColums: columnTypes size 
+		andTypes: columnTypesExternalArray) 
+		initialize
 ]
 
 { #category : #'instance creation' }

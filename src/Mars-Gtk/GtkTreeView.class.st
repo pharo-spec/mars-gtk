@@ -15,15 +15,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtkTreeView class >> basicNewTreeView [
-
-	^ self ffiCall: #(#GtkTreeView *gtk_tree_view_new (void))
-]
-
-{ #category : #'instance creation' }
 GtkTreeView class >> new [
 
-	^ self basicNewTreeView initialize
+	^ self treeViewNew initialize
+]
+
+{ #category : #private }
+GtkTreeView class >> treeViewNew [
+
+	^ self ffiCall: #(#GtkTreeView *gtk_tree_view_new (void))
 ]
 
 { #category : #accessing }

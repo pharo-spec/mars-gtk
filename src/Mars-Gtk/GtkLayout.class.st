@@ -10,7 +10,7 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
-{ #category : #primitive }
+{ #category : #private }
 GtkLayout class >> gtkNewLayoutWithHorizontalAdjustment: horizontalAdjustment withVerticalAdjustment: verticalAdjustment [ 
 
 	^ self ffiCall: #(GtkLayout *gtk_layout_new (GtkAdjustment *horizontalAdjustment,
@@ -26,13 +26,13 @@ GtkLayout class >> new [
 ]
 
 { #category : #'instance creation' }
-GtkLayout class >> withHorizontalAdjustment: horizontalAdjustment withVerticalAdjustment: verticalAdjustment [ 
+GtkLayout class >> withHorizontalAdjustment: horizontalAdjustment withVerticalAdjustment: verticalAdjustment [
 
 	^ (self
 		gtkNewLayoutWithHorizontalAdjustment: horizontalAdjustment
 		withVerticalAdjustment: verticalAdjustment)
-			initialize;
-			yourself
+		initialize
+			
 ]
 
 { #category : #accessing }
