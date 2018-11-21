@@ -1,8 +1,9 @@
+"
+I'm a base for all Gtk3 objects (not all Gtk3 references are).
+"
 Class {
 	#name : #GObject,
-	#superclass : #FFIOpaqueObject,
-	#traits : 'TGtkLibrary',
-	#classTraits : 'TGtkLibrary classTrait',
+	#superclass : #GBaseObject,
 	#instVars : [
 		'callbacks'
 	],
@@ -13,16 +14,10 @@ Class {
 		'GtkAccelFlags',
 		'GtkAlign',
 		'GtkStateFlags',
-		'GtkStateType',
-		'GtkTypes'
+		'GtkStateType'
 	],
 	#category : #'Mars-Gtk-Base'
 }
-
-{ #category : #'library path' }
-GObject class >> ffiLibraryName [
-	^ GtkLibrary
-]
 
 { #category : #finalization }
 GObject class >> finalizeResourceData: handle [
@@ -202,14 +197,34 @@ GObject >> gObjectSet: aName toString: aString [
 
 { #category : #initialization }
 GObject >> initialize [
-	"cancel chain because superclass attempts to setHandle: 
-	 (which is incorrect, probably I should patch UFFI)"
+
+	super initialize.
+	
+	"I retain a reference to ensure it is not destroyed until I actually want to doit."
+	self objectRef.
+	
+	GtkCreateSignal emitWidget: self.
+	GtkDestroySignal installFor: self
+]
+
+{ #category : #private }
+GObject >> instanceIsFundamentallyA: fundamental_type [
+
+	self ffiCall: #(gboolean g_type_check_instance_is_fundamentally_a (
+		self,
+		GType fundamental_type))
 ]
 
 { #category : #testing }
 GObject >> isFloating [ 
 
 	^ self ffiCall: #(gboolean g_object_is_floating (self))
+]
+
+{ #category : #testing }
+GObject >> isObject [ 
+
+	^ self instanceIsFundamentallyA: G_TYPE_OBJECT
 ]
 
 { #category : #'private referencing' }

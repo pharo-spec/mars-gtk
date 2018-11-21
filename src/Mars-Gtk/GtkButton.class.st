@@ -82,7 +82,7 @@ GtkButton >> gtkButtonSetLabel: utf8EncodedBytes [
 ]
 
 { #category : #accessing }
-GtkButton >> image [ 
+GtkButton >> image [
 	^ self ffiCall: #(GtkImage *gtk_button_get_image (self))
 ]
 

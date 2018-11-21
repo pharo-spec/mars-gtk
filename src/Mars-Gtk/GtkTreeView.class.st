@@ -136,7 +136,7 @@ GtkTreeView >> model [
 GtkTreeView >> model: aListStore [
 
 	listStore := aListStore.
-	self setModel: aListStore getHandle
+	self setModel: aListStore
 ]
 
 { #category : #accessing }
@@ -169,5 +169,5 @@ GtkTreeView >> setExpanderColumn: aColumn [
 { #category : #private }
 GtkTreeView >> setModel: aListStore [
 
-	^ self ffiCall: #(void gtk_tree_view_set_model (self, void* aListStore))
+	^ self ffiCall: #(void gtk_tree_view_set_model (self, GtkTreeStore *aListStore))
 ]

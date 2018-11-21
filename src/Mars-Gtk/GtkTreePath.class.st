@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkTreePath,
-	#superclass : #GObject,
+	#superclass : #GBaseObject,
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 

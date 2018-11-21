@@ -88,15 +88,10 @@ GtkWindow >> defaultSizeWidth: width height: height [
 GtkWindow >> initialize [
 
 	super initialize.
-	"I retain a reference to ensure it is not destroyed until I actually want to doit."
-	self objectRef.
 	"registering to prevent GC"
 	self application registerWindow: self.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
-	self connectDestroy: [ self windowDestroyed ].
-	"self weakRef: (notifyFinalize := FFICallback 
-		signature: #(void (void *aData, void *where_the_object_was)) 
-		block: [ :aData :object | Stdio stdout << 'Finalizing: ' << object printString << String lf ])"	
+	self connectDestroy: [ self windowDestroyed ]
 ]
 
 { #category : #testing }
@@ -178,7 +173,7 @@ GtkWindow >> windowAddAccelGroup: accel_group [
 GtkWindow >> windowDestroyed [
 	"This process a destroy signal"
 
-	GtkDestroySignal emitWidget: self.
+	GtkWindowDestroySignal emitWidget: self.
 	"according to documentation: Signals that all holders of a reference to the widget should 
 	 release the reference that they hold. May result in finalization of the widget if all 
 	 references are released.

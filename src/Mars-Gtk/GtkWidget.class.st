@@ -67,6 +67,10 @@ GtkWidget >> asListBoxRow [
 { #category : #'external resource management' }
 GtkWidget >> autoRelease [
 
+	(FFIExternalResourceManager uniqueInstance includesObject: self) ifTrue: [ 
+		"already marked for autoRelease"
+		^ self ].
+	
 	GtkRegisterAutoRelease emitWidget: self.
 	^ super autoRelease
 ]
@@ -192,10 +196,8 @@ GtkWidget >> connectUnmap: aBlock [
 GtkWidget >> contextMenu: aGtkMenu [
 	"sets all needed to show a context menu. 
 	 this is an extension to Gtk3, but it will make our lifes easier this side :)"
-	
-	"Keep menu (it will not be GC until winget is destroyed because it will be referenced 
-	 in the signal event"
-	aGtkMenu objectRef; autoRelease.
+
+	aGtkMenu autoRelease.
 	self connectButtonPressEvent: [ :event |
 		event isSecondaryButton ifTrue: [ 
 				aGtkMenu
@@ -291,13 +293,6 @@ GtkWidget >> hExpand: expand [
 GtkWidget >> hide [
 
 	self ffiCall: #(void gtk_widget_hide (self))
-]
-
-{ #category : #initialization }
-GtkWidget >> initialize [ 
-	
-	super initialize.
-	GtkCreateSignal emitWidget: self.
 ]
 
 { #category : #testing }

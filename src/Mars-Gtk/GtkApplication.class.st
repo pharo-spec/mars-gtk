@@ -47,7 +47,9 @@ GtkApplication class >> reset [
 
 	Current ifNil: [ ^ self ].
 	Current stop.
-	Current := nil
+	Current := nil.
+	self flag: #TODO. "I'm placing this here, not sure is the right place but for now it works"
+	GtkDestroySignal reset.
 ]
 
 { #category : #'system startup' }

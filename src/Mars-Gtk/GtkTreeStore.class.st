@@ -72,7 +72,8 @@ GtkTreeStore >> gtkTreeStoreAppend: anIterator withParent: aParentIterator [
 
 { #category : #initialization }
 GtkTreeStore >> initialize [ 
+
 	super initialize.
-	"Stores needs to be unreferenced after set"
-	self autoRelease 
+	"Stores need to be unreferenced after set"
+	self autoRelease
 ]
