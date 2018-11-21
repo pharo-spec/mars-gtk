@@ -1,3 +1,8 @@
+"
+GtkCssProvider — CSS-like styling for widgets
+
+https://developer.gnome.org/gtk3/stable/GtkCssProvider.html
+"
 Class {
 	#name : #GtkCssProvider,
 	#superclass : #FFIExternalObject,
@@ -6,7 +11,7 @@ Class {
 	#pools : [
 		'GtkTypes'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #private }

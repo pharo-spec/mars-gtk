@@ -27,19 +27,24 @@ GtkImage class >> imageNewFromSurface: surface [
 
 { #category : #'instance creation' }
 GtkImage class >> newForm: aForm [
+
 	^ self newMorph: aForm asMorph
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForButtonNamed: aString [
 
-	^ self newIconNamed: aString size: GTK_ICON_SIZE_BUTTON
+	^ self 
+		newIconNamed: aString 
+		size: GTK_ICON_SIZE_BUTTON
 ]
 
 { #category : #'instance creation' }
 GtkImage class >> newIconForDialogNamed: aString [
 
-	^ self newIconNamed: aString size: GTK_ICON_SIZE_DIALOG
+	^ self 
+		newIconNamed: aString 
+		size: GTK_ICON_SIZE_DIALOG
 ]
 
 { #category : #'instance creation' }
