@@ -133,7 +133,7 @@ GtkHeaderBar >> subtitle [
 { #category : #accessing }
 GtkHeaderBar >> subtitle: aString [
 
-	^ self basicSubtitle: aString utf8Encoded
+	^ self basicSubtitle: aString utf8Encoded asString
 ]
 
 { #category : #accessing }
@@ -145,5 +145,5 @@ GtkHeaderBar >> title [
 { #category : #accessing }
 GtkHeaderBar >> title: aString [
 
-	^ self basicTitle: aString utf8Encoded
+	^ self basicTitle: aString utf8Encoded asString
 ]

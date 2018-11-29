@@ -7,6 +7,9 @@ Class {
 	#classVars : [
 		'FilteredSignals'
 	],
+	#classInstVars : [
+		'tracingClasses'
+	],
 	#category : #'Mars-Gtk-Signal'
 }
 
@@ -22,6 +25,13 @@ GtkSignal class >> filter [
 	FilteredSignals add: self
 ]
 
+{ #category : #accessing }
+GtkSignal class >> filterExcept: classesList [
+	
+	self filter.
+	tracingClasses := classesList 
+]
+
 { #category : #'class initialization' }
 GtkSignal class >> initialize [ 
 
@@ -34,10 +44,29 @@ GtkSignal class >> isFiltered [
 	^ FilteredSignals includes: self
 ]
 
+{ #category : #testing }
+GtkSignal class >> isTracing: aWidget [
+
+	^ self tracingClasses includes: aWidget class
+]
+
+{ #category : #private }
+GtkSignal class >> resetTrace [
+
+	tracingClasses := nil
+]
+
 { #category : #accessing }
 GtkSignal class >> resume [
 	
-	FilteredSignals remove: self ifAbsent: [ ]
+	FilteredSignals remove: self ifAbsent: [ ].
+	self resetTrace
+]
+
+{ #category : #private }
+GtkSignal class >> tracingClasses [
+
+	^ tracingClasses ifNil: [ #() ]
 ]
 
 { #category : #emitting }
@@ -51,4 +80,10 @@ GtkSignal >> emit [
 GtkSignal >> isFiltered [
 
 	^ self class isFiltered
+]
+
+{ #category : #testing }
+GtkSignal >> isTracing: anObject [ 
+
+	^ self class isTracing: anObject
 ]

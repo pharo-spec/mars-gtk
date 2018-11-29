@@ -21,9 +21,10 @@ GtkWidget class >> ffiLibraryName [
 { #category : #finalization }
 GtkWidget class >> finalizeResourceData: aHandle [
 
-	(self isValidHandle: aHandle) ifFalse: [ ^ self ].
+	super finalizeResourceData: aHandle
+	"(self isValidHandle: aHandle) ifFalse: [ ^ self ].
 	GtkFinalizeSignal emitTarget: self handle: aHandle.
-	self widgetDestroy: aHandle
+	self widgetDestroy: aHandle"
 ]
 
 { #category : #'instance creation' }
@@ -414,7 +415,7 @@ GtkWidget >> takeKeyboardFocus [
 { #category : #accessing }
 GtkWidget >> tooltipText: aString [
 
-	self setTooltipText: aString utf8Encoded 
+	self setTooltipText: aString utf8Encoded asString 
 ]
 
 { #category : #accessing }

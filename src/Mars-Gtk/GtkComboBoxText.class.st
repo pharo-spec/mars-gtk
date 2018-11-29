@@ -48,7 +48,9 @@ GtkComboBoxText >> append: text [
 { #category : #accessing }
 GtkComboBoxText >> append: text id: id [
 
-	^ self basicAppend: text utf8Encoded asString id: id utf8Encoded asString
+	^ self 
+		basicAppend: text utf8Encoded asString 
+		id: id utf8Encoded asString
 ]
 
 { #category : #private }

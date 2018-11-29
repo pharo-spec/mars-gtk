@@ -116,7 +116,7 @@ GtkButton >> label [
 { #category : #accessing }
 GtkButton >> label: aString [
 
-	^ self gtkButtonSetLabel: aString utf8Encoded
+	^ self gtkButtonSetLabel: aString utf8Encoded asString
 ]
 
 { #category : #accessing }

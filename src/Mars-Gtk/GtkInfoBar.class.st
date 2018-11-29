@@ -34,7 +34,9 @@ GtkInfoBar >> addActionWidget: child withId: responseId [
 { #category : #adding }
 GtkInfoBar >> addButtonWithLabel: label withId: responseId [
 
-	^ self basicAddButtonWithLabel: label utf8Encoded asString withId: responseId
+	^ self 
+		basicAddButtonWithLabel: label utf8Encoded asString 
+		withId: responseId
 ]
 
 { #category : #private }

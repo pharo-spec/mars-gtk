@@ -12,12 +12,20 @@ Class {
 
 { #category : #'instance creation' }
 GtkWidgetSignal class >> emitWidget: aWidget [
+
 	^ (self newWidget: aWidget) emit
 ]
 
 { #category : #'instance creation' }
 GtkWidgetSignal class >> newWidget: aWidget [
 	^ self new widget: aWidget
+]
+
+{ #category : #testing }
+GtkWidgetSignal >> isFiltered [
+
+	^ super isFiltered 
+		and: [ (self isTracing: self widget) not ]
 ]
 
 { #category : #printing }

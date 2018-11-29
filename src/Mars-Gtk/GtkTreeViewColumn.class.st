@@ -66,5 +66,5 @@ GtkTreeViewColumn >> title [
 { #category : #accessing }
 GtkTreeViewColumn >> title: aString [
 
-	self gtkTreeViewColumnSetTitle: aString utf8Encoded
+	self gtkTreeViewColumnSetTitle: aString utf8Encoded asString
 ]

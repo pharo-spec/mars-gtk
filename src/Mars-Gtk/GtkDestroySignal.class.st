@@ -13,7 +13,7 @@ Class {
 { #category : #'as yet unclassified' }
 GtkDestroySignal class >> installFor: aWidget [
 	
-	self isFiltered ifTrue: [ ^ self ].
+	(self isFiltered and: [ (self isTracing: aWidget) not ]) ifTrue: [ ^ self ].
 	aWidget weakRef: self notifyCallback
 ]
 

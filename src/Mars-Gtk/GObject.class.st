@@ -24,6 +24,8 @@ GObject class >> finalizeResourceData: handle [
 	"when marking for autoRelease, g-objects needs to be freed in a particular way."
 
 	(self isValidHandle: handle) ifFalse: [ ^ self ].
+
+	GtkFinalizeSignal emitTarget: self handle: handle.
 	self objectUnref: handle.
 	handle beNull
 ]
@@ -196,6 +198,7 @@ GObject >> initialize [
 	self isValidHandle ifTrue: [ 
 		"I retain a reference to ensure it is not destroyed until I actually want to doit."
 		self objectRef.
+		"emit signals to debug"
 		GtkCreateSignal emitWidget: self.
 		GtkDestroySignal installFor: self	]
 ]

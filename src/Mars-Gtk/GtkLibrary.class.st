@@ -6,7 +6,7 @@ Class {
 
 { #category : #'accessing platform' }
 GtkLibrary >> macModuleName [ 
-	^ '/usr/local/lib/libgtk-3.dylib'
+	^ '/Users/esteban/gtk/inst/lib/libgtk-3.dylib'
 ]
 
 { #category : #'accessing platform' }

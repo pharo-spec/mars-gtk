@@ -6,7 +6,10 @@ https://developer.gnome.org/gtk3/stable/GtkTextView.html
 Class {
 	#name : #GtkTextView,
 	#superclass : #GtkWidget,
-	#category : 'Mars-Gtk-Widget'
+	#instVars : [
+		'textBuffer'
+	],
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #'instance creation' }
@@ -22,6 +25,12 @@ GtkTextView class >> textViewNew [
 { #category : #accessing }
 GtkTextView >> editable: setting [
 	self ffiCall: #(void gtk_text_view_set_editable (self, gboolean setting))
+]
+
+{ #category : #private }
+GtkTextView >> getBuffer [
+
+	self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
 ]
 
 { #category : #testing }
@@ -45,15 +54,18 @@ GtkTextView >> monospace: aBoolean [
 
 { #category : #accessing }
 GtkTextView >> text [
+
 	^ self textBuffer text
 ]
 
 { #category : #accessing }
 GtkTextView >> text: aString [
+
 	self textBuffer text: aString utf8Encoded asString
 ]
 
 { #category : #accessing }
 GtkTextView >> textBuffer [
-	self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
+
+	^ textBuffer ifNil: [ textBuffer := self getBuffer ]
 ]

@@ -37,15 +37,15 @@ GtkLinkButton class >> buttonNewWithUri: utf8EncodedUrl withLabel: utf8EncodedSt
 { #category : #'instance creation' }
 GtkLinkButton class >> newWithUri: aString [
 
-	^ (self buttonNewWithUri: aString utf8Encoded) initialize
+	^ (self buttonNewWithUri: aString utf8Encoded asString) initialize
 ]
 
 { #category : #'instance creation' }
 GtkLinkButton class >> newWithUri: aString withLabel: aLabel [
 
 	^ (self 
-		buttonNewWithUri: aString utf8Encoded 
-		withLabel: aLabel utf8Encoded)
+		buttonNewWithUri: aString utf8Encoded asString
+		withLabel: aLabel utf8Encoded asString)
 		initialize
 ]
 
@@ -82,7 +82,7 @@ GtkLinkButton >> uri [
 { #category : #accessing }
 GtkLinkButton >> uri: aString [
 
-	^ self gtkLinkButtonSetUri: aString utf8Encoded
+	^ self gtkLinkButtonSetUri: aString utf8Encoded asString
 ]
 
 { #category : #accessing }

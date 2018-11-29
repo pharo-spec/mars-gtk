@@ -5,7 +5,7 @@ Class {
 		'text',
 		'statusBar'
 	],
-	#category : #'Mars-Tools'
+	#category : #'Mars-Tools-Playground'
 }
 
 { #category : #accessing }
@@ -50,42 +50,11 @@ StPlayground >> initializeWidgets [
 StPlayground >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter 
-		menu: self newMenu;
 		toolBar: self newToolBar;
-		statusBar: (statusBar := self newStatusBar)
-]
-
-{ #category : #'private factory' }
-StPlayground >> newBindingsToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Bindings';
-		icon: (self iconNamed: #glamorousTable);
-		help: 'Edit bindings list';
-		action: [ self inform: 'TODO!' ];
-		yourself
-]
-
-{ #category : #'private factory' }
-StPlayground >> newGoToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Do it';
-		icon: (self iconNamed: #glamorousGo);
-		help: 'Do it all and inspect';
-		action: [ statusBar pushMessage: 'TODO do it...' ];
-		yourself
-]
-
-{ #category : #'private factory' }
-StPlayground >> newHelpToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Help';
-		icon: (self iconNamed: #glamorousHelp);
-		help: 'Open help browser';
-		action: [ self inform: 'TODO!' ];
-		yourself
+		statusBar: (statusBar := self newStatusBar).
+	
+	self flag: #TODO. "This just has sense if this is the 'main' window"
+	"aWindowPresenter menu: self newMenu"
 ]
 
 { #category : #'private factory' }
@@ -101,39 +70,6 @@ StPlayground >> newMenu [
 ]
 
 { #category : #'private factory' }
-StPlayground >> newPagesToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Pages';
-		icon: (self iconNamed: #glamorousMore);
-		help: 'Load a saved page';
-		action: [ self inform: 'TODO!' ];
-		yourself
-]
-
-{ #category : #'private factory' }
-StPlayground >> newRemotePublishToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Publish';
-		icon: (self iconNamed: #glamorousSaveToUrl);
-		help: 'Publish contents to the cloud';
-		action: [ self inform: 'TODO!' ];
-		yourself
-]
-
-{ #category : #'private factory' }
-StPlayground >> newSettingsToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Settings';
-		icon: (self iconNamed: #smallCogInitialState);
-		help: 'Open settings browser';
-		action: [ self inform: 'TODO!' ];
-		yourself
-]
-
-{ #category : #'private factory' }
 StPlayground >> newStatusBar [ 
 
 	^ StatusBarPresenter new
@@ -142,26 +78,10 @@ StPlayground >> newStatusBar [
 { #category : #'private factory' }
 StPlayground >> newToolBar [
 
-	^ ToolBarPresenter new 
-		addItem: self newUpdateToolBarItem position: ToolBarItemPosition right;
-		addItem: self newHelpToolBarItem  position: ToolBarItemPosition right;
-		addItem: self newSettingsToolBarItem position: ToolBarItemPosition right;
-		addItem: self newGoToolBarItem;
-		addItem: self newRemotePublishToolBarItem;
-		addItem: self newBindingsToolBarItem;
-		addItem: self newPagesToolBarItem;
-		yourself
-]
-
-{ #category : #'private factory' }
-StPlayground >> newUpdateToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Update';
-		icon: (self iconNamed: #glamorousRefresh);
-		help: 'Update inspect values';
-		action: [ self inform: 'TODO!' ];
-		yourself
+	^ LtToolBarBuilder new 
+		owner: self;
+		matching: [ :each | each hasGroup: StPlaygroundCommandGroup uniqueInstance ];
+		build
 ]
 
 { #category : #'accessing ui' }

@@ -97,6 +97,12 @@ GtkTreeView >> enableTreeLines: enabled [
 ]
 
 { #category : #private }
+GtkTreeView >> getModel [
+
+	^ self ffiCall: #(GtkListStore gtk_tree_view_get_model (self))
+]
+
+{ #category : #private }
 GtkTreeView >> getSelection [ 
 
 	^ self ffiCall: #(GtkTreeSelection *gtk_tree_view_get_selection (self))
@@ -129,13 +135,15 @@ GtkTreeView >> isHeadersVisible [
 { #category : #accessing }
 GtkTreeView >> model [
 
-	^ self ffiCall: #(GtkListStore gtk_tree_view_get_model (self))
+	^ listStore ifNil: [ listStore := self getModel objectRef ]
 ]
 
 { #category : #accessing }
 GtkTreeView >> model: aListStore [
 
+	"listStore ifNotNil: [ listStore objectUnref ]."
 	listStore := aListStore.
+	"listStore objectRef."
 	self setModel: aListStore
 ]
 
