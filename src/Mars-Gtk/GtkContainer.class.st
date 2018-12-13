@@ -14,18 +14,22 @@ Class {
 
 { #category : #accessing }
 GtkContainer >> add: widget [
+
 	self keepWidget: widget.
 	self basicAdd: widget.
+
 	^ widget
 ]
 
 { #category : #accessing }
 GtkContainer >> addAll: aCollection [
+
 	aCollection do: [ :each | self add: each ]
 ]
 
 { #category : #private }
 GtkContainer >> basicAdd: widget [
+
 	self ffiCall: #(void gtk_container_add (self, GtkWidget *widget))
 
 ]

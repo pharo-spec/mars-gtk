@@ -54,6 +54,7 @@ GtkActionBar >> packEnd: child [
 
 	self keepWidget: child.
 	self basicPackEnd: child.
+
 	^ child
 ]
 
@@ -62,5 +63,6 @@ GtkActionBar >> packStart: child [
 
 	self keepWidget: child.
 	self basicPackStart: child.
+
 	^ child
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #GSignalCallback,
-	#superclass : #FFICallback,
+	#superclass : #GCallback,
 	#instVars : [
 		'signal',
 		'registerId'
@@ -19,6 +19,13 @@ GSignalCallback class >> signal: aString signature: aSignature block: aBlock [
 		block: aBlock)
 		signal: aString;
 		yourself
+]
+
+{ #category : #printing }
+GSignalCallback >> printOn: stream [ 
+
+	super printOn: stream.
+	stream << '(' << self signal << ')'
 ]
 
 { #category : #accessing }

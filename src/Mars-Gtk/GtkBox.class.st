@@ -49,7 +49,7 @@ GtkBox >> add: child [
 	"Add is not a valid message for boxes (they use pack* family)"
 	
 	"self shouldNotImplement"
-	self packStart: child
+	^ self packStart: child
 ]
 
 { #category : #private }
@@ -83,19 +83,23 @@ GtkBox >> isHomogeneous [
 ]
 
 { #category : #accessing }
-GtkBox >> packEnd: child [ 
+GtkBox >> packEnd: child [
+
 	^ self packEnd: child expand: true fill: true padding: 0 
 ]
 
 { #category : #accessing }
 GtkBox >> packEnd: child expand: expand fill: fill padding: padding [
+
 	self keepWidget: child.
 	self basicPackEnd: child expand: expand fill: fill padding: padding.
+
 	^ child
 ]
 
 { #category : #accessing }
 GtkBox >> packEnd: child padding: padding [
+
 	^ self packEnd: child expand: true fill: true padding: padding
 ]
 
@@ -110,11 +114,13 @@ GtkBox >> packStart: child expand: expand fill: fill padding: padding [
 
 	self keepWidget: child.
 	self basicPackStart: child expand: expand fill: fill padding: padding.
+
 	^ child
 ]
 
 { #category : #accessing }
 GtkBox >> packStart: child padding: padding [
+
 	^ self packStart: child expand: true fill: true padding: padding
 ]
 

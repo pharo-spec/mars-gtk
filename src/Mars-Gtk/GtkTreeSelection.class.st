@@ -14,7 +14,7 @@ GtkTreeSelection >> allSelected [
 	| function paths |
 	
 	paths := OrderedCollection new.
-	function := FFICallback 
+	function := GCallback 
 		signature: #(void (void *model, void *path, void *iter, void *data)) 
 		block: [ :model :path :iter :data |
 			paths add: (GtkTreePath fromHandle: path) toArray ].
@@ -53,6 +53,6 @@ GtkTreeSelection >> selectedForEach: func data: data [
 
 	self ffiCall: #(void gtk_tree_selection_selected_foreach (
 		self,
-		FFICallback func,
+		GCallback func,
 		gpointer data))
 ]

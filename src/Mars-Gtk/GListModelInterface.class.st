@@ -21,11 +21,11 @@ GListModelInterface class >> fieldsDesc [
 	^ #(
 	GTypeInterface 	g_iface;
   	"GType     (* get_item_type)   (GListModel *list);"
-	FFICallback		get_item_type;
+	#GCallback		get_item_type;
   	"guint     (* get_n_items)     (GListModel *list);"
-	FFICallback 		get_n_items;
+	#GCallback 		get_n_items;
   	"gpointer  (* get_item)        (GListModel *list, guint position);"
-	FFICallback		get_item;
+	#GCallback		get_item;
 	)
 ]
 
@@ -49,7 +49,7 @@ GListModelInterface >> g_iface: anObject [
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_item [
 	"This method was automatically generated"
-	^FFICallback forAddress: ((handle pointerAt: OFFSET_GET_ITEM) asInteger)
+	^GCallback forAddress: ((handle pointerAt: OFFSET_GET_ITEM) asInteger)
 ]
 
 { #category : #'accessing structure variables' }
@@ -66,7 +66,7 @@ GListModelInterface >> get_item: aCallback [
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_item_type [
 	"This method was automatically generated"
-	^FFICallback forAddress: ((handle pointerAt: OFFSET_GET_ITEM_TYPE) asInteger)
+	^GCallback forAddress: ((handle pointerAt: OFFSET_GET_ITEM_TYPE) asInteger)
 ]
 
 { #category : #'accessing structure variables' }
@@ -83,7 +83,7 @@ GListModelInterface >> get_item_type: aCallback [
 { #category : #'accessing structure variables' }
 GListModelInterface >> get_n_items [
 	"This method was automatically generated"
-	^FFICallback forAddress: ((handle pointerAt: OFFSET_GET_N_ITEMS) asInteger)
+	^GCallback forAddress: ((handle pointerAt: OFFSET_GET_N_ITEMS) asInteger)
 ]
 
 { #category : #'accessing structure variables' }

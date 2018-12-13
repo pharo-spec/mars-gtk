@@ -54,7 +54,7 @@ GObject >> connect: aString do: aBlock [
 	^ self 
 		connect: aString 
 		signature: #(void (void *widget, void *aData))  
- 		do: [ :widget :aData | [ aBlock value ] fork ]
+ 		do: [ :widget :aData | "[ "aBlock value" ] fork" ]
 ]
 
 { #category : #signaling }
@@ -188,7 +188,17 @@ GObject >> gObjectSet: aName toBoolean: aBoolean [
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toString: aString [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, gchar *aString, 0) )	
+	self ffiCall: #(void g_object_set ( self, const gchar *aName, gchar *aString, 0) )	
+]
+
+{ #category : #'GT-Inspector-Extension' }
+GObject >> gtInspectorCallbacksIn: composite [
+	<gtInspectorPresentationOrder: 90>  
+
+	composite fastList
+		title: 'Callbacks';
+		display: [ callbacks asArray ];
+		when: [ callbacks isEmptyOrNil not ]
 ]
 
 { #category : #initialization }
@@ -243,6 +253,7 @@ GObject >> objectUnref [
 
 { #category : #private }
 GObject >> registerCallback: aCallback [
+
 	callbacks ifNil: [ callbacks := Set new ].
 	callbacks add: aCallback
 ]
@@ -273,5 +284,5 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 { #category : #'private referencing' }
 GObject >> weakRef: notify [ 
 
-	^ self ffiCall: #(void g_object_weak_ref (self, FFICallback notify, 0))
+	^ self ffiCall: #(void g_object_weak_ref (self, #GCallback notify, 0))
 ]

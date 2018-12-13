@@ -24,6 +24,7 @@ GtkBin >> add: aWidget [
 
 	self children ifNotEmpty: [ 
 		GtkError signal: 'Bin container already contains a widget!' ].
+
 	^ super add: aWidget
 ]
 

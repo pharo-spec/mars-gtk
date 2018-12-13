@@ -54,12 +54,6 @@ GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
 		
 ]
 
-{ #category : #accessing }
-GtkWidget >> application [
-
-	^ GtkApplication current
-]
-
 { #category : #converting }
 GtkWidget >> asListBoxRow [
 	^ GtkListBoxRow newWidget: self
@@ -68,10 +62,6 @@ GtkWidget >> asListBoxRow [
 { #category : #'external resource management' }
 GtkWidget >> autoRelease [
 
-	(FFIExternalResourceManager uniqueInstance includesObject: self) ifTrue: [ 
-		"already marked for autoRelease"
-		^ self ].
-	
 	GtkRegisterAutoRelease emitWidget: self.
 	^ super autoRelease
 ]
@@ -249,11 +239,6 @@ GtkWidget >> ffiLibraryName [
 ]
 
 { #category : #private }
-GtkWidget >> getHandle [
-	^ handle
-]
-
-{ #category : #private }
 GtkWidget >> getTopLevel [
 	"I will get the window from GtkApplication (to keep identity), so I answer just the 
 	 ExternalAddress, skiping any other object creation."
@@ -272,6 +257,16 @@ GtkWidget >> grabDefault [
 { #category : #accessing }
 GtkWidget >> grabFocus [
 	self ffiCall: #(void gtk_widget_grab_focus (self))
+]
+
+{ #category : #'GT-Inspector-Extension' }
+GtkWidget >> gtInspectorDeferActionsIn: composite [
+	<gtInspectorPresentationOrder: 100>  
+
+	composite fastList
+		title: 'Deferred actions';
+		display: [ deferActions asArray ];
+		when: [ deferActions isEmptyOrNil not ]
 ]
 
 { #category : #accessing }
@@ -388,12 +383,14 @@ GtkWidget >> setTooltipText: text [
 
 { #category : #showing }
 GtkWidget >> show [
-	^ self ffiCall: #(void gtk_widget_show (self))
+
+	^ self ffiCall: #(void gtk_widget_show (self)) options: #(optMainQueue)
 ]
 
 { #category : #showing }
 GtkWidget >> showAll [
-	^ self ffiCall: #(void gtk_widget_show_all (self))
+
+	^ self ffiCall: #(void gtk_widget_show_all (self)) options: #(optMainQueue)
 ]
 
 { #category : #geometry }

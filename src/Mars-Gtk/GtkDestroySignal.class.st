@@ -21,7 +21,7 @@ GtkDestroySignal class >> installFor: aWidget [
 GtkDestroySignal class >> notifyCallback [
 
 	^ NotifyCallback ifNil: [ 
-		NotifyCallback := FFICallback 
+		NotifyCallback := GCallback 
 			signature: #(void (void *data, void *object)) 
 			block: [ :data :object | 
 				self new 

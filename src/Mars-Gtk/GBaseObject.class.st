@@ -25,6 +25,18 @@ GBaseObject class >> isValidHandle: handle [
 	^ handle notNil and: [ handle isNull not ]
 ]
 
+{ #category : #accessing }
+GBaseObject >> application [
+
+	^ GtkApplication current
+]
+
+{ #category : #'external resource management' }
+GBaseObject >> autoRelease [
+
+	self application resourceManager addResource: self
+]
+
 { #category : #initialization }
 GBaseObject >> initialize [
 	"cancel chain because superclass attempts to setHandle: 

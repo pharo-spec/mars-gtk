@@ -5,7 +5,6 @@ Class {
 	#name : #GtkTypes,
 	#superclass : #SharedPool,
 	#classVars : [
-		'GCallback',
 		'GQuark',
 		'GType',
 		'gboolean',
@@ -35,7 +34,6 @@ GtkTypes class >> initialize [
 	guint := #uint.
 	guint32 := #uint32.
 	gdouble := #double.
-	GCallback := #FFICallback.
 	GQuark := #guint32.
 	GType := #gsize.
 	gssize := #long.

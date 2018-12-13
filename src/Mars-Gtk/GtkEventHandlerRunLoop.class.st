@@ -14,7 +14,7 @@ GtkEventHandlerRunLoop >> getEventsHandler [
 
 { #category : #'private installing' }
 GtkEventHandlerRunLoop >> installRunLoop [
-	runLoop := FFICallback 
+	runLoop := GCallback 
 		signature: #(void (void)) 
 		block: [self processEvents].
 	self setEventsHandler: runLoop
@@ -27,7 +27,7 @@ GtkEventHandlerRunLoop >> setDefaultEventsHandler [
 
 { #category : #'private handler' }
 GtkEventHandlerRunLoop >> setEventsHandler: aHandler [
-	^ self ffiCall: #(void setEventsHandler(FFICallback aHandler)) module: 'EventsHandlerPlugin'
+	^ self ffiCall: #(void setEventsHandler(#GCallback aHandler)) module: 'EventsHandlerPlugin'
 ]
 
 { #category : #'private installing' }

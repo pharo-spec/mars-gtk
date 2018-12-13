@@ -29,21 +29,21 @@ GListModel >> createInterface [
 
 { #category : #private }
 GListModel >> getItemFn [
-	^ FFICallback 
+	^ GCallback 
 		signature: #(void *(void *list, uint post)) 
 		block: [ :list :pos | self itemAt: pos ]
 ]
 
 { #category : #private }
 GListModel >> getItemTypeFn [
-	^ FFICallback 
+	^ GCallback 
 		signature: #(ulong (void *list)) 
 		block: [ :list | self itemType ]
 ]
 
 { #category : #private }
 GListModel >> getNumberOfItemsFn [
-	^ FFICallback 
+	^ GCallback 
 		signature: #(uint (void *list)) 
 		block: [ :list | self numberOfItems ]
 ]

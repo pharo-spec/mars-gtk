@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TGtkLibrary classTrait',
 	#instVars : [
 		'runLoop',
-		'windowRegistry'
+		'windowRegistry',
+		'resourceManager'
 	],
 	#classVars : [
 		'Current'
@@ -69,7 +70,10 @@ GtkApplication class >> startUp: resuming [
 
 { #category : #private }
 GtkApplication >> initArgC: argc argV: argv [
-	^ self ffiCall: #( void gtk_init ( ulong argc, ulong argv ) )
+
+	^ self 
+		ffiCall: #( void gtk_init ( ulong argc, ulong argv ) )
+		options: #( optMainQueue )
 ]
 
 { #category : #private }
@@ -97,6 +101,12 @@ GtkApplication >> registerWindow: aWindow [
 
 	windowRegistry add: aWindow.
 	GtkWindowRegisterSignal emitWidget: aWindow	
+]
+
+{ #category : #accessing }
+GtkApplication >> resourceManager [
+
+	^ GtkExternalResourceManager uniqueInstance
 ]
 
 { #category : #running }
