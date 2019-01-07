@@ -20,10 +20,7 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 ]
 
 { #category : #factory }
-GtkButtonAdapter >> buildWidget [
-	| gtkButton |
+GtkButtonAdapter >> newWidget [ 
 	
-	gtkButton := GtkButton newLabel: self model label asString.
-	self addModelTo: gtkButton.
-	^ gtkButton
+	^ GtkButton newLabel: self model label asString
 ]

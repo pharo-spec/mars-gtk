@@ -17,6 +17,7 @@ GtkSimpleRunLoop >> initialize [
 
 { #category : #'private installing' }
 GtkSimpleRunLoop >> installRunLoop [
+
 	process := [
 		[ self isRunning and: [ session == Smalltalk session ] ] 
 		whileTrue: [

@@ -15,16 +15,6 @@ GtkStatusBarAdapter >> addModelTo: gtkStatusBar [
 			pushMessage: message ]
 ]
 
-{ #category : #building }
-GtkStatusBarAdapter >> buildWidget [
-	| gtkStatusBar |
-
-	gtkStatusBar := GtkStatusBar new.
-	self addModelTo: gtkStatusBar.
-	
-	^ gtkStatusBar 
-]
-
 { #category : #private }
 GtkStatusBarAdapter >> contextName [
 	"Answer a the current context name."
@@ -57,4 +47,10 @@ GtkStatusBarAdapter >> update: aSymbol [
 	aSymbol = #popMessage ifTrue: [ self popMessage ].
 
 	^ super update: aSymbol
+]
+
+{ #category : #building }
+GtkStatusBarAdapter >> widgetClass [
+
+	^ GtkStatusBar
 ]

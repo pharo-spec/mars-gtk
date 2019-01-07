@@ -5,6 +5,8 @@ Class {
 		'expand',
 		'fill',
 		'padding',
+		'minWidth',
+		'minHeight',
 		'placedAtStart'
 	],
 	#category : #'Mars-Spec-Layout-Box'
@@ -73,6 +75,32 @@ SpecBoxConstraints >> isFill [
 SpecBoxConstraints >> isPlacedAtStart [
 	
 	^ placedAtStart
+]
+
+{ #category : #accessing }
+SpecBoxConstraints >> minHeight [
+	"Minimum height of component.
+	 this just has sense in the case of expand=false"
+
+	^ minHeight
+]
+
+{ #category : #accessing }
+SpecBoxConstraints >> minHeight: anObject [
+	minHeight := anObject
+]
+
+{ #category : #accessing }
+SpecBoxConstraints >> minWidth [
+	"Minimum height of component.
+	 this just has sense in the case of expand=false"
+
+	^ minWidth
+]
+
+{ #category : #accessing }
+SpecBoxConstraints >> minWidth: anObject [
+	minWidth := anObject
 ]
 
 { #category : #accessing }

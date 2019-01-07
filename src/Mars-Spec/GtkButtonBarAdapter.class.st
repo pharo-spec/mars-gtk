@@ -15,10 +15,7 @@ GtkButtonBarAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #building }
-GtkButtonBarAdapter >> buildWidget [
-	| gtkWidget |
+GtkButtonBarAdapter >> newWidget [ 
 
-	gtkWidget := GtkButtonBox newHorizontal.
-	self addModelTo: gtkWidget.
-	^ gtkWidget
+	^ GtkButtonBox newHorizontal
 ]

@@ -12,7 +12,7 @@ GtkContainerAdapter >> add: anAdapter [
 ]
 
 { #category : #building }
-GtkContainerAdapter >> buildWidget [
+GtkContainerAdapter >> newWidget [
 
 	^ GtkBox newVertical
 ]

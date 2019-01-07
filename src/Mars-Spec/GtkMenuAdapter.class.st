@@ -16,7 +16,7 @@ GtkMenuAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #accessing }
-GtkMenuAdapter >> gtkClass [
+GtkMenuAdapter >> widgetClass [
 
 	^ GtkMenu
 ]

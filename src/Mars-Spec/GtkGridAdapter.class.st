@@ -34,7 +34,9 @@ GtkGridAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
 	gtkWidget 
 		attach: childWidget 
 		at: constraints position 
-		span: constraints span
+		span: constraints span.
+		
+	^ gtkWidget
 ]
 
 { #category : #building }

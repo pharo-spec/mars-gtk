@@ -13,12 +13,6 @@ GtkGenericAdapter class >> morph: aMorph [
 	^ self new morph: aMorph
 ]
 
-{ #category : #building }
-GtkGenericAdapter >> buildWidget [
-
-	^ GtkScrolledWindow newWidget: (GtkMorphView newMorph: self morph)
-]
-
 { #category : #accessing }
 GtkGenericAdapter >> morph [
 
@@ -29,4 +23,10 @@ GtkGenericAdapter >> morph [
 GtkGenericAdapter >> morph: anObject [
 
 	morph := anObject
+]
+
+{ #category : #building }
+GtkGenericAdapter >> newWidget [
+
+	^ GtkScrolledWindow newWidget: (GtkMorphView newMorph: self morph)
 ]

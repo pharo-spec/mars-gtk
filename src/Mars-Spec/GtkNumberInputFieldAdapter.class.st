@@ -21,15 +21,15 @@ GtkNumberInputFieldAdapter >> addModelTo: gtkSpinButton [
 		gtkSpinButton climbRate: self model climbRate ]
 ]
 
-{ #category : #building }
-GtkNumberInputFieldAdapter >> gtkWidgetClass [ 
-
-	^ GtkSpinButton
-]
-
 { #category : #private }
 GtkNumberInputFieldAdapter >> refreshText [
 	
 	self widgetDo: [ :w |
 		w value: self model number ]
+]
+
+{ #category : #building }
+GtkNumberInputFieldAdapter >> widgetClass [ 
+
+	^ GtkSpinButton
 ]

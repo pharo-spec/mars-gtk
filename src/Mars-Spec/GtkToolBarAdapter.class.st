@@ -28,11 +28,7 @@ GtkToolBarAdapter >> addModelTo: gtkToolBar [
 ]
 
 { #category : #building }
-GtkToolBarAdapter >> buildWidget [
-	| gtkToolBar |
+GtkToolBarAdapter >> widgetClass [
 
-	gtkToolBar := GtkToolbar new.
-	self addModelTo: gtkToolBar.
-	
-	^ gtkToolBar 
+	^ GtkToolbar
 ]

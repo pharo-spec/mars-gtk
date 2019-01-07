@@ -13,11 +13,9 @@ GtkToolBarButtonAdapter >> addModelTo: gtkToolButton [
 ]
 
 { #category : #building }
-GtkToolBarButtonAdapter >> buildWidget [
-	| gtkToolButton |
+GtkToolBarButtonAdapter >> newWidget [
 	
-	gtkToolButton := (GtkToolButton newForm: self model icon label: self model label).
-	self addModelTo: gtkToolButton.
-	^ gtkToolButton
-
+	^ GtkToolButton 
+		newForm: self model icon 
+		label: self model label
 ]

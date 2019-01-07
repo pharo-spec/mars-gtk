@@ -22,15 +22,9 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 GtkTextInputFieldAdapter >> buildWidget [
 	| gtkWidget |
 	
-	gtkWidget := self gtkWidgetClass new.
+	gtkWidget := self widgetClass new.
 	self addModelTo: gtkWidget.
 	^ gtkWidget
-]
-
-{ #category : #private }
-GtkTextInputFieldAdapter >> gtkWidgetClass [
-
-	^ GtkEntry
 ]
 
 { #category : #private }
@@ -38,4 +32,10 @@ GtkTextInputFieldAdapter >> refreshText [
 	
 	self widgetDo: [ :w |
 		w text: self model text ]
+]
+
+{ #category : #private }
+GtkTextInputFieldAdapter >> widgetClass [
+
+	^ GtkEntry
 ]

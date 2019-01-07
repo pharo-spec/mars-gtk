@@ -26,15 +26,6 @@ GtkDialogWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 	super addModelIn: gtkWindow withSpecLayout: aSpec	
 ]
 
-{ #category : #building }
-GtkDialogWindowAdapter >> buildWidget [
-
-	^ GtkDialogWindow new 
-		autoRelease
-		resize: self model initialExtent;
-		yourself
-]
-
 { #category : #accessing }
 GtkDialogWindowAdapter >> close [
 
@@ -45,6 +36,15 @@ GtkDialogWindowAdapter >> close [
 GtkDialogWindowAdapter >> contentWidget: aSpec [
 
 	^ self model contents
+]
+
+{ #category : #building }
+GtkDialogWindowAdapter >> newWidget [
+
+	^ GtkDialogWindow new 
+		autoRelease
+		resize: self model initialExtent;
+		yourself
 ]
 
 { #category : #accessing }

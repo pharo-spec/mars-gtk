@@ -29,15 +29,6 @@ GtkListAdapter >> addModelTo: gtkList [
 		self model setIndex: selectedPaths first first ] ]
 ]
 
-{ #category : #building }
-GtkListAdapter >> buildWidget [
-	| gtkList |
-	
-	gtkList := GtkTreeView new.
-	self addModelTo: gtkList.
-	^ gtkList	
-]
-
 { #category : #private }
 GtkListAdapter >> modelItemsAsDisplay [
 
@@ -65,7 +56,7 @@ GtkListAdapter >> refreshSelection [
 ]
 
 { #category : #updating }
-GtkListAdapter >> update: aSymbol [ 
+GtkListAdapter >> update: aSymbol [
 	"Spec uses this to inform about a change in the model"
 	
 	self flag: #TODO. "Review this inform mechanism (and see ways to avoid the coupling between
@@ -74,4 +65,10 @@ GtkListAdapter >> update: aSymbol [
 	aSymbol = #getIndex ifTrue: [ ^ self refreshSelection ].
 
 	^ super update: aSymbol	
+]
+
+{ #category : #building }
+GtkListAdapter >> widgetClass [
+	
+	^ GtkTreeView
 ]

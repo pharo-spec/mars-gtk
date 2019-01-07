@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-GtkMenuBarAdapter >> gtkClass [
+GtkMenuBarAdapter >> widgetClass [
 	
 	^ GtkMenuBar
 ]

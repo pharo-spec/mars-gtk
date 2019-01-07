@@ -65,15 +65,6 @@ GtkWindowAdapter >> addToolBarTo: gtkBox [
 		padding: 0
 ]
 
-{ #category : #building }
-GtkWindowAdapter >> buildWidget [
-
-	^ GtkWindow new 
-		autoRelease
-		resize: self model initialExtent;
-		yourself
-]
-
 { #category : #accessing }
 GtkWindowAdapter >> centered [
 	
@@ -95,6 +86,15 @@ GtkWindowAdapter >> close [
 GtkWindowAdapter >> contentWidget: aSpec [
 
 	^ self model presenter buildWithSpecLayout: aSpec
+]
+
+{ #category : #building }
+GtkWindowAdapter >> newWidget [
+
+	^ GtkWindow new 
+		autoRelease
+		resize: self model initialExtent;
+		yourself
 ]
 
 { #category : #accessing }

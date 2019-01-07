@@ -8,18 +8,3 @@ Class {
 GtkMenuBaseAdapter >> addModelTo: gtkWidget [
 	self subclassResponsibility
 ]
-
-{ #category : #building }
-GtkMenuBaseAdapter >> buildWidget [
-	| gtkWidget |
-
-	gtkWidget := self gtkClass new.
-	self addModelTo: gtkWidget.
-	^ gtkWidget
-]
-
-{ #category : #accessing }
-GtkMenuBaseAdapter >> gtkClass [
-	
-	^ self subclassResponsibility
-]

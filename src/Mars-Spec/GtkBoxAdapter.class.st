@@ -17,6 +17,16 @@ GtkBoxAdapter >> add: aPresenter constraints: constraints [
 { #category : #private }
 GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 	"adds constraits by child."
+	
+	constraints isExpand ifFalse: [
+		| min |
+		min := childWidget preferredSizeMinimum.
+		constraints minWidth ifNotNil: [ :w | 
+			childWidget sizeRequest: w@min y ].
+		constraints minHeight ifNotNil: [ :h | 
+			childWidget sizeRequest: min x@h ] ].
+
+	^ childWidget
 ]
 
 { #category : #private }
@@ -37,7 +47,9 @@ GtkBoxAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
 				packEnd: childWidget 
 				expand: constraints isExpand 
 				fill: constraints isFill 
-				padding: constraints padding ]
+				padding: constraints padding ].
+			
+	^ gtkWidget
 ]
 
 { #category : #building }

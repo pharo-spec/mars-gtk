@@ -19,10 +19,7 @@ GtkActionBarAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #building }
-GtkActionBarAdapter >> buildWidget [
-	| gtkWidget |
+GtkActionBarAdapter >> widgetClass [
 
-	gtkWidget := GtkActionBar new.
-	self addModelTo: gtkWidget.
-	^ gtkWidget
+	^ GtkActionBar
 ]

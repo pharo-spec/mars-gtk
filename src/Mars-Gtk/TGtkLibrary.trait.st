@@ -11,7 +11,8 @@ TGtkLibrary classSide >> ffiLibraryName [
 { #category : #accessing }
 TGtkLibrary >> calloutAPIClass [
 
-	^ TFCalloutAPI
+	"^ TFCalloutAPI"
+	^ super calloutAPIClass
 ]
 
 { #category : #'library path' }

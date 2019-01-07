@@ -151,6 +151,18 @@ SpecBoxLayout >> isHomogeneous [
 	^ homogeneous
 ]
 
+{ #category : #testing }
+SpecBoxLayout >> isHorizontal [ 
+
+	^ self direction = SpecBoxLayoutDirection horizontal
+]
+
+{ #category : #testing }
+SpecBoxLayout >> isVertical [ 
+
+	^ self direction = SpecBoxLayoutDirection vertical
+]
+
 { #category : #accessing }
 SpecBoxLayout >> spacing [
 	^ spacing

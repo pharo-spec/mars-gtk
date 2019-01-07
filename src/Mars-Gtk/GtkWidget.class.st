@@ -238,6 +238,15 @@ GtkWidget >> ffiLibraryName [
 	^ self class ffiLibraryName
 ]
 
+{ #category : #accessing }
+GtkWidget >> getPreferredSizeMin: minimum_size natural: natural_size [
+
+	self ffiCall: #(void gtk_widget_get_preferred_size (
+		self, 
+		GtkRequisition *minimum_size,
+		GtkRequisition *natural_size))
+]
+
 { #category : #private }
 GtkWidget >> getTopLevel [
 	"I will get the window from GtkApplication (to keep identity), so I answer just the 
@@ -357,6 +366,32 @@ GtkWidget >> path [
 	^ path readString
 ]
 
+{ #category : #geometry }
+GtkWidget >> preferredSizeMinimum [
+	| min natural |
+	
+	min := GtkRequisition new.
+	natural := GtkRequisition new.
+	self 
+		getPreferredSizeMin: min 
+		natural: natural.
+	
+	^ min width @ min height
+]
+
+{ #category : #geometry }
+GtkWidget >> preferredSizeNatural [
+	| min natural |
+	
+	min := GtkRequisition new.
+	natural := GtkRequisition new.
+	self 
+		getPreferredSizeMin: min 
+		natural: natural.
+	
+	^ min width @ min height
+]
+
 { #category : #private }
 GtkWidget >> queueDraw [
 
@@ -384,13 +419,17 @@ GtkWidget >> setTooltipText: text [
 { #category : #showing }
 GtkWidget >> show [
 
-	^ self ffiCall: #(void gtk_widget_show (self)) options: #(optMainQueue)
+	^ self 
+		ffiCall: #(void gtk_widget_show (self))
+		options: #(optMainQueue)		
 ]
 
 { #category : #showing }
 GtkWidget >> showAll [
 
-	^ self ffiCall: #(void gtk_widget_show_all (self)) options: #(optMainQueue)
+	^ self 
+		ffiCall: #(void gtk_widget_show_all (self))
+		options: #(optMainQueue)		
 ]
 
 { #category : #geometry }

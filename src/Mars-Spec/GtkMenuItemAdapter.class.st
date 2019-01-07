@@ -38,12 +38,6 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 		gtkWidget submenu: menuPresenter buildWithSpec ]
 ]
 
-{ #category : #accessing }
-GtkMenuItemAdapter >> gtkClass [
-
-	^ GtkMenuItem
-]
-
 { #category : #building }
 GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 	| gtkBox |
@@ -77,4 +71,10 @@ GtkMenuItemAdapter >> shortcutGroup [
 		group := GtkAccelGroup new.
 		root shortcutGroup: group.
 		group ]
+]
+
+{ #category : #accessing }
+GtkMenuItemAdapter >> widgetClass [
+
+	^ GtkMenuItem
 ]

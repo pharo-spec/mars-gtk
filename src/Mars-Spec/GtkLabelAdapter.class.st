@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #factory }
-GtkLabelAdapter >> buildWidget [
+GtkLabelAdapter >> newWidget [
 
 	^ GtkLabel newLabel: self model label
 ]

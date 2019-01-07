@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #factory }
-GtkCheckBoxAdapter >> buildWidget [ 
+GtkCheckBoxAdapter >> newWidget [
 
 	^ GtkCheckButton newLabel: self model label
 ]

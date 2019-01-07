@@ -73,7 +73,7 @@ GtkApplication >> initArgC: argc argV: argv [
 
 	^ self 
 		ffiCall: #( void gtk_init ( ulong argc, ulong argv ) )
-		options: #( optMainQueue )
+		options: #(optMainQueue)
 ]
 
 { #category : #private }
