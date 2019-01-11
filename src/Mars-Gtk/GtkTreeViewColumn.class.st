@@ -42,10 +42,46 @@ GtkTreeViewColumn >> gtkTreeViewColumnSetTitle: encodedBytes [
 	self ffiCall: #(void gtk_tree_view_column_set_title (self, const gchar *encodedBytes))
 ]
 
+{ #category : #testing }
+GtkTreeViewColumn >> isResizable [ 
+
+	^ self ffiCall: #(gboolean gtk_tree_view_column_get_resizable (self))
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> maxWidth [
+
+	^ self ffiCall: #(gint gtk_tree_view_column_get_max_width (self))
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> maxWidth: max_width [
+
+	^ self ffiCall: #(void gtk_tree_view_column_set_max_width (self, gint max_width))
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> minWidth [
+
+	^ self ffiCall: #(gint gtk_tree_view_column_get_min_width (self) )
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> minWidth: min_width [
+
+	^ self ffiCall: #(void gtk_tree_view_column_set_min_width (self, gint min_width) )
+]
+
 { #category : #accessing }
 GtkTreeViewColumn >> renderer: aRenderer [
 
 	self gtkTreeViewColumnPackStart: aRenderer andExpand: true
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> resizable: resizable [
+
+	^ self ffiCall: #(void gtk_tree_view_column_set_resizable (self, gboolean resizable))
 ]
 
 { #category : #accessing }
