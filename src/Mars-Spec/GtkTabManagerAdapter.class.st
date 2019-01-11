@@ -17,13 +17,14 @@ GtkTabManagerAdapter >> addModelTo: gtkWidget [
 GtkTabManagerAdapter >> buildLabelForTab: aTabPresenter [
 	| label |
 
-	label := GtkLabel newLabel: aTabPresenter label.
-	aTabPresenter icon ifNotNil: [ :icon |
-		label := GtkBox newHorizontal 
+	label := GtkLabel newLabel: aTabPresenter label asString.
+	self flag: #TODO. "I'm not sure a notebook takes anything"
+	"aTabPresenter icon ifNotNil: [ :icon |
+		label := GtkBox newHorizontal
 			packStart: (GtkImage newForm: icon);
-			packStart: label;
-			yourself  ].
-	
+			packEnd: label;
+			yourself ]."
+
 	^ label
 ]
 

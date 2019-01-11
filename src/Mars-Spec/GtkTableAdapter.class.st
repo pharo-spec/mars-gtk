@@ -17,9 +17,19 @@ GtkTableAdapter >> addModelTo: gtkWidget [
 		gtkWidget appendColumn: (GtkTreeViewColumn new
 			title: each title;
 			renderer: renderer;
-			setAttribute: 'text' 
-				toColumAtIndex: index - 1 
-				forRenderer: renderer) ].
+			setAttribute: 'text' toColumAtIndex: index - 1 forRenderer: renderer;
+			in: [ :this | 
+				each width ifNotNil: [ :w | this minWidth: w ] ];
+			yourself) ].
+]
+
+{ #category : #building }
+GtkTableAdapter >> buildWidget [
+	| gtkTextView |
+
+	gtkTextView := self newWidget.
+	self addModelTo: gtkTextView.
+	^ GtkScrolledWindow newWidget: gtkTextView
 ]
 
 { #category : #building }
@@ -34,8 +44,8 @@ GtkTableAdapter >> newStoreFrom: aCollection [
 		gtkRow := store appendRow.
 		self model columns withIndexDo: [ :eachColumn :index | 
 			gtkRow 	
-				atColumnIndex: (index - 1) 
-				setValue: (eachColumn readObject: eachRow) asString utf8Encoded ] ].
+				at: (index - 1) 
+				put: (eachColumn readObject: eachRow) asString utf8Encoded ] ].
 
 	^ store
 ]
