@@ -1317,12 +1317,14 @@ GtkExamples class >> gtkExampleListView [
 
 	100 timesRepeat: [
 		store appendRow
-			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
-			atColumnIndex: 1 setValue: '1' utf8Encoded.
-		store appendRow atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
-			atColumnIndex: 1 setValue: '2' utf8Encoded.
-		store appendRow atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
-			atColumnIndex: 1 setValue: '3' utf8Encoded. ].
+			at: 0 put: 'Hey!' utf8Encoded;
+			at: 1 put: '1' utf8Encoded.
+		store appendRow 
+			at: 0 put: 'Encoded 今' utf8Encoded;
+			at: 1 put: '2' utf8Encoded.
+		store appendRow 
+			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
+			at: 1 put: '3' utf8Encoded. ].
 	
 	list := GtkTreeView new.
 	list model: store.
@@ -1878,18 +1880,18 @@ GtkExamples class >> gtkExampleTreeView [
 
 	100 timesRepeat: [ | row |
 		row := store appendRow
-			atColumnIndex: 0 setValue: 'Hey!' utf8Encoded;
-			atColumnIndex: 1 setValue: '1' utf8Encoded;
+			at: 0 put: 'Hey!' utf8Encoded;
+			at: 1 put: '1' utf8Encoded;
 			yourself.
 		row newChild
-			atColumnIndex: 0 setValue: 'Childddd' utf8Encoded;
-			atColumnIndex: 1 setValue: '11321' utf8Encoded.
+			at: 0 put: 'Childddd' utf8Encoded;
+			at: 1 put: '11321' utf8Encoded.
 		row newChild
-			atColumnIndex: 0 setValue: 'Encoded 今' utf8Encoded;
-			atColumnIndex: 1 setValue: '2' utf8Encoded.
+			at: 0 put: 'Encoded 今' utf8Encoded;
+			at: 1 put: '2' utf8Encoded.
 		row newChild
-			atColumnIndex: 0 setValue: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
-			atColumnIndex: 1 setValue: '3' utf8Encoded.].
+			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
+			at: 1 put: '3' utf8Encoded.].
 	
 	tree := GtkTreeView new.
 	tree model: store.
@@ -1925,20 +1927,20 @@ GtkExamples class >> gtkExampleTreeViewWithIcons [
 		
 		iconName := Smalltalk ui icons icons keys atRandom.
 		row := store appendRow
-			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
-			atColumnIndex: 1 setValue: iconName asString utf8Encoded;
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded;
 			yourself.
 			
 		iconName := Smalltalk ui icons icons keys atRandom.
 		row newChild
-			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
-			atColumnIndex: 1 setValue: iconName asString utf8Encoded.
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded.
 		row newChild
-			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
-			atColumnIndex: 1 setValue: iconName asString utf8Encoded.
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded.
 		row newChild
-			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
-			atColumnIndex: 1 setValue: iconName asString utf8Encoded ].
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded ].
 	
 	tree := GtkTreeView new.
 	tree model: store.

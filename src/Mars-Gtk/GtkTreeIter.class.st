@@ -17,14 +17,14 @@ Class {
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 
-{ #category : #accessing }
+{ #category : #private }
 GtkTreeIter >> atColumnIndex: index setString: aValue [
 	"Just a convenience method to avoid adding an extra zero to all Strings"
 
 	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore *store, self, uint index, String aValue, -1))
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkTreeIter >> atColumnIndex: index setValue: aValue [
 
 	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore *store, self, uint index, void* aValue, -1))

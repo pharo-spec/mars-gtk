@@ -86,12 +86,10 @@ GtkRoassalExample >> newTreeStore [
 	self allExamples keysAndValuesDo: [ :group :groupExamples | | row |
 		groupExamples ifNotEmpty: [ 
 			(row := store appendRow)
-				atColumnIndex: 0 
-				setValue: group label utf8Encoded.
+				at: 0 put: group label utf8Encoded.
 			groupExamples do: [ :each |
 				row newChild 
-					atColumnIndex: 0 
-					setValue: each selector utf8Encoded ] ] ].
+					at: 0 put: each selector utf8Encoded ] ] ].
 
 	^ store
 
