@@ -13,7 +13,7 @@ Class {
 { #category : #private }
 GtkCellRendererText class >> cellRendererTextNew [
 
-	^ self ffiCall: #(#GtkCellRendererText *gtk_cell_renderer_text_new (void))
+	^ self ffiCall: #(GtkCellRendererText *gtk_cell_renderer_text_new (void))
 ]
 
 { #category : #'instance creation' }

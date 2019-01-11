@@ -1910,6 +1910,56 @@ GtkExamples class >> gtkExampleTreeView [
 	^ tree
 ]
 
+{ #category : #'private-examples-lists' }
+GtkExamples class >> gtkExampleTreeViewWithIcons [
+	<gtkExample>
+	<title: 'Tree View with Icons'>
+	<category: #Lists>
+	<layoutFillContainer>
+	
+	| store tree pixbufRenderer textRenderer |
+	
+	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF.  GType G_TYPE_STRING }.
+
+	100 timesRepeat: [ | row iconName |
+		
+		iconName := Smalltalk ui icons icons keys atRandom.
+		row := store appendRow
+			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
+			atColumnIndex: 1 setValue: iconName asString utf8Encoded;
+			yourself.
+			
+		iconName := Smalltalk ui icons icons keys atRandom.
+		row newChild
+			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
+			atColumnIndex: 1 setValue: iconName asString utf8Encoded.
+		row newChild
+			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
+			atColumnIndex: 1 setValue: iconName asString utf8Encoded.
+		row newChild
+			atColumnIndex: 0 setValue: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName)) getHandle;
+			atColumnIndex: 1 setValue: iconName asString utf8Encoded ].
+	
+	tree := GtkTreeView new.
+	tree model: store.
+
+	pixbufRenderer := GtkCellRendererPixbuf new.
+	textRenderer := GtkCellRendererText new.
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Icon';
+		renderer: pixbufRenderer;
+		setAttribute: 'pixbuf' toColumAtIndex: 0 forRenderer: pixbufRenderer).
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Name';
+		renderer: textRenderer;
+		setAttribute: 'text' toColumAtIndex: 1 forRenderer: textRenderer).
+		
+	tree addExpanderColumn.
+	tree enableTreeLines.
+
+	^ tree
+]
+
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleVerticalBox [
 	<gtkExample>

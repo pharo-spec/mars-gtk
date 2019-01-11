@@ -39,117 +39,123 @@ Class {
 	#category : #'Mars-Gtk-Misc'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+GType class >> GDK_TYPE_PIXBUF [
+
+	^ self gdkPixbufGetType
+]
+
+{ #category : #accessing }
 GType class >> G_TYPE_BOOLEAN [
 	^ G_TYPE_BOOLEAN
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_BOXED [
 	^ G_TYPE_BOXED
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_CHAR [
 	^ G_TYPE_CHAR
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_DOUBLE [
 	^ G_TYPE_DOUBLE
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_ENUM [
 	^ G_TYPE_ENUM
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_FLAGS [
 	^ G_TYPE_FLAGS
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_FLOAT [
 	^ G_TYPE_FLOAT
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_FUNDAMENTAL_SHIFT [
 	^ G_TYPE_FUNDAMENTAL_SHIFT
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_INT [
 	^ G_TYPE_INT
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_INT64 [
 	^ G_TYPE_INT64
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_INTERFACE [
 	^ G_TYPE_INTERFACE
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_INVALID [
 	^ G_TYPE_INVALID
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_LONG [
 	^ G_TYPE_LONG
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_NONE [
 	^ G_TYPE_NONE
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_OBJECT [
 	^ G_TYPE_OBJECT
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_PARAM [
 	^ G_TYPE_PARAM
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_POINTER [
 	^ G_TYPE_POINTER
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_STRING [
 	^ G_TYPE_STRING
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_UCHAR [
 	^ G_TYPE_UCHAR
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_UINT [
 	^ G_TYPE_UINT
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_UINT64 [
 	^ G_TYPE_UINT64
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_ULONG [
 	^ G_TYPE_ULONG
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GType class >> G_TYPE_VARIANT [
 	^ G_TYPE_VARIANT
 ]
@@ -157,6 +163,12 @@ GType class >> G_TYPE_VARIANT [
 { #category : #'library path' }
 GType class >> ffiLibraryName [
 	^ GtkLibrary
+]
+
+{ #category : #private }
+GType class >> gdkPixbufGetType [
+
+	^ self ffiCall: #(GType gdk_pixbuf_get_type())
 ]
 
 { #category : #initialization }
