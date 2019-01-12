@@ -21,3 +21,37 @@ GtkCellRendererText class >> new [
 	
 	^ self cellRendererTextNew initialize
 ]
+
+{ #category : #accessing }
+GtkCellRendererText >> beEditable [
+
+	self editable: true
+]
+
+{ #category : #'as yet unclassified' }
+GtkCellRendererText >> connectEdited: aBlock [
+	"I use a block with two arguments: 
+	 aRenderer connectEdited: [ :path :newText | ... ] "
+
+	^ self 
+		connect: 'edited'  
+		signature: #(void (void *renderer, void *path, void *new_text, gpointer data))  
+		do: [ :renderer :path :new_text :data |
+			aBlock 
+				value: path readStringUTF8 
+				value: new_text readStringUTF8 ]
+]
+
+{ #category : #private }
+GtkCellRendererText >> editable: aBoolean [
+
+	self 
+		gObjectSet: 'editable' 
+		toBoolean: aBoolean
+]
+
+{ #category : #testing }
+GtkCellRendererText >> isEditable [
+
+	^ self gObjectGetBoolean: 'editable'
+]

@@ -9,7 +9,8 @@ Class {
 	#superclass : #GtkContainer,
 	#instVars : [
 		'listStore',
-		'selection'
+		'selection',
+		'columns'
 	],
 	#category : #'Mars-Gtk-Widget-Tree'
 }
@@ -47,7 +48,8 @@ GtkTreeView >> allSelected [
 { #category : #accessing }
 GtkTreeView >> appendColumn: column [
 	
-	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
+	columns add: column.
+	self basicAppendColumn: column
 ]
 
 { #category : #'convenience columns' }
@@ -58,6 +60,12 @@ GtkTreeView >> appendTextColumn [
 	self appendColumn: (GtkTreeViewColumn new
 		renderer: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer)
+]
+
+{ #category : #private }
+GtkTreeView >> basicAppendColumn: column [
+
+	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
 ]
 
 { #category : #signals }
@@ -112,6 +120,13 @@ GtkTreeView >> getSelection [
 GtkTreeView >> headersVisible: aBoolean [
 
 	self gObjectSet: 'headers-visible' toBoolean: aBoolean
+]
+
+{ #category : #initialization }
+GtkTreeView >> initialize [
+
+	super initialize.
+	columns := OrderedCollection new: 1
 ]
 
 { #category : #testing }

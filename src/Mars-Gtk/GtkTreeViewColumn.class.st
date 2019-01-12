@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/stable/GtkTreeViewColumn.html
 Class {
 	#name : #GtkTreeViewColumn,
 	#superclass : #GObject,
+	#instVars : [
+		'renderer'
+	],
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 
@@ -75,7 +78,10 @@ GtkTreeViewColumn >> minWidth: min_width [
 { #category : #accessing }
 GtkTreeViewColumn >> renderer: aRenderer [
 
-	self gtkTreeViewColumnPackStart: aRenderer andExpand: true
+	renderer := aRenderer.
+	self 
+		gtkTreeViewColumnPackStart: aRenderer 
+		andExpand: true
 ]
 
 { #category : #accessing }
