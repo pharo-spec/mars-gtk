@@ -57,20 +57,14 @@ GtkSettings >> property: aName toString: aString [
 
 { #category : #accessing }
 GtkSettings >> propertyBoolean: aName [
-	| buffer |
 	
-	buffer := FFIBool newBuffer.
-	self gObjectGet: aName into: buffer.
-	^ buffer booleanAt: 1
+	^ self gObjectGetBoolean: aName
 ]
 
 { #category : #accessing }
 GtkSettings >> propertyString: aName [
-	| buffer |
 	
-	buffer := ExternalAddress new.
-	self gObjectGet: aName intoAddress: buffer.
-	^ buffer readStringUTF8 
+	^ self gObjectGetString: aName
 ]
 
 { #category : #'accessing convenience' }
