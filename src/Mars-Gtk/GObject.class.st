@@ -180,6 +180,26 @@ GObject >> gObjectGet: aName intoAddress: aBuffer [
 ]
 
 { #category : #'private primitives' }
+GObject >> gObjectGetBoolean: aName [
+	"a convenience method to read boolean properties"
+	| buffer |
+	
+	buffer := FFIBool newBuffer.
+	self gObjectGet: aName into: buffer.
+	^ buffer booleanAt: 1
+]
+
+{ #category : #'private primitives' }
+GObject >> gObjectGetString: aName [
+	"a convenience method to read string properties"
+	| buffer |
+	
+	buffer := ExternalAddress new.
+	self gObjectGet: aName intoAddress: buffer.
+	^ buffer readStringUTF8
+]
+
+{ #category : #'private primitives' }
 GObject >> gObjectSet: aName toBoolean: aBoolean [
 
 	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean) )	
