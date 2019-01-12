@@ -26,16 +26,24 @@ StRawInspection >> initialize [
 StRawInspection >> initializeWidgets [
 	
 	attributeTable := self newTable.
-	attributeTable addColumn: (TableColumn new
-		title: 'Variable';
-		evaluated: #name;
-		yourself).
-	attributeTable addColumn: (TableColumn new
-		title: 'Value';
-		evaluated: #stringValue;
-		beEditable;
-		onAcceptEdition: [ :node :value | node value: value ];
-		yourself).
+	attributeTable 
+		addColumn: (ImageTableColumn new
+			title: '';
+			width: 20;
+			evaluated: #icon;
+			yourself);
+		addColumn: (StringTableColumn new
+			title: 'Variable';
+			evaluated: #name;
+			width: 150;
+			yourself);
+		addColumn: (StringTableColumn new
+			title: 'Value';
+			evaluated: #stringValue;
+			beEditable;
+			onAcceptEdition: [ :node :value | node value: value ];
+			yourself).
+			
 	attributeTable items: self model inspectorNodes
 ]
 

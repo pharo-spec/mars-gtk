@@ -30,11 +30,6 @@ StInspectorSlotNode >> name [
 ]
 
 { #category : #accessing }
-StInspectorSlotNode >> object [
-	^ object
-]
-
-{ #category : #accessing }
 StInspectorSlotNode >> slot [
 	^ slot
 ]

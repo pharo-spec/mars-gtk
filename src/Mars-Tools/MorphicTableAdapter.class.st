@@ -8,7 +8,7 @@ Class {
 MorphicTableAdapter >> addModelTo: tableMorph [
 	
 	self model columns do: [ :each |
-		tableMorph addColumn: (MorphicTableColumn on: each) ].
+		tableMorph addColumn: (self newColumnFrom: each) ].
 	
 	tableMorph dataSource: (MorphicTableDataSource new 
 		elements: self model items;
@@ -25,4 +25,12 @@ MorphicTableAdapter >> buildWidget [
 		yourself.
 	self addModelTo: tableMorph.
 	^ tableMorph
+]
+
+{ #category : #factory }
+MorphicTableAdapter >> newColumnFrom: aTableColumn [
+
+	^ (MorphicTableColumn on: aTableColumn)
+		width: aTableColumn width;
+		yourself
 ]

@@ -1,26 +1,23 @@
 Class {
 	#name : #GtkTableAdapter,
 	#superclass : #GtkAdapter,
+	#instVars : [
+		'columnFiller'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #building }
 GtkTableAdapter >> addModelTo: gtkWidget [
-	| renderer |
-	
-	self flag: #TODO. "For now I'm just adding text columns (while there are possible a lot others)"
+	| columnBuilder |
 	
 	gtkWidget model: (self newStoreFrom: self model items).
-
-	renderer := GtkCellRendererText new.	
-	self model columns withIndexDo: [ :each :index |
-		gtkWidget appendColumn: (GtkTreeViewColumn new
-			title: each title;
-			renderer: renderer;
-			setAttribute: 'text' toColumAtIndex: index - 1 forRenderer: renderer;
-			in: [ :this | 
-				each width ifNotNil: [ :w | this minWidth: w ] ];
-			yourself) ].
+	
+	columnBuilder := GtkTableColumnBuilder new.
+	self model columns withIndexDo: [ :each :index | 
+		gtkWidget appendColumn: (columnBuilder 
+			columnIndex: index;
+			visit: each) ].
 ]
 
 { #category : #building }
@@ -34,18 +31,21 @@ GtkTableAdapter >> buildWidget [
 
 { #category : #building }
 GtkTableAdapter >> newStoreFrom: aCollection [
-	| store |
+	| store typeCollector |
 
-	store := GtkListStore newColumnTypes: (Array 
-		new: self model columns size 
-		withAll: GType G_TYPE_STRING).
-
+	typeCollector := GtkTableColumnTypeCollector new.
+	store := GtkListStore newColumnTypes: (self model columns collect: [ :each |
+		typeCollector visit: each ]).
+	columnFiller := GtkTableColumnFiller new.
 	aCollection do: [ :eachRow | | gtkRow |
 		gtkRow := store appendRow.
+		columnFiller
+			gtkRow: gtkRow;
+			row: eachRow.
 		self model columns withIndexDo: [ :eachColumn :index | 
-			gtkRow 	
-				at: (index - 1) 
-				put: (eachColumn readObject: eachRow) asString utf8Encoded ] ].
+			 columnFiller 
+				columnIndex: index;
+				visit: eachColumn ] ].
 
 	^ store
 ]

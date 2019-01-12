@@ -1,6 +1,12 @@
 Extension { #name : #Object }
 
 { #category : #'*Mars-Tools' }
+Object >> inspectorIcon [
+
+	^ self iconOrThumbnailOfSize: 16
+]
+
+{ #category : #'*Mars-Tools' }
 Object >> inspectorNodes [
 	"Answer a list of attributes as nodes"
 	

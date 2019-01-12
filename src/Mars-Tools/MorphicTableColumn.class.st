@@ -30,7 +30,7 @@ MorphicTableColumn >> model: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-MorphicTableColumn >> readString: anObject [ 
+MorphicTableColumn >> readObject: anObject [ 
 
-	^ (self model readObject: anObject) printString
+	^ self model readObject: anObject
 ]

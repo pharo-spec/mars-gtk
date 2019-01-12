@@ -6,8 +6,11 @@ Class {
 
 { #category : #accessing }
 MorphicTableDataSource >> cellColumn: column row: rowIndex [
+	| cell |
 
-	^ FTCellMorph new
-		addMorphBack: (column readString: (self elementAt: rowIndex)) asMorph;
-		yourself
+	cell := FTCellMorph new.
+	(column readObject: (self elementAt: rowIndex)) ifNotNil: [ :object |
+		cell addMorphBack: object asMorph ].
+	^ cell 
+		
 ]

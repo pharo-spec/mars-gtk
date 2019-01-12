@@ -4,16 +4,15 @@ Class {
 	#instVars : [
 		'title',
 		'evaluation',
-		'editable',
-		'acceptAction'
+		'width'
 	],
 	#category : #'Mars-Tools-Inspector'
 }
 
-{ #category : #accessing }
-TableColumn >> beEditable [ 
+{ #category : #visiting }
+TableColumn >> acceptColumnBuilder: aBuilder [
 
-	editable := true
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -32,25 +31,6 @@ TableColumn >> evaluation: anObject [
 	evaluation := anObject
 ]
 
-{ #category : #initialization }
-TableColumn >> initialize [ 
-
-	super initialize.
-	editable := false
-]
-
-{ #category : #testing }
-TableColumn >> isEditable [ 
-	
-	^ editable
-]
-
-{ #category : #accessing }
-TableColumn >> onAcceptEdition: aBlock [
-
-	acceptAction := aBlock
-]
-
 { #category : #accessing }
 TableColumn >> readObject: anObject [ 
 
@@ -65,4 +45,14 @@ TableColumn >> title [
 { #category : #accessing }
 TableColumn >> title: anObject [
 	title := anObject
+]
+
+{ #category : #accessing }
+TableColumn >> width [
+	^ width
+]
+
+{ #category : #accessing }
+TableColumn >> width: anObject [
+	width := anObject
 ]
