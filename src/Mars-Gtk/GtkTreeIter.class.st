@@ -30,6 +30,17 @@ GtkTreeIter >> atColumnIndex: index setValue: aValue [
 	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore *store, self, uint index, void* aValue, -1))
 ]
 
+{ #category : #private }
+GtkTreeIter >> getStringAtColumnIndex: index into: aValue [
+
+	 self ffiCall: #(void gtk_tree_model_get (
+		GtkTreeStore *store, 
+		self, 
+		uint index, 
+		void *aValue, 
+		-1))
+]
+
 { #category : #accessing }
 GtkTreeIter >> newChild [
 

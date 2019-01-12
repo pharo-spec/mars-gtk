@@ -64,6 +64,12 @@ GtkAbstractIter >> atColumnIndex: index setValue: aValue [
 	 self subclassResponsibility
 ]
 
+{ #category : #private }
+GtkAbstractIter >> getStringAtColumnIndex: index into: aValue [
+
+	 self subclassResponsibility
+]
+
 { #category : #accessing }
 GtkAbstractIter >> setValues: aValueArray [
 
@@ -78,4 +84,13 @@ GtkAbstractIter >> store [
 { #category : #accessing }
 GtkAbstractIter >> store: anObject [
 	store := anObject
+]
+
+{ #category : #accessing }
+GtkAbstractIter >> stringAt: index [
+	| result |
+
+	result := ExternalAddress new.
+	self getStringAtColumnIndex: index into: result.
+	^ result readStringUTF8
 ]

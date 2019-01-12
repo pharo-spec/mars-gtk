@@ -1915,7 +1915,7 @@ GtkExamples class >> gtkExampleTreeView [
 { #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleTreeViewEditable [
 	<gtkExample>
-	<title: 'Tree View Editable'>
+	<title: 'Tree View with Editable cell'>
 	<category: #Lists>
 	<layoutFillContainer>
 	
@@ -1949,7 +1949,9 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 	
 	renderer := GtkCellRendererText new.
 	renderer beEditable.
-	renderer connectEdited: [ :path :text | self inform: text ].
+	renderer connectEdited: [ :path :text | | iter | 
+		iter := store iteratorFromString: path.
+		iter at: 1 putString: text ].
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Editable column';
 		renderer: renderer;

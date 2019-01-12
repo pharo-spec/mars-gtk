@@ -68,6 +68,24 @@ GtkTreeStore >> appendRow [
 ]
 
 { #category : #private }
+GtkTreeStore >> getIter: iter fromPath: path_string [
+	
+	self ffiCall: #(gboolean gtk_tree_model_get_iter (
+		self,
+		GtkTreeIter *iter,
+		GtkTreePath *path))
+]
+
+{ #category : #private }
+GtkTreeStore >> getIter: iter fromString: path_string [
+	
+	self ffiCall: #(gboolean gtk_tree_model_get_iter_from_string (
+		self,
+		GtkTreeIter *iter,
+		const gchar *path_string))
+]
+
+{ #category : #private }
 GtkTreeStore >> gtkTreeStoreAppend: anIterator withParent: aParentIterator [
 
 	^ self ffiCall: #(void gtk_tree_store_append (self, GtkTreeIter *anIterator, GtkTreeIter *aParentIterator))
@@ -79,4 +97,31 @@ GtkTreeStore >> initialize [
 	"super initialize."
 	"Stores need to be unreferenced after set"
 	self autoRelease
+]
+
+{ #category : #accessing }
+GtkTreeStore >> iteratorFromPath: aPath [
+	| iter |
+
+	iter := GtkTreeIter new 
+		store: self;
+		yourself.
+	(self getIter: iter fromPath: aPath) ifFalse: [
+		self error: 'Iterator could not be set' ].	
+
+	^ iter
+]
+
+{ #category : #accessing }
+GtkTreeStore >> iteratorFromString: aString [
+	| iter |
+
+	iter := GtkTreeIter new 
+		store: self;
+		yourself.
+	
+	(self getIter: iter fromString: aString) ifFalse: [
+		self error: 'Iter could not be set' ].
+	
+	^ iter
 ]
