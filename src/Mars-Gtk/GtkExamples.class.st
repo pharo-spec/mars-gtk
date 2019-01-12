@@ -1913,6 +1913,55 @@ GtkExamples class >> gtkExampleTreeView [
 ]
 
 { #category : #'private-examples-lists' }
+GtkExamples class >> gtkExampleTreeViewEditable [
+	<gtkExample>
+	<title: 'Tree View Editable'>
+	<category: #Lists>
+	<layoutFillContainer>
+	
+	| store tree renderer |
+	
+	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
+
+	100 timesRepeat: [ | row |
+		row := store appendRow
+			at: 0 put: 'Hey!' utf8Encoded;
+			at: 1 put: '1' utf8Encoded;
+			yourself.
+		row newChild
+			at: 0 put: 'Childddd' utf8Encoded;
+			at: 1 put: '11321' utf8Encoded.
+		row newChild
+			at: 0 put: 'Encoded 今' utf8Encoded;
+			at: 1 put: '2' utf8Encoded.
+		row newChild
+			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
+			at: 1 put: '3' utf8Encoded.].
+	
+	tree := GtkTreeView new.
+	tree model: store.
+
+	renderer := GtkCellRendererText new.
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Example Column Tìtlé';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+	
+	renderer := GtkCellRendererText new.
+	renderer beEditable.
+	renderer connectEdited: [ :path :text | self inform: text ].
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Editable column';
+		renderer: renderer;
+		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+		
+	tree addExpanderColumn.
+	tree enableTreeLines.
+
+	^ tree
+]
+
+{ #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleTreeViewWithIcons [
 	<gtkExample>
 	<title: 'Tree View with Icons'>
