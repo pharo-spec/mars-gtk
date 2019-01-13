@@ -39,7 +39,7 @@ GtkBaseStore class >> newStrings: aCollection [
 	
 	store := self newColumnTypes: { G_TYPE_STRING }.
 	aCollection do: [ :each |
-		store appendRow
+		store appendNew
 			at: 0 
 			putString: each utf8Encoded asString ].
 

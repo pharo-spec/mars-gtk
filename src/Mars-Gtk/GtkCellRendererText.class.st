@@ -28,7 +28,7 @@ GtkCellRendererText >> beEditable [
 	self editable: true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #signaling }
 GtkCellRendererText >> connectEdited: aBlock [
 	"I use a block with two arguments: 
 	 aRenderer connectEdited: [ :path :newText | ... ] "

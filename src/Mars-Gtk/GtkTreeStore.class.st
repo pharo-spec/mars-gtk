@@ -28,25 +28,9 @@ GtkTreeStore class >> gtkTreeStoreNewWithNumberOfColums: numberoOfColumns andTyp
 ]
 
 { #category : #iterating }
-GtkTreeStore >> appendChildInParent: aParent [
-
-	| iterator |
-	iterator := GtkTreeIter externalNew autoRelease.
-	iterator store: self.
-	self gtkTreeStoreAppend: iterator withParent: aParent.
-	^ iterator
-]
-
-{ #category : #iterating }
-GtkTreeStore >> appendRow [
-
-	^ self appendChildInParent: nil
-]
-
-{ #category : #private }
-GtkTreeStore >> gtkTreeStoreAppend: anIterator withParent: aParentIterator [
-
-	^ self ffiCall: #(void gtk_tree_store_append (self, GtkTreeIter *anIterator, GtkTreeIter *aParentIterator))
+GtkTreeStore >> appendNew [
+	
+	^ (GtkTreeIter on: self) appendNewRoot
 ]
 
 { #category : #initialization }

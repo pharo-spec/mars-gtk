@@ -1316,13 +1316,13 @@ GtkExamples class >> gtkExampleListView [
 	store := GtkListStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [
-		store appendRow
+		store appendNew
 			at: 0 put: 'Hey!' utf8Encoded;
 			at: 1 put: '1' utf8Encoded.
-		store appendRow 
+		store appendNew 
 			at: 0 put: 'Encoded 今' utf8Encoded;
 			at: 1 put: '2' utf8Encoded.
-		store appendRow 
+		store appendNew 
 			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
 			at: 1 put: '3' utf8Encoded. ].
 	
@@ -1879,17 +1879,17 @@ GtkExamples class >> gtkExampleTreeView [
 	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [ | row |
-		row := store appendRow
+		row := store appendNew
 			at: 0 put: 'Hey!' utf8Encoded;
 			at: 1 put: '1' utf8Encoded;
 			yourself.
-		row newChild
+		row appendNew
 			at: 0 put: 'Childddd' utf8Encoded;
 			at: 1 put: '11321' utf8Encoded.
-		row newChild
+		row appendNew
 			at: 0 put: 'Encoded 今' utf8Encoded;
 			at: 1 put: '2' utf8Encoded.
-		row newChild
+		row appendNew
 			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
 			at: 1 put: '3' utf8Encoded.].
 	
@@ -1924,17 +1924,17 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING .  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [ | row |
-		row := store appendRow
+		row := store appendNew
 			at: 0 put: 'Hey!' utf8Encoded;
 			at: 1 put: '1' utf8Encoded;
 			yourself.
-		row newChild
+		row appendNew
 			at: 0 put: 'Childddd' utf8Encoded;
 			at: 1 put: '11321' utf8Encoded.
-		row newChild
+		row appendNew
 			at: 0 put: 'Encoded 今' utf8Encoded;
 			at: 1 put: '2' utf8Encoded.
-		row newChild
+		row appendNew
 			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
 			at: 1 put: '3' utf8Encoded.].
 	
@@ -1970,26 +1970,29 @@ GtkExamples class >> gtkExampleTreeViewWithIcons [
 	<category: #Lists>
 	<layoutFillContainer>
 	
-	| store tree pixbufRenderer textRenderer |
+	| store tree pixbufRenderer textRenderer child |
 	
 	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF.  GType G_TYPE_STRING }.
 
 	100 timesRepeat: [ | row iconName |
 		
 		iconName := Smalltalk ui icons icons keys atRandom.
-		row := store appendRow
+		row := store appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
 			at: 1 put: iconName asString utf8Encoded;
 			yourself.
 			
 		iconName := Smalltalk ui icons icons keys atRandom.
-		row newChild
+		(child := row appendNew)
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
 			at: 1 put: iconName asString utf8Encoded.
-		row newChild
+		child appendNew 
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
 			at: 1 put: iconName asString utf8Encoded.
-		row newChild
+		row appendNew
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded.
+		row appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
 			at: 1 put: iconName asString utf8Encoded ].
 	

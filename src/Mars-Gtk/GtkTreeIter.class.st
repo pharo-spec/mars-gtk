@@ -17,6 +17,24 @@ Class {
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 
+{ #category : #accessing }
+GtkTreeIter >> appendNew [
+	| iterator |
+
+	iterator := GtkTreeIter on: self store.
+	self gtkTreeStoreAppend: iterator withParent: self.
+	
+	^ iterator
+]
+
+{ #category : #accessing }
+GtkTreeIter >> appendNewRoot [
+
+	^ self 
+		gtkTreeStoreAppend: self 
+		withParent: nil
+]
+
 { #category : #private }
 GtkTreeIter >> atColumnIndex: index setString: aValue [
 	"Just a convenience method to avoid adding an extra zero to all Strings"
@@ -41,10 +59,13 @@ GtkTreeIter >> getStringAtColumnIndex: index into: aValue [
 		-1))
 ]
 
-{ #category : #accessing }
-GtkTreeIter >> newChild [
+{ #category : #private }
+GtkTreeIter >> gtkTreeStoreAppend: iter withParent: parent [
 
-	^ store appendChildInParent: self
+	^ self ffiCall: #(void gtk_tree_store_append (
+		GtkListStore *store, 
+		GtkTreeIter *iter, 
+		GtkTreeIter *parent))
 ]
 
 { #category : #accessing }

@@ -4,6 +4,12 @@ Class {
 	#category : #'Mars-Gtk-Widget-List'
 }
 
+{ #category : #accessing }
+GtkListIter >> appendNew [
+
+	self ffiCall: #(void gtk_list_store_append (GtkListStore *store, self))
+]
+
 { #category : #private }
 GtkListIter >> atColumnIndex: index setString: aValue [
 	"Just a convenience method to avoid adding an extra zero to all Strings"

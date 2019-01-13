@@ -85,10 +85,10 @@ GtkRoassalExample >> newTreeStore [
 	store := GtkTreeStore newColumnTypes: { GType G_TYPE_STRING }.
 	self allExamples keysAndValuesDo: [ :group :groupExamples | | row |
 		groupExamples ifNotEmpty: [ 
-			(row := store appendRow)
+			(row := store appendNew)
 				at: 0 put: group label utf8Encoded.
 			groupExamples do: [ :each |
-				row newChild 
+				row appendNew 
 					at: 0 put: each selector utf8Encoded ] ] ].
 
 	^ store

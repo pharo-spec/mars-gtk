@@ -25,19 +25,9 @@ GtkListStore class >> gtkListStoreNewWithNumberOfColums: numberoOfColumns andTyp
 ]
 
 { #category : #iterating }
-GtkListStore >> appendRow [
-
-	| iterator |
-	iterator := GtkListIter externalNew autoRelease.
-	iterator store: self.
-	self gtkListStoreAppend: iterator.
-	^ iterator
-]
-
-{ #category : #private }
-GtkListStore >> gtkListStoreAppend: anIterator [
-
-	^ self ffiCall: #(void gtk_list_store_append (self, GtkListIter* anIterator))
+GtkListStore >> appendNew [
+	
+	^ (GtkListIter on: self) appendNew
 ]
 
 { #category : #initialization }

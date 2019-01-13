@@ -28,6 +28,18 @@ GtkAbstractIter class >> fieldsDesc [
 		gpointer user_data3;)
 ]
 
+{ #category : #'instance creation' }
+GtkAbstractIter class >> on: aStore [
+
+	^ self new store: aStore
+]
+
+{ #category : #accessing }
+GtkAbstractIter >> appendNew [
+	
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 GtkAbstractIter >> at: index put: aValue [
 
