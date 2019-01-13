@@ -6,7 +6,7 @@ Class {
 		'row',
 		'columnIndex'
 	],
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Adapter-Table'
 }
 
 { #category : #accessing }

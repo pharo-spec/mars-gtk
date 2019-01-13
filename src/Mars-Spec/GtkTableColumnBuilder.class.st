@@ -2,12 +2,37 @@ Class {
 	#name : #GtkTableColumnBuilder,
 	#superclass : #GtkTableColumnVisitor,
 	#instVars : [
+		'model',
+		'store',
 		'textRenderer',
 		'imageRenderer',
 		'columnIndex'
 	],
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Adapter-Table'
 }
+
+{ #category : #'instance creation' }
+GtkTableColumnBuilder class >> on: aModel [
+
+	^ self new model: aModel
+]
+
+{ #category : #private }
+GtkTableColumnBuilder >> columnEdited: aTableColumn path: path text: text [
+	| node iter |
+	
+	node := self nodeFromPath: path.
+	
+	"process edition"
+	aTableColumn acceptAction 
+		value: node 
+		value: text.
+	"store the new value (or restore the old valur)"
+	iter := self store iteratorFromString: path.
+	iter 
+		at: self columnIndex 
+		putString: node stringValue
+]
 
 { #category : #accessing }
 GtkTableColumnBuilder >> columnIndex [ 
@@ -25,6 +50,17 @@ GtkTableColumnBuilder >> columnIndex: aNumber [
 GtkTableColumnBuilder >> imageRenderer [
 
 	^ imageRenderer ifNil: [ imageRenderer := GtkCellRendererPixbuf new ]
+]
+
+{ #category : #accessing }
+GtkTableColumnBuilder >> model [
+
+	^ model
+]
+
+{ #category : #accessing }
+GtkTableColumnBuilder >> model: anObject [
+	model := anObject
 ]
 
 { #category : #'private factory' }
@@ -45,10 +81,8 @@ GtkTableColumnBuilder >> newEditableTextRendererFor: aTableColumn [
 	
 	renderer := GtkCellRendererText new.
 	renderer beEditable.
-	renderer connectEdited: [ :path :text |  
-		aTableColumn acceptAction 
-			value: (self nodeFromPath: path)
-			value: text ].
+	renderer connectEdited: [ :path :text | 
+		self columnEdited: aTableColumn path: path text: text ].
 		
 	^ renderer
 ]
@@ -56,7 +90,19 @@ GtkTableColumnBuilder >> newEditableTextRendererFor: aTableColumn [
 { #category : #private }
 GtkTableColumnBuilder >> nodeFromPath: path [
 	
-	self halt
+	self flag: #TODO. "A tree will have a different behaviour"
+	^ self model itemAt: 	((path substrings: ':') first asNumber + 1)
+]
+
+{ #category : #accessing }
+GtkTableColumnBuilder >> store [ 
+
+	^ store 
+]
+
+{ #category : #accessing }
+GtkTableColumnBuilder >> store: anObject [
+	store := anObject
 ]
 
 { #category : #private }

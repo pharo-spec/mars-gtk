@@ -4,18 +4,20 @@ Class {
 	#instVars : [
 		'columnFiller'
 	],
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Adapter-Table'
 }
 
 { #category : #building }
 GtkTableAdapter >> addModelTo: gtkWidget [
-	| columnBuilder |
+	| columnBuilder store |
 	
-	gtkWidget model: (self newStoreFrom: self model items).
+	store := self newStoreFrom: self model items.
+	gtkWidget model: store.
 	
-	columnBuilder := GtkTableColumnBuilder new.
+	columnBuilder := GtkTableColumnBuilder on: self model.
+	columnBuilder store: store.
 	self model columns withIndexDo: [ :each :index | 
-		gtkWidget appendColumn: (columnBuilder 
+		gtkWidget appendColumn: (columnBuilder
 			columnIndex: index;
 			visit: each) ].
 ]

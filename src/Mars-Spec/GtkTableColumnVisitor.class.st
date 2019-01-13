@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkTableColumnVisitor,
 	#superclass : #Object,
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Adapter-Table'
 }
 
 { #category : #visiting }
