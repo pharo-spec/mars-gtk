@@ -1,0 +1,93 @@
+"
+A common parent for stores. 
+I will keep the commonly used api (iterators, etc.) 
+"
+Class {
+	#name : #GtkBaseStore,
+	#superclass : #GObject,
+	#category : #'Mars-Gtk-Misc'
+}
+
+{ #category : #private }
+GtkBaseStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalArray [
+
+	self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
+GtkBaseStore class >> newColumnTypes: columnTypes [
+	| columnTypesExternalArray longSize |
+	
+	longSize := FFIArchitecture forCurrentArchitecture longTypeSize.
+	columnTypesExternalArray := ByteArray new: columnTypes size * longSize.
+	
+	columnTypes withIndexDo: [ :value :index | 
+		columnTypesExternalArray 
+			platformUnsignedLongAt: 1 + ((index - 1) * longSize) 
+			put: value ].
+
+	^ (self 
+		basicNewWithNumberOfColumns: columnTypes size 
+		andTypes: columnTypesExternalArray) 
+		initialize
+]
+
+{ #category : #'instance creation' }
+GtkBaseStore class >> newStrings: aCollection [
+	"convenience method to create a store of strings"
+	| store |
+	
+	store := self newColumnTypes: { G_TYPE_STRING }.
+	aCollection do: [ :each |
+		store appendRow
+			at: 0 
+			putString: each utf8Encoded asString ].
+
+	^ store
+]
+
+{ #category : #private }
+GtkBaseStore >> getIter: iter fromPath: path_string [
+	
+	self ffiCall: #(gboolean gtk_tree_model_get_iter (
+		self,
+		GtkTreeIter *iter,
+		GtkTreePath *path))
+]
+
+{ #category : #private }
+GtkBaseStore >> getIter: iter fromString: path_string [
+	
+	self ffiCall: #(gboolean gtk_tree_model_get_iter_from_string (
+		self,
+		GtkTreeIter *iter,
+		const gchar *path_string))
+]
+
+{ #category : #accessing }
+GtkBaseStore >> iteratorFromPath: aPath [
+	| iter |
+
+	iter := GtkTreeIter new 
+		store: self;
+		yourself.
+
+	(self getIter: iter fromPath: aPath) ifFalse: [
+		self error: 'Iterator could not be set' ].	
+
+	^ iter
+]
+
+{ #category : #accessing }
+GtkBaseStore >> iteratorFromString: aString [
+	| iter |
+
+	iter := GtkTreeIter new 
+		store: self;
+		yourself.
+	
+	(self getIter: iter fromString: aString) ifFalse: [
+		self error: 'Iter could not be set' ].
+	
+	^ iter
+]

@@ -6,31 +6,22 @@ https://developer.gnome.org/gtk3/stable/GtkListStore.html#gtk-list-store-new
 "
 Class {
 	#name : #GtkListStore,
-	#superclass : #GObject,
+	#superclass : #GtkBaseStore,
 	#category : #'Mars-Gtk-Widget-List'
 }
+
+{ #category : #private }
+GtkListStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalArray [
+
+	^ self 
+		gtkListStoreNewWithNumberOfColums: aNumber 
+		andTypes: anExternalArray
+]
 
 { #category : #accessing }
 GtkListStore class >> gtkListStoreNewWithNumberOfColums: numberoOfColumns andTypes: types [
 
-	^ self ffiCall: #(GtkListStore * gtk_list_store_newv (gint numberoOfColumns, void *types))
-]
-
-{ #category : #accessing }
-GtkListStore class >> newColumnTypes: columnTypes [
-	| columnTypesExternalArray longSize |
-
-	longSize := FFIArchitecture forCurrentArchitecture longTypeSize.
-	columnTypesExternalArray := ByteArray new: columnTypes size * longSize.
-	columnTypes withIndexDo: [ :value :index | 
-		columnTypesExternalArray 
-			platformUnsignedLongAt: 1 + ((index - 1) * longSize) 
-			put: value ].
-	
-	^ (self 
-		gtkListStoreNewWithNumberOfColums: columnTypes size 
-		andTypes: columnTypesExternalArray) 
-		initialize
+	^ self ffiCall: #(GtkListStore *gtk_list_store_newv (gint numberoOfColumns, void *types))
 ]
 
 { #category : #iterating }

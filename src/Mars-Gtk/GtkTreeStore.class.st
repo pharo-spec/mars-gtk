@@ -6,7 +6,7 @@ https://developer.gnome.org/gtk3/stable/GtkTreeStore.html
 "
 Class {
 	#name : #GtkTreeStore,
-	#superclass : #GObject,
+	#superclass : #GtkBaseStore,
 	#pools : [
 		'GType'
 	],
@@ -14,41 +14,17 @@ Class {
 }
 
 { #category : #private }
+GtkTreeStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalArray [
+
+	^ self 
+		gtkTreeStoreNewWithNumberOfColums: aNumber 
+		andTypes: anExternalArray
+]
+
+{ #category : #private }
 GtkTreeStore class >> gtkTreeStoreNewWithNumberOfColums: numberoOfColumns andTypes: types [
 
 	^ self ffiCall: #(GtkTreeStore * gtk_tree_store_newv (gint numberoOfColumns, void *types))
-]
-
-{ #category : #'instance creation' }
-GtkTreeStore class >> newColumnTypes: columnTypes [
-	| columnTypesExternalArray longSize |
-	
-	longSize := FFIArchitecture forCurrentArchitecture longTypeSize.
-	columnTypesExternalArray := ByteArray new: columnTypes size * longSize.
-	
-	columnTypes withIndexDo: [ :value :index | 
-		columnTypesExternalArray 
-			platformUnsignedLongAt: 1 + ((index - 1) * longSize) 
-			put: value ].
-		
-	^ (self 
-		gtkTreeStoreNewWithNumberOfColums: columnTypes size 
-		andTypes: columnTypesExternalArray) 
-		initialize
-]
-
-{ #category : #'instance creation' }
-GtkTreeStore class >> newStrings: aCollection [
-	"convenience method to create a store of strings"
-	| store |
-	
-	store := self newColumnTypes: { G_TYPE_STRING }.
-	aCollection do: [ :each |
-		store appendRow
-			at: 0 
-			putString: each utf8Encoded asString ].
-
-	^ store
 ]
 
 { #category : #iterating }
@@ -68,24 +44,6 @@ GtkTreeStore >> appendRow [
 ]
 
 { #category : #private }
-GtkTreeStore >> getIter: iter fromPath: path_string [
-	
-	self ffiCall: #(gboolean gtk_tree_model_get_iter (
-		self,
-		GtkTreeIter *iter,
-		GtkTreePath *path))
-]
-
-{ #category : #private }
-GtkTreeStore >> getIter: iter fromString: path_string [
-	
-	self ffiCall: #(gboolean gtk_tree_model_get_iter_from_string (
-		self,
-		GtkTreeIter *iter,
-		const gchar *path_string))
-]
-
-{ #category : #private }
 GtkTreeStore >> gtkTreeStoreAppend: anIterator withParent: aParentIterator [
 
 	^ self ffiCall: #(void gtk_tree_store_append (self, GtkTreeIter *anIterator, GtkTreeIter *aParentIterator))
@@ -97,31 +55,4 @@ GtkTreeStore >> initialize [
 	"super initialize."
 	"Stores need to be unreferenced after set"
 	self autoRelease
-]
-
-{ #category : #accessing }
-GtkTreeStore >> iteratorFromPath: aPath [
-	| iter |
-
-	iter := GtkTreeIter new 
-		store: self;
-		yourself.
-	(self getIter: iter fromPath: aPath) ifFalse: [
-		self error: 'Iterator could not be set' ].	
-
-	^ iter
-]
-
-{ #category : #accessing }
-GtkTreeStore >> iteratorFromString: aString [
-	| iter |
-
-	iter := GtkTreeIter new 
-		store: self;
-		yourself.
-	
-	(self getIter: iter fromString: aString) ifFalse: [
-		self error: 'Iter could not be set' ].
-	
-	^ iter
 ]
