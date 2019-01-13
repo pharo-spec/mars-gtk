@@ -42,6 +42,12 @@ TablePresenter >> initialize [
 ]
 
 { #category : #accessing }
+TablePresenter >> itemAt: aNumber [
+	
+	^ self items at: aNumber
+]
+
+{ #category : #accessing }
 TablePresenter >> items [
 
 	^ itemsHolder value
