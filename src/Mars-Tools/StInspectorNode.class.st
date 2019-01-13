@@ -14,6 +14,12 @@ StInspectorNode class >> defaultStringLimit [
 ]
 
 { #category : #accessing }
+StInspectorNode >> children [
+
+	^ #()
+]
+
+{ #category : #accessing }
 StInspectorNode >> icon [ 
 
 	^ [ 

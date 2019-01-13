@@ -25,7 +25,7 @@ StRawInspection >> initialize [
 { #category : #initialization }
 StRawInspection >> initializeWidgets [
 	
-	attributeTable := self newTable.
+	attributeTable := self newTreeTable.
 	attributeTable 
 		addColumn: (ImageTableColumn new
 			title: '';
@@ -44,11 +44,7 @@ StRawInspection >> initializeWidgets [
 			onAcceptEdition: [ :node :value | self inform: node name, '=', value asString "node value: value" ];
 			yourself).
 			
-	attributeTable items: self model inspectorNodes
-]
-
-{ #category : #initialization }
-StRawInspection >> newTable [
-
-	^ self instantiate: TablePresenter
+	attributeTable 
+		roots: self model inspectorNodes;
+		children: [ :node | node children ]
 ]

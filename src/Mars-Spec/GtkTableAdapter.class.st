@@ -1,9 +1,6 @@
 Class {
 	#name : #GtkTableAdapter,
 	#superclass : #GtkAdapter,
-	#instVars : [
-		'columnFiller'
-	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
 
@@ -11,7 +8,7 @@ Class {
 GtkTableAdapter >> addModelTo: gtkWidget [
 	| columnBuilder store |
 	
-	store := self newStoreFrom: self model items.
+	store := self newStoreFrom: self items.
 	gtkWidget model: store.
 	
 	columnBuilder := GtkTableColumnBuilder on: self model.
@@ -20,6 +17,22 @@ GtkTableAdapter >> addModelTo: gtkWidget [
 		gtkWidget appendColumn: (columnBuilder
 			columnIndex: index;
 			visit: each) ].
+]
+
+{ #category : #private }
+GtkTableAdapter >> addRow: eachRow into: store [
+	| gtkRow columnFiller |
+	
+	gtkRow := store appendNew.
+	columnFiller := GtkTableColumnFiller new
+		gtkRow: gtkRow;
+		row: eachRow;
+		yourself.
+		
+	^ self model columns withIndexDo: [ :eachColumn :index | 
+			columnFiller
+				columnIndex: index;
+				visit: eachColumn ]
 ]
 
 { #category : #building }
@@ -31,23 +44,38 @@ GtkTableAdapter >> buildWidget [
 	^ GtkScrolledWindow newWidget: gtkTextView
 ]
 
-{ #category : #building }
-GtkTableAdapter >> newStoreFrom: aCollection [
-	| store typeCollector |
+{ #category : #private }
+GtkTableAdapter >> fillStore: store with: aCollection [
+	
+	aCollection do: [ :each | 
+		self 
+			addRow: each 
+			into: store ]
+]
+
+{ #category : #private }
+GtkTableAdapter >> items [
+
+	^ self model items
+]
+
+{ #category : #'private factory' }
+GtkTableAdapter >> newStore [
+	| typeCollector |
 
 	typeCollector := GtkTableColumnTypeCollector new.
-	store := GtkListStore newColumnTypes: (self model columns collect: [ :each |
-		typeCollector visit: each ]).
-	columnFiller := GtkTableColumnFiller new.
-	aCollection do: [ :eachRow | | gtkRow |
-		gtkRow := store appendRow.
-		columnFiller
-			gtkRow: gtkRow;
-			row: eachRow.
-		self model columns withIndexDo: [ :eachColumn :index | 
-			 columnFiller 
-				columnIndex: index;
-				visit: eachColumn ] ].
+	^ self storeClass newColumnTypes: (self model columns collect: [ :each |
+		typeCollector visit: each ])
+]
+
+{ #category : #'private factory' }
+GtkTableAdapter >> newStoreFrom: aCollection [
+	| store |
+
+	store := self newStore.
+	self 
+		fillStore: store
+		with: aCollection.
 
 	^ store
 ]
@@ -56,6 +84,12 @@ GtkTableAdapter >> newStoreFrom: aCollection [
 GtkTableAdapter >> refreshList [
 
 	widget model: (self newStoreFrom: self model items)
+]
+
+{ #category : #private }
+GtkTableAdapter >> storeClass [
+
+	^ GtkListStore
 ]
 
 { #category : #updating }
