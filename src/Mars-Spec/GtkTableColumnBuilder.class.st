@@ -117,7 +117,7 @@ GtkTableColumnBuilder >> visitImageColumn: aTableColumn [
 	
 	column := self newColumnFor: aTableColumn.
 
-	column renderer: self imageRenderer.
+	column packStart: self imageRenderer.
 	column 
 		setAttribute: 'pixbuf' 
 		toColumAtIndex: self columnIndex - 1 
@@ -136,7 +136,7 @@ GtkTableColumnBuilder >> visitStringColumn: aTableColumn [
 		ifTrue: [ self newEditableTextRendererFor: aTableColumn ]
 		ifFalse: [ self textRenderer ].
 	
-	column renderer: renderer.
+	column packStart: renderer.
 	column 
 		setAttribute: 'text' 
 		toColumAtIndex: self columnIndex - 1 

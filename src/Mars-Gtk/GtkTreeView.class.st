@@ -58,7 +58,7 @@ GtkTreeView >> appendTextColumn [
 
 	renderer := GtkCellRendererText new.
 	self appendColumn: (GtkTreeViewColumn new
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer)
 ]
 

@@ -43,7 +43,7 @@ GtkRoassalExample >> buildTreeView [
 		
 	renderer := GtkCellRendererText new.
 	tree appendColumn: (GtkTreeViewColumn new
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
 		
 	tree addExpanderColumn.

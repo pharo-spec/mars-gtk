@@ -53,11 +53,10 @@ GtkTreeTableAdapter >> addLevelTo: item parent: iter [
 GtkTreeTableAdapter >> addModelTo: gtkWidget [
 
 	super addModelTo: gtkWidget.
-	gtkWidget connectTestExpandRow: [ :iter |
+	gtkWidget connectRowExpanded: [ :iter |
 		"it will be an orfan iterator (store not setted since it comes from a callback)"
 		iter store: self store.
-		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter.
-		false ]
+		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ]
 ]
 
 { #category : #private }

@@ -1332,11 +1332,11 @@ GtkExamples class >> gtkExampleListView [
 	renderer := GtkCellRendererText new.
 	list appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
 	list appendColumn: (GtkTreeViewColumn new
 		title: 'Another Column アイウエオ';
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
 
 	^ list
@@ -1899,11 +1899,11 @@ GtkExamples class >> gtkExampleTreeView [
 	renderer := GtkCellRendererText new.
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Another Column アイウエオ';
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
 		
 	tree addExpanderColumn.
@@ -1944,7 +1944,7 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 	renderer := GtkCellRendererText new.
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
 	
 	renderer := GtkCellRendererText new.
@@ -1954,7 +1954,7 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 		iter at: 1 putString: text ].
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Editable column';
-		renderer: renderer;
+		packStart: renderer;
 		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
 		
 	tree addExpanderColumn.
@@ -1964,9 +1964,60 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 ]
 
 { #category : #'private-examples-lists' }
-GtkExamples class >> gtkExampleTreeViewWithIcons [
+GtkExamples class >> gtkExampleTreeViewWithIconsInCell [
 	<gtkExample>
-	<title: 'Tree View with Icons'>
+	<title: 'Tree View with Icons in Cell'>
+	<category: #Lists>
+	<layoutFillContainer>
+	
+	| store tree pixbufRenderer textRenderer child |
+	
+	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF. GType G_TYPE_STRING }.
+
+	100 timesRepeat: [ | row iconName |
+		
+		iconName := Smalltalk ui icons icons keys atRandom.
+		row := store appendNew
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded;
+			yourself.
+			
+		iconName := Smalltalk ui icons icons keys atRandom.
+		(child := row appendNew)
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded.
+		child appendNew 
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded.
+		row appendNew
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded.
+		row appendNew
+			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 1 put: iconName asString utf8Encoded ].
+	
+	tree := GtkTreeView new.
+	tree model: store.
+
+	pixbufRenderer := GtkCellRendererPixbuf new.
+	textRenderer := GtkCellRendererText new.
+	tree appendColumn: (GtkTreeViewColumn new
+		title: 'Icons';
+		packStart: pixbufRenderer expand: false;
+		packStart: textRenderer;
+		setAttribute: 'pixbuf' toColumAtIndex: 0 forRenderer: pixbufRenderer;
+		setAttribute: 'text' toColumAtIndex: 1 forRenderer: textRenderer).
+		
+	tree addExpanderColumn.
+	tree enableTreeLines.
+
+	^ tree
+]
+
+{ #category : #'private-examples-lists' }
+GtkExamples class >> gtkExampleTreeViewWithIconsInColumn [
+	<gtkExample>
+	<title: 'Tree View with Icons in Column'>
 	<category: #Lists>
 	<layoutFillContainer>
 	
@@ -2003,11 +2054,11 @@ GtkExamples class >> gtkExampleTreeViewWithIcons [
 	textRenderer := GtkCellRendererText new.
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Icon';
-		renderer: pixbufRenderer;
+		packStart: pixbufRenderer;
 		setAttribute: 'pixbuf' toColumAtIndex: 0 forRenderer: pixbufRenderer).
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Name';
-		renderer: textRenderer;
+		packStart: textRenderer;
 		setAttribute: 'text' toColumAtIndex: 1 forRenderer: textRenderer).
 		
 	tree addExpanderColumn.

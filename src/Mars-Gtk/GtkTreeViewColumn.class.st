@@ -8,7 +8,7 @@ Class {
 	#name : #GtkTreeViewColumn,
 	#superclass : #GObject,
 	#instVars : [
-		'renderer'
+		'renderers'
 	],
 	#category : #'Mars-Gtk-Widget-Tree'
 }
@@ -25,6 +25,12 @@ GtkTreeViewColumn class >> treeViewColumnNew [
 	^ self ffiCall: #(GtkTreeViewColumn *gtk_tree_view_column_new (void))
 ]
 
+{ #category : #accessing }
+GtkTreeViewColumn >> beResizable [
+
+	self resizable: true
+]
+
 { #category : #private }
 GtkTreeViewColumn >> gtkTreeViewColumnGetTitle [
 
@@ -32,17 +38,34 @@ GtkTreeViewColumn >> gtkTreeViewColumnGetTitle [
 ]
 
 { #category : #private }
-GtkTreeViewColumn >> gtkTreeViewColumnPackStart: aRenderer andExpand: aBoolean [
+GtkTreeViewColumn >> gtkTreeViewColumnPackEnd: cell expand: expand [
 
-	self ffiCall: #(void gtk_tree_view_column_pack_start (self,
-                                 GtkCellRendererText *aRenderer,
-                                 gboolean aBoolean))
+	self ffiCall: #(void gtk_tree_view_column_pack_end (
+		self,
+		GtkCellRendererText *cell,
+		gboolean aBoolean))
+]
+
+{ #category : #private }
+GtkTreeViewColumn >> gtkTreeViewColumnPackStart: cell expand: expand [
+
+	self ffiCall: #(void gtk_tree_view_column_pack_start (
+		self,
+		GtkCellRendererText *cell,
+		gboolean expand))
 ]
 
 { #category : #private }
 GtkTreeViewColumn >> gtkTreeViewColumnSetTitle: encodedBytes [
 
 	self ffiCall: #(void gtk_tree_view_column_set_title (self, const gchar *encodedBytes))
+]
+
+{ #category : #initialization }
+GtkTreeViewColumn >> initialize [
+
+	super initialize.
+	renderers := #()
 ]
 
 { #category : #testing }
@@ -76,15 +99,37 @@ GtkTreeViewColumn >> minWidth: min_width [
 ]
 
 { #category : #accessing }
-GtkTreeViewColumn >> renderer: aRenderer [
+GtkTreeViewColumn >> packEnd: aRenderer [
 
-	renderer := aRenderer.
-	self 
-		gtkTreeViewColumnPackStart: aRenderer 
-		andExpand: true
+	self packEnd: aRenderer expand: true
 ]
 
 { #category : #accessing }
+GtkTreeViewColumn >> packEnd: aRenderer expand: aBoolean [
+
+	renderers := renderers copyWith: aRenderer.
+	self 
+		gtkTreeViewColumnPackEnd: aRenderer 
+		expand: aBoolean
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> packStart: aRenderer [
+
+	self packStart: aRenderer expand: true 
+		
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> packStart: aRenderer expand: aBoolean [
+
+	renderers := renderers copyWith: aRenderer.
+	self 
+		gtkTreeViewColumnPackStart: aRenderer 
+		expand: aBoolean
+]
+
+{ #category : #private }
 GtkTreeViewColumn >> resizable: resizable [
 
 	^ self ffiCall: #(void gtk_tree_view_column_set_resizable (self, gboolean resizable))
@@ -93,10 +138,11 @@ GtkTreeViewColumn >> resizable: resizable [
 { #category : #accessing }
 GtkTreeViewColumn >> setAttribute: attribute toColumAtIndex: column forRenderer: aRenderer [
 
-	self ffiCall: #(void gtk_tree_view_column_add_attribute (self,
-                                    GtkCellRendererText *aRenderer,
-                                    const gchar *attribute,
-                                    gint column))
+	self ffiCall: #(void gtk_tree_view_column_add_attribute (
+		self,
+		GtkCellRendererText *aRenderer,
+		const gchar *attribute,
+		gint column))
 ]
 
 { #category : #accessing }
