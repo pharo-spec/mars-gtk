@@ -42,6 +42,7 @@ GtkTableColumnFiller >> row: anObject [
 { #category : #visiting }
 GtkTableColumnFiller >> visitImageColumn: aTableColumn [
 
+	self flag: #TODO. "I'm assuming the image is a Form, which may not be the case in the future"
 	self gtkRow
 		at: self columnIndex - 1 
 		putObject: (GdkPixbuf newForm: (aTableColumn readObject: self row))

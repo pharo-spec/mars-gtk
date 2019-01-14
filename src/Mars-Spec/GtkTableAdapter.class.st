@@ -20,19 +20,21 @@ GtkTableAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #private }
-GtkTableAdapter >> addRow: eachRow into: store [
+GtkTableAdapter >> addRow: anObject into: store [
 	| gtkRow columnFiller |
 	
 	gtkRow := store appendNew.
 	columnFiller := GtkTableColumnFiller new
 		gtkRow: gtkRow;
-		row: eachRow;
+		row: anObject;
 		yourself.
 		
-	^ self model columns withIndexDo: [ :eachColumn :index | 
-			columnFiller
-				columnIndex: index;
-				visit: eachColumn ]
+	self model columns withIndexDo: [ :eachColumn :index | 
+		columnFiller
+			columnIndex: index;
+			visit: eachColumn ].
+		
+	^ gtkRow
 ]
 
 { #category : #building }
