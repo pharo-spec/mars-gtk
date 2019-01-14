@@ -76,6 +76,14 @@ GtkAbstractIter >> atColumnIndex: index setValue: aValue [
 	 self subclassResponsibility
 ]
 
+{ #category : #copying }
+GtkAbstractIter >> copyInMemory [
+	
+	^ super copyInMemory
+		store: self store;
+		yourself
+]
+
 { #category : #private }
 GtkAbstractIter >> getStringAtColumnIndex: index into: aValue [
 

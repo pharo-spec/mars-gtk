@@ -48,6 +48,28 @@ GtkTreeIter >> atColumnIndex: index setValue: aValue [
 	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore *store, self, uint index, void* aValue, -1))
 ]
 
+{ #category : #iterating }
+GtkTreeIter >> childrenDo: aBlock [ 
+	| child more |
+
+	child := self firstChild.
+	more := child notNil.
+	[ more ] whileTrue: [
+		aBlock value: child.
+ 		more := child next ]
+	
+]
+
+{ #category : #'private iterating' }
+GtkTreeIter >> firstChild [
+	| childIter |
+
+	childIter := self copyInMemory.
+	^ (self gtkTreeModelIterChildrenOf: self into: childIter) 
+		ifTrue: [ childIter ]
+		ifFalse: [ nil ]
+]
+
 { #category : #private }
 GtkTreeIter >> getStringAtColumnIndex: index into: aValue [
 
@@ -60,12 +82,41 @@ GtkTreeIter >> getStringAtColumnIndex: index into: aValue [
 ]
 
 { #category : #private }
+GtkTreeIter >> gtkTreeModelIterChildrenOf: parent into: iter [
+
+	^ self ffiCall: #(gboolean gtk_tree_model_iter_children (
+		GtkTreeStore *store,
+ 		GtkTreeIter *iter,
+ 		GtkTreeIter *parent))
+]
+
+{ #category : #private }
 GtkTreeIter >> gtkTreeStoreAppend: iter withParent: parent [
 
 	^ self ffiCall: #(void gtk_tree_store_append (
-		GtkListStore *store, 
+		GtkTreeStore *store, 
 		GtkTreeIter *iter, 
 		GtkTreeIter *parent))
+]
+
+{ #category : #testing }
+GtkTreeIter >> hasChildren [
+
+	^ self ffiCall: #(gboolean gtk_tree_model_iter_has_child (
+		GtkTreeStore *store,
+ 		self))
+]
+
+{ #category : #'private iterating' }
+GtkTreeIter >> next [ 
+
+	^ self ffiCall: #(gboolean gtk_tree_model_iter_next (GtkTreeStore *store, self))
+]
+
+{ #category : #'private iterating' }
+GtkTreeIter >> previous [
+
+	^ self ffiCall: #(gboolean gtk_tree_model_iter_previous (GtkTreeStore *store, self))
 ]
 
 { #category : #accessing }
@@ -75,4 +126,18 @@ GtkTreeIter >> setValues: aValueArray [
 		GtkTreeStore *store,
 		self,
 		void *aValueArray))
+]
+
+{ #category : #converting }
+GtkTreeIter >> toPath [
+
+	^ self ffiCall: #(GtkTreePath *gtk_tree_model_get_path (
+		GtkTreeStore *store,
+		self))
+]
+
+{ #category : #converting }
+GtkTreeIter >> toPathArray [
+
+	^ self toPath toArray
 ]

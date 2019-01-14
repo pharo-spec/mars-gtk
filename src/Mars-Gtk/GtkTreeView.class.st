@@ -69,6 +69,18 @@ GtkTreeView >> basicAppendColumn: column [
 ]
 
 { #category : #signals }
+GtkTreeView >> connectRowExpanded: aBlock [
+
+	self 
+		connect: 'row-expanded' 
+		signature: #(void (void *treeView, void *iter, void *path, void *userData))
+		do: [ :treeView :iterHandle :pathHandle :userData | | iter path |
+			iter := (GtkTreeIter fromHandle: iterHandle) copyInMemory.
+			path := (GtkTreePath fromHandle: pathHandle) toArray.
+			[ aBlock cull: iter cull: path ] fork ]
+]
+
+{ #category : #signals }
 GtkTreeView >> connectRowSelected: aBlock [
 
 	self 
@@ -89,6 +101,19 @@ GtkTreeView >> connectRowSelected: aBlock [
 GtkTreeView >> connectSelectionChanged: aBlock [
 
 	^ self selection connectChanged: aBlock
+]
+
+{ #category : #signals }
+GtkTreeView >> connectTestExpandRow: aBlock [
+	"You need to answer false to allow expansion (yes, this is weird)"
+
+	self 
+		connect: 'test-expand-row' 
+		signature: #(gboolean (void *treeView, void *iter, void *path, void *userData))
+		do: [ :treeView :iterHandle :pathHandle :userData | | iter path |
+			iter := (GtkTreeIter fromHandle: iterHandle) copyInMemory.
+			path := (GtkTreePath fromHandle: pathHandle) toArray.
+			aBlock cull: iter cull: path ]
 ]
 
 { #category : #private }
