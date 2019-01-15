@@ -102,7 +102,7 @@ GtkTableColumnBuilder >> visitCompositeColumn: aTableColumn [
 
 	aTableColumn columns do: [ :each |
 		packer 
-			expand: (each = aTableColumn columns last);
+			expand: each width isNil;
 			visit: each ].
 
 	self view appendColumn: column

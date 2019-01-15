@@ -8,3 +8,15 @@ Class {
 	#superclass : #GObject,
 	#category : #'Mars-Gtk-Widget-CellRenderers'
 }
+
+{ #category : #accessing }
+GtkCellRenderer >> width [
+
+	^ self gObjectGetInteger: 'width'
+]
+
+{ #category : #accessing }
+GtkCellRenderer >> width: aNumber [ 
+
+	self gObjectSet: 'width' toInteger: aNumber
+]

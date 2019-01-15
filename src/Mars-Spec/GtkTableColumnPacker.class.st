@@ -15,6 +15,14 @@ GtkTableColumnPacker class >> on: aModel [
 	^ self new model: aModel
 ]
 
+{ #category : #private }
+GtkTableColumnPacker >> addRendererPropertiesTo: renderer column: aTableColumn [
+	
+	aTableColumn width ifNotNil: [ :w | 
+		renderer width: w ].
+
+]
+
 { #category : #accessing }
 GtkTableColumnPacker >> builder [
 	^ builder
@@ -97,6 +105,7 @@ GtkTableColumnPacker >> visitImageColumn: aTableColumn [
 	| renderer |
 
 	renderer := self newImageRenderer.
+	self addRendererPropertiesTo: renderer column: aTableColumn.
 	column packStart: renderer expand: self isExpand.
 	column 
 		addAttribute: 'pixbuf' 
@@ -111,6 +120,7 @@ GtkTableColumnPacker >> visitStringColumn: aTableColumn [
 	renderer := aTableColumn isEditable 
 		ifTrue: [ self newEditableTextRendererFor: aTableColumn ]
 		ifFalse: [ self newTextRenderer ].
+	self addRendererPropertiesTo: renderer column: aTableColumn.
 	
 	column packStart: renderer expand: self isExpand.
 	column 

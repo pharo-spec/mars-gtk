@@ -190,6 +190,16 @@ GObject >> gObjectGetBoolean: aName [
 ]
 
 { #category : #'private primitives' }
+GObject >> gObjectGetInteger: aName [
+	"a convenience method to read boolean properties"
+	| buffer |
+	
+	buffer := FFIInt32 newBuffer.
+	self gObjectGet: aName into: buffer.
+	^ buffer signedLongAt: 1
+]
+
+{ #category : #'private primitives' }
 GObject >> gObjectGetString: aName [
 	"a convenience method to read string properties"
 	| buffer |
@@ -203,6 +213,12 @@ GObject >> gObjectGetString: aName [
 GObject >> gObjectSet: aName toBoolean: aBoolean [
 
 	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean) )	
+]
+
+{ #category : #'private primitives' }
+GObject >> gObjectSet: aName toInteger: aNumber [
+
+	self ffiCall: #(void g_object_set (self, const gchar *aName, gint aNumber) )
 ]
 
 { #category : #'private primitives' }
