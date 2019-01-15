@@ -20,16 +20,16 @@ GtkTableAdapter >> addModelTo: gtkWidget [
 
 { #category : #private }
 GtkTableAdapter >> addRow: anObject into: store [
-	| gtkRow columnFiller |
+	| gtkRow filler |
 	
 	gtkRow := store appendNew.
-	columnFiller := GtkTableRowFiller new
+	filler := GtkTableRowFiller new
 		gtkRow: gtkRow;
 		row: anObject;
 		yourself.
 		
 	self model columns do: [ :eachColumn | 
-		columnFiller visit: eachColumn ].
+		filler visit: eachColumn ].
 		
 	^ gtkRow
 ]

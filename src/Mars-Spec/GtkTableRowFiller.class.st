@@ -3,8 +3,7 @@ Class {
 	#superclass : #GtkTableColumnVisitor,
 	#instVars : [
 		'gtkRow',
-		'row',
-		'nextColumnIndex'
+		'row'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
@@ -17,6 +16,13 @@ GtkTableRowFiller >> gtkRow [
 { #category : #accessing }
 GtkTableRowFiller >> gtkRow: anObject [
 	gtkRow := anObject
+]
+
+{ #category : #accessing }
+GtkTableRowFiller >> nextColumnIndex [ 
+
+	super nextColumnIndex.
+	
 ]
 
 { #category : #accessing }

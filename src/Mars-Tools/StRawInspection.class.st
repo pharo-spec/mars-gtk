@@ -26,16 +26,17 @@ StRawInspection >> initialize [
 StRawInspection >> initializeWidgets [
 	
 	attributeTable := self newTreeTable.
-	attributeTable 
-		addColumn: (ImageTableColumn new
-			title: '';
-			width: 20;
-			evaluated: #icon;
-			yourself);
-		addColumn: (StringTableColumn new
+	attributeTable
+		addColumn: (CompositeTableColumn new  
 			title: 'Variable';
-			evaluated: #name;
-			width: 150;
+			addColumn: (ImageTableColumn new
+				width: 20;
+				evaluated: #icon;
+				yourself);
+			addColumn: (StringTableColumn new
+				evaluated: #name;
+				width: 150;
+				yourself);
 			yourself);
 		addColumn: (StringTableColumn new
 			title: 'Value';
@@ -45,6 +46,6 @@ StRawInspection >> initializeWidgets [
 			yourself).
 			
 	attributeTable 
-		roots: self model inspectorNodes;
+		roots: self model allInspectorNodes;
 		children: [ :node | node children ]
 ]

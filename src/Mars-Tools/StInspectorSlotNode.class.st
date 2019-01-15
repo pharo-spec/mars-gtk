@@ -15,6 +15,12 @@ StInspectorSlotNode class >> newObject: anObject slot: aSlot [
 		yourself
 ]
 
+{ #category : #accessing }
+StInspectorSlotNode >> children [ 
+	
+	^ self value inspectorNodes
+]
+
 { #category : #initialization }
 StInspectorSlotNode >> initializeObject: anObject slot: aSlot [
 

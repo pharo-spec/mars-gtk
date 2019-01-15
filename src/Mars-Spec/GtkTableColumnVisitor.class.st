@@ -14,6 +14,12 @@ GtkTableColumnVisitor >> columnIndex [
 ]
 
 { #category : #accessing }
+GtkTableColumnVisitor >> columnIndex: aNumber [
+
+	columnIndex := aNumber
+]
+
+{ #category : #accessing }
 GtkTableColumnVisitor >> initialize [
 
 	super initialize.
@@ -27,7 +33,13 @@ GtkTableColumnVisitor >> nextColumnIndex [
 ]
 
 { #category : #accessing }
-GtkTableColumnVisitor >> resetColumnIndex [ 
+GtkTableColumnVisitor >> prevColumnIndex [
+
+	columnIndex := columnIndex - 1
+]
+
+{ #category : #accessing }
+GtkTableColumnVisitor >> resetColumnIndex [
 
 	columnIndex := 0
 ]
@@ -43,7 +55,9 @@ GtkTableColumnVisitor >> visit: aTableColumn [
 GtkTableColumnVisitor >> visitCompositeColumn: aTableColumn [
 	
 	aTableColumn columns do: [ :each |
-		self visit: each  ]
+		self visit: each  ].
+	"reduce index because it was incremented by the inner columns process"
+	self prevColumnIndex
 ]
 
 { #category : #visiting }

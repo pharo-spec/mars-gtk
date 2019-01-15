@@ -44,12 +44,6 @@ GtkTableColumnPacker >> column: anObject [
 ]
 
 { #category : #accessing }
-GtkTableColumnPacker >> columnIndex: aNumber [
-
-	columnIndex := aNumber
-]
-
-{ #category : #accessing }
 GtkTableColumnPacker >> expand: anObject [
 	expand := anObject
 ]

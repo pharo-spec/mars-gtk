@@ -1,6 +1,13 @@
 Extension { #name : #Object }
 
 { #category : #'*Mars-Tools' }
+Object >> allInspectorNodes [
+	"Answer a list of attributes as nodes"
+	
+	^ { StInspectorSelfNode newObject: self }, self inspectorNodes
+]
+
+{ #category : #'*Mars-Tools' }
 Object >> inspectorIcon [
 
 	^ self iconOrThumbnailOfSize: 16
@@ -10,8 +17,7 @@ Object >> inspectorIcon [
 Object >> inspectorNodes [
 	"Answer a list of attributes as nodes"
 	
-	^ { StInspectorSelfNode newObject: self }, 
-	  (self class allSlots collect: [ :each |
+	^ (self class allSlots collect: [ :each |
 		StInspectorSlotNode newObject: self slot: each ])
 ]
 

@@ -103,8 +103,10 @@ GtkTableColumnBuilder >> visitCompositeColumn: aTableColumn [
 	aTableColumn columns do: [ :each |
 		packer 
 			expand: each width isNil;
-			visit: each ].
-
+			visit: each.
+		self nextColumnIndex ].
+	self prevColumnIndex.
+	
 	self view appendColumn: column
 ]
 
@@ -120,6 +122,5 @@ GtkTableColumnBuilder >> visitStringColumn: aTableColumn [
 	
 	column := self newColumnFor: aTableColumn.
 	(self newColumnPackerFor: column) visit: aTableColumn.
-
-	self view appendColumn: column
+	self view appendColumn: column.
 ]
