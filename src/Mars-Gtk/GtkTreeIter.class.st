@@ -22,7 +22,7 @@ GtkTreeIter >> appendNew [
 	| iterator |
 
 	iterator := GtkTreeIter on: self store.
-	self gtkTreeStoreAppend: iterator withParent: self.
+	self gtkTreeStoreAppend: iterator parent: self.
 	
 	^ iterator
 ]
@@ -32,7 +32,7 @@ GtkTreeIter >> appendNewRoot [
 
 	^ self 
 		gtkTreeStoreAppend: self 
-		withParent: nil
+		parent: nil
 ]
 
 { #category : #private }
@@ -91,7 +91,7 @@ GtkTreeIter >> gtkTreeModelIterChildrenOf: parent into: iter [
 ]
 
 { #category : #private }
-GtkTreeIter >> gtkTreeStoreAppend: iter withParent: parent [
+GtkTreeIter >> gtkTreeStoreAppend: iter parent: parent [
 
 	^ self ffiCall: #(void gtk_tree_store_append (
 		GtkTreeStore *store, 

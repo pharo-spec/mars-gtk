@@ -13,10 +13,9 @@ GtkTableAdapter >> addModelTo: gtkWidget [
 	
 	columnBuilder := GtkTableColumnBuilder on: self model.
 	columnBuilder store: store.
-	self model columns withIndexDo: [ :each :index | 
-		gtkWidget appendColumn: (columnBuilder
-			columnIndex: index;
-			visit: each) ].
+	columnBuilder view: gtkWidget. 
+	self model columns do: [ :each | 
+		columnBuilder visit: each ].
 ]
 
 { #category : #private }
@@ -24,15 +23,13 @@ GtkTableAdapter >> addRow: anObject into: store [
 	| gtkRow columnFiller |
 	
 	gtkRow := store appendNew.
-	columnFiller := GtkTableColumnFiller new
+	columnFiller := GtkTableRowFiller new
 		gtkRow: gtkRow;
 		row: anObject;
 		yourself.
 		
-	self model columns withIndexDo: [ :eachColumn :index | 
-		columnFiller
-			columnIndex: index;
-			visit: eachColumn ].
+	self model columns do: [ :eachColumn | 
+		columnFiller visit: eachColumn ].
 		
 	^ gtkRow
 ]
@@ -66,8 +63,9 @@ GtkTableAdapter >> newStore [
 	| typeCollector |
 
 	typeCollector := GtkTableColumnTypeCollector new.
-	^ self storeClass newColumnTypes: (self model columns collect: [ :each |
-		typeCollector visit: each ])
+	self model columns collect: [ :each | 
+		typeCollector visit: each ].
+	^ self storeClass newColumnTypes: typeCollector types
 ]
 
 { #category : #'private factory' }

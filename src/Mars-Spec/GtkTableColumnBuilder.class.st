@@ -4,9 +4,7 @@ Class {
 	#instVars : [
 		'model',
 		'store',
-		'textRenderer',
-		'imageRenderer',
-		'columnIndex'
+		'view'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
@@ -35,24 +33,6 @@ GtkTableColumnBuilder >> columnEdited: aTableColumn path: path text: text [
 ]
 
 { #category : #accessing }
-GtkTableColumnBuilder >> columnIndex [ 
-
-	^ columnIndex
-]
-
-{ #category : #accessing }
-GtkTableColumnBuilder >> columnIndex: aNumber [
-
-	columnIndex := aNumber
-]
-
-{ #category : #private }
-GtkTableColumnBuilder >> imageRenderer [
-
-	^ imageRenderer ifNil: [ imageRenderer := GtkCellRendererPixbuf new ]
-]
-
-{ #category : #accessing }
 GtkTableColumnBuilder >> model [
 
 	^ model
@@ -76,15 +56,13 @@ GtkTableColumnBuilder >> newColumnFor: aTableColumn [
 ]
 
 { #category : #'private factory' }
-GtkTableColumnBuilder >> newEditableTextRendererFor: aTableColumn [
-	| renderer |
-	
-	renderer := GtkCellRendererText new.
-	renderer beEditable.
-	renderer connectEdited: [ :path :text | 
-		self columnEdited: aTableColumn path: path text: text ].
-		
-	^ renderer
+GtkTableColumnBuilder >> newColumnPackerFor: column [
+
+	^ GtkTableColumnPacker new 
+		column: column;
+		builder: self;
+		columnIndex: self columnIndex;
+		yourself
 ]
 
 { #category : #private }
@@ -105,42 +83,43 @@ GtkTableColumnBuilder >> store: anObject [
 	store := anObject
 ]
 
-{ #category : #private }
-GtkTableColumnBuilder >> textRenderer [
+{ #category : #accessing }
+GtkTableColumnBuilder >> view [
+	^ view
+]
 
-	^ textRenderer ifNil: [ textRenderer := GtkCellRendererText new ]
+{ #category : #accessing }
+GtkTableColumnBuilder >> view: anObject [
+	view := anObject
+]
+
+{ #category : #visiting }
+GtkTableColumnBuilder >> visitCompositeColumn: aTableColumn [
+	| column packer |
+	
+	column := self newColumnFor: aTableColumn.
+	packer := self newColumnPackerFor: column.	
+
+	aTableColumn columns do: [ :each |
+		packer 
+			expand: (each = aTableColumn columns last);
+			visit: each ].
+
+	self view appendColumn: column
 ]
 
 { #category : #visiting }
 GtkTableColumnBuilder >> visitImageColumn: aTableColumn [
-	| column |
 	
-	column := self newColumnFor: aTableColumn.
-
-	column packStart: self imageRenderer.
-	column 
-		setAttribute: 'pixbuf' 
-		toColumAtIndex: self columnIndex - 1 
-		forRenderer: self imageRenderer.
-
-	^ column
+	self visitStringColumn: aTableColumn
 ]
 
 { #category : #visiting }
 GtkTableColumnBuilder >> visitStringColumn: aTableColumn [
-	| column renderer |
+	| column |
 	
 	column := self newColumnFor: aTableColumn.
-	
-	renderer := aTableColumn isEditable 
-		ifTrue: [ self newEditableTextRendererFor: aTableColumn ]
-		ifFalse: [ self textRenderer ].
-	
-	column packStart: renderer.
-	column 
-		setAttribute: 'text' 
-		toColumAtIndex: self columnIndex - 1 
-		forRenderer: renderer.
+	(self newColumnPackerFor: column) visit: aTableColumn.
 
-	^ column
+	self view appendColumn: column
 ]

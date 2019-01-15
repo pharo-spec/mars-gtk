@@ -26,6 +26,16 @@ GtkTreeViewColumn class >> treeViewColumnNew [
 ]
 
 { #category : #accessing }
+GtkTreeViewColumn >> addAttribute: attribute column: column renderer: aRenderer [
+
+	self ffiCall: #(void gtk_tree_view_column_add_attribute (
+		self,
+		GtkCellRendererText *aRenderer,
+		const gchar *attribute,
+		gint column))
+]
+
+{ #category : #accessing }
 GtkTreeViewColumn >> beResizable [
 
 	self resizable: true
@@ -133,16 +143,6 @@ GtkTreeViewColumn >> packStart: aRenderer expand: aBoolean [
 GtkTreeViewColumn >> resizable: resizable [
 
 	^ self ffiCall: #(void gtk_tree_view_column_set_resizable (self, gboolean resizable))
-]
-
-{ #category : #accessing }
-GtkTreeViewColumn >> setAttribute: attribute toColumAtIndex: column forRenderer: aRenderer [
-
-	self ffiCall: #(void gtk_tree_view_column_add_attribute (
-		self,
-		GtkCellRendererText *aRenderer,
-		const gchar *attribute,
-		gint column))
 ]
 
 { #category : #accessing }

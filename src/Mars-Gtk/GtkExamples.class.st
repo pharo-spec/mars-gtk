@@ -1333,11 +1333,11 @@ GtkExamples class >> gtkExampleListView [
 	list appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
 		packStart: renderer;
-		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+		addAttribute: 'text' column: 0 renderer: renderer).
 	list appendColumn: (GtkTreeViewColumn new
 		title: 'Another Column アイウエオ';
 		packStart: renderer;
-		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+		addAttribute: 'text' column: 1 renderer: renderer).
 
 	^ list
 ]
@@ -1900,11 +1900,11 @@ GtkExamples class >> gtkExampleTreeView [
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
 		packStart: renderer;
-		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+		addAttribute: 'text' column: 0 renderer: renderer).
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Another Column アイウエオ';
 		packStart: renderer;
-		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+		addAttribute: 'text' column: 1 renderer: renderer).
 		
 	tree addExpanderColumn.
 	tree enableTreeLines.
@@ -1945,7 +1945,7 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Example Column Tìtlé';
 		packStart: renderer;
-		setAttribute: 'text' toColumAtIndex: 0 forRenderer: renderer).
+		addAttribute: 'text' column: 0 renderer: renderer).
 	
 	renderer := GtkCellRendererText new.
 	renderer beEditable.
@@ -1955,7 +1955,7 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Editable column';
 		packStart: renderer;
-		setAttribute: 'text' toColumAtIndex: 1 forRenderer: renderer).
+		addAttribute: 'text' column: 1 renderer: renderer).
 		
 	tree addExpanderColumn.
 	tree enableTreeLines.
@@ -2005,8 +2005,8 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInCell [
 		title: 'Icons';
 		packStart: pixbufRenderer expand: false;
 		packStart: textRenderer;
-		setAttribute: 'pixbuf' toColumAtIndex: 0 forRenderer: pixbufRenderer;
-		setAttribute: 'text' toColumAtIndex: 1 forRenderer: textRenderer).
+		addAttribute: 'pixbuf' column: 0 renderer: pixbufRenderer;
+		addAttribute: 'text' column: 1 renderer: textRenderer).
 		
 	tree addExpanderColumn.
 	tree enableTreeLines.
@@ -2055,11 +2055,11 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInColumn [
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Icon';
 		packStart: pixbufRenderer;
-		setAttribute: 'pixbuf' toColumAtIndex: 0 forRenderer: pixbufRenderer).
+		addAttribute: 'pixbuf' column: 0 renderer: pixbufRenderer).
 	tree appendColumn: (GtkTreeViewColumn new
 		title: 'Name';
 		packStart: textRenderer;
-		setAttribute: 'text' toColumAtIndex: 1 forRenderer: textRenderer).
+		addAttribute: 'text' column: 1 renderer: textRenderer).
 		
 	tree addExpanderColumn.
 	tree enableTreeLines.
