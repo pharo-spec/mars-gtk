@@ -65,5 +65,11 @@ GtkTableColumnVisitor >> visitImageColumn: aTableColumn [
 ]
 
 { #category : #visiting }
+GtkTableColumnVisitor >> visitIndexColumn: aTableColumn [
+	
+	^ self visitStringColumn: aTableColumn
+]
+
+{ #category : #visiting }
 GtkTableColumnVisitor >> visitStringColumn: aTableColumn [
 ]
