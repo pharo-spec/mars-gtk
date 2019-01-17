@@ -16,6 +16,8 @@ GtkTableAdapter >> addModelTo: gtkWidget [
 	columnBuilder view: gtkWidget. 
 	self model columns do: [ :each | 
 		columnBuilder visit: each ].
+	
+	gtkWidget headersVisible: self model isShowingColumnHeaders
 ]
 
 { #category : #private }
