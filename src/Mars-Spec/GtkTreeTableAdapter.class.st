@@ -32,8 +32,11 @@ Class {
 { #category : #private }
 GtkTreeTableAdapter >> addChildrenFor: anObject into: gtkRow [
 
-	(self model childrenFor: anObject) do: [ :childElement |
-		super addRow: childElement into: gtkRow ]
+	(self model childrenFor: anObject) withIndexDo: [ :childElement :index |
+		super 
+			addRow: childElement 
+			index: index 
+			into: gtkRow ]
 ]
 
 { #category : #private }
@@ -60,10 +63,10 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #private }
-GtkTreeTableAdapter >> addRow: anObject into: store [
+GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 	| gtkRow |
 
-	gtkRow := super addRow: anObject into: store.
+	gtkRow := super addRow: anObject index: index into: store.
 	"I will add the first level children of this row"
 	self addChildrenFor: anObject into: gtkRow.
 			
@@ -93,6 +96,12 @@ GtkTreeTableAdapter >> items [
 GtkTreeTableAdapter >> markLevelAddedFor: item [
 
 	levelsAdded add: item
+]
+
+{ #category : #'private factory' }
+GtkTreeTableAdapter >> newColumnBuilderOn: anObject [
+
+	^ GtkTreeTableColumnBuilder on: anObject
 ]
 
 { #category : #private }

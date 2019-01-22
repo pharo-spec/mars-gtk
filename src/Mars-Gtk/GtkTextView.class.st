@@ -9,6 +9,9 @@ Class {
 	#instVars : [
 		'textBuffer'
 	],
+	#pools : [
+		'GtkWrapMode'
+	],
 	#category : #'Mars-Gtk-Widget'
 }
 
@@ -20,6 +23,30 @@ GtkTextView class >> new [
 { #category : #private }
 GtkTextView class >> textViewNew [
 	^ self ffiCall: #(GtkTextView *gtk_text_view_new (void))
+]
+
+{ #category : #accessing }
+GtkTextView >> beWrapChar [
+
+	self setWrapMode: GTK_WRAP_CHAR
+]
+
+{ #category : #accessing }
+GtkTextView >> beWrapNone [
+
+	self setWrapMode: GTK_WRAP_NONE
+]
+
+{ #category : #accessing }
+GtkTextView >> beWrapWord [
+
+	self setWrapMode: GTK_WRAP_WORD
+]
+
+{ #category : #accessing }
+GtkTextView >> beWrapWordChar [
+
+	self setWrapMode: GTK_WRAP_WORD_CHAR
 ]
 
 { #category : #accessing }
@@ -52,6 +79,12 @@ GtkTextView >> monospace: aBoolean [
 	^ self ffiCall: #(void gtk_text_view_set_monospace (self, gboolean aBoolean))
 ]
 
+{ #category : #private }
+GtkTextView >> setWrapMode: wrap_mode [
+
+	^ self ffiCall: #(void gtk_text_view_set_wrap_mode (self, GtkWrapMode wrap_mode))
+]
+
 { #category : #accessing }
 GtkTextView >> text [
 
@@ -68,4 +101,10 @@ GtkTextView >> text: aString [
 GtkTextView >> textBuffer [
 
 	^ textBuffer ifNil: [ textBuffer := self getBuffer ]
+]
+
+{ #category : #accessing }
+GtkTextView >> wrapMode [ 
+
+	^ self ffiCall: #(GtkWrapMode gtk_text_view_get_wrap_mode(self))
 ]

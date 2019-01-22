@@ -3,7 +3,8 @@ Class {
 	#superclass : #GtkTableColumnVisitor,
 	#instVars : [
 		'gtkRow',
-		'row'
+		'row',
+		'rowIndex'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
@@ -35,6 +36,16 @@ GtkTableRowFiller >> row: anObject [
 	row := anObject
 ]
 
+{ #category : #accessing }
+GtkTableRowFiller >> rowIndex [
+	^ rowIndex
+]
+
+{ #category : #accessing }
+GtkTableRowFiller >> rowIndex: anObject [
+	rowIndex := anObject
+]
+
 { #category : #visiting }
 GtkTableRowFiller >> visitImageColumn: aTableColumn [
 
@@ -42,6 +53,14 @@ GtkTableRowFiller >> visitImageColumn: aTableColumn [
 	self gtkRow
 		at: self columnIndex 
 		putObject: (GdkPixbuf newForm: (aTableColumn readObject: self row))
+]
+
+{ #category : #visiting }
+GtkTableRowFiller >> visitIndexColumn: aTableColumn [
+
+	self gtkRow
+		at: self columnIndex
+		put: self rowIndex asString utf8Encoded
 ]
 
 { #category : #visiting }

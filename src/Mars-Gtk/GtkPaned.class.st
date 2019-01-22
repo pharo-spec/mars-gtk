@@ -32,22 +32,52 @@ GtkPaned class >> panedNew: orientation [
 	^ self ffiCall: #(GtkPaned *gtk_paned_new (GtkOrientation orientation))
 ]
 
+{ #category : #private }
+GtkPaned >> basicPack1: child resize: resize shrink: shrink [ 
+
+	^ self ffiCall: #(void gtk_paned_pack1 (self, GtkWidget *child, gboolean resize, gboolean shrink))
+]
+
+{ #category : #private }
+GtkPaned >> basicPack2: child resize: resize shrink: shrink [
+ 
+	^ self ffiCall: #(void gtk_paned_pack2 (self, GtkWidget *child, gboolean resize, gboolean shrink))
+]
+
 { #category : #accessing }
 GtkPaned >> pack1: child [
-	^ self pack1: child resize: true shrink: true
+
+	^ self 
+		pack1: child 
+		resize: true 
+		shrink: true
 ]
 
 { #category : #accessing }
 GtkPaned >> pack1: child resize: resize shrink: shrink [ 
-	^ self ffiCall: #(void gtk_paned_pack1 (self, GtkWidget *child, gboolean resize, gboolean shrink))
+
+	self keepWidget: child.
+	self 
+		basicPack1: child 
+		resize: resize 
+		shrink: shrink 
 ]
 
 { #category : #accessing }
 GtkPaned >> pack2: child [
-	^ self pack2: child resize: true shrink: true
+
+	^ self 
+		pack2: child 
+		resize: true 
+		shrink: true
 ]
 
 { #category : #accessing }
 GtkPaned >> pack2: child resize: resize shrink: shrink [ 
-	^ self ffiCall: #(void gtk_paned_pack2 (self, GtkWidget *child, gboolean resize, gboolean shrink))
+
+	self keepWidget: child.
+	self 
+		basicPack2: child 
+		resize: resize 
+		shrink: shrink 
 ]

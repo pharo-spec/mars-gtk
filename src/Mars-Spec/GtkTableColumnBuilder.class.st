@@ -68,7 +68,6 @@ GtkTableColumnBuilder >> newColumnPackerFor: column [
 { #category : #private }
 GtkTableColumnBuilder >> nodeFromPath: path [
 	
-	self flag: #TODO. "A tree will have a different behaviour"
 	^ self model itemAt: 	((path substrings: ':') first asNumber + 1)
 ]
 
