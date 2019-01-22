@@ -132,7 +132,7 @@ GtkEntry >> beUrl [
 { #category : #private }
 GtkEntry >> convertGunichar: unichar toUtf8InBuffer: buffer [
 
-	^ self ffiCall: #(gint g_unichar_to_utf8 (gunichar unichar, String buffer))
+	^ self ffiCall: #(gint g_unichar_to_utf8 (gunichar unichar, String buffer)) module: GLibLibrary
 ]
 
 { #category : #private }
@@ -147,7 +147,7 @@ GtkEntry >> g_ucs4_to_utf8: aUCS4Character [
 { #category : #private }
 GtkEntry >> g_utf8_to_ucs4: aString [
 
-	^ self ffiCall: #(gunichar g_utf8_get_char(String aString))
+	^ self ffiCall: #(gunichar g_utf8_get_char(String aString)) module: GLibLibrary
 ]
 
 { #category : #accessing }

@@ -1292,10 +1292,10 @@ GtkExamples class >> gtkExampleLinkButton [
 
 { #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleListBox [
-	<gtkExample>
+	"<gtkExample>
 	<title: 'List Box'>
 	<category: #Lists>
-	<layoutFillContainer>
+	<layoutFillContainer>"
 
 	^ GtkBox newVertical 
 		packStart: (GtkListBox new
@@ -1306,10 +1306,10 @@ GtkExamples class >> gtkExampleListBox [
 
 { #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleListView [
-	<gtkExample>
+	"<gtkExample>
 	<title: 'List View'>
 	<category: #Lists>
-	<layoutFillContainer>
+	<layoutFillContainer>"
 	
 	| store list renderer |
 	
@@ -1869,10 +1869,10 @@ GtkExamples class >> gtkExampleToolBar [
 
 { #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleTreeView [
-	<gtkExample>
+	"<gtkExample>
 	<title: 'Tree View'>
 	<category: #Lists>
-	<layoutFillContainer>
+	<layoutFillContainer>"
 	
 	| store tree renderer |
 	

@@ -79,7 +79,6 @@ GtkRunLoop >> getEventsPending [
 
 	^ self 
 		ffiCall: #( gboolean gtk_events_pending (void) )
-		options: #( optMainQueue )
 ]
 
 { #category : #initialization }
@@ -104,7 +103,6 @@ GtkRunLoop >> mainIterationDo: blocking [
 	
 	^ self 
 		ffiCall: #( void gtk_main_iteration_do ( gboolean blocking ) )
-		options: #( optMainQueue )
 ]
 
 { #category : #private }
