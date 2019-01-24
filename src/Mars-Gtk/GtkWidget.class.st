@@ -330,6 +330,18 @@ GtkWidget >> isVisible [
 ]
 
 { #category : #accessing }
+GtkWidget >> margin [
+
+	^ self gObjectGetInteger: 'margin'
+]
+
+{ #category : #accessing }
+GtkWidget >> margin: aNumber [
+
+	^ self gObjectSet: 'margin' toInteger: aNumber
+]
+
+{ #category : #accessing }
 GtkWidget >> overrideBackgroundColor: color [
 
 	^ self 
