@@ -56,6 +56,7 @@ GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
 
 { #category : #converting }
 GtkWidget >> asListBoxRow [
+
 	^ GtkListBoxRow newWidget: self
 ]
 
