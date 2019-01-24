@@ -272,7 +272,7 @@ GObject >> isObject [
 { #category : #'private referencing' }
 GObject >> objectRef [
 
-	self ffiCall: #(gpointer g_object_ref (self))
+	self ffiCall: #(gpointer g_object_ref (self)) module: GObjectLibrary
 ]
 
 { #category : #'private referencing' }
@@ -313,12 +313,11 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 		GCallback callback,
 		gpointer 	aData,
 		0,
-		GConnectFlags connectFlags ) )
-		
+		GConnectFlags connectFlags ) ) module: GObjectLibrary
 ]
 
 { #category : #'private referencing' }
 GObject >> weakRef: notify [ 
 
-	^ self ffiCall: #(void g_object_weak_ref (self, #GCallback notify, 0))
+	^ self ffiCall: #(void g_object_weak_ref (self, #GCallback notify, 0)) module: GObjectLibrary
 ]

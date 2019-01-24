@@ -434,7 +434,6 @@ GtkWidget >> show [
 
 	^ self 
 		ffiCall: #(void gtk_widget_show (self))
-		options: #(optMainQueue)		
 ]
 
 { #category : #showing }
@@ -442,7 +441,6 @@ GtkWidget >> showAll [
 
 	^ self 
 		ffiCall: #(void gtk_widget_show_all (self))
-		options: #(optMainQueue)		
 ]
 
 { #category : #geometry }
