@@ -5,14 +5,14 @@ Class {
 }
 
 { #category : #building }
-GtkNotebookAdapter >> addContentPage: index to: gtkWidget [ 
+GtkNotebookAdapter >> addContentPage: gtkPage [	
 	| box |
-
-	box := gtkWidget children at: index.
+	
+	box := gtkPage content.
 	box hasChildren ifTrue: [ ^ self ].
 	
 	box 
-		packStart: (self buildPage: (self model pageAt: index) presenter);
+		packStart: (self buildPage: gtkPage data retrievePresenter);
 		showAll
 ]
 
@@ -21,27 +21,33 @@ GtkNotebookAdapter >> addModelTo: gtkWidget [
 
 	self model pages ifEmpty: [ ^ self ].
 	self model pages do: [ :each |
-		gtkWidget 
-			append: GtkBox newVertical
-			label: (self buildLabelForTab: each) ].
+		| page |
+		
+		page := gtkWidget 
+			newPageLabel: (self buildLabelForTab: each) 
+			content: GtkBox newVertical.
+		page data: each.
+		gtkWidget append: page ].
 	"I add contents to fist page because this will shown anyway (and like this I allow
-	 the layout to act correctly"
-	self addContentPage: 1 to: gtkWidget. 
-	gtkWidget connectSwitchPage: [ :index | 
-		self addContentPage: index to: gtkWidget ].
+	 the layout to act correctly)"
+	self addContentPage: gtkWidget children first. 
+	gtkWidget connectSwitchPage: [ :aPage | 
+		self addContentPage: aPage ].
 ]
 
 { #category : #building }
-GtkNotebookAdapter >> buildLabelForTab: aTabPresenter [
+GtkNotebookAdapter >> buildLabelForTab: aPage [
 	| label |
 
-	label := GtkLabel newLabel: aTabPresenter title asString.
-	self flag: #TODO. "I'm not sure a notebook takes anything"
-	"aTabPresenter icon ifNotNil: [ :icon |
+	label := GtkLabel newLabel: aPage title asString.
+	aPage icon ifNotNil: [ :icon |
 		label := GtkBox newHorizontal
-			packStart: (GtkImage newForm: icon);
-			packEnd: label;
-			yourself ]."
+			packStart: (GtkImage newForm: icon)
+				expand: false 
+				fill: false 
+				padding: 0;
+			packStart: label;
+			showAll ].
 
 	^ label
 ]
@@ -53,6 +59,14 @@ GtkNotebookAdapter >> buildPage: aPresenter [
 	 	value: GtkAdapterBindings 
 		during: [ aPresenter buildWithSpec ]
 
+]
+
+{ #category : #updating }
+GtkNotebookAdapter >> updatePage: aPage [
+
+	self widgetDo: [ :w | | widgetPage  |
+		widgetPage := w children detect: [ :each | each data = aPage ]. 
+		widgetPage updateLabel: (self buildLabelForTab: aPage) ]
 ]
 
 { #category : #building }

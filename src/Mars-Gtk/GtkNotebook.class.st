@@ -26,20 +26,32 @@ GtkNotebook class >> notebookNew [
 ]
 
 { #category : #accessing }
+GtkNotebook >> append: aPage [
+
+	pages add: aPage.
+	self 
+		appendPageChild: aPage content
+		label: aPage label
+]
+
+{ #category : #accessing }
 GtkNotebook >> append: child label: label [
-	pages at: label put: child.
-	self appendPageChild: child label: label
+	| page |
+
+	page := self newPageLabel: label content: child.
+	self append: page
 ]
 
 { #category : #private }
 GtkNotebook >> appendPageChild: child label: tab_label [
+
 	^ self ffiCall: #(gint gtk_notebook_append_page (self, GtkWidget *child, GtkWidget *tab_label))
 ]
 
 { #category : #accessing }
 GtkNotebook >> children [ 
 
-	^ pages values
+	^ pages
 ]
 
 { #category : #signals }
@@ -51,17 +63,21 @@ GtkNotebook >> connectSwitchPage: aBlock [
 		connect: 'switch-page' 
 		signature: #(void (void *notebook, void *page, guint page_num, gpointer user_data))
 		do: [ :notebook :page :page_num :user_data |
-			[ aBlock value: page_num + 1 ] fork ]
+			[ aBlock value: (self children at: page_num + 1) ] fork ]
 ]
 
 { #category : #initialization }
 GtkNotebook >> initialize [
+
 	super initialize.
-	pages := OrderedDictionary new
+	pages := OrderedCollection new
 ]
 
-{ #category : #accessing }
-GtkNotebook >> pages [
+{ #category : #factory }
+GtkNotebook >> newPageLabel: labelWidget content: pageWidget [
 
-	^ pages
+	^ GtkNotebookPage 
+		newNotebook: self
+		label: labelWidget
+		content: pageWidget
 ]
