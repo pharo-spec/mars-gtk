@@ -21,9 +21,9 @@ GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 	constraints isExpand ifFalse: [
 		| min |
 		min := childWidget preferredSizeMinimum.
-		constraints minWidth ifNotNil: [ :w | 
+		constraints width ifNotNil: [ :w | 
 			childWidget sizeRequest: w@min y ].
-		constraints minHeight ifNotNil: [ :h | 
+		constraints height ifNotNil: [ :h | 
 			childWidget sizeRequest: min x@h ] ].
 
 	^ childWidget

@@ -81,3 +81,10 @@ GtkNotebook >> newPageLabel: labelWidget content: pageWidget [
 		label: labelWidget
 		content: pageWidget
 ]
+
+{ #category : #accessing }
+GtkNotebook >> pageWithData: anObject [
+	"utility to find child with associated data (useful to map operations)"
+	
+	^ self children detect: [ :each | each data = anObject ] 
+]

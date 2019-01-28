@@ -4,7 +4,7 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #building }
+{ #category : #private }
 GtkNotebookAdapter >> addContentPage: gtkPage [	
 	| box |
 	
@@ -30,9 +30,13 @@ GtkNotebookAdapter >> addModelTo: gtkWidget [
 		gtkWidget append: page ].
 	"I add contents to fist page because this will shown anyway (and like this I allow
 	 the layout to act correctly)"
-	self addContentPage: gtkWidget children first. 
+	self model selectedPage ifNil: [ 
+		self model selectedPageIndex: 1 ].
+	self addContentPage: (gtkWidget pageWithData: self model selectedPage). 
+	"get when page changed"
 	gtkWidget connectSwitchPage: [ :aPage | 
-		self addContentPage: aPage ].
+		self addContentPage: aPage.
+		self model basicSelectedPage: aPage. ].
 ]
 
 { #category : #building }
@@ -61,11 +65,37 @@ GtkNotebookAdapter >> buildPage: aPresenter [
 
 ]
 
-{ #category : #updating }
-GtkNotebookAdapter >> updatePage: aPage [
+{ #category : #private }
+GtkNotebookAdapter >> removePageContent: gtkPage [
+	| box |
 
-	self widgetDo: [ :w | | widgetPage  |
-		widgetPage := w children detect: [ :each | each data = aPage ]. 
+	box := gtkPage content.
+	box hasChildren ifFalse: [ ^ self ].
+	box removeAll
+]
+
+{ #category : #updating }
+GtkNotebookAdapter >> selectedPage [ 
+	
+	self widgetDo: [ :w |
+		(w pageWithData: self model selectedPage) select ]
+]
+
+{ #category : #updating }
+GtkNotebookAdapter >> updatePageContent: aPage [
+
+	self widgetDo: [ :w | | widgetPage |
+		widgetPage := w pageWithData: aPage. 
+		self removePageContent: widgetPage.
+		self model selectedPage = aPage ifTrue: [ 
+			self addContentPage: widgetPage ] ]
+]
+
+{ #category : #updating }
+GtkNotebookAdapter >> updatePageTitle: aPage [
+
+	self widgetDo: [ :w | | widgetPage |
+		widgetPage := w pageWithData: aPage.
 		widgetPage updateLabel: (self buildLabelForTab: aPage) ]
 ]
 

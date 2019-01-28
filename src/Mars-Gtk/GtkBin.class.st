@@ -32,3 +32,9 @@ GtkBin >> add: aWidget [
 GtkBin >> child [
 	^ self children anyOne
 ]
+
+{ #category : #accessing }
+GtkBin >> removeChild [
+
+	self remove: self child
+]

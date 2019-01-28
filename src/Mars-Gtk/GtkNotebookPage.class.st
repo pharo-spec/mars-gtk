@@ -73,6 +73,20 @@ GtkNotebookPage >> notebook [
 	^ notebook
 ]
 
+{ #category : #accessing }
+GtkNotebookPage >> select [ 
+
+	self select: (self notebook children indexOf: self)
+]
+
+{ #category : #private }
+GtkNotebookPage >> select: page_num [
+
+	^ self ffiCall: #(void gtk_notebook_set_current_page (
+		GtkNotebook *notebook,
+		gint page_num))
+]
+
 { #category : #private }
 GtkNotebookPage >> setLabel [
 
@@ -88,7 +102,6 @@ GtkNotebookPage >> updateLabel: aWidget [
 
 	label := aWidget.
 	self setLabel
-
 	
 ]
 
