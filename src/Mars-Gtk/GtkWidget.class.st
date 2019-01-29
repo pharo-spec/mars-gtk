@@ -54,6 +54,15 @@ GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
 		
 ]
 
+{ #category : #accessing }
+GtkWidget >> allocation [
+	| allocation |
+	
+	allocation := GtkAllocation new.
+	self getAllocation: allocation.
+	^ allocation asRectangle
+]
+
 { #category : #converting }
 GtkWidget >> asListBoxRow [
 
@@ -177,6 +186,16 @@ GtkWidget >> connectShow: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectSizeAllocate: aBlock [
+
+	self 
+		connect: 'size-allocate'
+		signature: #(void (void *widget, void *allocation, gpointer user_data))
+		do: [ :widget :allocation :user_data | | rect |
+			aBlock cull: (GdkRectangle fromHandle: allocation) asRectangle ]
+]
+
+{ #category : #signaling }
 GtkWidget >> connectUnmap: aBlock [
 
 	self 
@@ -237,6 +256,13 @@ GtkWidget >> executeDeferredActions [
 { #category : #'library path' }
 GtkWidget >> ffiLibraryName [
 	^ self class ffiLibraryName
+]
+
+{ #category : #private }
+GtkWidget >> getAllocation: allocation [
+
+	self ffiCall: #(void gtk_widget_get_allocation (self, GtkAllocation *allocation))
+	
 ]
 
 { #category : #accessing }

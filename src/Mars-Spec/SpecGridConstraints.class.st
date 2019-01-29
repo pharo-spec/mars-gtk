@@ -1,6 +1,6 @@
 Class {
 	#name : #SpecGridConstraints,
-	#superclass : #Object,
+	#superclass : #SpecLayoutConstraints,
 	#instVars : [
 		'position',
 		'span'

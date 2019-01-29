@@ -81,3 +81,15 @@ GtkPaned >> pack2: child resize: resize shrink: shrink [
 		resize: resize 
 		shrink: shrink 
 ]
+
+{ #category : #accessing }
+GtkPaned >> position [
+
+	self ffiCall: #(gint gtk_paned_get_position (self))
+]
+
+{ #category : #accessing }
+GtkPaned >> position: position [
+
+	self ffiCall: #(void gtk_paned_set_position (self, gint position))
+]

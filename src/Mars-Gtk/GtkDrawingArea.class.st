@@ -22,15 +22,6 @@ GtkDrawingArea class >> new [
 	^ self drawingAreaNew initialize
 ]
 
-{ #category : #accessing }
-GtkDrawingArea >> allocation [
-	| allocation |
-	
-	allocation := GtkAllocation new.
-	self getAllocation: allocation.
-	^ allocation asRectangle
-]
-
 { #category : #private }
 GtkDrawingArea >> basicDraw: cr [
 	"I need to be sure this process will not be highjacked by another 
@@ -52,13 +43,6 @@ GtkDrawingArea >> getAllocatedHeight [
 { #category : #private }
 GtkDrawingArea >> getAllocatedWidth [
 	^ self ffiCall: #(int gtk_widget_get_allocated_width (self))
-]
-
-{ #category : #private }
-GtkDrawingArea >> getAllocation: allocation [
-
-	self ffiCall: #(void gtk_widget_get_allocation (self, GtkAllocation *allocation))
-	
 ]
 
 { #category : #initialization }

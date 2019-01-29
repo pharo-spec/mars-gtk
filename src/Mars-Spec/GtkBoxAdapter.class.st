@@ -33,7 +33,7 @@ GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 GtkBoxAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
 	| childWidget |
 
-	childWidget := aPresenter buildWithSpec.
+	childWidget := aPresenter buildWithSpec: constraints spec.
 	self addConstraits: constraints toChild: childWidget.
 	constraints isPlacedAtStart
 		ifTrue: [ 
