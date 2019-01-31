@@ -167,6 +167,19 @@ GtkWidget >> connectDestroy: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectDoubleClicked: aBlock [
+	self flag: #TODO. "According to #irc, the correct way to deal with a double click 
+	 is with a GtkGestureMultipress, but this works and I do not have time to go deeper."
+	
+	self connectButtonPressEvent: [ :event | | stop |
+		stop := false.
+		event isDoubleClick ifTrue: [ 
+			aBlock fork.
+			stop := true ].
+		stop ]
+]
+
+{ #category : #signaling }
 GtkWidget >> connectHide: aBlock [
 	self connect: 'hide' do: aBlock
 ]
@@ -191,7 +204,7 @@ GtkWidget >> connectSizeAllocate: aBlock [
 	self 
 		connect: 'size-allocate'
 		signature: #(void (void *widget, void *allocation, gpointer user_data))
-		do: [ :widget :allocation :user_data | | rect |
+		do: [ :widget :allocation :user_data |
 			aBlock cull: (GdkRectangle fromHandle: allocation) asRectangle ]
 ]
 

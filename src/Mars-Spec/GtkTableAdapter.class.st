@@ -17,7 +17,14 @@ GtkTableAdapter >> addModelTo: gtkWidget [
 	self model columns do: [ :each | 
 		columnBuilder visit: each ].
 	
-	gtkWidget headersVisible: self model isShowingColumnHeaders
+	gtkWidget headersVisible: self model isShowingColumnHeaders.
+	
+	gtkWidget connectSelectionChanged: [ 
+		self rowSelected: gtkWidget selected ].
+	
+	self model doubleClickAction ifNotNil: [ :action |
+		gtkWidget connectDoubleClicked: [ 
+			action cull: self model selectedItem ] ]
 ]
 
 { #category : #private }
@@ -94,6 +101,12 @@ GtkTableAdapter >> newStoreFrom: aCollection [
 GtkTableAdapter >> refreshList [
 
 	widget model: (self newStoreFrom: self model items)
+]
+
+{ #category : #private }
+GtkTableAdapter >> rowSelected: path [
+
+	self model selectedIndex: path first
 ]
 
 { #category : #private }

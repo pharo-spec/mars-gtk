@@ -203,6 +203,12 @@ GtkTreeView >> selectPath: pathArray [
 ]
 
 { #category : #accessing }
+GtkTreeView >> selected [
+
+	^ self allSelected ifNotEmpty: #first
+]
+
+{ #category : #private }
 GtkTreeView >> selection [ 
 
 	^ selection ifNil: [ selection := self getSelection initialize ]

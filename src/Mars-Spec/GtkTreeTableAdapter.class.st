@@ -105,6 +105,12 @@ GtkTreeTableAdapter >> newColumnBuilderOn: anObject [
 ]
 
 { #category : #private }
+GtkTreeTableAdapter >> rowSelected: path [
+
+	self model selectedPath: path
+]
+
+{ #category : #private }
 GtkTreeTableAdapter >> store [ 
 
 	^ self widgetDo: [ :w | w child model ]
