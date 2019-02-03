@@ -13,9 +13,8 @@ GtkTextInputFieldAdapter >> accept [
 
 { #category : #building }
 GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
-
-	self model ghostText ifNotNil: [ :text | 
-		gtkEntry placeHolderText: text ]
+	self model placeholder
+		ifNotNil: [ :text | gtkEntry placeHolderText: text ]
 ]
 
 { #category : #building }
