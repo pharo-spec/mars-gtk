@@ -11,11 +11,10 @@ GtkLibrary >> macModuleName [
 	^ '/usr/local/lib/libgtk-3.dylib'
 ]
 
-{ #category : #accessing }
-GtkLibrary >> options [ 
-	"dispatch to a queue (because there will be a runloop someplace there)"
-	^ super options
-	"^ #(optQueue:'org.pharo.Gtk')"
+{ #category : #'accessing platform' }
+GtkLibrary >> runner [ 
+	
+	^ TFSameThreadRunner new
 ]
 
 { #category : #'accessing platform' }
@@ -32,10 +31,4 @@ GtkLibrary >> unix64ModuleName [
 GtkLibrary >> win32ModuleName [
 	
 	^ 'c:/cygwin64/usr/x86_64-w64-mingw32/sys-root/mingw/bin/libgtk-3-0.dll'
-]
-
-{ #category : #'accessing platform' }
-GtkLibrary >> workerName [
-
-	^ #GTK
 ]
