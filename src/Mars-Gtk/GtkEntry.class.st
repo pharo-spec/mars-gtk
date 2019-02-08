@@ -66,7 +66,7 @@ GtkEntry >> basicText [
 { #category : #private }
 GtkEntry >> basicText: text [
 	
-	self ffiCall: #(void gtk_entry_set_text (self, String *text))
+	self ffiCall: #(void gtk_entry_set_text (self, String text))
 ]
 
 { #category : #accessing }

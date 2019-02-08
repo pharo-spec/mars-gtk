@@ -61,7 +61,7 @@ GtkAboutDialog >> basicProgramName [
 { #category : #private }
 GtkAboutDialog >> basicProgramName: utf8EncodedProgramName [
 
-	^ self ffiCall: #(void gtk_about_dialog_set_program_name (self, String *utf8EncodedProgramName))
+	^ self ffiCall: #(void gtk_about_dialog_set_program_name (self, String utf8EncodedProgramName))
 ]
 
 { #category : #private }

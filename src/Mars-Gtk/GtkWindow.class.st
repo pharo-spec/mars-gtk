@@ -142,7 +142,7 @@ GtkWindow >> title [
 
 { #category : #accessing }
 GtkWindow >> title: title [
-	^ self ffiCall: #(void gtk_window_set_title (self, String *title))
+	^ self ffiCall: #(void gtk_window_set_title (self, String title))
 ]
 
 { #category : #accessing }

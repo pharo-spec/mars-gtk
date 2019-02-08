@@ -91,7 +91,9 @@ GtkImage class >> newIconNamed: aString size: aSize [
 { #category : #'instance creation' }
 GtkImage class >> newMorph: anImageMorph [
 
-	^ (self imageNewFromSurface: (self surfaceFor: anImageMorph)) initialize
+	| surf |
+	surf := self surfaceFor: anImageMorph.
+	^ (self imageNewFromSurface: surf) initialize
 ]
 
 { #category : #private }

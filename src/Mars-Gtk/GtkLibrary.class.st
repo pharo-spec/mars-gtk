@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #'accessing platform' }
+GtkLibrary >> calloutAPIClass [ 
+
+	^ TFCalloutAPI 
+]
+
+{ #category : #'accessing platform' }
 GtkLibrary >> macModuleName [
 
 	"^ '/opt/gtk/inst/lib/libgtk-3.dylib'" 

@@ -94,9 +94,9 @@ GtkTreeIter >> gtkTreeModelIterChildrenOf: parent into: iter [
 GtkTreeIter >> gtkTreeStoreAppend: iter parent: parent [
 
 	^ self ffiCall: #(void gtk_tree_store_append (
-		GtkTreeStore *store, 
-		GtkTreeIter *iter, 
-		GtkTreeIter *parent))
+		GtkTreeStore* store, 
+		GtkTreeIter* iter, 
+		GtkTreeIter* parent))
 ]
 
 { #category : #testing }
