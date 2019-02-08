@@ -48,13 +48,13 @@ GtkComboBox class >> newWithEntry [
 { #category : #accessing }
 GtkComboBox >> activeId [
 
-	^ self basicActiveId asByteArray utf8Decoded
+	^ self basicActiveId
 ]
 
 { #category : #accessing }
 GtkComboBox >> activeId: anIdString [
 
-	^ self basicActiveId: anIdString utf8Encoded asString
+	^ self basicActiveId: anIdString
 ]
 
 { #category : #accessing }

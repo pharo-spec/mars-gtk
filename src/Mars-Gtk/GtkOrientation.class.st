@@ -13,6 +13,18 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #'accessing enum' }
+GtkOrientation class >> GTK_ORIENTATION_HORIZONTAL [
+	"This method was automatically generated"
+	^ GTK_ORIENTATION_HORIZONTAL
+]
+
+{ #category : #'accessing enum' }
+GtkOrientation class >> GTK_ORIENTATION_VERTICAL [
+	"This method was automatically generated"
+	^ GTK_ORIENTATION_VERTICAL
+]
+
 { #category : #'enum declaration' }
 GtkOrientation class >> enumDecl [
 	^ #(

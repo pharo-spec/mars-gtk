@@ -54,7 +54,7 @@ GtkStatusBar >> popFromContextId: context_id [
 GtkStatusBar >> pushMessage: aMessage withId: anId [
 
 	self 
-		basicPush: aMessage utf8Encoded asString 
+		basicPush: aMessage
 		withId: anId
 ]
 

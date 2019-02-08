@@ -115,11 +115,11 @@ GtkProgressBar >> showsText [
 { #category : #accessing }
 GtkProgressBar >> text [
 
-	^ self basicText asByteArray utf8Decoded
+	^ self basicText
 ]
 
 { #category : #accessing }
 GtkProgressBar >> text: aString [
 
-	self basicText: aString utf8Encoded asString
+	self basicText: aString
 ]

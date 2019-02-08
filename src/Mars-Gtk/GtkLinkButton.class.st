@@ -25,27 +25,27 @@ GtkLinkButton class >> buttonNewWithLabel: utf8EncodedString [
 { #category : #private }
 GtkLinkButton class >> buttonNewWithUri: utf8EncodedUrl [
 	
-	^ self ffiCall: #(GtkLinkButton *gtk_link_button_new (const gchar *utf8EncodedUrl))
+	^ self ffiCall: #(GtkLinkButton *gtk_link_button_new (String utf8EncodedUrl))
 ]
 
 { #category : #private }
 GtkLinkButton class >> buttonNewWithUri: utf8EncodedUrl withLabel: utf8EncodedString [
 	
-	^ self ffiCall: #(GtkLinkButton *gtk_link_button_new_with_label (const gchar *utf8EncodedUrl, const gchar *utf8EncodedString))
+	^ self ffiCall: #(GtkLinkButton *gtk_link_button_new_with_label (String utf8EncodedUrl, String utf8EncodedString))
 ]
 
 { #category : #'instance creation' }
 GtkLinkButton class >> newWithUri: aString [
 
-	^ (self buttonNewWithUri: aString utf8Encoded asString) initialize
+	^ (self buttonNewWithUri: aString) initialize
 ]
 
 { #category : #'instance creation' }
 GtkLinkButton class >> newWithUri: aString withLabel: aLabel [
 
 	^ (self 
-		buttonNewWithUri: aString utf8Encoded asString
-		withLabel: aLabel utf8Encoded asString)
+		buttonNewWithUri: aString
+		withLabel: aLabel)
 		initialize
 ]
 
@@ -64,7 +64,7 @@ GtkLinkButton >> gtkLinkButtonGetUri [
 { #category : #private }
 GtkLinkButton >> gtkLinkButtonSetUri: utf8EncodedUri [
 
-	^ self ffiCall: #(void gtk_link_button_set_uri (self, gchar* utf8EncodedUri))
+	^ self ffiCall: #(void gtk_link_button_set_uri (self, String utf8EncodedUri))
 ]
 
 { #category : #accessing }
@@ -76,13 +76,13 @@ GtkLinkButton >> isVisited [
 { #category : #accessing }
 GtkLinkButton >> uri [
 
-	^ self gtkLinkButtonGetUri asByteArray utf8Decoded
+	^ self gtkLinkButtonGetUri
 ]
 
 { #category : #accessing }
 GtkLinkButton >> uri: aString [
 
-	^ self gtkLinkButtonSetUri: aString utf8Encoded asString
+	^ self gtkLinkButtonSetUri: aString
 ]
 
 { #category : #accessing }

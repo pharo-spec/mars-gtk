@@ -44,7 +44,7 @@ GtkTreeViewColumn >> beResizable [
 { #category : #private }
 GtkTreeViewColumn >> gtkTreeViewColumnGetTitle [
 
-	^ self ffiCall: #(const gchar * gtk_tree_view_column_get_title (self))
+	^ self ffiCall: #(String gtk_tree_view_column_get_title (self))
 ]
 
 { #category : #private }
@@ -66,9 +66,9 @@ GtkTreeViewColumn >> gtkTreeViewColumnPackStart: cell expand: expand [
 ]
 
 { #category : #private }
-GtkTreeViewColumn >> gtkTreeViewColumnSetTitle: encodedBytes [
+GtkTreeViewColumn >> gtkTreeViewColumnSetTitle: string [
 
-	self ffiCall: #(void gtk_tree_view_column_set_title (self, const gchar *encodedBytes))
+	self ffiCall: #(void gtk_tree_view_column_set_title (self, String string))
 ]
 
 { #category : #initialization }
@@ -148,11 +148,11 @@ GtkTreeViewColumn >> resizable: resizable [
 { #category : #accessing }
 GtkTreeViewColumn >> title [
 
-	^ self gtkTreeViewColumnGetTitle utf8Decoded
+	^ self gtkTreeViewColumnGetTitle
 ]
 
 { #category : #accessing }
 GtkTreeViewColumn >> title: aString [
 
-	self gtkTreeViewColumnSetTitle: aString utf8Encoded asString
+	self gtkTreeViewColumnSetTitle: aString
 ]

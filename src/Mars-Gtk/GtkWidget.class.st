@@ -501,7 +501,7 @@ GtkWidget >> takeKeyboardFocus [
 { #category : #accessing }
 GtkWidget >> tooltipText: aString [
 
-	self setTooltipText: aString utf8Encoded asString 
+	self setTooltipText: aString
 ]
 
 { #category : #accessing }

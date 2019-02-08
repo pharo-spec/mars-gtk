@@ -103,25 +103,25 @@ GtkAboutDialog >> basicWebsiteLabel: utf8EncodedVersion [
 { #category : #accessing }
 GtkAboutDialog >> comments [
 
-	^ self basicComments asByteArray utf8Decoded
+	^ self basicComments
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> comments: aString [
 
-	self basicComments: aString utf8Encoded asString
+	self basicComments: aString
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> copyright [
 
-	^ self basicCopyright asByteArray utf8Decoded
+	^ self basicCopyright
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> copyright: aString [
 
-	self basicCopyright: aString utf8Encoded asString
+	self basicCopyright: aString
 ]
 
 { #category : #accessing }
@@ -133,61 +133,61 @@ GtkAboutDialog >> doNotWrapLicence [
 { #category : #accessing }
 GtkAboutDialog >> licence [
 
-	^ self basicLicence asByteArray utf8Decoded
+	^ self basicLicence
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> licence: aString [
 
-	self basicLicence: aString utf8Encoded asString
+	self basicLicence: aString
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> programName [
 
-	^ self basicProgramName asByteArray utf8Decoded
+	^ self basicProgramName
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> programName: aString [
 
-	self basicProgramName: aString utf8Encoded asString
+	self basicProgramName: aString
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> version [
 
-	^ self basicVersion asByteArray utf8Decoded
+	^ self basicVersion
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> version: aString [
 
-	self basicVersion: aString utf8Encoded asString
+	self basicVersion: aString
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> website [
 
-	^ self basicWebsite asByteArray utf8Decoded
+	^ self basicWebsite
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> website: aString [
 
-	self basicWebsite: aString utf8Encoded asString
+	self basicWebsite: aString
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> websiteLabel [
 
-	^ self basicWebsiteLabel asByteArray utf8Decoded
+	^ self basicWebsiteLabel
 ]
 
 { #category : #accessing }
 GtkAboutDialog >> websiteLabel: aString [
 
-	self basicWebsiteLabel: aString utf8Encoded asString
+	self basicWebsiteLabel: aString
 ]
 
 { #category : #accessing }

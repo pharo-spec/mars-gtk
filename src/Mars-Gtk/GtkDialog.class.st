@@ -49,7 +49,7 @@ GtkDialog >> addButton: aString do: aBlock [
 GtkDialog >> addButtonWithLabel: aText withResponseId: aResponseId [
 
 	self 
-		basicAddButtonWithLabel: aText utf8Encoded asString 
+		basicAddButtonWithLabel: aText
 		withResponseId: aResponseId
 ]
 

@@ -36,21 +36,21 @@ GtkComboBoxText class >> newWithEntry [
 { #category : #accessing }
 GtkComboBoxText >> activeText [
 
-	^ self basicActiveText asByteArray utf8Decoded
+	^ self basicActiveText
 ]
 
 { #category : #accessing }
 GtkComboBoxText >> append: text [
 
-	^ self basicAppend: text utf8Encoded asString
+	^ self basicAppend: text
 ]
 
 { #category : #accessing }
 GtkComboBoxText >> append: text id: id [
 
 	^ self 
-		basicAppend: text utf8Encoded asString 
-		id: id utf8Encoded asString
+		basicAppend: text
+		id: id
 ]
 
 { #category : #private }
@@ -105,25 +105,25 @@ GtkComboBoxText >> basicPrepend: utf8EncodedText id: utf8EncodedId [
 { #category : #accessing }
 GtkComboBoxText >> insertAt: position text: text [
 
-	self basicInsertAt: position text: text utf8Encoded asString
+	self basicInsertAt: position text: text
 ]
 
 { #category : #accessing }
 GtkComboBoxText >> insertAt: position text: text id: id [
 
-	self basicInsertAt: position text: text utf8Encoded asString id: id utf8Encoded asString
+	self basicInsertAt: position text: text id: id
 ]
 
 { #category : #accessing }
 GtkComboBoxText >> prepend: text [
 
-	^ self basicPrepend: text utf8Encoded asString
+	^ self basicPrepend: text
 ]
 
 { #category : #accessing }
 GtkComboBoxText >> prepend: text id: id [
 
-	^ self basicPrepend: text utf8Encoded asString id: id utf8Encoded asString
+	^ self basicPrepend: text id: id
 ]
 
 { #category : #accessing }

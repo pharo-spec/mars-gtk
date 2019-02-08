@@ -31,7 +31,7 @@ GtkSimpleRunLoop >> processEvents [
 	self doNotOverlap: [
 		[ self getEventsPending ]
 		whileTrue: [ self mainIterationDo: true ].
-		5 milliSeconds wait ]
+		50 milliSeconds wait ]
 ]
 
 { #category : #'private installing' }

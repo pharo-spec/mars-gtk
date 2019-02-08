@@ -16,6 +16,36 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #'accessing enum' }
+GtkWindowPosition class >> GTK_WIN_POS_CENTER [
+	"This method was automatically generated"
+	^ GTK_WIN_POS_CENTER
+]
+
+{ #category : #'accessing enum' }
+GtkWindowPosition class >> GTK_WIN_POS_CENTER_ALWAYS [
+	"This method was automatically generated"
+	^ GTK_WIN_POS_CENTER_ALWAYS
+]
+
+{ #category : #'accessing enum' }
+GtkWindowPosition class >> GTK_WIN_POS_CENTER_ON_PARENT [
+	"This method was automatically generated"
+	^ GTK_WIN_POS_CENTER_ON_PARENT
+]
+
+{ #category : #'accessing enum' }
+GtkWindowPosition class >> GTK_WIN_POS_MOUSE [
+	"This method was automatically generated"
+	^ GTK_WIN_POS_MOUSE
+]
+
+{ #category : #'accessing enum' }
+GtkWindowPosition class >> GTK_WIN_POS_NONE [
+	"This method was automatically generated"
+	^ GTK_WIN_POS_NONE
+]
+
 { #category : #'enum declaration' }
 GtkWindowPosition class >> enumDecl [
 	^ #(

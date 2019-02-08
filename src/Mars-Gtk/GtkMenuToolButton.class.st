@@ -19,7 +19,7 @@ GtkMenuToolButton class >> toolButtonNew: icon_widget label: label [
 { #category : #api }
 GtkMenuToolButton >> arrowTooltipText: aString [
 
-	self basicArrowTooltipText: aString utf8Encoded asString
+	self basicArrowTooltipText: aString
 ]
 
 { #category : #api }

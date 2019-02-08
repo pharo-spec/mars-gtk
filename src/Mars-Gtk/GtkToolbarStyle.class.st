@@ -15,6 +15,30 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #'accessing enum' }
+GtkToolbarStyle class >> GTK_TOOLBAR_BOTH [
+	"This method was automatically generated"
+	^ GTK_TOOLBAR_BOTH
+]
+
+{ #category : #'accessing enum' }
+GtkToolbarStyle class >> GTK_TOOLBAR_BOTH_HORIZ [
+	"This method was automatically generated"
+	^ GTK_TOOLBAR_BOTH_HORIZ
+]
+
+{ #category : #'accessing enum' }
+GtkToolbarStyle class >> GTK_TOOLBAR_ICONS [
+	"This method was automatically generated"
+	^ GTK_TOOLBAR_ICONS
+]
+
+{ #category : #'accessing enum' }
+GtkToolbarStyle class >> GTK_TOOLBAR_TEXT [
+	"This method was automatically generated"
+	^ GTK_TOOLBAR_TEXT
+]
+
 { #category : #'enum declaration' }
 GtkToolbarStyle class >> enumDecl [
 	^ #(

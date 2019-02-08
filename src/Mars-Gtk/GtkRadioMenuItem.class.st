@@ -25,13 +25,13 @@ GtkRadioMenuItem class >> basicNewLabel: utf8EncodedLabel fromWidget: aRadioMenu
 { #category : #'instance creation' }
 GtkRadioMenuItem class >> newLabel: aString [
 
-	^ (self basicNewLabel: aString utf8Encoded asString) initialize
+	^ (self basicNewLabel: aString) initialize
 ]
 
 { #category : #'instance creation' }
 GtkRadioMenuItem class >> newLabel: aString fromWidget: aWidget [
 
-	^ (self basicNewLabel: aString utf8Encoded asString fromWidget: aWidget) initialize
+	^ (self basicNewLabel: aString fromWidget: aWidget) initialize
 ]
 
 { #category : #events }

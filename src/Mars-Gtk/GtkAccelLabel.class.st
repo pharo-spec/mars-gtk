@@ -24,7 +24,7 @@ GtkAccelLabel class >> new [
 { #category : #'instance creation' }
 GtkAccelLabel class >> newLabel: aString [
 
-	^ (self accelLabelNew: aString utf8Encoded asString) initialize
+	^ (self accelLabelNew: aString) initialize
 ]
 
 { #category : #private }

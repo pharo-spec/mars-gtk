@@ -27,7 +27,7 @@ GtkLabel class >> new [
 { #category : #'instance creation' }
 GtkLabel class >> newLabel: aString [
 
-	^ (self labelNew: aString utf8Encoded asString) initialize
+	^ (self labelNew: aString) initialize
 ]
 
 { #category : #private }
@@ -76,11 +76,11 @@ GtkLabel >> justify: jtype [
 { #category : #accessing }
 GtkLabel >> text [
 	
-	^ self basicText asByteArray utf8Decoded
+	^ self basicText
 ]
 
 { #category : #accessing }
 GtkLabel >> text: str [
 	
-	self basicText: str utf8Encoded asString
+	self basicText: str
 ]

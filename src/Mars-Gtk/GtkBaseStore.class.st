@@ -43,7 +43,7 @@ GtkBaseStore class >> newStrings: aCollection [
 	aCollection do: [ :each |
 		store appendNew
 			at: 0 
-			putString: each utf8Encoded asString ].
+			putString: each ].
 
 	^ store
 ]

@@ -50,7 +50,7 @@ GtkDialogWindow class >> windowNew: type [
 { #category : #adding }
 GtkDialogWindow >> addButton: aString do: aBlock [
 
-	buttonBox packStart: ((GtkButton newLabel: aString utf8Encoded asString)
+	buttonBox packStart: ((GtkButton newLabel: aString)
 		connectClicked: aBlock;
 		yourself)
 ]

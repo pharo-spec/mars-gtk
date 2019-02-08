@@ -13,6 +13,18 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #'accessing enum' }
+GtkWindowType class >> GTK_WINDOW_POPUP [
+	"This method was automatically generated"
+	^ GTK_WINDOW_POPUP
+]
+
+{ #category : #'accessing enum' }
+GtkWindowType class >> GTK_WINDOW_TOPLEVEL [
+	"This method was automatically generated"
+	^ GTK_WINDOW_TOPLEVEL
+]
+
 { #category : #'enum declaration' }
 GtkWindowType class >> enumDecl [
 	^ #(

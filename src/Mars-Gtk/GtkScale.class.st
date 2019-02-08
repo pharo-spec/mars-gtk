@@ -52,7 +52,7 @@ GtkScale >> addMarkAtValue: value withPosition: position [
 { #category : #accessing }
 GtkScale >> addMarkAtValue: value withPosition: position withText: markup [
 
-	self basicAddMarkAtValue: value withPosition: position withText: markup utf8Encoded asString
+	self basicAddMarkAtValue: value withPosition: position withText: markup
 ]
 
 { #category : #private }

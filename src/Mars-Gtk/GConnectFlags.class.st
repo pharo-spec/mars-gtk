@@ -14,6 +14,24 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #'accessing enum' }
+GConnectFlags class >> G_CONNECT_AFTER [
+	"This method was automatically generated"
+	^ G_CONNECT_AFTER
+]
+
+{ #category : #'accessing enum' }
+GConnectFlags class >> G_CONNECT_NONE [
+	"This method was automatically generated"
+	^ G_CONNECT_NONE
+]
+
+{ #category : #'accessing enum' }
+GConnectFlags class >> G_CONNECT_SWAPPED [
+	"This method was automatically generated"
+	^ G_CONNECT_SWAPPED
+]
+
 { #category : #'as yet unclassified' }
 GConnectFlags class >> enumDecl [
 	^ { 

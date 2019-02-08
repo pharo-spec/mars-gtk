@@ -94,7 +94,7 @@ GtkTextView >> text [
 { #category : #accessing }
 GtkTextView >> text: aString [
 
-	self textBuffer text: aString utf8Encoded asString
+	self textBuffer text: aString
 ]
 
 { #category : #accessing }

@@ -18,6 +18,48 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #'accessing enum' }
+GtkStateType class >> GTK_STATE_ACTIVE [
+	"This method was automatically generated"
+	^ GTK_STATE_ACTIVE
+]
+
+{ #category : #'accessing enum' }
+GtkStateType class >> GTK_STATE_FOCUSED [
+	"This method was automatically generated"
+	^ GTK_STATE_FOCUSED
+]
+
+{ #category : #'accessing enum' }
+GtkStateType class >> GTK_STATE_INCONSISTENT [
+	"This method was automatically generated"
+	^ GTK_STATE_INCONSISTENT
+]
+
+{ #category : #'accessing enum' }
+GtkStateType class >> GTK_STATE_INSENSITIVE [
+	"This method was automatically generated"
+	^ GTK_STATE_INSENSITIVE
+]
+
+{ #category : #'accessing enum' }
+GtkStateType class >> GTK_STATE_NORMAL [
+	"This method was automatically generated"
+	^ GTK_STATE_NORMAL
+]
+
+{ #category : #'accessing enum' }
+GtkStateType class >> GTK_STATE_PRELIGHT [
+	"This method was automatically generated"
+	^ GTK_STATE_PRELIGHT
+]
+
+{ #category : #'accessing enum' }
+GtkStateType class >> GTK_STATE_SELECTED [
+	"This method was automatically generated"
+	^ GTK_STATE_SELECTED
+]
+
 { #category : #'enum declaration' }
 GtkStateType class >> enumDecl [
 	^ #(

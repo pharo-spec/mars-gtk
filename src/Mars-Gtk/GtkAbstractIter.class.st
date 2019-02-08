@@ -96,6 +96,18 @@ GtkAbstractIter >> setValues: aValueArray [
 	self subclassResponsibility
 ]
 
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> stamp [
+	"This method was automatically generated"
+	^handle signedLongAt: OFFSET_STAMP
+]
+
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> stamp: anObject [
+	"This method was automatically generated"
+	handle signedLongAt: OFFSET_STAMP put: anObject
+]
+
 { #category : #accessing }
 GtkAbstractIter >> store [
 	^ store
@@ -113,4 +125,40 @@ GtkAbstractIter >> stringAt: index [
 	result := ExternalAddress new.
 	self getStringAtColumnIndex: index into: result.
 	^ result readStringUTF8
+]
+
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> user_data [
+	"This method was automatically generated"
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_USER_DATA) type: ExternalType void asPointerType
+]
+
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> user_data2 [
+	"This method was automatically generated"
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_USER_DATA2) type: ExternalType void asPointerType
+]
+
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> user_data2: anObject [
+	"This method was automatically generated"
+	handle pointerAt: OFFSET_USER_DATA2 put: anObject getHandle.
+]
+
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> user_data3 [
+	"This method was automatically generated"
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_USER_DATA3) type: ExternalType void asPointerType
+]
+
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> user_data3: anObject [
+	"This method was automatically generated"
+	handle pointerAt: OFFSET_USER_DATA3 put: anObject getHandle.
+]
+
+{ #category : #'accessing structure variables' }
+GtkAbstractIter >> user_data: anObject [
+	"This method was automatically generated"
+	handle pointerAt: OFFSET_USER_DATA put: anObject getHandle.
 ]

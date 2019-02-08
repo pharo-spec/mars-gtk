@@ -127,23 +127,23 @@ GtkHeaderBar >> showsSubtitle [
 { #category : #accessing }
 GtkHeaderBar >> subtitle [
 
-	^ self basicSubtitle asByteArray utf8Decoded
+	^ self basicSubtitle
 ]
 
 { #category : #accessing }
 GtkHeaderBar >> subtitle: aString [
 
-	^ self basicSubtitle: aString utf8Encoded asString
+	^ self basicSubtitle: aString
 ]
 
 { #category : #accessing }
 GtkHeaderBar >> title [
 
-	^ self basicTitle asByteArray utf8Decoded
+	^ self basicTitle
 ]
 
 { #category : #accessing }
 GtkHeaderBar >> title: aString [
 
-	^ self basicTitle: aString utf8Encoded asString
+	^ self basicTitle: aString
 ]

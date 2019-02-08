@@ -60,7 +60,7 @@ GtkTableRowFiller >> visitIndexColumn: aTableColumn [
 
 	self gtkRow
 		at: self columnIndex
-		put: self rowIndex asString utf8Encoded
+		putString: self rowIndex asString
 ]
 
 { #category : #visiting }
@@ -68,5 +68,5 @@ GtkTableRowFiller >> visitStringColumn: aTableColumn [
 
 	self gtkRow
 		at: self columnIndex
-		put: (aTableColumn readObject: self row) asString utf8Encoded
+		putString: (aTableColumn readObject: self row) asString
 ]

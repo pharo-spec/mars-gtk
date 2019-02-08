@@ -29,7 +29,7 @@ GtkRadioButton class >> buttonNewInGroup: aGroup withLabel: utf8EncodedString [
 
 	"aGroup should be an existing radio button group, or NULL if you are creating a new group"
 
-	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_with_label (GtkRadioButtonGroup *aGroup, gchar *utf8EncodedString))
+	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_with_label (GtkRadioButtonGroup *aGroup, String utf8EncodedString))
 ]
 
 { #category : #private }
@@ -41,7 +41,7 @@ GtkRadioButton class >> buttonNewInSameGroupAs: aRadioButton [
 { #category : #private }
 GtkRadioButton class >> buttonNewInSameGroupAs: aRadioButton withLabel: utf8EncodedString [
 
-	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_with_label_from_widget (GtkRadioButton *aRadioButton, const gchar *utf8EncodedString))
+	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_with_label_from_widget (GtkRadioButton *aRadioButton, String utf8EncodedString))
 ]
 
 { #category : #'instance creation' }
@@ -55,7 +55,7 @@ GtkRadioButton class >> newInGroup: aGroup [
 { #category : #'instance creation' }
 GtkRadioButton class >> newInGroup: aGroup withLabel: aLabel [
 
-	^ (self buttonNewInGroup: aGroup withLabel: aLabel utf8Encoded asString)
+	^ (self buttonNewInGroup: aGroup withLabel: aLabel)
 		initialize;
 		yourself
 ]
@@ -71,7 +71,7 @@ GtkRadioButton class >> newInSameGroupAs: aRadioButton [
 { #category : #'instance creation' }
 GtkRadioButton class >> newInSameGroupAs: aRadioButton withLabel: aLabel [
 
-	^ (self buttonNewInSameGroupAs: aRadioButton withLabel: aLabel utf8Encoded asString)
+	^ (self buttonNewInSameGroupAs: aRadioButton withLabel: aLabel)
 		initialize;
 		yourself
 ]

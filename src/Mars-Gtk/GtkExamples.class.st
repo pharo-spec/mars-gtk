@@ -1306,10 +1306,10 @@ GtkExamples class >> gtkExampleListBox [
 
 { #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleListView [
-	"<gtkExample>
+	<gtkExample>
 	<title: 'List View'>
 	<category: #Lists>
-	<layoutFillContainer>"
+	<layoutFillContainer>
 	
 	| store list renderer |
 	
@@ -1317,14 +1317,14 @@ GtkExamples class >> gtkExampleListView [
 
 	100 timesRepeat: [
 		store appendNew
-			at: 0 put: 'Hey!' utf8Encoded;
-			at: 1 put: '1' utf8Encoded.
+			at: 0 putString: 'Hey!';
+			at: 1 putString: '1'.
 		store appendNew 
-			at: 0 put: 'Encoded 今' utf8Encoded;
-			at: 1 put: '2' utf8Encoded.
+			at: 0 putString: 'Encoded 今';
+			at: 1 putString: '2'.
 		store appendNew 
-			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
-			at: 1 put: '3' utf8Encoded. ].
+			at: 0 putString: 'Benoît, Hürlz, ƒåΩ®¥';
+			at: 1 putString: '3'. ].
 	
 	list := GtkTreeView new.
 	list model: store.
@@ -1869,10 +1869,10 @@ GtkExamples class >> gtkExampleToolBar [
 
 { #category : #'private-examples-lists' }
 GtkExamples class >> gtkExampleTreeView [
-	"<gtkExample>
+	<gtkExample>
 	<title: 'Tree View'>
 	<category: #Lists>
-	<layoutFillContainer>"
+	<layoutFillContainer>
 	
 	| store tree renderer |
 	
@@ -1880,18 +1880,18 @@ GtkExamples class >> gtkExampleTreeView [
 
 	100 timesRepeat: [ | row |
 		row := store appendNew
-			at: 0 put: 'Hey!' utf8Encoded;
-			at: 1 put: '1' utf8Encoded;
+			at: 0 putString: 'Hey!';
+			at: 1 putString: '1';
 			yourself.
 		row appendNew
-			at: 0 put: 'Childddd' utf8Encoded;
-			at: 1 put: '11321' utf8Encoded.
+			at: 0 putString: 'Childddd';
+			at: 1 putString: '11321'.
 		row appendNew
-			at: 0 put: 'Encoded 今' utf8Encoded;
-			at: 1 put: '2' utf8Encoded.
+			at: 0 putString: 'Encoded 今';
+			at: 1 putString: '2'.
 		row appendNew
-			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
-			at: 1 put: '3' utf8Encoded.].
+			at: 0 putString: 'Benoît, Hürlz, ƒåΩ®¥';
+			at: 1 putString: '3'.].
 	
 	tree := GtkTreeView new.
 	tree model: store.
@@ -1925,18 +1925,18 @@ GtkExamples class >> gtkExampleTreeViewEditable [
 
 	100 timesRepeat: [ | row |
 		row := store appendNew
-			at: 0 put: 'Hey!' utf8Encoded;
-			at: 1 put: '1' utf8Encoded;
+			at: 0 putString: 'Hey!';
+			at: 1 putString: '1';
 			yourself.
 		row appendNew
-			at: 0 put: 'Childddd' utf8Encoded;
-			at: 1 put: '11321' utf8Encoded.
+			at: 0 putString: 'Childddd';
+			at: 1 putString: '11321'.
 		row appendNew
-			at: 0 put: 'Encoded 今' utf8Encoded;
-			at: 1 put: '2' utf8Encoded.
+			at: 0 putString: 'Encoded 今';
+			at: 1 putString: '2'.
 		row appendNew
-			at: 0 put: 'Benoît, Hürlz, ƒåΩ®¥' utf8Encoded;
-			at: 1 put: '3' utf8Encoded.].
+			at: 0 putString: 'Benoît, Hürlz, ƒåΩ®¥';
+			at: 1 putString: '3'].
 	
 	tree := GtkTreeView new.
 	tree model: store.
@@ -1979,22 +1979,22 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInCell [
 		iconName := Smalltalk ui icons icons keys atRandom.
 		row := store appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded;
+			at: 1 putString: iconName asString;
 			yourself.
 			
 		iconName := Smalltalk ui icons icons keys atRandom.
 		(child := row appendNew)
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded.
+			at: 1 putString: iconName asString.
 		child appendNew 
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded.
+			at: 1 putString: iconName asString.
 		row appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded.
+			at: 1 putString: iconName asString.
 		row appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded ].
+			at: 1 putString: iconName asString ].
 	
 	tree := GtkTreeView new.
 	tree model: store.
@@ -2030,22 +2030,22 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInColumn [
 		iconName := Smalltalk ui icons icons keys atRandom.
 		row := store appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded;
+			at: 1 putString: iconName asString;
 			yourself.
 			
 		iconName := Smalltalk ui icons icons keys atRandom.
 		(child := row appendNew)
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded.
+			at: 1 putString: iconName asString.
 		child appendNew 
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded.
+			at: 1 putString: iconName asString.
 		row appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded.
+			at: 1 putString: iconName asString.
 		row appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
-			at: 1 put: iconName asString utf8Encoded ].
+			at: 1 putString: iconName asString ].
 	
 	tree := GtkTreeView new.
 	tree model: store.

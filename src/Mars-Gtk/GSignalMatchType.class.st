@@ -17,6 +17,42 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #'accessing enum' }
+GSignalMatchType class >> G_SIGNAL_MATCH_CLOSURE [
+	"This method was automatically generated"
+	^ G_SIGNAL_MATCH_CLOSURE
+]
+
+{ #category : #'accessing enum' }
+GSignalMatchType class >> G_SIGNAL_MATCH_DATA [
+	"This method was automatically generated"
+	^ G_SIGNAL_MATCH_DATA
+]
+
+{ #category : #'accessing enum' }
+GSignalMatchType class >> G_SIGNAL_MATCH_DETAIL [
+	"This method was automatically generated"
+	^ G_SIGNAL_MATCH_DETAIL
+]
+
+{ #category : #'accessing enum' }
+GSignalMatchType class >> G_SIGNAL_MATCH_FUNC [
+	"This method was automatically generated"
+	^ G_SIGNAL_MATCH_FUNC
+]
+
+{ #category : #'accessing enum' }
+GSignalMatchType class >> G_SIGNAL_MATCH_ID [
+	"This method was automatically generated"
+	^ G_SIGNAL_MATCH_ID
+]
+
+{ #category : #'accessing enum' }
+GSignalMatchType class >> G_SIGNAL_MATCH_UNBLOCKED [
+	"This method was automatically generated"
+	^ G_SIGNAL_MATCH_UNBLOCKED
+]
+
 { #category : #'enum declaration' }
 GSignalMatchType class >> enumDecl [
 	^ { 

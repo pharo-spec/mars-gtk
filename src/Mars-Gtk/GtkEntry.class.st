@@ -165,13 +165,13 @@ GtkEntry >> inputPurpose: purpose [
 { #category : #accessing }
 GtkEntry >> invisibleCharacter [
 
-	^ (self g_ucs4_to_utf8: self basicInvisibleCharacter) asByteArray utf8Decoded 
+	^ (self g_ucs4_to_utf8: self basicInvisibleCharacter) utf8Decoded
 ]
 
 { #category : #accessing }
 GtkEntry >> invisibleCharacter: aCharacter [
 
-	self basicInvisibleCharacter: (self g_utf8_to_ucs4: aCharacter utf8Encoded asString)
+	self basicInvisibleCharacter: (self g_utf8_to_ucs4: aCharacter)
 ]
 
 { #category : #accessing }
@@ -189,13 +189,13 @@ GtkEntry >> maxLength: length [
 { #category : #accessing }
 GtkEntry >> placeHolderText [
 	
-	^ self basicPlaceHolderText asByteArray utf8Decoded
+	^ self basicPlaceHolderText
 ]
 
 { #category : #accessing }
 GtkEntry >> placeHolderText: text [
 	
-	self basicPlaceHolderText: text utf8Encoded asString
+	self basicPlaceHolderText: text
 ]
 
 { #category : #accessing }
@@ -213,13 +213,13 @@ GtkEntry >> progress: fraction [
 { #category : #accessing }
 GtkEntry >> text [
 	
-	^ self basicText asByteArray utf8Decoded
+	^ self basicText
 ]
 
 { #category : #accessing }
 GtkEntry >> text: text [
 	
-	self basicText: text utf8Encoded asString
+	self basicText: text
 ]
 
 { #category : #accessing }
