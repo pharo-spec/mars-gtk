@@ -4,16 +4,6 @@ Class {
 	#category : #'Mars-Spec-Layout-Box'
 }
 
-{ #category : #accessing }
-GtkBoxAdapter >> add: aPresenter constraints: constraints [
- 
-	self widgetDo: [ :gtkWidget | 
-		self 
-			basicAdd: aPresenter 
-			constaints: constraints 
-			to: gtkWidget ]
-]
-
 { #category : #private }
 GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 	"adds constraits by child."
