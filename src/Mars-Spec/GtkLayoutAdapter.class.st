@@ -11,8 +11,31 @@ GtkLayoutAdapter class >> isAbstract [
 		or: [ self = GtkLayoutAdapter ]
 ]
 
+{ #category : #accessing }
+GtkLayoutAdapter >> add: aPresenter constraints: constraints [
+ 
+	self widgetDo: [ :gtkWidget | 
+		self 
+			basicAdd: aPresenter 
+			constaints: constraints 
+			to: gtkWidget ]
+]
+
+{ #category : #private }
+GtkLayoutAdapter >> basicAdd: aPresenter constaints: constraints to: aPanel [ 
+
+	self subclassResponsibility
+]
+
 { #category : #'as yet unclassified' }
 GtkLayoutAdapter >> buildWithSpec [
+	"This provides some polymorphism with regular presenters to allow composition of layouts."
+	
+	^ self widget
+]
+
+{ #category : #'as yet unclassified' }
+GtkLayoutAdapter >> buildWithSpec: aSpec [
 	"This provides some polymorphism with regular presenters to allow composition of layouts."
 	
 	^ self widget
