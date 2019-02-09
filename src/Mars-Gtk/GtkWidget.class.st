@@ -441,7 +441,7 @@ GtkWidget >> preferredSizeNatural [
 		getPreferredSizeMin: min 
 		natural: natural.
 	
-	^ min width @ min height
+	^ natural width @ natural height
 ]
 
 { #category : #private }
