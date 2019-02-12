@@ -16,7 +16,7 @@ GtkGridAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
-GtkGridAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
+GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
 	childWidget := aPresenter buildWithSpec: constraints spec.

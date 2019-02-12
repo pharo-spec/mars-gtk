@@ -20,7 +20,7 @@ GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
-GtkBoxAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
+GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
 	childWidget := aPresenter buildWithSpec: constraints spec.

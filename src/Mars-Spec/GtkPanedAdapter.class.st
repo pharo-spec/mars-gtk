@@ -19,7 +19,7 @@ GtkPanedAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
-GtkPanedAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
+GtkPanedAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
 	childWidget := aPresenter buildWithSpec: constraints spec.

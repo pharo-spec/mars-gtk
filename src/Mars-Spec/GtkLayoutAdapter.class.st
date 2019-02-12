@@ -17,12 +17,12 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
 	self widgetDo: [ :gtkWidget | 
 		self 
 			basicAdd: aPresenter 
-			constaints: constraints 
+			constraints: constraints 
 			to: gtkWidget ]
 ]
 
 { #category : #private }
-GtkLayoutAdapter >> basicAdd: aPresenter constaints: constraints to: aPanel [ 
+GtkLayoutAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [ 
 
 	self subclassResponsibility
 ]
