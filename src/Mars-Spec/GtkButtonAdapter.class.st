@@ -9,10 +9,10 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 	
 	self model label isEmptyOrNil ifFalse: [
 		gtkButton label: self model label asString  ].
-	"self model icon ifNotNil: [ :icon | 
+	self model icon ifNotNil: [ :icon | 
 		gtkButton 
 			alwaysShowImage;
-			image: (GtkImage newForm: icon) ]."
+			image: (GtkImage newForm: icon) ].
 	self model help ifNotNil: [ :help | 
 		gtkButton tooltipText: help ].
 

@@ -102,11 +102,11 @@ SpecFormExample >> initializeWidgets [
 	
 	textInputLabel := self newLabel label: 'Text input'.
 	textInput := self newTextInput 
-		ghostText: 'a ghost text'.
+		placeholder: 'a ghost text'.
 		
 	numberInputLabel := self newLabel label: 'Number input'.
 	numberInput := self newNumberInput 
-		ghostText: 'a ghost number';
+		placeholder: 'a ghost number';
 		beFloat;
 		rangeMinimum: 0 maximum: 1000000.
 

@@ -17,3 +17,9 @@ GtkLayoutAdapter >> buildWithSpec [
 	
 	^ self widget
 ]
+
+{ #category : #'as yet unclassified' }
+GtkLayoutAdapter >> buildWithSpec: spec. [
+
+	^ self buildWithSpec 
+]
