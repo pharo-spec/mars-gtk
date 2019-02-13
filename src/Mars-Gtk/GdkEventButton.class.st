@@ -41,6 +41,12 @@ GdkEventButton class >> fieldsDesc [
 	)
 ]
 
+{ #category : #'field definition' }
+GdkEventButton class >> newPressEvent [
+
+	^ self fromHandle: (self eventNew: GdkEventType GDK_BUTTON_PRESS)
+]
+
 { #category : #'accessing structure variables' }
 GdkEventButton >> axes [
 	"This method was automatically generated"

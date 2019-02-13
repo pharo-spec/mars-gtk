@@ -70,6 +70,22 @@ GtkButton >> beImagePositionTop [
 	self imagePosition: GTK_POS_TOP
 ]
 
+{ #category : #simulating }
+GtkButton >> clicked [
+
+	self ffiCall: #(void gtk_button_clicked (self))
+
+]
+
+{ #category : #style }
+GtkButton >> font: aLogicalFont [ 
+	
+	| pangoFont |
+	
+	pangoFont := self styleContext font.
+	pangoFont familyName: aLogicalFont familyName.
+]
+
 { #category : #private }
 GtkButton >> gtkButtonGetLabel [
 

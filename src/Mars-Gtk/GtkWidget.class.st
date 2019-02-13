@@ -252,6 +252,11 @@ GtkWidget >> deferAction: aBlock [
 	deferActions := deferActions copyWith: aBlock
 ]
 
+{ #category : #'initialize-destroy' }
+GtkWidget >> delete [
+	self destroy
+]
+
 { #category : #accessing }
 GtkWidget >> destroy [
 	
@@ -492,10 +497,22 @@ GtkWidget >> sizeRequestWidth: width height: height [
 	^ self ffiCall: #(void gtk_widget_set_size_request ( self, gint width, gint height ) )
 ]
 
+{ #category : #styles }
+GtkWidget >> styleContext [
+	
+	^ self ffiCall: #(GtkStyleContext *gtk_widget_get_style_context (self))
+]
+
 { #category : #TOREMOVE }
 GtkWidget >> takeKeyboardFocus [
 	
 	self flag: #TODO.
+]
+
+{ #category : #accessing }
+GtkWidget >> tooltipText [
+	
+	^ self ffiCall: #(String gtk_widget_get_tooltip_text (self))
 ]
 
 { #category : #accessing }
