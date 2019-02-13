@@ -67,6 +67,11 @@ GtkListBox >> insert: aWidget at: position [
 	^ row
 ]
 
+{ #category : #convenience }
+GtkListBox >> items [
+	^ self children
+]
+
 { #category : #accessing }
 GtkListBox >> listModel: aListModel [
 	listModel := aListModel. 
