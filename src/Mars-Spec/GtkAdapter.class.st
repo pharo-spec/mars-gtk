@@ -55,6 +55,12 @@ GtkAdapter >> newWidget [
 	^ self widgetClass new
 ]
 
+{ #category : #accessing }
+GtkAdapter >> setBalloonText: aString [ 
+	
+	^ self widget ifNotNil: [ self widget tooltipText: aString ]
+]
+
 { #category : #protocol }
 GtkAdapter >> takeKeyboardFocus [
 	self

@@ -6,21 +6,41 @@ Class {
 
 { #category : #factory }
 GtkButtonAdapter >> addModelTo: gtkButton [
-	
-	self model label isEmptyOrNil ifFalse: [
-		gtkButton label: self model label asString  ].
-	self model icon ifNotNil: [ :icon | 
-		gtkButton 
-			alwaysShowImage;
-			image: (GtkImage newForm: icon) ].
-	self model help ifNotNil: [ :help | 
-		gtkButton tooltipText: help ].
 
-	gtkButton connectClicked: self model action
+	widget := gtkButton.
+
+	self model label isEmptyOrNil ifFalse: [self updateLabel].
+	self model icon ifNotNil: [self updateIcon].
+	self model help ifNotNil: [self updateTooltip].
+	
+	gtkButton connectClicked: self model action value.
+	
+	model whenLabelChangedDo: [ self updateLabel ].
+	model whenIconChangedDo: [ self updateIcon ].
+
 ]
 
 { #category : #factory }
 GtkButtonAdapter >> newWidget [ 
 	
 	^ GtkButton newLabel: self model label asString
+]
+
+{ #category : #factory }
+GtkButtonAdapter >> updateIcon [
+
+	self widget
+		alwaysShowImage;
+		image: (GtkImage newForm: self model icon)
+]
+
+{ #category : #factory }
+GtkButtonAdapter >> updateLabel [
+
+	self widget label: self model label asString
+]
+
+{ #category : #factory }
+GtkButtonAdapter >> updateTooltip [
+	self widget tooltipText: self model help
 ]
