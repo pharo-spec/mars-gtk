@@ -52,6 +52,17 @@ GtkListAdapter >> refreshSelection [
 		w selectPath: { self model selectedIndex } ]
 ]
 
+{ #category : #'as yet unclassified' }
+GtkListAdapter >> refreshWidgetSelection [
+	| rowIndexes |
+	rowIndexes := self presenter selection selectedIndexes.
+	(self widget selection allSelected collect: #first) asArray
+		= rowIndexes
+		ifTrue: [ ^ self ].
+	self notYetImplemented.
+	self flag:'Programatic selection of presenter in GTK'
+]
+
 { #category : #updating }
 GtkListAdapter >> update: aSymbol [
 	"Spec uses this to inform about a change in the model"
