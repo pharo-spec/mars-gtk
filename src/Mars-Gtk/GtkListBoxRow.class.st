@@ -21,3 +21,8 @@ GtkListBoxRow class >> new [
 GtkListBoxRow >> asListBoxRow [
 	^ self
 ]
+
+{ #category : #accessing }
+GtkListBoxRow >> content [
+	^ self children first
+]

@@ -76,7 +76,7 @@ GtkListBox >> listModel: aListModel [
 { #category : #accessing }
 GtkListBox >> prependWidget: aWidget [
 	self
-		ffiCall: #(void gtk_list_box_prepend #(self , GtkWidget * child))
+		ffiCall: #(void gtk_list_box_prepend #(self , GtkWidget * aWidget))
 ]
 
 { #category : #accessing }
