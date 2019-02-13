@@ -11,16 +11,6 @@ Class {
 	#category : #'Mars-Spec-Layout-Box'
 }
 
-{ #category : #accessing }
-GtkPanedAdapter >> add: aPresenter constraints: constraints [
- 
-	self widgetDo: [ :gtkWidget | 
-		self 
-			basicAdd: aPresenter 
-			constaints: constraints 
-			to: gtkWidget ]
-]
-
 { #category : #private }
 GtkPanedAdapter >> addConstraits: constraints toChild: childWidget [
 	"adds constraits by child."
@@ -29,7 +19,7 @@ GtkPanedAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
-GtkPanedAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
+GtkPanedAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
 	childWidget := aPresenter buildWithSpec: constraints spec.

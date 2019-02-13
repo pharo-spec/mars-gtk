@@ -4,16 +4,6 @@ Class {
 	#category : #'Mars-Spec-Layout-Grid'
 }
 
-{ #category : #accessing }
-GtkGridAdapter >> add: aPresenter constraints: constraints [
- 
-	self widgetDo: [ :gtkWidget | 
-		self 
-			basicAdd: aPresenter 
-			constaints: constraints 
-			to: gtkWidget ]
-]
-
 { #category : #private }
 GtkGridAdapter >> addConstraits: constraints toChild: childWidget [
 	"adds constraits by child."
@@ -26,7 +16,7 @@ GtkGridAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
-GtkGridAdapter >> basicAdd: aPresenter constaints: constraints to: gtkWidget [
+GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
 	childWidget := aPresenter buildWithSpec: constraints spec.
