@@ -74,6 +74,12 @@ GtkListBox >> listModel: aListModel [
 ]
 
 { #category : #accessing }
+GtkListBox >> prependWidget: aWidget [
+	self
+		ffiCall: #(void gtk_list_box_prepend #(self , GtkWidget * child))
+]
+
+{ #category : #accessing }
 GtkListBox >> selectRow: aRow [
 	self ffiCall: #(void gtk_list_box_select_row (self, GtkListBoxRow *row))
 ]
