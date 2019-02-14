@@ -3,7 +3,8 @@ Class {
 	#superclass : #GtkWindowAdapter,
 	#instVars : [
 		'wasModal',
-		'waitForAnswer'
+		'waitForAnswer',
+		'contentsWidget'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -30,12 +31,6 @@ GtkDialogWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 GtkDialogWindowAdapter >> close [
 
 	self widgetDo: [ :w | w respond ]
-]
-
-{ #category : #private }
-GtkDialogWindowAdapter >> contentWidget: aSpec [
-
-	^ self model contents
 ]
 
 { #category : #building }
