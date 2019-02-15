@@ -30,10 +30,28 @@ GtkTreeSelection >> basicSelectPath: path [
 	self ffiCall: #(void gtk_tree_selection_select_path (self, GtkTreePath *path))
 ]
 
+{ #category : #private }
+GtkTreeSelection >> basicUnselectPath: path [
+
+	self ffiCall: #(void gtk_tree_selection_unselect_path (self, GtkTreePath *path))
+]
+
 { #category : #signals }
 GtkTreeSelection >> connectChanged: aBlock [
 
 	self connect: 'changed' do: aBlock
+]
+
+{ #category : #accessing }
+GtkTreeSelection >> mode [
+	
+	self ffiCall: #(GtkSelectionMode gtk_tree_selection_get_mode (self))
+]
+
+{ #category : #'selection mode' }
+GtkTreeSelection >> mode: type [
+	
+	self ffiCall: #(void gtk_tree_selection_set_mode (self, GtkSelectionMode type))
 ]
 
 { #category : #accessing }
@@ -55,4 +73,22 @@ GtkTreeSelection >> selectedForEach: func data: data [
 		self,
 		GCallback func,
 		gpointer data))
+]
+
+{ #category : #selection }
+GtkTreeSelection >> unselectAll [
+	
+	^ self ffiCall: #(void gtk_tree_selection_unselect_all (self))
+]
+
+{ #category : #accessing }
+GtkTreeSelection >> unselectPath: pathArray [
+
+	| path |
+	
+	"if is none selected, skip"
+	(self allSelected includes: pathArray) ifFalse: [ ^ self ].
+	
+	path := (GtkTreePath newFromArray: pathArray) autoRelease.
+	self basicUnselectPath: path
 ]

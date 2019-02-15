@@ -68,6 +68,11 @@ GtkTreeView >> basicAppendColumn: column [
 	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
 ]
 
+{ #category : #configuting }
+GtkTreeView >> beSingleSelectionMode [
+	self selection mode: GtkSelectionMode GTK_SELECTION_SINGLE
+]
+
 { #category : #signals }
 GtkTreeView >> connectRowExpanded: aBlock [
 
@@ -196,6 +201,12 @@ GtkTreeView >> newColumn [
 	^ column
 ]
 
+{ #category : #selection }
+GtkTreeView >> selectIndex: anInteger [ 
+	
+	self selection selectPath: { anInteger }
+]
+
 { #category : #accessing }
 GtkTreeView >> selectPath: pathArray [ 
 
@@ -206,6 +217,12 @@ GtkTreeView >> selectPath: pathArray [
 GtkTreeView >> selected [
 
 	^ self allSelected ifNotEmpty: #first
+]
+
+{ #category : #selection }
+GtkTreeView >> selectedIndexes [
+
+	^ self selection allSelected flattened
 ]
 
 { #category : #private }
