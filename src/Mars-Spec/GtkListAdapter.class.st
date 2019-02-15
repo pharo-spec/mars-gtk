@@ -14,6 +14,7 @@ GtkListAdapter class >> adaptingAliases [
 GtkListAdapter >> addModelTo: gtkList [
 	gtkList
 		headersVisible: false;
+		beSingleSelectionMode;
 		appendTextColumn;
 		model: self newTreeStore.
 
@@ -51,6 +52,7 @@ GtkListAdapter >> refreshSelection [
 { #category : #'as yet unclassified' }
 GtkListAdapter >> refreshWidgetSelection [
 	| rowIndexes |
+	
 	rowIndexes := self presenter selection selectedIndexes.
 	(self widget selection allSelected collect: #first) asArray = rowIndexes
 		ifTrue: [ ^ self ].

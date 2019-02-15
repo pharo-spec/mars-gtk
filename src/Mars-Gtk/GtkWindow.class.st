@@ -135,6 +135,7 @@ GtkWindow >> showAll [
 	self withAllChildrenDo: #executeDeferredActions.
 
 	"We have to do in this way to avoid the selection of the first element in a list"
+	self show.
 	self children do: #showAll
 ]
 
