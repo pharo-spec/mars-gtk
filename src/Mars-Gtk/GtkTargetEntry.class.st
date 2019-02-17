@@ -1,3 +1,9 @@
+"
+https://www.cs.tut.fi/lintula/manual/gtk/gtk/gtk-selections.html#GTKTARGETENTRY
+A GtkTargetEntry structure represents a single type of data than can be supplied for by a widget for a selection or for supplied or received during drag-and-drop. It contains a string representing the drag type, a flags field (used only for drag and drop - see GtkTargetFlags), and an application assigned integer ID. The integer ID will later be passed as a signal parameter for signals like ""selection_get"". It allows the application to identify the target type without extensive string compares.
+
+
+"
 Class {
 	#name : #GtkTargetEntry,
 	#superclass : #GtkStructure,
