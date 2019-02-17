@@ -263,6 +263,13 @@ GtkWidget >> destroy [
 	^ self ffiCall: #(void gtk_widget_destroy (self))
 ]
 
+{ #category : #testing }
+GtkWidget >> dragDestSetFlags: flags targetsTypes: targets targetsAmount: n_targets actions: actions [
+	^ self
+		ffiCall:
+			#(void gtk_drag_dest_set #(self , GtkDestDefaults flags , const GtkTargetEntry * targets , gint n_targets , GdkDragAction actions))
+]
+
 { #category : #'private deferring' }
 GtkWidget >> executeDeferredActions [
 
