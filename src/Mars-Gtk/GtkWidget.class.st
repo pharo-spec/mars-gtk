@@ -265,9 +265,22 @@ GtkWidget >> destroy [
 
 { #category : #testing }
 GtkWidget >> dragDestSetFlags: flags targetsTypes: targets targetsAmount: n_targets actions: actions [
+"Sets a widget as a potential drop destination, and adds default behaviors.
+
+The default behaviors listed in flags have an effect similar to installing default handlers for the widget’s drag-and-drop signals (“drag-motion”, “drag-drop”, ...). They all exist for convenience. When passing GTK_DEST_DEFAULT_ALL for instance it is sufficient to connect to the widget’s “drag-data-received” signal to get primitive, but consistent drag-and-drop support.
+
+Things become more complicated when you try to preview the dragged data, as described in the documentation for “drag-motion”. The default behaviors described by flags make some assumptions, that can conflict with your own signal handlers. For instance GTK_DEST_DEFAULT_DROP causes invokations of gdk_drag_status() in the context of “drag-motion”, and invokations of gtk_drag_finish() in “drag-data-received”. Especially the later is dramatic, when your own “drag-motion” handler calls gtk_drag_get_data() to inspect the dragged data.
+
+There’s no way to set a default action here, you can use the “drag-motion” callback for that. Here’s an example which selects the action to use depending on whether the control key is pressed or not:"
 	^ self
 		ffiCall:
 			#(void gtk_drag_dest_set #(self , GtkDestDefaults flags , const GtkTargetEntry * targets , gint n_targets , GdkDragAction actions))
+]
+
+{ #category : #testing }
+GtkWidget >> dragDestUnset [
+	"Clears information about a drop destination set with gtk_drag_dest_set(). The widget will no longer receive notification of drags."
+	^ self ffiCall: #(void gtk_drag_dest_unset #(self))
 ]
 
 { #category : #'private deferring' }
