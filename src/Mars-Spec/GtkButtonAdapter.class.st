@@ -9,9 +9,9 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 
 	widget := gtkButton.
 
-	self model label isEmptyOrNil ifFalse: [self updateLabel].
-	self model icon ifNotNil: [self updateIcon].
-	self model help ifNotNil: [self updateTooltip].
+	self model label isEmptyOrNil ifFalse: [ self updateLabel ].
+	self model icon ifNotNil: [ self updateIcon ].
+	self model help ifNotNil: [ self updateTooltip ].
 	
 	gtkButton connectClicked: self model action value.
 	

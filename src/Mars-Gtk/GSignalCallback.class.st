@@ -47,3 +47,17 @@ GSignalCallback >> signal [
 GSignalCallback >> signal: anObject [
 	signal := anObject
 ]
+
+{ #category : #evaluating }
+GSignalCallback >> valueWithArguments: args [
+	"same as my parent, but with logging"
+
+	GtkWidgetSignaledSignal emitSignal: self signal.
+	^ [ block valueWithArguments: args ]
+		on: Error
+		fork: [ :e | 
+			e emit.
+			e debug ]
+		return: [ 
+			self returnOnError ]
+]

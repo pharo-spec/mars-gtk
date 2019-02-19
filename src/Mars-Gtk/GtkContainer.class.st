@@ -92,7 +92,7 @@ GtkContainer >> initialize [
 { #category : #private }
 GtkContainer >> keepWidget: widget [
 
-	children := children copyWith: widget.
+	children := children copyWith: widget
 
 
 ]

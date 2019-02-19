@@ -43,7 +43,7 @@ GtkFinalizeSignal >> printOneLineContentsOn: stream [
 	
 	stream
 		<< self target name  
-		<< ' ' << self handle asString
+		<< ' ' << self handle printString
 ]
 
 { #category : #accessing }

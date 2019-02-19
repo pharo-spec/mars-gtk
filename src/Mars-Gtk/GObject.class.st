@@ -69,7 +69,8 @@ GObject >> connect: aString signature: signature do: aBlock [
 		signal: aString 
 		connect: callback 
 		data: callback thunk.
-	callback registerId: id
+	callback registerId: id.
+	GtkConnectSignalSignal emitWidget: self signal: aString
 ]
 
 { #category : #signaling }

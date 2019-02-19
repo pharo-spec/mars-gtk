@@ -18,7 +18,7 @@ GtkLibrary >> macModuleName [
 ]
 
 { #category : #'accessing platform' }
-GtkLibrary >> runner [ 
+GtkLibrary >> runner [
 	
 	^ TFSameThreadRunner new
 ]
