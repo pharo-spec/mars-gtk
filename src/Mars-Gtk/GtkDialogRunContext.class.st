@@ -42,7 +42,10 @@ GtkDialogRunContext >> doAfterRun [
 
 	wasDestroyed ifTrue: [ ^ self ].
 	
-	wasModal ifFalse: [ self dialog beNotModal ].
+	self flag: #REVIEW. "For some reason, removing the modal state is breaking the flow (seems 
+	is letting the modal state in some weird status and system does not receives more events).
+	I deactivating this because that way it seems working... at least for now :)"
+	"wasModal ifFalse: [ self dialog beNotModal ]."
 	self dialog 
 		disconnect: 'unmap';
 		disconnect: 'delete-event'.
