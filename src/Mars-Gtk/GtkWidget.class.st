@@ -252,8 +252,9 @@ GtkWidget >> deferAction: aBlock [
 	deferActions := deferActions copyWith: aBlock
 ]
 
-{ #category : #'initialize-destroy' }
+{ #category : #initialization }
 GtkWidget >> delete [
+
 	self destroy
 ]
 

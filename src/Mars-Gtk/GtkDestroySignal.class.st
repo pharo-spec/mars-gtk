@@ -1,3 +1,6 @@
+"
+I signal a gobject has been destroyed.
+"
 Class {
 	#name : #GtkDestroySignal,
 	#superclass : #GtkSignal,

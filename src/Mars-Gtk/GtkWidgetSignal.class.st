@@ -33,7 +33,7 @@ GtkWidgetSignal >> printOneLineContentsOn: stream [
 	
 	stream
 		<< self widget className  
-		<< ' ' << self widget getHandle asString
+		<< ' ' << self widget getHandle printString
 ]
 
 { #category : #accessing }

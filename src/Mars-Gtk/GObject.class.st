@@ -69,7 +69,8 @@ GObject >> connect: aString signature: signature do: aBlock [
 		signal: aString 
 		connect: callback 
 		data: callback thunk.
-	callback registerId: id
+	callback registerId: id.
+	GtkConnectSignalSignal emitWidget: self signal: aString
 ]
 
 { #category : #signaling }
@@ -212,13 +213,13 @@ GObject >> gObjectGetString: aName [
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toBoolean: aBoolean [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean) )	
+	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean, 0) )	
 ]
 
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toInteger: aNumber [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, gint aNumber) )
+	self ffiCall: #(void g_object_set (self, const gchar *aName, gint aNumber, 0) )
 ]
 
 { #category : #'private primitives' }
