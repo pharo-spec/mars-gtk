@@ -131,8 +131,12 @@ GtkWindow >> setPosition: position [
 
 { #category : #accessing }
 GtkWindow >> showAll [
+
 	self withAllChildrenDo: #executeDeferredActions.
-	super showAll
+
+	"We have to do in this way to avoid the selection of the first element in a list"
+	self children do: #showAll.
+	super showAll.
 ]
 
 { #category : #accessing }
