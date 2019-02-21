@@ -180,15 +180,18 @@ GtkTreeView >> isHeadersVisible [
 { #category : #accessing }
 GtkTreeView >> model [
 
-	^ listStore ifNil: [ listStore := self getModel objectRef ]
+	^ listStore ifNil: [ 
+		listStore := self getModel 
+			objectRef;
+			yourself ]
 ]
 
 { #category : #accessing }
 GtkTreeView >> model: aListStore [
 
-	"listStore ifNotNil: [ listStore objectUnref ]."
+	listStore ifNotNil: [ listStore objectUnref ].
 	listStore := aListStore.
-	"listStore objectRef."
+	listStore objectRef.
 	self setModel: aListStore
 ]
 
