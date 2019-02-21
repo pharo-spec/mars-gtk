@@ -21,6 +21,12 @@ Class {
 	#category : #'Mars-Gtk-Base-Events'
 }
 
+{ #category : #private }
+GdkEventButton class >> eventNew: type [
+
+	self ffiCall: #(GdkEventButton *gdk_event_new (GdkEventType type))
+]
+
 { #category : #'field definition' }
 GdkEventButton class >> fieldsDesc [ 
 	"self rebuildFieldAccessors"
@@ -41,10 +47,10 @@ GdkEventButton class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'field definition' }
+{ #category : #'instance creation' }
 GdkEventButton class >> newPressEvent [
 
-	^ self fromHandle: (self eventNew: GdkEventType GDK_BUTTON_PRESS)
+	^ (self eventNew: GDK_BUTTON_PRESS) initialize
 ]
 
 { #category : #'accessing structure variables' }

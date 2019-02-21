@@ -7,13 +7,13 @@ Class {
 	#category : #'Mars-Gtk-Base-Events'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GdkEvent class >> eventNew: type [
 
 	self ffiCall: #(GdkEvent *gdk_event_new (GdkEventType type))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #resources }
 GdkEvent class >> ffiLibrary [
 
 	^ GtkLibrary 
