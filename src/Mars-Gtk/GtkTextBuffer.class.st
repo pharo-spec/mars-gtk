@@ -44,7 +44,8 @@ GtkTextBuffer >> text: text [
 
 { #category : #private }
 GtkTextBuffer >> textStart: start end: end includeHiddenChars: include_hidden_chars [ 
-	self ffiCall: #(gchar *gtk_text_buffer_get_text (
+
+	self ffiCall: #(String gtk_text_buffer_get_text (
 		self,
       "const GtkTextIter *" void *start,
       "const GtkTextIter *" void *end,
