@@ -68,7 +68,7 @@ GtkAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelectio
 	| selectedIndex |
 	presenter selection
 		whenChangedDo: [ :selection | selectedIndex := selection selectedIndex ].
-	presenter adapter widget selectIndex: 1.
+	presenter adapter widget selection selectPath: {1}.
 	self assert: selectedIndex equals: 1
 ]
 
