@@ -6,5 +6,6 @@ Class {
 
 { #category : #building }
 GtkMenuBaseAdapter >> addModelTo: gtkWidget [
+
 	self subclassResponsibility
 ]

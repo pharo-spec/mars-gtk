@@ -13,7 +13,7 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 	self model icon ifNotNil: [ self updateIcon ].
 	self model help ifNotNil: [ self updateTooltip ].
 	
-	gtkButton connectClicked: self model action value.
+	gtkButton connectClicked: self model action.
 	
 	model whenLabelChangedDo: [ self updateLabel ].
 	model whenIconChangedDo: [ self updateIcon ].

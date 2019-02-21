@@ -19,26 +19,33 @@ GtkListAdapter >> addModelTo: gtkList [
 
 	gtkList selection unselectAll.
 	
-	self presenter selection isEmpty ifFalse: [ gtkList selection selectPath: self presenter selection selectedIndexes ].
+	self presenter selection isEmpty ifFalse: [
+		self presenter selection selectedIndexes do: [ :each |  
+			gtkList selection selectPath: { each } ] ].
 	
-	self model menu
-		ifNotNil:
-			[ :menuPresenter | gtkList contextMenu: menuPresenter buildWithSpec ].
-	gtkList
-		connectSelectionChanged: [ 
-			self presenter selection selectIndexes: gtkList allSelected flattened ]
+	self model menu ifNotNil: [ :menuPresenter | 
+		gtkList contextMenu: menuPresenter buildWithSpec ].
+	gtkList connectSelectionChanged: [ 
+		self presenter selection selectIndexes: gtkList allSelected flattened ]
 ]
 
 { #category : #private }
 GtkListAdapter >> modelItemsAsDisplay [
-	^ self model model shownItems
-		collect: [ :each | self model displayBlock value: each ]
+	^ self model model shownItems 
+		collect: [ :each | (self model displayBlock value: each) asString ]
 ]
 
 { #category : #private }
 GtkListAdapter >> newTreeStore [
 
 	^ GtkTreeStore newStrings: self modelItemsAsDisplay
+]
+
+{ #category : #updating }
+GtkListAdapter >> refreshList [
+
+	self widgetDo: [ :w |
+		w model: self newTreeStore ]
 ]
 
 { #category : #private }
@@ -51,14 +58,16 @@ GtkListAdapter >> refreshSelection [
 { #category : #'as yet unclassified' }
 GtkListAdapter >> refreshWidgetSelection [
 	| rowIndexes |
+
 	rowIndexes := self presenter selection selectedIndexes.
 	(self widget selection allSelected collect: #first) asArray = rowIndexes
 		ifTrue: [ ^ self ].
-		
 	rowIndexes ifEmpty: [ ^ self widget selection unselectAll ].
-
-	self widget 	selection selectPath: rowIndexes.
-
+	"I need to iterate because selected indexes will have all selections and 
+	 selectPath will take paths (since models are trees) and select them one 
+	 by one"
+	rowIndexes do: [ :each |
+		self widget 	selection selectPath: { each } ]
 ]
 
 { #category : #building }
