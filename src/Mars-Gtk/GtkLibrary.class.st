@@ -1,8 +1,31 @@
 Class {
 	#name : #GtkLibrary,
 	#superclass : #FFILibrary,
-	#category : 'Mars-Gtk-Base'
+	#classVars : [
+		'Debug'
+	],
+	#category : #'Mars-Gtk-Base'
 }
+
+{ #category : #accessing }
+GtkLibrary class >> beForDebug [
+	<script>
+	
+	Debug := true
+]
+
+{ #category : #accessing }
+GtkLibrary class >> beForProduction [
+	<script>
+
+	Debug := false
+]
+
+{ #category : #testing }
+GtkLibrary class >> isDebug [ 
+
+	^ Debug
+]
 
 { #category : #'accessing platform' }
 GtkLibrary >> calloutAPIClass [ 
@@ -13,7 +36,7 @@ GtkLibrary >> calloutAPIClass [
 { #category : #'accessing platform' }
 GtkLibrary >> macModuleName [
 
-	"^ '/opt/gtk/inst/lib/libgtk-3.dylib'" 
+	self class isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libgtk-3.dylib' ]. 
 	^ '/usr/local/lib/libgtk-3.dylib'
 ]
 
