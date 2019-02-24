@@ -68,7 +68,7 @@ GtkTreeView >> basicAppendColumn: column [
 	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
 ]
 
-{ #category : #configuting }
+{ #category : #configuring }
 GtkTreeView >> beSingleSelectionMode [
 	self selection mode: GtkSelectionMode GTK_SELECTION_SINGLE
 ]
