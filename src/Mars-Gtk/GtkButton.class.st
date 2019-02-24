@@ -6,6 +6,9 @@ https://developer.gnome.org/gtk3/stable/GtkButton.html
 Class {
 	#name : #GtkButton,
 	#superclass : #GtkWidget,
+	#instVars : [
+		'image'
+	],
 	#pools : [
 		'GtkPositionType',
 		'GtkReliefStyle'
@@ -87,6 +90,12 @@ GtkButton >> font: aLogicalFont [
 ]
 
 { #category : #private }
+GtkButton >> getImage [
+
+	^ self ffiCall: #(GtkImage *gtk_button_get_image (self))
+]
+
+{ #category : #private }
 GtkButton >> gtkButtonGetLabel [
 
 	^ self ffiCall: #(gchar *gtk_button_get_label(self))
@@ -100,12 +109,15 @@ GtkButton >> gtkButtonSetLabel: aString [
 
 { #category : #accessing }
 GtkButton >> image [
-	^ self ffiCall: #(GtkImage *gtk_button_get_image (self))
+
+	^ image ifNil: [ image := self getImage ]
 ]
 
 { #category : #accessing }
-GtkButton >> image: image [
-	self ffiCall: #(void gtk_button_set_image (self, GtkWidget *image))
+GtkButton >> image: anImage [
+
+	image := anImage.
+	self setImage: anImage
 ]
 
 { #category : #accessing }
@@ -145,6 +157,12 @@ GtkButton >> reliefStyle [
 GtkButton >> reliefStyle: relief [
 
 	^ self ffiCall: #(void gtk_button_set_relief (self, GtkReliefStyle relief))
+]
+
+{ #category : #private }
+GtkButton >> setImage: anImage [
+
+	self ffiCall: #(void gtk_button_set_image (self, GtkWidget *anImage))
 ]
 
 { #category : #accessing }
