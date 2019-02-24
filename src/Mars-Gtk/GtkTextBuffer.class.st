@@ -15,25 +15,25 @@ Class {
 { #category : #private }
 GtkTextBuffer >> endIter: iter [
 
-	self ffiCall: #(void gtk_text_buffer_get_end_iter (self, "GtkTextIter *"void *iter))
+	self ffiCall: #(void gtk_text_buffer_get_end_iter (self, GtkTextIter *iter))
 ]
 
 { #category : #private }
 GtkTextBuffer >> startIter: iter [
 
-	self ffiCall: #(void gtk_text_buffer_get_start_iter (self, "GtkTextIter *"void *iter))
+	self ffiCall: #(void gtk_text_buffer_get_start_iter (self, GtkTextIter *iter))
 ]
 
 { #category : #accessing }
 GtkTextBuffer >> text [
 	| start end |
 
-	self startIter: (start := ExternalAddress newPointer) autoRelease.
-	self endIter: (end := ExternalAddress newPointer) autoRelease.
-	^ self 
-		textStart: start 
-		end: end 
-		includeHiddenChars: false
+	start := GtkTextIter new.
+	end := GtkTextIter new.
+	self startIter: start.
+	self endIter: end.
+	
+	^ self textStart: start end: end includeHiddenChars: false
 ]
 
 { #category : #accessing }
@@ -47,7 +47,7 @@ GtkTextBuffer >> textStart: start end: end includeHiddenChars: include_hidden_ch
 
 	self ffiCall: #(String gtk_text_buffer_get_text (
 		self,
-      "const GtkTextIter *" void *start,
-      "const GtkTextIter *" void *end,
+      const GtkTextIter *start,
+      const GtkTextIter *end,
       gboolean include_hidden_chars))
 ]
