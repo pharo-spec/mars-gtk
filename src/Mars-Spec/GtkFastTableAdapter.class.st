@@ -3,3 +3,9 @@ Class {
 	#superclass : #GtkListAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
+
+{ #category : #deprecation }
+GtkFastTableAdapter class >> isDeprecated [ 
+
+	^ true
+]

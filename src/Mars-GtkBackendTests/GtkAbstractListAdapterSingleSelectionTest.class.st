@@ -66,6 +66,7 @@ GtkAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelectio
 { #category : #'tests-widget-to-model' }
 GtkAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelectionIndexChangeEventWithSelectedIndex [
 	| selectedIndex |
+		
 	presenter selection
 		whenChangedDo: [ :selection | selectedIndex := selection selectedIndex ].
 	presenter adapter widget selection selectPath: {1}.

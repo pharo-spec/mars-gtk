@@ -20,11 +20,9 @@ GtkListAdapter >> addModelTo: gtkList [
 
 	gtkList selection unselectAll.
 	
-	self presenter selection isEmpty ifFalse: [ gtkList selection selectPath: self presenter selection selectedIndexes ].
+	self presenter selection isEmpty 
+		ifFalse: [ gtkList selection selectPath: self presenter selection selectedIndexes ].
 	
-	self model menu
-		ifNotNil:
-			[ :menuPresenter | gtkList contextMenu: menuPresenter buildWithSpec ].
 	gtkList
 		connectSelectionChanged: [ 
 			self presenter selection selectIndexes: gtkList allSelected flattened ]
@@ -67,6 +65,22 @@ GtkListAdapter >> refreshWidgetSelection [
 	rowIndexes ifEmpty: [ ^ self widget selection unselectAll ].
 
 	self widget 	selection selectPath: rowIndexes.
+
+]
+
+{ #category : #building }
+GtkListAdapter >> takeKeyboardFocus [
+
+	| needToCleanUP |
+	
+	needToCleanUP := self presenter selection isEmpty.
+
+	super takeKeyboardFocus.
+
+	self flag: #hack.
+	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
+	
+	needToCleanUP ifTrue: [ self widget selection unselectAll ]
 
 ]
 

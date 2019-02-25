@@ -24,7 +24,7 @@ GtkLibrary class >> beForProduction [
 { #category : #testing }
 GtkLibrary class >> isDebug [ 
 
-	^ Debug
+	^ Debug ifNil: [ Debug := false ]
 ]
 
 { #category : #'accessing platform' }
