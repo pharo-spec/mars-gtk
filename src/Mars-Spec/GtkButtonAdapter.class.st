@@ -7,11 +7,12 @@ Class {
 { #category : #factory }
 GtkButtonAdapter >> addModelTo: gtkButton [
 
+	super addModelTo: gtkButton.
+
 	widget := gtkButton.
 
 	self model label isEmptyOrNil ifFalse: [ self updateLabel ].
 	self model icon ifNotNil: [ self updateIcon ].
-	self model help ifNotNil: [ self updateTooltip ].
 	
 	gtkButton connectClicked: [ self model action value ].
 	
@@ -23,11 +24,6 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 { #category : #events }
 GtkButtonAdapter >> clicked [
 	self widget clicked
-]
-
-{ #category : #accessing }
-GtkButtonAdapter >> helpText [
-	^ widget tooltipText
 ]
 
 { #category : #accessing }
@@ -59,9 +55,4 @@ GtkButtonAdapter >> updateIcon [
 GtkButtonAdapter >> updateLabel [
 
 	self widget label: self model label asString
-]
-
-{ #category : #factory }
-GtkButtonAdapter >> updateTooltip [
-	self widget tooltipText: self model help
 ]

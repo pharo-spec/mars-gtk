@@ -7,6 +7,8 @@ Class {
 { #category : #emulating }
 GtkCheckBoxAdapter >> addModelTo: gtkWidget [
 	
+	super addModelTo: gtkWidget.
+	
 	gtkWidget label: self model label.
 	gtkWidget active: self model state.
 	

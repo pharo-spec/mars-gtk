@@ -482,6 +482,12 @@ GtkWidget >> resourceData [
 ]
 
 { #category : #accessing }
+GtkWidget >> sensitive [
+	
+	^ self ffiCall: #(gboolean gtk_widget_get_sensitive (self))
+]
+
+{ #category : #accessing }
 GtkWidget >> sensitive: sensitive [
 	"sensitive is the gtk equivallent of enable/disable"
 

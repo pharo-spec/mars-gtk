@@ -26,7 +26,11 @@ GtkAdapter class >> isAbstract [
 
 { #category : #building }
 GtkAdapter >> addModelTo: gtkWidget [
+
+	self model help ifNotNil: [ gtkWidget tooltipText: self model help ].
+	gtkWidget sensitive: self model isEnabled.
 	
+	self model whenEnabledChanged: [ gtkWidget sensitive: self model isEnabled ].
 ]
 
 { #category : #building }
@@ -38,9 +42,26 @@ GtkAdapter >> buildWidget [
 	^ gtkWidget
 ]
 
+{ #category : #accessing }
+GtkAdapter >> enabled [
+
+	^ widget sensitive
+]
+
+{ #category : #accessing }
+GtkAdapter >> enabled: aValue [
+
+	widget sensitive: aValue
+]
+
 { #category : #'as yet unclassified' }
 GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 	"Do nothing at the moment"
+]
+
+{ #category : #accessing }
+GtkAdapter >> helpText [
+	^ widget tooltipText
 ]
 
 { #category : #protocol }
@@ -69,15 +90,6 @@ GtkAdapter >> takeKeyboardFocus [
 			window adapter
 				ifNotNil: [ w grabFocus ]
 				ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
-]
-
-{ #category : #updating }
-GtkAdapter >> update: aSymbol with: anArray [
-
-	self flag: #TODO. "I'm not sure I want to do this :("
-	self 
-		perform: aSymbol 
-		withArguments: anArray
 ]
 
 { #category : #building }

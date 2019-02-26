@@ -74,6 +74,18 @@ GtkLabel >> justify: jtype [
 ]
 
 { #category : #accessing }
+GtkLabel >> label [
+	
+	self ffiCall: #(String gtk_label_get_label (self))
+]
+
+{ #category : #accessing }
+GtkLabel >> label: aString [ 
+	
+	self ffiCall: #(void gtk_label_set_label (self, String aString))
+]
+
+{ #category : #accessing }
 GtkLabel >> text [
 	
 	^ self basicText
