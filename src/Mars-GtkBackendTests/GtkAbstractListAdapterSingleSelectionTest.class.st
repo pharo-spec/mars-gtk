@@ -16,21 +16,11 @@ GtkAbstractListAdapterSingleSelectionTest >> adapter [
 	^ presenter adapter
 ]
 
-{ #category : #running }
-GtkAbstractListAdapterSingleSelectionTest >> setUp [
-
-	super setUp.
-
-	window := presenter
-		beSingleSelection;
-		items: #(10 20 30);
-		openWithSpec.
-]
-
 { #category : #'tests-model-to-widget' }
 GtkAbstractListAdapterSingleSelectionTest >> testSelectManyIndexesKeepsLastSelectionInWidget [
 	presenter selectIndex: 1.
 	presenter selectIndex: 2.
+
 	self assert: presenter adapter widget selectedIndexes equals: #(2)
 ]
 
@@ -66,7 +56,7 @@ GtkAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelectio
 { #category : #'tests-widget-to-model' }
 GtkAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelectionIndexChangeEventWithSelectedIndex [
 	| selectedIndex |
-		
+	
 	presenter selection
 		whenChangedDo: [ :selection | selectedIndex := selection selectedIndex ].
 	presenter adapter widget selection selectPath: {1}.

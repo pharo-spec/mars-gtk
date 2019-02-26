@@ -73,6 +73,11 @@ GtkTreeView >> beSingleSelectionMode [
 	self selection mode: GtkSelectionMode GTK_SELECTION_SINGLE
 ]
 
+{ #category : #accessing }
+GtkTreeView >> columns [
+	^ columns
+]
+
 { #category : #signals }
 GtkTreeView >> connectRowExpanded: aBlock [
 
