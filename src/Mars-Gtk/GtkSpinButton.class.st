@@ -84,6 +84,18 @@ GtkSpinButton >> beNumber [
 ]
 
 { #category : #accessing }
+GtkSpinButton >> climbRate [
+
+	^ self gObjectGetDouble: 'climb-rate'
+]
+
+{ #category : #accessing }
+GtkSpinButton >> climbRate: rate [
+
+	^ self gObjectSet: 'climb-rate' toDouble: rate asFloat
+]
+
+{ #category : #accessing }
 GtkSpinButton >> digits [
 
 	^ self ffiCall: #(guint gtk_spin_button_get_digits (self))
