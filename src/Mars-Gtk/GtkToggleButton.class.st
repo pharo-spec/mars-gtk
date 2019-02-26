@@ -24,7 +24,7 @@ GtkToggleButton class >> buttonNewWithLabel: utf8EncodedString [
 { #category : #accessing }
 GtkToggleButton >> active: aBoolean [
 
-	^ self ffiCall: #(gboolean gtk_toggle_button_set_active (self, gBoolean aBoolean))
+	^ self ffiCall: #(gboolean gtk_toggle_button_set_active (self, gboolean aBoolean))
 ]
 
 { #category : #accessing }
@@ -61,6 +61,11 @@ GtkToggleButton >> drawIndicator [
 GtkToggleButton >> drawIndicator: aBoolean [
 
 	^ self ffiCall: #(void gtk_toggle_button_set_mode (self, gboolean aBoolean))
+]
+
+{ #category : #accessing }
+GtkToggleButton >> getActive [
+	^ self ffiCall: #(gboolean gtk_toggle_button_get_active (self))
 ]
 
 { #category : #accessing }

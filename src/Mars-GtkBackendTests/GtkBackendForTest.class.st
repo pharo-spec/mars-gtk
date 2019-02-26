@@ -19,17 +19,6 @@ GtkBackendForTest >> canChangeFonts [
 	^ false
 ]
 
-{ #category : #testing }
-GtkBackendForTest >> emulateClick: mouseButtonCode onTest: aButtonAdapterTest [ 
-
-	MouseButtonEvent yellowButton = mouseButtonCode 
-		ifTrue: [ aButtonAdapterTest adapter rightClicked ].
-
-	MouseButtonEvent redButton = mouseButtonCode 
-		ifTrue: [ aButtonAdapterTest adapter clicked ].
-
-]
-
 { #category : #running }
 GtkBackendForTest >> openInstanceOf: aTest [ 
 	
