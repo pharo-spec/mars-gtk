@@ -12,16 +12,26 @@ GtkListAdapter class >> adaptingAliases [
 
 { #category : #building }
 GtkListAdapter >> addModelTo: gtkList [
+
+	super addModelTo: gtkList.
+
+	self model selection isMultipleSelection 
+		ifTrue: [gtkList beMultipleSelectionMode] 
+		ifFalse: [gtkList beSingleSelectionMode].
+
 	gtkList
 		headersVisible: false;
-		beSingleSelectionMode;
 		appendTextColumn;
 		model: self newTreeStore.
 
 	gtkList selection unselectAll.
 	
 	self presenter selection isEmpty 
-		ifFalse: [ gtkList selection selectPath: self presenter selection selectedIndexes ].
+		ifFalse: [ self presenter selection selectedIndexes 
+				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]  ].
+	
+	self presenter selection whenChangedDo: [ self presenter selection selectedIndexes 
+				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
 	
 	gtkList
 		connectSelectionChanged: [ 

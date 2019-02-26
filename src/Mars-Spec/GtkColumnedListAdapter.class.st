@@ -24,18 +24,26 @@ GtkColumnedListAdapter >> addColumn: aTableColumn to: aGtkTreeView [
 { #category : #building }
 GtkColumnedListAdapter >> addModelTo: gtkList [
 		
-	gtkList
-		headersVisible: self model isShowingColumnHeaders;
-		beSingleSelectionMode.
+	super addModelTo: gtkList.
 		
+	gtkList headersVisible: self model isShowingColumnHeaders.
+
+	self model selection isMultipleSelection 
+		ifTrue: [gtkList beMultipleSelectionMode] 
+		ifFalse: [gtkList beSingleSelectionMode].
+				
 	self model columns do: [ :aColumn | self addColumn: aColumn to: gtkList ].	
 	
-	gtkList model: self newTreeStore.
-
+	self model columns ifNotEmpty: [gtkList model: self newTreeStore].
+	
 	gtkList selection unselectAll.
 	
 	self presenter selection isEmpty 
-		ifFalse: [ gtkList selection selectPath: self presenter selection selectedIndexes ].
+		ifFalse: [ self presenter selection selectedIndexes 
+				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]  ].
+	
+	self presenter selection whenChangedDo: [ self presenter selection selectedIndexes 
+				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
 	
 	gtkList
 		connectSelectionChanged: [ 

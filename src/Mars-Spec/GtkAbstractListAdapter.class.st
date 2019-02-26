@@ -24,6 +24,13 @@ GtkAbstractListAdapter >> refreshWidgetSelection [
 
 ]
 
+{ #category : #accessing }
+GtkAbstractListAdapter >> selectIndex: anInteger [ 
+	
+	anInteger = 0 ifTrue: [ widget selection unselectAll. ^ self ].
+	widget selectIndex: anInteger
+]
+
 { #category : #building }
 GtkAbstractListAdapter >> takeKeyboardFocus [
 

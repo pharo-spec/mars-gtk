@@ -69,6 +69,11 @@ GtkTreeView >> basicAppendColumn: column [
 ]
 
 { #category : #configuring }
+GtkTreeView >> beMultipleSelectionMode [
+	self selection mode: GtkSelectionMode GTK_SELECTION_MULTIPLE
+]
+
+{ #category : #configuring }
 GtkTreeView >> beSingleSelectionMode [
 	self selection mode: GtkSelectionMode GTK_SELECTION_SINGLE
 ]
