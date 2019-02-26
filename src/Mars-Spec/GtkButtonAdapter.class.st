@@ -13,17 +13,38 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 	self model icon ifNotNil: [ self updateIcon ].
 	self model help ifNotNil: [ self updateTooltip ].
 	
-	gtkButton connectClicked: self model action.
+	gtkButton connectClicked: [ self model action value ].
 	
 	model whenLabelChangedDo: [ self updateLabel ].
 	model whenIconChangedDo: [ self updateIcon ].
 
 ]
 
+{ #category : #events }
+GtkButtonAdapter >> clicked [
+	self widget clicked
+]
+
+{ #category : #accessing }
+GtkButtonAdapter >> helpText [
+	^ widget tooltipText
+]
+
+{ #category : #accessing }
+GtkButtonAdapter >> icon [
+	^ widget image
+]
+
 { #category : #factory }
 GtkButtonAdapter >> newWidget [ 
 	
 	^ GtkButton newLabel: self model label asString
+]
+
+{ #category : #events }
+GtkButtonAdapter >> rightClicked [
+	
+	"The button does not do nothing when rightClicked"
 ]
 
 { #category : #factory }

@@ -48,3 +48,8 @@ GdkPixbuf class >> surfaceFor: anImageMorph [
 	
 	^ surface
 ]
+
+{ #category : #comparing }
+GdkPixbuf >> isSimilarTo: aGdkPixbuf [ 
+	self shouldBeImplemented.
+]

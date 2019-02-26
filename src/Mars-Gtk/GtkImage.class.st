@@ -112,5 +112,5 @@ GtkImage >> asGdkPixbuf [
 	"this will only work if the image it self is creared from a pixbuf. 
 	 Most of the time you are better going through GdkPixbuf creation methods."
 
-	^ self ffiCall: #(GdkPixbuf *void *gtk_image_get_pixbuf (self))
+	^ self ffiCall: #(GdkPixbuf* gtk_image_get_pixbuf (self))
 ]
