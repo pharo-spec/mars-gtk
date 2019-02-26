@@ -46,6 +46,13 @@ GtkAdapter >> buildWidget [
 	^ self wrapWidget: gtkWidget
 ]
 
+{ #category : #accessing }
+GtkAdapter >> enabled: aBoolean [
+
+	self widgetDo: [ :w |
+		w sensitive: aBoolean ]
+]
+
 { #category : #'as yet unclassified' }
 GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 	"Do nothing at the moment"
