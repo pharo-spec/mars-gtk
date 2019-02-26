@@ -17,15 +17,6 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 		ifNotNil: [ :text | gtkEntry placeHolderText: text ]
 ]
 
-{ #category : #building }
-GtkTextInputFieldAdapter >> buildWidget [
-	| gtkWidget |
-	
-	gtkWidget := self widgetClass new.
-	self addModelTo: gtkWidget.
-	^ gtkWidget
-]
-
 { #category : #private }
 GtkTextInputFieldAdapter >> refreshText [
 	
@@ -37,4 +28,10 @@ GtkTextInputFieldAdapter >> refreshText [
 GtkTextInputFieldAdapter >> widgetClass [
 
 	^ GtkEntry
+]
+
+{ #category : #building }
+GtkTextInputFieldAdapter >> wrapWidget: gtkWidget [
+
+	^ gtkWidget
 ]

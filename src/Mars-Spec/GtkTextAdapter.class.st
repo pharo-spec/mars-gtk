@@ -21,15 +21,6 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 		gtkTextView text: text asString ]
 ]
 
-{ #category : #building }
-GtkTextAdapter >> buildWidget [
-	| gtkTextView |
-
-	gtkTextView := self newWidget.
-	self addModelTo: gtkTextView.
-	^ GtkScrolledWindow newWidget: gtkTextView
-]
-
 { #category : #private }
 GtkTextAdapter >> refreshText [
 	
@@ -49,4 +40,10 @@ GtkTextAdapter >> update: aSymbol [
 GtkTextAdapter >> widgetClass [
 
 	^ GtkTextView
+]
+
+{ #category : #building }
+GtkTextAdapter >> wrapWidget: gtkWidget [
+
+	^ GtkScrolledWindow newWidget: gtkWidget
 ]

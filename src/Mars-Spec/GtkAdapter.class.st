@@ -30,12 +30,20 @@ GtkAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #building }
+GtkAdapter >> addSettingsTo: gtkWidget [
+	"A secondary initialization generic to all widgets"
+	
+	gtkWidget sensitive: self model isEnabled
+]
+
+{ #category : #building }
 GtkAdapter >> buildWidget [ 
 	| gtkWidget |
 	
 	gtkWidget := self newWidget.
+	self addSettingsTo: gtkWidget.
 	self addModelTo: gtkWidget.
-	^ gtkWidget
+	^ self wrapWidget: gtkWidget
 ]
 
 { #category : #'as yet unclassified' }
@@ -84,4 +92,10 @@ GtkAdapter >> update: aSymbol with: anArray [
 GtkAdapter >> widgetClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #building }
+GtkAdapter >> wrapWidget: gtkWidget [
+
+	^ gtkWidget
 ]
