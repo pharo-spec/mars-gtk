@@ -34,7 +34,8 @@ GtkCssProvider class >> fileNameToUTF8: aString [
 		written: written
 		error: error.
 		
-	error isOk ifTrue: [ ^ GtkError signal: error messageString ].
+	error isOk ifFalse: [ 
+		GtkError signal: error messageString ].
 	
 	^ encoded
 ]
@@ -57,11 +58,10 @@ GtkCssProvider class >> new [
 { #category : #accessing }
 GtkCssProvider >> loadFromData: aString [
 	| error |
-	error := GError externalNew autoRelease.
-	error message: FFIExternalArray newPointer autoRelease.
+	
+	error := GError new.
 	(self loadFromData: aString length: aString size error: error)
-		ifFalse: [ ^ GtkError signal ].
-	 
+		ifFalse: [ GtkError signal: error messageString ]
 ]
 
 { #category : #private }
@@ -77,11 +77,10 @@ GtkCssProvider >> loadFromData: data length: length error: error [
 GtkCssProvider >> loadFromPath: path [
 	| encodedPath error |
 	
-	error  := GError externalNew autoRelease.
+	error  := GError new.
 	encodedPath := self class fileNameToUTF8: path.
 	(self loadFromPath: encodedPath error: error getHandle) 
-		ifFalse: [ ^ GtkError signal: error messageString ].
-	 
+		ifFalse: [ GtkError signal: error messageString ]
 ]
 
 { #category : #private }
@@ -90,4 +89,10 @@ GtkCssProvider >> loadFromPath: path error: error [
 		self, 
 		const gchar *path,
 		0))
+]
+
+{ #category : #accessing }
+GtkCssProvider >> toString [ 
+
+	^ self ffiCall: #(char *gtk_css_provider_to_string (self))
 ]

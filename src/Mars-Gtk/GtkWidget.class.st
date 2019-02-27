@@ -54,6 +54,12 @@ GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
 		
 ]
 
+{ #category : #style }
+GtkWidget >> addClass: aString [
+
+	self styleContext addClass: aString
+]
+
 { #category : #accessing }
 GtkWidget >> allocation [
 	| allocation |
@@ -476,6 +482,12 @@ GtkWidget >> queueDraw [
 	^ self ffiCall: #(void gtk_widget_queue_draw (self))
 ]
 
+{ #category : #style }
+GtkWidget >> removeClass: aString [
+
+	self styleContext removeClass: aString
+]
+
 { #category : #'external resource management' }
 GtkWidget >> resourceData [
 	^ handle
@@ -518,7 +530,7 @@ GtkWidget >> sizeRequestWidth: width height: height [
 	^ self ffiCall: #(void gtk_widget_set_size_request ( self, gint width, gint height ) )
 ]
 
-{ #category : #styles }
+{ #category : #style }
 GtkWidget >> styleContext [
 	
 	^ self ffiCall: #(GtkStyleContext *gtk_widget_get_style_context (self))
