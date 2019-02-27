@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkTextInputFieldAdapter,
-	#superclass : #GtkTextAdapter,
+	#superclass : #GtkAbstractTextAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -13,24 +13,48 @@ GtkTextInputFieldAdapter >> accept [
 
 { #category : #building }
 GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
-	self model placeholder
-		ifNotNil: [ :text | gtkEntry placeHolderText: text ]
+	
+	super addModelTo: gtkEntry.
+
+	self model placeholder ifNotNil: [ :text | gtkEntry placeHolderText: text asString ].
+	self model whenPlaceholderChangedDo: [ :text | gtkEntry placeHolderText: text asString ].
+	
+	gtkEntry maxLength: self model maxLength.
+	self model whenMaxLengthChangedDo: [ gtkEntry maxLength: self model maxLength ].
+	
+	self model isInvisible ifTrue: [ 
+		gtkEntry bePassword.
+		gtkEntry visibility: false. ].
+	
+	self model whenVisibilityChangedDo: [ :aValue | aValue 
+		ifTrue: [ gtkEntry beForAnyCharacter ]
+		ifFalse: [ gtkEntry bePassword ].
+		gtkEntry visibility: aValue ].
+	
+
+	gtkEntry connectTextChanged: [ :text | 
+		self halt.
+		self model text: text ]
 ]
 
-{ #category : #building }
-GtkTextInputFieldAdapter >> buildWidget [
-	| gtkWidget |
+{ #category : #testing }
+GtkTextInputFieldAdapter >> isPassword [
 	
-	gtkWidget := self widgetClass new.
-	self addModelTo: gtkWidget.
-	^ gtkWidget
+	^ widget isPassword 
 ]
 
-{ #category : #private }
-GtkTextInputFieldAdapter >> refreshText [
+{ #category : #accessing }
+GtkTextInputFieldAdapter >> placeHolderText [
 	
-	self widgetDo: [ :w |
-		w text: self model text ]
+	^ widget placeHolderText 
+]
+
+{ #category : #visiting }
+GtkTextInputFieldAdapter >> text: aString [ 
+	
+	super text: aString.
+	"Changing the text programatically does not throw an event"
+	self model text: aString.
 ]
 
 { #category : #private }
