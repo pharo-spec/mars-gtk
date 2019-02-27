@@ -37,17 +37,17 @@ GtkColumnedListAdapter >> addModelTo: gtkList [
 	self model columns ifNotEmpty: [gtkList model: self newTreeStore].
 	
 	gtkList selection unselectAll.
-	
+
 	self presenter selection isEmpty 
 		ifFalse: [ self presenter selection selectedIndexes 
 				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]  ].
 	
-	self presenter selection whenChangedDo: [ self presenter selection selectedIndexes 
+	self presenter selection whenChangedDo: [ 
+		self presenter selection selectedIndexes 
 				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
 	
-	gtkList
-		connectSelectionChanged: [ 
-			self presenter selection selectIndexes: gtkList allSelected flattened ]
+	widget := gtkList.
+	self connectSelectionChanged
 ]
 
 { #category : #building }

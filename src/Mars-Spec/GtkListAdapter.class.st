@@ -25,7 +25,7 @@ GtkListAdapter >> addModelTo: gtkList [
 		model: self newTreeStore.
 
 	gtkList selection unselectAll.
-	
+
 	self presenter selection isEmpty 
 		ifFalse: [ self presenter selection selectedIndexes 
 				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]  ].
@@ -33,9 +33,8 @@ GtkListAdapter >> addModelTo: gtkList [
 	self presenter selection whenChangedDo: [ self presenter selection selectedIndexes 
 				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
 	
-	gtkList
-		connectSelectionChanged: [ 
-			self presenter selection selectIndexes: gtkList allSelected flattened ]
+	widget := gtkList.
+	self connectSelectionChanged
 ]
 
 { #category : #private }
