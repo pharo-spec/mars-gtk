@@ -78,6 +78,12 @@ GtkTextBuffer >> insertText: aString [
 		text: aString
 ]
 
+{ #category : #accessing }
+GtkTextBuffer >> insertTextAtCursor: text [
+
+	^ self ffiCall: #(void gtk_text_buffer_insert_at_cursor (self, const gchar *text, -1))
+]
+
 { #category : #private }
 GtkTextBuffer >> startIter [ 
 	| start |
