@@ -49,7 +49,7 @@ GtkBaseStore class >> newStrings: aCollection [
 ]
 
 { #category : #private }
-GtkBaseStore >> getIter: iter fromPath: path_string [
+GtkBaseStore >> getIter: iter fromPath: path [
 	
 	self ffiCall: #(gboolean gtk_tree_model_get_iter (
 		self,
@@ -62,7 +62,7 @@ GtkBaseStore >> getIter: iter fromString: path_string [
 	
 	self ffiCall: #(gboolean gtk_tree_model_get_iter_from_string (
 		self,
-		GtkTreeIter *iter,
+		void *iter,
 		const gchar *path_string))
 ]
 

@@ -33,8 +33,19 @@ GtkListAdapter >> addModelTo: gtkList [
 	self presenter selection whenChangedDo: [ self presenter selection selectedIndexes 
 				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
 	
+	gtkList connectRowActivated: [ :path | 
+		self model doActivateAtIndex: path toArray first ].
+	
 	widget := gtkList.
-	self connectSelectionChanged
+	self connectSelectionChanged.
+	
+	self refreshWidgetHeaderTitle
+]
+
+{ #category : #accessing }
+GtkListAdapter >> isShowColumnHeaders [
+	
+	^ widget isHeadersVisible
 ]
 
 { #category : #private }
@@ -47,4 +58,17 @@ GtkListAdapter >> modelItemsAsDisplay [
 GtkListAdapter >> newTreeStore [
 
 	^ GtkTreeStore newStrings: self modelItemsAsDisplay
+]
+
+{ #category : #events }
+GtkListAdapter >> refreshList [
+	
+	widget model: self newTreeStore 
+]
+
+{ #category : #events }
+GtkListAdapter >> refreshWidgetHeaderTitle [
+	
+	self model headerTitle ifNotNil: [(widget columns at: 1) title: self model headerTitle].
+	widget headersVisible: self model headerTitle isNotNil
 ]

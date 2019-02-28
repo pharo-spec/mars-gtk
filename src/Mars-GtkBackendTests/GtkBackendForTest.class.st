@@ -4,6 +4,12 @@ Class {
 	#category : #'Mars-GtkBackendTests'
 }
 
+{ #category : #accessing }
+GtkBackendForTest >> assertHasHeader: aGtkTreeView [ 
+	
+	^ aGtkTreeView isHeadersVisible
+]
+
 { #category : #asserting }
 GtkBackendForTest >> assertIcon: aGtkImage equals: aForm [ 
 	
@@ -13,10 +19,45 @@ GtkBackendForTest >> assertIcon: aGtkImage equals: aForm [
 	
 ]
 
+{ #category : #asserting }
+GtkBackendForTest >> assertList: aGtkTreeView displayItems: aCollection [ 
+	
+	| iter |
+	
+	iter := aGtkTreeView model iteratorFromPath: (GtkTreePath newFromArray: {1}).
+
+	aCollection do: [ :aValue |  
+		self assert: (iter stringAt: 0) = aValue.
+		iter next 
+	].
+
+]
+
+{ #category : #asserting }
+GtkBackendForTest >> assertListHeaderOf: aGtkTreeView equals: aCollection [
+
+	self assert: (aGtkTreeView columns collect: [ :c | c title ]) asArray = aCollection asArray
+	
+]
+
 { #category : #testing }
 GtkBackendForTest >> canChangeFonts [
 	
 	^ false
+]
+
+{ #category : #emulating }
+GtkBackendForTest >> clickFirstRowAndColumn: aGtkTreeView [ 
+	
+	| path |
+	path := (GtkTreePath newFromArray: {1}) autoRelease.	
+	aGtkTreeView activateRow: path column: aGtkTreeView columns first
+]
+
+{ #category : #simulating }
+GtkBackendForTest >> doubleClickFirstRowAndColumn: aGtkTreeView [ 
+	
+	self clickFirstRowAndColumn: aGtkTreeView
 ]
 
 { #category : #running }

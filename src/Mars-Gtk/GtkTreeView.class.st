@@ -33,6 +33,13 @@ GtkTreeView >> activateOnSingleClick: aBoolean [
 	self gObjectSet: 'activate-on-single-click' toBoolean: aBoolean
 ]
 
+{ #category : #simulating }
+GtkTreeView >> activateRow: path column: column [ 
+
+	self ffiCall: #(void gtk_tree_view_row_activated(self, GtkTreePath *path, GtkTreeViewColumn *column))
+
+]
+
 { #category : #private }
 GtkTreeView >> addExpanderColumn [
 
@@ -81,6 +88,18 @@ GtkTreeView >> beSingleSelectionMode [
 { #category : #accessing }
 GtkTreeView >> columns [
 	^ columns
+]
+
+{ #category : #events }
+GtkTreeView >> connectRowActivated: aBlock [ 
+	
+	^ self 
+		connect: 'row-activated' 
+		signature: #(void (void *widget, void *pathAddress, void *column, void *aData))  
+ 		do: [ :widget :pathAddress :column :aData | 
+			| path |
+			path := GtkTreePath fromHandle: pathAddress.
+			aBlock value: path ]
 ]
 
 { #category : #signals }
@@ -183,6 +202,7 @@ GtkTreeView >> isHeadersVisible [
 	| buffer |
 	
 	buffer := FFIBool newBuffer.
+	buffer pinInMemory.
 	self gObjectGet: 'headers-visible' into: buffer.
 	^ buffer booleanAt: 1
 ]

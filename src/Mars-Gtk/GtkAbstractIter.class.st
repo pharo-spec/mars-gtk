@@ -122,9 +122,14 @@ GtkAbstractIter >> store: anObject [
 GtkAbstractIter >> stringAt: index [
 	| result |
 
-	result := ExternalAddress new.
-	self getStringAtColumnIndex: index into: result.
-	^ result readStringUTF8
+	[
+		result := ExternalAddress newPointer.
+		result pointerAt: 1 put: ExternalAddress null. 
+		self getStringAtColumnIndex: index into: result.
+		^ (result pointerAt:1) readStringUTF8]
+	ensure: [ 
+		result isNull ifFalse: [ result free ] 	
+	]
 ]
 
 { #category : #'accessing structure variables' }

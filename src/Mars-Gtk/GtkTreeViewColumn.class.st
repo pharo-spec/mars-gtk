@@ -71,6 +71,11 @@ GtkTreeViewColumn >> gtkTreeViewColumnSetTitle: string [
 	self ffiCall: #(void gtk_tree_view_column_set_title (self, String string))
 ]
 
+{ #category : #accessing }
+GtkTreeViewColumn >> id [
+	^ self title
+]
+
 { #category : #initialization }
 GtkTreeViewColumn >> initialize [
 

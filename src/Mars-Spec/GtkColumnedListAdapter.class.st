@@ -46,8 +46,23 @@ GtkColumnedListAdapter >> addModelTo: gtkList [
 		self presenter selection selectedIndexes 
 				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
 	
+	self presenter whenShowColumnHeadersChangedDo: [ 	gtkList headersVisible: self model isShowingColumnHeaders. ].
+		
+	gtkList connectRowActivated: [ :path | 
+	self model doActivateAtIndex: path toArray first ].
+	
 	widget := gtkList.
-	self connectSelectionChanged
+	self connectSelectionChanged.
+	
+	self presenter whenColumnsChangedDo: [ self refreshWidgetHeaderTitle. self refreshList ].
+	
+	self refreshWidgetHeaderTitle
+]
+
+{ #category : #testing }
+GtkColumnedListAdapter >> isShowColumnHeaders [
+
+	^ widget isHeadersVisible
 ]
 
 { #category : #building }
@@ -73,4 +88,21 @@ GtkColumnedListAdapter >> newTreeStore [
 	].
 
 	^ store
+]
+
+{ #category : #events }
+GtkColumnedListAdapter >> refreshList [
+	
+	widget model: self newTreeStore 
+]
+
+{ #category : #events }
+GtkColumnedListAdapter >> refreshWidgetHeaderTitle [
+	
+	"By now I only accept to add columns, as the data should be all generated. It is not so easy"
+	(widget columns size < self model columns size) ifTrue: [  
+		(self model columns last: (self model columns size - widget columns size)) do: [ :aTableColumn | self addColumn: aTableColumn to: widget  ]
+	].
+	
+	self model columns with: widget columns do: [ :modelColumn :widgetColumn | widgetColumn title: modelColumn title  ]
 ]
