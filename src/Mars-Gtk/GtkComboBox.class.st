@@ -172,6 +172,22 @@ GtkComboBox >> rowSpanColumn: rowSpan [
 	^ self ffiCall: #(void gtk_combo_box_set_row_span_column (self, gint rowSpan))
 ]
 
+{ #category : #accessing }
+GtkComboBox >> selectIndex: anInteger [ 
+	
+	self activeIndex: anInteger - 1
+]
+
+{ #category : #accessing }
+GtkComboBox >> selectedIndexes [
+
+	| selectedValue |
+	selectedValue := self activeIndex.
+	^ selectedValue = -1
+		ifTrue: [ #() ]
+		ifFalse: [ {(selectedValue + 1)} ]
+]
+
 { #category : #private }
 GtkComboBox >> setModel: aTreeModel [
 

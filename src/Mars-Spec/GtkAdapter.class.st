@@ -42,6 +42,16 @@ GtkAdapter >> buildWidget [
 	^ gtkWidget
 ]
 
+{ #category : #protocol }
+GtkAdapter >> doTakeKeyboardFocus [
+
+	self widgetDo: [ :w | 
+	self model window ifNotNil: [ :window | 
+			window adapter
+				ifNotNil: [ w grabFocus ]
+				ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
+]
+
 { #category : #accessing }
 GtkAdapter >> enabled [
 
@@ -85,11 +95,7 @@ GtkAdapter >> setBalloonText: aString [
 { #category : #protocol }
 GtkAdapter >> takeKeyboardFocus [
 
-	self widgetDo: [ :w | 
-		self model window ifNotNil: [ :window | 
-			window adapter
-				ifNotNil: [ w grabFocus ]
-				ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
+	self doTakeKeyboardFocus
 ]
 
 { #category : #building }

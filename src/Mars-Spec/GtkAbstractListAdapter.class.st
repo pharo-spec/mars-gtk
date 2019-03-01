@@ -12,10 +12,10 @@ GtkAbstractListAdapter >> connectSelectionChanged [
 				selectIndexes: widget allSelected flattened ]
 ]
 
-{ #category : #building }
+{ #category : #private }
 GtkAbstractListAdapter >> newTreeStore [
 
-	^ self subclassResponsibility 
+	^ GtkTreeStore newStrings: self modelItemsAsDisplay
 ]
 
 { #category : #'as yet unclassified' }
@@ -30,6 +30,12 @@ GtkAbstractListAdapter >> refreshWidgetSelection [
 
 	self widget 	selection selectPath: rowIndexes.
 
+]
+
+{ #category : #building }
+GtkAbstractListAdapter >> resetSelection [
+	
+	self widget selection unselectAll
 ]
 
 { #category : #accessing }
@@ -48,7 +54,7 @@ GtkAbstractListAdapter >> takeKeyboardFocus [
 
 	needToCleanUP ifTrue: [ self widget selection disconnect: 'changed' ].
 
-	super takeKeyboardFocus.
+	self doTakeKeyboardFocus.
 
 	self flag: #hack.
 	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
