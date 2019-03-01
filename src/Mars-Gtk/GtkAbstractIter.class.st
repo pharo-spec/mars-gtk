@@ -84,10 +84,27 @@ GtkAbstractIter >> copyInMemory [
 		yourself
 ]
 
+{ #category : #accessing }
+GtkAbstractIter >> gdkPixbufAt: index [ 
+
+	| result |
+
+	result := ByteArray new: Smalltalk wordSize.
+	result pointerAt: 1 put: ExternalAddress null. 
+	self getStringAtColumnIndex: index into: result.
+	^ (GdkPixbuf fromHandle: (result pointerAt: 1)) initialize
+
+]
+
 { #category : #private }
 GtkAbstractIter >> getStringAtColumnIndex: index into: aValue [
 
 	 self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtkAbstractIter >> gtkImageAt: anInteger [ 
+	self shouldBeImplemented.
 ]
 
 { #category : #accessing }
@@ -122,14 +139,11 @@ GtkAbstractIter >> store: anObject [
 GtkAbstractIter >> stringAt: index [
 	| result |
 
-	[
-		result := ExternalAddress newPointer.
-		result pointerAt: 1 put: ExternalAddress null. 
-		self getStringAtColumnIndex: index into: result.
-		^ (result pointerAt:1) readStringUTF8]
-	ensure: [ 
-		result isNull ifFalse: [ result free ] 	
-	]
+	result := ByteArray new: Smalltalk wordSize.
+	result pointerAt: 1 put: ExternalAddress null. 
+	self getStringAtColumnIndex: index into: result.
+	^ (result pointerAt:1) readStringUTF8
+
 ]
 
 { #category : #'accessing structure variables' }

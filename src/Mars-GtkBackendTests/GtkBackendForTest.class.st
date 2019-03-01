@@ -13,6 +13,8 @@ GtkBackendForTest >> assertHasHeader: aGtkTreeView [
 { #category : #asserting }
 GtkBackendForTest >> assertIcon: aGtkImage equals: aForm [ 
 	
+	(aForm isNil and: [ aGtkImage isNil ]) ifTrue: [ ^ self ].
+	
 	"I can only test if the image is nil and the form is nil or not"
 	self assert: (aForm isNotNil or: [(aGtkImage isNil or: [ aGtkImage isNull])]).
 	self assert: (aGtkImage isNotNil and: [ aGtkImage isNull not])

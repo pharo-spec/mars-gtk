@@ -18,6 +18,18 @@ TGtkCellLayout >> addAttribute: cell attribute: attribute column: column [
 ]
 
 { #category : #private }
+TGtkCellLayout >> clear [
+
+	self ffiCall: #(void gtk_cell_layout_clear (self))
+]
+
+{ #category : #private }
+TGtkCellLayout >> packStart: cell [
+
+	^ self packStart: cell expand: true
+]
+
+{ #category : #private }
 TGtkCellLayout >> packStart: cell expand: expand [
 
 	self ffiCall: #(void gtk_cell_layout_pack_start (self, GtkCellRenderer *cell, gboolean expand))

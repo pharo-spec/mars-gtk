@@ -154,6 +154,11 @@ GtkComboBox >> hasEntry [
 ]
 
 { #category : #accessing }
+GtkComboBox >> model [
+	^ model
+]
+
+{ #category : #accessing }
 GtkComboBox >> model: aTreeModel [
 
 	model := aTreeModel.
