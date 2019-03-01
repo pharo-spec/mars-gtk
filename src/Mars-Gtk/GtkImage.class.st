@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : #private }
+GtkImage class >> basicNewEmpty [
+
+	^ self ffiCall: #(GtkImage * gtk_image_new ())
+]
+
+{ #category : #private }
 GtkImage class >> imageNewFromIconName: iconNameString size: aSize [
 
 	^ self ffiCall: #(GtkImage *gtk_image_new_from_icon_name (String iconNameString, GtkIconSize aSize))
@@ -23,6 +29,12 @@ GtkImage class >> imageNewFromIconName: iconNameString size: aSize [
 GtkImage class >> imageNewFromSurface: surface [
 
 	^ self ffiCall: #(GtkImage *gtk_image_new_from_surface (AthensCairoSurface surface))
+]
+
+{ #category : #private }
+GtkImage class >> newEmpty [
+
+	^ self basicNewEmpty initialize
 ]
 
 { #category : #'instance creation' }
@@ -113,4 +125,16 @@ GtkImage >> asGdkPixbuf [
 	 Most of the time you are better going through GdkPixbuf creation methods."
 
 	^ self ffiCall: #(GdkPixbuf* gtk_image_get_pixbuf (self))
+]
+
+{ #category : #accessing }
+GtkImage >> clear [
+	
+	^ self ffiCall: #(void gtk_image_clear(self))
+]
+
+{ #category : #converting }
+GtkImage >> setFromGdkPixbuf: pixbuf [
+
+	^ self ffiCall: #(void gtk_image_set_from_pixbuf(self, GdkPixbuf* pixbuf))
 ]

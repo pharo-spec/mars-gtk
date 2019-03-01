@@ -49,7 +49,31 @@ GdkPixbuf class >> surfaceFor: anImageMorph [
 	^ surface
 ]
 
+{ #category : #accessing }
+GdkPixbuf >> depth [
+	
+	^ self numberOfChannels * 8
+]
+
+{ #category : #comparing }
+GdkPixbuf >> height [ 
+
+	^ self ffiCall: #(int gdk_pixbuf_get_height(self))
+]
+
 { #category : #comparing }
 GdkPixbuf >> isSimilarTo: aGdkPixbuf [ 
 	self shouldBeImplemented.
+]
+
+{ #category : #accessing }
+GdkPixbuf >> numberOfChannels [
+	
+	^ self ffiCall: #(int gdk_pixbuf_get_n_channels(self))
+]
+
+{ #category : #comparing }
+GdkPixbuf >> width [ 
+
+	^ self ffiCall: #(int gdk_pixbuf_get_width(self))
 ]

@@ -21,6 +21,20 @@ GtkBackendForTest >> assertIcon: aGtkImage equals: aForm [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+GtkBackendForTest >> assertImage: aGtkImage equals: aForm [ 
+	
+	| pixbuf |
+	pixbuf := aGtkImage asGdkPixbuf.
+	(aForm isNil and: [ pixbuf isNull ]) ifTrue: [ ^ self ].
+
+	self assert: pixbuf isNull not.	
+	self assert: pixbuf width = aForm width.
+	self assert: pixbuf height = aForm height.
+	self assert: pixbuf depth = aForm depth.
+
+]
+
 { #category : #asserting }
 GtkBackendForTest >> assertList: aGtkTreeView displayItems: aCollection [ 
 	
