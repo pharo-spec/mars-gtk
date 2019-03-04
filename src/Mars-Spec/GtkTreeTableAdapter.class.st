@@ -29,18 +29,12 @@ Class {
 	#category : #'Mars-Spec-Adapter-Table'
 }
 
-{ #category : #deprecation }
-GtkTreeTableAdapter class >> isDeprecated [
-
-	^ true
-]
-
 { #category : #private }
 GtkTreeTableAdapter >> addChildrenFor: anObject into: gtkRow [
 
 	(self model childrenFor: anObject) withIndexDo: [ :childElement :index |
-		super 
-			addRow: childElement 
+		self 
+			doAddRow: childElement 
 			index: index 
 			into: gtkRow ]
 ]
@@ -90,17 +84,9 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 
 { #category : #private }
 GtkTreeTableAdapter >> addRow: anObject index: index into: store [
-	| gtkRow filler |
+	| gtkRow  |
 	
-	gtkRow := store appendNew.
-	filler := GtkTableRowFiller new
-		gtkRow: gtkRow;
-		row: anObject;
-		rowIndex: index;
-		yourself.
-		
-	self model columns do: [ :eachColumn | 
-		filler visit: eachColumn ].
+	gtkRow := self doAddRow: anObject index: index into: store.
 		
 	"I will add the first level children of this row"
 	self addChildrenFor: anObject into: gtkRow.
@@ -115,6 +101,24 @@ GtkTreeTableAdapter >> buildWidget [
 	gtkTextView := self newWidget.
 	self addModelTo: gtkTextView.
 	^ GtkScrolledWindow newWidget: gtkTextView
+]
+
+{ #category : #private }
+GtkTreeTableAdapter >> doAddRow: anObject index: index into: store [
+
+	| gtkRow filler |
+	
+	gtkRow := store appendNew.
+	filler := GtkTableRowFiller new
+		gtkRow: gtkRow;
+		row: anObject;
+		rowIndex: index;
+		yourself.
+		
+	self model columns do: [ :eachColumn | 
+		filler visit: eachColumn ].
+
+	^ gtkRow
 ]
 
 { #category : #private }
