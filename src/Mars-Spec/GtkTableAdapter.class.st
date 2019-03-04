@@ -1,128 +1,108 @@
 Class {
 	#name : #GtkTableAdapter,
-	#superclass : #GtkAdapter,
-	#category : #'Mars-Spec-Adapter-Table'
+	#superclass : #GtkAbstractListAdapter,
+	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #building }
-GtkTableAdapter >> addModelTo: gtkWidget [
-	| columnBuilder store |
+GtkTableAdapter >> addColumn: aTableColumn to: aGtkTreeView [ 
 	
-	store := self newStoreFrom: self items.
-	gtkWidget model: store.
+	| addColumnVisitor |
 	
-	columnBuilder := self newColumnBuilderOn: self model.
-	columnBuilder store: store.
-	columnBuilder view: gtkWidget. 
-	self model columns do: [ :each | 
-		columnBuilder visit: each ].
-	
-	gtkWidget headersVisible: self model isShowingColumnHeaders.
-	
-	gtkWidget connectSelectionChanged: [ 
-		self rowSelected: gtkWidget selected ].
-	
-	self model doubleClickAction ifNotNil: [ :action |
-		gtkWidget connectDoubleClicked: [ 
-			action cull: self model selectedItem ] ]
-]
-
-{ #category : #private }
-GtkTableAdapter >> addRow: anObject index: index into: store [
-	| gtkRow filler |
-	
-	gtkRow := store appendNew.
-	filler := GtkTableRowFiller new
-		gtkRow: gtkRow;
-		row: anObject;
-		rowIndex: index;
-		yourself.
+	addColumnVisitor := GtkSpecColumnTypeVisitor new
+		columns: self model columns;
+		forString: [ :column :index | | renderer | 
+			renderer := GtkCellRendererText new.
+			aGtkTreeView appendColumn: (GtkTreeViewColumn new
+			packStart: renderer;
+			addAttribute: 'text' column: (index - 1) renderer: renderer)			
+		].
 		
-	self model columns do: [ :eachColumn | 
-		filler visit: eachColumn ].
-		
-	^ gtkRow
+	aTableColumn acceptColumnVisitor: addColumnVisitor.
 ]
 
 { #category : #building }
-GtkTableAdapter >> buildWidget [
-	| gtkTextView |
+GtkTableAdapter >> addModelTo: gtkList [
+		
+	super addModelTo: gtkList.
+		
+	gtkList headersVisible: self model isShowingColumnHeaders.
 
-	gtkTextView := self newWidget.
-	self addModelTo: gtkTextView.
-	^ GtkScrolledWindow newWidget: gtkTextView
-]
-
-{ #category : #private }
-GtkTableAdapter >> fillStore: store with: aCollection [
+	self model selection isMultipleSelection 
+		ifTrue: [gtkList beMultipleSelectionMode] 
+		ifFalse: [gtkList beSingleSelectionMode].
+				
+	self model columns do: [ :aColumn | self addColumn: aColumn to: gtkList ].	
 	
-	aCollection withIndexDo: [ :each :index | 
-		self 
-			addRow: each 
-			index: index
-			into: store ]
+	self model columns ifNotEmpty: [gtkList model: self newTreeStore].
+	
+	gtkList selection unselectAll.
+
+	self presenter selection isEmpty 
+		ifFalse: [ self presenter selection selectedIndexes 
+				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]  ].
+	
+	self presenter selection whenChangedDo: [ 
+		self presenter selection selectedIndexes 
+				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
+	
+	self presenter whenShowColumnHeadersChangedDo: [ 	gtkList headersVisible: self model isShowingColumnHeaders. ].
+		
+	gtkList connectRowActivated: [ :path | 
+	self model doActivateAtIndex: path toArray first ].
+	
+	widget := gtkList.
+	self connectSelectionChanged.
+	
+	self presenter whenColumnsChangedDo: [ self refreshWidgetHeaderTitle. self refreshList ].
+	
+	self refreshWidgetHeaderTitle
 ]
 
-{ #category : #private }
-GtkTableAdapter >> items [
+{ #category : #testing }
+GtkTableAdapter >> isShowColumnHeaders [
 
-	^ self model items
+	^ widget isHeadersVisible
 ]
 
-{ #category : #'private factory' }
-GtkTableAdapter >> newColumnBuilderOn: anObject [
+{ #category : #building }
+GtkTableAdapter >> newTreeStore [
+	
+	| typeTransformer columnTypes store |
+	
+	typeTransformer := GtkSpecColumnTypeVisitor new forString: [ GType G_TYPE_STRING ].
+		
+	columnTypes := self model columns collect: [ :aColumn | aColumn acceptColumnVisitor: typeTransformer ].
+	store := GtkTreeStore newColumnTypes: columnTypes.
+	
+	self model model shownItems do: [ :anItem | | row valueTransformer |
+		row := store appendNew.
 
-	^ GtkTableColumnBuilder on: anObject
-]
-
-{ #category : #'private factory' }
-GtkTableAdapter >> newStore [
-	| typeCollector |
-
-	typeCollector := GtkTableColumnTypeCollector new.
-	self model columns collect: [ :each | 
-		typeCollector visit: each ].
-	^ self storeClass newColumnTypes: typeCollector types
-]
-
-{ #category : #'private factory' }
-GtkTableAdapter >> newStoreFrom: aCollection [
-	| store |
-
-	store := self newStore.
-	self 
-		fillStore: store
-		with: aCollection.
+		valueTransformer :=GtkSpecColumnTypeVisitor new
+			columns: self model columns;
+			forString: [ :column :index | | aValue |
+				aValue := (column readObject: anItem) asString.
+				row at: index - 1 putString: aValue ].
+			
+		self model columns do: [ :aColumn | aColumn acceptColumnVisitor: valueTransformer ].
+	].
 
 	^ store
 ]
 
-{ #category : #updating }
+{ #category : #events }
 GtkTableAdapter >> refreshList [
-
-	widget model: (self newStoreFrom: self model items)
-]
-
-{ #category : #private }
-GtkTableAdapter >> rowSelected: path [
-
-	self model selectedIndex: path first
-]
-
-{ #category : #private }
-GtkTableAdapter >> storeClass [
-
-	^ GtkListStore
-]
-
-{ #category : #updating }
-GtkTableAdapter >> update: aSymbol [
-
-	aSymbol == #items ifTrue: [ self refreshList ]
-]
-
-{ #category : #building }
-GtkTableAdapter >> widgetClass [
 	
-	^ GtkTreeView
+	widget model: self newTreeStore 
+]
+
+{ #category : #events }
+GtkTableAdapter >> refreshWidgetHeaderTitle [
+	
+	"By now I only accept to add columns, as the data should be all generated. It is not so easy"
+	(widget columns size < self model columns size) ifTrue: [  
+		(self model columns last: (self model columns size - widget columns size)) do: [ :aTableColumn | self addColumn: aTableColumn to: widget  ]
+	].
+	
+	self model columns with: widget columns do: [ :modelColumn :widgetColumn | widgetColumn title: modelColumn title  ]
 ]

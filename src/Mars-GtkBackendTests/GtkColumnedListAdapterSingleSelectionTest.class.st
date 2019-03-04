@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 GtkColumnedListAdapterSingleSelectionTest >> classToTest [
-	^ ColumnedListPresenter
+	^ TablePresenter
 ]
 
 { #category : #running }
