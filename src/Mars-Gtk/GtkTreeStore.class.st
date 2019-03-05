@@ -40,3 +40,9 @@ GtkTreeStore >> initialize [
 	"Stores need to be unreferenced after set"
 	self autoRelease
 ]
+
+{ #category : #testing }
+GtkTreeStore >> numberOfColumns [
+
+	^ self ffiCall: #(gint gtk_tree_model_get_n_columns(self))
+]
