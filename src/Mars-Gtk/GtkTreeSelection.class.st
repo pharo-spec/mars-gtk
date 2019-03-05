@@ -42,6 +42,12 @@ GtkTreeSelection >> connectChanged: aBlock [
 	self connect: 'changed' do: aBlock
 ]
 
+{ #category : #testing }
+GtkTreeSelection >> isSelected: pathArray [
+
+	^ self allSelected includes: pathArray
+]
+
 { #category : #accessing }
 GtkTreeSelection >> mode [
 	

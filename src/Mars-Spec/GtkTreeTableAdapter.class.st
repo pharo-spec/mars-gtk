@@ -54,18 +54,10 @@ GtkTreeTableAdapter >> addLevelTo: item parent: iter [
 
 { #category : #building }
 GtkTreeTableAdapter >> addModelTo: gtkWidget [
-	| columnBuilder store |
 	
 	super addModelTo: gtkWidget.
-	
-	store := self newStoreFrom: self items.
-	gtkWidget model: store.
-	
-	columnBuilder := self newColumnBuilderOn: self model.
-	columnBuilder store: store.
-	columnBuilder view: gtkWidget. 
-	self model columns do: [ :each | 
-		columnBuilder visit: each ].
+
+	self buildStore: gtkWidget.	
 	
 	gtkWidget headersVisible: self model isShowingColumnHeaders.
 		
@@ -85,7 +77,7 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ].
 	
 	self model whenSelectionChangedDo: [ self selectItemIn: gtkWidget path: self model selection selectedPath ].
-	
+	self model whenRootsChangedDo: [ self buildStore: gtkWidget ]
 ]
 
 { #category : #private }
@@ -101,13 +93,19 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 ]
 
 { #category : #building }
-GtkTreeTableAdapter >> buildWidget [
-"	| gtkTextView |
+GtkTreeTableAdapter >> buildStore: gtkWidget [	
+	
+	| store columnBuilder |
+	
+	store := self newStoreFrom: self items.
+	gtkWidget model: store.
+	
+	columnBuilder := self newColumnBuilderOn: self model.
+	columnBuilder store: store.
+	columnBuilder view: gtkWidget. 
+	self model columns do: [ :each | 
+		columnBuilder visit: each ].
 
-	gtkTextView := self newWidget.
-	self addModelTo: gtkTextView.
-	^ GtkScrolledWindow newWidget: gtkTextView"
-	^ super buildWidget
 ]
 
 { #category : #building }
@@ -213,9 +211,14 @@ GtkTreeTableAdapter >> rowSelected: path [
 { #category : #building }
 GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 
+	(aPath isNil or: [ aPath isEmpty ])
+		ifTrue: [ gtkWidget selection unselectAll. ^ self ].
+
 	gtkWidget expandToPath: aPath.
 	gtkWidget selection selectPath: aPath.
-	
+
+	(gtkWidget selection isSelected: aPath)
+		ifFalse: [ gtkWidget selection unselectAll ].
 ]
 
 { #category : #accessing }
@@ -257,12 +260,6 @@ GtkTreeTableAdapter >> takeKeyboardFocus [
 		self widget selection unselectAll.
 		self connectSelectionChanged.	 ]
 
-]
-
-{ #category : #updating }
-GtkTreeTableAdapter >> update: aSymbol [
-
-	aSymbol == #items ifTrue: [ self refreshList ]
 ]
 
 { #category : #building }
