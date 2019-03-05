@@ -82,10 +82,9 @@ GtkButton >> clicked [
 
 { #category : #style }
 GtkButton >> font: aLogicalFont [ 
-	
 	| pangoFont |
 	
-	pangoFont := self styleContext font.
+	pangoFont := self styleContext fontNormal.
 	pangoFont familyName: aLogicalFont familyName.
 ]
 

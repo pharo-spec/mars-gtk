@@ -68,6 +68,5 @@ GtkExampleBrowser >> show [
 		resize: 500@500;
 		add: mainContainer;
 		center;
-		showAll;
-		inspect
+		showAll
 ]

@@ -54,7 +54,7 @@ GObject >> connect: aString do: aBlock [
 	^ self 
 		connect: aString 
 		signature: #(void (void *widget, void *aData))  
- 		do: [ :widget :aData | aBlock value ]
+ 		do: [ :widget :aData | aBlock fork ]
 ]
 
 { #category : #signaling }
@@ -191,6 +191,16 @@ GObject >> gObjectGetBoolean: aName [
 ]
 
 { #category : #'private primitives' }
+GObject >> gObjectGetDouble: aName [
+	"a convenience method to read boolean properties"
+	| buffer |
+	
+	buffer := FFIFloat64 newBuffer.
+	self gObjectGet: aName into: buffer.
+	^ buffer doubleAt: 1
+]
+
+{ #category : #'private primitives' }
 GObject >> gObjectGetInteger: aName [
 	"a convenience method to read boolean properties"
 	| buffer |
@@ -214,6 +224,12 @@ GObject >> gObjectGetString: aName [
 GObject >> gObjectSet: aName toBoolean: aBoolean [
 
 	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean, 0) )	
+]
+
+{ #category : #'private primitives' }
+GObject >> gObjectSet: aName toDouble: aNumber [
+
+	self ffiCall: #(void g_object_set (self, const gchar *aName, gdouble aNumber, 0) )
 ]
 
 { #category : #'private primitives' }

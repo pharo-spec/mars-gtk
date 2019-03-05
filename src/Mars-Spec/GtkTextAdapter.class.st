@@ -22,16 +22,13 @@ GtkTextAdapter >> addToModel: gtkTextView [
 ]
 
 { #category : #building }
-GtkTextAdapter >> buildWidget [
-	| gtkTextView |
-
-	gtkTextView := self newWidget.
-	self addModelTo: gtkTextView.
-	^ GtkScrolledWindow newWidget: gtkTextView
-]
-
-{ #category : #building }
 GtkTextAdapter >> widgetClass [
 
 	^ GtkTextView
+]
+
+{ #category : #building }
+GtkTextAdapter >> wrapWidget: gtkWidget [
+
+	^ GtkScrolledWindow newWidget: gtkWidget
 ]

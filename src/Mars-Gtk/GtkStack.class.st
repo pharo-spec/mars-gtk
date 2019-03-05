@@ -23,6 +23,7 @@ GtkStack class >> new [
 
 { #category : #adding }
 GtkStack >> addChild: child withTitle: aTitle [
+
 	self keepWidget: child.
 	self 
 		basicAddChild: child 

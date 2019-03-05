@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkBackend,
 	#superclass : #ApplicationBackend,
-	#category : #'Mars-Gtk'
+	#category : #'Mars-Gtk-Backend'
 }
 
 { #category : #accessing }

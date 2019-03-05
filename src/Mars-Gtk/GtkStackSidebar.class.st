@@ -2,7 +2,7 @@
 GtkStackSidebar
 GtkStackSidebar — An automatic sidebar widget
 
-https://developer.gnome.org/gtk3/stable/GtkStackSidebar.html#gtk-stack-sidebar-set-stack
+https://developer.gnome.org/gtk3/stable/GtkStackSidebar.html
 "
 Class {
 	#name : #GtkStackSidebar,
@@ -28,7 +28,13 @@ GtkStackSidebar class >> new [
 	^ self gtkNewStackSidebar initialize
 ]
 
-{ #category : #accessing }
+{ #category : #private }
+GtkStackSidebar >> basicStack: aStack [
+
+	self ffiCall: #(void gtk_stack_sidebar_set_stack (self, GtkStack *aStack))
+]
+
+{ #category : #private }
 GtkStackSidebar >> stack [
 
 	^ self ffiCall: #(GtkStack gtk_stack_sidebar_get_stack (self))
@@ -37,5 +43,6 @@ GtkStackSidebar >> stack [
 { #category : #accessing }
 GtkStackSidebar >> stack: aStack [
 
-	self ffiCall: #(void gtk_stack_sidebar_set_stack (self, GtkStack *aStack))
+	self keepWidget: aStack.
+	self basicStack: aStack
 ]
