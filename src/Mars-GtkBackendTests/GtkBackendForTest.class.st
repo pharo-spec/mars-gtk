@@ -89,14 +89,15 @@ GtkBackendForTest >> openInstanceOf: aTest [
 ]
 
 { #category : #running }
-GtkBackendForTest >> runTest: aBlockClosure [ 
+GtkBackendForTest >> runTest: aBlock [ 
+	| oldApplication |
 		
 	GtkApplication ensureRunning. 
-	app := Application new.
+	app := SpecApplication new.
 	app useBackend: #Gtk. 
 	
-	aBlockClosure value.
-	
-	"SpecBindings value: GtkAdapterBindings during: aBlockClosure."
-
+	oldApplication := SpecApplication activeApplication.
+	SpecApplication activeApplication: app.
+	aBlock ensure: [ 
+		SpecApplication activeApplication: oldApplication ]
 ]

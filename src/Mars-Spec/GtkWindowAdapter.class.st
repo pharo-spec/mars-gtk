@@ -7,7 +7,7 @@ Class {
 { #category : #private }
 GtkWindowAdapter >> activateApplication [ 
 
-	Application activeApplication: self model application
+	SpecApplication activeApplication: self model application
 ]
 
 { #category : #private }
