@@ -54,7 +54,7 @@ GObject >> connect: aString do: aBlock [
 	^ self 
 		connect: aString 
 		signature: #(void (void *widget, void *aData))  
- 		do: [ :widget :aData | aBlock value ]
+ 		do: [ :widget :aData | aBlock fork ]
 ]
 
 { #category : #signaling }

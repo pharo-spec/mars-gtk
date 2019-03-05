@@ -5,7 +5,7 @@ https://developer.gnome.org/gtk3/stable/GtkCssProvider.html
 "
 Class {
 	#name : #GtkCssProvider,
-	#superclass : #FFIExternalObject,
+	#superclass : #GObject,
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#pools : [

@@ -72,6 +72,12 @@ GtkWindow >> center [
 	self setPosition: GTK_WIN_POS_CENTER
 ]
 
+{ #category : #signaling }
+GtkWindow >> connectActivateFocus: aBlock [
+
+	self connect: 'activate-focus' do: aBlock
+]
+
 { #category : #geometry }
 GtkWindow >> defaultSize: aPoint [
 

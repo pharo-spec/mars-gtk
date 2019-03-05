@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #private }
+GtkWindowAdapter >> activateApplication [ 
+
+	Application activeApplication: self model application
+]
+
+{ #category : #private }
 GtkWindowAdapter >> add: gtkBox toWindow: gtkWindow [
 
 	gtkWindow add: gtkBox
@@ -28,16 +34,23 @@ GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 { #category : #accessing }
 GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
-		
-	gtkBox := GtkBox newVertical.
-			
-	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
-	self model hasToolBar ifTrue: [ self addToolBarTo: gtkBox ].
-	
-	gtkBox packStart: (self contentWidget: aSpec).
 
+	gtkWindow connectFocusInEvent: [ 
+		self activateApplication ].
+	"window properties"
+	gtkWindow resize: self model initialExtent.
+
+	"inner contents of window"	
+	gtkBox := GtkBox newVertical.
+	"menu bar"
+	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
+	"tool bar"
+	self model hasToolBar ifTrue: [ self addToolBarTo: gtkBox ].
+	"contents"
+	gtkBox packStart: (self contentWidget: aSpec).
+	"status bar"
 	self model hasStatusBar ifTrue: [ self addStatusBarTo: gtkBox ].
-	
+	"... and add all that to window"
 	self add: gtkBox toWindow: gtkWindow.
 ]
 
@@ -92,8 +105,7 @@ GtkWindowAdapter >> contentWidget: aSpec [
 GtkWindowAdapter >> newWidget [
 
 	^ GtkWindow new 
-		autoRelease
-		resize: self model initialExtent;
+		autoRelease;
 		yourself
 ]
 
