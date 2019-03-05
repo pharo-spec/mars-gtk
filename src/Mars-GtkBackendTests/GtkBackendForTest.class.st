@@ -98,7 +98,7 @@ GtkBackendForTest >> openInstanceOf: aTest [
 GtkBackendForTest >> runTest: aBlockClosure [ 
 		
 	GtkApplication ensureRunning. 
-	app := Application new.
+	app := SpecApplication new.
 	app useBackend: #Gtk.
 	aBlockClosure value
 ]
