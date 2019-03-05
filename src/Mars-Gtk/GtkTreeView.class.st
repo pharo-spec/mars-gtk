@@ -151,6 +151,12 @@ GtkTreeView >> connectTestExpandRow: aBlock [
 ]
 
 { #category : #private }
+GtkTreeView >> doExpandToPath: path [ 
+	
+	self ffiCall: #(void gtk_tree_view_expand_to_path (self, GtkTreePath *path))
+]
+
+{ #category : #private }
 GtkTreeView >> enableTreeLines [
 
 	self enableTreeLines: true
@@ -161,6 +167,12 @@ GtkTreeView >> enableTreeLines: enabled [
 
 	self ffiCall: #(void gtk_tree_view_set_enable_tree_lines (self,
                                      gboolean enabled))
+]
+
+{ #category : #expanding }
+GtkTreeView >> expandToPath: pathArray [
+
+	self doExpandToPath: (GtkTreePath newFromArray: pathArray) autoRelease 
 ]
 
 { #category : #private }

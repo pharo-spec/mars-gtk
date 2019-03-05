@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkBackendForTest,
 	#superclass : #AbstractBackendForTest,
+	#instVars : [
+		'app'
+	],
 	#category : #'Mars-GtkBackendTests'
 }
 
@@ -78,14 +81,22 @@ GtkBackendForTest >> doubleClickFirstRowAndColumn: aGtkTreeView [
 
 { #category : #running }
 GtkBackendForTest >> openInstanceOf: aTest [ 
-	
-	aTest window ifNil: [ aTest window: aTest presenter openWithSpec ].
+		
+	aTest window ifNil: [ 
+		aTest presenter application: app.
+		aTest window: aTest presenter openWithSpec ].
 
 ]
 
 { #category : #running }
 GtkBackendForTest >> runTest: aBlockClosure [ 
-	
+		
 	GtkApplication ensureRunning. 
-	SpecBindings value: GtkAdapterBindings during: aBlockClosure.
+	app := Application new.
+	app useBackend: #Gtk. 
+	
+	aBlockClosure value.
+	
+	"SpecBindings value: GtkAdapterBindings during: aBlockClosure."
+
 ]

@@ -75,6 +75,17 @@ GtkTreeSelection >> selectedForEach: func data: data [
 		gpointer data))
 ]
 
+{ #category : #accessing }
+GtkTreeSelection >> selectedPath [
+	
+	| allSelected |
+	allSelected := self allSelected.
+	allSelected size > 1 ifTrue: [ self error: 'Not single selection' ].
+	
+	allSelected size = 0 ifTrue: [ ^ nil ].
+	^ allSelected first
+]
+
 { #category : #selection }
 GtkTreeSelection >> unselectAll [
 	

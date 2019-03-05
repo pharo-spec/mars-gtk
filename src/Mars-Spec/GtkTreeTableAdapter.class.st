@@ -68,9 +68,12 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		columnBuilder visit: each ].
 	
 	gtkWidget headersVisible: self model isShowingColumnHeaders.
+		
+	self model selection isEmpty 
+		ifFalse: [ self selectItemIn: gtkWidget path: self model selection selectedPath ].
 	
-	gtkWidget connectSelectionChanged: [ 
-		self rowSelected: gtkWidget selected ].
+	widget := gtkWidget.
+	self connectSelectionChanged.
 	
 	self model doubleClickAction ifNotNil: [ :action |
 		gtkWidget connectDoubleClicked: [ 
@@ -79,7 +82,10 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	gtkWidget connectRowExpanded: [ :iter |
 		"it will be an orfan iterator (store not setted since it comes from a callback)"
 		iter store: self store.
-		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ]
+		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ].
+	
+	self model whenSelectionChangedDo: [ self selectItemIn: gtkWidget path: self model selection selectedPath ].
+	
 ]
 
 { #category : #private }
@@ -96,11 +102,19 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 
 { #category : #building }
 GtkTreeTableAdapter >> buildWidget [
-	| gtkTextView |
+"	| gtkTextView |
 
 	gtkTextView := self newWidget.
 	self addModelTo: gtkTextView.
-	^ GtkScrolledWindow newWidget: gtkTextView
+	^ GtkScrolledWindow newWidget: gtkTextView"
+	^ super buildWidget
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> connectSelectionChanged [
+
+	widget connectSelectionChanged: [ self rowSelected: widget selected ].
+
 ]
 
 { #category : #private }
@@ -193,19 +207,56 @@ GtkTreeTableAdapter >> refreshList [
 { #category : #private }
 GtkTreeTableAdapter >> rowSelected: path [
 
-	self model selectedPath: path
+	self model selection selectedPath: path
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
+
+	gtkWidget expandToPath: aPath.
+	gtkWidget selection selectPath: aPath.
+	
+]
+
+{ #category : #accessing }
+GtkTreeTableAdapter >> selectedItem [
+
+	self widget selection selectedPath ifNil: [ ^ nil ].
+	self widget selection selectedPath ifEmpty: [ ^ nil ].
+
+	^ self model itemAtPath: self widget selection selectedPath	
 ]
 
 { #category : #private }
 GtkTreeTableAdapter >> store [ 
 
-	^ self widgetDo: [ :w | w child model ]
+	^ self widgetDo: [ :w | w model ]
 ]
 
 { #category : #private }
 GtkTreeTableAdapter >> storeClass [
 
 	^ GtkTreeStore
+]
+
+{ #category : #private }
+GtkTreeTableAdapter >> takeKeyboardFocus [
+
+	| needToCleanUP |
+	
+	needToCleanUP := self presenter selection isEmpty.
+
+	needToCleanUP ifTrue: [ self widget selection disconnect: 'changed' ].
+
+	self doTakeKeyboardFocus.
+
+	self flag: #hack.
+	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
+	
+	needToCleanUP ifTrue: [ 
+		self widget selection unselectAll.
+		self connectSelectionChanged.	 ]
+
 ]
 
 { #category : #updating }
