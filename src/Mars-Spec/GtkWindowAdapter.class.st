@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #private }
-GtkWindowAdapter >> activateApplication [ 
-
-	SpecApplication activeApplication: self model application
-]
-
-{ #category : #private }
 GtkWindowAdapter >> add: gtkBox toWindow: gtkWindow [
 
 	gtkWindow add: gtkBox
@@ -35,8 +29,6 @@ GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
 
-	gtkWindow connectFocusInEvent: [ 
-		self activateApplication ].
 	"window properties"
 	gtkWindow resize: self model initialExtent.
 

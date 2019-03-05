@@ -66,7 +66,7 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 GtkMenuItemAdapter >> shortcutGroup [ 
 	| root |
 	
-	root := self model root.
+	root := self model rootMenu.
 	^ root shortcutGroup ifNil: [ | group |
 		group := GtkAccelGroup new.
 		root shortcutGroup: group.

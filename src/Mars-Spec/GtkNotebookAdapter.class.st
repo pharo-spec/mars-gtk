@@ -60,7 +60,7 @@ GtkNotebookAdapter >> buildLabelForTab: aPage [
 GtkNotebookAdapter >> buildPage: aPresenter [
 
 	^ SpecBindings 
-	 	value: GtkAdapterBindings 
+	 	value: GtkAdapterBindings new
 		during: [ aPresenter buildWithSpec ]
 
 ]

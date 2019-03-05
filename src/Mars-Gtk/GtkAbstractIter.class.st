@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkAbstractIter,
-	#superclass : #FFIExternalStructure,
+	#superclass : #GtkStructure,
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#instVars : [

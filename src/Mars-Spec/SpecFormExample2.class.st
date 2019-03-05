@@ -27,7 +27,7 @@ SpecFormExample2 class >> showWithGtk [
 	<example>
 	
 	SpecBindings 
-		value: GtkAdapterBindings
+		value: GtkAdapterBindings new
 		during: [ self new openWithSpec ]
 ]
 

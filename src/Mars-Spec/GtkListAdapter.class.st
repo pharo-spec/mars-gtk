@@ -54,6 +54,12 @@ GtkListAdapter >> modelItemsAsDisplay [
 		collect: [ :each | (self model displayBlock value: each) asString ]
 ]
 
+{ #category : #private }
+GtkListAdapter >> newTreeStore [
+
+	^ GtkTreeStore newStrings: self modelItemsAsDisplay
+]
+
 { #category : #events }
 GtkListAdapter >> refreshList [
 	

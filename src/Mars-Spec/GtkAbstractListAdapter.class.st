@@ -15,7 +15,7 @@ GtkAbstractListAdapter >> connectSelectionChanged [
 { #category : #private }
 GtkAbstractListAdapter >> newTreeStore [
 
-	^ GtkTreeStore newStrings: self modelItemsAsDisplay
+	self subclassResponsibility
 ]
 
 { #category : #'as yet unclassified' }

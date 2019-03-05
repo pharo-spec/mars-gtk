@@ -71,7 +71,7 @@ SpecFormExample class >> showWithGtk [
 	<example>
 	
 	SpecBindings 
-		value: GtkAdapterBindings
+		value: GtkAdapterBindings new
 		during: [ self new openWithSpec: #gridSpec ].
 
 
