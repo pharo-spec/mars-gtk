@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 GtkBackendForTest >> assertHasHeader: aGtkTreeView [ 
 	
-	^ aGtkTreeView isHeadersVisible
+	self assert: aGtkTreeView isHeadersVisible
 ]
 
 { #category : #asserting }
@@ -73,6 +73,12 @@ GtkBackendForTest >> clickFirstRowAndColumn: aGtkTreeView [
 	aGtkTreeView activateRow: path column: aGtkTreeView columns first
 ]
 
+{ #category : #accessing }
+GtkBackendForTest >> denyHasHeader: aGtkTreeView [ 
+	
+	self assert: aGtkTreeView isHeadersVisible not
+]
+
 { #category : #simulating }
 GtkBackendForTest >> doubleClickFirstRowAndColumn: aGtkTreeView [ 
 	
@@ -89,15 +95,10 @@ GtkBackendForTest >> openInstanceOf: aTest [
 ]
 
 { #category : #running }
-GtkBackendForTest >> runTest: aBlock [ 
-	| oldApplication |
+GtkBackendForTest >> runTest: aBlockClosure [ 
 		
 	GtkApplication ensureRunning. 
 	app := SpecApplication new.
-	app useBackend: #Gtk. 
-	
-	oldApplication := SpecApplication activeApplication.
-	SpecApplication activeApplication: app.
-	aBlock ensure: [ 
-		SpecApplication activeApplication: oldApplication ]
+	app useBackend: #Gtk.
+	aBlockClosure value
 ]

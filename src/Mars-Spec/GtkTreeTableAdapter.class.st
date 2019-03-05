@@ -77,7 +77,9 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ].
 	
 	self model whenSelectionChangedDo: [ self selectItemIn: gtkWidget path: self model selection selectedPath ].
-	self model whenRootsChangedDo: [ self buildStore: gtkWidget ]
+	self model whenRootsChangedDo: [ self buildStore: gtkWidget ].
+	self model whenShowColumnHeadersChangedDo: [ gtkWidget headersVisible: self model isShowingColumnHeaders ].
+	self model whenColumnsChangedDo: [ self buildStore: gtkWidget ].
 ]
 
 { #category : #private }
@@ -106,6 +108,12 @@ GtkTreeTableAdapter >> buildStore: gtkWidget [
 	self model columns do: [ :each | 
 		columnBuilder visit: each ].
 
+]
+
+{ #category : #accessing }
+GtkTreeTableAdapter >> columnCount [
+	
+	^ widget model numberOfColumns
 ]
 
 { #category : #building }
