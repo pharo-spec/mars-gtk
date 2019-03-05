@@ -213,7 +213,7 @@ GtkTreeView >> isActivateOnSingleClick [
 GtkTreeView >> isHeadersVisible [
 	| buffer |
 	
-	buffer := FFIBool newBuffer.
+	buffer := ByteArray new: Smalltalk wordSize.
 	buffer pinInMemory.
 	self gObjectGet: 'headers-visible' into: buffer.
 	^ buffer booleanAt: 1
