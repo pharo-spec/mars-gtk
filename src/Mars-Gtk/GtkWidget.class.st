@@ -54,6 +54,12 @@ GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
 		
 ]
 
+{ #category : #style }
+GtkWidget >> addClass: aString [
+
+	self styleContext addClass: aString
+]
+
 { #category : #accessing }
 GtkWidget >> allocation [
 	| allocation |
@@ -177,6 +183,24 @@ GtkWidget >> connectDoubleClicked: aBlock [
 			aBlock fork.
 			stop := true ].
 		stop ]
+]
+
+{ #category : #signaling }
+GtkWidget >> connectFocusInEvent: aBlock [
+
+	self 
+		connect: 'focus-in-event' 
+		signature: #(gboolean (void *widget, void *event, gpointer user_data))  
+		do: [ :widget :event :user_data | aBlock fork. false ]
+]
+
+{ #category : #signaling }
+GtkWidget >> connectFocusOutEvent: aBlock [
+
+	self 
+		connect: 'focus-out-event' 
+		signature: #(gboolean (void *widget, void *event, gpointer user_data))  
+		do: [ :widget :event :user_data | aBlock fork. false ]
 ]
 
 { #category : #signaling }
@@ -476,6 +500,12 @@ GtkWidget >> queueDraw [
 	^ self ffiCall: #(void gtk_widget_queue_draw (self))
 ]
 
+{ #category : #style }
+GtkWidget >> removeClass: aString [
+
+	self styleContext removeClass: aString
+]
+
 { #category : #'external resource management' }
 GtkWidget >> resourceData [
 	^ handle
@@ -524,7 +554,7 @@ GtkWidget >> sizeRequestWidth: width height: height [
 	^ self ffiCall: #(void gtk_widget_set_size_request ( self, gint width, gint height ) )
 ]
 
-{ #category : #styles }
+{ #category : #style }
 GtkWidget >> styleContext [
 	
 	^ self ffiCall: #(GtkStyleContext *gtk_widget_get_style_context (self))

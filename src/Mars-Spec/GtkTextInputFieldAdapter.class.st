@@ -62,3 +62,9 @@ GtkTextInputFieldAdapter >> widgetClass [
 
 	^ GtkEntry
 ]
+
+{ #category : #building }
+GtkTextInputFieldAdapter >> wrapWidget: gtkWidget [
+
+	^ gtkWidget
+]

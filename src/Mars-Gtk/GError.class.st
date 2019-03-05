@@ -87,6 +87,7 @@ GError >> message: anObject [
 
 { #category : #accessing }
 GError >> messageString [
+
 	self message isNull ifTrue: [ ^ 'Unknown error.' ].
-	^ self message readString
+	^ self message readStringUTF8
 ]

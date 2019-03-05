@@ -56,3 +56,8 @@ GtkButtonAdapter >> updateLabel [
 
 	self widget label: self model label asString
 ]
+
+{ #category : #factory }
+GtkButtonAdapter >> updateTooltip [
+	self widget tooltipText: self model help
+]

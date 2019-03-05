@@ -34,12 +34,20 @@ GtkAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #building }
+GtkAdapter >> addSettingsTo: gtkWidget [
+	"A secondary initialization generic to all widgets"
+	
+	gtkWidget sensitive: self model isEnabled
+]
+
+{ #category : #building }
 GtkAdapter >> buildWidget [ 
 	| gtkWidget |
 	
 	gtkWidget := self newWidget.
+	self addSettingsTo: gtkWidget.
 	self addModelTo: gtkWidget.
-	^ gtkWidget
+	^ self wrapWidget: gtkWidget
 ]
 
 { #category : #protocol }
@@ -59,9 +67,10 @@ GtkAdapter >> enabled [
 ]
 
 { #category : #accessing }
-GtkAdapter >> enabled: aValue [
+GtkAdapter >> enabled: aBoolean [
 
-	widget sensitive: aValue
+	self widgetDo: [ :w |
+		w sensitive: aBoolean ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -98,8 +107,23 @@ GtkAdapter >> takeKeyboardFocus [
 	self doTakeKeyboardFocus
 ]
 
+{ #category : #updating }
+GtkAdapter >> update: aSymbol with: anArray [
+
+	self flag: #TODO. "I'm not sure I want to do this :("
+	self 
+		perform: aSymbol 
+		withArguments: anArray
+]
+
 { #category : #building }
 GtkAdapter >> widgetClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #building }
+GtkAdapter >> wrapWidget: gtkWidget [
+
+	^ gtkWidget
 ]
