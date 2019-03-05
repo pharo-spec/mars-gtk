@@ -107,6 +107,15 @@ GtkAdapter >> takeKeyboardFocus [
 	self doTakeKeyboardFocus
 ]
 
+{ #category : #updating }
+GtkAdapter >> update: aSymbol with: anArray [
+
+	self flag: #TODO. "I'm not sure I want to do this :("
+	self 
+		perform: aSymbol 
+		withArguments: anArray
+]
+
 { #category : #building }
 GtkAdapter >> widgetClass [
 
