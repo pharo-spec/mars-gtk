@@ -44,7 +44,7 @@ GtkDropListAdapter >> modelItemsAsDisplay [
 GtkDropListAdapter >> newTreeStore [
 
 	self model hasIcons 
-		ifFalse: [ ^ super newTreeStore ].
+		ifFalse: [ ^ GtkTreeStore newStrings: self modelItemsAsDisplay ].
 		
 	^ self newTreeStoreWithIcons
 ]
