@@ -62,7 +62,7 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	gtkWidget headersVisible: self model isShowingColumnHeaders.
 		
 	self model selection isEmpty 
-		ifFalse: [ self selectItemIn: gtkWidget path: self model selection selectedPath ].
+		ifFalse: [ self updateSelectionOf: gtkWidget ].
 	
 	widget := gtkWidget.
 	self connectSelectionChanged.
@@ -76,10 +76,10 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		iter store: self store.
 		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ].
 	
-	self model whenSelectionChangedDo: [ self selectItemIn: gtkWidget path: self model selection selectedPath ].
-	self model whenRootsChangedDo: [ self buildStore: gtkWidget ].
+	self model whenSelectionChangedDo: [ self updateSelectionOf: gtkWidget ].
+	self model whenRootsChangedDo: [ self disableSelectionEventsDuring: [self buildStore: gtkWidget] ].
 	self model whenShowColumnHeadersChangedDo: [ gtkWidget headersVisible: self model isShowingColumnHeaders ].
-	self model whenColumnsChangedDo: [ self buildStore: gtkWidget ].
+	self model whenColumnsChangedDo: [ self disableSelectionEventsDuring: [self buildStore: gtkWidget] ].
 ]
 
 { #category : #private }
@@ -119,8 +119,16 @@ GtkTreeTableAdapter >> columnCount [
 { #category : #building }
 GtkTreeTableAdapter >> connectSelectionChanged [
 
-	widget connectSelectionChanged: [ self rowSelected: widget selected ].
+"	widget connectSelectionChanged: [ self rowSelected: widget selected ].
+"
+]
 
+{ #category : #events }
+GtkTreeTableAdapter >> disableSelectionEventsDuring: aBlockClosure [ 
+
+	self widget selection disconnect: 'changed'.	
+	aBlockClosure value.
+	self connectSelectionChanged.
 ]
 
 { #category : #private }
@@ -232,10 +240,13 @@ GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 { #category : #accessing }
 GtkTreeTableAdapter >> selectedItem [
 
-	self widget selection selectedPath ifNil: [ ^ nil ].
-	self widget selection selectedPath ifEmpty: [ ^ nil ].
+	| selectedPath |
+	selectedPath := self widget selection selectedPath.
 
-	^ self model itemAtPath: self widget selection selectedPath	
+	selectedPath ifNil: [ ^ nil ].
+	selectedPath ifEmpty: [ ^ nil ].
+
+	^ self model itemAtPath: selectedPath
 ]
 
 { #category : #private }
@@ -268,6 +279,13 @@ GtkTreeTableAdapter >> takeKeyboardFocus [
 		self widget selection unselectAll.
 		self connectSelectionChanged.	 ]
 
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> updateSelectionOf: gtkWidget [
+
+	self model selection selectedPaths
+		do: [ :selectedPath | self selectItemIn: gtkWidget path: selectedPath ]
 ]
 
 { #category : #building }

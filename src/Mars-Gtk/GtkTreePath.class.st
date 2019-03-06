@@ -13,6 +13,12 @@ GtkTreePath class >> finalizeResourceData: handle [
 	handle beNull
 ]
 
+{ #category : #finalization }
+GtkTreePath class >> fromHandle: aHandle [
+
+	^ self basicNew setHandle: aHandle
+]
+
 { #category : #'instance creation' }
 GtkTreePath class >> new [
 
