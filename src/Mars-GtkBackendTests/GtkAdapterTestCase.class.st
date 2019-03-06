@@ -14,5 +14,7 @@ GtkAdapterTestCase >> adapter [
 GtkAdapterTestCase >> runCaseManaged [
 
 	GtkApplication ensureRunning. 
-	SpecBindings value: GtkAdapterBindings during: [ super runCaseManaged ].
+	SpecBindings 
+		value: GtkAdapterBindings new 
+		during: [ super runCaseManaged ]
 ]
