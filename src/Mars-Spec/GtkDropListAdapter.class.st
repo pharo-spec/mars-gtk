@@ -16,6 +16,14 @@ GtkDropListAdapter >> addModelTo: gtkComboBox [
 	self model model whenChangedDo: [ self setModelTo: gtkComboBox ]
 ]
 
+{ #category : #private }
+GtkDropListAdapter >> disconnectSelectionEventsOf: aWidget during: aBlock [
+
+	aWidget 
+		disconnect: 'changed' 
+		during: aBlock
+]
+
 { #category : #accessing }
 GtkDropListAdapter >> displayedIcon [
 	
@@ -67,7 +75,6 @@ GtkDropListAdapter >> selectedIndexes [
 
 { #category : #building }
 GtkDropListAdapter >> setModelTo: gtkComboBox [
-	
 	| pixbufRenderer textRenderer |
 	
 	gtkComboBox model: self newTreeStore.

@@ -41,12 +41,9 @@ GtkAbstractListAdapter >> resetSelection [
 GtkAbstractListAdapter >> selectIndex: anInteger [ 
 	
 	self widgetDo: [ :w |
-		self 
-			disconnectSelectionEventsOf: w 
-			during: [ 
-				anInteger ~= 0
-					ifTrue: [ w selectIndex: anInteger ]
-					ifFalse: [ self resetSelection ] ] ]
+		anInteger ~= 0
+			ifTrue: [ w selectIndex: anInteger ]
+			ifFalse: [ self resetSelection ] ]
 ]
 
 { #category : #building }

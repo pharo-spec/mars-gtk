@@ -55,9 +55,9 @@ GtkAdapter >> doTakeKeyboardFocus [
 
 	self widgetDo: [ :w | 
 	self model window ifNotNil: [ :window | 
-			window adapter
-				ifNotNil: [ w grabFocus ]
-				ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
+		window adapter
+			ifNotNil: [ w grabFocus ]
+			ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
 ]
 
 { #category : #accessing }
