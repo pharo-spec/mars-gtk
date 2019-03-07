@@ -1,7 +1,9 @@
 Class {
 	#name : #GtkAbstractListAdapter,
 	#superclass : #GtkAdapter,
-	#category : #'Mars-Spec-Adapter'
+	#traits : 'TGtkDisconnectSelectionEvents',
+	#classTraits : 'TGtkDisconnectSelectionEvents classTrait',
+	#category : #'Mars-Spec-Adapter-List'
 }
 
 { #category : #private }
@@ -10,49 +12,58 @@ GtkAbstractListAdapter >> newTreeStore [
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkAbstractListAdapter >> refreshWidgetSelection [
-	| rowIndexes |
+	| rowIndexes selection |
 	
+	self widget ifNil: [ ^ self ].
+
 	rowIndexes := self presenter selection selectedIndexes.
-	(self widget selection allSelected collect: #first) asArray = rowIndexes
+	selection := self widget selection.
+	(selection allSelected collect: #first) asArray = rowIndexes
 		ifTrue: [ ^ self ].
-		
-	rowIndexes ifEmpty: [ ^ self widget selection unselectAll ].
 
-	self widget 	selection selectPath: rowIndexes.
-
+	self 
+		disconnectSelectionEventsOf: self widget 
+		during: [ 		
+			rowIndexes 
+				ifNotEmpty: [ self widget selection selectPath: rowIndexes ]
+				ifEmpty: [ self widget selection unselectAll ] ]
 ]
 
 { #category : #building }
 GtkAbstractListAdapter >> resetSelection [
-	
+
 	self widget selection unselectAll
 ]
 
 { #category : #accessing }
 GtkAbstractListAdapter >> selectIndex: anInteger [ 
 	
-	anInteger = 0 ifTrue: [ widget selection unselectAll. ^ self ].
-	widget selectIndex: anInteger
+	self widgetDo: [ :w |
+		self 
+			disconnectSelectionEventsOf: w 
+			during: [ 
+				anInteger ~= 0
+					ifTrue: [ w selectIndex: anInteger ]
+					ifFalse: [ self resetSelection ] ] ]
 ]
 
 { #category : #building }
 GtkAbstractListAdapter >> takeKeyboardFocus [
 	| needToCleanUP |
 
+	self widget ifNil: [ ^ self ].
 	self flag: #hack.
-	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
-	
+	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"	
 	needToCleanUP := self presenter selection isEmpty.
 	needToCleanUP 
 		ifTrue: [ 
-			self widget disconnect: 'changed' during: [ 
-					self doTakeKeyboardFocus.
-					self widget selection unselectAll]]
-		ifFalse: [ self doTakeKeyboardFocus ]
-
-
+			self disconnectSelectionEventsOf: self widget during: [ 
+				self doTakeKeyboardFocus.
+				self widget selection unselectAll ] ]
+		ifFalse: [ 
+			self doTakeKeyboardFocus ]
 ]
 
 { #category : #building }

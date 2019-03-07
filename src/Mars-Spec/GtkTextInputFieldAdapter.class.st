@@ -33,7 +33,6 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 	
 
 	gtkEntry connectTextChanged: [ :text | 
-		self halt.
 		self model text: text ]
 ]
 

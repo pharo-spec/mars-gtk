@@ -52,6 +52,7 @@ GtkExampleBrowser >> categoryStackFor: categoryName [
 
 { #category : #'examples-windows' }
 GtkExampleBrowser >> show [
+	<script: 'self new show'>
 
 	mainContainer := GtkBox newHorizontal.
 	categoryStack := GtkStack new.

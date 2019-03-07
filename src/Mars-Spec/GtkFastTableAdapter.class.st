@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkFastTableAdapter,
 	#superclass : #GtkListAdapter,
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Adapter-List'
 }
 
 { #category : #deprecation }

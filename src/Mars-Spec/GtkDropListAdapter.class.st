@@ -1,23 +1,19 @@
 Class {
 	#name : #GtkDropListAdapter,
 	#superclass : #GtkAbstractListAdapter,
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Adapter-List'
 }
 
 { #category : #building }
 GtkDropListAdapter >> addModelTo: gtkComboBox [
-	
 	super addModelTo: gtkComboBox.
-	
 	self setModelTo: gtkComboBox.
-	
-	gtkComboBox connectChanged: [ 
-		self widgetDo: [ :w | 
-			self model selectedIndex: w activeIndex + 1 ] ].
-	
-	self model whenSelectionChanged:  [ gtkComboBox activeIndex: self model selectedIndex - 1  ].
-	self model model whenChangedDo: [ 
-		self setModelTo: gtkComboBox ]
+	gtkComboBox
+		connectChanged:
+			[ self widgetDo: [ :w | self model selectedIndex: w activeIndex + 1 ] ].
+	self model
+		whenSelectionChangedDo: [ gtkComboBox activeIndex: self model selectedIndex - 1 ].
+	self model model whenChangedDo: [ self setModelTo: gtkComboBox ]
 ]
 
 { #category : #accessing }

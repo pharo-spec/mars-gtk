@@ -23,6 +23,8 @@ After processing, we will the full tree.
 Class {
 	#name : #GtkTreeTableAdapter,
 	#superclass : #GtkAdapter,
+	#traits : 'TGtkDisconnectSelectionEvents',
+	#classTraits : 'TGtkDisconnectSelectionEvents classTrait',
 	#instVars : [
 		'levelsAdded'
 	],
@@ -77,12 +79,12 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		self updateSelectionOf: gtkWidget ].
 	self model whenRootsChangedDo: [ 
 		self 
-			disableSelectionEventsOf: gtkWidget 
+			disconnectSelectionEventsOf: gtkWidget 
 			during: [ self buildStore: gtkWidget ] ].
 	self model whenShowColumnHeadersChangedDo: [ 
 		gtkWidget headersVisible: self model isShowingColumnHeaders ].
 	self model whenColumnsChangedDo: [ 
-		self disableSelectionEventsOf: gtkWidget 
+		self disconnectSelectionEventsOf: gtkWidget 
 		during: [ self buildStore: gtkWidget ] ].
 ]
 
@@ -117,14 +119,6 @@ GtkTreeTableAdapter >> buildStore: gtkWidget [
 GtkTreeTableAdapter >> columnCount [
 	
 	^ widget model numberOfColumns
-]
-
-{ #category : #events }
-GtkTreeTableAdapter >> disableSelectionEventsOf: aWidget during: aBlock [ 
-
-	aWidget selection 
-		disconnect: 'changed' 
-		during: aBlock
 ]
 
 { #category : #private }
@@ -259,22 +253,18 @@ GtkTreeTableAdapter >> storeClass [
 
 { #category : #private }
 GtkTreeTableAdapter >> takeKeyboardFocus [
-
 	| needToCleanUP |
 	
 	needToCleanUP := self presenter selection isEmpty.
-
-	needToCleanUP ifTrue: [ self widget selection disconnect: 'changed' ].
-
-	self doTakeKeyboardFocus.
-
 	self flag: #hack.
 	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
-	
-	needToCleanUP ifTrue: [ 
-		self widget selection unselectAll.
-		self connectSelectionChanged.	 ]
-
+	needToCleanUP 
+		ifTrue: [ 
+			self disconnectSelectionEventsOf: self widget during: [ 
+				self doTakeKeyboardFocus.
+				self widget selection unselectAll ] ]
+		ifFalse: [ 
+			self doTakeKeyboardFocus ]
 ]
 
 { #category : #building }

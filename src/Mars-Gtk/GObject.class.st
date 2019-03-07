@@ -114,8 +114,6 @@ GObject >> disconnectAll: aCollection during: aBlock [
 	| matching |
 
 	callbacks isEmptyOrNil ifTrue: [ ^ self ].
-	"Do not use #select:thenDo: because I want explicitly the new collection 
-	 (because disconnect will remove the callback from the list)"
 	matching := callbacks select: [ :each | aCollection includes: each signal ].
 	matching do: [ :each | self disconnectCallback: each ].
 	aBlock ensure: [ 

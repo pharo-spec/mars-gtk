@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkListAdapter,
 	#superclass : #GtkAbstractListAdapter,
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Adapter-List'
 }
 
 { #category : #specs }
