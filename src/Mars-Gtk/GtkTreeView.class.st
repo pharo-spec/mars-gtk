@@ -234,7 +234,6 @@ GtkTreeView >> model: aListStore [
 	listStore ifNotNil: [ listStore objectUnref ].
 	listStore := aListStore.
 	listStore objectRef.
-	selection := nil.
 	
 	self setModel: aListStore
 ]
