@@ -40,16 +40,18 @@ GtkAbstractListAdapter >> selectIndex: anInteger [
 { #category : #building }
 GtkAbstractListAdapter >> takeKeyboardFocus [
 	| needToCleanUP |
-	
-	needToCleanUP := self presenter selection isEmpty.
-	needToCleanUP ifTrue: [ self widget selection disconnect: 'changed' ].
-
-	self doTakeKeyboardFocus.
 
 	self flag: #hack.
 	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
-	needToCleanUP ifTrue: [ 
-		self widget selection unselectAll ]
+	
+	needToCleanUP := self presenter selection isEmpty.
+	needToCleanUP 
+		ifTrue: [ 
+			self widget disconnect: 'changed' during: [ 
+					self doTakeKeyboardFocus.
+					self widget selection unselectAll]]
+		ifFalse: [ self doTakeKeyboardFocus ]
+
 
 ]
 

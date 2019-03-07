@@ -37,7 +37,10 @@ GtkListAdapter >> addModelTo: gtkList [
 		self model doActivateAtIndex: path toArray first ].
 	
 	widget := gtkList.
-	self connectSelectionChanged.
+
+	gtkList
+		connectSelectionChanged: [ self presenter selection
+				selectIndexes: gtkList allSelected flattened ].
 	
 	self refreshWidgetHeaderTitle
 ]

@@ -52,11 +52,15 @@ GtkTableAdapter >> addModelTo: gtkList [
 	self model doActivateAtIndex: path toArray first ].
 	
 	widget := gtkList.
-	self connectSelectionChanged.
 	
 	self presenter whenColumnsChangedDo: [ self refreshWidgetHeaderTitle. self refreshList ].
 	
-	self refreshWidgetHeaderTitle
+	self refreshWidgetHeaderTitle.
+	
+	gtkList
+		connectSelectionChanged: [ self presenter selection
+				selectIndexes: gtkList allSelected flattened ].
+
 ]
 
 { #category : #testing }

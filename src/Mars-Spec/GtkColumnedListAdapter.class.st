@@ -24,6 +24,8 @@ GtkColumnedListAdapter >> addColumn: aTableColumn to: aGtkTreeView [
 { #category : #building }
 GtkColumnedListAdapter >> addModelTo: gtkList [
 		
+	super addModelTo: gtkList.
+
 	gtkList
 		headersVisible: self model isShowingColumnHeaders;
 		beSingleSelectionMode.

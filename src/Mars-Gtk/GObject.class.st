@@ -120,7 +120,7 @@ GObject >> disconnectAll: aCollection during: aBlock [
 	matching do: [ :each | self disconnectCallback: each ].
 	aBlock ensure: [ 
 		matching do: [ :each |
-			each connectSignal: each ] ]
+			self connectSignal: each ] ]
 ]
 
 { #category : #'private signaling' }
