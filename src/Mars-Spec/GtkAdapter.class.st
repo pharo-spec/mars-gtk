@@ -42,12 +42,13 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 
 { #category : #building }
 GtkAdapter >> buildWidget [ 
-	| gtkWidget |
-	
-	gtkWidget := self newWidget.
-	self addSettingsTo: gtkWidget.
-	self addModelTo: gtkWidget.
-	^ self wrapWidget: gtkWidget
+
+	| aGtkWidget|
+
+	aGtkWidget := self newWidget.
+	self addSettingsTo: aGtkWidget.
+	self addModelTo: aGtkWidget.
+	^ self wrapWidget: aGtkWidget
 ]
 
 { #category : #protocol }
@@ -63,7 +64,7 @@ GtkAdapter >> doTakeKeyboardFocus [
 { #category : #accessing }
 GtkAdapter >> enabled [
 
-	^ widget sensitive
+	^ self widget sensitive
 ]
 
 { #category : #accessing }
@@ -80,7 +81,7 @@ GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 
 { #category : #accessing }
 GtkAdapter >> helpText [
-	^ widget tooltipText
+	^ self widget tooltipText
 ]
 
 { #category : #protocol }

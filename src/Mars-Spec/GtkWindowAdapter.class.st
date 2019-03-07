@@ -29,6 +29,8 @@ GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
 
+	self addModelTo: gtkWindow.
+
 	"window properties"
 	gtkWindow resize: self model initialExtent.
 

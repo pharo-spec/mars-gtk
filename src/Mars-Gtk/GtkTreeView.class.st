@@ -75,6 +75,12 @@ GtkTreeView >> basicAppendColumn: column [
 	self ffiCall: #(gint gtk_tree_view_append_column (self, GtkTreeViewColumn *column))
 ]
 
+{ #category : #private }
+GtkTreeView >> basicRemoveColumn: column [ 
+	
+	self ffiCall: #(gint gtk_tree_view_remove_column (self, GtkTreeViewColumn *column))
+]
+
 { #category : #configuring }
 GtkTreeView >> beMultipleSelectionMode [
 	self selection mode: GtkSelectionMode GTK_SELECTION_MULTIPLE
@@ -245,6 +251,19 @@ GtkTreeView >> newColumn [
 	column := GtkTreeViewColumn new.
 	self appendColumn: column.
 	^ column
+]
+
+{ #category : #columns }
+GtkTreeView >> removeAllColumns [
+	
+	columns copy do: [ :aColumn | self removeColumn: aColumn ]
+]
+
+{ #category : #'api-columns' }
+GtkTreeView >> removeColumn: aGtkTreeViewColumn [ 
+	
+	columns remove: aGtkTreeViewColumn.
+	self basicRemoveColumn: aGtkTreeViewColumn
 ]
 
 { #category : #selection }
