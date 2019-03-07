@@ -115,7 +115,10 @@ GObject >> disconnectAll: aCollection during: aBlock [
 
 	callbacks isEmptyOrNil ifTrue: [ ^ self ].
 	matching := callbacks select: [ :each | aCollection includes: each signal ].
-	matching do: [ :each | self disconnectCallback: each ].
+	matching do: [ :each |
+		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 
+		needed, or we model better the verification of error" 
+		self assert: (self disconnectCallback: each) = 1 ].
 	aBlock ensure: [ 
 		matching do: [ :each |
 			self connectSignal: each ] ]
@@ -170,7 +173,9 @@ GObject >> disconnectCallback: aCallback [
 	callbacks remove: aCallback.
 	GtkDisconnectCallbackSignal 
 		emitCallback: aCallback 
-		number: numberDiconnected
+		number: numberDiconnected.
+		
+	^ numberDiconnected
 ]
 
 { #category : #'private signaling' }
