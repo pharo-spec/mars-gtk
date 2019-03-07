@@ -4,14 +4,6 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #building }
-GtkAbstractListAdapter >> connectSelectionChanged [
-
-	widget
-		connectSelectionChanged: [ self presenter selection
-				selectIndexes: widget allSelected flattened ]
-]
-
 { #category : #private }
 GtkAbstractListAdapter >> newTreeStore [
 
@@ -47,21 +39,17 @@ GtkAbstractListAdapter >> selectIndex: anInteger [
 
 { #category : #building }
 GtkAbstractListAdapter >> takeKeyboardFocus [
-
 	| needToCleanUP |
 	
 	needToCleanUP := self presenter selection isEmpty.
-
 	needToCleanUP ifTrue: [ self widget selection disconnect: 'changed' ].
 
 	self doTakeKeyboardFocus.
 
 	self flag: #hack.
 	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
-	
 	needToCleanUP ifTrue: [ 
-		self widget selection unselectAll.
-		self connectSelectionChanged.	 ]
+		self widget selection unselectAll ]
 
 ]
 

@@ -58,14 +58,11 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 
 	self buildStore: gtkWidget.	
-	
 	gtkWidget headersVisible: self model isShowingColumnHeaders.
-		
 	self model selection isEmpty 
 		ifFalse: [ self updateSelectionOf: gtkWidget ].
 	
-	widget := gtkWidget.
-	self connectSelectionChanged.
+	gtkWidget connectSelectionChanged: [ self updatePresenterSelection ].
 	
 	self model doubleClickAction ifNotNil: [ :action |
 		gtkWidget connectDoubleClicked: [ 
@@ -76,10 +73,17 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		iter store: self store.
 		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ].
 	
-	self model whenSelectionChangedDo: [ self updateSelectionOf: gtkWidget ].
-	self model whenRootsChangedDo: [ self disableSelectionEventsDuring: [self buildStore: gtkWidget] ].
-	self model whenShowColumnHeadersChangedDo: [ gtkWidget headersVisible: self model isShowingColumnHeaders ].
-	self model whenColumnsChangedDo: [ self disableSelectionEventsDuring: [self buildStore: gtkWidget] ].
+	self model whenSelectionChangedDo: [ 
+		self updateSelectionOf: gtkWidget ].
+	self model whenRootsChangedDo: [ 
+		self 
+			disableSelectionEventsOf: gtkWidget 
+			during: [ self buildStore: gtkWidget ] ].
+	self model whenShowColumnHeadersChangedDo: [ 
+		gtkWidget headersVisible: self model isShowingColumnHeaders ].
+	self model whenColumnsChangedDo: [ 
+		self disableSelectionEventsOf: gtkWidget 
+		during: [ self buildStore: gtkWidget ] ].
 ]
 
 { #category : #private }
@@ -96,7 +100,6 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 
 { #category : #building }
 GtkTreeTableAdapter >> buildStore: gtkWidget [	
-	
 	| store columnBuilder |
 	
 	store := self newStoreFrom: self items.
@@ -116,19 +119,12 @@ GtkTreeTableAdapter >> columnCount [
 	^ widget model numberOfColumns
 ]
 
-{ #category : #building }
-GtkTreeTableAdapter >> connectSelectionChanged [
-
-"	widget connectSelectionChanged: [ self rowSelected: widget selected ].
-"
-]
-
 { #category : #events }
-GtkTreeTableAdapter >> disableSelectionEventsDuring: aBlockClosure [ 
+GtkTreeTableAdapter >> disableSelectionEventsOf: aWidget during: aBlock [ 
 
-	self widget selection disconnect: 'changed'.	
-	aBlockClosure value.
-	self connectSelectionChanged.
+	aWidget selection 
+		disconnect: 'changed' 
+		during: aBlock
 ]
 
 { #category : #private }
@@ -279,6 +275,13 @@ GtkTreeTableAdapter >> takeKeyboardFocus [
 		self widget selection unselectAll.
 		self connectSelectionChanged.	 ]
 
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> updatePresenterSelection [
+	
+	self widgetDo: [ :w | 
+		self rowSelected: w selected ]
 ]
 
 { #category : #building }

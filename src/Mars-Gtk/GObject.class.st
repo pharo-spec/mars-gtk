@@ -61,16 +61,25 @@ GObject >> connect: aString do: aBlock [
 GObject >> connect: aString signature: signature do: aBlock [
 	"BEWARE when installing callbacks to gtk... you HAVE TO catch and fork any error happening, 
 	 otherwise you will crash your image (event processing happens in VM event loop, so is fragile)"
-	| callback id |
 
-	callback := GSignalCallback signal: aString signature: signature block: aBlock.
+	self connectSignal: (GSignalCallback 
+		signal: aString 
+		signature: signature 
+		block: aBlock)
+
+]
+
+{ #category : #'private signaling' }
+GObject >> connectSignal: callback [ 
+	| id |
+	
 	self registerCallback: callback.
 	id := self 
-		signal: aString 
+		signal: callback signal 
 		connect: callback 
 		data: callback thunk.
 	callback registerId: id.
-	GtkConnectSignalSignal emitWidget: self signal: aString
+	GtkConnectSignalSignal emitWidget: self signal: callback signal
 ]
 
 { #category : #signaling }
@@ -85,11 +94,33 @@ GObject >> disconnect: aString [
 ]
 
 { #category : #signaling }
+GObject >> disconnect: aString during: aBlock [
+
+	self 
+		disconnectAll: { aString } 
+		during: aBlock
+]
+
+{ #category : #signaling }
 GObject >> disconnectAll [
 
 	callbacks isEmptyOrNil ifTrue: [ ^ self ].
 	callbacks copy 
 		do: [ :each | self disconnectCallback: each ]
+]
+
+{ #category : #signaling }
+GObject >> disconnectAll: aCollection during: aBlock [
+	| matching |
+
+	callbacks isEmptyOrNil ifTrue: [ ^ self ].
+	"Do not use #select:thenDo: because I want explicitly the new collection 
+	 (because disconnect will remove the callback from the list)"
+	matching := callbacks select: [ :each | aCollection includes: each signal ].
+	matching do: [ :each | self disconnectCallback: each ].
+	aBlock ensure: [ 
+		matching do: [ :each |
+			each connectSignal: each ] ]
 ]
 
 { #category : #'private signaling' }
