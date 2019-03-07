@@ -12,30 +12,31 @@ GtkMenuItemAdapter class >> defaultSpacing [
 
 { #category : #building }
 GtkMenuItemAdapter >> addModelTo: gtkWidget [
-
 	"label (and icon if there)"
-	self model icon 
+
+	self model icon
 		ifNotNil: [ gtkWidget add: (self menuLabelWithIconAndAccelFor: gtkWidget) ]
-		ifNil: [ 	gtkWidget label: self model name ].
-	
+		ifNil: [ gtkWidget label: self model name ].
+
 	"accel"
-	self model shortcut ifNotNil: [ :shortcut | 
-		self flag: #HACK. "this is to ensure is not a key combination (gtk does not allows them)"
-		shortcut currentCharacter asString ifNotEmpty: [ 
-			gtkWidget 
-				addAccelerator: 'activate' 
-				group: self shortcutGroup 
-				shortcut: shortcut ] ].
-	
-	gtkWidget sensitive: self model enabled.
-	
-	"action"		
-	self model action ifNotNil: [ :actionBlock |
-		gtkWidget connectActivate: actionBlock ].
-	
+	self model shortcut
+		ifNotNil: [ :shortcut | 
+			self flag: #HACK.	"this is to ensure is not a key combination (gtk does not allows them)"
+			shortcut currentCharacter asString
+				ifNotEmpty: [
+					gtkWidget
+						addAccelerator: 'activate'
+						group: self shortcutGroup
+						shortcut: shortcut ] ].
+	gtkWidget sensitive: self model isEnabled.
+
+	"action"
+	self model action
+		ifNotNil: [ :actionBlock | gtkWidget connectActivate: actionBlock ].
+
 	"submenu"
-	self model subMenu ifNotNil: [ :menuPresenter |
-		gtkWidget submenu: menuPresenter buildWithSpec ]
+	self model subMenu
+		ifNotNil: [ :menuPresenter | gtkWidget submenu: menuPresenter buildWithSpec ]
 ]
 
 { #category : #building }
