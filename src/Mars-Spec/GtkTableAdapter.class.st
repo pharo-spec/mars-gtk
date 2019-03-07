@@ -100,15 +100,6 @@ GtkTableAdapter >> newTreeStore [
 ]
 
 { #category : #events }
-GtkTableAdapter >> refreshList [
-	
-	self widgetDo: [ :w |
-		self 
-			disconnectSelectionEventsOf: w
-			 during: [ w model: self newTreeStore ] ]
-]
-
-{ #category : #events }
 GtkTableAdapter >> refreshWidgetHeaderTitle [
 	
 	"By now I only accept to add columns, as the data should be all generated. It is not so easy"

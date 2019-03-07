@@ -12,6 +12,15 @@ GtkAbstractListAdapter >> newTreeStore [
 	self subclassResponsibility
 ]
 
+{ #category : #events }
+GtkAbstractListAdapter >> refreshList [
+	
+	self widgetDo: [ :w |
+		self 
+			disconnectSelectionEventsOf: w
+			during: [ w model: self newTreeStore ] ]
+]
+
 { #category : #accessing }
 GtkAbstractListAdapter >> refreshWidgetSelection [
 	| rowIndexes selection |

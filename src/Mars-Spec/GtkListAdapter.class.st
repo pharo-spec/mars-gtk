@@ -16,8 +16,8 @@ GtkListAdapter >> addModelTo: gtkList [
 	super addModelTo: gtkList.
 
 	self model selection isMultipleSelection 
-		ifTrue: [gtkList beMultipleSelectionMode] 
-		ifFalse: [gtkList beSingleSelectionMode].
+		ifTrue: [ gtkList beMultipleSelectionMode ]
+		ifFalse: [ gtkList beSingleSelectionMode ].
 
 	gtkList
 		headersVisible: false;
@@ -27,20 +27,21 @@ GtkListAdapter >> addModelTo: gtkList [
 	gtkList selection unselectAll.
 
 	self presenter selection isEmpty 
-		ifFalse: [ self presenter selection selectedIndexes 
+		ifFalse: [ 
+			self presenter selection selectedIndexes 
 				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]  ].
 	
-	self presenter selection whenChangedDo: [ self presenter selection selectedIndexes 
-				do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
+	self presenter selection whenChangedDo: [ 
+		self presenter selection selectedIndexes 
+			do: [ :anIndex | gtkList selection selectPath: { anIndex } ] ].
 	
 	gtkList connectRowActivated: [ :path | 
 		self model doActivateAtIndex: path toArray first ].
 	
 	widget := gtkList.
 
-	gtkList
-		connectSelectionChanged: [ self presenter selection
-				selectIndexes: gtkList allSelected flattened ].
+	gtkList connectSelectionChanged: [ 
+		self presenter selection selectIndexes: gtkList allSelected flattened ].
 	
 	self refreshWidgetHeaderTitle
 ]
@@ -61,12 +62,6 @@ GtkListAdapter >> modelItemsAsDisplay [
 GtkListAdapter >> newTreeStore [
 
 	^ GtkTreeStore newStrings: self modelItemsAsDisplay
-]
-
-{ #category : #events }
-GtkListAdapter >> refreshList [
-	
-	widget model: self newTreeStore 
 ]
 
 { #category : #events }

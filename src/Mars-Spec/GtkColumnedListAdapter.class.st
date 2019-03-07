@@ -63,8 +63,8 @@ GtkColumnedListAdapter >> newTreeStore [
 				aValue := (column readObject: anItem) asString.
 				row at: index - 1 putString: aValue ].
 			
-		self model columns do: [ :aColumn | aColumn acceptColumnVisitor: valueTransformer ].
-	].
+		self model columns do: [ :aColumn | 
+			aColumn acceptColumnVisitor: valueTransformer ] ].
 
 	^ store
 ]
