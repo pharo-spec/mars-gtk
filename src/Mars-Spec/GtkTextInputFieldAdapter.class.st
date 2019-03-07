@@ -26,14 +26,11 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 		gtkEntry bePassword.
 		gtkEntry visibility: false. ].
 	
-	self model whenVisibilityChangedDo: [ :aValue | aValue 
-		ifTrue: [ gtkEntry beForAnyCharacter ]
-		ifFalse: [ gtkEntry bePassword ].
-		gtkEntry visibility: aValue ].
-	
-
-	gtkEntry connectTextChanged: [ :text | 
-		self model text: text ]
+	self model whenVisibilityChangedDo: [ :aValue | 
+		aValue 
+			ifTrue: [ gtkEntry beForAnyCharacter ]
+			ifFalse: [ gtkEntry bePassword ].
+		gtkEntry visibility: aValue ]
 ]
 
 { #category : #testing }
