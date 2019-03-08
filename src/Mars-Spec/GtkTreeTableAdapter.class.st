@@ -59,7 +59,7 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 
-	self buildStore: gtkWidget generateColumns: true.	
+	self recreateStore: gtkWidget generateColumns: true.	
 	gtkWidget headersVisible: self model isShowingColumnHeaders.
 	self model selection isEmpty 
 		ifFalse: [ self updateSelectionOf: gtkWidget ].
@@ -80,12 +80,12 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	self model whenRootsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self buildStore: gtkWidget generateColumns: false] ].
+			during: [ self recreateStore: gtkWidget generateColumns: false] ].
 	self model whenShowColumnHeadersChangedDo: [ 
 		gtkWidget headersVisible: self model isShowingColumnHeaders ].
 	self model whenColumnsChangedDo: [ 
 		self disconnectSelectionEventsOf: gtkWidget 
-		during: [ self buildStore: gtkWidget generateColumns: true] ].
+		during: [ self recreateStore: gtkWidget generateColumns: true] ].
 ]
 
 { #category : #private }
@@ -98,26 +98,6 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 	self addChildrenFor: anObject into: gtkRow.
 			
 	^ gtkRow
-]
-
-{ #category : #building }
-GtkTreeTableAdapter >> buildStore: gtkWidget	generateColumns: doesGenerateColumns [
-	| store columnBuilder |
-	
-	store := self newStoreFrom: self items.
-	gtkWidget model: store.
-
-	doesGenerateColumns ifFalse: [ ^ self ].
-	
-	columnBuilder := self newColumnBuilderOn: self model.
-	columnBuilder store: store.
-	columnBuilder view: gtkWidget. 
-
-	gtkWidget removeAllColumns.
-
-	self model columns do: [ :each | 
-		columnBuilder visit: each ].
-
 ]
 
 { #category : #accessing }
@@ -205,6 +185,26 @@ GtkTreeTableAdapter >> newStoreFrom: aCollection [
 		with: aCollection.
 
 	^ store
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> recreateStore: gtkWidget	generateColumns: doesGenerateColumns [
+	| store columnBuilder |
+	
+	store := self newStoreFrom: self items.
+	gtkWidget model: store.
+
+	doesGenerateColumns ifFalse: [ ^ self ].
+	
+	columnBuilder := self newColumnBuilderOn: self model.
+	columnBuilder store: store.
+	columnBuilder view: gtkWidget. 
+
+	gtkWidget removeAllColumns.
+
+	self model columns do: [ :each | 
+		columnBuilder visit: each ].
+
 ]
 
 { #category : #updating }

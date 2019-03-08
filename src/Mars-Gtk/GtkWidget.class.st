@@ -139,11 +139,8 @@ GtkWidget >> canDefault: can_default [
 { #category : #signaling }
 GtkWidget >> connectButtonPressEvent: aBlock [
 
-	^ self 
-		connect: 'button-press-event'
-		signature: #(gboolean (void *widget, void* event, void *aData))  
- 		do: [ :widget :event :aData |
-			aBlock value: (GdkEventButton fromHandle: event) ]
+	^ GButtonPressEventCallback do: aBlock	
+
 ]
 
 { #category : #signaling }
@@ -174,15 +171,8 @@ GtkWidget >> connectDestroy: aBlock [
 
 { #category : #signaling }
 GtkWidget >> connectDoubleClicked: aBlock [
-	self flag: #TODO. "According to #irc, the correct way to deal with a double click 
-	 is with a GtkGestureMultipress, but this works and I do not have time to go deeper."
 	
-	self connectButtonPressEvent: [ :event | | stop |
-		stop := false.
-		event isDoubleClick ifTrue: [ 
-			aBlock fork.
-			stop := true ].
-		stop ]
+	(GDoubleClickButtonPressEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
@@ -241,17 +231,11 @@ GtkWidget >> connectUnmap: aBlock [
 ]
 
 { #category : #accessing }
-GtkWidget >> contextMenu: aGtkMenu [
+GtkWidget >> contextMenu: aValuable [
 	"sets all needed to show a context menu. 
 	 this is an extension to Gtk3, but it will make our lifes easier this side :)"
 
-	aGtkMenu autoRelease.
-	self connectButtonPressEvent: [ :event |
-		event isSecondaryButton ifTrue: [ 
-				aGtkMenu
-					showAll;
-					popupAtPointer: event ].
-			false ]
+	(GContextMenuCallback do: aValuable) connectTo: self
 ]
 
 { #category : #accessing }
@@ -542,6 +526,20 @@ GtkWidget >> showAll [
 
 	^ self 
 		ffiCall: #(void gtk_widget_show_all (self))
+]
+
+{ #category : #private }
+GtkWidget >> showContextMenu: aValuable event: event [
+	"Shows the menu defined in aValuable. 
+	 aValuable can be a block or a GtkMenu (anything that you can send #value and you will
+	 get a new gtkMenu back."
+	| gtkMenu |
+			
+	gtkMenu := aValuable value. 
+	gtkMenu autoRelease.
+	gtkMenu
+		showAll;
+		popupAtPointer: event
 ]
 
 { #category : #geometry }

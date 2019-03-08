@@ -31,7 +31,7 @@ GtkConnectSignalSignal class >> newWidget: aWidget signal: aName [
 GtkConnectSignalSignal >> printOneLineContentsOn: stream [
 	
 	super printOneLineContentsOn: stream.
-	stream << ' ' << self signal
+	stream << ' ' << self signalName
 ]
 
 { #category : #accessing }

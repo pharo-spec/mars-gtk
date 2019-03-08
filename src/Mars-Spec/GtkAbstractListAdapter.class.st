@@ -6,6 +6,12 @@ Class {
 	#category : #'Mars-Spec-Adapter-List'
 }
 
+{ #category : #building }
+GtkAbstractListAdapter >> addModelTo: gtkList [
+
+	super addModelTo: gtkList.
+]
+
 { #category : #private }
 GtkAbstractListAdapter >> newTreeStore [
 

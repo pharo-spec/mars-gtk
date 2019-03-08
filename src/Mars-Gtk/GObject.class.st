@@ -51,6 +51,7 @@ GObject >> connect: aString do: aBlock [
 	 #connect:signature:do:
 	 BEWARE when installing callbacks to gtk... you HAVE TO catch and fork any error happening, 
 	 otherwise you will crash your image (event processing happens in VM event loop, so is fragile)"
+
 	^ self 
 		connect: aString 
 		signature: #(void (void *widget, void *aData))  
@@ -75,11 +76,12 @@ GObject >> connectSignal: callback [
 	
 	self registerCallback: callback.
 	id := self 
-		signal: callback signal 
+		signal: callback signalName
 		connect: callback 
 		data: callback thunk.
 	callback registerId: id.
-	GtkConnectSignalSignal emitWidget: self signal: callback signal
+	GtkConnectSignalSignal emitWidget: self signal: callback signal.
+	^ callback
 ]
 
 { #category : #signaling }
@@ -89,7 +91,7 @@ GObject >> disconnect: aString [
 	"Do not use #select:thenDo: because I want explicitly the new collection 
 	 (because disconnect will remove the callback from the list)"
 	(callbacks
-		select: [ :each | each signal = aString ])
+		select: [ :each | each signalName = aString ])
 		do: [ :each | self disconnectCallback: each ]
 ]
 
@@ -114,7 +116,7 @@ GObject >> disconnectAll: aCollection during: aBlock [
 	| matching |
 
 	callbacks isEmptyOrNil ifTrue: [ ^ self ].
-	matching := callbacks select: [ :each | aCollection includes: each signal ].
+	matching := callbacks select: [ :each | aCollection includes: each signalName ].
 	matching do: [ :each |
 		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 
 		needed, or we model better the verification of error" 

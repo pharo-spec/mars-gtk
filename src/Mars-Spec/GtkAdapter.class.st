@@ -27,9 +27,8 @@ GtkAdapter class >> isAbstract [
 { #category : #building }
 GtkAdapter >> addModelTo: gtkWidget [
 
-	self model help ifNotNil: [ gtkWidget tooltipText: self model help ].
 	gtkWidget sensitive: self model isEnabled.
-	
+	self model help ifNotNil: [ gtkWidget tooltipText: self model help ].
 	self model whenEnabledChanged: [ gtkWidget sensitive: self model isEnabled ].
 ]
 
@@ -42,13 +41,12 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 
 { #category : #building }
 GtkAdapter >> buildWidget [ 
-
-	| aGtkWidget|
-
-	aGtkWidget := self newWidget.
-	self addSettingsTo: aGtkWidget.
-	self addModelTo: aGtkWidget.
-	^ self wrapWidget: aGtkWidget
+	| gtkWidget |
+	
+	gtkWidget := self newWidget.
+	self addSettingsTo: gtkWidget.
+	self addModelTo: gtkWidget.
+	^ self wrapWidget: gtkWidget
 ]
 
 { #category : #protocol }

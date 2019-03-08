@@ -53,6 +53,6 @@ GtkDisconnectCallbackSignal >> number: anObject [
 GtkDisconnectCallbackSignal >> printOneLineContentsOn: stream [
 	
 	stream
-		<< self callback signal  
+		<< self callback signalName
 		<< ' (' << self number asString << ')'
 ]

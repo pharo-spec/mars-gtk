@@ -2,8 +2,8 @@ Class {
 	#name : #GSignalCallback,
 	#superclass : #GCallback,
 	#instVars : [
-		'signal',
-		'registerId'
+		'registerId',
+		'signalName'
 	],
 	#pools : [
 		'GtkTypes'
@@ -17,15 +17,21 @@ GSignalCallback class >> signal: aString signature: aSignature block: aBlock [
 	^ (self 
 		signature: aSignature 
 		block: aBlock)
-		signal: aString;
+		signalName: aString;
 		yourself
+]
+
+{ #category : #connecting }
+GSignalCallback >> connectTo: aWidget [
+
+	aWidget connectSignal: self
 ]
 
 { #category : #printing }
 GSignalCallback >> printOn: stream [ 
 
 	super printOn: stream.
-	stream << '(' << self signal << ')'
+	stream << '(' << self signalName << ')'
 ]
 
 { #category : #accessing }
@@ -39,20 +45,22 @@ GSignalCallback >> registerId: anObject [
 ]
 
 { #category : #accessing }
-GSignalCallback >> signal [
-	^ signal
+GSignalCallback >> signalName [
+
+	^ signalName
 ]
 
 { #category : #accessing }
-GSignalCallback >> signal: anObject [
-	signal := anObject
+GSignalCallback >> signalName: aString [
+
+	signalName := aString
 ]
 
 { #category : #evaluating }
 GSignalCallback >> valueWithArguments: args [
 	"same as my parent, but with logging"
 
-	GtkWidgetSignaledSignal emitSignal: self signal.
+	GtkWidgetSignaledSignal emitSignal: self signalName.
 	^ [ block valueWithArguments: args ]
 		on: Error
 		fork: [ :e | 
