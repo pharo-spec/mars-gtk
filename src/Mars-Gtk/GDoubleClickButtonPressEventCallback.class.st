@@ -13,7 +13,7 @@ GDoubleClickButtonPressEventCallback >> do: aBlock [
 	 is with a GtkGestureMultipress, but this works and I do not have time to go deeper."
 
 	super do: [ :event | 
-		event isDoubleClick ifTrue: [
-			aBlock fork.
-			self stopPropagation ] ]
+		event isDoubleClick 
+			ifTrue: [ aBlock fork. true ]
+			ifFalse: [ false ] ]
 ]

@@ -138,6 +138,8 @@ GtkWidget >> canDefault: can_default [
 
 { #category : #signaling }
 GtkWidget >> connectButtonPressEvent: aBlock [
+	"connects to button-press-event signal 
+	 aBlock needs to answer a boolean to stop or not event propagation"
 
 	^ GButtonPressEventCallback do: aBlock	
 
@@ -208,6 +210,15 @@ GtkWidget >> connectKeyPressEvent: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectRightClicked: aBlock [
+	"connect to button-press-event signal but evaluates if this is 'secondary button', 
+	 which is right click.
+	 aBlock needs to answer a boolean to stop or not event propagation"
+	
+	(GSecondaryButtonPressEventCallback do: aBlock) connectTo: self
+]
+
+{ #category : #signaling }
 GtkWidget >> connectShow: aBlock [
 	self connect: 'show' do: aBlock
 ]
@@ -231,11 +242,16 @@ GtkWidget >> connectUnmap: aBlock [
 ]
 
 { #category : #accessing }
-GtkWidget >> contextMenu: aValuable [
+GtkWidget >> contextMenu: aGtkMenu [
 	"sets all needed to show a context menu. 
-	 this is an extension to Gtk3, but it will make our lifes easier this side :)"
+	 this is an extension to Gtk3, but it will make our lifes easier this side :).
+	 It receives a valuable (usually a block)"
 
-	(GContextMenuCallback do: aValuable) connectTo: self
+	self connectRightClicked: [ :event |
+		aGtkMenu 
+			showAll;
+			popupAtPointer: event.
+		false ]
 ]
 
 { #category : #accessing }
@@ -526,20 +542,6 @@ GtkWidget >> showAll [
 
 	^ self 
 		ffiCall: #(void gtk_widget_show_all (self))
-]
-
-{ #category : #private }
-GtkWidget >> showContextMenu: aValuable event: event [
-	"Shows the menu defined in aValuable. 
-	 aValuable can be a block or a GtkMenu (anything that you can send #value and you will
-	 get a new gtkMenu back."
-	| gtkMenu |
-			
-	gtkMenu := aValuable value. 
-	gtkMenu autoRelease.
-	gtkMenu
-		showAll;
-		popupAtPointer: event
 ]
 
 { #category : #geometry }

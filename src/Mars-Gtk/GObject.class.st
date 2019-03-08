@@ -44,6 +44,12 @@ GObject class >> resolveType: aType [
 		resolveType: aType
 ]
 
+{ #category : #private }
+GObject >> callbacks [
+
+	^ callbacks
+]
+
 { #category : #signaling }
 GObject >> connect: aString do: aBlock [
 	"this is the basic signaling (for IO events), who share signature along them... of course 
@@ -80,7 +86,7 @@ GObject >> connectSignal: callback [
 		connect: callback 
 		data: callback thunk.
 	callback registerId: id.
-	GtkConnectSignalSignal emitWidget: self signal: callback signal.
+	GtkConnectSignalSignal emitWidget: self signal: callback signalName.
 	^ callback
 ]
 
@@ -372,5 +378,5 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 { #category : #'private referencing' }
 GObject >> weakRef: notify [ 
 
-	^ self ffiCall: #(void g_object_weak_ref (self, #GCallback notify, 0)) module: GObjectLibrary
+	^ self ffiCall: #(void g_object_weak_ref (self, GCallback notify, 0)) module: GObjectLibrary
 ]

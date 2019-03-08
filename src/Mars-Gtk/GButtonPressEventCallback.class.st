@@ -1,9 +1,6 @@
 Class {
 	#name : #GButtonPressEventCallback,
 	#superclass : #GManagedSignalCallback,
-	#instVars : [
-		'stopPropagation'
-	],
 	#pools : [
 		'GtkTypes'
 	],
@@ -16,21 +13,7 @@ GButtonPressEventCallback >> do: aBlock [
 	self
 		signature: self signature
 		block: [ :widget :event :aData | 
-			aBlock cull: (GdkEventButton fromHandle: event).
-			self shouldStopPropagation ]
-]
-
-{ #category : #accessing }
-GButtonPressEventCallback >> initialize [ 
-
-	super initialize.
-	stopPropagation := false
-]
-
-{ #category : #testing }
-GButtonPressEventCallback >> shouldStopPropagation [
-
-	^ stopPropagation
+			aBlock cull: (GdkEventButton fromHandle: event) ]
 ]
 
 { #category : #accessing }
@@ -43,10 +26,4 @@ GButtonPressEventCallback >> signalName [
 GButtonPressEventCallback >> signature [
 
 	^ #(gboolean (void *widget, void* event, void *aData))
-]
-
-{ #category : #accessing }
-GButtonPressEventCallback >> stopPropagation [
-
-	stopPropagation := true
 ]

@@ -12,5 +12,6 @@ GSecondaryButtonPressEventCallback >> do: aBlock [
 
 	super do: [ :event |
 		event isSecondaryButton
-			ifTrue:[ aBlock cull: event ] ]
+			ifTrue:[ aBlock cull: event ]
+			ifFalse: [ false ] ]
 ]
