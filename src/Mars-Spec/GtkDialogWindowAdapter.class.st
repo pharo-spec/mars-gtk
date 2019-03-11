@@ -21,10 +21,10 @@ GtkDialogWindowAdapter >> add: gtkBox toWindow: gtkDialog [
 ]
 
 { #category : #accessing }
-GtkDialogWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
+GtkDialogWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 
 	self model isCentered ifTrue: [ gtkWindow center ].
-	super addModelIn: gtkWindow withSpecLayout: aSpec	
+	super addPresenterIn: gtkWindow withSpecLayout: aSpec	
 ]
 
 { #category : #accessing }
