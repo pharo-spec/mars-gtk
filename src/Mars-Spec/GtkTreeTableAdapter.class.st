@@ -75,17 +75,21 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		iter store: self store.
 		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ].
 	
-	self model whenSelectionChangedDo: [ 
-		self updateSelectionOf: gtkWidget ].
+	self model whenShowColumnHeadersChangedDo: [ 
+		gtkWidget headersVisible: self model isShowingColumnHeaders ].
+
+	self model whenSelectionChangedDo: [
+		self 
+			disconnectSelectionEventsOf: gtkWidget 
+			during: [ self updateSelectionOf: gtkWidget ] ].
 	self model whenRootsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self recreateStore: gtkWidget generateColumns: false] ].
-	self model whenShowColumnHeadersChangedDo: [ 
-		gtkWidget headersVisible: self model isShowingColumnHeaders ].
+			during: [ self recreateStore: gtkWidget generateColumns: false ] ].
 	self model whenColumnsChangedDo: [ 
-		self disconnectSelectionEventsOf: gtkWidget 
-		during: [ self recreateStore: gtkWidget generateColumns: true] ].
+		self 
+			disconnectSelectionEventsOf: gtkWidget 
+			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
 ]
 
 { #category : #private }
