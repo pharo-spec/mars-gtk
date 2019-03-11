@@ -10,26 +10,6 @@ Class {
 }
 
 { #category : #building }
-GtkAbstractListAdapter >> addMenu: aValuable to: gtkList [
-
-	gtkList connectRightClicked: [ :event | 
-		lastShownMenu := self buildMenu: aValuable value.
-		lastShownMenu connectDestroy: [ lastShownMenu := nil ].
-		lastShownMenu 
-			showAll;
-			popupAtPointer: event.
-		false ]
-]
-
-{ #category : #building }
-GtkAbstractListAdapter >> addModelTo: gtkList [
-
-	super addModelTo: gtkList.
-	self model contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: gtkList ]
-]
-
-{ #category : #building }
 GtkAbstractListAdapter >> buildMenu: aMenuPresenter [
 
 	^ aMenuPresenter 
