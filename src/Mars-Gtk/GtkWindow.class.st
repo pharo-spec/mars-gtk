@@ -134,6 +134,12 @@ GtkWindow >> modal: modal [
 	^ self ffiCall: #(void gtk_window_set_modal (self, gboolean modal))
 ]
 
+{ #category : #geometry }
+GtkWindow >> moveTo: aPoint [
+
+	self moveX: aPoint x y: aPoint y
+]
+
 { #category : #private }
 GtkWindow >> moveX: x y: y [
 
@@ -150,12 +156,6 @@ GtkWindow >> position [
 	self getPositionX: rootX y: rootY. 
 	
 	^ (rootX signedLongAt: 1) @ (rootY signedLongAt: 1)
-]
-
-{ #category : #geometry }
-GtkWindow >> position: aPoint [
-
-	self moveX: aPoint x y: aPoint y
 ]
 
 { #category : #geometry }
