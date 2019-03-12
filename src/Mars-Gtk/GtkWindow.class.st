@@ -112,6 +112,18 @@ GtkWindow >> getSizeWidth: width height: height [
 	^ self ffiCall: #(void gtk_window_get_size (self, gint *width, gint *height))
 ]
 
+{ #category : #geometry }
+GtkWindow >> gravity [
+
+	^ self ffiCall: #(GdkGravity gtk_window_get_gravity (self))
+]
+
+{ #category : #geometry }
+GtkWindow >> gravity: gravity [
+
+	^ self ffiCall: #(void gtk_window_set_gravity (self, GdkGravity gravity))
+]
+
 { #category : #initialization }
 GtkWindow >> initialize [
 
