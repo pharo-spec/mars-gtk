@@ -21,7 +21,7 @@ GtkWindow class >> finalizeResourceData: aHandle [
 
 	(self isValidHandle: aHandle) ifFalse: [ ^ self ].
 	GtkFinalizeSignal emitTarget: self handle: aHandle.
-	self widgetDestroy: aHandle.
+	"self widgetDestroy: aHandle."
 	aHandle beNull
 ]
 

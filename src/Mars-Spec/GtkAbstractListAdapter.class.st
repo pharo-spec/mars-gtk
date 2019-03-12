@@ -3,19 +3,8 @@ Class {
 	#superclass : #GtkAdapter,
 	#traits : 'TGtkDisconnectSelectionEvents',
 	#classTraits : 'TGtkDisconnectSelectionEvents classTrait',
-	#instVars : [
-		'lastShownMenu'
-	],
 	#category : #'Mars-Spec-Adapter-List'
 }
-
-{ #category : #building }
-GtkAbstractListAdapter >> buildMenu: aMenuPresenter [
-
-	^ aMenuPresenter 
-		owner: self model;
-		buildWithSpec
-]
 
 { #category : #private }
 GtkAbstractListAdapter >> newTreeStore [
