@@ -168,7 +168,7 @@ GType class >> ffiLibraryName [
 { #category : #private }
 GType class >> gdkPixbufGetType [
 
-	^ self ffiCall: #(GType gdk_pixbuf_get_type())
+	^ self ffiCall: #(GType gdk_pixbuf_get_type()) module: GdkPixbufLibrary
 ]
 
 { #category : #initialization }

@@ -59,5 +59,5 @@ GtkLibrary >> unix64ModuleName [
 { #category : #'accessing platform' }
 GtkLibrary >> win32ModuleName [
 	
-	^ 'c:/cygwin64/usr/x86_64-w64-mingw32/sys-root/mingw/bin/libgtk-3-0.dll'
+	^ 'libgtk-3-0.dll'
 ]

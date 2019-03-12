@@ -26,7 +26,7 @@ GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 ]
 
 { #category : #accessing }
-GtkWindowAdapter >> addModelIn: gtkWindow withSpecLayout: aSpec [
+GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
 
 	self addModelTo: gtkWindow.

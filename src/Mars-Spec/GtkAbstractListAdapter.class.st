@@ -25,8 +25,8 @@ GtkAbstractListAdapter >> addMenu: aValuable to: gtkList [
 GtkAbstractListAdapter >> addModelTo: gtkList [
 
 	super addModelTo: gtkList.
-	self model contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: gtkList ]
+	"self model contextMenu ifNotNil: [ :menu |
+		self addMenu: menu to: gtkList ]"
 ]
 
 { #category : #building }

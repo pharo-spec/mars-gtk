@@ -58,7 +58,6 @@ GdkDragAction class >> GDK_ACTION_LINK [
 GdkDragAction class >> GDK_ACTION_MOVE [
 	"This method was automatically generated"
 	^ GDK_ACTION_MOVE
-	
 ]
 
 { #category : #'accessing enum' }

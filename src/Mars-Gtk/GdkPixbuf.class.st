@@ -18,7 +18,7 @@ GdkPixbuf class >> getFromSurface: surface x: src_x y: src_y width: width height
 		gint src_x,
 		gint src_y,
 		gint width,
-		gint height))
+		gint height)) module: GdkLibrary
 ]
 
 { #category : #'instance creation' }
@@ -58,7 +58,7 @@ GdkPixbuf >> depth [
 { #category : #comparing }
 GdkPixbuf >> height [ 
 
-	^ self ffiCall: #(int gdk_pixbuf_get_height(self))
+	^ self ffiCall: #(int gdk_pixbuf_get_height(self)) module: GdkPixbufLibrary
 ]
 
 { #category : #comparing }
@@ -69,11 +69,11 @@ GdkPixbuf >> isSimilarTo: aGdkPixbuf [
 { #category : #accessing }
 GdkPixbuf >> numberOfChannels [
 	
-	^ self ffiCall: #(int gdk_pixbuf_get_n_channels(self))
+	^ self ffiCall: #(int gdk_pixbuf_get_n_channels(self)) module: GdkPixbufLibrary
 ]
 
 { #category : #comparing }
 GdkPixbuf >> width [ 
 
-	^ self ffiCall: #(int gdk_pixbuf_get_width(self))
+	^ self ffiCall: #(int gdk_pixbuf_get_width(self)) module: GdkPixbufLibrary
 ]

@@ -44,7 +44,7 @@ GtkDialogWindow class >> newParent: aWindow [
 { #category : #private }
 GtkDialogWindow class >> windowNew: type [ 
 
-	^ self ffiCall: #( GtkDialogWindow *gtk_window_new ( GtkWindowType type ) )
+	^ self ffiCall: #( GtkDialogWindow *gtk_window_new ( uint64 type ) )
 ]
 
 { #category : #adding }

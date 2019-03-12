@@ -33,7 +33,7 @@ GObject class >> finalizeResourceData: handle [
 { #category : #private }
 GObject class >> objectUnref: handle [
 	
-	^ self ffiCall: #(gpointer g_object_unref (void *handle))
+	^ self ffiCall: #(gpointer g_object_unref (void *handle)) module: GObjectLibrary
 ]
 
 { #category : #private }
@@ -123,10 +123,11 @@ GObject >> disconnectAll: aCollection during: aBlock [
 
 	callbacks isEmptyOrNil ifTrue: [ ^ self ].
 	matching := callbacks select: [ :each | aCollection includes: each signalName ].
-	matching do: [ :each |
+	matching do: [ :each | | numberDisconnected |
 		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 
 		needed, or we model better the verification of error" 
-		self assert: (self disconnectCallback: each) = 1 ].
+		numberDisconnected := self disconnectCallback: each.
+		self assert: numberDisconnected = 1 ].
 	aBlock ensure: [ 
 		matching do: [ :each |
 			self connectSignal: each ] ]
@@ -201,7 +202,7 @@ GObject >> disconnectMatchedMask: mask
 		GQuark detail,
 		"GClosure *" void *closure,
 		"FFICallback " void *func,
-      gpointer aData))
+      gpointer aData)) module: GObjectLibrary
 ]
 
 { #category : #'private primitives' }
@@ -265,7 +266,7 @@ GObject >> gObjectGetString: aName [
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toBoolean: aBoolean [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean, 0) )	
+	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean, 0) )	 module: GObjectLibrary
 ]
 
 { #category : #'private primitives' }
@@ -304,8 +305,8 @@ GObject >> initialize [
 		"I retain a reference to ensure it is not destroyed until I actually want to doit."
 		self objectRef.
 		"emit signals to debug"
-		GtkCreateSignal emitWidget: self.
-		GtkDestroySignal installFor: self	]
+		"GtkCreateSignal emitWidget: self.
+		GtkDestroySignal installFor: self"	]
 ]
 
 { #category : #private }
@@ -373,6 +374,18 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 		gpointer 	aData,
 		0,
 		GConnectFlags connectFlags ) ) module: GObjectLibrary
+]
+
+{ #category : #'private signaling' }
+GObject >> signal: signalName connect: callback data: aData flags: connectFlags variable: variable [
+	
+	^ self ffiCall: #( gulong g_signal_connect_data ( 
+		self,
+		const gchar *signalName,
+		GCallback callback,
+		gpointer 	aData,
+		uint64 variable,
+		uint64 connectFlags ) ) module: GObjectLibrary
 ]
 
 { #category : #'private referencing' }

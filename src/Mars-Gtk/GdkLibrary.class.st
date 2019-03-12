@@ -1,11 +1,11 @@
 Class {
-	#name : #GLibLibrary,
+	#name : #GdkLibrary,
 	#superclass : #GtkLibrary,
 	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #'accessing platform' }
-GLibLibrary >> win32ModuleName [
+GdkLibrary >> win32ModuleName [
 
-	^ 'libglib-2.0-0.dll'
+	^ 'libgdk-3-0.dll'
 ]

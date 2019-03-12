@@ -1,11 +1,11 @@
 Class {
-	#name : #GLibLibrary,
+	#name : #GdkPixbufLibrary,
 	#superclass : #GtkLibrary,
 	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #'accessing platform' }
-GLibLibrary >> win32ModuleName [
+GdkPixbufLibrary >> win32ModuleName [
 
-	^ 'libglib-2.0-0.dll'
+	^ 'libgdk_pixbuf-2.0-0.dll'
 ]
