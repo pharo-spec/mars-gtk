@@ -197,7 +197,8 @@ GtkWidget >> connectFocusOutEvent: aBlock [
 
 { #category : #signaling }
 GtkWidget >> connectHide: aBlock [
-	self connect: 'hide' do: aBlock
+
+	(GHideCallback do: [ :widget :widget_data | aBlock value ]) connectTo: self 
 ]
 
 { #category : #signaling }
