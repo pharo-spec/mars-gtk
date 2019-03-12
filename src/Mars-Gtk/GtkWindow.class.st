@@ -27,13 +27,13 @@ GtkWindow class >> finalizeResourceData: aHandle [
 
 { #category : #'instance creation' }
 GtkWindow class >> new [ 
-	^ (self windowNew: GTK_WINDOW_TOPLEVEL value) initialize
+	^ (self windowNew: GTK_WINDOW_TOPLEVEL) initialize
 ]
 
 { #category : #private }
 GtkWindow class >> windowNew: type [ 
 
-	^ self ffiCall: #( GtkWindow *gtk_window_new ( uint64 type ) )
+	^ self ffiCall: #( GtkWindow *gtk_window_new ( GtkWindowType type ) )
 ]
 
 { #category : #accessing }
@@ -110,6 +110,18 @@ GtkWindow >> getPositionX: root_x y: root_y [
 GtkWindow >> getSizeWidth: width height: height [
 
 	^ self ffiCall: #(void gtk_window_get_size (self, gint *width, gint *height))
+]
+
+{ #category : #geometry }
+GtkWindow >> gravity [
+
+	^ self ffiCall: #(GdkGravity gtk_window_get_gravity (self))
+]
+
+{ #category : #geometry }
+GtkWindow >> gravity: gravity [
+
+	^ self ffiCall: #(void gtk_window_set_gravity (self, GdkGravity gravity))
 ]
 
 { #category : #initialization }

@@ -157,7 +157,7 @@ GtkWidget >> connectDeleteEvent: aBlock [
 	
 	self 
 		connect: 'delete-event'
-		signature: #(int (void *widget, void *event, void *user_data))
+		signature: #(gboolean (void *widget, void *event, void *user_data))
 		do: [ :widget :event :user_data | aBlock value ]
 ]
 
@@ -198,7 +198,7 @@ GtkWidget >> connectFocusOutEvent: aBlock [
 { #category : #signaling }
 GtkWidget >> connectHide: aBlock [
 
-	(GHideCallback do: [ :widget :widget_data | aBlock value ]) connectTo: self 
+	(GHideCallback do: [ :widget :user_data | aBlock value ]) connectTo: self 
 ]
 
 { #category : #signaling }

@@ -62,7 +62,7 @@ GtkDialogRunContext >> doBeforeRun [
 	"Connect interesting signals"
 	self dialog 
 		connectUnmap: [ self resume ];
-		connectDeleteEvent: [ [ self resume ] fork. 0 ].
+		connectDeleteEvent: [ [ self resume ] fork. false ].
 	"in original code this is done here, but we are handling window destruction 
 	 in window code (to properly handle resitration), then we will hook there 
 	 instead here. Other solution would be to stack callbacks on same signal 
