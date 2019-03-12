@@ -27,7 +27,8 @@ GtkDrawingArea >> basicDraw: cr [
 	"I need to be sure this process will not be highjacked by another 
 	 so I need to execute it unpreemptively (otherwise it will crash 
 	 the vm)"
-	"[ "self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr)" ] valueUnpreemptively"		
+
+	self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr)
 ]
 
 { #category : #drawing }
@@ -36,13 +37,8 @@ GtkDrawingArea >> drawOnAthensCanvas: aCanvas [
 ]
 
 { #category : #private }
-GtkDrawingArea >> getAllocatedHeight [
-	^ self ffiCall: #(int gtk_widget_get_allocated_height (self))
-]
-
-{ #category : #private }
-GtkDrawingArea >> getAllocatedWidth [
-	^ self ffiCall: #(int gtk_widget_get_allocated_width (self))
+GtkDrawingArea >> extent: aPoint [
+	self setSizeRequestWidth: aPoint x height: aPoint y
 ]
 
 { #category : #initialization }
