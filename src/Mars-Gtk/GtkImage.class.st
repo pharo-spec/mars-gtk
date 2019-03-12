@@ -32,6 +32,11 @@ GtkImage class >> imageNewFromSurface: surface [
 ]
 
 { #category : #private }
+GtkImage class >> new [
+	^ self newEmpty
+]
+
+{ #category : #private }
 GtkImage class >> newEmpty [
 
 	^ self basicNewEmpty initialize

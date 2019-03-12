@@ -112,6 +112,18 @@ GtkWindow >> getSizeWidth: width height: height [
 	^ self ffiCall: #(void gtk_window_get_size (self, gint *width, gint *height))
 ]
 
+{ #category : #geometry }
+GtkWindow >> gravity [
+
+	^ self ffiCall: #(GdkGravity gtk_window_get_gravity (self))
+]
+
+{ #category : #geometry }
+GtkWindow >> gravity: gravity [
+
+	^ self ffiCall: #(void gtk_window_set_gravity (self, GdkGravity gravity))
+]
+
 { #category : #initialization }
 GtkWindow >> initialize [
 
@@ -134,6 +146,12 @@ GtkWindow >> modal: modal [
 	^ self ffiCall: #(void gtk_window_set_modal (self, gboolean modal))
 ]
 
+{ #category : #geometry }
+GtkWindow >> moveTo: aPoint [
+
+	self moveX: aPoint x y: aPoint y
+]
+
 { #category : #private }
 GtkWindow >> moveX: x y: y [
 
@@ -150,12 +168,6 @@ GtkWindow >> position [
 	self getPositionX: rootX y: rootY. 
 	
 	^ (rootX signedLongAt: 1) @ (rootY signedLongAt: 1)
-]
-
-{ #category : #geometry }
-GtkWindow >> position: aPoint [
-
-	self moveX: aPoint x y: aPoint y
 ]
 
 { #category : #geometry }

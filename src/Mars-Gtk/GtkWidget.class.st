@@ -60,6 +60,20 @@ GtkWidget >> addClass: aString [
 	self styleContext addClass: aString
 ]
 
+{ #category : #testing }
+GtkWidget >> allocatedHeight [
+	"Returns the height that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
+
+	^ self ffiCall: #(int gtk_widget_get_allocated_height #(self))
+]
+
+{ #category : #testing }
+GtkWidget >> allocatedWidth [
+	"Returns the width that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
+
+	^ self ffiCall: #(int gtk_widget_get_allocated_width #(self))
+]
+
 { #category : #accessing }
 GtkWidget >> allocation [
 	| allocation |
@@ -157,7 +171,7 @@ GtkWidget >> connectDeleteEvent: aBlock [
 	
 	self 
 		connect: 'delete-event'
-		signature: #(int (void *widget, void *event, void *user_data))
+		signature: #(gboolean (void *widget, void *event, void *user_data))
 		do: [ :widget :event :user_data | aBlock value ]
 ]
 
@@ -198,7 +212,7 @@ GtkWidget >> connectFocusOutEvent: aBlock [
 { #category : #signaling }
 GtkWidget >> connectHide: aBlock [
 
-	(GHideCallback do: [ :widget :widget_data | aBlock value ]) connectTo: self 
+	(GHideCallback do: [ :widget :user_data | aBlock value ]) connectTo: self 
 ]
 
 { #category : #signaling }
