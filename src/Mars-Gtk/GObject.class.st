@@ -214,7 +214,7 @@ GObject >> gFree: aPointer [
 { #category : #'private primitives' }
 GObject >> gObjectGet: aName into: aBuffer [
 
-	self ffiCall: #(void g_object_get (self, const gchar *aName, ByteArray aBuffer) )
+	self ffiCall: #(void g_object_get (self, const gchar *aName, ByteArray aBuffer) ) module: GObjectLibrary
 ]
 
 { #category : #'private primitives' }
@@ -344,7 +344,7 @@ GObject >> objectRefSink [
 { #category : #'private referencing' }
 GObject >> objectUnref [
 
-	self ffiCall: #(gpointer g_object_unref (self))
+	self ffiCall: #(gpointer g_object_unref (self)) module: GObjectLibrary
 ]
 
 { #category : #private }
