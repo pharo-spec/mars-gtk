@@ -27,13 +27,13 @@ GtkWindow class >> finalizeResourceData: aHandle [
 
 { #category : #'instance creation' }
 GtkWindow class >> new [ 
-	^ (self windowNew: GTK_WINDOW_TOPLEVEL value) initialize
+	^ (self windowNew: GTK_WINDOW_TOPLEVEL) initialize
 ]
 
 { #category : #private }
 GtkWindow class >> windowNew: type [ 
 
-	^ self ffiCall: #( GtkWindow *gtk_window_new ( uint64 type ) )
+	^ self ffiCall: #( GtkWindow *gtk_window_new ( GtkWindowType type ) )
 ]
 
 { #category : #accessing }
