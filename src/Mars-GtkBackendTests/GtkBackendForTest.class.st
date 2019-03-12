@@ -85,6 +85,12 @@ GtkBackendForTest >> doubleClickFirstRowAndColumn: aGtkTreeView [
 	self clickFirstRowAndColumn: aGtkTreeView
 ]
 
+{ #category : #testing }
+GtkBackendForTest >> isGtkBackend [
+
+	^ true
+]
+
 { #category : #running }
 GtkBackendForTest >> openInstanceOf: aTest [ 
 		

@@ -18,12 +18,12 @@ GtkBaseStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 GtkBaseStore class >> newColumnTypes: columnTypes [
 	| columnTypesExternalArray longSize |
 	
-	longSize := FFIArchitecture forCurrentArchitecture longTypeSize.
+	longSize := FFIArchitecture forCurrentArchitecture sizeTTypeSize.
 	columnTypesExternalArray := ByteArray new: columnTypes size * longSize.
 	
 	columnTypes withIndexDo: [ :value :index | 
 		columnTypesExternalArray 
-			platformUnsignedLongAt: 1 + ((index - 1) * longSize) 
+			platformSizeTAt: 1 + ((index - 1) * longSize) 
 			put: value ].
 
 	columnTypesExternalArray pinInMemory.
