@@ -21,7 +21,7 @@ GtkWindow class >> finalizeResourceData: aHandle [
 
 	(self isValidHandle: aHandle) ifFalse: [ ^ self ].
 	GtkFinalizeSignal emitTarget: self handle: aHandle.
-	self widgetDestroy: aHandle.
+	"self widgetDestroy: aHandle."
 	aHandle beNull
 ]
 
@@ -67,8 +67,16 @@ GtkWindow >> beNotModal [
 	self modal: false
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
+GtkWindow >> bounds [
+
+	^ self position extent: self size
+]
+
+{ #category : #geometry }
 GtkWindow >> center [
+	"Sets position as 'center' to be applied *before* window is opened."
+	
 	self setPosition: GTK_WIN_POS_CENTER
 ]
 
@@ -81,13 +89,27 @@ GtkWindow >> connectActivateFocus: aBlock [
 { #category : #geometry }
 GtkWindow >> defaultSize: aPoint [
 
-	self defaultSizeWidth: aPoint x height: aPoint y
+	self 
+		defaultSizeWidth: aPoint x
+		height: aPoint y
 ]
 
 { #category : #private }
 GtkWindow >> defaultSizeWidth: width height: height [
 
 	^ self ffiCall: #(void gtk_window_set_default_size (self, gint width, gint height))
+]
+
+{ #category : #private }
+GtkWindow >> getPositionX: root_x y: root_y [
+
+	^ self ffiCall: #(void gtk_window_get_position (self, gint *root_x, gint *root_y))
+]
+
+{ #category : #private }
+GtkWindow >> getSizeWidth: width height: height [
+
+	^ self ffiCall: #(void gtk_window_get_size (self, gint *width, gint *height))
 ]
 
 { #category : #initialization }
@@ -112,15 +134,36 @@ GtkWindow >> modal: modal [
 	^ self ffiCall: #(void gtk_window_set_modal (self, gboolean modal))
 ]
 
-{ #category : #accessing }
+{ #category : #private }
+GtkWindow >> moveX: x y: y [
+
+	^ self ffiCall: #(void gtk_window_move (self, gint x, gint y))
+]
+
+{ #category : #geometry }
+GtkWindow >> position [
+	| rootX rootY |
+	
+	rootX := FFIInt32 newBuffer.
+	rootY := FFIInt32 newBuffer.
+	
+	self getPositionX: rootX y: rootY. 
+	
+	^ (rootX signedLongAt: 1) @ (rootY signedLongAt: 1)
+]
+
+{ #category : #geometry }
 GtkWindow >> position: aPoint [
 
-	self flag: #TODO.
+	self moveX: aPoint x y: aPoint y
 ]
 
 { #category : #geometry }
 GtkWindow >> resize: aPoint [
-	self resizeWidth: aPoint x height: aPoint y
+
+	self 
+		resizeWidth: aPoint x 
+		height: aPoint y
 ]
 
 { #category : #private }
@@ -143,6 +186,18 @@ GtkWindow >> showAll [
 	"We have to do in this way to avoid the selection of the first element in a list"
 	self show.
 	self children do: #showAll
+]
+
+{ #category : #geometry }
+GtkWindow >> size [
+	| width height |
+	
+	width := FFIInt32 newBuffer.
+	height := FFIInt32 newBuffer.
+	
+	self getSizeWidth: width height: height. 
+	
+	^ (width signedLongAt: 1) @ (height signedLongAt: 1)
 ]
 
 { #category : #accessing }

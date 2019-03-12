@@ -4,7 +4,7 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #factory }
+{ #category : #building }
 GtkButtonAdapter >> addModelTo: gtkButton [
 
 	super addModelTo: gtkButton.
@@ -15,6 +15,8 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 	self model icon ifNotNil: [ self updateIcon ].
 	
 	gtkButton connectClicked: [ self model performAction ].
+	self model contextMenu ifNotNil: [ :menu |
+		self addMenu: menu to: gtkButton ].
 	
 	model whenLabelChangedDo: [ self updateLabel ].
 	model whenIconChangedDo: [ self updateIcon ].
@@ -43,7 +45,7 @@ GtkButtonAdapter >> rightClicked [
 	"The button does not do nothing when rightClicked"
 ]
 
-{ #category : #factory }
+{ #category : #updating }
 GtkButtonAdapter >> updateIcon [
 
 	self widget
@@ -51,13 +53,13 @@ GtkButtonAdapter >> updateIcon [
 		image: (GtkImage newForm: self model icon)
 ]
 
-{ #category : #factory }
+{ #category : #updating }
 GtkButtonAdapter >> updateLabel [
 
 	self widget label: self model label asString
 ]
 
-{ #category : #factory }
+{ #category : #updating }
 GtkButtonAdapter >> updateTooltip [
 	self widget tooltipText: self model help
 ]

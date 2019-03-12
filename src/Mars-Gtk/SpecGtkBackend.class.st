@@ -15,3 +15,10 @@ SpecGtkBackend >> adapterBindingsClass [
 
 	^ GtkAdapterBindings
 ]
+
+{ #category : #initialization }
+SpecGtkBackend >> initialize [ 
+	
+	super initialize.
+	GtkApplication ensureRunning
+]

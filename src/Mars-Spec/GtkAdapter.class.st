@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkAdapter,
 	#superclass : #AbstractAdapter,
+	#instVars : [
+		'lastShownMenu'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -25,6 +28,18 @@ GtkAdapter class >> isAbstract [
 ]
 
 { #category : #building }
+GtkAdapter >> addMenu: aValuable to: gtkList [
+
+	gtkList connectRightClicked: [ :event | 
+		lastShownMenu := self buildMenu: aValuable value.
+		lastShownMenu connectDestroy: [ lastShownMenu := nil ].
+		lastShownMenu 
+			showAll;
+			popupAtPointer: event.
+		true ]
+]
+
+{ #category : #building }
 GtkAdapter >> addModelTo: gtkWidget [
 
 	gtkWidget sensitive: self model isEnabled.
@@ -37,6 +52,14 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	"A secondary initialization generic to all widgets"
 	
 	gtkWidget sensitive: self model isEnabled
+]
+
+{ #category : #building }
+GtkAdapter >> buildMenu: aMenuPresenter [
+
+	^ aMenuPresenter 
+		owner: self model;
+		buildWithSpec
 ]
 
 { #category : #building }
