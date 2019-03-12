@@ -25,6 +25,14 @@ GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 		gtkWindow addAcceleratorGroup: accelGroup ]
 ]
 
+{ #category : #building }
+GtkWindowAdapter >> addModelTo: gtkWindow [
+
+	super addModelTo: gtkWindow.
+	gtkWindow connectHide: [ 
+		self announceClosed ]
+]
+
 { #category : #accessing }
 GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
@@ -70,6 +78,12 @@ GtkWindowAdapter >> addToolBarTo: gtkBox [
 		expand: false 
 		fill: false 
 		padding: 0
+]
+
+{ #category : #private }
+GtkWindowAdapter >> announceClosed [
+
+	self model windowIsClosing
 ]
 
 { #category : #accessing }
