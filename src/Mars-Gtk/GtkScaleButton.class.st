@@ -62,7 +62,7 @@ GtkScaleButton >> connectValueChanged: aBlock [
 	^ self 
 		connect: 'value-changed'
 		signature: #(gboolean (void *widget, gdouble value, void *aData))  
- 		do: [ :widget :value :aData | [ aBlock cull: value ] fork ] 
+ 		do: [ :widget :value :aData | aBlock cull: value ] 
 ]
 
 { #category : #accessing }

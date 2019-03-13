@@ -59,7 +59,7 @@ GtkToolbar >> connectPopupContextMenu: aBlock [
 	^ self 
 		connect: 'popup-context-menu' 
 		signature: #(gint (void *widget, int x, int y, int mouseButton, void *aData))  
- 		do: [ :widget :x :y :aData | [ aBlock value: x value: y ] fork ]
+ 		do: [ :widget :x :y :aData | aBlock value: x value: y ]
 ]
 
 { #category : #accessing }
