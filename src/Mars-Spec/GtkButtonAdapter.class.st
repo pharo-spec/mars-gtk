@@ -25,6 +25,7 @@ GtkButtonAdapter >> addModelTo: gtkButton [
 
 { #category : #events }
 GtkButtonAdapter >> clicked [
+
 	self widget clicked
 ]
 
@@ -42,7 +43,13 @@ GtkButtonAdapter >> newWidget [
 { #category : #events }
 GtkButtonAdapter >> rightClicked [
 	
-	"The button does not do nothing when rightClicked"
+	self widget 
+		withCallbacksOfType: GSecondaryButtonPressEventCallback 
+		do: [ :aCallback |
+			aCallback valueWithArguments: {
+				self widget getHandle.
+				GdkEventButton newRightClick getHandle.
+				ExternalAddress null } ]
 ]
 
 { #category : #updating }
@@ -57,6 +64,28 @@ GtkButtonAdapter >> updateIcon [
 GtkButtonAdapter >> updateLabel [
 
 	self widget label: self model label asString
+]
+
+{ #category : #updating }
+GtkButtonAdapter >> updateMenu [
+	| existingCallbacks menu |
+
+	self widget ifNil: [ ^ self ].
+
+	existingCallbacks := Set new.
+	self widget 
+		withCallbacksOfType: GSecondaryButtonPressEventCallback 
+		do: [ :each | existingCallbacks add: each ].
+		
+	menu := self model contextMenu. 
+	menu ifNil: [ 
+		existingCallbacks do: [ :each | each disconnectFrom: self widget ].
+		^ self ].
+	"if there is already a callback, I do not need to do anything (because it will be 
+	 evaluated each time)"
+	existingCallbacks ifNotEmpty: [ ^ self ].
+	"Now, actually add the menu callback"
+	self addMenu: menu to: self widget
 ]
 
 { #category : #updating }
