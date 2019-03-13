@@ -61,6 +61,11 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 
 	self recreateStore: gtkWidget generateColumns: true.	
 	gtkWidget headersVisible: self model isShowingColumnHeaders.
+
+	self presenter selection isMultipleSelection 
+		ifTrue: [ gtkWidget beMultipleSelectionMode ]
+		ifFalse: [ gtkWidget beSingleSelectionMode ].
+
 	self model selection isEmpty 
 		ifFalse: [ self updateSelectionOf: gtkWidget ].
 	
@@ -77,6 +82,12 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	
 	self model whenShowColumnHeadersChangedDo: [ 
 		gtkWidget headersVisible: self model isShowingColumnHeaders ].
+
+	self model whenMultiSelectionChangedDo: [ 
+		self presenter selection isMultipleSelection 
+			ifTrue: [ gtkWidget beMultipleSelectionMode ]
+			ifFalse: [ gtkWidget beSingleSelectionMode ].
+	].
 
 	self model whenSelectionChangedDo: [
 		self 
@@ -246,6 +257,12 @@ GtkTreeTableAdapter >> selectedItem [
 	selectedPath ifEmpty: [ ^ nil ].
 
 	^ self model itemAtPath: selectedPath
+]
+
+{ #category : #accessing }
+GtkTreeTableAdapter >> selectedPaths [
+	
+	^ self widget allSelected
 ]
 
 { #category : #private }
