@@ -12,7 +12,7 @@ Class {
 		'dialog',
 		'wasModal',
 		'wasDestroyed',
-		'waitForAnswer'
+		'dialogClosed'
 	],
 	#category : #'Mars-Gtk-Widget-Window'
 }
@@ -77,13 +77,13 @@ GtkDialogRunContext >> initializeDialog: aGtkDialog [
 	dialog := aGtkDialog.
 	wasModal := aGtkDialog isModal.
 	wasDestroyed := false.
-	waitForAnswer := Semaphore new
+	dialogClosed := false
 ]
 
 { #category : #accessing }
 GtkDialogRunContext >> resume [
 
-	waitForAnswer signal
+	dialogClosed := true.
 ]
 
 { #category : #running }
@@ -99,7 +99,10 @@ GtkDialogRunContext >> run [
 { #category : #private }
 GtkDialogRunContext >> waitForAnswer [ 
 
-	waitForAnswer wait
+	[ dialogClosed ] whileFalse: [
+		[ GtkSimpleRunLoop uniqueInstance getEventsPending ]
+			whileTrue: [ GtkSimpleRunLoop uniqueInstance mainIterationDo: true ].
+			50 milliSeconds wait]
 ]
 
 { #category : #'event handling' }
