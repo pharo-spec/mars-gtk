@@ -30,10 +30,10 @@ GtkAdapter class >> isAbstract [
 { #category : #building }
 GtkAdapter >> addMenu: aValuable to: gtkList [
 
-	gtkList connectRightClicked: [ :event | 
+	gtkList connectRightClicked: [ :event |
 		lastShownMenu := self buildMenu: aValuable value.
-		lastShownMenu connectDestroy: [ lastShownMenu := nil ].
 		lastShownMenu 
+			connectDestroy: [ lastShownMenu := nil ];
 			showAll;
 			popupAtPointer: event.
 		true ]

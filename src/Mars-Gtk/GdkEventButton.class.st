@@ -24,7 +24,7 @@ Class {
 { #category : #private }
 GdkEventButton class >> eventNew: type [
 
-	self ffiCall: #(GdkEventButton *gdk_event_new (GdkEventType type))
+	^ self ffiCall: #(GdkEventButton *gdk_event_new (GdkEventType type))
 ]
 
 { #category : #'field definition' }
@@ -50,7 +50,15 @@ GdkEventButton class >> fieldsDesc [
 { #category : #'instance creation' }
 GdkEventButton class >> newPressEvent [
 
-	^ (self eventNew: GDK_BUTTON_PRESS) initialize
+	^ self newType: GDK_BUTTON_PRESS
+]
+
+{ #category : #'instance creation' }
+GdkEventButton class >> newRightClick [
+
+	^ (self newType: GDK_BUTTON_PRESS)
+		button: GDK_BUTTON_SECONDARY;
+		yourself		
 ]
 
 { #category : #'accessing structure variables' }
@@ -87,6 +95,12 @@ GdkEventButton >> device [
 GdkEventButton >> device: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_DEVICE put: anObject getHandle.
+]
+
+{ #category : #testing }
+GdkEventButton >> isDoubleClick [ 
+
+	^ self type = GDK_2BUTTON_PRESS
 ]
 
 { #category : #testing }

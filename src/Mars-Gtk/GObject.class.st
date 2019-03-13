@@ -44,7 +44,7 @@ GObject class >> resolveType: aType [
 		resolveType: aType
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GObject >> callbacks [
 
 	^ callbacks
@@ -61,7 +61,7 @@ GObject >> connect: aString do: aBlock [
 	^ self 
 		connect: aString 
 		signature: #(void (void *widget, void *aData))  
- 		do: [ :widget :aData | aBlock fork ]
+ 		do: [ :widget :aData | aBlock value ]
 ]
 
 { #category : #signaling }
@@ -392,4 +392,20 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 GObject >> weakRef: notify [ 
 
 	^ self ffiCall: #(void g_object_weak_ref (self, GCallback notify, 0)) module: GObjectLibrary
+]
+
+{ #category : #accessing }
+GObject >> withCallbacksMatching: matchBlock do: aBlock [
+
+	self callbacks 
+		select: matchBlock
+		thenDo: aBlock
+]
+
+{ #category : #accessing }
+GObject >> withCallbacksOfType: aClass do: aBlock [
+
+	self
+		withCallbacksMatching: [ :each | each class = aClass ]
+		do: aBlock
 ]

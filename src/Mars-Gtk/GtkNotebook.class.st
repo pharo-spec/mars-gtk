@@ -62,8 +62,7 @@ GtkNotebook >> connectSwitchPage: aBlock [
 	self 
 		connect: 'switch-page' 
 		signature: #(void (void *notebook, void *page, guint page_num, gpointer user_data))
-		do: [ :notebook :page :page_num :user_data |
-			[ aBlock value: (self children at: page_num + 1) ] fork ]
+		do: [ :notebook :page :page_num :user_data | aBlock value: (self children at: page_num + 1) ]
 ]
 
 { #category : #initialization }

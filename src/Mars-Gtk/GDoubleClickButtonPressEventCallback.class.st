@@ -14,6 +14,6 @@ GDoubleClickButtonPressEventCallback >> do: aBlock [
 
 	super do: [ :event | 
 		event isDoubleClick 
-			ifTrue: [ aBlock fork. true ]
+			ifTrue: [ aBlock value. true ]
 			ifFalse: [ false ] ]
 ]
