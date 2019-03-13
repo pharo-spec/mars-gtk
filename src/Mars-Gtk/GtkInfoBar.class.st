@@ -81,8 +81,7 @@ GtkInfoBar >> connectResponse: aBlock [
 	self 
 		connect: 'response' 
 		signature: #(void (void *infobar, long responseid, void *user_data))
-		do: [ :infobar :responseid :user_data | 
-			[ aBlock value: responseid ] fork ]
+		do: [ :infobar :responseid :user_data | aBlock value: responseid ]
 ]
 
 { #category : #adding }

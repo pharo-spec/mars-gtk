@@ -117,7 +117,7 @@ GtkTreeView >> connectRowExpanded: aBlock [
 		do: [ :treeView :iterHandle :pathHandle :userData | | iter path |
 			iter := (GtkTreeIter fromHandle: iterHandle) copyInMemory.
 			path := (GtkTreePath fromHandle: pathHandle) toArray.
-			[ aBlock cull: iter cull: path ] fork ]
+			aBlock cull: iter cull: path  ]
 ]
 
 { #category : #signals }
@@ -126,15 +126,9 @@ GtkTreeView >> connectRowSelected: aBlock [
 	self 
 		connect: 'row-activated' 
 		signature: #(void (void *treeView, void *path, void *column, void *userData))
-		do: [ :treeView :path :column :userData | 
-			| indexPath |
-			self flag: #TODO. "This is temporal (I hope if does not lasts until future me finds 
-			this five years from now ;). 
-			The fact is that Gtk3 is destroying the path after using it... and I do not want to 
-			process this inside the callback (I want to fork it) so I need to take the values 
-			now."
+		do: [ :treeView :path :column :userData | | indexPath |
 			indexPath := (GtkTreePath fromHandle: path) toArray.
-			[ aBlock value: indexPath ] fork ]
+			aBlock value: indexPath ]
 ]
 
 { #category : #signals }
