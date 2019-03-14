@@ -28,9 +28,9 @@ GtkAdapter class >> isAbstract [
 ]
 
 { #category : #building }
-GtkAdapter >> addMenu: aValuable to: gtkList [
+GtkAdapter >> addMenu: aValuable to: gtkWidget [
 
-	gtkList connectRightClicked: [ :event |
+	gtkWidget connectRightClicked: [ :event |
 		lastShownMenu := self buildMenu: aValuable value.
 		lastShownMenu 
 			connectDestroy: [ lastShownMenu := nil ];
@@ -117,6 +117,18 @@ GtkAdapter >> newWidget [
 	^ self widgetClass new
 ]
 
+{ #category : #emulating }
+GtkAdapter >> rightClicked [
+	
+	self widget 
+		withCallbacksOfType: GSecondaryButtonPressEventCallback 
+		do: [ :aCallback |
+			aCallback valueWithArguments: {
+				self widget getHandle.
+				GdkEventButton newRightClick getHandle.
+				ExternalAddress null } ]
+]
+
 { #category : #accessing }
 GtkAdapter >> setBalloonText: aString [ 
 	
@@ -136,6 +148,28 @@ GtkAdapter >> update: aSymbol with: anArray [
 	self 
 		perform: aSymbol 
 		withArguments: anArray
+]
+
+{ #category : #updating }
+GtkAdapter >> updateMenu [
+	| existingCallbacks menu |
+
+	self widget ifNil: [ ^ self ].
+
+	existingCallbacks := Set new.
+	self widget 
+		withCallbacksOfType: GSecondaryButtonPressEventCallback 
+		do: [ :each | existingCallbacks add: each ].
+		
+	menu := self model contextMenu. 
+	menu ifNil: [ 
+		existingCallbacks do: [ :each | each disconnectFrom: self widget ].
+		^ self ].
+	"if there is already a callback, I do not need to do anything (because it will be 
+	 evaluated each time)"
+	existingCallbacks ifNotEmpty: [ ^ self ].
+	"Now, actually add the menu callback"
+	self addMenu: menu to: self widget
 ]
 
 { #category : #building }
