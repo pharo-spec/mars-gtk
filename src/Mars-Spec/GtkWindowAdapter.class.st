@@ -44,6 +44,7 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 
 	"inner contents of window"	
 	gtkBox := GtkBox newVertical.
+	gtkBox showAll.
 	"menu bar"
 	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
 	"tool bar"
@@ -94,7 +95,7 @@ GtkWindowAdapter >> centered [
 			ifFalse: [ 
 				w center ]
 			ifTrue: [ 
-				w hide; center; showAll ] ]
+				w hide; center; show ] ]
 ]
 
 { #category : #accessing }
@@ -120,7 +121,7 @@ GtkWindowAdapter >> newWidget [
 { #category : #accessing }
 GtkWindowAdapter >> open [
 
-	self widgetDo: [ :w | w showAll ]
+	self widgetDo: [ :w | w show ]
 ]
 
 { #category : #accessing }

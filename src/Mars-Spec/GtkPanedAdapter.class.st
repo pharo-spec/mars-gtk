@@ -65,7 +65,8 @@ GtkPanedAdapter >> layout: aLayout [
 	aLayout position ifNotNil: [ :pos |
 		pos < 1 
 			ifTrue: [ self setPositionDeferred: aLayout position to: widget ]
-			ifFalse: [ self setPosition: aLayout position to: widget ] ]
+			ifFalse: [ self setPosition: aLayout position to: widget ] ].
+	widget show.
 ]
 
 { #category : #factory }

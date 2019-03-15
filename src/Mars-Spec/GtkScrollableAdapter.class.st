@@ -31,5 +31,6 @@ GtkScrollableAdapter >> buildWidget [
 { #category : #building }
 GtkScrollableAdapter >> layout: aLayout [
 
-	widget := GtkScrolledWindow new
+	widget := GtkScrolledWindow new.
+	widget show
 ]
