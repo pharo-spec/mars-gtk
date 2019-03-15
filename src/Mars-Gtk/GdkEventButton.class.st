@@ -24,7 +24,7 @@ Class {
 { #category : #private }
 GdkEventButton class >> eventNew: type [
 
-	^ self ffiCall: #(GdkEventButton *gdk_event_new (GdkEventType type))
+	^ self ffiCall: #(GdkEventButton *gdk_event_new (GdkEventType type)) module: GdkLibrary
 ]
 
 { #category : #'field definition' }
