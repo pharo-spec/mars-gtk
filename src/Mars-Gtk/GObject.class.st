@@ -44,6 +44,12 @@ GObject class >> resolveType: aType [
 		resolveType: aType
 ]
 
+{ #category : #'private primitives' }
+GObject >> basicGObjectSet: aName toBoolean: aBoolean nullValue: aNull [
+
+	self ffiCall: #(void g_object_set (self, const gchar *aName, int aBoolean, void* aNull) )	 module: GObjectLibrary
+]
+
 { #category : #accessing }
 GObject >> callbacks [
 
@@ -214,13 +220,17 @@ GObject >> gFree: aPointer [
 { #category : #'private primitives' }
 GObject >> gObjectGet: aName into: aBuffer [
 
-	self ffiCall: #(void g_object_get (self, const gchar *aName, ByteArray aBuffer) ) module: GObjectLibrary
+	self 
+		ffiCall: #(void g_object_get (self, const gchar *aName, void* aBuffer, 0) ) 
+		module: GObjectLibrary
 ]
 
 { #category : #'private primitives' }
 GObject >> gObjectGet: aName intoAddress: aBuffer [
 
-	self ffiCall: #(void g_object_get (self, const gchar *aName, gpointer *aBuffer) )
+	self 
+		ffiCall: #(void g_object_get (self, const gchar *aName, gpointer *aBuffer, 0) )
+		module: GObjectLibrary		
 ]
 
 { #category : #'private primitives' }
@@ -266,7 +276,12 @@ GObject >> gObjectGetString: aName [
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toBoolean: aBoolean [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, Boolean aBoolean, 0) )	 module: GObjectLibrary
+	"Forcing the boolean to occupy a whole integer and the same for the external address null"
+	self 
+			basicGObjectSet: aName 
+			toBoolean: (aBoolean ifTrue:[1] ifFalse:[ 0 ]) 
+			nullValue: ExternalAddress null.
+
 ]
 
 { #category : #'private primitives' }
