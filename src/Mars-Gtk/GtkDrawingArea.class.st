@@ -7,9 +7,10 @@ Class {
 	#name : #GtkDrawingArea,
 	#superclass : #GtkWidget,
 	#instVars : [
-		'drawing'
+		'drawing',
+		'requestedSize'
 	],
-	#category : 'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #private }
@@ -32,13 +33,37 @@ GtkDrawingArea >> basicDraw: cr [
 ]
 
 { #category : #drawing }
+GtkDrawingArea >> boundingBox [
+	^ self positionInTopLevel corner: self positionInTopLevel + self size
+]
+
+{ #category : #drawing }
 GtkDrawingArea >> drawOnAthensCanvas: aCanvas [
 	self subclassResponsibility
 ]
 
 { #category : #private }
 GtkDrawingArea >> extent: aPoint [
+	requestedSize := aPoint.
 	self setSizeRequestWidth: aPoint x height: aPoint y
+]
+
+{ #category : #private }
+GtkDrawingArea >> getSizeRequest [
+	| width height |
+	
+	width := FFIInt32 newBuffer.
+	height := FFIInt32 newBuffer.
+	
+	self getSizeRequestWidth: width height: height. 
+	
+	^ (width signedLongAt: 1) @ (height signedLongAt: 1)
+]
+
+{ #category : #private }
+GtkDrawingArea >> getSizeRequestWidth: width height: height [
+	self
+		ffiCall: #(void gtk_widget_get_size_request #(self , gint width , gint height)).
 ]
 
 { #category : #initialization }
@@ -64,5 +89,11 @@ GtkDrawingArea >> positionInTopLevel [
 { #category : #private }
 GtkDrawingArea >> setSizeRequestWidth: width height: height [
 	
-	self ffiCall: #(void gtk_widget_set_size_request (self, gint width, gint height))
+	self
+		ffiCall: #(void gtk_widget_set_size_request #(self , gint width , gint height))
+]
+
+{ #category : #private }
+GtkDrawingArea >> size [
+	^  self getAllocatedWidth @ self getAllocatedHeight 
 ]
