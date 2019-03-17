@@ -116,9 +116,18 @@ GtkWindowAdapter >> contentWidget: aSpec [
 
 { #category : #'api-inform' }
 GtkWindowAdapter >> inform: aString [
+
+	self inform: aString with: #beInfo.
+]
+
+{ #category : #'api-inform' }
+GtkWindowAdapter >> inform: aString with: aBlock [
 	| gtkInfoBar |
 	
-	(gtkInfoBar := GtkInfoBar new)
+	gtkInfoBar := GtkInfoBar new.
+	aBlock value: gtkInfoBar.
+
+	gtkInfoBar
 		showCloseButton;
 		connectResponse: [ :responseId |
 			gtkInfoBar hide.
@@ -135,6 +144,12 @@ GtkWindowAdapter >> inform: aString [
 		packStart: gtkInfoBar expand: false fill: false padding: 0;
 		showAll.
 	
+]
+
+{ #category : #'api-inform' }
+GtkWindowAdapter >> informError: aString [
+
+	self inform: aString with: #beError	
 ]
 
 { #category : #building }
