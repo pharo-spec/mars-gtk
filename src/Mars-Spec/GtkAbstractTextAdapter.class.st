@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #building }
-GtkAbstractTextAdapter >> addModelTo: gtkTextView [
-	super addModelTo: gtkTextView.
-	self model text ifNotNil: [ :text | gtkTextView text: text asString ].
+GtkAbstractTextAdapter >> addModelTo: gtkWidget [
 
-	self model
-		whenTextChangedDo: [ :text | gtkTextView text: text asString ].
+	super addModelTo: gtkWidget.
+	self model text ifNotNil: [ :text | gtkWidget text: text asString ].
+	self model whenTextChangedDo: [ :text | 
+		gtkWidget text: text asString ].
 ]
 
 { #category : #accessing }

@@ -47,7 +47,9 @@ GObject class >> resolveType: aType [
 { #category : #'private primitives' }
 GObject >> basicGObjectSet: aName toBoolean: aBoolean nullValue: aNull [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, int aBoolean, void* aNull) )	 module: GObjectLibrary
+	self 
+		ffiCall: #(void g_object_set (self, const gchar *aName, int aBoolean, void* aNull) )
+		module: GObjectLibrary
 ]
 
 { #category : #accessing }

@@ -129,13 +129,10 @@ GtkEntry >> beUrl [
 	self inputPurpose: GTK_INPUT_PURPOSE_URL
 ]
 
-{ #category : #accessing }
-GtkEntry >> connectTextChanged: aBlock [
-	
-	^ self 
-		connect: 'preedit-changed' 
-		signature: #(void (void *widget, String text, void *aData))  
- 		do: [ :widget :text :aData | aBlock cull: text ]
+{ #category : #signals }
+GtkEntry >> connectChanged: aBlock [
+
+	self connect: 'changed' do: aBlock
 ]
 
 { #category : #private }
