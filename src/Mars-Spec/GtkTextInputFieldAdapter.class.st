@@ -21,6 +21,8 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 	
 	gtkEntry maxLength: self model maxLength.
 	self model whenMaxLengthChangedDo: [ gtkEntry maxLength: self model maxLength ].
+	gtkEntry connectFocusOutEvent: [ self model text: gtkEntry text ].
+
 	
 	self model isInvisible ifTrue: [ 
 		gtkEntry bePassword.
