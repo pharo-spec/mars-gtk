@@ -15,7 +15,6 @@ GtkTextAdapter >> accept [
 GtkTextAdapter >> addToModel: gtkTextView [
 
 	gtkTextView beWrapWord.
-	
 	self model isForSmalltalkCode ifTrue: [ 
 		gtkTextView monospace: true  ].
 

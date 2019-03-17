@@ -30,7 +30,11 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 		aValue 
 			ifTrue: [ gtkEntry beForAnyCharacter ]
 			ifFalse: [ gtkEntry bePassword ].
-		gtkEntry visibility: aValue ]
+		gtkEntry visibility: aValue ].
+	
+	self model autoAccept ifTrue: [ 
+		gtkEntry connectChanged: [ 
+			self model text: gtkEntry text ] ]
 ]
 
 { #category : #testing }
