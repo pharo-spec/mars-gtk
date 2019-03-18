@@ -19,7 +19,6 @@ GtkBlockBasedDrawingArea >> drawBlock [
 
 { #category : #drawing }
 GtkBlockBasedDrawingArea >> drawBlock: aBlock [
-	self inspect.
 	drawBlock := aBlock
 ]
 

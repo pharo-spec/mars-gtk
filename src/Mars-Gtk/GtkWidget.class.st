@@ -414,6 +414,11 @@ GtkWidget >> hide [
 ]
 
 { #category : #testing }
+GtkWidget >> isConfiguredVisible [
+	^ self ffiCall: #(gboolean gtk_widget_get_visible (self))
+]
+
+{ #category : #testing }
 GtkWidget >> isFocus [
 	^ self ffiCall: #(gboolean gtk_widget_is_focus (self))
 ]

@@ -42,9 +42,17 @@ GtkAdapter >> addMenu: aValuable to: gtkWidget [
 { #category : #building }
 GtkAdapter >> addModelTo: gtkWidget [
 
-	gtkWidget sensitive: self model isEnabled.
-	self model help ifNotNil: [ gtkWidget tooltipText: self model help ].
-	self model whenEnabledChanged: [ gtkWidget sensitive: self model isEnabled ].
+	gtkWidget sensitive: self presenter isEnabled.
+	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
+	self presenter whenEnabledChanged: [ gtkWidget sensitive: self presenter isEnabled ].
+	
+	self presenter isVisible
+		ifTrue: [ gtkWidget show ]
+		ifFalse: [ gtkWidget hide ].
+	self presenter whenVisibleChangedDo: [ :value |
+		value
+			ifTrue: [ gtkWidget show ]
+			ifFalse: [ gtkWidget hide ] ].
 ]
 
 { #category : #building }
@@ -103,6 +111,12 @@ GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 { #category : #accessing }
 GtkAdapter >> helpText [
 	^ self widget tooltipText
+]
+
+{ #category : #visibility }
+GtkAdapter >> isVisible [
+	
+	^ widget isConfiguredVisible
 ]
 
 { #category : #protocol }
