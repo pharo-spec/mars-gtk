@@ -20,6 +20,7 @@ GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
 	childWidget := aPresenter buildWithSpec: constraints spec.
+	childWidget data: aPresenter.
 	self addConstraits: constraints toChild: childWidget.
 	gtkWidget 
 		attach: childWidget 

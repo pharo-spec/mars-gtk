@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkWindowAdapter,
 	#superclass : #GtkAdapter,
+	#instVars : [
+		'infoArea'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -44,11 +47,12 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 
 	"inner contents of window"	
 	gtkBox := GtkBox newVertical.
-	gtkBox showAll.
 	"menu bar"
 	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
 	"tool bar"
 	self model hasToolBar ifTrue: [ self addToolBarTo: gtkBox ].
+	"infoArea"
+	gtkBox packStart: (infoArea := GtkBox newVertical) expand: false fill: false padding: 0. 
 	"contents"
 	gtkBox packStart: (self contentWidget: aSpec).
 	"status bar"
@@ -116,6 +120,48 @@ GtkWindowAdapter >> newWidget [
 	^ GtkWindow new 
 		autoRelease;
 		yourself
+]
+
+{ #category : #'private notifying' }
+GtkWindowAdapter >> notify: aString withBar: aBlock [
+	| gtkInfoBar |
+	
+	gtkInfoBar := GtkInfoBar new.
+	aBlock value: gtkInfoBar.
+
+	gtkInfoBar
+		showCloseButton;
+		connectResponse: [ :responseId |
+			gtkInfoBar hide.
+			self flag: #TODO. "I'm not sure I can do this, but seems correct to not leak"
+			infoArea remove: gtkInfoBar ].
+		
+	gtkInfoBar contentArea 
+		packStart: (GtkLabel newLabel: aString)
+		expand: false 
+		fill: false 
+		padding: 0.
+		
+	infoArea
+		packStart: gtkInfoBar expand: false fill: false padding: 0;
+		showAll.
+	
+]
+
+{ #category : #notifying }
+GtkWindowAdapter >> notifyError: aSpecNotification [
+
+	self 
+		notify: aSpecNotification message 
+		withBar: #beError	
+]
+
+{ #category : #notifying }
+GtkWindowAdapter >> notifyInfo: aSpecNotification [
+
+	self 
+		notify: aSpecNotification message
+		withBar: #beInfo
 ]
 
 { #category : #accessing }

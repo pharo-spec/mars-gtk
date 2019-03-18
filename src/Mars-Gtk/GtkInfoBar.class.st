@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/stable/GtkInfoBar.html
 Class {
 	#name : #GtkInfoBar,
 	#superclass : #GtkWidget,
+	#instVars : [
+		'contentArea'
+	],
 	#pools : [
 		'GtkMessageType'
 	],
@@ -25,13 +28,13 @@ GtkInfoBar class >> new [
 	^ self gtkInfoBarNew initialize
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> addActionWidget: child withId: responseId [
 
 	self ffiCall: #(void gtk_info_bar_add_action_widget (self, GtkWidget *child, gint responseId))
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> addButtonWithLabel: label withId: responseId [
 
 	^ self 
@@ -45,25 +48,31 @@ GtkInfoBar >> basicAddButtonWithLabel: utf8EncodedLabel withId: responseId [
 	self ffiCall: #(GtkButton *gtk_info_bar_add_button (self, const String utf8EncodedLabel, gint responseId))
 ]
 
-{ #category : #adding }
+{ #category : #private }
+GtkInfoBar >> basicContentArea [
+
+	^ self ffiCall: #(GtkBox *gtk_info_bar_get_content_area (self))
+]
+
+{ #category : #accessing }
 GtkInfoBar >> beError [
 
 	self messageType: GTK_MESSAGE_ERROR
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> beInfo [
 
 	self messageType: GTK_MESSAGE_INFO
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> beQuestion [
 
 	self messageType: GTK_MESSAGE_QUESTION
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> beWarning [
 
 	self messageType: GTK_MESSAGE_WARNING
@@ -84,61 +93,68 @@ GtkInfoBar >> connectResponse: aBlock [
 		do: [ :infobar :responseid :user_data | aBlock value: responseid ]
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
+GtkInfoBar >> contentArea [
+	
+	^ contentArea ifNil: [ 
+		contentArea := self basicContentArea initialize ]
+]
+
+{ #category : #accessing }
 GtkInfoBar >> doNotShowCloseButton [
 
 	^ self showCloseButton: false
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> hide [
 
 	^ self reveal: false
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> isRevealed [
 
 	^ self ffiCall: #(gboolean gtk_info_bar_get_revealed (self))
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> messageType [
 
 	^ self ffiCall: #(GtkMessageType gtk_info_bar_get_message_type (self))
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> messageType: aType [
 
 	^ self ffiCall: #(void gtk_info_bar_set_message_type (self, GtkMessageType aType))
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> reveal [
 
 	^ self reveal: true
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> reveal: aBoolean [
 
 	^ self ffiCall: #(void gtk_info_bar_set_revealed (self, gboolean aBoolean))
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> showCloseButton [
 
 	^ self showCloseButton: true
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> showCloseButton: aBoolean [
 
 	^ self ffiCall: #(void gtk_info_bar_set_show_close_button (self, gboolean aBoolean))
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 GtkInfoBar >> showsCloseButton [
 
 	^ self ffiCall: #(gboolean gtk_info_bar_get_show_close_button (self))

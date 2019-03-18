@@ -86,8 +86,7 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	self model whenMultiSelectionChangedDo: [ 
 		self presenter selection isMultipleSelection 
 			ifTrue: [ gtkWidget beMultipleSelectionMode ]
-			ifFalse: [ gtkWidget beSingleSelectionMode ].
-	].
+			ifFalse: [ gtkWidget beSingleSelectionMode ] ].
 
 	self model whenSelectionChangedDo: [
 		self 

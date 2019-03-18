@@ -22,15 +22,19 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 	gtkEntry maxLength: self model maxLength.
 	self model whenMaxLengthChangedDo: [ gtkEntry maxLength: self model maxLength ].
 	
-	self model isPassword ifTrue: [ 
+	self model isInvisible ifTrue: [ 
 		gtkEntry bePassword.
 		gtkEntry visibility: false. ].
 	
-	self model whenPasswordChangedDo: [ :isPassword | 
-		isPassword 
-			ifTrue: [ gtkEntry bePassword ]
-			ifFalse: [ gtkEntry beForAnyCharacter ].
-		gtkEntry visibility: isPassword ]
+	self model whenVisibilityChangedDo: [ :aValue | 
+		aValue 
+			ifTrue: [ gtkEntry beForAnyCharacter ]
+			ifFalse: [ gtkEntry bePassword ].
+		gtkEntry visibility: aValue ].
+	
+	self model autoAccept ifTrue: [ 
+		gtkEntry connectChanged: [ 
+			self model text: gtkEntry text ] ]
 ]
 
 { #category : #testing }

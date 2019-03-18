@@ -117,7 +117,7 @@ GtkComboBox >> columnSpanColumn: columnSpan [
 	^ self ffiCall: #(void gtk_combo_box_set_column_span_column (self, gint columnSpan))
 ]
 
-{ #category : #events }
+{ #category : #signals }
 GtkComboBox >> connectChanged: aBlock [
 
 	self connect: 'changed' do: aBlock
