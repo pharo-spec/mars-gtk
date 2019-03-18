@@ -6,7 +6,7 @@ https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html
 "
 Class {
 	#name : #GtkAboutDialog,
-	#superclass : #GtkDialog,
+	#superclass : #GtkSystemDialog,
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
@@ -14,6 +14,12 @@ Class {
 GtkAboutDialog class >> gtkDialogNew [
 
 	^ self ffiCall: #(GtkAboutDialog *gtk_about_dialog_new (void))
+]
+
+{ #category : #'instance creation' }
+GtkAboutDialog class >> new [
+
+	^ self gtkDialogNew initialize
 ]
 
 { #category : #private }

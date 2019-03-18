@@ -7,12 +7,11 @@ In fact, I'm a simulation of what happens in the real GtkDialog. This is need be
 "
 Class {
 	#name : #GtkDialogWindow,
-	#superclass : #GtkWindow,
+	#superclass : #GtkBaseDialog,
 	#instVars : [
 		'contentArea',
 		'buttonBox',
-		'defaultResponse',
-		'runContext'
+		'defaultResponse'
 	],
 	#pools : [
 		'GtkResponseType'
@@ -89,12 +88,6 @@ GtkDialogWindow >> initializeParent: aWindow [
 	aWindow ifNotNil: [ self transientTo: aWindow ]
 ]
 
-{ #category : #testing }
-GtkDialogWindow >> isRunning [ 
-
-	^ runContext notNil
-]
-
 { #category : #'private factory' }
 GtkDialogWindow >> newButtonBox [
 
@@ -109,36 +102,4 @@ GtkDialogWindow >> newButtonBox [
 GtkDialogWindow >> newContentArea [ 
 
 	^ GtkBox newVertical
-]
-
-{ #category : #private }
-GtkDialogWindow >> respond [ 
-
-	self runContext resume.
-	self hide
-]
-
-{ #category : #running }
-GtkDialogWindow >> run [
-
-	self isRunning ifTrue: [ self error: 'Dialog is already running!' ].
-	
-	self isVisible ifFalse: [ self showAll ].
-	runContext := GtkDialogRunContext newDialog: self.
-	^ [ runContext run ]
-	ensure: [ runContext := nil ]
-]
-
-{ #category : #private }
-GtkDialogWindow >> runContext [
-
-	^ runContext
-]
-
-{ #category : #finalization }
-GtkDialogWindow >> windowDestroyed [
-
-	super windowDestroyed.
-	self isRunning ifTrue: [ 
-		self runContext windowDestroyed ]
 ]

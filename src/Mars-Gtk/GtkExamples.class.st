@@ -1016,7 +1016,7 @@ GtkExamples class >> gtkExampleDialog [
 
 	^ (GtkButton newLabel: 'Show Dialog')
 		connectClicked: [ | dialog |
-			dialog := GtkDialog new
+			dialog := GtkDialogWindow new
 				resize: 600@400;
 				center;
 				in: [ :this | this contentArea packStart: (GtkLabel newLabel: 'Dialog example') ];
