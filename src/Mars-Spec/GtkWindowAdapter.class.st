@@ -47,6 +47,7 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 
 	"inner contents of window"	
 	gtkBox := GtkBox newVertical.
+	gtkBox show.
 	"menu bar"
 	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
 	"tool bar"
@@ -99,7 +100,7 @@ GtkWindowAdapter >> centered [
 			ifFalse: [ 
 				w center ]
 			ifTrue: [ 
-				w hide; center; showAll ] ]
+				w hide; center; show ] ]
 ]
 
 { #category : #accessing }
@@ -114,14 +115,16 @@ GtkWindowAdapter >> contentWidget: aSpec [
 	^ self model presenter buildWithSpecLayout: aSpec
 ]
 
-{ #category : #'api-inform' }
-GtkWindowAdapter >> inform: aString [
+{ #category : #building }
+GtkWindowAdapter >> newWidget [
 
-	self inform: aString with: #beInfo.
+	^ GtkWindow new 
+		autoRelease;
+		yourself
 ]
 
-{ #category : #'api-inform' }
-GtkWindowAdapter >> inform: aString with: aBlock [
+{ #category : #'private notifying' }
+GtkWindowAdapter >> notify: aString withBar: aBlock [
 	| gtkInfoBar |
 	
 	gtkInfoBar := GtkInfoBar new.
@@ -146,24 +149,26 @@ GtkWindowAdapter >> inform: aString with: aBlock [
 	
 ]
 
-{ #category : #'api-inform' }
-GtkWindowAdapter >> informError: aString [
+{ #category : #notifying }
+GtkWindowAdapter >> notifyError: aSpecNotification [
 
-	self inform: aString with: #beError	
+	self 
+		notify: aSpecNotification message 
+		withBar: #beError	
 ]
 
-{ #category : #building }
-GtkWindowAdapter >> newWidget [
+{ #category : #notifying }
+GtkWindowAdapter >> notifyInfo: aSpecNotification [
 
-	^ GtkWindow new 
-		autoRelease;
-		yourself
+	self 
+		notify: aSpecNotification message
+		withBar: #beInfo
 ]
 
 { #category : #accessing }
 GtkWindowAdapter >> open [
 
-	self widgetDo: [ :w | w showAll ]
+	self widgetDo: [ :w | w show ]
 ]
 
 { #category : #accessing }

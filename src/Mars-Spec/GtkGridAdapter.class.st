@@ -45,5 +45,6 @@ GtkGridAdapter >> layout: aLayout [
 			columnSpacing: aLayout columnSpacing;
 			rowSpacing: aLayout rowSpacing;
 			columnHomogeneous: aLayout isColumnHomogeneous;
-			rowHomogeneous: aLayout isRowHomogeneous ]
+			rowHomogeneous: aLayout isRowHomogeneous;
+			show ]
 ]

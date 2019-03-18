@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 GdkEvent class >> eventFree: event [
 
-	self ffiCall: #(void gdk_event_free ("GdkEvent *"void *event))
+	self ffiCall: #(void gdk_event_free ("GdkEvent *"void *event)) module: GdkLibrary
 ]
 
 { #category : #private }

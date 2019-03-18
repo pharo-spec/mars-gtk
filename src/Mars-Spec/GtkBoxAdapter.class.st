@@ -57,7 +57,8 @@ GtkBoxAdapter >> layout: aLayout [
 	widget 
 		homogeneous: aLayout isHomogeneous;
 		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth.
+		borderWidth: aLayout borderWidth;
+		show.
 ]
 
 { #category : #factory }

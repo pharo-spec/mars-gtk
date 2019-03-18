@@ -11,9 +11,7 @@ GtkNotebookAdapter >> addContentPage: gtkPage [
 	box := gtkPage content.
 	box hasChildren ifTrue: [ ^ self ].
 	
-	box 
-		packStart: (self buildPage: gtkPage data retrievePresenter);
-		showAll
+	box packStart: (self buildPage: gtkPage data retrievePresenter)
 ]
 
 { #category : #building }
@@ -25,7 +23,7 @@ GtkNotebookAdapter >> addModelTo: gtkWidget [
 		
 		page := gtkWidget 
 			newPageLabel: (self buildLabelForTab: each) 
-			content: GtkBox newVertical.
+			content: (GtkBox newVertical show; yourself).
 		page data: each.
 		gtkWidget append: page ].
 	"I add contents to fist page because this will shown anyway (and like this I allow

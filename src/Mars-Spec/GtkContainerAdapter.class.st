@@ -15,4 +15,6 @@ GtkContainerAdapter >> add: anAdapter [
 GtkContainerAdapter >> newWidget [
 
 	^ GtkBox newVertical
+		show;
+		yourself
 ]
