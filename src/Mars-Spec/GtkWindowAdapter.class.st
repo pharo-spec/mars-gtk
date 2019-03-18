@@ -47,6 +47,7 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 
 	"inner contents of window"	
 	gtkBox := GtkBox newVertical.
+	gtkBox show.
 	"menu bar"
 	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
 	"tool bar"
