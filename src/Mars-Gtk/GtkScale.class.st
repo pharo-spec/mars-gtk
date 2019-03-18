@@ -94,6 +94,11 @@ GtkScale >> drawsValue [
 ]
 
 { #category : #accessing }
+GtkScale >> getValue [
+	^ self ffiCall: #(gdouble gtk_range_get_value #(self))
+]
+
+{ #category : #accessing }
 GtkScale >> hasOrigin [
 
 	^ self ffiCall: #(gboolean gtk_scale_get_has_origin (self))
@@ -103,6 +108,13 @@ GtkScale >> hasOrigin [
 GtkScale >> hasOrigin: aBoolean [
 
 	^ self ffiCall: #(void gtk_scale_set_has_origin (self, gboolean aBoolean))
+]
+
+{ #category : #accessing }
+GtkScale >> setValue: value [
+	^ self
+		ffiCall:
+			#(void gtk_range_set_value #(self , gdouble value))
 ]
 
 { #category : #accessing }
