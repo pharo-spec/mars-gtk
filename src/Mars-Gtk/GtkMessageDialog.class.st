@@ -30,6 +30,20 @@ GtkMessageDialog class >> defaultTitle [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'instance creation' }
+GtkMessageDialog class >> newMessage: aString [
+
+	^ self new 
+		message: aString;
+		yourself 
+]
+
+{ #category : #'instance creation' }
+GtkMessageDialog class >> runMessage: aString [
+
+	^ (self newMessage: aString) run 
+]
+
 { #category : #private }
 GtkMessageDialog class >> windowNew: type [ 
 
