@@ -8,11 +8,11 @@ Class {
 GtkAthensStaticAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 	gtkWidget drawBlock: self presenter drawBlock.
-	gtkWidget extent: self presenter surfaceExtent.
+"	gtkWidget extent: self presenter surfaceExtent."
 	self presenter
 		whenDrawBlockChangedDo: [ :newBlock | self widget drawBlock: newBlock ].
-	self presenter
-		whenExtentChangedDo: [ :newExtent | self widget extent: newExtent ]
+"	self presenter
+		whenExtentChangedDo: [ :newExtent | self widget extent: newExtent ]"
 ]
 
 { #category : #drawing }

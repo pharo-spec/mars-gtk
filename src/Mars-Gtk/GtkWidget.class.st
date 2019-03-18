@@ -326,14 +326,14 @@ GtkWidget >> ffiLibraryName [
 GtkWidget >> getAllocatedHeight [
 	"Returns the height that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
 
-	^ self ffiCall: #(int gtk_widget_get_allocated_height #(self) #';')
+	^ self ffiCall: #(int gtk_widget_get_allocated_height(self))
 ]
 
 { #category : #testing }
 GtkWidget >> getAllocatedWidth [
 	"Returns the width that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
 
-	^ self ffiCall: #(int gtk_widget_get_allocated_width #(self) #';')
+	^ self ffiCall: #(int gtk_widget_get_allocated_width(self))
 ]
 
 { #category : #private }
@@ -358,6 +358,14 @@ GtkWidget >> getTopLevel [
 	 ExternalAddress, skiping any other object creation."
 
 	^ self ffiCall: #("GtkWidget *"void *gtk_widget_get_toplevel (self))
+]
+
+{ #category : #testing }
+GtkWidget >> getWindow [
+	"Returns the height that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
+
+	^ self
+		ffiCall: #(GtkWindow *gtk_widget_get_window(self))
 ]
 
 { #category : #accessing }
