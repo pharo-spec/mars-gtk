@@ -7,9 +7,13 @@ Class {
 { #category : #building }
 GtkSliderAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
-	gtkWidget drawValue: false "self presenter value".
-	gtkWidget setValue: self presenter value. 
-	self presenter whenValueChangedDo: [ : newValue | gtkWidget setValue: newValue ]
+	gtkWidget drawValue: false.	
+	gtkWidget setValue: self presenter value.
+	gtkWidget marks: self presenter marks.
+	self presenter
+		whenMarksChangedDo: [ :newValue | gtkWidget marks:  newValue ].
+	self presenter
+		whenValueChangedDo: [ :newValue | gtkWidget setValue: newValue ]
 ]
 
 { #category : #building }

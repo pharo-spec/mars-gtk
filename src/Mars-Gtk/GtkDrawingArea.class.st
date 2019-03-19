@@ -33,11 +33,6 @@ GtkDrawingArea >> basicDraw: cr [
 ]
 
 { #category : #drawing }
-GtkDrawingArea >> boundingBox [
-	^ self positionInTopLevel corner: self positionInTopLevel + self size
-]
-
-{ #category : #drawing }
 GtkDrawingArea >> drawOnAthensCanvas: aCanvas [
 	self subclassResponsibility
 ]
@@ -78,22 +73,9 @@ GtkDrawingArea >> initialize [
 			0 ]
 ]
 
-{ #category : #drawing }
-GtkDrawingArea >> positionInTopLevel [
-
-	^ self 
-		translateCoordinates: 0@0
-		to: self parentWindow
-]
-
 { #category : #private }
 GtkDrawingArea >> setSizeRequestWidth: width height: height [
 	
 	self
 		ffiCall: #(void gtk_widget_set_size_request #(self , gint width , gint height))
-]
-
-{ #category : #private }
-GtkDrawingArea >> size [
-	^  self getAllocatedWidth @ self getAllocatedHeight 
 ]
