@@ -294,6 +294,12 @@ GtkWidget >> destroy [
 	^ self ffiCall: #(void gtk_widget_destroy (self))
 ]
 
+{ #category : #private }
+GtkWidget >> display [
+
+	^ self ffiCall: #(GdkDisplay *gtk_widget_get_display (self))
+]
+
 { #category : #testing }
 GtkWidget >> dragDestSetFlags: flags targetsTypes: targets targetsAmount: n_targets actions: actions [
 "Sets a widget as a potential drop destination, and adds default behaviors.

@@ -77,7 +77,9 @@ GtkWindow >> bounds [
 GtkWindow >> center [
 	"Sets position as 'center' to be applied *before* window is opened."
 	
-	self setPosition: GTK_WIN_POS_CENTER
+	self isVisible 
+		ifTrue: [ self moveTo: (self display primaryMonitor geometry extent - self size) // 2 ]
+		ifFalse: [ self setPosition: GTK_WIN_POS_CENTER ]
 ]
 
 { #category : #signaling }
