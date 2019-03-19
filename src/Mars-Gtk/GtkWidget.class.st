@@ -130,6 +130,11 @@ GtkWidget >> bindKeyCombination: aShortcut toAction: aBlock [
 	self flag: #TODO.
 ]
 
+{ #category : #drawing }
+GtkWidget >> boundingBox [
+	^ self positionInTopLevel corner: self positionInTopLevel + self size
+]
+
 { #category : #private }
 GtkWidget >> canDefault: can_default [
 
@@ -496,6 +501,14 @@ GtkWidget >> path [
 	^ path readString
 ]
 
+{ #category : #drawing }
+GtkWidget >> positionInTopLevel [
+
+	^ self 
+		translateCoordinates: 0@0
+		to: self parentWindow
+]
+
 { #category : #geometry }
 GtkWidget >> preferredSizeMinimum [
 	| min natural |
@@ -570,6 +583,11 @@ GtkWidget >> showAll [
 
 	^ self 
 		ffiCall: #(void gtk_widget_show_all (self))
+]
+
+{ #category : #private }
+GtkWidget >> size [
+	^  self getAllocatedWidth @ self getAllocatedHeight 
 ]
 
 { #category : #geometry }
