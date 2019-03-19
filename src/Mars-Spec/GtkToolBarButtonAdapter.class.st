@@ -7,6 +7,7 @@ Class {
 { #category : #private }
 GtkToolBarButtonAdapter >> addModelTo: gtkToolButton [
 	
+	gtkToolButton showAll. "Show all to ensure icons are shown if they are not"
 	gtkToolButton 
 		tooltipText: self model help;
 		connectClicked: self model action

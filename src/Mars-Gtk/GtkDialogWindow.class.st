@@ -55,6 +55,12 @@ GtkDialogWindow >> addButton: aString do: aBlock [
 ]
 
 { #category : #accessing }
+GtkDialogWindow >> buttonBox [
+
+	^ buttonBox
+]
+
+{ #category : #accessing }
 GtkDialogWindow >> contentArea [
 
 	^ contentArea
