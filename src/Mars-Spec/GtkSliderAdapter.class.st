@@ -7,26 +7,37 @@ Class {
 { #category : #building }
 GtkSliderAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
-	gtkWidget drawValue: false.	
+	gtkWidget drawValue: false.
 	gtkWidget setValue: self presenter value.
 	gtkWidget marks: self presenter marks.
 	self presenter
-		whenMarksChangedDo: [ :newValue | gtkWidget marks:  newValue ].
+		whenMarksChangedDo: [ :newValue | self marks: newValue into: gtkWidget ].
 	self presenter
 		whenValueChangedDo: [ :newValue | gtkWidget setValue: newValue ]
+]
+
+{ #category : #building }
+GtkSliderAdapter >> marks: newValue into: gtkWidget [
+	gtkWidget clearMarks.
+	newValue
+		do: [ :m | 
+			gtkWidget
+				addMarkAtValue: (self presenter scaleValue: m value)
+				withPosition: GtkPositionType GTK_POS_BOTTOM
+				withText: m text ]
 ]
 
 { #category : #building }
 GtkSliderAdapter >> newWidget [
 	^ self presenter isHorizontal
 		ifTrue: [ self widgetClass
-				newHorizontalMin: self presenter min
-				max: self presenter max
-				step: self presenter quantum ]
+				newHorizontalMin: 0
+				max: 1
+				step: (self presenter quantum / self presenter max) asFloat ]
 		ifFalse: [ self widgetClass
-				newVerticalMin: self presenter min
-				max: self presenter max
-				step: self presenter quantum ]
+				newVerticalMin: 0
+				max: 1
+				step: (self presenter quantum / self presenter max) asFloat ]
 ]
 
 { #category : #building }
