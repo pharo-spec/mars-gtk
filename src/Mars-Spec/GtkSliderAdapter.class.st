@@ -9,7 +9,7 @@ GtkSliderAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 	gtkWidget drawValue: false.
 	gtkWidget setValue: self presenter value.
-	gtkWidget marks: self presenter marks.
+	self marks: self presenter marks into: gtkWidget.
 	self presenter
 		whenMarksChangedDo: [ :newValue | self marks: newValue into: gtkWidget ].
 	self presenter
@@ -22,7 +22,7 @@ GtkSliderAdapter >> marks: newValue into: gtkWidget [
 	newValue
 		do: [ :m | 
 			gtkWidget
-				addMarkAtValue: (self presenter scaleValue: m value)
+				addMarkAtValue: (self presenter valueToAbsoluteValue:  m value)
 				withPosition: GtkPositionType GTK_POS_BOTTOM
 				withText: m text ]
 ]
