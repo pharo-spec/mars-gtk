@@ -89,7 +89,7 @@ GtkInfoBar >> connectResponse: aBlock [
 
 	self 
 		connect: 'response' 
-		signature: #(void (void *infobar, long responseid, void *user_data))
+		signature: #(void (void *infobar, gint responseid, void *user_data))
 		do: [ :infobar :responseid :user_data | aBlock value: responseid ]
 ]
 
