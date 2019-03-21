@@ -47,5 +47,8 @@ GtkDialogWindowAdapter >> newWidget [
 { #category : #accessing }
 GtkDialogWindowAdapter >> open [ 
 
-	self widgetDo: [ :w | ^ w run ]
+	self widgetDo: [ :w | 
+		w show.
+		self announceOpened.
+		^ w run ]
 ]

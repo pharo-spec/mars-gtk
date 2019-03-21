@@ -4,7 +4,7 @@ I'm an element inside a GtkListBox
 Class {
 	#name : #GtkListBoxRow,
 	#superclass : #GtkBin,
-	#category : #'Mars-Gtk-Widget'
+	#category : 'Mars-Gtk-Widget'
 }
 
 { #category : #private }
