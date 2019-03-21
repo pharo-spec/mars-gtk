@@ -103,10 +103,8 @@ GtkWindowAdapter >> centered [
 	
 	self widgetDo: [ :w | 
 		w isVisible 
-			ifFalse: [ 
-				w center ]
-			ifTrue: [ 
-				w hide; center; show ] ]
+			ifTrue: [ w moveToCenter ]
+			ifFalse: [ w center ] ]
 ]
 
 { #category : #accessing }

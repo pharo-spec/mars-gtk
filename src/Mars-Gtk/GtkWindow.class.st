@@ -154,6 +154,12 @@ GtkWindow >> moveTo: aPoint [
 	self moveX: aPoint x y: aPoint y
 ]
 
+{ #category : #geometry }
+GtkWindow >> moveToCenter [ 
+
+	self moveTo: (self display primaryMonitor geometry extent - self size) // 2
+]
+
 { #category : #private }
 GtkWindow >> moveX: x y: y [
 
