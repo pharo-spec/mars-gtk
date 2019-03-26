@@ -15,14 +15,39 @@ Class {
 }
 
 { #category : #'instance creation' }
+GtkFileChooserDialog class >> newOpenDirectoryTitle: aString [
+
+	^ self newOpenDirectoryTitle: aString acceptLabel: 'Open' cancelLabel: 'Cancel' 
+]
+
+{ #category : #'instance creation' }
+GtkFileChooserDialog class >> newOpenDirectoryTitle: aString acceptLabel: acceptString cancelLabel: cancelString [
+
+	^ (self 
+		newTitle: aString 
+		action: GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER
+		firstButtonText: cancelString
+		firstButtonId: GTK_RESPONSE_CANCEL
+		secondButtonText: acceptString
+		secondButtonId: GTK_RESPONSE_OK)
+		initialize
+]
+
+{ #category : #'instance creation' }
 GtkFileChooserDialog class >> newOpenFileTitle: aString [
+
+	^ self newOpenFileTitle: aString acceptLabel: 'Open' cancelLabel: 'Cancel' 
+]
+
+{ #category : #'instance creation' }
+GtkFileChooserDialog class >> newOpenFileTitle: aString acceptLabel: acceptString cancelLabel: cancelString [
 
 	^ (self 
 		newTitle: aString 
 		action: GTK_FILE_CHOOSER_ACTION_OPEN 
-		firstButtonText: 'Cancel'
+		firstButtonText: cancelString
 		firstButtonId: GTK_RESPONSE_CANCEL
-		secondButtonText: 'Open'
+		secondButtonText: acceptString
 		secondButtonId: GTK_RESPONSE_OK)
 		initialize
 ]

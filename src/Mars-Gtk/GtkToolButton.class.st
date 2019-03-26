@@ -13,7 +13,7 @@ Class {
 GtkToolButton class >> newForm: aForm label: aString [
 
 	^ self 
-		newIcon: (GtkImage newForm: aForm) 
+		newIcon: (GtkImage newForm: aForm)
 		label: aString
 ]
 

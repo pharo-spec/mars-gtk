@@ -92,15 +92,19 @@ GtkWindowAdapter >> announceClosed [
 	self model windowIsClosing
 ]
 
+{ #category : #private }
+GtkWindowAdapter >> announceOpened [
+
+	self model windowIsOpening
+]
+
 { #category : #accessing }
 GtkWindowAdapter >> centered [
 	
 	self widgetDo: [ :w | 
 		w isVisible 
-			ifFalse: [ 
-				w center ]
-			ifTrue: [ 
-				w hide; center; show ] ]
+			ifTrue: [ w moveToCenter ]
+			ifFalse: [ w center ] ]
 ]
 
 { #category : #accessing }
@@ -168,7 +172,9 @@ GtkWindowAdapter >> notifyInfo: aSpecNotification [
 { #category : #accessing }
 GtkWindowAdapter >> open [
 
-	self widgetDo: [ :w | w show ]
+	self widgetDo: [ :w | 
+		w show.
+		self announceOpened ].
 ]
 
 { #category : #accessing }

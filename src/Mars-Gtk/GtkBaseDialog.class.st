@@ -34,7 +34,6 @@ GtkBaseDialog >> run [
 
 	self isRunning ifTrue: [ self error: 'Dialog is already running!' ].
 	
-	self isVisible ifFalse: [ self showAll ].
 	runContext := GtkDialogRunContext newDialog: self.
 	^ [ runContext run ]
 	ensure: [ runContext := nil ]

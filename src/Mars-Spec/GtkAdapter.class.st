@@ -41,7 +41,12 @@ GtkAdapter >> addMenu: aValuable to: gtkWidget [
 
 { #category : #building }
 GtkAdapter >> addModelTo: gtkWidget [
+]
 
+{ #category : #building }
+GtkAdapter >> addSettingsTo: gtkWidget [
+	"A secondary initialization generic to all widgets"
+	
 	gtkWidget sensitive: self presenter isEnabled.
 	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
 	self presenter whenEnabledChanged: [ gtkWidget sensitive: self presenter isEnabled ].
@@ -53,13 +58,6 @@ GtkAdapter >> addModelTo: gtkWidget [
 		value
 			ifTrue: [ gtkWidget show ]
 			ifFalse: [ gtkWidget hide ] ].
-]
-
-{ #category : #building }
-GtkAdapter >> addSettingsTo: gtkWidget [
-	"A secondary initialization generic to all widgets"
-	
-	gtkWidget sensitive: self model isEnabled
 ]
 
 { #category : #building }

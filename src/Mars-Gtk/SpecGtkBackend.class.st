@@ -24,17 +24,42 @@ SpecGtkBackend >> initialize [
 
 ]
 
-{ #category : #'private notifying' }
+{ #category : #'ui notifying' }
 SpecGtkBackend >> notifyError: aSpecNotification [
-
-	aSpecNotification window ifNotNil: [ :aWindow |
-		^ aWindow notifyError: aSpecNotification ].
 
 	GtkErrorDialog runMessage: aSpecNotification message
 ]
 
-{ #category : #'private notifying' }
+{ #category : #'ui notifying' }
 SpecGtkBackend >> notifyInfo: aSpecNotification [
 
 	GtkInformDialog runMessage: aSpecNotification message
+]
+
+{ #category : #'ui dialogs' }
+SpecGtkBackend >> selectDirectoryTitle: aString [
+	| dialog |
+
+	dialog := GtkFileChooserDialog 
+		newOpenDirectoryTitle: 'Select file...' 
+		acceptLabel: 'Accept' 
+		cancelLabel: 'Cancel'.
+	dialog run.
+	^ dialog isOk 
+		ifTrue: [ dialog filename asFileReference ]
+		ifFalse: [ nil ]
+]
+
+{ #category : #'ui dialogs' }
+SpecGtkBackend >> selectFileTitle: aString [
+	| dialog |
+
+	dialog := GtkFileChooserDialog 
+		newOpenFileTitle: 'Select file...' 
+		acceptLabel: 'Accept' 
+		cancelLabel: 'Cancel'.
+	dialog run.
+	^ dialog isOk 
+		ifTrue: [ dialog filename asFileReference ]
+		ifFalse: [ nil ]
 ]

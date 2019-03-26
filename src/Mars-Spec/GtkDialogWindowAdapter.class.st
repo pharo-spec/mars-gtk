@@ -17,12 +17,14 @@ GtkDialogWindowAdapter >> add: gtkBox toWindow: gtkDialog [
 		gtkDialog 
 			addButton: buttonPresenter label asString
 			do: buttonPresenter action ].
+	gtkDialog buttonBox showAll.
 	gtkDialog defaultResponse: self model buttons size
 ]
 
 { #category : #accessing }
 GtkDialogWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 
+	gtkWindow showAll.
 	self model isCentered ifTrue: [ gtkWindow center ].
 	super addPresenterIn: gtkWindow withSpecLayout: aSpec	
 ]
@@ -44,5 +46,9 @@ GtkDialogWindowAdapter >> newWidget [
 
 { #category : #accessing }
 GtkDialogWindowAdapter >> open [ 
-	self widgetDo: [ :w | ^ w run ]
+
+	self widgetDo: [ :w | 
+		w show.
+		self announceOpened.
+		^ w run ]
 ]
