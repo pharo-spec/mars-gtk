@@ -5,7 +5,7 @@ Class {
 		'inputSemaphore',
 		'semaIndex'
 	],
-	#category : 'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #testing }

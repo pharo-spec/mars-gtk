@@ -55,6 +55,12 @@ GtkTextIter class >> fieldsDesc [
 	)
 ]
 
+{ #category : #accessing }
+GtkTextIter >> backwardLines: count [
+
+	^ self ffiCall: #(gboolean gtk_text_iter_backward_lines (self, gint count))
+]
+
 { #category : #'accessing structure variables' }
 GtkTextIter >> dummy1 [
 	"This method was automatically generated"
@@ -221,4 +227,10 @@ GtkTextIter >> dummy9 [
 GtkTextIter >> dummy9: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_DUMMY9 put: anObject getHandle.
+]
+
+{ #category : #accessing }
+GtkTextIter >> forwardLines: count [
+
+	^ self ffiCall: #(gboolean gtk_text_iter_forward_lines (self, gint count))
 ]

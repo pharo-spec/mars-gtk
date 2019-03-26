@@ -1,7 +1,7 @@
 Class {
 	#name : #GtkMainRunLoop,
 	#superclass : #GtkRunLoop,
-	#category : 'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #'private installing' }

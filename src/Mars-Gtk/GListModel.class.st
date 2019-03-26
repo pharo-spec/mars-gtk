@@ -10,7 +10,7 @@ Class {
 	#pools : [
 		'GtkTypes'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #accessing }
