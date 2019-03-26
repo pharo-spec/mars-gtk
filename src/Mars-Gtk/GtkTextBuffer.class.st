@@ -28,6 +28,12 @@ GtkTextBuffer >> appendText: aString [
 		text: aString
 ]
 
+{ #category : #accessing }
+GtkTextBuffer >> charCount [
+
+	^ self ffiCall: #(gint gtk_text_buffer_get_char_count (self))
+]
+
 { #category : #private }
 GtkTextBuffer >> endIter [ 
 	| end |
@@ -82,6 +88,12 @@ GtkTextBuffer >> insertText: aString [
 GtkTextBuffer >> insertTextAtCursor: text [
 
 	^ self ffiCall: #(void gtk_text_buffer_insert_at_cursor (self, const gchar *text, -1))
+]
+
+{ #category : #accessing }
+GtkTextBuffer >> lineCount [
+
+	^ self ffiCall: #(gint gtk_text_buffer_get_line_count (self))
 ]
 
 { #category : #private }
