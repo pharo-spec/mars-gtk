@@ -35,6 +35,12 @@ GtkTextBuffer >> charCount [
 ]
 
 { #category : #private }
+GtkTextBuffer >> deleteStart: start end: end [
+
+	^ self ffiCall: #(void gtk_text_buffer_delete (self, GtkTextIter *start, GtkTextIter *end))
+]
+
+{ #category : #private }
 GtkTextBuffer >> endIter [ 
 	| end |
 
