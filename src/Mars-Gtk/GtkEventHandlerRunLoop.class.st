@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'runLoop'
 	],
-	#category : 'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #'private handler' }

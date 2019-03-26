@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'items'
 	],
-	#category : 'Mars-Gtk-Misc'
+	#category : #'Mars-Gtk-Misc'
 }
 
 { #category : #'instance creation' }
