@@ -41,7 +41,7 @@ GtkMessageDialog class >> newMessage: aString [
 { #category : #'instance creation' }
 GtkMessageDialog class >> runMessage: aString [
 
-	^ (self newMessage: aString) run 
+	^ (self newMessage: aString) showAll; run 
 ]
 
 { #category : #private }

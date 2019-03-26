@@ -44,7 +44,7 @@ SpecGtkBackend >> selectDirectoryTitle: aString [
 		newOpenDirectoryTitle: 'Select file...' 
 		acceptLabel: 'Accept' 
 		cancelLabel: 'Cancel'.
-	dialog run.
+	dialog showAll; run.
 	^ dialog isOk 
 		ifTrue: [ dialog filename asFileReference ]
 		ifFalse: [ nil ]
@@ -58,7 +58,7 @@ SpecGtkBackend >> selectFileTitle: aString [
 		newOpenFileTitle: 'Select file...' 
 		acceptLabel: 'Accept' 
 		cancelLabel: 'Cancel'.
-	dialog run.
+	dialog showAll; run.
 	^ dialog isOk 
 		ifTrue: [ dialog filename asFileReference ]
 		ifFalse: [ nil ]
