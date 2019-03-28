@@ -5,9 +5,7 @@ https://developer.gnome.org/pango/unstable/pango-Text-Processing.html#PangoConte
 "
 Class {
 	#name : #PangoContext,
-	#superclass : #FFIOpaqueObject,
-	#traits : 'TPangoLibrary',
-	#classTraits : 'TPangoLibrary classTrait',
+	#superclass : #PangoObject,
 	#category : #'Mars-Pango-Base'
 }
 

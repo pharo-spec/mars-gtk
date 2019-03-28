@@ -1,8 +1,6 @@
 Class {
 	#name : #PangoLayout,
-	#superclass : #FFIOpaqueObject,
-	#traits : 'TPangoLibrary',
-	#classTraits : 'TPangoLibrary classTrait',
+	#superclass : #PangoObject,
 	#category : #'Mars-Pango-Base'
 }
 

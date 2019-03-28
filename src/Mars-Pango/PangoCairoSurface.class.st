@@ -3,7 +3,7 @@ Class {
 	#superclass : #AthensCairoSurface,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
-	#category : #'Mars-Pango-Base'
+	#category : #'Mars-Pango-Athens'
 }
 
 { #category : #'instance creation' }

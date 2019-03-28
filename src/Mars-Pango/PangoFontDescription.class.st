@@ -5,9 +5,7 @@ https://developer.gnome.org/pango/stable/pango-Fonts.html#PangoFontDescription
 "
 Class {
 	#name : #PangoFontDescription,
-	#superclass : #FFIOpaqueObject,
-	#traits : 'TPangoLibrary',
-	#classTraits : 'TPangoLibrary classTrait',
+	#superclass : #PangoObject,
 	#category : #'Mars-Pango-Base'
 }
 

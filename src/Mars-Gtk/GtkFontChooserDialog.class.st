@@ -20,3 +20,21 @@ GtkFontChooserDialog class >> newTitle: aString [
 
 	^ (self fontChooserDialogNewTitle: aString) initialize
 ]
+
+{ #category : #'cairo-options' }
+GtkFontChooserDialog >> fontDescription [
+
+	^ self ffiCall: #(PangoFontDescription *gtk_font_chooser_get_font_desc (self))
+]
+
+{ #category : #'cairo-options' }
+GtkFontChooserDialog >> fontFamily [
+
+	^ self ffiCall: #(PangoFontFamily *gtk_font_chooser_get_font_family (self))
+]
+
+{ #category : #'cairo-options' }
+GtkFontChooserDialog >> fontSize [
+
+	^ self ffiCall: #(gint gtk_font_chooser_get_font_size (self))
+]
