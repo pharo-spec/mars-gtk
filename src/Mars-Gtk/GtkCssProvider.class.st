@@ -49,6 +49,18 @@ GtkCssProvider class >> fileNameToUTF8: opsysstring len: len read: bytes_read wr
 ]
 
 { #category : #'instance creation' }
+GtkCssProvider class >> fromPath: aString [
+
+	^ self new loadFromPath: aString
+]
+
+{ #category : #'instance creation' }
+GtkCssProvider class >> fromString: aString [
+
+	^ self new loadFromData: aString
+]
+
+{ #category : #'instance creation' }
 GtkCssProvider class >> new [ 
 	^ self cssProviderNew initialize
 ]
