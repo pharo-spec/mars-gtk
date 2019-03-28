@@ -10,7 +10,8 @@ BaselineOfMars >> baseline: spec [
 	spec
 		for: #common
 		do: [ self beacon: spec.
-			spec package: 'Mars-Gtk' with: [ spec requires: 'Beacon' ].
+			spec package: 'Mars-Pango'.
+			spec package: 'Mars-Gtk' with: [ spec requires: #('Beacon' 'Mars-Pango') ].
 			spec package: 'Mars-Spec' with: [ spec requires: 'Mars-Gtk' ].
 			spec
 				package: 'Mars-GtkBackendTests'
