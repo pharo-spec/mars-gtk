@@ -34,6 +34,12 @@ GtkFontChooserDialog >> fontFamily [
 ]
 
 { #category : #accessing }
+GtkFontChooserDialog >> fontMap: fontmap [
+
+	^ self ffiCall: #(void gtk_font_chooser_set_font_map (self, PangoFontMap *fontmap))
+]
+
+{ #category : #accessing }
 GtkFontChooserDialog >> fontSize [
 
 	^ self ffiCall: #(gint gtk_font_chooser_get_font_size (self))

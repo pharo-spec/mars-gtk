@@ -29,10 +29,22 @@ FcConfig class >> getCurrent [
 	^ self ffiCall: #(FcConfig *FcConfigGetCurrent(void))
 ]
 
+{ #category : #private }
+FcConfig class >> initLoadConfigAndFonts [
+
+	self ffiCall: #(FcConfig *FcInitLoadConfigAndFonts())
+]
+
 { #category : #'instance creation' }
 FcConfig class >> new [ 
 
 	^ self create initialize
+]
+
+{ #category : #'instance creation' }
+FcConfig class >> newLoadConfigAndFonts [
+
+	^ self initLoadConfigAndFonts initialize
 ]
 
 { #category : #accessing }
@@ -95,7 +107,7 @@ FcConfig >> initialize [
 ]
 
 { #category : #accessing }
-FcConfig >> installInCurrentFontMap [
+FcConfig >> installInDefaultFontMap [
 
 	PangoFontMap default config: self
 ]
