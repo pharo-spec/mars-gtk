@@ -24,7 +24,7 @@ GtkCssProvider class >> fileNameToUTF8: aString [
 	
 	read := ExternalAddress new.
 	written := ExternalAddress new.
-	error := GError externalNew autoRelease.
+	error := GError new.
 	encoded := self 
 		fileNameToUTF8: aString 
 		len: aString size 
@@ -40,6 +40,7 @@ GtkCssProvider class >> fileNameToUTF8: aString [
 
 { #category : #private }
 GtkCssProvider class >> fileNameToUTF8: opsysstring len: len read: bytes_read written: bytes_written error: error [
+
 	self ffiCall: #(gchar *g_filename_to_utf8 (
 		const gchar *opsysstring,
 		gssize len,
@@ -49,20 +50,26 @@ GtkCssProvider class >> fileNameToUTF8: opsysstring len: len read: bytes_read wr
 ]
 
 { #category : #'instance creation' }
-GtkCssProvider class >> fromPath: aString [
+GtkCssProvider class >> new [ 
+	^ self cssProviderNew initialize
+]
+
+{ #category : #'instance creation' }
+GtkCssProvider class >> newFromPath: aString [
 
 	^ self new loadFromPath: aString
 ]
 
 { #category : #'instance creation' }
-GtkCssProvider class >> fromString: aString [
-
-	^ self new loadFromData: aString
+GtkCssProvider class >> newFromReference: aFileReference [ 
+	
+	^ self newFromPath: aFileReference fullName
 ]
 
 { #category : #'instance creation' }
-GtkCssProvider class >> new [ 
-	^ self cssProviderNew initialize
+GtkCssProvider class >> newFromString: aString [
+
+	^ self new loadFromData: aString
 ]
 
 { #category : #accessing }

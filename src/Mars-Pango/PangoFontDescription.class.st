@@ -17,6 +17,7 @@ PangoFontDescription class >> finalizeResourceData: handle [
 
 { #category : #'instance creation' }
 PangoFontDescription class >> newFromString: aString [
+
 	^ (self pango_font_description_from_string: aString) initialize
 ]
 

@@ -10,3 +10,8 @@ Class {
 PangoObject class >> ffiLibraryName [
 	^ PangoLibrary
 ]
+
+{ #category : #initialization }
+PangoObject >> initialize [
+	
+]

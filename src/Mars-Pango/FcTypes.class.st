@@ -3,7 +3,8 @@ Class {
 	#superclass : #SharedPool,
 	#classVars : [
 		'FcBool',
-		'FcChar8'
+		'FcChar8',
+		'FcSetName'
 	],
 	#category : #'Mars-Pango-FontConfig'
 }
@@ -12,5 +13,6 @@ Class {
 FcTypes >> initialize [
 
 	FcChar8 := #char.
-	FcBool := #Boolean
+	FcBool := #Boolean.
+	FcSetName := #int
 ]

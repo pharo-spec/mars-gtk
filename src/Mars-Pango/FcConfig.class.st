@@ -7,10 +7,7 @@ https://www.freedesktop.org/software/fontconfig/fontconfig-devel/x31.html
 "
 Class {
 	#name : #FcConfig,
-	#superclass : #FFIOpaqueObject,
-	#pools : [
-		'FcTypes'
-	],
+	#superclass : #FcObject,
 	#category : #'Mars-Pango-FontConfig'
 }
 
@@ -24,12 +21,6 @@ FcConfig class >> create [
 FcConfig class >> current [
 
 	^ self getCurrent initialize
-]
-
-{ #category : #'library path' }
-FcConfig class >> ffiLibraryName [
-
-	^ FcLibrary
 ]
 
 { #category : #private }
@@ -67,6 +58,12 @@ FcConfig >> addFile: aFileReference [
 ]
 
 { #category : #accessing }
+FcConfig >> applicationFonts [
+
+	^ self getFonts: 1
+]
+
+{ #category : #accessing }
 FcConfig >> buildFonts [
 
 	^ self ffiCall: #(FcBool FcConfigBuildFonts(self))
@@ -86,13 +83,25 @@ FcConfig >> fcAddFile: file [
 	^ self ffiCall: #(FcBool FcConfigAppFontAddFile(self, const FcChar8 *file))
 ]
 
-{ #category : #'library path' }
-FcConfig >> ffiLibraryName [
+{ #category : #'private primitives' }
+FcConfig >> getFonts: set [
 
-	^ self class ffiLibraryName
+	^ self ffiCall: #(FcFontSet *FcConfigGetFonts(self, FcSetName set))
 ]
 
 { #category : #initialization }
 FcConfig >> initialize [
 	"cancel super to avoid setHandle: call"
+]
+
+{ #category : #accessing }
+FcConfig >> installInCurrentFontMap [
+
+	PangoFontMap default config: self
+]
+
+{ #category : #accessing }
+FcConfig >> systemFonts [
+
+	^ self getFonts: 0
 ]
