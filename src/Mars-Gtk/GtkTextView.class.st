@@ -79,6 +79,29 @@ GtkTextView >> monospace: aBoolean [
 	^ self ffiCall: #(void gtk_text_view_set_monospace (self, gboolean aBoolean))
 ]
 
+{ #category : #accessing }
+GtkTextView >> scrollToEnd [
+
+	self 
+		scrollToIter: self textBuffer endIter
+		withinMargin: 0.0
+		useAlign: false 
+		xalign: 0.0
+		yalign: 0.0
+]
+
+{ #category : #private }
+GtkTextView >> scrollToIter: iter withinMargin: within_margin useAlign: use_align xalign: xalign yalign: yalign [
+
+	^ self ffiCall: #(gboolean gtk_text_view_scroll_to_iter (
+		self,
+      GtkTextIter *iter,
+      gdouble within_margin,
+      gboolean use_align,
+      gdouble xalign,
+      gdouble yalign))
+]
+
 { #category : #private }
 GtkTextView >> setWrapMode: wrap_mode [
 
