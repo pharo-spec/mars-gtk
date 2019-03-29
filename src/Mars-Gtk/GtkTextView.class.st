@@ -83,9 +83,9 @@ GtkTextView >> monospace: aBoolean [
 GtkTextView >> scrollToEnd [
 
 	self 
-		scrollToIter: self textBuffer endIter
+		scrollToMark: self textBuffer insertMark
 		withinMargin: 0.0
-		useAlign: false 
+		useAlign: false
 		xalign: 0.0
 		yalign: 0.0
 ]
@@ -96,6 +96,18 @@ GtkTextView >> scrollToIter: iter withinMargin: within_margin useAlign: use_alig
 	^ self ffiCall: #(gboolean gtk_text_view_scroll_to_iter (
 		self,
       GtkTextIter *iter,
+      gdouble within_margin,
+      gboolean use_align,
+      gdouble xalign,
+      gdouble yalign))
+]
+
+{ #category : #private }
+GtkTextView >> scrollToMark: mark withinMargin: within_margin useAlign: use_align xalign: xalign yalign: yalign [
+
+	^ self ffiCall: #(gboolean gtk_text_view_scroll_to_mark (
+		self,
+      GtkTextMark *mark,
       gdouble within_margin,
       gboolean use_align,
       gdouble xalign,

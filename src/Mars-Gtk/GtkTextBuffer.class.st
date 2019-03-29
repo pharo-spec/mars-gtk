@@ -66,6 +66,12 @@ GtkTextBuffer >> insertIter: iter text: text [
 ]
 
 { #category : #accessing }
+GtkTextBuffer >> insertMark [
+
+	^ self ffiCall: #(GtkTextMark *gtk_text_buffer_get_insert (self))
+]
+
+{ #category : #accessing }
 GtkTextBuffer >> insertMarkup: aString [
 
 	self 
