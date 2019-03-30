@@ -13,6 +13,12 @@ GtkAbstractTextAdapter >> addModelTo: gtkWidget [
 		gtkWidget text: text asString ].
 ]
 
+{ #category : #selection }
+GtkAbstractTextAdapter >> selectAll [
+	
+	self widget selectAll
+]
+
 { #category : #accessing }
 GtkAbstractTextAdapter >> text: aString [ 
 	

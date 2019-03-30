@@ -222,6 +222,18 @@ GtkEntry >> progress: fraction [
 	^ self ffiCall: #(void gtk_entry_set_progress_fraction (self, gdouble fraction))
 ]
 
+{ #category : #selection }
+GtkEntry >> selectAll [
+
+	self selectFrom: 0 to: -1
+]
+
+{ #category : #selection }
+GtkEntry >> selectFrom: start_pos to: end_pos [
+
+	^ self ffiCall: #(void gtk_editable_select_region (self, gint start_pos, gint end_pos))
+]
+
 { #category : #accessing }
 GtkEntry >> text [
 	
