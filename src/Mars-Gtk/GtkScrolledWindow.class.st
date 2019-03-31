@@ -25,3 +25,15 @@ GtkScrolledWindow class >> scrolledWindowNewHAdjustment: hadjustment vAdjustment
 		GtkAdjustment *hadjustment,
 		GtkAdjustment *vadjustment))
 ]
+
+{ #category : #'as yet unclassified' }
+GtkScrolledWindow >> isKineticScrolling [
+
+	^ self ffiCall: #(gboolean gtk_scrolled_window_get_kinetic_scrolling(self))
+]
+
+{ #category : #'as yet unclassified' }
+GtkScrolledWindow >> kineticScrolling: kinetic_scrolling [
+
+	^ self ffiCall: #(void gtk_scrolled_window_set_kinetic_scrolling (self, gboolean kinetic_scrolling))
+]

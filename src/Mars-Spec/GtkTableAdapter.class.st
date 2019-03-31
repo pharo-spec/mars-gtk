@@ -54,8 +54,8 @@ GtkTableAdapter >> addModelTo: gtkList [
 		gtkList headersVisible: self model isShowingColumnHeaders ].
 		
 	gtkList connectRowActivated: [ :path | 
-	self model doActivateAtIndex: path toArray first ].
-	
+		self model doActivateAtIndex: path toArray first ].
+
 	widget := gtkList.
 	
 	self presenter whenColumnsChangedDo: [ 

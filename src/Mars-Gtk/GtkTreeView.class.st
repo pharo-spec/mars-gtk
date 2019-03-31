@@ -100,12 +100,11 @@ GtkTreeView >> columns [
 GtkTreeView >> connectRowActivated: aBlock [ 
 	
 	^ self 
-		connect: 'row-activated' 
-		signature: #(void (void *widget, void *pathAddress, void *column, void *aData))  
- 		do: [ :widget :pathAddress :column :aData | 
-			| path |
-			path := GtkTreePath fromHandle: pathAddress.
-			aBlock value: path ]
+		connect: 'row-activated'
+		signature: #(void (void *treeView, void *path, void *column, void *userData))  
+ 		do: [ :treeView :pathHandle :columnHandle :userData | | path |
+			path := GtkTreePath fromHandle: pathHandle.
+			aBlock cull: path ]
 ]
 
 { #category : #signals }

@@ -26,18 +26,30 @@ GtkSettings class >> gtkSettingsGetDefault [
 	^ self ffiCall: #(GtkSettings *gtk_settings_get_default (void))
 ]
 
+{ #category : #settings }
+GtkSettings >> enableAnimations: aBoolean [ 
+
+	self gObjectSet: 'gtk-enable-animations' toBoolean: aBoolean
+]
+
 { #category : #initialization }
 GtkSettings >> initialize [
 	
 ]
 
-{ #category : #'accessing convenience' }
+{ #category : #settings }
+GtkSettings >> isEnableAnimations [ 
+
+	^ self gObjectGetBoolean: 'gtk-enable-animations'
+]
+
+{ #category : #settings }
 GtkSettings >> preferDarkTheme [
 
 	^ self propertyBoolean: 'gtk-application-prefer-dark-theme'
 ]
 
-{ #category : #'accessing convenience' }
+{ #category : #settings }
 GtkSettings >> preferDarkTheme: aBoolean [
 
 	self property: 'gtk-application-prefer-dark-theme' toBoolean: aBoolean
@@ -67,13 +79,13 @@ GtkSettings >> propertyString: aName [
 	^ self gObjectGetString: aName
 ]
 
-{ #category : #'accessing convenience' }
+{ #category : #settings }
 GtkSettings >> themeName [
 
 	^ self propertyString: 'gtk-theme-name'
 ]
 
-{ #category : #'accessing convenience' }
+{ #category : #settings }
 GtkSettings >> themeName: aString [
 	"GtkSettings default themeName: 'McOS-MJV-Light-1.2'"
 	self property: 'gtk-theme-name' toString: aString
