@@ -6,7 +6,6 @@ https://developer.gnome.org/glib/stable/glib-Error-Reporting.html
 Class {
 	#name : #GError,
 	#superclass : #GtkStructure,
-	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#classVars : [
 		'OFFSET_CODE',

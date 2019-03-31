@@ -50,6 +50,12 @@ GtkTextView >> beWrapWordChar [
 ]
 
 { #category : #accessing }
+GtkTextView >> cursorVisible: setting [
+
+	self ffiCall: #(void gtk_text_view_set_cursor_visible (self, gboolean setting))
+]
+
+{ #category : #accessing }
 GtkTextView >> editable: setting [
 	self ffiCall: #(void gtk_text_view_set_editable (self, gboolean setting))
 ]
@@ -58,6 +64,12 @@ GtkTextView >> editable: setting [
 GtkTextView >> getBuffer [
 
 	self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
+]
+
+{ #category : #testing }
+GtkTextView >> isCursorVisible [
+
+	^ self ffiCall: #(gboolean gtk_text_view_get_cursor_visible (self))
 ]
 
 { #category : #testing }
