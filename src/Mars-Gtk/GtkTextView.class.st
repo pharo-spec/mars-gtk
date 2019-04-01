@@ -66,6 +66,18 @@ GtkTextView >> getBuffer [
 	self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
 ]
 
+{ #category : #accessing }
+GtkTextView >> hAdjustment [
+
+	^ self ffiCall: #(GtkAdjustment *gtk_tree_view_get_hadjustment (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> hAdjustment: adjustment [
+
+	^ self ffiCall: #(void gtk_tree_view_set_hadjustment (self, GtkAdjustment *adjustment))
+]
+
 { #category : #testing }
 GtkTextView >> isCursorVisible [
 
@@ -93,13 +105,10 @@ GtkTextView >> monospace: aBoolean [
 
 { #category : #accessing }
 GtkTextView >> scrollToEnd [
+	| vAdjustment |
 
-	self 
-		scrollToMark: self textBuffer insertMark
-		withinMargin: 0.0
-		useAlign: false
-		xalign: 0.0
-		yalign: 0.0
+	vAdjustment := self vAdjustment.
+	self vAdjustment: vAdjustment upper - vAdjustment pageSize
 ]
 
 { #category : #private }
@@ -148,6 +157,18 @@ GtkTextView >> text: aString [
 GtkTextView >> textBuffer [
 
 	^ textBuffer ifNil: [ textBuffer := self getBuffer ]
+]
+
+{ #category : #accessing }
+GtkTextView >> vAdjustment [
+
+	^ self ffiCall: #(GtkAdjustment *gtk_tree_view_get_vadjustment (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> vAdjustment: adjustment [
+
+	^ self ffiCall: #(void gtk_tree_view_set_vadjustment (self, GtkAdjustment *adjustment))
 ]
 
 { #category : #accessing }
