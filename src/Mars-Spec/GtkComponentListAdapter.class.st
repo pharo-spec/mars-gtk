@@ -1,6 +1,13 @@
 Class {
 	#name : #GtkComponentListAdapter,
 	#superclass : #GtkAdapter,
+	#instVars : [
+		'realWidget'
+	],
+	#classInstVars : [
+		'gtkWidget',
+		'realWidget'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -13,6 +20,7 @@ GtkComponentListAdapter class >> adaptingAliases [
 { #category : #building }
 GtkComponentListAdapter >> addModelTo: gtkListBox [
 	widget := gtkListBox .
+	realWidget := gtkListBox.
 	self presenter
 		property: #presenters
 		whenChangedDo: [ :collection | 
@@ -23,11 +31,11 @@ GtkComponentListAdapter >> addModelTo: gtkListBox [
 { #category : #building }
 GtkComponentListAdapter >> updateWith: aCollection [
 	| listItem |
-	widget removeAll.
+	realWidget removeAll.
 	aCollection
 		doWithIndex: [ :p :i | 
 			listItem := p buildWithSpec asListBoxRow.
-			widget add: listItem.
+			realWidget add: listItem.
 			widget showAll ]
 ]
 
@@ -35,4 +43,12 @@ GtkComponentListAdapter >> updateWith: aCollection [
 GtkComponentListAdapter >> widgetClass [
 	
 	^ GtkListBox
+]
+
+{ #category : #building }
+GtkComponentListAdapter >> wrapWidget: gtkWidget [
+	realWidget := gtkWidget.
+	^ (GtkScrolledWindow newWidget: gtkWidget)
+		show;
+		yourself
 ]
