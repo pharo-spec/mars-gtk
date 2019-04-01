@@ -44,14 +44,6 @@ GObject class >> resolveType: aType [
 		resolveType: aType
 ]
 
-{ #category : #'private primitives' }
-GObject >> basicGObjectSet: aName toBoolean: aBoolean nullValue: aNull [
-
-	self 
-		ffiCall: #(void g_object_set (self, const gchar *aName, int aBoolean, void* aNull) )
-		module: GObjectLibrary
-]
-
 { #category : #accessing }
 GObject >> callbacks [
 
@@ -223,7 +215,7 @@ GObject >> gFree: aPointer [
 GObject >> gObjectGet: aName into: aBuffer [
 
 	self 
-		ffiCall: #(void g_object_get (self, const gchar *aName, void* aBuffer, 0) ) 
+		ffiCall: #(void g_object_get (self, const gchar *aName, void* aBuffer, NULL)) 
 		module: GObjectLibrary
 ]
 
@@ -231,7 +223,7 @@ GObject >> gObjectGet: aName into: aBuffer [
 GObject >> gObjectGet: aName intoAddress: aBuffer [
 
 	self 
-		ffiCall: #(void g_object_get (self, const gchar *aName, gpointer *aBuffer, 0) )
+		ffiCall: #(void g_object_get (self, const gchar *aName, gpointer *aBuffer, NULL))
 		module: GObjectLibrary		
 ]
 
@@ -278,30 +270,33 @@ GObject >> gObjectGetString: aName [
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toBoolean: aBoolean [
 
-	"Forcing the boolean to occupy a whole integer and the same for the external address null"
 	self 
-			basicGObjectSet: aName 
-			toBoolean: (aBoolean ifTrue:[1] ifFalse:[ 0 ]) 
-			nullValue: ExternalAddress null.
-
+		ffiCall: #(void g_object_set (self, const gchar *aName, gboolean aBoolean, NULL))
+		module: GObjectLibrary
 ]
 
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toDouble: aNumber [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, gdouble aNumber, 0) )
+	self 
+		ffiCall: #(void g_object_set (self, const gchar *aName, gdouble aNumber, NULL))
+		module: GObjectLibrary
 ]
 
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toInteger: aNumber [
 
-	self ffiCall: #(void g_object_set (self, const gchar *aName, gint aNumber, 0) )
+	self 
+		ffiCall: #(void g_object_set (self, const gchar *aName, gint aNumber, NULL))
+		module: GObjectLibrary
 ]
 
 { #category : #'private primitives' }
 GObject >> gObjectSet: aName toString: aString [
 
-	self ffiCall: #(void g_object_set ( self, const gchar *aName, gchar *aString, 0) )	
+	self 
+		ffiCall: #(void g_object_set ( self, const gchar *aName, gchar *aString, NULL))
+		module: GObjectLibrary	
 ]
 
 { #category : #'GT-Inspector-Extension' }
