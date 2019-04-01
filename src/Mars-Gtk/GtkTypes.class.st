@@ -16,7 +16,9 @@ Class {
 		'gsize',
 		'gssize',
 		'guint',
+		'guint16',
 		'guint32',
+		'guint8',
 		'gulong',
 		'gunichar'
 	],
@@ -31,6 +33,8 @@ GtkTypes class >> initialize [
 	gulong :=  #ulong.
 	gint := #int.
 	gint8 := #int8.
+	guint8 := #uint8.
+	guint16 := #uint16.
 	guint := #uint.
 	guint32 := #uint32.
 	gdouble := #double.

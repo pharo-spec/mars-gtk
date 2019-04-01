@@ -1,6 +1,6 @@
 Trait {
 	#name : #TGtkLibrary,
-	#category : 'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base'
 }
 
 { #category : #'library path' }
