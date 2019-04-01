@@ -25,6 +25,8 @@ GtkBlockBasedDrawingArea >> drawBlock: aBlock [
 { #category : #drawing }
 GtkBlockBasedDrawingArea >> drawOnAthensCanvas: aCanvas [
 	aCanvas surface
-		drawDuring:
-			[ :canvas | canvas clipBy: self boundingBox during: [ drawBlock cull: canvas ] ]
+		drawDuring: [ :canvas | 
+			canvas
+				clipBy: self boundingBox
+				during: [ drawBlock cull: canvas cull: self boundingBox ] ]
 ]
