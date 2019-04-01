@@ -1680,7 +1680,7 @@ GtkExamples class >> gtkExampleSearchBar [
 					packStart: bar;
 					packStart: (GtkLabel newLabel: 'Type on this window!');
 					yourself);
-				connectKeyPressEvent: [ :event | bar handleEvent: event ];
+				connectKeyPressEvent: [ :event | bar handleEvent: event getHandle ];
 				center;
 				showAll;
 				inspect ];

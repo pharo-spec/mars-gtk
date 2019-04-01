@@ -6,6 +6,9 @@ https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEventKey
 Class {
 	#name : #GdkEventKey,
 	#superclass : #GdkEvent,
+	#instVars : [
+		'keyValue'
+	],
 	#classVars : [
 		'OFFSET_GROUP',
 		'OFFSET_HARDWARE_KEYCODE',
@@ -18,6 +21,9 @@ Class {
 		'OFFSET_TIME',
 		'OFFSET_TYPE',
 		'OFFSET_WINDOW'
+	],
+	#pools : [
+		'GdkKeyCodes'
 	],
 	#category : #'Mars-Gtk-Base-Events'
 }
@@ -65,6 +71,18 @@ GdkEventKey >> hardware_keycode: anObject [
 	handle unsignedShortAt: OFFSET_HARDWARE_KEYCODE put: anObject
 ]
 
+{ #category : #testing }
+GdkEventKey >> isKeyDown [
+
+	^ self keyValue = KEY_DOWN
+]
+
+{ #category : #testing }
+GdkEventKey >> isKeyUp [
+
+	^ self keyValue = KEY_UP
+]
+
 { #category : #'accessing structure variables' }
 GdkEventKey >> is_modifier [
 	"This method was automatically generated"
@@ -75,6 +93,12 @@ GdkEventKey >> is_modifier [
 GdkEventKey >> is_modifier: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_IS_MODIFIER put: anObject
+]
+
+{ #category : #private }
+GdkEventKey >> keyValue [
+
+	^ keyValue ifNil: [ keyValue := self keyval ]
 ]
 
 { #category : #'accessing structure variables' }
