@@ -69,13 +69,13 @@ GtkTextView >> getBuffer [
 { #category : #accessing }
 GtkTextView >> hAdjustment [
 
-	^ self ffiCall: #(GtkAdjustment *gtk_tree_view_get_hadjustment (self))
+	^ self ffiCall: #(GtkAdjustment *gtk_scrollable_get_hadjustment (self))
 ]
 
 { #category : #accessing }
 GtkTextView >> hAdjustment: adjustment [
 
-	^ self ffiCall: #(void gtk_tree_view_set_hadjustment (self, GtkAdjustment *adjustment))
+	^ self ffiCall: #(void gtk_scrollable_set_hadjustment (self, GtkAdjustment *adjustment))
 ]
 
 { #category : #testing }
@@ -101,14 +101,6 @@ GtkTextView >> monospace [
 GtkTextView >> monospace: aBoolean [
 
 	^ self ffiCall: #(void gtk_text_view_set_monospace (self, gboolean aBoolean))
-]
-
-{ #category : #accessing }
-GtkTextView >> scrollToEnd [
-	| vAdjustment |
-
-	vAdjustment := self vAdjustment.
-	self vAdjustment: vAdjustment upper - vAdjustment pageSize
 ]
 
 { #category : #private }
@@ -162,13 +154,13 @@ GtkTextView >> textBuffer [
 { #category : #accessing }
 GtkTextView >> vAdjustment [
 
-	^ self ffiCall: #(GtkAdjustment *gtk_tree_view_get_vadjustment (self))
+	^ self ffiCall: #(GtkAdjustment *gtk_scrollable_get_vadjustment (self))
 ]
 
 { #category : #accessing }
 GtkTextView >> vAdjustment: adjustment [
 
-	^ self ffiCall: #(void gtk_tree_view_set_vadjustment (self, GtkAdjustment *adjustment))
+	^ self ffiCall: #(void gtk_scrollable_set_vadjustment (self, GtkAdjustment *adjustment))
 ]
 
 { #category : #accessing }
