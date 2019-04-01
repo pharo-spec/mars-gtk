@@ -6,7 +6,6 @@ https://developer.gnome.org/gdk3/stable/gdk3-RGBA-Colors.html
 Class {
 	#name : #GdkRGBA,
 	#superclass : #GtkStructure,
-	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#classVars : [
 		'OFFSET_ALPHA',

@@ -50,6 +50,12 @@ GtkTextView >> beWrapWordChar [
 ]
 
 { #category : #accessing }
+GtkTextView >> cursorVisible: setting [
+
+	self ffiCall: #(void gtk_text_view_set_cursor_visible (self, gboolean setting))
+]
+
+{ #category : #accessing }
 GtkTextView >> editable: setting [
 	self ffiCall: #(void gtk_text_view_set_editable (self, gboolean setting))
 ]
@@ -58,6 +64,24 @@ GtkTextView >> editable: setting [
 GtkTextView >> getBuffer [
 
 	self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> hAdjustment [
+
+	^ self ffiCall: #(GtkAdjustment *gtk_scrollable_get_hadjustment (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> hAdjustment: adjustment [
+
+	^ self ffiCall: #(void gtk_scrollable_set_hadjustment (self, GtkAdjustment *adjustment))
+]
+
+{ #category : #testing }
+GtkTextView >> isCursorVisible [
+
+	^ self ffiCall: #(gboolean gtk_text_view_get_cursor_visible (self))
 ]
 
 { #category : #testing }
@@ -77,17 +101,6 @@ GtkTextView >> monospace [
 GtkTextView >> monospace: aBoolean [
 
 	^ self ffiCall: #(void gtk_text_view_set_monospace (self, gboolean aBoolean))
-]
-
-{ #category : #accessing }
-GtkTextView >> scrollToEnd [
-
-	self 
-		scrollToMark: self textBuffer insertMark
-		withinMargin: 0.0
-		useAlign: false
-		xalign: 0.0
-		yalign: 0.0
 ]
 
 { #category : #private }
@@ -136,6 +149,18 @@ GtkTextView >> text: aString [
 GtkTextView >> textBuffer [
 
 	^ textBuffer ifNil: [ textBuffer := self getBuffer ]
+]
+
+{ #category : #accessing }
+GtkTextView >> vAdjustment [
+
+	^ self ffiCall: #(GtkAdjustment *gtk_scrollable_get_vadjustment (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> vAdjustment: adjustment [
+
+	^ self ffiCall: #(void gtk_scrollable_set_vadjustment (self, GtkAdjustment *adjustment))
 ]
 
 { #category : #accessing }
