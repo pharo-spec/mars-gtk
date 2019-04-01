@@ -34,6 +34,16 @@ GtkTextBuffer >> charCount [
 	^ self ffiCall: #(gint gtk_text_buffer_get_char_count (self))
 ]
 
+{ #category : #'accessing mark' }
+GtkTextBuffer >> createMarkNamed: mark_name where: where leftGravity: left_gravity [
+
+	^ self ffiCall: #(GtkTextMark *gtk_text_buffer_create_mark (
+			self,
+			const gchar *mark_name,
+			const GtkTextIter *where,
+			gboolean left_gravity))
+]
+
 { #category : #private }
 GtkTextBuffer >> deleteStart: start end: end [
 
@@ -65,7 +75,7 @@ GtkTextBuffer >> insertIter: iter text: text [
                         -1))
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing mark' }
 GtkTextBuffer >> insertMark [
 
 	^ self ffiCall: #(GtkTextMark *gtk_text_buffer_get_insert (self))
@@ -106,6 +116,21 @@ GtkTextBuffer >> insertTextAtCursor: text [
 GtkTextBuffer >> lineCount [
 
 	^ self ffiCall: #(gint gtk_text_buffer_get_line_count (self))
+]
+
+{ #category : #'accessing mark' }
+GtkTextBuffer >> markNamed: aName [
+
+	^ self ffiCall: #(GtkTextMark *gtk_text_buffer_get_mark (self, const gchar *aName))
+]
+
+{ #category : #'accessing mark' }
+GtkTextBuffer >> moveMark: mark to: where [
+
+	^ self ffiCall: #(void gtk_text_buffer_move_mark (
+		self,
+		GtkTextMark *mark,
+		const GtkTextIter *where))
 ]
 
 { #category : #private }
