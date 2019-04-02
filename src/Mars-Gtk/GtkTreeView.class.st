@@ -99,7 +99,7 @@ GtkTreeView >> columns [
 { #category : #events }
 GtkTreeView >> connectRowActivated: aBlock [ 
 	
-	^ self 
+	self
 		connect: 'row-activated'
 		signature: #(void (void *treeView, void *path, void *column, void *userData))  
  		do: [ :treeView :pathHandle :columnHandle :userData | | path |
@@ -117,17 +117,6 @@ GtkTreeView >> connectRowExpanded: aBlock [
 			iter := (GtkTreeIter fromHandle: iterHandle) copyInMemory.
 			path := (GtkTreePath fromHandle: pathHandle) toArray.
 			aBlock cull: iter cull: path  ]
-]
-
-{ #category : #signals }
-GtkTreeView >> connectRowSelected: aBlock [
-
-	self 
-		connect: 'row-activated' 
-		signature: #(void (void *treeView, void *path, void *column, void *userData))
-		do: [ :treeView :path :column :userData | | indexPath |
-			indexPath := (GtkTreePath fromHandle: path) toArray.
-			aBlock value: indexPath ]
 ]
 
 { #category : #signals }

@@ -142,6 +142,12 @@ GtkWindow >> isModal [
 	^ self ffiCall: #(gboolean gtk_window_get_modal (self))
 ]
 
+{ #category : #testing }
+GtkWindow >> isResizable [
+
+	^ self ffiCall: #(gboolean gtk_window_get_resizable (self))
+]
+
 { #category : #private }
 GtkWindow >> modal: modal [
 
@@ -176,6 +182,12 @@ GtkWindow >> position [
 	self getPositionX: rootX y: rootY. 
 	
 	^ (rootX signedLongAt: 1) @ (rootY signedLongAt: 1)
+]
+
+{ #category : #accessing }
+GtkWindow >> resizable: resizable [
+
+	self ffiCall: #(void gtk_window_set_resizable (self, gboolean resizable))
 ]
 
 { #category : #geometry }

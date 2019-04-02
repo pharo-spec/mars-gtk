@@ -16,6 +16,32 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #initialization }
+GtkBaseDialog >> initialize [ 
+
+	super initialize.
+	self initializeTitleBar.
+	self initializeKeyBindings
+]
+
+{ #category : #initialization }
+GtkBaseDialog >> initializeKeyBindings [
+	"| group |
+	
+	group := GtkAccelGroup new.
+	self addAcceleratorGroup: group.
+	self addAccelerator: 'hide' group: group shortcut: Character escape asKeyCombination"
+	
+]
+
+{ #category : #initialization }
+GtkBaseDialog >> initializeTitleBar [
+	
+	"self titleBar: (GtkHeaderBar new
+		title: 'Untitled dialog';
+		yourself)"
+]
+
 { #category : #testing }
 GtkBaseDialog >> isRunning [ 
 
