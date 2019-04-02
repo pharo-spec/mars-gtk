@@ -31,7 +31,7 @@ GtkSearchBar >> connectEntry: anEntry [
 { #category : #accessing }
 GtkSearchBar >> handleEvent: anEvent [
 
-	^ self ffiCall: #(gboolean gtk_search_bar_handle_event (self, void *anEvent))
+	^ self ffiCall: #(gboolean gtk_search_bar_handle_event (self, GdkEvent *anEvent))
 ]
 
 { #category : #accessing }

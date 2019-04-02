@@ -108,6 +108,15 @@ GtkWindowAdapter >> centered [
 ]
 
 { #category : #accessing }
+GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [ 
+	| bounds position |	
+
+	bounds := aWindowPresenter adapter widget bounds.
+	position := bounds topLeft + ((bounds extent - self widget size) // 2).
+	self widget moveTo: position		
+]
+
+{ #category : #accessing }
 GtkWindowAdapter >> close [
 
 	self widgetDo: [ :w | w hide ]

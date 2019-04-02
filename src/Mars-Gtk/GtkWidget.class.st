@@ -132,10 +132,7 @@ GtkWidget >> bindKeyCombination: aShortcut toAction: aBlock [
 
 { #category : #drawing }
 GtkWidget >> boundingBox [
-	| pos |
-	
-	pos := self positionInTopLevel.
-	^ pos corner: (pos + self size)
+	^ self positionInTopLevel corner: self positionInTopLevel + self size
 ]
 
 { #category : #private }
