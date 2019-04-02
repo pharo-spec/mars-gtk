@@ -6,10 +6,6 @@ https://developer.gnome.org/gtk3/stable/GtkDrawingArea.html
 Class {
 	#name : #GtkDrawingArea,
 	#superclass : #GtkWidget,
-	#instVars : [
-		'drawing',
-		'requestedSize'
-	],
 	#category : #'Mars-Gtk-Widget'
 }
 
@@ -39,8 +35,10 @@ GtkDrawingArea >> drawOnAthensCanvas: aCanvas [
 
 { #category : #private }
 GtkDrawingArea >> extent: aPoint [
-	requestedSize := aPoint.
-	self setSizeRequestWidth: aPoint x height: aPoint y
+
+	self 
+		setSizeRequestWidth: aPoint x 
+		height: aPoint y
 ]
 
 { #category : #private }
@@ -58,24 +56,23 @@ GtkDrawingArea >> getSizeRequest [
 { #category : #private }
 GtkDrawingArea >> getSizeRequestWidth: width height: height [
 	self
-		ffiCall: #(void gtk_widget_get_size_request #(self , gint width , gint height)).
+		ffiCall: #(void gtk_widget_get_size_request #(self , gint *width , gint *height)).
 ]
 
 { #category : #initialization }
 GtkDrawingArea >> initialize [
+
 	super initialize.
-	drawing := false.
 	self 
 		connect: 'draw' 
-		signature: #( int (void *widget, void *cr, void *payload) ) 
+		signature: #(gboolean (void *widget, void *cr, void *payload) ) 
 		do: [ :widget :cr :payload |
 			self basicDraw: cr.
-			0 ]
+			true ]
 ]
 
 { #category : #private }
 GtkDrawingArea >> setSizeRequestWidth: width height: height [
 	
-	self
-		ffiCall: #(void gtk_widget_set_size_request #(self , gint width , gint height))
+	self ffiCall: #(void gtk_widget_set_size_request #(self , gint width , gint height))
 ]
