@@ -212,10 +212,15 @@ GtkWindow >> setPosition: position [
 
 { #category : #accessing }
 GtkWindow >> show [
+	| titleBar |
 	
 	self withAllChildrenDo: #executeDeferredActions.
+	self flag: #TODO. "All this checking is because current TFFI does not answers correctly nil when 
+	address answered is NULL. This will be fixed and this will not be necesary :)"
+	titleBar := self titleBar.
+	(titleBar notNil and: [ titleBar getHandle isNull not ]) 
+		ifTrue: [ titleBar showAll ].
 	super show
-
 ]
 
 { #category : #accessing }
