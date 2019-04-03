@@ -16,8 +16,15 @@ GtkTextAdapter >> addToModel: gtkTextView [
 
 	gtkTextView beWrapWord.
 	self model isForSmalltalkCode ifTrue: [ 
-		gtkTextView monospace: true  ].
+		gtkTextView monospace: true  ]
+]
 
+{ #category : #visiting }
+GtkTextAdapter >> setText: aString to: gtkTextView [
+
+	self model isForSmalltalkCode
+		ifTrue: [ gtkTextView methodText: aString class: Object ]
+		ifFalse: [ super setText: aString to: gtkTextView ]
 ]
 
 { #category : #building }

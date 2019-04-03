@@ -97,6 +97,19 @@ StStyleVisitor >> reset [
 ]
 
 { #category : #private }
+StStyleVisitor >> resolveStyleFor: aRBVariableNode [ 
+
+	aRBVariableNode binding ifNil: [^#default].
+	aRBVariableNode isArg ifTrue: [ ^#methodArg].
+	aRBVariableNode isTemp ifTrue: [ ^#tempVar].
+	aRBVariableNode isGlobal ifTrue: [ ^#globalVar].
+	aRBVariableNode isInstance ifTrue: [ ^#instVar]. 
+	aRBVariableNode hasIncompleteIdentifier ifTrue:[ ^#incompleteIdentifier].
+	
+	^#invalid.
+]
+
+{ #category : #private }
 StStyleVisitor >> styleCloseBracket: aRBBlockNode [ 
 	
 	bracketLevel := bracketLevel - 1.
@@ -331,6 +344,15 @@ StStyleVisitor >> visitNode: aRBNode [
 ]
 
 { #category : #'private visiting' }
+StStyleVisitor >> visitParseErrorNode: aRBParseErrorNode [ 
+	
+	self 
+		addStyle: #invalid
+		from: aRBParseErrorNode  start 
+		to: aRBParseErrorNode  stop
+]
+
+{ #category : #'private visiting' }
 StStyleVisitor >> visitPragmaNode: aRBPragmaNode [ 
 
 	aRBPragmaNode selectorParts 
@@ -401,4 +423,15 @@ StStyleVisitor >> visitTemporaryNode: aRBTemporaryNode [
 		addStyle: methodOrBlockTempStyle 
 		from: aRBTemporaryNode start
 		to: aRBTemporaryNode stop
+]
+
+{ #category : #'private visiting' }
+StStyleVisitor >> visitVariableNode: aRBVariableNode [ 
+	
+	self 
+		addStyle: (self resolveStyleFor: aRBVariableNode) 
+		from: aRBVariableNode start
+		to: aRBVariableNode stop.
+	
+	
 ]

@@ -172,7 +172,7 @@ GtkTextBuffer >> offsetIter: offset [
 	
 	iter := GtkTextIter new.
 	self offsetIter: iter pos: offset.
-	^ offset
+	^ iter
 	
 ]
 

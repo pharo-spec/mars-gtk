@@ -19,5 +19,5 @@ GtkTextTag class >> textTagNew: aName [
 { #category : #accessing }
 GtkTextTag >> foreground: aColor [
 
-	self gObjectSet: 'foreground' toString: aColor asHTMLColor
+	self gObjectSet: 'foreground' toString: '#', aColor asHexString
 ]
