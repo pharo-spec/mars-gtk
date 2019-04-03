@@ -20,12 +20,18 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 		gtkTextView monospace: true  ]
 ]
 
+{ #category : #'as yet unclassified' }
+GtkTextAdapter >> classOrMetaClass: anObject [
+	"ignore, I do not need it right now"
+]
+
 { #category : #visiting }
 GtkTextAdapter >> setText: aString to: gtkTextView [
 
-	self model isForSmalltalkCode
-		ifTrue: [ gtkTextView methodText: aString class: Object ]
-		ifFalse: [ super setText: aString to: gtkTextView ]
+	self model isForSmalltalkCode ifFalse: [ ^ super setText: aString to: gtkTextView ].
+	self model behavior 
+		ifNotNil: [ gtkTextView methodText: aString class: Object ]
+		ifNil: [ gtkTextView expressionText: aString ]
 ]
 
 { #category : #building }
