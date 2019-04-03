@@ -12,6 +12,18 @@ Class {
 	#category : #'Mars-Gtk-Misc'
 }
 
+{ #category : #'instance creation' }
+GtkTextBuffer class >> newTable: table [ 
+
+	^ (self textBufferNew: table) initialize 
+]
+
+{ #category : #private }
+GtkTextBuffer class >> textBufferNew: table [
+
+	^ self ffiCall: #(GtkTextBuffer *gtk_text_buffer_new (GtkTextTagTable *table))
+]
+
 { #category : #accessing }
 GtkTextBuffer >> appendMarkup: aString [
 
@@ -26,6 +38,27 @@ GtkTextBuffer >> appendText: aString [
 	self 
 		insertIter: self endIter 
 		text: aString
+]
+
+{ #category : #accessing }
+GtkTextBuffer >> applyTagByName: aName start: start end: end [
+	| startIter endIter |
+	
+	startIter := self offsetIter: start.
+	endIter := self offsetIter: end.
+	self applyTagByName: aName startIter: startIter endIter: endIter
+	
+	
+]
+
+{ #category : #private }
+GtkTextBuffer >> applyTagByName: name startIter: start endIter: end [
+
+	self ffiCall: #(void gtk_text_buffer_apply_tag_by_name (
+		self,
+ 		const gchar *name,
+		const GtkTextIter *start,
+		const GtkTextIter *end))
 ]
 
 { #category : #accessing }
@@ -131,6 +164,23 @@ GtkTextBuffer >> moveMark: mark to: where [
 		self,
 		GtkTextMark *mark,
 		const GtkTextIter *where))
+]
+
+{ #category : #private }
+GtkTextBuffer >> offsetIter: offset [
+	| iter |
+	
+	iter := GtkTextIter new.
+	self offsetIter: iter pos: offset.
+	^ offset
+	
+]
+
+{ #category : #private }
+GtkTextBuffer >> offsetIter: iter pos: char_offset [
+	
+	^ self ffiCall: #(void gtk_text_buffer_get_iter_at_offset (self, GtkTextIter *iter, gint char_offset))
+	
 ]
 
 { #category : #private }

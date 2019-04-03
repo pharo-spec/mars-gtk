@@ -128,6 +128,12 @@ GtkTextView >> scrollToMark: mark withinMargin: within_margin useAlign: use_alig
 ]
 
 { #category : #private }
+GtkTextView >> setBuffer: buffer [
+
+	self ffiCall: #(void gtk_text_view_set_buffer (self, GtkTextBuffer *buffer))
+]
+
+{ #category : #private }
 GtkTextView >> setWrapMode: wrap_mode [
 
 	^ self ffiCall: #(void gtk_text_view_set_wrap_mode (self, GtkWrapMode wrap_mode))
@@ -149,6 +155,13 @@ GtkTextView >> text: aString [
 GtkTextView >> textBuffer [
 
 	^ textBuffer ifNil: [ textBuffer := self getBuffer ]
+]
+
+{ #category : #accessing }
+GtkTextView >> textBuffer: aTextBuffer [ 
+
+	self setBuffer: aTextBuffer.
+	textBuffer := aTextBuffer
 ]
 
 { #category : #accessing }
