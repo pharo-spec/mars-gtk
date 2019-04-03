@@ -33,6 +33,17 @@ GtkTextAdapter >> classOrMetaClass: anObject [
 	"ignore, I do not need it right now"
 ]
 
+{ #category : #adding }
+GtkTextAdapter >> newCssProvider [
+
+	OSPlatform current isMacOS 
+		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Monaco" }' ].
+	OSPlatform current isWindows
+		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Microsoft Sans Serif" }' ].
+	
+	^ GtkCssProvider newFromString: '* { font: 12pt "Sans" }'
+]
+
 { #category : #visiting }
 GtkTextAdapter >> setText: aString to: gtkTextView [
 
