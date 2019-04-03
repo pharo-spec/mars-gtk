@@ -32,6 +32,18 @@ GtkSettings >> enableAnimations: aBoolean [
 	self gObjectSet: 'gtk-enable-animations' toBoolean: aBoolean
 ]
 
+{ #category : #settings }
+GtkSettings >> fontName [
+
+	^ self gObjectGetString: 'gtk-font-name'
+]
+
+{ #category : #settings }
+GtkSettings >> fontName: aString [
+
+	^ self gObjectSet: 'gtk-font-name' toString: aString
+]
+
 { #category : #initialization }
 GtkSettings >> initialize [
 	

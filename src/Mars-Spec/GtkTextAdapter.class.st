@@ -17,7 +17,15 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 	super addModelTo: gtkTextView.
 	gtkTextView beWrapWord.
 	self model isForSmalltalkCode ifTrue: [ 
-		gtkTextView monospace: true  ]
+		"gtkTextView monospace: true."
+		self addMonospaceStyleFor: gtkTextView ]
+]
+
+{ #category : #adding }
+GtkTextAdapter >> addMonospaceStyleFor: gtkTextView [
+	
+	gtkTextView styleContext addProvider: self newCssProvider.
+	
 ]
 
 { #category : #'as yet unclassified' }
