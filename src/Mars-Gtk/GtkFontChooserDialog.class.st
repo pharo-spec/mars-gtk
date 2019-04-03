@@ -9,6 +9,14 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #examples }
+GtkFontChooserDialog class >> example [ 
+
+	(self newTitle: 'Choose Font') 
+		showAll; 
+		run
+]
+
 { #category : #private }
 GtkFontChooserDialog class >> fontChooserDialogNewTitle: title [
 

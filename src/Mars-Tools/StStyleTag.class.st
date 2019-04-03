@@ -23,7 +23,7 @@ StStyleTag >> acceptTextBuffer: textBuffer [
 	textBuffer 
 		applyTagByName: self name asString
 		start: self start - 1
-		end: self stop - 1
+		end: self stop
 ]
 
 { #category : #initialization }

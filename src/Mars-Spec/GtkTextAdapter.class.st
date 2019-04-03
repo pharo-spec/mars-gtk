@@ -12,8 +12,9 @@ GtkTextAdapter >> accept [
 ]
 
 { #category : #visiting }
-GtkTextAdapter >> addToModel: gtkTextView [
+GtkTextAdapter >> addModelTo: gtkTextView [
 
+	super addModelTo: gtkTextView.
 	gtkTextView beWrapWord.
 	self model isForSmalltalkCode ifTrue: [ 
 		gtkTextView monospace: true  ]
