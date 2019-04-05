@@ -15,42 +15,7 @@ GtkTextAdapter >> accept [
 GtkTextAdapter >> addModelTo: gtkTextView [
 
 	super addModelTo: gtkTextView.
-	gtkTextView beWrapWord.
-	self model isForSmalltalkCode ifTrue: [ 
-		"gtkTextView monospace: true."
-		self addMonospaceStyleFor: gtkTextView ]
-]
-
-{ #category : #adding }
-GtkTextAdapter >> addMonospaceStyleFor: gtkTextView [
-	
-	gtkTextView styleContext addProvider: self newCssProvider.
-	
-]
-
-{ #category : #'as yet unclassified' }
-GtkTextAdapter >> classOrMetaClass: anObject [
-	"ignore, I do not need it right now"
-]
-
-{ #category : #adding }
-GtkTextAdapter >> newCssProvider [
-
-	OSPlatform current isMacOS 
-		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Monaco" }' ].
-	OSPlatform current isWindows
-		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Microsoft Sans Serif" }' ].
-	
-	^ GtkCssProvider newFromString: '* { font: 12pt "Sans" }'
-]
-
-{ #category : #visiting }
-GtkTextAdapter >> setText: aString to: gtkTextView [
-
-	self model isForSmalltalkCode ifFalse: [ ^ super setText: aString to: gtkTextView ].
-	self model behavior 
-		ifNotNil: [ gtkTextView methodText: aString class: Object ]
-		ifNil: [ gtkTextView expressionText: aString ]
+	gtkTextView beWrapWord
 ]
 
 { #category : #building }

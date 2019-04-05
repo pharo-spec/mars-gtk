@@ -44,7 +44,5 @@ StStyleVisitorTest >> testVisitMethod [
 
 	tags := visitor 
 		contextClass: Object;
-		visitMethod: self class syntaxInAPostcard.
-		
-	tags inspect
+		visitMethod: self class syntaxInAPostcard
 ]
