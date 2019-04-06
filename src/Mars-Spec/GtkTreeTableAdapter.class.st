@@ -211,7 +211,6 @@ GtkTreeTableAdapter >> recreateStore: gtkWidget	generateColumns: doesGenerateCol
 	doesGenerateColumns ifFalse: [ ^ self ].
 	
 	columnBuilder := self newColumnBuilderOn: self model.
-	columnBuilder store: store.
 	columnBuilder view: gtkWidget. 
 
 	gtkWidget removeAllColumns.

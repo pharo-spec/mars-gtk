@@ -7,12 +7,12 @@ Trait {
 TGtkTableAccessing >> addColumn: aTableColumn index: index to: aGtkTreeView [ 
 	| addColumnVisitor |
 	
-	addColumnVisitor := GtkSpecColumnBuilderVisitor new
-		index: index;
-		treeView: aGtkTreeView;
+	addColumnVisitor := GtkTableColumnBuilder new
+		columnIndex: index;
+		view: aGtkTreeView;
 		yourself.
 		
-	aTableColumn acceptColumnVisitor: addColumnVisitor.
+	aTableColumn acceptColumnVisitor: addColumnVisitor
 ]
 
 { #category : #building }

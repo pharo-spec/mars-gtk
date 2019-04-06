@@ -7,21 +7,6 @@ Class {
 }
 
 { #category : #building }
-GtkTableAdapter >> addColumnItem: anItem to: store [	
-	| row valueTransformer |
-	
-	row := store appendNew.
-	valueTransformer :=GtkSpecRowFillVisitor new
-		item: anItem;
-		row: row;
-		yourself.
-
-	self model columns withIndexDo: [ :aColumn :index | 
-		valueTransformer index: index.
-		aColumn acceptColumnVisitor: valueTransformer ]
-]
-
-{ #category : #building }
 GtkTableAdapter >> addModelTo: gtkTreeView [
 		
 	super addModelTo: gtkTreeView.

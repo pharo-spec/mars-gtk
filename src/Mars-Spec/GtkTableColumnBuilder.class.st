@@ -3,7 +3,6 @@ Class {
 	#superclass : #GtkTableColumnVisitor,
 	#instVars : [
 		'model',
-		'store',
 		'view'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
@@ -69,17 +68,6 @@ GtkTableColumnBuilder >> newColumnPackerFor: column [
 GtkTableColumnBuilder >> nodeFromPath: path [
 	
 	^ self model itemAt: 	((path substrings: ':') first asNumber + 1)
-]
-
-{ #category : #accessing }
-GtkTableColumnBuilder >> store [ 
-
-	^ store 
-]
-
-{ #category : #accessing }
-GtkTableColumnBuilder >> store: anObject [
-	store := anObject
 ]
 
 { #category : #accessing }
