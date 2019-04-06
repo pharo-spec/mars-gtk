@@ -1,28 +1,17 @@
 Class {
 	#name : #GtkSpecColumnTypeVisitor,
-	#superclass : #Object,
-	#instVars : [
-		'stringColumnBlock',
-		'columnCollection'
-	],
+	#superclass : #GtkSpecColumnVisitor,
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #accessing }
-GtkSpecColumnTypeVisitor >> columns: aCollection [ 
-	columnCollection := aCollection.
-]
+{ #category : #visiting }
+GtkSpecColumnTypeVisitor >> visitIndexColumn: anIndexTableColumn [
 
-{ #category : #accessing }
-GtkSpecColumnTypeVisitor >> forString: aBlockClosure [ 
-	
-	stringColumnBlock := aBlockClosure
+	^ GType G_TYPE_UINT
 ]
 
 { #category : #visiting }
-GtkSpecColumnTypeVisitor >> visitStringColumn: aStringTableColumn [ 
-	
-	| index |
-	index := columnCollection ifNotNil: [ columnCollection indexOf: aStringTableColumn ].
-	^ stringColumnBlock cull: aStringTableColumn cull: index
+GtkSpecColumnTypeVisitor >> visitStringColumn: aStringTableColumn [
+ 
+	^ GType G_TYPE_STRING
 ]

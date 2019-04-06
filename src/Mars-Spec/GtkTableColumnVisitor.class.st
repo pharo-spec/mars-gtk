@@ -27,7 +27,7 @@ GtkTableColumnVisitor >> initialize [
 ]
 
 { #category : #accessing }
-GtkTableColumnVisitor >> nextColumnIndex [ 
+GtkTableColumnVisitor >> nextColumnIndex [
 
 	columnIndex := columnIndex + 1
 ]

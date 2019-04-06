@@ -1,62 +1,59 @@
 Class {
 	#name : #GtkTableAdapter,
 	#superclass : #GtkBaseListAdapter,
+	#traits : 'TGtkTableAccessing',
+	#classTraits : 'TGtkTableAccessing classTrait',
 	#category : #'Mars-Spec-Adapter-Table'
 }
 
 { #category : #building }
-GtkTableAdapter >> addColumn: aTableColumn to: aGtkTreeView [ 
+GtkTableAdapter >> addColumnItem: anItem to: store [	
+	| row valueTransformer |
 	
-	| addColumnVisitor |
-	
-	addColumnVisitor := GtkSpecColumnTypeVisitor new
-		columns: self model columns;
-		forString: [ :column :index | | renderer | 
-			renderer := GtkCellRendererText new.
-			aGtkTreeView appendColumn: (GtkTreeViewColumn new
-			packStart: renderer;
-			addAttribute: 'text' column: (index - 1) renderer: renderer)			
-		].
-		
-	aTableColumn acceptColumnVisitor: addColumnVisitor.
+	row := store appendNew.
+	valueTransformer :=GtkSpecRowFillVisitor new
+		item: anItem;
+		row: row;
+		yourself.
+
+	self model columns withIndexDo: [ :aColumn :index | 
+		valueTransformer index: index.
+		aColumn acceptColumnVisitor: valueTransformer ]
 ]
 
 { #category : #building }
-GtkTableAdapter >> addModelTo: gtkList [
+GtkTableAdapter >> addModelTo: gtkTreeView [
 		
-	super addModelTo: gtkList.
+	super addModelTo: gtkTreeView.
 		
-	gtkList headersVisible: self model isShowingColumnHeaders.
+	gtkTreeView headersVisible: self model isShowingColumnHeaders.
 
 	self model selection isMultipleSelection 
-		ifTrue: [ gtkList beMultipleSelectionMode ] 
-		ifFalse: [ gtkList beSingleSelectionMode ].
+		ifTrue: [ gtkTreeView beMultipleSelectionMode ] 
+		ifFalse: [ gtkTreeView beSingleSelectionMode ].
 				
-	self model columns do: [ :aColumn | 
-		self 
-			addColumn: aColumn 
-			to: gtkList ].	
+	self addColumnsTo: gtkTreeView.
 	
 	self model columns ifNotEmpty: [
-		gtkList model: self newTreeStore ].
+		gtkTreeView model: self newTreeStore ].
 	
-	gtkList selection unselectAll.
+	gtkTreeView selection unselectAll.
 
 	self presenter selection isEmpty ifFalse: [ 
 		self presenter selection selectedIndexes 
-			do: [ :anIndex | gtkList selection selectPath: { anIndex } ]  ].
+			do: [ :anIndex | gtkTreeView selection selectPath: { anIndex } ]  ].
 	
 	self presenter selection whenChangedDo: [ 
 		self presenter selection selectedIndexes 
-			do: [ :anIndex | gtkList selection selectPath: { anIndex } ]].
+			do: [ :anIndex | gtkTreeView selection selectPath: { anIndex } ] ].
 	
 	self presenter whenShowColumnHeadersChangedDo: [ 	
-		gtkList headersVisible: self model isShowingColumnHeaders ].
+		gtkTreeView headersVisible: self model isShowingColumnHeaders ].
 		
-	gtkList connectRowActivated: [ :path | 
+	gtkTreeView connectRowActivated: [ :path | 
 		self model doActivateAtIndex: path toArray first ].
 
-	widget := gtkList.
+	widget := gtkTreeView.
 	
 	self presenter whenColumnsChangedDo: [ 
 		self refreshWidgetHeaderTitle. 
@@ -64,9 +61,21 @@ GtkTableAdapter >> addModelTo: gtkList [
 	
 	self refreshWidgetHeaderTitle.
 	
-	gtkList connectSelectionChanged: [ 
-		self presenter selection selectIndexes: gtkList allSelected flattened ].
+	gtkTreeView connectSelectionChanged: [ 
+		self presenter selection selectIndexes: gtkTreeView allSelected flattened ].
 
+]
+
+{ #category : #private }
+GtkTableAdapter >> appendAddedColumns [
+	| columns |
+	
+	columns := self model columns.  
+	(columns last: (columns size - widget columns size)) do: [ :aTableColumn | 
+		self 
+			addColumn: aTableColumn 
+			index: (columns indexOf: aTableColumn)
+			to: widget ]	
 ]
 
 { #category : #testing }
@@ -75,41 +84,12 @@ GtkTableAdapter >> isShowColumnHeaders [
 	^ widget isHeadersVisible
 ]
 
-{ #category : #building }
-GtkTableAdapter >> newTreeStore [
-	| typeTransformer columnTypes store |
-	
-	typeTransformer := GtkSpecColumnTypeVisitor new forString: [ GType G_TYPE_STRING ].
-		
-	columnTypes := self model columns 
-		collect: [ :aColumn | aColumn acceptColumnVisitor: typeTransformer ].
-	store := GtkTreeStore newColumnTypes: columnTypes.
-	
-	self model model shownItems do: [ :anItem | | row valueTransformer |
-		row := store appendNew.
-		valueTransformer :=GtkSpecColumnTypeVisitor new
-			columns: self model columns;
-			forString: [ :column :index | | aValue |
-				aValue := (column readObject: anItem) asString.
-				row at: index - 1 putString: aValue ].
-			
-		self model columns do: [ :aColumn | 
-			aColumn acceptColumnVisitor: valueTransformer ] ].
-
-	^ store
-]
-
 { #category : #events }
 GtkTableAdapter >> refreshWidgetHeaderTitle [
 	
 	"By now I only accept to add columns, as the data should be all generated. It is not so easy"
 	(widget columns size < self model columns size) 
-		ifTrue: [  
-			(self model columns last: (self model columns size - widget columns size)) 
-				do: [ :aTableColumn | 
-					self 
-						addColumn: aTableColumn 
-						to: widget  ] ].
+		ifTrue: [ self appendAddedColumns ].
 	
 	self model columns 
 		with: widget columns 

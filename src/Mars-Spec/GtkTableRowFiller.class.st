@@ -20,13 +20,6 @@ GtkTableRowFiller >> gtkRow: anObject [
 ]
 
 { #category : #accessing }
-GtkTableRowFiller >> nextColumnIndex [ 
-
-	super nextColumnIndex.
-	
-]
-
-{ #category : #accessing }
 GtkTableRowFiller >> row [
 	^ row
 ]
