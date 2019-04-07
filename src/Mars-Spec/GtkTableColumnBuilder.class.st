@@ -27,7 +27,7 @@ GtkTableColumnBuilder >> columnEdited: aTableColumn path: path text: text [
 	"store the new value (or restore the old valur)"
 	iter := self store iteratorFromString: path.
 	iter 
-		at: self columnIndex 
+		at: (self columnIndexOf: aTableColumn) 
 		putString: node stringValue
 ]
 
@@ -60,7 +60,6 @@ GtkTableColumnBuilder >> newColumnPackerFor: column [
 	^ GtkTableColumnPacker new 
 		column: column;
 		builder: self;
-		columnIndex: self columnIndex;
 		yourself
 ]
 

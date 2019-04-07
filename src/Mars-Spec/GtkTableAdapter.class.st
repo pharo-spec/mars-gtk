@@ -59,7 +59,6 @@ GtkTableAdapter >> appendAddedColumns [
 	(columns last: (columns size - widget columns size)) do: [ :aTableColumn | 
 		self 
 			addColumn: aTableColumn 
-			index: (columns indexOf: aTableColumn)
 			to: widget ]	
 ]
 

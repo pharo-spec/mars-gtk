@@ -4,11 +4,11 @@ Trait {
 }
 
 { #category : #building }
-TGtkTableAccessing >> addColumn: aTableColumn index: index to: aGtkTreeView [ 
+TGtkTableAccessing >> addColumn: aTableColumn to: aGtkTreeView [ 
 	| addColumnVisitor |
 	
 	addColumnVisitor := GtkTableColumnBuilder new
-		columnIndex: index;
+		columns: self model columns;
 		view: aGtkTreeView;
 		yourself.
 		
@@ -18,8 +18,8 @@ TGtkTableAccessing >> addColumn: aTableColumn index: index to: aGtkTreeView [
 { #category : #building }
 TGtkTableAccessing >> addColumnsTo: gtkWidget [
 
-	self model columns withIndexDo: [ :aColumn :index | 
-		self addColumn: aColumn index: index to: gtkWidget ].	
+	self model columns do: [ :aColumn | 
+		self addColumn: aColumn to: gtkWidget ].	
 ]
 
 { #category : #building }
@@ -43,13 +43,13 @@ TGtkTableAccessing >> doAddRow: anObject index: rowIndex into: store [
 
 	row := store appendNew.
 	valueTransformer := GtkTableRowFiller new
+		columns: self model columns;
 		gtkRow: row;
 		row: anObject;
 		rowIndex: rowIndex;
 		yourself.
 
-	self model columns withIndexDo: [ :aColumn :columnIndex | 
-		valueTransformer columnIndex: columnIndex.
+	self model columns do: [ :aColumn :columnIndex | 
 		aColumn acceptColumnVisitor: valueTransformer ]
 ]
 

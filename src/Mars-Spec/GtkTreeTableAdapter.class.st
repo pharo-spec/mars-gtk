@@ -120,16 +120,17 @@ GtkTreeTableAdapter >> columnCount [
 	^ self widget model numberOfColumns
 ]
 
-{ #category : #private }
-GtkTreeTableAdapter >> doAddRow: anObject index: index into: store [
+{ #category : #building }
+GtkTreeTableAdapter >> doAddRow: anObject index: rowIndex into: store [
 
 	| gtkRow filler |
 	
 	gtkRow := store appendNew.
 	filler := GtkTableRowFiller new
+		columns: self model columns;
 		gtkRow: gtkRow;
 		row: anObject;
-		rowIndex: index;
+		rowIndex: rowIndex;
 		yourself.
 		
 	self model columns do: [ :eachColumn | 

@@ -44,7 +44,7 @@ GtkTableRowFiller >> visitImageColumn: aTableColumn [
 
 	self flag: #TODO. "I'm assuming the image is a Form, which may not be the case in the future"
 	self gtkRow
-		at: self columnIndex 
+		at: (self columnIndexOf: aTableColumn) 
 		putObject: (GdkPixbuf newForm: (aTableColumn readObject: self row))
 ]
 
@@ -52,7 +52,7 @@ GtkTableRowFiller >> visitImageColumn: aTableColumn [
 GtkTableRowFiller >> visitIndexColumn: aTableColumn [
 
 	self gtkRow
-		at: self columnIndex
+		at: (self columnIndexOf: aTableColumn)
 		putString: self rowIndex asString
 ]
 
@@ -60,6 +60,6 @@ GtkTableRowFiller >> visitIndexColumn: aTableColumn [
 GtkTableRowFiller >> visitStringColumn: aTableColumn [
 
 	self gtkRow
-		at: self columnIndex
+		at: (self columnIndexOf: aTableColumn)
 		putString: (aTableColumn readObject: self row) asString
 ]

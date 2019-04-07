@@ -2,13 +2,13 @@ Class {
 	#name : #GtkTableColumnVisitor,
 	#superclass : #Object,
 	#instVars : [
-		'columnIndex'
+		'columns'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
 
 { #category : #accessing }
-GtkTableColumnVisitor >> columnIndex [ 
+GtkTableColumnVisitor >> columnIndex [
 
 	^ columnIndex
 ]
@@ -16,7 +16,26 @@ GtkTableColumnVisitor >> columnIndex [
 { #category : #accessing }
 GtkTableColumnVisitor >> columnIndex: aNumber [
 
-	columnIndex := aNumber
+	self flag: #REMOVE.
+	"columnIndex := aNumber"
+]
+
+{ #category : #accessing }
+GtkTableColumnVisitor >> columnIndexOf: aTableColumn [
+
+	^ (self columns indexOf: aTableColumn) - 1
+]
+
+{ #category : #accessing }
+GtkTableColumnVisitor >> columns [
+
+	^ columns
+]
+
+{ #category : #accessing }
+GtkTableColumnVisitor >> columns: aCollection [
+
+	columns := aCollection
 ]
 
 { #category : #accessing }
@@ -29,19 +48,22 @@ GtkTableColumnVisitor >> initialize [
 { #category : #accessing }
 GtkTableColumnVisitor >> nextColumnIndex [
 
-	columnIndex := columnIndex + 1
+	self flag: #REMOVE.
+	"columnIndex := columnIndex + 1"
 ]
 
 { #category : #accessing }
 GtkTableColumnVisitor >> prevColumnIndex [
 
-	columnIndex := columnIndex - 1
+	self flag: #REMOVE.
+	"columnIndex := columnIndex - 1"
 ]
 
 { #category : #accessing }
 GtkTableColumnVisitor >> resetColumnIndex [
 
-	columnIndex := 0
+	self flag: #REMOVE.
+	"columnIndex := 0"
 ]
 
 { #category : #visiting }
@@ -55,9 +77,7 @@ GtkTableColumnVisitor >> visit: aTableColumn [
 GtkTableColumnVisitor >> visitCompositeColumn: aTableColumn [
 	
 	aTableColumn columns do: [ :each |
-		self visit: each  ].
-	"reduce index because it was incremented by the inner columns process"
-	self prevColumnIndex
+		self visit: each  ]
 ]
 
 { #category : #visiting }

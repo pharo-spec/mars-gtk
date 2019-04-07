@@ -119,6 +119,6 @@ GtkTableColumnPacker >> visitStringColumn: aTableColumn [
 	column packStart: renderer expand: self isExpand.
 	column 
 		addAttribute: 'text' 
-		column: self columnIndex 
+		column: self columnIndex
 		renderer: renderer
 ]
