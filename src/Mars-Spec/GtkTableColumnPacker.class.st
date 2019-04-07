@@ -103,7 +103,7 @@ GtkTableColumnPacker >> visitImageColumn: aTableColumn [
 	column packStart: renderer expand: self isExpand.
 	column 
 		addAttribute: 'pixbuf' 
-		column: self columnIndex 
+		column: (self columnIndexOf: aTableColumn)
 		renderer: renderer
 ]
 
@@ -119,6 +119,6 @@ GtkTableColumnPacker >> visitStringColumn: aTableColumn [
 	column packStart: renderer expand: self isExpand.
 	column 
 		addAttribute: 'text' 
-		column: self columnIndex
+		column: (self columnIndexOf: aTableColumn)
 		renderer: renderer
 ]

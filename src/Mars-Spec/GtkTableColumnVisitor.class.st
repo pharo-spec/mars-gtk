@@ -2,7 +2,8 @@ Class {
 	#name : #GtkTableColumnVisitor,
 	#superclass : #Object,
 	#instVars : [
-		'columns'
+		'columns',
+		'flattenColumns'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
@@ -10,7 +11,8 @@ Class {
 { #category : #accessing }
 GtkTableColumnVisitor >> columnIndex [
 
-	^ columnIndex
+	self halt.
+	"^ columnIndex"
 ]
 
 { #category : #accessing }
@@ -23,7 +25,7 @@ GtkTableColumnVisitor >> columnIndex: aNumber [
 { #category : #accessing }
 GtkTableColumnVisitor >> columnIndexOf: aTableColumn [
 
-	^ (self columns indexOf: aTableColumn) - 1
+	^ (self flattenColumns indexOf: aTableColumn) - 1
 ]
 
 { #category : #accessing }
@@ -39,6 +41,15 @@ GtkTableColumnVisitor >> columns: aCollection [
 ]
 
 { #category : #accessing }
+GtkTableColumnVisitor >> flattenColumns [
+
+	flattenColumns ifNil: [ 
+		flattenColumns := self obtainFlattenColumns: OrderedCollection new ].
+
+	^ flattenColumns
+]
+
+{ #category : #accessing }
 GtkTableColumnVisitor >> initialize [
 
 	super initialize.
@@ -50,6 +61,25 @@ GtkTableColumnVisitor >> nextColumnIndex [
 
 	self flag: #REMOVE.
 	"columnIndex := columnIndex + 1"
+]
+
+{ #category : #accessing }
+GtkTableColumnVisitor >> obtainFlattenColumns: aCollection [
+	
+	self 
+		obtainFlattenColumns: self columns 
+		in: aCollection.
+	^ aCollection
+]
+
+{ #category : #accessing }
+GtkTableColumnVisitor >> obtainFlattenColumns: columnsCollection in: aCollection [
+
+	columnsCollection do: [ :each |
+		each isComposite
+			ifTrue: [ self obtainFlattenColumns: each columns in: aCollection ]
+			ifFalse: [ aCollection add: each ] ].
+
 ]
 
 { #category : #accessing }

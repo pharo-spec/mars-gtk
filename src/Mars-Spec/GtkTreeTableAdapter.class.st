@@ -175,9 +175,12 @@ GtkTreeTableAdapter >> markLevelAddedFor: item [
 ]
 
 { #category : #'private factory' }
-GtkTreeTableAdapter >> newColumnBuilderOn: anObject [
+GtkTreeTableAdapter >> newColumnBuilderOn: aTreeTablePresenter [
 
-	^ GtkTreeTableColumnBuilder on: anObject
+	^ GtkTreeTableColumnBuilder new 
+		model: aTreeTablePresenter;
+		columns: aTreeTablePresenter columns;
+		yourself
 ]
 
 { #category : #'private factory' }

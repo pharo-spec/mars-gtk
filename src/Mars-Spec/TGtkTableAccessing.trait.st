@@ -49,7 +49,7 @@ TGtkTableAccessing >> doAddRow: anObject index: rowIndex into: store [
 		rowIndex: rowIndex;
 		yourself.
 
-	self model columns do: [ :aColumn :columnIndex | 
+	self model columns do: [ :aColumn | 
 		aColumn acceptColumnVisitor: valueTransformer ]
 ]
 

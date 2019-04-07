@@ -58,6 +58,7 @@ GtkTableColumnBuilder >> newColumnFor: aTableColumn [
 GtkTableColumnBuilder >> newColumnPackerFor: column [
 
 	^ GtkTableColumnPacker new 
+		columns: self columns;
 		column: column;
 		builder: self;
 		yourself
