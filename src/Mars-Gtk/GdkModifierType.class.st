@@ -292,6 +292,12 @@ GdkModifierType class >> newValue: anInteger [
 		yourself
 ]
 
+{ #category : #'logical operations' }
+GdkModifierType >> & aModifier [
+
+	^ self value & aModifier value
+]
+
 { #category : #arithmetic }
 GdkModifierType >> + aModifierType [
 

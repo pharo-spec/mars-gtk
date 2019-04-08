@@ -23,7 +23,8 @@ Class {
 		'OFFSET_WINDOW'
 	],
 	#pools : [
-		'GdkKeyCodes'
+		'GdkKeyCodes',
+		'GdkModifierType'
 	],
 	#category : #'Mars-Gtk-Base-Events'
 }
@@ -69,6 +70,54 @@ GdkEventKey >> hardware_keycode [
 GdkEventKey >> hardware_keycode: anObject [
 	"This method was automatically generated"
 	handle unsignedShortAt: OFFSET_HARDWARE_KEYCODE put: anObject
+]
+
+{ #category : #testing }
+GdkEventKey >> hasAltModifier [
+
+	^ self hasMod1
+]
+
+{ #category : #testing }
+GdkEventKey >> hasAnyModifier [
+
+	^ self state ~= 0
+]
+
+{ #category : #testing }
+GdkEventKey >> hasControlModifier [
+
+	^ self hasModifier: GDK_CONTROL_MASK
+]
+
+{ #category : #testing }
+GdkEventKey >> hasLockModifier [
+
+	^ self hasModifier: GDK_LOCK_MASK	
+]
+
+{ #category : #testing }
+GdkEventKey >> hasMetaModifier [
+
+	^ self hasModifier: GDK_META_MASK
+]
+
+{ #category : #testing }
+GdkEventKey >> hasMod1 [
+
+	^ self hasModifier: GDK_MOD1_MASK
+]
+
+{ #category : #testing }
+GdkEventKey >> hasModifier: aModifier [
+
+	^ (self state & (aModifier value)) = aModifier value
+]
+
+{ #category : #testing }
+GdkEventKey >> hasShiftModifier [
+
+	^ self hasModifier: GDK_SHIFT_MASK
 ]
 
 { #category : #testing }
