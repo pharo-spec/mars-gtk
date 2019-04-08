@@ -233,7 +233,7 @@ GtkTreeTableAdapter >> refreshList [
 { #category : #private }
 GtkTreeTableAdapter >> rowSelected: path [
 
-	self model selection selectedPath: path
+	self model selection selectPath: path
 ]
 
 { #category : #building }
