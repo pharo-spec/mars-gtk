@@ -88,6 +88,13 @@ GtkWindow >> connectActivateFocus: aBlock [
 	self connect: 'activate-focus' do: aBlock
 ]
 
+{ #category : #accessing }
+GtkWindow >> decorated: setting [
+	"https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-set-decorated
+	 This may not work all the time"
+	self ffiCall: #(void gtk_window_set_decorated (self, gboolean setting))
+]
+
 { #category : #geometry }
 GtkWindow >> defaultSize: aPoint [
 
@@ -134,6 +141,12 @@ GtkWindow >> initialize [
 	self application registerWindow: self.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
 	self connectDestroy: [ self windowDestroyed ]
+]
+
+{ #category : #testing }
+GtkWindow >> isDecorated [
+
+	^ self ffiCall: #(gboolean gtk_window_get_decorated (self))
 ]
 
 { #category : #testing }

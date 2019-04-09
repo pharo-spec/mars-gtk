@@ -121,15 +121,21 @@ GdkEventKey >> hasShiftModifier [
 ]
 
 { #category : #testing }
+GdkEventKey >> isEscape [
+
+	^ self keyValue = KEY_Escape
+]
+
+{ #category : #testing }
 GdkEventKey >> isKeyDown [
 
-	^ self keyValue = KEY_DOWN
+	^ self keyValue = KEY_Down
 ]
 
 { #category : #testing }
 GdkEventKey >> isKeyUp [
 
-	^ self keyValue = KEY_UP
+	^ self keyValue = KEY_Up
 ]
 
 { #category : #'accessing structure variables' }
