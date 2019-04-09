@@ -133,6 +133,18 @@ GdkEventKey >> isKeyDown [
 ]
 
 { #category : #testing }
+GdkEventKey >> isKeyLeft [
+
+	^ self keyValue = KEY_Left
+]
+
+{ #category : #testing }
+GdkEventKey >> isKeyRight [
+
+	^ self keyValue = KEY_Right
+]
+
+{ #category : #testing }
 GdkEventKey >> isKeyUp [
 
 	^ self keyValue = KEY_Up
