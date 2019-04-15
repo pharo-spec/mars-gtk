@@ -33,7 +33,8 @@ GtkRunLoop class >> current: aRunLoop [
 
 { #category : #private }
 GtkRunLoop class >> defaultRunLoopClass [
-	^ GtkPluginRunLoop
+
+	^ GtkSimpleRunLoop
 ]
 
 { #category : #accessing }
