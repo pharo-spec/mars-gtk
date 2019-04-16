@@ -12,21 +12,21 @@ GtkCodeAdapter >> addModelTo: gtkTextView [
 	self addMonospaceStyleFor: gtkTextView
 ]
 
-{ #category : #adding }
+{ #category : #building }
 GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 	
-	gtkTextView styleContext addProvider: self newCssProvider.
-	
+	gtkTextView styleContext addProvider: self codeCssProvider
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private-shout' }
 GtkCodeAdapter >> classOrMetaClass: anObject [
 	"ignore, I do not need it right now"
 ]
 
-{ #category : #adding }
-GtkCodeAdapter >> newCssProvider [
-
+{ #category : #building }
+GtkCodeAdapter >> codeCssProvider [
+	
+	self flag: #TODO. "This has to came from the application"
 	OSPlatform current isMacOS 
 		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Monaco" }' ].
 	OSPlatform current isWindows
@@ -41,4 +41,10 @@ GtkCodeAdapter >> setText: aString to: gtkTextView [
 	self model behavior 
 		ifNotNil: [ gtkTextView methodText: aString class: Object ]
 		ifNil: [ gtkTextView expressionText: aString ]
+]
+
+{ #category : #private }
+GtkCodeAdapter >> textWithStyle [
+
+	^ self widget textBuffer asText
 ]
