@@ -269,5 +269,5 @@ GtkTextIter >> forwardLines: count [
 { #category : #accessing }
 GtkTextIter >> tags [ 
 
-	^ (GSList fromHandle: self basicTags)  initialize
+	^ (GSList fromHandle: self basicTags) initialize
 ]
