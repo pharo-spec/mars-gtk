@@ -46,5 +46,5 @@ GtkCodeAdapter >> setText: aString to: gtkTextView [
 { #category : #private }
 GtkCodeAdapter >> textWithStyle [
 
-	^ self widget textBuffer asText
+	^ self widget child textBuffer asText
 ]

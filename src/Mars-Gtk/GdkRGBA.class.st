@@ -48,6 +48,16 @@ GdkRGBA >> alpha: anObject [
 ]
 
 { #category : #converting }
+GdkRGBA >> asColor [
+
+	^ Color 
+		r: self red 
+		g: self green 
+		b: self blue 
+		alpha: self alpha
+]
+
+{ #category : #converting }
 GdkRGBA >> asString [ 
 	^ self ffiCall: #( gchar *gdk_rgba_to_string ( self ) )
 ]

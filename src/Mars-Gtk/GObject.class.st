@@ -248,6 +248,26 @@ GObject >> gObjectGetDouble: aName [
 ]
 
 { #category : #'private primitives' }
+GObject >> gObjectGetHandle: aName [
+	| address |
+	
+	address := ExternalAddress new.
+	self gObjectGet: aName intoAddress: address.
+	^ address	
+			
+]
+
+{ #category : #'private primitives' }
+GObject >> gObjectGetHandle: aName as: aClass [
+	| address |
+
+	address := self gObjectGetHandle: aName.
+	address isNull ifTrue: [ ^ nil ].
+
+	^ aClass fromHandle: address
+]
+
+{ #category : #'private primitives' }
 GObject >> gObjectGetInteger: aName [
 	"a convenience method to read boolean properties"
 	| buffer |

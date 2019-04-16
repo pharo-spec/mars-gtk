@@ -76,7 +76,8 @@ GtkTextIter >> backwardLines: count [
 { #category : #private }
 GtkTextIter >> basicTags [
 
-	^ self ffiCall: #(GSList *gtk_text_iter_get_tags (self))
+	self flag: #TODO. "This should be GSList* but FFI is not answering correctly structures "
+	^ self ffiCall: #("GSList"void *gtk_text_iter_get_tags (self))
 ]
 
 { #category : #'accessing structure variables' }
@@ -268,5 +269,5 @@ GtkTextIter >> forwardLines: count [
 { #category : #accessing }
 GtkTextIter >> tags [ 
 
-	^ self basicTags initialize
+	^ (GSList fromHandle: self basicTags)  initialize
 ]

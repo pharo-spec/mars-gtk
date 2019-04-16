@@ -70,8 +70,8 @@ GtkTextBuffer >> asText [
 	pos := 1.
 	atEnd := false.
 	[ atEnd ] whileFalse: [ 
-		iter tags do: [ :eachTag |
-			eachTag asTextAttributeList do: [ :eachAttr | 
+		iter tags do: [ :eachTagHandle |
+			(GtkTextTag fromHandle: eachTagHandle)  asTextAttributeList do: [ :eachAttr | 
 				text addAttribute: eachAttr from: pos to: pos ] ].
 		pos := pos + 1.
 		atEnd := iter forwardChar not ].

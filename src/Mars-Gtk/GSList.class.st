@@ -98,10 +98,16 @@ GSList >> next [
 		ifFalse: [ GSList fromHandle: next ]
 ]
 
+{ #category : #'as yet unclassified' }
+GSList >> resourceData [
+
+	^ self getHandle
+]
+
 { #category : #private }
 GSList >> traverseNext: anElement do: aBlock [
 
-	anElement ifNil: [ ^ self ].
+	(anElement isNil or: [ anElement isNull ])  ifTrue: [ ^ self ].
 	aBlock value: anElement data.
 	self traverseNext: anElement next do: aBlock
 ]

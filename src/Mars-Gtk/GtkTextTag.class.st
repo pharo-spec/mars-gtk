@@ -23,9 +23,16 @@ GtkTextTag class >> textTagNew: aName [
 
 { #category : #converting }
 GtkTextTag >> asTextAttributeList [
+	| list |
 
 	self flag: #TODO. "Other properties"
-	^ { TextColor color: self foreground }
+	list := #().
+	self isForegroundSet ifTrue: [ 
+		"for some reason, 'foreground' property is NULL while 'foreground-rgba' is not"
+		list := list copyWith: (TextColor color: self foregroundRGBA asColor)  ].
+	
+	^ list
+	
 ]
 
 { #category : #accessing }
@@ -38,4 +45,16 @@ GtkTextTag >> foreground [
 GtkTextTag >> foreground: aColor [
 
 	self gObjectSet: 'foreground' toString: '#', aColor asHexString
+]
+
+{ #category : #accessing }
+GtkTextTag >> foregroundRGBA [
+
+	^ self gObjectGetHandle: 'foreground-rgba' as: GdkRGBA
+]
+
+{ #category : #testing }
+GtkTextTag >> isForegroundSet [
+
+	^ self gObjectGetBoolean: 'foreground-set'
 ]
