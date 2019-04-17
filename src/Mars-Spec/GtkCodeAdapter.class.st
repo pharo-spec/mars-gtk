@@ -47,12 +47,49 @@ GtkCodeAdapter >> codeCssProvider [
 	^ GtkCssProvider newFromString: '* { font: 12pt "Sans" }'
 ]
 
+{ #category : #'private factory' }
+GtkCodeAdapter >> newExpressionText: aString [ 
+	| textBuffer |
+	
+	textBuffer := GtkTextBuffer newTable: GtkTextTagTable newForCode.
+	textBuffer text: aString.
+	(StStyleVisitor new 
+		visitExpression: aString)
+		do: [ :each | each acceptTextBuffer: textBuffer ].
+	
+	^ textBuffer
+]
+
+{ #category : #'private factory' }
+GtkCodeAdapter >> newMethodText: aString class: aClass [ 
+	| textBuffer |
+	
+	aString isEmptyOrNil ifTrue: [ ^ self text: aString ].
+
+	textBuffer := GtkTextBuffer newTable: GtkTextTagTable newForCode.
+	textBuffer text: aString.
+	(StStyleVisitor new 
+		contextClass: aClass;
+		visitMethod: aString)
+		do: [ :each | each acceptTextBuffer: textBuffer ].
+		
+	^ textBuffer
+]
+
 { #category : #visiting }
 GtkCodeAdapter >> setText: aString to: gtkTextView [
+	| textBuffer |
 
-	self behavior 
-		ifNotNil: [ gtkTextView methodText: aString class: self behavior ]
-		ifNil: [ gtkTextView expressionText: aString ]
+	"remove existing callbacks to avoid cycles"
+	gtkTextView textBuffer disconnectAll.
+	textBuffer := self behavior 
+		ifNotNil: [ self newMethodText: aString class: self behavior ]
+		ifNil: [ self newExpressionText: aString ].
+	"it will change the textBuffer, so I reconnect to force a reformat"
+	textBuffer connectChanged: [ 
+		self setText: gtkTextView text to: gtkTextView ].
+	
+	gtkTextView textBuffer: textBuffer 
 ]
 
 { #category : #private }

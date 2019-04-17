@@ -85,6 +85,15 @@ GtkTextBuffer >> charCount [
 	^ self ffiCall: #(gint gtk_text_buffer_get_char_count (self))
 ]
 
+{ #category : #signals }
+GtkTextBuffer >> connectChanged: aBlock [ 
+
+	self 
+		connect: 'changed' 
+		signature: #(void (void *textBuffer, gpointer data))
+		do: [ :textBuffer :data | aBlock value ]
+]
+
 { #category : #'accessing mark' }
 GtkTextBuffer >> createMarkNamed: mark_name where: where leftGravity: left_gravity [
 
