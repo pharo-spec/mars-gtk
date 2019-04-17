@@ -55,10 +55,16 @@ GSList >> application [
 	^ GtkApplication current
 ]
 
-{ #category : #initialization }
+{ #category : #'external resource management' }
 GSList >> autoRelease [
 
 	self application resourceManager addResource: self
+]
+
+{ #category : #private }
+GSList >> basicFree [
+
+	self ffiCall: #(void g_slist_free (self))
 ]
 
 { #category : #'accessing structure variables' }
@@ -82,10 +88,17 @@ GSList >> ffiLibraryName [
 ]
 
 { #category : #initialization }
+GSList >> free [
+	
+	self basicFree.
+	self getHandle beNull
+]
+
+{ #category : #initialization }
 GSList >> initialize [
 	
 	super initialize.
-	self autoRelease
+	"self autoRelease"
 ]
 
 { #category : #'accessing structure variables' }
@@ -107,7 +120,7 @@ GSList >> resourceData [
 { #category : #private }
 GSList >> traverseNext: anElement do: aBlock [
 
-	(anElement isNil or: [ anElement isNull ])  ifTrue: [ ^ self ].
+	(anElement isNil or: [ anElement isNull ]) ifTrue: [ ^ self ].
 	aBlock value: anElement data.
 	self traverseNext: anElement next do: aBlock
 ]

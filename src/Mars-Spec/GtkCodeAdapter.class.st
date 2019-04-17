@@ -18,9 +18,21 @@ GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 	gtkTextView styleContext addProvider: self codeCssProvider
 ]
 
+{ #category : #'api-shout' }
+GtkCodeAdapter >> behavior [
+
+	^ self model behavior
+]
+
 { #category : #'private-shout' }
-GtkCodeAdapter >> classOrMetaClass: anObject [
-	"ignore, I do not need it right now"
+GtkCodeAdapter >> classOrMetaClass: aClass [
+	"I will take the behavior from model, I just need to fire a refresh"
+	| gtkTextView |
+	
+	gtkTextView := self widget child.
+	self 
+		setText: gtkTextView text 
+		to: gtkTextView
 ]
 
 { #category : #building }
@@ -38,8 +50,8 @@ GtkCodeAdapter >> codeCssProvider [
 { #category : #visiting }
 GtkCodeAdapter >> setText: aString to: gtkTextView [
 
-	self model behavior 
-		ifNotNil: [ gtkTextView methodText: aString class: Object ]
+	self behavior 
+		ifNotNil: [ gtkTextView methodText: aString class: self behavior ]
 		ifNil: [ gtkTextView expressionText: aString ]
 ]
 
