@@ -9,7 +9,13 @@ GtkCodeAdapter >> addModelTo: gtkTextView [
 
 	super addModelTo: gtkTextView.
 	"gtkTextView monospace: true."
-	self addMonospaceStyleFor: gtkTextView
+	self addMonospaceStyleFor: gtkTextView.
+	"add style table"
+	self flag: #TODO. "What do we do when color style changes?"
+	gtkTextView textBuffer: (GtkTextBuffer newTable: GtkTextTagTable newForCode).
+	"I need to recalculate style each time I get a change"
+	gtkTextView textBuffer connectChanged: [
+		self setText: gtkTextView text to: gtkTextView ]
 ]
 
 { #category : #building }
@@ -48,48 +54,38 @@ GtkCodeAdapter >> codeCssProvider [
 ]
 
 { #category : #'private factory' }
-GtkCodeAdapter >> newExpressionText: aString [ 
-	| textBuffer |
-	
-	textBuffer := GtkTextBuffer newTable: GtkTextTagTable newForCode.
+GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
+
 	textBuffer text: aString.
-	(StStyleVisitor new 
+	(STxStyleVisitor new 
 		visitExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
-	
-	^ textBuffer
+
 ]
 
 { #category : #'private factory' }
-GtkCodeAdapter >> newMethodText: aString class: aClass [ 
-	| textBuffer |
-	
-	aString isEmptyOrNil ifTrue: [ ^ self text: aString ].
+GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [ 
 
-	textBuffer := GtkTextBuffer newTable: GtkTextTagTable newForCode.
 	textBuffer text: aString.
-	(StStyleVisitor new 
+	(STxStyleVisitor new 
 		contextClass: aClass;
 		visitMethod: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
-		
-	^ textBuffer
+
 ]
 
 { #category : #visiting }
 GtkCodeAdapter >> setText: aString to: gtkTextView [
 	| textBuffer |
 
-	"remove existing callbacks to avoid cycles"
-	gtkTextView textBuffer disconnectAll.
-	textBuffer := self behavior 
-		ifNotNil: [ self newMethodText: aString class: self behavior ]
-		ifNil: [ self newExpressionText: aString ].
-	"it will change the textBuffer, so I reconnect to force a reformat"
-	textBuffer connectChanged: [ 
-		self setText: gtkTextView text to: gtkTextView ].
-	
-	gtkTextView textBuffer: textBuffer 
+	textBuffer := gtkTextView textBuffer.
+	textBuffer userActionDuring: [ 
+		textBuffer disconnect: 'changed' during: [ 
+			self behavior 
+				ifNotNil: [ :aBehavior | 
+					self setMethodText: aString class: aBehavior toBuffer: textBuffer ]
+				ifNil: [ 
+					self setExpressionText: aString toBuffer: textBuffer ] ] ]
 ]
 
 { #category : #private }
