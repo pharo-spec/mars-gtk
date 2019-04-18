@@ -429,6 +429,15 @@ STxStyleVisitor >> visitTemporaryNode: aRBTemporaryNode [
 ]
 
 { #category : #'private visiting' }
+STxStyleVisitor >> visitThisContextNode: aThisContextNode [ 
+	
+	self 
+		addStyle: #thisContext 
+		from: aThisContextNode start 
+		to: aThisContextNode stop
+]
+
+{ #category : #'private visiting' }
 STxStyleVisitor >> visitVariableNode: aRBVariableNode [ 
 	
 	self 
