@@ -43,7 +43,7 @@ GtkListAdapter >> addModelTo: gtkList [
 	gtkList connectSelectionChanged: [ 
 		self presenter selection selectIndexes: gtkList allSelected flattened ].
 	
-	self refreshWidgetHeaderTitle
+	self refreshWidgetHeaderTitleTo: gtkList
 ]
 
 { #category : #testing }
