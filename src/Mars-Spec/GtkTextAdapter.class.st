@@ -27,7 +27,5 @@ GtkTextAdapter >> widgetClass [
 { #category : #building }
 GtkTextAdapter >> wrapWidget: gtkWidget [
 
-	^ (GtkScrolledWindow newWidget: gtkWidget) 
-		show;
-		yourself
+	^ self wrapWithScrollableWindow: gtkWidget
 ]

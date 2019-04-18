@@ -2,7 +2,7 @@ Class {
 	#name : #GtkComponentListAdapter,
 	#superclass : #GtkAdapter,
 	#instVars : [
-		'realWidget'
+		'innerWidget'
 	],
 	#classInstVars : [
 		'gtkWidget',
@@ -19,24 +19,40 @@ GtkComponentListAdapter class >> adaptingAliases [
 
 { #category : #building }
 GtkComponentListAdapter >> addModelTo: gtkListBox [
-	widget := gtkListBox .
-	realWidget := gtkListBox.
-	self presenter
+
+	self presenter 
 		property: #presenters
 		whenChangedDo: [ :collection | 
-			self updateWith: collection ].
-	self updateWith: self presenter presenters
+			self updateWith: collection ].	
+			
+	self 
+		update: gtkListBox 
+		with: self presenter presenters
+]
+
+{ #category : #'private accessing' }
+GtkComponentListAdapter >> innerWidget [
+
+	^ widget child
+]
+
+{ #category : #building }
+GtkComponentListAdapter >> update: gtkWidget with: aCollection [
+	| listItem |
+	
+	gtkWidget removeAll.
+	aCollection doWithIndex: [ :presenter :index | 
+		listItem := presenter buildWithSpec asListBoxRow.
+		gtkWidget add: listItem.
+		widget showAll ]
 ]
 
 { #category : #building }
 GtkComponentListAdapter >> updateWith: aCollection [
-	| listItem |
-	realWidget removeAll.
-	aCollection
-		doWithIndex: [ :p :i | 
-			listItem := p buildWithSpec asListBoxRow.
-			realWidget add: listItem.
-			widget showAll ]
+
+	self 
+		update: self innerWidget 
+		with: aCollection
 ]
 
 { #category : #building }
@@ -47,8 +63,7 @@ GtkComponentListAdapter >> widgetClass [
 
 { #category : #building }
 GtkComponentListAdapter >> wrapWidget: gtkWidget [
-	realWidget := gtkWidget.
-	^ (GtkScrolledWindow newWidget: gtkWidget)
-		show;
-		yourself
+
+	^ self wrapWithScrollableWindow: gtkWidget
+		
 ]

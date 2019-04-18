@@ -104,10 +104,9 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 
 { #category : #private }
 GtkTreeTableAdapter >> addRow: anObject index: index into: store [
-	| gtkRow  |
+	| gtkRow |
 	
 	gtkRow := self doAddRow: anObject index: index into: store.
-		
 	"I will add the first level children of this row"
 	self addChildrenFor: anObject into: gtkRow.
 			
@@ -117,12 +116,11 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 { #category : #accessing }
 GtkTreeTableAdapter >> columnCount [
 	
-	^ self widget model numberOfColumns
+	^ self innerWidget model numberOfColumns
 ]
 
 { #category : #building }
 GtkTreeTableAdapter >> doAddRow: anObject index: rowIndex into: store [
-
 	| gtkRow filler |
 	
 	gtkRow := store appendNew.
@@ -154,6 +152,12 @@ GtkTreeTableAdapter >> initialize [
 
 	super initialize.
 	levelsAdded := Set new
+]
+
+{ #category : #'private accessing' }
+GtkTreeTableAdapter >> innerWidget [
+
+	^ widget child
 ]
 
 { #category : #private }
@@ -227,7 +231,7 @@ GtkTreeTableAdapter >> recreateStore: gtkWidget	generateColumns: doesGenerateCol
 { #category : #updating }
 GtkTreeTableAdapter >> refreshList [
 
-	self widget model: (self newStoreFrom: self model items)
+	self innerWidget model: (self newStoreFrom: self model items)
 ]
 
 { #category : #private }
@@ -251,9 +255,9 @@ GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 
 { #category : #accessing }
 GtkTreeTableAdapter >> selectedItem [
-
 	| selectedPath |
-	selectedPath := self widget selection selectedPath.
+	
+	selectedPath := self innerWidget selection selectedPath.
 
 	selectedPath ifNil: [ ^ nil ].
 	selectedPath ifEmpty: [ ^ nil ].
@@ -264,13 +268,13 @@ GtkTreeTableAdapter >> selectedItem [
 { #category : #accessing }
 GtkTreeTableAdapter >> selectedPaths [
 	
-	^ self widget allSelected
+	^ self innerWidget allSelected
 ]
 
 { #category : #private }
 GtkTreeTableAdapter >> store [ 
 
-	^ self widgetDo: [ :w | w model ]
+	^ self innerWidgetDo: [ :w | w model ]
 ]
 
 { #category : #private }
@@ -288,9 +292,9 @@ GtkTreeTableAdapter >> takeKeyboardFocus [
 	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
 	needToCleanUP 
 		ifTrue: [ 
-			self disconnectSelectionEventsOf: self widget during: [ 
+			self disconnectSelectionEventsOf: self innerWidget during: [ 
 				self doTakeKeyboardFocus.
-				self widget selection unselectAll ] ]
+				self innerWidget selection unselectAll ] ]
 		ifFalse: [ 
 			self doTakeKeyboardFocus ]
 ]
@@ -298,7 +302,7 @@ GtkTreeTableAdapter >> takeKeyboardFocus [
 { #category : #building }
 GtkTreeTableAdapter >> updatePresenterSelection [
 	
-	self widgetDo: [ :w | 
+	self innerWidgetDo: [ :w | 
 		self rowSelected: w selected ]
 ]
 
@@ -313,4 +317,10 @@ GtkTreeTableAdapter >> updateSelectionOf: gtkWidget [
 GtkTreeTableAdapter >> widgetClass [
 	
 	^ GtkTreeView
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> wrapWidget: gtkWidget [
+
+	^ self wrapWithScrollableWindow: gtkWidget
 ]

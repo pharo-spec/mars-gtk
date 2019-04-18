@@ -38,17 +38,14 @@ GtkTableAdapter >> addModelTo: gtkTreeView [
 	gtkTreeView connectRowActivated: [ :path | 
 		self model doActivateAtIndex: path toArray first ].
 
-	widget := gtkTreeView.
-	
 	self presenter whenColumnsChangedDo: [ 
 		self refreshWidgetHeaderTitle. 
 		self refreshList ].
 	
-	self refreshWidgetHeaderTitle.
+	self refreshWidgetHeaderTitleTo: gtkTreeView.
 	
 	gtkTreeView connectSelectionChanged: [ 
 		self presenter selection selectIndexes: gtkTreeView allSelected flattened ].
-
 ]
 
 { #category : #private }
@@ -56,26 +53,32 @@ GtkTableAdapter >> appendAddedColumns [
 	| columns |
 	
 	columns := self model columns.  
-	(columns last: (columns size - widget columns size)) do: [ :aTableColumn | 
+	(columns last: (columns size - self innerWidget columns size)) do: [ :aTableColumn | 
 		self 
 			addColumn: aTableColumn 
-			to: widget ]	
+			to: self innerWidget ]	
 ]
 
 { #category : #testing }
 GtkTableAdapter >> isShowColumnHeaders [
 
-	^ widget isHeadersVisible
+	^ self innerWidget isHeadersVisible
 ]
 
 { #category : #events }
 GtkTableAdapter >> refreshWidgetHeaderTitle [
 	
+	self refreshWidgetHeaderTitleTo: self innerWidget
+]
+
+{ #category : #events }
+GtkTableAdapter >> refreshWidgetHeaderTitleTo: gtkTreeView [
+	
 	"By now I only accept to add columns, as the data should be all generated. It is not so easy"
-	(widget columns size < self model columns size) 
+	(gtkTreeView columns size < self model columns size) 
 		ifTrue: [ self appendAddedColumns ].
 	
 	self model columns 
-		with: widget columns 
+		with: gtkTreeView columns 
 		do: [ :modelColumn :widgetColumn | widgetColumn title: modelColumn title ]
 ]

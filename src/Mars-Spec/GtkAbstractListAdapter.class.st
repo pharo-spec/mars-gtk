@@ -15,7 +15,7 @@ GtkAbstractListAdapter >> newTreeStore [
 { #category : #events }
 GtkAbstractListAdapter >> refreshList [
 	
-	self widgetDo: [ :w |
+	self innerWidgetDo: [ :w |
 		self 
 			disconnectSelectionEventsOf: w
 			during: [ w model: self newTreeStore ] ]
@@ -24,32 +24,32 @@ GtkAbstractListAdapter >> refreshList [
 { #category : #accessing }
 GtkAbstractListAdapter >> refreshWidgetSelection [
 	| rowIndexes selection |
-	
-	self widget ifNil: [ ^ self ].
+
+	self hasWidget ifFalse: [ ^ self ].
 
 	rowIndexes := self presenter selection selectedIndexes.
-	selection := self widget selection.
+	selection := self innerWidget selection.
 	(selection allSelected collect: #first) asArray = rowIndexes
 		ifTrue: [ ^ self ].
 
 	self 
-		disconnectSelectionEventsOf: self widget 
+		disconnectSelectionEventsOf: self innerWidget 
 		during: [ 		
 			rowIndexes 
-				ifNotEmpty: [ self widget selection selectPath: rowIndexes ]
-				ifEmpty: [ self widget selection unselectAll ] ]
+				ifNotEmpty: [ self innerWidget selection selectPath: rowIndexes ]
+				ifEmpty: [ self innerWidget selection unselectAll ] ]
 ]
 
 { #category : #building }
 GtkAbstractListAdapter >> resetSelection [
 
-	self widget selection unselectAll
+	self innerWidget selection unselectAll
 ]
 
 { #category : #accessing }
 GtkAbstractListAdapter >> selectIndex: anInteger [ 
 	
-	self widgetDo: [ :w |
+	self innerWidgetDo: [ :w |
 		anInteger ~= 0
 			ifTrue: [ w selectIndex: anInteger ]
 			ifFalse: [ self resetSelection ] ]
@@ -59,15 +59,15 @@ GtkAbstractListAdapter >> selectIndex: anInteger [
 GtkAbstractListAdapter >> takeKeyboardFocus [
 	| needToCleanUP |
 
-	self widget ifNil: [ ^ self ].
+	self hasWidget ifFalse: [ ^ self ].
 	self flag: #hack.
 	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"	
 	needToCleanUP := self presenter selection isEmpty.
 	needToCleanUP 
 		ifTrue: [ 
-			self disconnectSelectionEventsOf: self widget during: [ 
+			self disconnectSelectionEventsOf: self innerWidget during: [ 
 				self doTakeKeyboardFocus.
-				self widget selection unselectAll ] ]
+				self innerWidget selection unselectAll ] ]
 		ifFalse: [ 
 			self doTakeKeyboardFocus ]
 ]
