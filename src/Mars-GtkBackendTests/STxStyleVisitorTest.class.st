@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'visitor'
 	],
-	#category : #'Mars-Spec-Text'
+	#category : #'Mars-GtkBackendTests'
 }
 
 { #category : #accessing }
