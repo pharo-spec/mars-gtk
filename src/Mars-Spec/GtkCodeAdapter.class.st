@@ -15,13 +15,25 @@ GtkCodeAdapter >> addModelTo: gtkTextView [
 	gtkTextView textBuffer: (GtkTextBuffer newTable: GtkTextTagTable newForCode).
 	"I need to recalculate style each time I get a change"
 	gtkTextView textBuffer connectChanged: [
-		self setText: gtkTextView text to: gtkTextView ]
+		self applyStyleTo: gtkTextView textBuffer ]
 ]
 
 { #category : #building }
 GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 	
 	gtkTextView styleContext addProvider: self codeCssProvider
+]
+
+{ #category : #visiting }
+GtkCodeAdapter >> applyStyleTo: textBuffer [
+
+	textBuffer userActionDuring: [ 
+		textBuffer removeAllTags.
+		self behavior 
+			ifNotNil: [ :aBehavior | 
+				self setMethodText: textBuffer text class: aBehavior toBuffer: textBuffer ]
+			ifNil: [ 
+				self setExpressionText: textBuffer text toBuffer: textBuffer ] ]
 ]
 
 { #category : #'api-shout' }
@@ -36,9 +48,7 @@ GtkCodeAdapter >> classOrMetaClass: aClass [
 	| gtkTextView |
 	
 	gtkTextView := self widget child.
-	self 
-		setText: gtkTextView text 
-		to: gtkTextView
+	self applyStyleTo: gtkTextView textBuffer
 ]
 
 { #category : #building }
@@ -53,20 +63,18 @@ GtkCodeAdapter >> codeCssProvider [
 	^ GtkCssProvider newFromString: '* { font: 12pt "Sans" }'
 ]
 
-{ #category : #'private factory' }
+{ #category : #'private-shout' }
 GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
 
-	textBuffer text: aString.
 	(STxStyleVisitor new 
 		visitExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
 ]
 
-{ #category : #'private factory' }
+{ #category : #'private-shout' }
 GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [ 
 
-	textBuffer text: aString.
 	(STxStyleVisitor new 
 		contextClass: aClass;
 		visitMethod: aString)
@@ -76,16 +84,9 @@ GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [
 
 { #category : #visiting }
 GtkCodeAdapter >> setText: aString to: gtkTextView [
-	| textBuffer |
 
-	textBuffer := gtkTextView textBuffer.
-	textBuffer userActionDuring: [ 
-		textBuffer disconnect: 'changed' during: [ 
-			self behavior 
-				ifNotNil: [ :aBehavior | 
-					self setMethodText: aString class: aBehavior toBuffer: textBuffer ]
-				ifNil: [ 
-					self setExpressionText: aString toBuffer: textBuffer ] ] ]
+	gtkTextView text: aString.
+	self applyStyleTo: gtkTextView textBuffer.
 ]
 
 { #category : #private }

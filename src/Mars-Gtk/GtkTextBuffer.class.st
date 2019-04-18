@@ -40,7 +40,7 @@ GtkTextBuffer >> appendText: aString [
 		text: aString
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing tags' }
 GtkTextBuffer >> applyTagByName: aName start: start end: end [
 	| startIter endIter |
 	
@@ -79,7 +79,7 @@ GtkTextBuffer >> asText [
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkTextBuffer >> beginUserAction [
 	
 	self ffiCall: #(void gtk_text_buffer_begin_user_action (self))
@@ -140,7 +140,7 @@ GtkTextBuffer >> endIter: iter [
 	self ffiCall: #(void gtk_text_buffer_get_end_iter (self, GtkTextIter *iter))
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkTextBuffer >> endUserAction [
 	
 	self ffiCall: #(void gtk_text_buffer_end_user_action (self))
@@ -228,6 +228,23 @@ GtkTextBuffer >> offsetIter: iter pos: char_offset [
 	
 	^ self ffiCall: #(void gtk_text_buffer_get_iter_at_offset (self, GtkTextIter *iter, gint char_offset))
 	
+]
+
+{ #category : #'accessing tags' }
+GtkTextBuffer >> removeAllTags [ 
+
+	self 
+		removeAllTagsFrom: self startIter 
+		to: self endIter
+]
+
+{ #category : #private }
+GtkTextBuffer >> removeAllTagsFrom: start to: end [
+
+	self ffiCall: #(void gtk_text_buffer_remove_all_tags (
+		self, 
+		const GtkTextIter *start, 
+		const GtkTextIter *end))
 ]
 
 { #category : #private }
