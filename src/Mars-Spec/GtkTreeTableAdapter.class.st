@@ -55,6 +55,18 @@ GtkTreeTableAdapter >> addLevelTo: item parent: iter [
 ]
 
 { #category : #building }
+GtkTreeTableAdapter >> addLevelsUpTo: aPath to: gtkWidget [	
+	| segments |	
+		
+	segments := OrderedCollection new.
+	aPath do: [ :each | 
+		| iter |
+		segments add: each.
+		iter := gtkWidget model iteratorFromPath: (GtkTreePath newFromArray: segments).
+		self addLevelTo: (self model itemAtPath: segments) parent: iter ]
+]
+
+{ #category : #building }
 GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
@@ -237,9 +249,11 @@ GtkTreeTableAdapter >> rowSelected: path [
 { #category : #building }
 GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 
-	(aPath isNil or: [ aPath isEmpty ])
-		ifTrue: [ gtkWidget selection unselectAll. ^ self ].
+	(aPath isNil or: [ aPath isEmpty ]) ifTrue: [ 
+		gtkWidget selection unselectAll. 
+		^ self ].
 
+	self addLevelsUpTo: aPath to: gtkWidget.
 	gtkWidget expandToPath: aPath.
 	gtkWidget selection selectPath: aPath.
 
@@ -303,8 +317,8 @@ GtkTreeTableAdapter >> updatePresenterSelection [
 { #category : #building }
 GtkTreeTableAdapter >> updateSelectionOf: gtkWidget [
 
-	self model selection selectedPaths
-		do: [ :selectedPath | self selectItemIn: gtkWidget path: selectedPath ]
+	self model selection selectedPaths do: [ :selectedPath | 
+		self selectItemIn: gtkWidget path: selectedPath ]
 ]
 
 { #category : #building }
