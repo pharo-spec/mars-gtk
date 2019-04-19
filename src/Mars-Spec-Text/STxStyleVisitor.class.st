@@ -201,6 +201,12 @@ STxStyleVisitor >> visitArgumentNode: aRBArgumentNode [
 ]
 
 { #category : #'private visiting' }
+STxStyleVisitor >> visitArrayNode: anArrayNode [ 
+
+	anArrayNode children do: [ :each | self visitNode: each ]
+]
+
+{ #category : #'private visiting' }
 STxStyleVisitor >> visitAssignmentNode: aRBAssignmentNode [
 
 	self visitNode: aRBAssignmentNode variable.
