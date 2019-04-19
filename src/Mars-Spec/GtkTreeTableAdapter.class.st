@@ -23,8 +23,8 @@ After processing, we will the full tree.
 Class {
 	#name : #GtkTreeTableAdapter,
 	#superclass : #GtkAdapter,
-	#traits : 'TGtkDisconnectSelectionEvents',
-	#classTraits : 'TGtkDisconnectSelectionEvents classTrait',
+	#traits : 'TGtkDisconnectSelectionEvents + TGtkHaveWrappingScrollBars',
+	#classTraits : 'TGtkDisconnectSelectionEvents classTrait + TGtkHaveWrappingScrollBars classTrait',
 	#instVars : [
 		'levelsAdded'
 	],
@@ -152,12 +152,6 @@ GtkTreeTableAdapter >> initialize [
 
 	super initialize.
 	levelsAdded := Set new
-]
-
-{ #category : #'private accessing' }
-GtkTreeTableAdapter >> innerWidget [
-
-	^ widget child
 ]
 
 { #category : #private }
@@ -317,10 +311,4 @@ GtkTreeTableAdapter >> updateSelectionOf: gtkWidget [
 GtkTreeTableAdapter >> widgetClass [
 	
 	^ GtkTreeView
-]
-
-{ #category : #building }
-GtkTreeTableAdapter >> wrapWidget: gtkWidget [
-
-	^ self wrapWithScrollableWindow: gtkWidget
 ]

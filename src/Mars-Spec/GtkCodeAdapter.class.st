@@ -45,10 +45,8 @@ GtkCodeAdapter >> behavior [
 { #category : #'private-shout' }
 GtkCodeAdapter >> classOrMetaClass: aClass [
 	"I will take the behavior from model, I just need to fire a refresh"
-	| gtkTextView |
-	
-	gtkTextView := self widget child.
-	self applyStyleTo: gtkTextView textBuffer
+
+	self applyStyleTo: self innerWidget textBuffer
 ]
 
 { #category : #building }
@@ -92,5 +90,5 @@ GtkCodeAdapter >> setText: aString to: gtkTextView [
 { #category : #private }
 GtkCodeAdapter >> textWithStyle [
 
-	^ self widget child textBuffer asText
+	^ self innerWidget textBuffer asText
 ]
