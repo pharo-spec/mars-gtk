@@ -39,17 +39,17 @@ STxStyleVisitorTest >> setUp [
 ]
 
 { #category : #tests }
-STxStyleVisitorTest >> testVisitMethod [
+STxStyleVisitorTest >> testStyleMethod [
 	| tags |
 
 	"smoke test"
 	visitor 
 		contextClass: Object;
-		visitMethod: self class syntaxInAPostcard.
+		styleMethod: self class syntaxInAPostcard.
 	"basic test"
 	tags := visitor 
 		contextClass: Object;
-		visitMethod: 'self asString'.
+		styleMethod: 'self asString'.
 	
 	self assert: tags size equals: 2
 ]

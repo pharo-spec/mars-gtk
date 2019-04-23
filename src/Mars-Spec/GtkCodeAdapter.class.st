@@ -65,7 +65,7 @@ GtkCodeAdapter >> codeCssProvider [
 GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
 
 	(STxStyleVisitor new 
-		visitExpression: aString)
+		styleExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
 ]
@@ -75,7 +75,7 @@ GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [
 
 	(STxStyleVisitor new 
 		contextClass: aClass;
-		visitMethod: aString)
+		styleMethod: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
 ]

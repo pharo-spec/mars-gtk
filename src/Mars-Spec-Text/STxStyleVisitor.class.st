@@ -1,6 +1,8 @@
 Class {
 	#name : #STxStyleVisitor,
 	#superclass : #Object,
+	#traits : 'TRBProgramNodeVisitor',
+	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
 		'parentheseLevel',
 		'bracketLevel',
@@ -109,6 +111,22 @@ STxStyleVisitor >> resolveStyleFor: aRBVariableNode [
 	^#invalid.
 ]
 
+{ #category : #styling }
+STxStyleVisitor >> styleAST: ast [
+	| context |
+
+	self reset.
+	context := (Smalltalk compiler compilationContextClass new
+		class: contextClass;
+		forSyntaxHighlighting: true;
+		requestor: nil;
+		yourself).
+	ast methodNode compilationContext: context.
+	ast doSemanticAnalysis.
+
+	ast acceptVisitor: self
+]
+
 { #category : #private }
 STxStyleVisitor >> styleCloseBracket: aRBBlockNode [ 
 	
@@ -129,6 +147,23 @@ STxStyleVisitor >> styleCloseParenthese: aMessageNode [
 			pos := interval last.
 			parentheseLevel := parentheseLevel - 1.
 			self addStyle: self currentClosedParenthesisStyleName from: pos to: pos ] ]
+]
+
+{ #category : #styling }
+STxStyleVisitor >> styleExpression: aString [
+
+	self styleAST: (RBParser parseFaultyExpression: aString).
+	^ self tags
+]
+
+{ #category : #styling }
+STxStyleVisitor >> styleMethod: aString [
+	| ast |
+
+	ast := RBParser parseFaultyMethod: aString.
+	ast isParseError ifTrue: [ ^ self styleExpression: aString ].
+	self styleAST: ast.
+	^ self tags
 ]
 
 { #category : #private }
@@ -173,23 +208,7 @@ STxStyleVisitor >> tags [
 	^ tags
 ]
 
-{ #category : #'private visiting' }
-STxStyleVisitor >> visitAST: ast [
-	| context |
-
-	self reset.
-	context := (Smalltalk compiler compilationContextClass new
-		class: contextClass;
-		forSyntaxHighlighting: true;
-		requestor: nil;
-		yourself).
-	ast methodNode compilationContext: context.
-	ast doSemanticAnalysis.
-
-	ast acceptVisitor: self
-]
-
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitArgumentNode: aRBArgumentNode [ 
 	| blockOrMethodArgStyle |
 	
@@ -200,13 +219,13 @@ STxStyleVisitor >> visitArgumentNode: aRBArgumentNode [
 		to: aRBArgumentNode stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitArrayNode: anArrayNode [ 
 
 	anArrayNode children do: [ :each | self visitNode: each ]
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitAssignmentNode: aRBAssignmentNode [
 
 	self visitNode: aRBAssignmentNode variable.
@@ -215,7 +234,7 @@ STxStyleVisitor >> visitAssignmentNode: aRBAssignmentNode [
 		ifFalse: [ self addStyle: #invalid forNode: aRBAssignmentNode ]
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitBlockNode: aRBBlockNode [ 
 
 	aRBBlockNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
@@ -228,7 +247,7 @@ STxStyleVisitor >> visitBlockNode: aRBBlockNode [
 	self styleCloseBracket: aRBBlockNode
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitCascadeNode: aRBCascadeNode [
 
 	aRBCascadeNode messages do: [ :each | self visitNode: each ].
@@ -236,13 +255,6 @@ STxStyleVisitor >> visitCascadeNode: aRBCascadeNode [
 ]
 
 { #category : #visiting }
-STxStyleVisitor >> visitExpression: aString [
-
-	self visitAST: (RBParser parseFaultyExpression: aString).
-	^ self tags
-]
-
-{ #category : #'private visiting' }
 STxStyleVisitor >> visitGlobalNode: aRBGlobalNode [
 
 	self 
@@ -251,7 +263,7 @@ STxStyleVisitor >> visitGlobalNode: aRBGlobalNode [
 		to: aRBGlobalNode stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	"in a (valid) byte array all elements are of the same type, style the whole 
 	 contents at once, but for ordinary literal arrays, style every node"
@@ -267,7 +279,7 @@ STxStyleVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 			aRBLiteralArrayNode contents do: [ :each | self visitNode: each ] ]
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitLiteralNode: aRBLiteralValueNode [ 
 	| value |
 	
@@ -278,7 +290,7 @@ STxStyleVisitor >> visitLiteralNode: aRBLiteralValueNode [
 		to: aRBLiteralValueNode stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitMessageNode: aRBMessageNode [ 
 	| style link |
 	
@@ -304,16 +316,6 @@ STxStyleVisitor >> visitMessageNode: aRBMessageNode [
 ]
 
 { #category : #visiting }
-STxStyleVisitor >> visitMethod: aString [
-	| ast |
-
-	ast := RBParser parseFaultyMethod: aString.
-	ast isParseError ifTrue: [ ^ self visitExpression: aString ].
-	self visitAST: ast.
-	^ self tags
-]
-
-{ #category : #'private visiting' }
 STxStyleVisitor >> visitMethodComments: comments [
 
 	comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
@@ -321,7 +323,7 @@ STxStyleVisitor >> visitMethodComments: comments [
 		ifTrue: [ comments do: [ :comment | self styleDocComment: comment ] ]"
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitMethodNode: aRBMethodNode [ 
 	
 	self visitMethodComments: aRBMethodNode comments.
@@ -340,7 +342,7 @@ STxStyleVisitor >> visitMethodNode: aRBMethodNode [
 	self visitNode: aRBMethodNode body
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitNode: aRBNode [ 
 	
 	aRBNode comments do: [ :comment |
@@ -352,7 +354,7 @@ STxStyleVisitor >> visitNode: aRBNode [
 	^ aRBNode acceptVisitor: self
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitParseErrorNode: aRBParseErrorNode [ 
 	
 	self 
@@ -361,7 +363,7 @@ STxStyleVisitor >> visitParseErrorNode: aRBParseErrorNode [
 		to: aRBParseErrorNode  stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitPragmaNode: aRBPragmaNode [ 
 
 	aRBPragmaNode selectorParts 
@@ -375,7 +377,7 @@ STxStyleVisitor >> visitPragmaNode: aRBPragmaNode [
 	aRBPragmaNode arguments do: [ :each | self visitNode: each ]	
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitReturnNode: aRBReturnNode [ 
 	
 	self 
@@ -386,7 +388,7 @@ STxStyleVisitor >> visitReturnNode: aRBReturnNode [
 	self visitNode: aRBReturnNode value
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitSelfNode: aRBSelfNode [
 	
 	self 
@@ -395,7 +397,7 @@ STxStyleVisitor >> visitSelfNode: aRBSelfNode [
 		to: aRBSelfNode stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitSequenceNode: aRBSequenceNode [ 
 	| patternTempStyle |
 	
@@ -414,7 +416,7 @@ STxStyleVisitor >> visitSequenceNode: aRBSequenceNode [
 			to: pos ]
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitSuperNode: aRBSuperNode [ 
 
 	self 
@@ -423,7 +425,7 @@ STxStyleVisitor >> visitSuperNode: aRBSuperNode [
 		to: aRBSuperNode stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitTemporaryNode: aRBTemporaryNode [ 
 	| methodOrBlockTempStyle |
 		
@@ -434,7 +436,7 @@ STxStyleVisitor >> visitTemporaryNode: aRBTemporaryNode [
 		to: aRBTemporaryNode stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitThisContextNode: aThisContextNode [ 
 	
 	self 
@@ -443,7 +445,7 @@ STxStyleVisitor >> visitThisContextNode: aThisContextNode [
 		to: aThisContextNode stop
 ]
 
-{ #category : #'private visiting' }
+{ #category : #visiting }
 STxStyleVisitor >> visitVariableNode: aRBVariableNode [ 
 	
 	self 
