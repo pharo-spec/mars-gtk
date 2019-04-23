@@ -9,13 +9,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkTableColumnVisitor >> columnIndex [
-
-	self halt.
-	"^ columnIndex"
-]
-
-{ #category : #accessing }
 GtkTableColumnVisitor >> columnIndex: aNumber [
 
 	self flag: #REMOVE.
