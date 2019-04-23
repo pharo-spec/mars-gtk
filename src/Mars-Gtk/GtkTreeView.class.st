@@ -52,7 +52,7 @@ GtkTreeView >> allSelected [
 	^ self selection allSelected 
 ]
 
-{ #category : #accessing }
+{ #category : #columns }
 GtkTreeView >> appendColumn: column [
 	
 	columns add: column.
@@ -91,7 +91,7 @@ GtkTreeView >> beSingleSelectionMode [
 	self selection mode: GtkSelectionMode GTK_SELECTION_SINGLE
 ]
 
-{ #category : #accessing }
+{ #category : #columns }
 GtkTreeView >> columns [
 	^ columns
 ]
@@ -144,6 +144,12 @@ GtkTreeView >> doExpandToPath: path [
 	self ffiCall: #(void gtk_tree_view_expand_to_path (self, GtkTreePath *path))
 ]
 
+{ #category : #accessing }
+GtkTreeView >> enableSearch: enable_search [
+
+	self ffiCall: #(void gtk_tree_view_set_enable_search (self, gboolean enable_search))
+]
+
 { #category : #private }
 GtkTreeView >> enableTreeLines [
 
@@ -181,6 +187,12 @@ GtkTreeView >> headersVisible: aBoolean [
 	self gObjectSet: 'headers-visible' toBoolean: aBoolean
 ]
 
+{ #category : #accessing }
+GtkTreeView >> hoverExpand: expand [
+
+	self ffiCall: #(void gtk_tree_view_set_hover_expand (self, gboolean expand))
+]
+
 { #category : #initialization }
 GtkTreeView >> initialize [
 
@@ -198,6 +210,12 @@ GtkTreeView >> isActivateOnSingleClick [
 ]
 
 { #category : #testing }
+GtkTreeView >> isEnableSearch [
+
+	^ self ffiCall: #(gboolean gtk_tree_view_get_enable_search (self))
+]
+
+{ #category : #testing }
 GtkTreeView >> isHeadersVisible [
 	| buffer |
 	
@@ -205,6 +223,12 @@ GtkTreeView >> isHeadersVisible [
 	buffer pinInMemory.
 	self gObjectGet: 'headers-visible' into: buffer.
 	^ buffer booleanAt: 1
+]
+
+{ #category : #testing }
+GtkTreeView >> isHoverExpand [ 
+
+	^ self ffiCall: #(gboolean gtk_tree_view_get_hover_expand (self))
 ]
 
 { #category : #accessing }
@@ -226,7 +250,7 @@ GtkTreeView >> model: aListStore [
 	self setModel: aListStore
 ]
 
-{ #category : #accessing }
+{ #category : #columns }
 GtkTreeView >> newColumn [
 
 	| column |
@@ -241,7 +265,7 @@ GtkTreeView >> removeAllColumns [
 	columns copy do: [ :aColumn | self removeColumn: aColumn ]
 ]
 
-{ #category : #'api-columns' }
+{ #category : #columns }
 GtkTreeView >> removeColumn: aGtkTreeViewColumn [ 
 	
 	columns remove: aGtkTreeViewColumn.
