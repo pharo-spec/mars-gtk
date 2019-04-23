@@ -6,12 +6,14 @@ Class {
 
 { #category : #private }
 GtkNotebookAdapter >> addContentPage: gtkPage [	
-	| box |
+	| box presenter |
 	
 	box := gtkPage content.
 	box hasChildren ifTrue: [ ^ self ].
 	
-	box packStart: (self buildPage: gtkPage data retrievePresenter)
+	presenter := gtkPage data retrievePresenter.
+	presenter owner: self model.
+	box packStart: (self buildPage: presenter)
 ]
 
 { #category : #building }
@@ -58,9 +60,8 @@ GtkNotebookAdapter >> buildLabelForTab: aPage [
 GtkNotebookAdapter >> buildPage: aPresenter [
 
 	^ SpecBindings 
-	 	value: GtkAdapterBindings new
+	 	value: self model application adapterBindings
 		during: [ aPresenter buildWithSpec ]
-
 ]
 
 { #category : #private }
