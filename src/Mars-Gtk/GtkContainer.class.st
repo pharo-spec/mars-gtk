@@ -35,6 +35,14 @@ GtkContainer >> basicAdd: widget [
 ]
 
 { #category : #private }
+GtkContainer >> basicForEach: callback [
+
+	^ self ffiCall: #(void gtk_container_foreach (self, GCallback callback, NULL))
+
+	
+]
+
+{ #category : #private }
 GtkContainer >> basicRemove: widget [
 	self ffiCall: #(void gtk_container_remove (self, GtkWidget *widget))	
 ]
@@ -60,6 +68,14 @@ GtkContainer >> findChildByHandle: anExternalAddress [
 	(anExternalAddress isNil or: [ anExternalAddress isNull ]) ifTrue: [ ^ nil ].
 	address := anExternalAddress asInteger.
 	^ children detect: [ :each | each getHandle asInteger = address ]
+]
+
+{ #category : #private }
+GtkContainer >> forEach: aBlock [ 
+	
+	self basicForEach: (GCallback 
+		signature: #(void (void *widget, gpointer callback_data)) 
+		block: [ :widget :callback_data | aBlock value: widget ])
 ]
 
 { #category : #'GT-Inspector-Extension' }

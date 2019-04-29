@@ -38,8 +38,6 @@ GtkListAdapter >> addModelTo: gtkList [
 	gtkList connectRowActivated: [ :path | 
 		self model doActivateAtIndex: path toArray first ].
 	
-	widget := gtkList.
-
 	gtkList connectSelectionChanged: [ 
 		self presenter selection selectIndexes: gtkList allSelected flattened ].
 	
