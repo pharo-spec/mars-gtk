@@ -20,6 +20,7 @@ GtkNotebookAdapter >> addContentPage: gtkPage [
 GtkNotebookAdapter >> addModelTo: gtkWidget [
 	
 	self model pages do: [ :each | self appendPage: each to: gtkWidget ].
+	
 	"I add contents to fist page because this will shown anyway (and like this I allow
 	 the layout to act correctly)"
 	self model pages ifNotEmpty: [ 
@@ -32,8 +33,8 @@ GtkNotebookAdapter >> addModelTo: gtkWidget [
 		self model selectedPage: aPage data ].
 	
 	"get when model changed"
-	self model whenPagesChangedDo: [ :pages | self updatePagesWith: pages ].
-
+	self model whenPagesChangedDo: [ :pages | 
+		self updatePagesWith: pages ]
 ]
 
 { #category : #building }
@@ -138,7 +139,7 @@ GtkNotebookAdapter >> updatePagesWith: aCollection [
 		
 	pagesToRemove := self widget children 
 		reject: [ :eachPage | aCollection includes: eachPage data ].
-	pagesToRemove do: [ :eachPage | self widget removePage: eachPage ].
+	pagesToRemove do: [ :eachPage | self widget remove: eachPage ].
 	aCollection 
 		reject: [ :page | (self widget pageWithData: page ifNone: [ nil ]) notNil ]
 		thenDo: [ :page | self appendPage: page to: self widget ]
