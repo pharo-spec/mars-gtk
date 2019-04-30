@@ -1,16 +1,21 @@
+"
+GtkOverlay — A container which overlays widgets on top of each other
+
+https://developer.gnome.org/gtk3/stable/GtkOverlay.html
+"
 Class {
 	#name : #GtkOverlay,
 	#superclass : #GtkBin,
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance  creation' }
 GtkOverlay class >> new [
 
 	^ self overlayNew initialize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtkOverlay class >> overlayNew [
 
 	^ self ffiCall: #(GtkOverlay *gtk_overlay_new  (void))
