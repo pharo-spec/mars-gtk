@@ -54,8 +54,8 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	self presenter isVisible
 		ifTrue: [ gtkWidget show ]
 		ifFalse: [ gtkWidget hide ].
-	self presenter whenVisibleChangedDo: [ :value |
-		value
+	self presenter whenVisibleChangedDo: [ :aValuable |
+		aValuable value
 			ifTrue: [ gtkWidget show ]
 			ifFalse: [ gtkWidget hide ] ].
 ]

@@ -14,7 +14,8 @@ Class {
 		'data'
 	],
 	#pools : [
-		'GtkOrientation'
+		'GtkOrientation',
+		'GtkTypes'
 	],
 	#category : #'Mars-Gtk-Widget-Container'
 }
@@ -54,6 +55,13 @@ GtkNotebookPage >> data: anObject [
 	data := anObject
 ]
 
+{ #category : #accessing }
+GtkNotebookPage >> index [
+	"the index of this page in the notebook"
+
+	^ self notebook children indexOf: self
+]
+
 { #category : #initialization }
 GtkNotebookPage >> initializeNotebook: aNotebook label: labelWidget content: contentWidget [
 
@@ -76,7 +84,7 @@ GtkNotebookPage >> notebook [
 { #category : #accessing }
 GtkNotebookPage >> select [ 
 
-	self select: (self notebook children indexOf: self)
+	self select: self index
 ]
 
 { #category : #private }

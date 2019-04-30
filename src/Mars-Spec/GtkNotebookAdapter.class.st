@@ -18,25 +18,35 @@ GtkNotebookAdapter >> addContentPage: gtkPage [
 
 { #category : #building }
 GtkNotebookAdapter >> addModelTo: gtkWidget [
-
-	self model pages ifEmpty: [ ^ self ].
-	self model pages do: [ :each |
-		| page |
-		
-		page := gtkWidget 
-			newPageLabel: (self buildLabelForTab: each) 
-			content: (GtkBox newVertical show; yourself).
-		page data: each.
-		gtkWidget append: page ].
+	
+	self model pages do: [ :each | self appendPage: each to: gtkWidget ].
 	"I add contents to fist page because this will shown anyway (and like this I allow
 	 the layout to act correctly)"
-	self model selectedPage ifNil: [ 
-		self model selectedPageIndex: 1 ].
-	self addContentPage: (gtkWidget pageWithData: self model selectedPage). 
+	self model pages ifNotEmpty: [ 
+		self model selectedPage ifNil: [ self model selectedPageIndex: 1 ].
+		self addContentPage: (gtkWidget pageWithData: self model selectedPage) ].
+	
 	"get when page changed"
 	gtkWidget connectSwitchPage: [ :aPage | 
 		self addContentPage: aPage.
-		self model selectedPage: aPage. ].
+		self model selectedPage: aPage ].
+	
+	"get when model changed"
+	self model whenPagesChangedDo: [ :pages | self updatePagesWith: pages ].
+
+]
+
+{ #category : #building }
+GtkNotebookAdapter >> appendPage: each to: gtkWidget [
+	| page |
+	page := gtkWidget
+		newPageLabel: (self buildLabelForTab: each)
+		content:
+			(GtkBox newVertical
+				show;
+				yourself).
+	page data: each.
+	^ gtkWidget append: page
 ]
 
 { #category : #building }
@@ -64,6 +74,18 @@ GtkNotebookAdapter >> buildPage: aPresenter [
 		during: [ aPresenter buildWithSpec ]
 ]
 
+{ #category : #'as yet unclassified' }
+GtkNotebookAdapter >> clickTab: index [
+
+	(self widget children at: index) select: index
+]
+
+{ #category : #private }
+GtkNotebookAdapter >> numberOfTabs [
+
+	^ self widget children size
+]
+
 { #category : #private }
 GtkNotebookAdapter >> removePageContent: gtkPage [
 	| box |
@@ -78,6 +100,12 @@ GtkNotebookAdapter >> selectedPage [
 	
 	self widgetDo: [ :w |
 		(w pageWithData: self model selectedPage) select ]
+]
+
+{ #category : #'as yet unclassified' }
+GtkNotebookAdapter >> selectedPageName [
+
+	^ (self widget children at: self model selectedPageIndex) label text
 ]
 
 { #category : #updating }
@@ -96,6 +124,20 @@ GtkNotebookAdapter >> updatePageTitle: aPage [
 	self widgetDo: [ :w | | widgetPage |
 		widgetPage := w pageWithData: aPage.
 		widgetPage updateLabel: (self buildLabelForTab: aPage) ]
+]
+
+{ #category : #building }
+GtkNotebookAdapter >> updatePagesWith: aCollection [
+	| pagesToRemove |
+	
+	self widget ifNil: [ ^ self ].
+		
+	pagesToRemove := self widget children 
+		reject: [ :eachPage | aCollection includes: eachPage data ].
+	pagesToRemove do: [ :eachPage | self widget removePage: eachPage ].
+	aCollection 
+		reject: [ :page | (self widget pageWithData: page ifNone: [ nil ]) notNil ]
+		thenDo: [ :page | self appendPage: page to: self widget ]
 ]
 
 { #category : #building }

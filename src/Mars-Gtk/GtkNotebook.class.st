@@ -49,7 +49,7 @@ GtkNotebook >> appendPageChild: child label: tab_label [
 ]
 
 { #category : #accessing }
-GtkNotebook >> children [ 
+GtkNotebook >> children [
 
 	^ pages
 ]
@@ -85,5 +85,28 @@ GtkNotebook >> newPageLabel: labelWidget content: pageWidget [
 GtkNotebook >> pageWithData: anObject [
 	"utility to find child with associated data (useful to map operations)"
 	
-	^ self children detect: [ :each | each data = anObject ] 
+	^ self 
+		pageWithData: anObject 
+		ifNone: [ NotFound signalFor: anObject ]
+]
+
+{ #category : #accessing }
+GtkNotebook >> pageWithData: anObject ifNone: aBlock [
+	"utility to find child with associated data (useful to map operations)"
+	
+	^ self children 
+		detect: [ :each | each data = anObject ]
+		ifNone: aBlock
+]
+
+{ #category : #'as yet unclassified' }
+GtkNotebook >> removePage: aPage [
+ 
+	self removePageIndex: aPage index
+]
+
+{ #category : #'as yet unclassified' }
+GtkNotebook >> removePageIndex: page_num [
+	
+	self ffiCall: #(void gtk_notebook_remove_page (self, gint page_num))
 ]
