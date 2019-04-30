@@ -89,7 +89,7 @@ GtkTableColumnBuilder >> visitCompositeColumn: aTableColumn [
 
 	aTableColumn columns do: [ :each |
 		packer 
-			expand: each width isNil;
+			expand: each isExpandable;
 			visit: each.
 		self nextColumnIndex ].
 	self prevColumnIndex.

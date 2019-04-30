@@ -44,8 +44,9 @@ GtkTableColumnPacker >> column: anObject [
 ]
 
 { #category : #accessing }
-GtkTableColumnPacker >> expand: anObject [
-	expand := anObject
+GtkTableColumnPacker >> expand: aBoolean [
+
+	expand := aBoolean
 ]
 
 { #category : #visiting }
