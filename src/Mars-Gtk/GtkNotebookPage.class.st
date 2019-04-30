@@ -55,13 +55,6 @@ GtkNotebookPage >> data: anObject [
 	data := anObject
 ]
 
-{ #category : #accessing }
-GtkNotebookPage >> index [
-	"the index of this page in the notebook"
-
-	^ self notebook children indexOf: self
-]
-
 { #category : #initialization }
 GtkNotebookPage >> initializeNotebook: aNotebook label: labelWidget content: contentWidget [
 
@@ -84,7 +77,7 @@ GtkNotebookPage >> notebook [
 { #category : #accessing }
 GtkNotebookPage >> select [ 
 
-	self select: self index
+	self select: self zIndex
 ]
 
 { #category : #private }
@@ -118,4 +111,12 @@ GtkNotebookPage >> withAllChildrenDo: aBlock [
 	
 	aBlock cull: self label.
 	aBlock cull: self content
+]
+
+{ #category : #accessing }
+GtkNotebookPage >> zIndex [
+	"the index of this page in the notebook.
+	 This is zero based"
+
+	^ (self notebook children indexOf: self) - 1
 ]

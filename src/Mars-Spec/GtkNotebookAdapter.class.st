@@ -77,7 +77,7 @@ GtkNotebookAdapter >> buildPage: aPresenter [
 { #category : #'as yet unclassified' }
 GtkNotebookAdapter >> clickTab: index [
 
-	(self widget children at: index) select: index
+	(self widget children at: index) select
 ]
 
 { #category : #private }
@@ -104,8 +104,12 @@ GtkNotebookAdapter >> selectedPage [
 
 { #category : #'as yet unclassified' }
 GtkNotebookAdapter >> selectedPageName [
+	| index |
 
-	^ (self widget children at: self model selectedPageIndex) label text
+	index := self model selectedPageIndex. 
+	^ index > 0 
+		ifTrue: [ (self widget children at: index) label text ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #updating }

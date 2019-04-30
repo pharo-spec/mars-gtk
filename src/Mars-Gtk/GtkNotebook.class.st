@@ -102,7 +102,7 @@ GtkNotebook >> pageWithData: anObject ifNone: aBlock [
 { #category : #'as yet unclassified' }
 GtkNotebook >> removePage: aPage [
  
-	self removePageIndex: aPage index
+	self removePageIndex: aPage zIndex
 ]
 
 { #category : #'as yet unclassified' }
