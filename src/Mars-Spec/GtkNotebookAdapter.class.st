@@ -29,7 +29,7 @@ GtkNotebookAdapter >> addModelTo: gtkWidget [
 	"get when page changed"
 	gtkWidget connectSwitchPage: [ :aPage | 
 		self addContentPage: aPage.
-		self model selectedPage: aPage ].
+		self model selectedPage: aPage data ].
 	
 	"get when model changed"
 	self model whenPagesChangedDo: [ :pages | self updatePagesWith: pages ].
