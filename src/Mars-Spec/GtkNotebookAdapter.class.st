@@ -27,6 +27,9 @@ GtkNotebookAdapter >> addModelTo: gtkWidget [
 		self model selectedPage ifNil: [ self model selectedPageIndex: 1 ].
 		self addContentPage: (gtkWidget pageWithData: self model selectedPage) ].
 	
+	self model whenSelectedPageChangedDo: [ :page | 
+		self selectPage: page ].
+	
 	"get when page changed"
 	gtkWidget connectSwitchPage: [ :aPage | 
 		self addContentPage: aPage.
@@ -98,10 +101,17 @@ GtkNotebookAdapter >> removePageContent: gtkPage [
 ]
 
 { #category : #updating }
+GtkNotebookAdapter >> selectPage: aPage [ 
+	
+	self widget ifNil: [ ^ self ].
+
+	(self widget pageWithData: aPage) select
+]
+
+{ #category : #updating }
 GtkNotebookAdapter >> selectedPage [ 
 	
-	self widgetDo: [ :w |
-		(w pageWithData: self model selectedPage) select ]
+	self selectPage: self model selectedPage
 ]
 
 { #category : #private }
