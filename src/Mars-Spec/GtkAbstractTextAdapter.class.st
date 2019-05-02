@@ -15,12 +15,19 @@ GtkAbstractTextAdapter >> addMenu: aValuable to: gtkWidget [
 GtkAbstractTextAdapter >> addModelTo: gtkWidget [
 
 	super addModelTo: gtkWidget.
-	self model text ifNotNil: [ :text | 
-		self setText: text to: gtkWidget ].
+	self addTextTo: gtkWidget. 
 	self model whenTextChangedDo: [ :text | 
 		self setText: text to: gtkWidget ].
 	self model contextMenu ifNotNil: [ :menu |
 		self addMenu: menu to: gtkWidget ]
+]
+
+{ #category : #building }
+GtkAbstractTextAdapter >> addTextTo: gtkWidget [
+	
+	self model text ifNotNil: [ :text | 
+		self setText: text to: gtkWidget ].
+
 ]
 
 { #category : #building }

@@ -13,7 +13,7 @@ GtkTextAdapter >> accept [
 		self model acceptText: w text ]
 ]
 
-{ #category : #visiting }
+{ #category : #building }
 GtkTextAdapter >> addModelTo: gtkTextView [
 
 	super addModelTo: gtkTextView.
