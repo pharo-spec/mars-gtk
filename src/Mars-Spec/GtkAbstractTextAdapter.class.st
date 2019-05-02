@@ -32,10 +32,12 @@ GtkAbstractTextAdapter >> addTextTo: gtkWidget [
 
 { #category : #building }
 GtkAbstractTextAdapter >> populatePopup: menuWidget with: aValuable [
-
-	lastShownMenu := self buildMenu: aValuable value.
-	lastShownMenu children reverseDo: [ :each |
-		lastShownMenu remove: each.
+	| newMenu |
+	
+	lastShownMenu := menuWidget.
+	newMenu := self buildMenu: aValuable value.
+	newMenu children reverseDo: [ :each |
+		newMenu remove: each.
 		menuWidget addFirst: each.
 		each show ]
 ]
