@@ -75,9 +75,10 @@ GtkNotebookAdapter >> buildPage: aPresenter [
 		during: [ aPresenter buildWithSpec ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtkNotebookAdapter >> clickTab: index [
-
+	"used for testing purposes"
+	
 	(self widget children at: index) select
 ]
 
@@ -103,8 +104,9 @@ GtkNotebookAdapter >> selectedPage [
 		(w pageWithData: self model selectedPage) select ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtkNotebookAdapter >> selectedPageName [
+	"used for testing purposes"
 	| index |
 
 	index := self model selectedPageIndex. 
