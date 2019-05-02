@@ -90,14 +90,6 @@ GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [
 
 ]
 
-{ #category : #visiting }
-GtkCodeAdapter >> setText: aString to: gtkTextView [
-
-	gtkTextView textBuffer userActionDuring: [
-		super setText: aString to: gtkTextView.
-		self applyStyleTo: gtkTextView textBuffer ]
-]
-
 { #category : #private }
 GtkCodeAdapter >> textWithStyle [
 
