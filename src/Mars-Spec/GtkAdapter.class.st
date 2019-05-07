@@ -91,7 +91,7 @@ GtkAdapter >> doTakeKeyboardFocus [
 { #category : #accessing }
 GtkAdapter >> enabled [
 
-	^ self widget sensitive
+	^ self innerWidget sensitive
 ]
 
 { #category : #accessing }
@@ -138,7 +138,7 @@ GtkAdapter >> innerWidgetDo: aBlock [
 { #category : #visibility }
 GtkAdapter >> isVisible [
 	
-	^ widget isConfiguredVisible
+	^ self innerWidget isConfiguredVisible
 ]
 
 { #category : #emulating }
