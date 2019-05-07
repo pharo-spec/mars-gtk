@@ -10,8 +10,7 @@ Class {
 { #category : #building }
 GtkAbstractTextAdapter >> addMenu: aValuable to: gtkWidget [ 
 
-	gtkWidget connectPopulatePopup: [ :menuWidget |
-		self populatePopup: menuWidget with: aValuable ]
+	self shouldNotImplement
 ]
 
 { #category : #building }
@@ -21,11 +20,11 @@ GtkAbstractTextAdapter >> addModelTo: gtkWidget [
 	self addTextTo: gtkWidget. 
 	self model whenTextChangedDo: [ :text | 
 		self setText: text to: gtkWidget ].
-	self model contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: gtkWidget ].
 	self model additionalKeyBindings ifNotNil: [ :bindings |
 		bindings keysAndValuesDo: [ :shortcut :action | 
-			self bindKeyCombination: shortcut toAction: action ] ]
+			self bindKeyCombination: shortcut toAction: action ] ].
+	gtkWidget connectPopulatePopup: [ :menuWidget |
+		self populatePopup: menuWidget  ]
 ]
 
 { #category : #building }
@@ -56,11 +55,14 @@ GtkAbstractTextAdapter >> handleKeyEvent: event [
 ]
 
 { #category : #building }
-GtkAbstractTextAdapter >> populatePopup: menuWidget with: aValuable [
-	| newMenu |
+GtkAbstractTextAdapter >> populatePopup: menuWidget [
+	| newMenu menuPresenter |
+	
+	menuPresenter := self model contextMenu value.
+	menuPresenter ifNil: [ ^ self ].
 	
 	lastShownMenu := menuWidget.
-	newMenu := self buildMenu: aValuable value.
+	newMenu := self buildMenu: menuPresenter.
 	newMenu children reverseDo: [ :each |
 		newMenu remove: each.
 		menuWidget addFirst: each.
