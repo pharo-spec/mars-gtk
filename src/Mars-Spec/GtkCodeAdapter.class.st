@@ -74,7 +74,7 @@ GtkCodeAdapter >> codeCssProvider [
 { #category : #'private-shout' }
 GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
 
-	(STxStyleVisitor new 
+	(GtkTextStyleVisitor new 
 		styleExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
@@ -83,7 +83,7 @@ GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [
 { #category : #'private-shout' }
 GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [ 
 
-	(STxStyleVisitor new 
+	(GtkTextStyleVisitor new 
 		contextClass: aClass;
 		styleMethod: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
