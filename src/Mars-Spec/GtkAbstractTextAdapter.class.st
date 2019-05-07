@@ -22,7 +22,10 @@ GtkAbstractTextAdapter >> addModelTo: gtkWidget [
 	self model whenTextChangedDo: [ :text | 
 		self setText: text to: gtkWidget ].
 	self model contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: gtkWidget ]
+		self addMenu: menu to: gtkWidget ].
+	self model additionalKeyBindings ifNotNil: [ :bindings |
+		bindings keysAndValuesDo: [ :shortcut :action | 
+			self bindKeyCombination: shortcut toAction: action ] ]
 ]
 
 { #category : #building }
