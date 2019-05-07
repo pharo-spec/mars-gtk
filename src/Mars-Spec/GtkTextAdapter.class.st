@@ -17,7 +17,9 @@ GtkTextAdapter >> accept [
 GtkTextAdapter >> addModelTo: gtkTextView [
 
 	super addModelTo: gtkTextView.
-	gtkTextView beWrapWord
+	gtkTextView beWrapWord.
+	gtkTextView connectKeyPressEvent: [ :event |
+		self handleKeyEvent: event ]
 ]
 
 { #category : #building }

@@ -209,11 +209,7 @@ GtkWidget >> connectHide: aBlock [
 { #category : #signaling }
 GtkWidget >> connectKeyPressEvent: aBlock [
 
-	^ self 
-		connect: 'key-press-event'
-		signature: #(gboolean (void *widget, void* event, void *aData))  
- 		do: [ :widget :event :aData | 
-			aBlock value: (GdkEventKey fromHandle: event) ]
+	^ (GKeyPressEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }

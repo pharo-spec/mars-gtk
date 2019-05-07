@@ -7,7 +7,8 @@ Class {
 	#name : #GdkEventKey,
 	#superclass : #GdkEvent,
 	#instVars : [
-		'keyValue'
+		'keyValue',
+		'wasHandled'
 	],
 	#classVars : [
 		'OFFSET_GROUP',
@@ -29,6 +30,12 @@ Class {
 	#category : #'Mars-Gtk-Base-Events'
 }
 
+{ #category : #private }
+GdkEventKey class >> eventNew: type [
+
+	^ self ffiCall: #(GdkEventKey *gdk_event_new (GdkEventType type)) module: GdkLibrary
+]
+
 { #category : #'field definition' }
 GdkEventKey class >> fieldsDesc [ 
 	"self rebuildFieldAccessors"
@@ -46,6 +53,59 @@ GdkEventKey class >> fieldsDesc [
   guint8 group;
   guint is_modifier	
 	)
+]
+
+{ #category : #'instance creation' }
+GdkEventKey class >> newKeyPress [
+
+	self eventNew: GDK_KEY_PRESS
+]
+
+{ #category : #'instance creation' }
+GdkEventKey class >> newKeyPressValue: keyVal shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+
+	^ self 
+		newType: GDK_KEY_PRESS 
+		value: keyVal 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
+]
+
+{ #category : #'instance creation' }
+GdkEventKey class >> newKeyRelease [
+
+	self eventNew: GDK_KEY_RELEASE
+]
+
+{ #category : #'instance creation' }
+GdkEventKey class >> newKeyReleaseValue: keyVal shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+
+	^ self 
+		newType: GDK_KEY_RELEASE
+		value: keyVal 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
+]
+
+{ #category : #private }
+GdkEventKey class >> newType: aType value: keyVal shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	| state |
+
+	state := GdkModifierType newValue: 0.
+	shiftBoolean ifTrue: [ state := state | GDK_SHIFT_MASK ].
+	metaBoolean ifTrue: [ state := state | GDK_META_MASK ].
+	controlBoolean ifTrue: [ state := state | GDK_CONTROL_MASK ].
+	optionBoolean ifTrue: [ state := state | GDK_MOD1_MASK "Mod1 = Alt, Option" ].
+	
+	self flag: #TODO. "fromHandle: is workaround for a temporal problem"
+	^ (self fromHandle: (self eventNew: aType)) 		
+		keyval: keyVal;
+		state: state;
+		yourself
 ]
 
 { #category : #'accessing structure variables' }
@@ -250,6 +310,18 @@ GdkEventKey >> type [
 GdkEventKey >> type: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_TYPE put: anObject value
+]
+
+{ #category : #compatibility }
+GdkEventKey >> wasHandled [
+
+	^ wasHandled ifNil: [ wasHandled := false ]
+]
+
+{ #category : #compatibility }
+GdkEventKey >> wasHandled: aBoolean [
+
+	wasHandled := aBoolean
 ]
 
 { #category : #'accessing structure variables' }

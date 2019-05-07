@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkAbstractTextAdapter,
 	#superclass : #GtkAdapter,
+	#instVars : [
+		'kmDispatcher'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -28,6 +31,25 @@ GtkAbstractTextAdapter >> addTextTo: gtkWidget [
 	self model text ifNotNil: [ :text | 
 		self setText: text to: gtkWidget ].
 
+]
+
+{ #category : #private }
+GtkAbstractTextAdapter >> bindKeyCombination: aShortcut toAction: aBlock [ 
+	
+		kmDispatcher ifNil: [ kmDispatcher := KMDispatcher new ].
+		kmDispatcher 
+			bindKeyCombination: aShortcut 
+			toAction: aBlock
+]
+
+{ #category : #private }
+GtkAbstractTextAdapter >> handleKeyEvent: event [
+
+	kmDispatcher ifNotNil: [ 
+		kmDispatcher dispatchKeystroke: event.
+		^ event wasHandled ].
+	
+	^ false
 ]
 
 { #category : #building }

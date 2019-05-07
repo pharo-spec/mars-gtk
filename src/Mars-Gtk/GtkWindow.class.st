@@ -41,8 +41,7 @@ GtkWindow >> addAcceleratorGroup: anAcceleratorGroup [
 
 	acceleratorGroups ifNil: [ acceleratorGroups := Set new ].
 	acceleratorGroups add: anAcceleratorGroup.
-	self windowAddAccelGroup: anAcceleratorGroup.
-
+	self windowAddAccelGroup: anAcceleratorGroup
 ]
 
 { #category : #'external resource management' }
@@ -198,6 +197,15 @@ GtkWindow >> position [
 ]
 
 { #category : #accessing }
+GtkWindow >> removeAcceleratorGroup: anAcceleratorGroup [
+
+	(acceleratorGroups includes: anAcceleratorGroup) ifFalse: [ ^ self ].
+	self windowRemoveAccelGroup: anAcceleratorGroup.
+	acceleratorGroups remove: anAcceleratorGroup
+	
+]
+
+{ #category : #accessing }
 GtkWindow >> resizable: resizable [
 
 	self ffiCall: #(void gtk_window_set_resizable (self, gboolean resizable))
@@ -302,4 +310,10 @@ GtkWindow >> windowDestroyed [
 	 to re-trigger destroy on it."	
 	handle beNull.
 	self application unregisterWindow: self
+]
+
+{ #category : #private }
+GtkWindow >> windowRemoveAccelGroup: accel_group [
+
+	^ self ffiCall: #(void gtk_window_remove_accel_group (self, GtkAccelGroup *accel_group))
 ]

@@ -141,6 +141,41 @@ GtkAdapter >> isVisible [
 	^ widget isConfiguredVisible
 ]
 
+{ #category : #emulating }
+GtkAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+
+	"key press"
+	self innerWidget 
+		withCallbacksOfType: GKeyPressEventCallback 
+		do: [ :aCallback | 
+			aCallback valueWithArguments: { 
+				self innerWidget getHandle. 
+				(GdkEventKey 
+					newKeyPressValue: keyCode
+					shift: shiftBoolean
+					meta: metaBoolean
+					control: controlBoolean
+					option: optionBoolean) 
+				getHandle.
+				ExternalAddress null } ].
+
+	"key release"
+	
+	self innerWidget 
+		withCallbacksOfType: GKeyReleaseEventCallback 
+		do: [ :aCallback | 
+			aCallback valueWithArguments: { 
+				self innerWidget getHandle. 
+				(GdkEventKey 
+					newKeyReleaseValue: keyCode
+					shift: shiftBoolean
+					meta: metaBoolean
+					control: controlBoolean
+					option: optionBoolean) 
+				getHandle.
+				ExternalAddress null } ].
+]
+
 { #category : #protocol }
 GtkAdapter >> layout: aSpecLayoutFrame [ 
 	

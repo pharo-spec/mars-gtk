@@ -309,3 +309,9 @@ GdkModifierType >> - aModifierType [
 
 	^ self class newValue: (self value - aModifierType value)
 ]
+
+{ #category : #'logical operations' }
+GdkModifierType >> | aModifier [
+
+	^ self value | aModifier value
+]
