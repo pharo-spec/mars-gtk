@@ -23,6 +23,15 @@ GtkKMDispatcher >> attachCategory: aCategory [
 	categories := categories copyWith: aCategory
 ]
 
+{ #category : #compatibility }
+GtkKMDispatcher >> bindKeyCombination: aShortcut toAction: aBlock [
+
+	^ self directCategory 
+		addKeymapEntry: (KMKeymap
+			shortcut: aShortcut 
+			action: aBlock)
+]
+
 { #category : #accessing }
 GtkKMDispatcher >> buffer [
 
@@ -44,6 +53,12 @@ GtkKMDispatcher >> completeMatch: aKeymapEntry buffer: aBuffer [
 		cull: target
 		cull: aBuffer first
 	"self announcer announce: (KMCompleteMatch event: currentEvent from: self)."
+]
+
+{ #category : #private }
+GtkKMDispatcher >> directCategory [
+
+	^ categories first
 ]
 
 { #category : #dispatching }
@@ -71,7 +86,7 @@ GtkKMDispatcher >> dispatchKeyEvent: aKeyEvent [
 GtkKMDispatcher >> initialize [
 	
 	super initialize.
-	categories := #().
+	categories := { KMCategory new }.
 	buffer := KMBuffer new
 ]
 
@@ -86,6 +101,14 @@ GtkKMDispatcher >> partialMatch [
 	buffer partialMatch.
 	event := buffer currentEvent.
 	"self announcer announce: (KMPartialMatch event: event from: self)."
+]
+
+{ #category : #compatibility }
+GtkKMDispatcher >> removeKeyCombination: aShortcut [
+
+	self categories do: [ :each |
+		(each keymapForShortcut: aShortcut) ifNotNil: [ :keymap |
+			each removeKeymapEntry: keymap ] ]
 ]
 
 { #category : #accessing }
