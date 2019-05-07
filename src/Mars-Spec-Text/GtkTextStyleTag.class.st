@@ -1,5 +1,5 @@
 Class {
-	#name : #STxStyleTag,
+	#name : #GtkTextStyleTag,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-STxStyleTag class >> newName: aString from: start to: stop [
+GtkTextStyleTag class >> newName: aString from: start to: stop [
 
 	^ self basicNew 
 		initializeName: aString from: start to: stop;
@@ -18,7 +18,7 @@ STxStyleTag class >> newName: aString from: start to: stop [
 ]
 
 { #category : #visiting }
-STxStyleTag >> acceptTextBuffer: textBuffer [
+GtkTextStyleTag >> acceptTextBuffer: textBuffer [
 
 	textBuffer 
 		applyTagByName: self name asString
@@ -27,7 +27,7 @@ STxStyleTag >> acceptTextBuffer: textBuffer [
 ]
 
 { #category : #initialization }
-STxStyleTag >> initializeName: aString from: startNumber to: stopNumber [
+GtkTextStyleTag >> initializeName: aString from: startNumber to: stopNumber [
 
 	self initialize.
 	name := aString.
@@ -36,25 +36,25 @@ STxStyleTag >> initializeName: aString from: startNumber to: stopNumber [
 ]
 
 { #category : #accessing }
-STxStyleTag >> name [
+GtkTextStyleTag >> name [
 
 	^ name
 ]
 
 { #category : #printing }
-STxStyleTag >> printOn: aStream [ 
+GtkTextStyleTag >> printOn: aStream [ 
 	
 	aStream << self name << ' (' << self start asString << '-' << self stop asString << ')'
 ]
 
 { #category : #accessing }
-STxStyleTag >> start [
+GtkTextStyleTag >> start [
 
 	^ start
 ]
 
 { #category : #accessing }
-STxStyleTag >> stop [
+GtkTextStyleTag >> stop [
 
 	^ stop
 ]
