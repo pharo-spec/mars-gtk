@@ -69,6 +69,18 @@ GtkAbstractTextAdapter >> populatePopup: menuWidget [
 		each show ]
 ]
 
+{ #category : #emulating }
+GtkAbstractTextAdapter >> rightClicked [
+	
+	self innerWidget 
+		withCallbacksOfType: GPopulatePopupCallback 
+		do: [ :aCallback |
+			aCallback valueWithArguments: {
+				self innerWidget getHandle.
+				GtkMenu new getHandle.
+				ExternalAddress null } ]
+]
+
 { #category : #selection }
 GtkAbstractTextAdapter >> selectAll [
 	

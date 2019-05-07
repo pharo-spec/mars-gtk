@@ -135,6 +135,12 @@ GtkEntry >> connectChanged: aBlock [
 	self connect: 'changed' do: aBlock
 ]
 
+{ #category : #signals }
+GtkEntry >> connectPopulatePopup: aBlock [
+
+	^ (GPopulatePopupCallback do: aBlock) connectTo: self
+]
+
 { #category : #private }
 GtkEntry >> convertGunichar: unichar toUtf8InBuffer: buffer [
 

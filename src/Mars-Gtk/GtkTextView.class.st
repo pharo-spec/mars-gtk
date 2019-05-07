@@ -52,11 +52,7 @@ GtkTextView >> beWrapWordChar [
 { #category : #signaling }
 GtkTextView >> connectPopulatePopup: aBlock [
 
-	^ self 
-		connect: 'populate-popup' 
-		signature: #(void (void *text_view, void *popup, gpointer *user_data)) 
-		do: [ :text_view :popup :user_data |
-			aBlock value: (GtkMenu fromHandle: popup) ]
+	^ (GPopulatePopupCallback do: aBlock) connectTo: self
 ]
 
 { #category : #accessing }
