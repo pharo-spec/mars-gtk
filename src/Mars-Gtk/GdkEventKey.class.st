@@ -108,6 +108,12 @@ GdkEventKey class >> newType: aType value: keyVal shift: shiftBoolean meta: meta
 		yourself
 ]
 
+{ #category : #compatibility }
+GdkEventKey >> asKeyCombination [
+
+	^ KMKeyCombination fromEventKey: self
+]
+
 { #category : #'accessing structure variables' }
 GdkEventKey >> group [
 	"This method was automatically generated"
@@ -220,6 +226,12 @@ GdkEventKey >> is_modifier [
 GdkEventKey >> is_modifier: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_IS_MODIFIER put: anObject
+]
+
+{ #category : #compatibility }
+GdkEventKey >> keyCharacter [
+
+	^ Character value: self keyValue
 ]
 
 { #category : #private }

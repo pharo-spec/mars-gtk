@@ -1,0 +1,101 @@
+Class {
+	#name : #GtkKMDispatcher,
+	#superclass : #Object,
+	#instVars : [
+		'buffer',
+		'categories',
+		'target'
+	],
+	#category : #'Mars-Spec-Keybindings'
+}
+
+{ #category : #'instance creation' }
+GtkKMDispatcher class >> on: aTarget [
+
+	^ self new 
+		target: aTarget;
+		yourself
+]
+
+{ #category : #accessing }
+GtkKMDispatcher >> attachCategory: aCategory [
+
+	categories := categories copyWith: aCategory
+]
+
+{ #category : #accessing }
+GtkKMDispatcher >> buffer [
+
+	^ buffer buffer
+]
+
+{ #category : #accessing }
+GtkKMDispatcher >> categories [
+
+	^ categories
+]
+
+{ #category : #matching }
+GtkKMDispatcher >> completeMatch: aKeymapEntry buffer: aBuffer [
+
+	"KMLog logCompleteMatchBetween: morph and: aKeymapEntry."
+	buffer completeMatch.
+	aKeymapEntry action 
+		cull: target
+		cull: aBuffer first
+	"self announcer announce: (KMCompleteMatch event: currentEvent from: self)."
+]
+
+{ #category : #dispatching }
+GtkKMDispatcher >> dispatch: anEventBuffer [
+
+	self categories do: [ :aCategory | 
+		"nice hack to stop in the first listener"
+		aCategory 
+			onMatchWith: anEventBuffer
+			notify: self
+			andDo: [ ^ self ]  ].
+		
+	self noMatch
+]
+
+{ #category : #dispatching }
+GtkKMDispatcher >> dispatchKeyEvent: aKeyEvent [
+
+	KMLog log: aKeyEvent.
+	buffer addEvent: aKeyEvent.
+	^ self dispatch: buffer buffer copy
+]
+
+{ #category : #initialization }
+GtkKMDispatcher >> initialize [
+	
+	super initialize.
+	categories := #().
+	buffer := KMBuffer new
+]
+
+{ #category : #matching }
+GtkKMDispatcher >> noMatch [
+]
+
+{ #category : #matching }
+GtkKMDispatcher >> partialMatch [
+	| event |
+	
+	buffer partialMatch.
+	event := buffer currentEvent.
+	"self announcer announce: (KMPartialMatch event: event from: self)."
+]
+
+{ #category : #accessing }
+GtkKMDispatcher >> target [
+
+	^ target
+]
+
+{ #category : #accessing }
+GtkKMDispatcher >> target: aTarget [
+
+	target := aTarget
+]
