@@ -66,7 +66,7 @@ GtkCodeAdapter >> codeCssProvider [
 	OSPlatform current isMacOS 
 		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Monaco" }' ].
 	OSPlatform current isWindows
-		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Microsoft Sans Serif" }' ].
+		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 10pt "Microsoft Sans Serif" }' ].
 	
 	^ GtkCssProvider newFromString: '* { font: 12pt "Sans" }'
 ]
