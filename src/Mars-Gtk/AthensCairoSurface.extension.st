@@ -18,11 +18,17 @@ AthensCairoSurface >> directDrawDuring: aBlock [
 AthensCairoSurface >> fromCanvas: aCanvas [
 
 	session := Smalltalk session.
-	id := self class registerSurface: self.
+	"id := self class registerSurface: self."
 	context := aCanvas.
 	builder := AthensCairoPathBuilder new.
 	builder context: context.
 	ftFontRenderer := CairoFreetypeFontRenderer new 
 		canvas: context;
 		yourself
+]
+
+{ #category : #'*Mars-Gtk' }
+AthensCairoSurface >> getHandle [
+
+	^ handle
 ]

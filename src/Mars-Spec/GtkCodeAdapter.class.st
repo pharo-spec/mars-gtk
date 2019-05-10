@@ -62,13 +62,8 @@ GtkCodeAdapter >> classOrMetaClass: aClass [
 { #category : #building }
 GtkCodeAdapter >> codeCssProvider [
 	
-	self flag: #TODO. "This has to came from the application"
-	OSPlatform current isMacOS 
-		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 12pt "Monaco" }' ].
-	OSPlatform current isWindows
-		ifTrue: [ ^ GtkCssProvider newFromString: '* { font: 10pt "Microsoft Sans Serif" }' ].
-	
-	^ GtkCssProvider newFromString: '* { font: 12pt "Sans" }'
+	self flag: #TODO. "Demeters law"
+	^ self model application backend codeCssProvider
 ]
 
 { #category : #'private-shout' }

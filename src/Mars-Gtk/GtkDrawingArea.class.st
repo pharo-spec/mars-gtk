@@ -15,7 +15,8 @@ Class {
 
 { #category : #private }
 GtkDrawingArea class >> drawingAreaNew [
-	^ self ffiCall: #( GtkDrawingArea *gtk_drawing_area_new () )
+
+	^ self ffiCall: #(GtkDrawingArea *gtk_drawing_area_new ())
 ]
 
 { #category : #'instance creation' }
@@ -23,18 +24,76 @@ GtkDrawingArea class >> new [
 	^ self drawingAreaNew initialize
 ]
 
-{ #category : #private }
-GtkDrawingArea >> basicDraw: cr [
-	"I need to be sure this process will not be highjacked by another 
-	 so I need to execute it unpreemptively (otherwise it will crash 
-	 the vm)"
+{ #category : #'as yet unclassified' }
+GtkDrawingArea >> appPaintable: app_paintable [
 
-	self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr)
+	^ self ffiCall: #(void gtk_widget_set_app_paintable (self, gboolean app_paintable))
+]
+
+{ #category : #signaling }
+GtkDrawingArea >> connectDraw: aBlock [
+
+	^ (GDrawCallback do: aBlock) connectTo: self
+	"self eliotConnectDraw: aBlock"
+]
+
+{ #category : #private }
+GtkDrawingArea >> draw: cr [
+
+	self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).
+	^ true
 ]
 
 { #category : #drawing }
 GtkDrawingArea >> drawOnAthensCanvas: aCanvas [
 	self subclassResponsibility
+]
+
+{ #category : #signaling }
+GtkDrawingArea >> eliotCall: fnSpec [
+	"<ffiCalloutTranslator>"
+	
+	^ (self eliotCalloutIn: thisContext sender)
+		convention: self ffiCallingConvention;
+		options: #();
+		function: fnSpec module: self ffiLibrary uniqueInstance
+]
+
+{ #category : #signaling }
+GtkDrawingArea >> eliotCalloutIn: aContext [
+
+	^ FFICalloutAPI calloutAPIClass inContext: aContext
+]
+
+{ #category : #signaling }
+GtkDrawingArea >> eliotConnectDraw: aBlock [
+	| callback |
+	
+	callback := FFICallback 
+		signature: #(int (void *widget, void *cr, void *payload)) 
+		block: [ :w :cr :payload | aBlock value: cr ].
+
+	callbacks ifNil: [ callbacks := Set new ].
+	callbacks add: callback.
+	
+	self 
+		eliotConnectSignal: 'draw' 
+		callback: callback 
+		data: ExternalAddress null
+		notify: ExternalAddress null
+		flags: 0
+]
+
+{ #category : #signaling }
+GtkDrawingArea >> eliotConnectSignal: signalName callback: aCallback data: aData notify: aNotify flags: flags [
+
+	self eliotCall: #(ulong g_signal_connect_data ( 
+			self,
+			const char *signalName,
+			FFICallback aCallback,
+			void *	aData,
+			void *aNotify,
+			int flags ) )
 ]
 
 { #category : #private }
@@ -63,14 +122,12 @@ GtkDrawingArea >> getSizeRequestWidth: width height: height [
 
 { #category : #initialization }
 GtkDrawingArea >> initialize [
+
 	super initialize.
-	drawing := false.
-	self 
-		connect: 'draw' 
-		signature: #( int (void *widget, void *cr, void *payload) ) 
-		do: [ :widget :cr :payload |
-			self basicDraw: cr.
-			0 ]
+	self hExpand: true.
+	self vExpand: true.
+	self appPaintable: true.
+	self connectDraw: [ :cr | self draw: cr ]
 ]
 
 { #category : #private }

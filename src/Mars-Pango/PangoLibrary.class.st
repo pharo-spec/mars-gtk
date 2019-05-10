@@ -7,10 +7,22 @@ Class {
 	#category : #'Mars-Pango-Base'
 }
 
+{ #category : #accessing }
+PangoLibrary >> calloutAPIClass [ 
+
+	^ TFCalloutAPI
+]
+
 { #category : #'accessing platform' }
 PangoLibrary >> macModuleName [
 
 	^ '/usr/local/lib/libpango-1.0.0.dylib'
+]
+
+{ #category : #accessing }
+PangoLibrary >> runner [
+	
+	^ TFSameThreadRunner new
 ]
 
 { #category : #'accessing platform' }

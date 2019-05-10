@@ -7,11 +7,23 @@ Class {
 	#category : #'Mars-Pango-Base'
 }
 
+{ #category : #accessing }
+PangoFT2Library >> calloutAPIClass [ 
+
+	^ TFCalloutAPI
+]
+
 { #category : #'accessing platform' }
 PangoFT2Library >> macModuleName [
 
 	GtkLibrary isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libpangoft2-1.0.0.dylib' ]. 
 	^ '/usr/local/lib/libpangoft2-1.0.0.dylib'
+]
+
+{ #category : #accessing }
+PangoFT2Library >> runner [
+	
+	^ TFSameThreadRunner new
 ]
 
 { #category : #'accessing platform' }

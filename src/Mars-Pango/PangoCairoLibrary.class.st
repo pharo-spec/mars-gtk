@@ -7,12 +7,24 @@ Class {
 	#category : #'Mars-Pango-Base'
 }
 
+{ #category : #accessing }
+PangoCairoLibrary >> calloutAPIClass [ 
+
+	^ TFCalloutAPI
+]
+
 { #category : #'accessing platform' }
 PangoCairoLibrary >> macModuleName [
 
 	GtkLibrary isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libpangocairo-1.0.0.dylib' ]. 
 	^ '/usr/local/lib/libpangocairo-1.0.0.dylib'
 
+]
+
+{ #category : #accessing }
+PangoCairoLibrary >> runner [
+	
+	^ TFSameThreadRunner new
 ]
 
 { #category : #'accessing platform' }

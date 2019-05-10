@@ -30,7 +30,7 @@ GtkLibrary class >> isDebug [
 { #category : #'accessing platform' }
 GtkLibrary >> calloutAPIClass [ 
 
-	^ TFCalloutAPI 
+	^ TFCalloutAPI
 ]
 
 { #category : #'accessing platform' }
