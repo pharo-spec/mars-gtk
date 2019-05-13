@@ -33,6 +33,24 @@ GtkLibrary >> calloutAPIClass [
 	^ TFCalloutAPI
 ]
 
+{ #category : #private }
+GtkLibrary >> getMajorVersion [
+
+	^ self ffiCall: #(guint gtk_get_major_version (void))
+]
+
+{ #category : #private }
+GtkLibrary >> getMicroVersion [
+
+	^ self ffiCall: #(guint gtk_get_micro_version (void))
+]
+
+{ #category : #private }
+GtkLibrary >> getMinorVersion [
+
+	^ self ffiCall: #(guint gtk_get_minor_version (void))
+]
+
 { #category : #'accessing platform' }
 GtkLibrary >> macModuleName [
 
@@ -54,6 +72,15 @@ GtkLibrary >> unix32ModuleName [
 { #category : #'accessing platform' }
 GtkLibrary >> unix64ModuleName [ 
 	^ '/usr/lib/x86_64-linux-gnu/libgtk-3.so.0'
+]
+
+{ #category : #accessing }
+GtkLibrary >> version [
+
+	^ '{1}.{2}.{3}' format: { 
+		self getMajorVersion. 
+		self getMinorVersion.
+		self getMicroVersion }
 ]
 
 { #category : #'accessing platform' }

@@ -131,7 +131,7 @@ GtkApplication >> stop [
 	runLoop stop
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 GtkApplication >> suspendRunLoopWhile: aBlock [
 	self stop.
 	^ aBlock ensure: [ self start ]

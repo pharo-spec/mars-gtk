@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 GDrawCallback >> do: aBlock [
 
-	^ super do: [ :widget :cr :user_data |
+	^ super do: [ :widget :cr :payload |
 		aBlock value: cr  ]
 ]
 
