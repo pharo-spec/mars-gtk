@@ -8,9 +8,6 @@ Class {
 		'morph',
 		'activeSurface'
 	],
-	#pools : [
-		'GdkEventMask'
-	],
 	#category : #'Mars-Gtk-Widget'
 }
 
@@ -65,17 +62,11 @@ GtkMorphView >> drawOnAthensCanvas: aCanvas [
 	"do nothing"
 ]
 
-{ #category : #private }
-GtkMorphView >> events: events [
-	
-	self ffiCall: #(void gtk_widget_set_events (self, gint events))
-]
-
 { #category : #initialization }
 GtkMorphView >> initialize [ 
 
 	super initialize.
-	self events: GDK_ALL_EVENTS_MASK value
+	self registerToAllEvents
 ]
 
 { #category : #accessing }
