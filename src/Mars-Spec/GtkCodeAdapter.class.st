@@ -7,7 +7,7 @@ Class {
 { #category : #building }
 GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 	
-	gtkTextView styleContext addProvider: self codeCssProvider
+	gtkTextView styleContext addProvider: self model application cssProviderCode
 ]
 
 { #category : #building }
@@ -57,13 +57,6 @@ GtkCodeAdapter >> classOrMetaClass: aClass [
 	"I will take the behavior from model, I just need to fire a refresh"
 
 	self applyStyleTo: self innerWidget textBuffer
-]
-
-{ #category : #building }
-GtkCodeAdapter >> codeCssProvider [
-	
-	self flag: #TODO. "Demeters law"
-	^ self model application backend codeCssProvider
 ]
 
 { #category : #'private-shout' }
