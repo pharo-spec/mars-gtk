@@ -8,7 +8,7 @@ Class {
 		'morph',
 		'activeSurface'
 	],
-	#category : #'Mars-Gtk-Widget'
+	#category : #'Mars-Gtk-Morphic'
 }
 
 { #category : #private }
@@ -17,7 +17,7 @@ GtkMorphView class >> drawingAreaNew [
 ]
 
 { #category : #examples }
-GtkMorphView class >> example [ 
+GtkMorphView class >> example1 [
 
 	GtkApplication ensureRunning.
 	
@@ -26,6 +26,19 @@ GtkMorphView class >> example [
 		add: (GtkPaned newHorizontal
 			pack1: (GtkLabel newLabel: 'Label');
 			pack2: (GtkMorphView newMorph: (Morph new));
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
+GtkMorphView class >> example2 [
+	"show mouse events"
+	GtkApplication ensureRunning.
+
+	GtkWindow new 
+		resize: 500@500;
+		add: (GtkBox newVertical 
+			packStart: (GtkMorphView newMorph: (GtkTraceMovementMorph new));
 			yourself);
 		showAll
 ]
