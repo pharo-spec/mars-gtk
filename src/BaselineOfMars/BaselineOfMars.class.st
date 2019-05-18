@@ -9,14 +9,20 @@ BaselineOfMars >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ self beacon: spec.
-			spec package: 'Mars-Pango'.
-			spec package: 'Mars-Gtk' with: [ spec requires: #('Beacon' 'Mars-Pango') ].
-			spec package: 'Mars-Spec-Text' with: [ spec requires: 'Mars-Gtk' ].
-			spec package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Text') ].
+		do: [ 
+			self beacon: spec.
+			
 			spec
-				package: 'Mars-GtkBackendTests'
-				with: [ spec requires: 'Mars-Spec' ] ]
+				"core"
+				package: 'Mars-Pango';
+				package: 'Mars-Gtk' with: [ spec requires: #('Beacon' 'Mars-Pango') ];
+				package: 'Mars-Gtk-Morphic' with: [ spec requires: #('Mars-Gtk') ];
+				"spec"
+				package: 'Mars-Spec-Text' with: [ spec requires: 'Mars-Gtk' ];
+				package: 'Mars-Spec-Keybindings' with: [ spec requires: 'Mars-Gtk' ];
+				package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Text' 'Mars-Spec-Keybindings') ];
+				"testing"
+				package: 'Mars-GtkBackendTests' with: [ spec requires: 'Mars-Spec' ] ]
 ]
 
 { #category : #'external projects' }
