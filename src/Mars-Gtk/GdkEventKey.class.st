@@ -30,12 +30,6 @@ Class {
 	#category : #'Mars-Gtk-Base-Events'
 }
 
-{ #category : #private }
-GdkEventKey class >> eventNew: type [
-
-	^ self ffiCall: #(GdkEventKey *gdk_event_new (GdkEventType type)) module: GdkLibrary
-]
-
 { #category : #'field definition' }
 GdkEventKey class >> fieldsDesc [ 
 	"self rebuildFieldAccessors"
@@ -58,7 +52,7 @@ GdkEventKey class >> fieldsDesc [
 { #category : #'instance creation' }
 GdkEventKey class >> newKeyPress [
 
-	self eventNew: GDK_KEY_PRESS
+	^ self newType: GDK_KEY_PRESS
 ]
 
 { #category : #'instance creation' }
@@ -76,7 +70,7 @@ GdkEventKey class >> newKeyPressValue: keyVal shift: shiftBoolean meta: metaBool
 { #category : #'instance creation' }
 GdkEventKey class >> newKeyRelease [
 
-	self eventNew: GDK_KEY_RELEASE
+	^ self newType: GDK_KEY_RELEASE
 ]
 
 { #category : #'instance creation' }
@@ -101,8 +95,7 @@ GdkEventKey class >> newType: aType value: keyVal shift: shiftBoolean meta: meta
 	controlBoolean ifTrue: [ state := state | GDK_CONTROL_MASK ].
 	optionBoolean ifTrue: [ state := state | GDK_MOD1_MASK "Mod1 = Alt, Option" ].
 	
-	self flag: #TODO. "fromHandle: is workaround for a temporal problem"
-	^ (self fromHandle: (self eventNew: aType)) 		
+	^ (self newType: aType)
 		keyval: keyVal;
 		state: state;
 		yourself
@@ -193,6 +186,12 @@ GdkEventKey >> isEscape [
 ]
 
 { #category : #testing }
+GdkEventKey >> isEventKey [
+
+	^ false
+]
+
+{ #category : #testing }
 GdkEventKey >> isKeyDown [
 
 	^ self keyValue = KEY_Down
@@ -202,6 +201,18 @@ GdkEventKey >> isKeyDown [
 GdkEventKey >> isKeyLeft [
 
 	^ self keyValue = KEY_Left
+]
+
+{ #category : #testing }
+GdkEventKey >> isKeyPress [
+
+	^ self type = GDK_KEY_PRESS
+]
+
+{ #category : #testing }
+GdkEventKey >> isKeyRelease [
+
+	^ self type = GDK_KEY_RELEASE
 ]
 
 { #category : #testing }

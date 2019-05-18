@@ -1,15 +1,15 @@
 "
-Used for button press and button release events.
+struct GdkEventMotion
 
-https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEventButton
+Generated when the pointer moves.
 "
 Class {
-	#name : #GdkEventButton,
+	#name : #GdkEventMotion,
 	#superclass : #GdkEvent,
 	#classVars : [
 		'OFFSET_AXES',
-		'OFFSET_BUTTON',
 		'OFFSET_DEVICE',
+		'OFFSET_IS_HINT',
 		'OFFSET_SEND_EVENT',
 		'OFFSET_STATE',
 		'OFFSET_TIME',
@@ -20,222 +20,181 @@ Class {
 		'OFFSET_Y',
 		'OFFSET_Y_ROOT'
 	],
-	#pools : [
-		'GdkButtonType'
-	],
 	#category : #'Mars-Gtk-Base-Events'
 }
 
 { #category : #'field definition' }
-GdkEventButton class >> fieldsDesc [ 
+GdkEventMotion class >> fieldsDesc [
 	"self rebuildFieldAccessors"
-	
+
 	^ #(
   GdkEventType type;
-  "GdkWindow *" void *window;
+  "GdkWindow *"void *window;
   gint8 send_event;
   guint32 time;
   gdouble x;
   gdouble y;
   gdouble *axes;
   guint state;
-  guint button;
-  "GdkDevice *" void *device;
+  gint16 is_hint;
+  "GdkDevice *"void *device;
   gdouble x_root;
-  gdouble y_root;
+  gdouble y_root; 
 	)
 ]
 
-{ #category : #'instance creation' }
-GdkEventButton class >> newButtonPress [
+{ #category : #testing }
+GdkEventMotion class >> isType: aType [
 
-	^ self newType: GDK_BUTTON_PRESS
-]
-
-{ #category : #'instance creation' }
-GdkEventButton class >> newButtonRelease [
-
-	^ self newType: GDK_BUTTON_RELEASE
-]
-
-{ #category : #'instance creation' }
-GdkEventButton class >> newRightClick [
-
-	^ (self newType: GDK_BUTTON_PRESS)
-		button: GDK_BUTTON_SECONDARY;
-		yourself		
+	^ aType = GDK_MOTION_NOTIFY
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> axes [
+GdkEventMotion >> axes [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_AXES) type: ExternalType double asPointerType
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> axes: anObject [
+GdkEventMotion >> axes: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_AXES put: anObject getHandle.
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> button [
-	"This method was automatically generated"
-	^handle unsignedLongAt: OFFSET_BUTTON
-]
-
-{ #category : #'accessing structure variables' }
-GdkEventButton >> button: anObject [
-	"This method was automatically generated"
-	handle unsignedLongAt: OFFSET_BUTTON put: anObject
-]
-
-{ #category : #'accessing structure variables' }
-GdkEventButton >> device [
+GdkEventMotion >> device [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_DEVICE) type: ExternalType void asPointerType
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> device: anObject [
+GdkEventMotion >> device: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_DEVICE put: anObject getHandle.
 ]
 
 { #category : #testing }
-GdkEventButton >> isDoubleClick [ 
-
-	^ self type = GDK_2BUTTON_PRESS
-]
-
-{ #category : #testing }
-GdkEventButton >> isEventButton [
+GdkEventMotion >> isEventMotion [
 
 	^ true
 ]
 
-{ #category : #testing }
-GdkEventButton >> isMiddleButton [
-
-	^ self button = GDK_BUTTON_MIDDLE
-]
-
-{ #category : #testing }
-GdkEventButton >> isPrimaryButton [
-
-	^ self button = GDK_BUTTON_PRIMARY
-]
-
-{ #category : #testing }
-GdkEventButton >> isSecondaryButton [
-
-	^ self button = GDK_BUTTON_SECONDARY
+{ #category : #'accessing structure variables' }
+GdkEventMotion >> is_hint [
+	"This method was automatically generated"
+	^handle signedShortAt: OFFSET_IS_HINT
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> send_event [
+GdkEventMotion >> is_hint: anObject [
+	"This method was automatically generated"
+	handle signedShortAt: OFFSET_IS_HINT put: anObject
+]
+
+{ #category : #'accessing structure variables' }
+GdkEventMotion >> send_event [
 	"This method was automatically generated"
 	^handle signedByteAt: OFFSET_SEND_EVENT
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> send_event: anObject [
+GdkEventMotion >> send_event: anObject [
 	"This method was automatically generated"
 	handle signedByteAt: OFFSET_SEND_EVENT put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> state [
+GdkEventMotion >> state [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_STATE
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> state: anObject [
+GdkEventMotion >> state: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_STATE put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> time [
+GdkEventMotion >> time [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_TIME
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> time: anObject [
+GdkEventMotion >> time: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TIME put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> type [
+GdkEventMotion >> type [
 	"This method was automatically generated"
 	^GdkEventType fromInteger: (handle signedLongAt: OFFSET_TYPE)
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> type: anObject [
+GdkEventMotion >> type: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_TYPE put: anObject value
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> window [
+GdkEventMotion >> window [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_WINDOW) type: ExternalType void asPointerType
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> window: anObject [
+GdkEventMotion >> window: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> x [
+GdkEventMotion >> x [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> x: anObject [
+GdkEventMotion >> x: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> x_root [
+GdkEventMotion >> x_root [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X_ROOT
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> x_root: anObject [
+GdkEventMotion >> x_root: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X_ROOT put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> y [
+GdkEventMotion >> y [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> y: anObject [
+GdkEventMotion >> y: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> y_root [
+GdkEventMotion >> y_root [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y_ROOT
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventButton >> y_root: anObject [
+GdkEventMotion >> y_root: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y_ROOT put: anObject
 ]

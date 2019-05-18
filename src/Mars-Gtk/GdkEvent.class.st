@@ -1,3 +1,10 @@
+"
+union GdkEvent
+
+A GdkEvent contains a union of all of the event types, and allows access to the data fields in a number of ways.
+
+https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEvent
+"
 Class {
 	#name : #GdkEvent,
 	#superclass : #GtkStructure,
@@ -22,7 +29,7 @@ GdkEvent class >> eventNew: type [
 { #category : #resources }
 GdkEvent class >> ffiLibrary [
 
-	^ GtkLibrary 
+	^ GdkLibrary 
 ]
 
 { #category : #finalization }
@@ -31,13 +38,28 @@ GdkEvent class >> finalizeResourceData: aHandle [
 	self eventFree: aHandle
 ]
 
+{ #category : #testing }
+GdkEvent class >> isType: aType [
+
+	^ false
+]
+
 { #category : #'instance creation' }
 GdkEvent class >> newType: aType [
 
 	self flag: #TODO. "fromHandle: is workaround for a temporal problem"
-	^ (self fromHandle: (self eventNew: aType)) 
-		initialize;
-		autoRelease
+	^ (self fromHandle: (self eventNew: aType)) asConcreteType autoRelease
+]
+
+{ #category : #converting }
+GdkEvent >> asConcreteType [
+	| type |
+
+	type := self type.
+	^ GdkEvent allSubclasses 
+		detect: [ :each | each isType: type ]
+		ifFound: [ :each | each fromHandle: self getHandle ]
+		ifNone: [ GdkEventAny fromHandle: self getHandle ]
 ]
 
 { #category : #'external resource management' }
@@ -46,16 +68,22 @@ GdkEvent >> autoRelease [
 	FFIExternalResourceManager addResource: self
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 GdkEvent >> ffiLibrary [
 
-	^ GtkLibrary 
+	^ GdkLibrary
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 GdkEvent >> free [
 
 	self ffiCall: #(void gdk_event_free (self))
+]
+
+{ #category : #testing }
+GdkEvent >> isAnyType [
+
+	^ false
 ]
 
 { #category : #testing }
@@ -64,8 +92,38 @@ GdkEvent >> isDoubleClick [
 	^ false
 ]
 
+{ #category : #testing }
+GdkEvent >> isEventButton [
+
+	^ false
+]
+
+{ #category : #testing }
+GdkEvent >> isEventKey [
+
+	^ false
+]
+
+{ #category : #testing }
+GdkEvent >> isEventMotion [
+
+	^ false
+]
+
 { #category : #'external resource management' }
 GdkEvent >> resourceData [
 
 	^ self getHandle
+]
+
+{ #category : #'accessing structure variables' }
+GdkEvent >> type [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #'accessing structure variables' }
+GdkEvent >> window [
+
+	self subclassResponsibility
 ]
