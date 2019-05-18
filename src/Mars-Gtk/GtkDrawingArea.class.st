@@ -27,7 +27,7 @@ GtkDrawingArea class >> new [
 	^ self drawingAreaNew initialize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkDrawingArea >> appPaintable: app_paintable [
 
 	^ self ffiCall: #(void gtk_widget_set_app_paintable (self, gboolean app_paintable))
@@ -40,7 +40,7 @@ GtkDrawingArea >> connectDraw: aBlock [
 	"self eliotConnectDraw: aBlock"
 ]
 
-{ #category : #private }
+{ #category : #drawing }
 GtkDrawingArea >> draw: cr [
 
 	self drawOnAthensCanvas: (AthensCairoCanvas fromHandle: cr).
