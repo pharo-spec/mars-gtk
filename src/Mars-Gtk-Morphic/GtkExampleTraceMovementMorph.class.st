@@ -1,5 +1,5 @@
 Class {
-	#name : #GtkTraceMovementMorph,
+	#name : #GtkExampleTraceMovementMorph,
 	#superclass : #Morph,
 	#instVars : [
 		'positionMorph'
@@ -8,20 +8,22 @@ Class {
 }
 
 { #category : #'events-processing' }
-GtkTraceMovementMorph >> handleMouseMove: anEvent [
+GtkExampleTraceMovementMorph >> handleMouseMove: anEvent [
 
 	positionMorph contents: anEvent position asString
 ]
 
 { #category : #'events-processing' }
-GtkTraceMovementMorph >> handlesMouseMove: evt [
+GtkExampleTraceMovementMorph >> handlesMouseMove: evt [
 
 	^ true
 ]
 
 { #category : #initialization }
-GtkTraceMovementMorph >> initialize [
+GtkExampleTraceMovementMorph >> initialize [
 
 	super initialize.
-	self addMorphBack: (positionMorph := StringMorph new).
+	
+	self changeTableLayout.
+	self addMorph: (positionMorph := StringMorph contents: '[Position]')
 ]

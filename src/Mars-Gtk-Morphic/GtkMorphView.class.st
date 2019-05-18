@@ -41,7 +41,7 @@ GtkMorphView class >> example2 [
 	GtkWindow new
 		resize: 500@500;
 		add: (GtkBox newVertical 
-			packStart: (GtkMorphView newMorph: (GtkTraceMovementMorph new));
+			packStart: (GtkMorphView newMorph: (GtkExampleTraceMovementMorph new));
 			yourself);
 		showAll
 ]
@@ -69,10 +69,8 @@ GtkMorphView >> beMorphResizable [
 { #category : #initialization }
 GtkMorphView >> connectToSignals [
 
-	self connectSizeAllocate: [ :aRect |
-		self isMorphResizable ifTrue: [ 
-			self morph extent: aRect extent.
-			self resetSurface ] ]
+	self connectSizeAllocate: [ :aRect | self resizeIfEnabledTo: aRect extent ].
+	self connectEvent: [ :event | self handleEvent: event ]
 ]
 
 { #category : #drawing }
@@ -92,6 +90,14 @@ GtkMorphView >> draw: cr [
 GtkMorphView >> drawOnAthensCanvas: aCanvas [
 	
 	"do nothing"
+]
+
+{ #category : #'private events' }
+GtkMorphView >> handleEvent: event [
+
+	event type crLog.
+	"not handled, propagate"
+	^ false
 ]
 
 { #category : #initialization }
@@ -151,6 +157,15 @@ GtkMorphView >> paint: cr [
 GtkMorphView >> resetSurface [
 
 	activeSurface := self newMorphSurface
+]
+
+{ #category : #private }
+GtkMorphView >> resizeIfEnabledTo: extent [
+
+	self isMorphResizable ifFalse: [ ^ self ]. 
+			
+	self morph extent: extent.
+	self resetSurface
 ]
 
 { #category : #private }
