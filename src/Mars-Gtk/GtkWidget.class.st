@@ -233,6 +233,14 @@ GtkWidget >> connectKeyPressEvent: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectRealize: aBlock [
+
+	^ self 
+		connect: 'realize' 
+		do: aBlock
+]
+
+{ #category : #signaling }
 GtkWidget >> connectRightClicked: aBlock [
 	"connect to button-press-event signal but evaluates if this is 'secondary button', 
 	 which is right click.

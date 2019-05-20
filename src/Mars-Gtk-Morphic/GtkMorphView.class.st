@@ -8,7 +8,8 @@ Class {
 		'morph',
 		'activeSurface',
 		'morphResizable',
-		'eventHandler'
+		'eventHandler',
+		'queued'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -44,6 +45,46 @@ GtkMorphView class >> example2 [
 		resize: 500@500;
 		add: (GtkBox newVertical 
 			packStart: (GtkMorphView newMorph: (GtkExampleTraceMovementMorph new));
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
+GtkMorphView class >> example3 [
+	| m |
+
+	GtkApplication ensureRunning.
+
+	m := Morph new.
+	m 
+		color: Color transparent;
+		layoutPolicy: TableLayout new;
+		cellInset: 10;
+		listDirection: #topToBottom;
+		vResizing: #spaceFill; 
+		hResizing: #spaceFill.
+
+	10 timesRepeat: [ | row |
+		row := (Morph new color: Color transparent).
+		row
+			layoutPolicy: TableLayout new;
+			listDirection: #leftToRight;
+			cellInset: 10;
+			vResizing: #spaceFill; 
+			hResizing: #spaceFill.
+		10 timesRepeat: [ | cell |
+			cell := (Morph new color: Color random).
+			cell
+				vResizing: #spaceFill; 
+				hResizing: #spaceFill. 
+			row addMorphBack: cell ].
+		m addMorphBack: row ].
+
+	GtkWindow new
+		title: 'Mouse-move test';
+		resize: 500@500;
+		add: (GtkBox newVertical 
+			packStart: (GtkMorphView newMorph: m);
 			yourself);
 		showAll
 ]
@@ -91,14 +132,17 @@ GtkMorphView >> draw: cr [
 
 	drawing ifTrue: [ ^ true ].
 	drawing := true.
-	[ 
+	
+	[
 		self 
 			setSourceSurfaceTo: cr
 			surface: activeSurface getHandle
 			x: 0.0 
 			y: 0.0.
-		self paint: cr.	
-	 ] ensure: [ drawing := false ].
+		self paint: cr ] 
+	ensure: [ 
+		drawing := false.
+		queued := false ].
 
 	^ true
 ]
@@ -115,17 +159,11 @@ GtkMorphView >> handleEvent: event [
 	^ eventHandler handleEvent: event
 ]
 
-{ #category : #'private events' }
-GtkMorphView >> handleUpdate: ann [
-
-	self resetSurface.
-	self queueDraw
-]
-
 { #category : #initialization }
 GtkMorphView >> initialize [ 
 
 	super initialize.
+	queued := false.
 	drawing := false.
 	self beMorphResizable.
 	self registerToAllEvents.
@@ -135,7 +173,7 @@ GtkMorphView >> initialize [
 { #category : #'world simulation' }
 GtkMorphView >> invalidRect: damageRect from: aMorph [
 
-	self resetSurfaceAndQueueDraw
+	self queueDraw
 ]
 
 { #category : #testing }
@@ -147,7 +185,7 @@ GtkMorphView >> isMorphResizable [
 { #category : #'world simulation' }
 GtkMorphView >> layoutChanged [
 
-	self resetSurfaceAndQueueDraw
+	self queueDraw
 ]
 
 { #category : #accessing }
@@ -192,16 +230,20 @@ GtkMorphView >> paint: cr [
 ]
 
 { #category : #private }
+GtkMorphView >> queueDraw [
+	
+	drawing ifTrue: [ ^ self ].
+	queued ifTrue: [ ^ self ].
+	queued := true.
+	
+	self resetSurface.
+	super queueDraw.
+]
+
+{ #category : #private }
 GtkMorphView >> resetSurface [
 
 	activeSurface := self newMorphSurface
-]
-
-{ #category : #'world simulation' }
-GtkMorphView >> resetSurfaceAndQueueDraw [
-	drawing ifFalse: [ 
-		self resetSurface.
-		self queueDraw ]
 ]
 
 { #category : #private }
@@ -214,25 +256,9 @@ GtkMorphView >> resizeIfEnabledTo: extent [
 ]
 
 { #category : #private }
-GtkMorphView >> setIoProcessSuspended: suspended [
-
-	self 
-		ffiCall: #(void setIoProcessSuspended(int suspended)) 
-		module: VMFFILibrary
-]
-
-{ #category : #private }
 GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 
 	self 
 		ffiCall: #(void cairo_set_source_surface (void *cr, void *surface, double x,  double y))
 		module: CairoLibrary
-]
-
-{ #category : #private }
-GtkMorphView >> suspendIOEventsDuring: aBlock [ 
-
-	self setIoProcessSuspended: 1.
-	aBlock ensure: [ 
-		self setIoProcessSuspended: 0 ]
 ]
