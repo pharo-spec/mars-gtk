@@ -30,6 +30,11 @@ GdkEventAny class >> fieldsDesc [
 	)
 ]
 
+{ #category : #visiting }
+GdkEventAny >> accept: aVisitor [
+	"do nothing"
+]
+
 { #category : #testing }
 GdkEventAny >> isAnyType [
 

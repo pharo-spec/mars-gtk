@@ -10,7 +10,8 @@ Class {
 { #category : #'events-processing' }
 GtkExampleTraceMovementMorph >> handleMouseMove: anEvent [
 
-	positionMorph contents: anEvent position asString
+	positionMorph contents: anEvent position asString.
+	self changed
 ]
 
 { #category : #'events-processing' }

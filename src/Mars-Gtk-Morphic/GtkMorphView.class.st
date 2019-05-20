@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'morph',
 		'activeSurface',
-		'morphResizable'
+		'morphResizable',
+		'eventHandler'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -39,6 +40,7 @@ GtkMorphView class >> example2 [
 	GtkApplication ensureRunning.
 
 	GtkWindow new
+		title: 'Mouse-move test';
 		resize: 500@500;
 		add: (GtkBox newVertical 
 			packStart: (GtkMorphView newMorph: (GtkExampleTraceMovementMorph new));
@@ -52,6 +54,17 @@ GtkMorphView class >> newMorph: aMorph [
 		morph: aMorph;
 		yourself
 
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> activeHand [
+	
+	^ ActiveHand
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> beCursorOwner [
+	
 ]
 
 { #category : #accessing }
@@ -76,13 +89,17 @@ GtkMorphView >> connectToSignals [
 { #category : #drawing }
 GtkMorphView >> draw: cr [
 
-	self 
-		setSourceSurfaceTo: cr
-		surface: activeSurface getHandle
-		x: 0.0 
-		y: 0.0.
-	self paint: cr.
-	
+	drawing ifTrue: [ ^ true ].
+	drawing := true.
+	[ 
+		self 
+			setSourceSurfaceTo: cr
+			surface: activeSurface getHandle
+			x: 0.0 
+			y: 0.0.
+		self paint: cr.	
+	 ] ensure: [ drawing := false ].
+
 	^ true
 ]
 
@@ -95,24 +112,42 @@ GtkMorphView >> drawOnAthensCanvas: aCanvas [
 { #category : #'private events' }
 GtkMorphView >> handleEvent: event [
 
-	event type crLog.
-	"not handled, propagate"
-	^ false
+	^ eventHandler handleEvent: event
+]
+
+{ #category : #'private events' }
+GtkMorphView >> handleUpdate: ann [
+
+	self resetSurface.
+	self queueDraw
 ]
 
 { #category : #initialization }
 GtkMorphView >> initialize [ 
 
 	super initialize.
+	drawing := false.
 	self beMorphResizable.
 	self registerToAllEvents.
 	self connectToSignals.
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> invalidRect: damageRect from: aMorph [
+
+	self resetSurfaceAndQueueDraw
 ]
 
 { #category : #testing }
 GtkMorphView >> isMorphResizable [
 
 	^ morphResizable
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> layoutChanged [
+
+	self resetSurfaceAndQueueDraw
 ]
 
 { #category : #accessing }
@@ -125,6 +160,9 @@ GtkMorphView >> morph [
 GtkMorphView >> morph: aMorph [
 
 	morph := aMorph.
+	eventHandler := GtkMorphicEventHandler for: self.
+	eventHandler morph: aMorph.
+	morph privateOwner: self.
 	activeSurface := self newMorphSurface.
 	self sizeRequest: aMorph extent
 ]
@@ -157,6 +195,13 @@ GtkMorphView >> paint: cr [
 GtkMorphView >> resetSurface [
 
 	activeSurface := self newMorphSurface
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> resetSurfaceAndQueueDraw [
+	drawing ifFalse: [ 
+		self resetSurface.
+		self queueDraw ]
 ]
 
 { #category : #private }

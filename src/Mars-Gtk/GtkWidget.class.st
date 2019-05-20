@@ -189,7 +189,7 @@ GtkWidget >> connectEvent: aBlock [
 		connect: 'event' 
 		signature: #(gboolean (void *widget, void *event, gpointer user_data))
 		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent fromHandle: event) asConcreteType ]
+			aBlock value: (GdkEvent newConcreteFromHandle: event) ]
 ]
 
 { #category : #signaling }
@@ -199,7 +199,7 @@ GtkWidget >> connectEventAfter: aBlock [
 		connect: 'event-after' 
 		signature: #(gboolean (void *widget, void *event, gpointer user_data))
 		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent fromHandle: event) ]
+			aBlock value: (GdkEvent newConcreteFromHandle: event) ]
 ]
 
 { #category : #signaling }

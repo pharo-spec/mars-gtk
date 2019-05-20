@@ -6,6 +6,8 @@ https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEventKey
 Class {
 	#name : #GdkEventKey,
 	#superclass : #GdkEvent,
+	#traits : 'TGdkEventState',
+	#classTraits : 'TGdkEventState classTrait',
 	#instVars : [
 		'keyValue',
 		'wasHandled'
@@ -132,54 +134,6 @@ GdkEventKey >> hardware_keycode: anObject [
 ]
 
 { #category : #testing }
-GdkEventKey >> hasAltModifier [
-
-	^ self hasMod1
-]
-
-{ #category : #testing }
-GdkEventKey >> hasAnyModifier [
-
-	^ self state ~= 0
-]
-
-{ #category : #testing }
-GdkEventKey >> hasControlModifier [
-
-	^ self hasModifier: GDK_CONTROL_MASK
-]
-
-{ #category : #testing }
-GdkEventKey >> hasLockModifier [
-
-	^ self hasModifier: GDK_LOCK_MASK	
-]
-
-{ #category : #testing }
-GdkEventKey >> hasMetaModifier [
-
-	^ self hasModifier: GDK_META_MASK
-]
-
-{ #category : #testing }
-GdkEventKey >> hasMod1 [
-
-	^ self hasModifier: GDK_MOD1_MASK
-]
-
-{ #category : #testing }
-GdkEventKey >> hasModifier: aModifier [
-
-	^ (self state & (aModifier value)) = aModifier value
-]
-
-{ #category : #testing }
-GdkEventKey >> hasShiftModifier [
-
-	^ self hasModifier: GDK_SHIFT_MASK
-]
-
-{ #category : #testing }
 GdkEventKey >> isEscape [
 
 	^ self keyValue = KEY_Escape
@@ -206,13 +160,13 @@ GdkEventKey >> isKeyLeft [
 { #category : #testing }
 GdkEventKey >> isKeyPress [
 
-	^ self type = GDK_KEY_PRESS
+	^ false
 ]
 
 { #category : #testing }
 GdkEventKey >> isKeyRelease [
 
-	^ self type = GDK_KEY_RELEASE
+	^ false
 ]
 
 { #category : #testing }
@@ -337,6 +291,7 @@ GdkEventKey >> type: anObject [
 
 { #category : #compatibility }
 GdkEventKey >> wasHandled [
+	"this should be in package Mars-Gtk-Morphic but I need the instance variable"
 
 	^ wasHandled ifNil: [ wasHandled := false ]
 ]

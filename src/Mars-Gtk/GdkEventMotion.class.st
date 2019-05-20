@@ -6,6 +6,8 @@ Generated when the pointer moves.
 Class {
 	#name : #GdkEventMotion,
 	#superclass : #GdkEvent,
+	#traits : 'TGdkEventState',
+	#classTraits : 'TGdkEventState classTrait',
 	#classVars : [
 		'OFFSET_AXES',
 		'OFFSET_DEVICE',
@@ -49,6 +51,12 @@ GdkEventMotion class >> isType: aType [
 	^ aType = GDK_MOTION_NOTIFY
 ]
 
+{ #category : #visiting }
+GdkEventMotion >> accept: aVisitor [
+
+	^ aVisitor visitMouseMoveEvent: self
+]
+
 { #category : #'accessing structure variables' }
 GdkEventMotion >> axes [
 	"This method was automatically generated"
@@ -89,6 +97,12 @@ GdkEventMotion >> is_hint [
 GdkEventMotion >> is_hint: anObject [
 	"This method was automatically generated"
 	handle signedShortAt: OFFSET_IS_HINT put: anObject
+]
+
+{ #category : #compatibility }
+GdkEventMotion >> position [
+	
+	^ self x @ self y
 ]
 
 { #category : #'accessing structure variables' }

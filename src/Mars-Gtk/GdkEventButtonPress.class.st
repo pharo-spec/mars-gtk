@@ -14,3 +14,9 @@ GdkEventButtonPress class >> isType: aType [
 	 }
 	includes: aType
 ]
+
+{ #category : #visiting }
+GdkEventButtonPress >> accept: aVisitor [
+
+	^ aVisitor visitMouseButtonPressEvent: self
+]

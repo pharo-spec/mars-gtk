@@ -45,21 +45,34 @@ GdkEvent class >> isType: aType [
 ]
 
 { #category : #'instance creation' }
+GdkEvent class >> newConcreteFromHandle: handle [
+	| type |
+	
+	"type is always the first element on every type"
+	type := GdkEventType fromInteger: (handle signedLongAt: 1).
+	^ self allSubclasses
+		detect: [ :each | each isType: type ]
+		ifFound: [ :each | each fromHandle: handle ]
+		ifNone: [ GdkEventAny fromHandle: handle ]
+]
+
+{ #category : #'instance creation' }
 GdkEvent class >> newType: aType [
 
 	self flag: #TODO. "fromHandle: is workaround for a temporal problem"
 	^ (self fromHandle: (self eventNew: aType)) asConcreteType autoRelease
 ]
 
+{ #category : #visiting }
+GdkEvent >> accept: aVisitor [
+	
+	self subclassResponsibility
+]
+
 { #category : #converting }
 GdkEvent >> asConcreteType [
-	| type |
 
-	type := self type.
-	^ GdkEvent allSubclasses 
-		detect: [ :each | each isType: type ]
-		ifFound: [ :each | each fromHandle: self getHandle ]
-		ifNone: [ GdkEventAny fromHandle: self getHandle ]
+	^ self class newConcreteFromHandle: self getHandle
 ]
 
 { #category : #'external resource management' }
