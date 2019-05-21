@@ -82,6 +82,38 @@ GtkMorphView class >> example3 [
 ]
 
 { #category : #examples }
+GtkMorphView class >> example4 [
+	| morph1 morph2 |
+
+	GtkApplication ensureRunning.
+
+	morph1 := self 
+		newGridOf: 10 
+		with: [ :cell | 
+			cell 
+				color: Color blue;
+				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
+				on: #mouseLeave send: #value: to: [ :event | cell color: Color blue ] ].
+	morph2 := self 
+		newGridOf: 10 
+		with: [ :cell | 
+			cell 
+				color: Color green;
+				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
+				on: #mouseLeave send: #value: to: [ :event | cell color: Color green ] ].
+
+
+	GtkWindow new
+		title: 'Example 4';
+		resize: 500@500;
+		add: (GtkPaned newVertical 
+			pack1: (GtkMorphView newMorph: morph1);
+			pack2: (GtkMorphView newMorph: morph2);
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
 GtkMorphView class >> newGridOf: aNumber with: aBlock [
 	| gridMorph |
 
@@ -92,8 +124,7 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 		cellInset: 10;
 		listDirection: #topToBottom;
 		vResizing: #spaceFill; 
-		hResizing: #spaceFill;
-		on: #mouseMove send: #value: to: [ :event | event crLog ].
+		hResizing: #spaceFill.
 
 	aNumber timesRepeat: [ | row |
 		row := (Morph new color: Color transparent).
