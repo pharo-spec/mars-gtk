@@ -37,14 +37,22 @@ GtkMorphView class >> example1 [
 
 { #category : #examples }
 GtkMorphView class >> example2 [
+	| morph positionMorph |
 	"show mouse events"
 	GtkApplication ensureRunning.
+
+	morph := Morph new.
+	morph addMorphBack: (positionMorph := StringMorph contents: '[Position]').
+	morph 
+		on: #mouseMove 
+		send: #value:
+		to: [ :event | positionMorph contents: event position asString ].
 
 	GtkWindow new
 		title: 'Mouse-move test';
 		resize: 500@500;
 		add: (GtkBox newVertical 
-			packStart: (GtkMorphView newMorph: (GtkExampleTraceMovementMorph new));
+			packStart: (GtkMorphView newMorph: morph);
 			yourself);
 		showAll
 ]
