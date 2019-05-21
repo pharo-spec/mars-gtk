@@ -51,20 +51,38 @@ GtkMorphView class >> example2 [
 
 { #category : #examples }
 GtkMorphView class >> example3 [
-	| m |
+	| morph |
 
 	GtkApplication ensureRunning.
 
-	m := Morph new.
-	m 
+	morph  := self 
+		newGridOf: 10 
+		with: [ :cell | cell color: Color random ].
+
+	GtkWindow new
+		title: 'Example 3';
+		resize: 500@500;
+		add: (GtkBox newVertical 
+			packStart: (GtkMorphView newMorph: morph);
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
+GtkMorphView class >> newGridOf: aNumber with: aBlock [
+	| gridMorph |
+
+	(gridMorph := Morph new)
 		color: Color transparent;
 		layoutPolicy: TableLayout new;
+		borderWidth: 10;
 		cellInset: 10;
 		listDirection: #topToBottom;
 		vResizing: #spaceFill; 
-		hResizing: #spaceFill.
+		hResizing: #spaceFill;
+		on: #mouseMove send: #value: to: [ :event | event crLog ].
 
-	10 timesRepeat: [ | row |
+	aNumber timesRepeat: [ | row |
 		row := (Morph new color: Color transparent).
 		row
 			layoutPolicy: TableLayout new;
@@ -72,21 +90,16 @@ GtkMorphView class >> example3 [
 			cellInset: 10;
 			vResizing: #spaceFill; 
 			hResizing: #spaceFill.
-		10 timesRepeat: [ | cell |
-			cell := (Morph new color: Color random).
+		aNumber timesRepeat: [ | cell |
+			cell := Morph new.
 			cell
 				vResizing: #spaceFill; 
 				hResizing: #spaceFill. 
-			row addMorphBack: cell ].
-		m addMorphBack: row ].
-
-	GtkWindow new
-		title: 'Mouse-move test';
-		resize: 500@500;
-		add: (GtkBox newVertical 
-			packStart: (GtkMorphView newMorph: m);
-			yourself);
-		showAll
+			row addMorphBack: cell.
+			aBlock value: cell ].
+		gridMorph addMorphBack: row ].
+	
+	^ gridMorph
 ]
 
 { #category : #'instance creation' }
@@ -131,14 +144,10 @@ GtkMorphView >> connectToSignals [
 GtkMorphView >> draw: cr [
 
 	drawing ifTrue: [ ^ true ].
-	drawing := true.
-	
+
+	drawing := true.	
 	[
-		self 
-			setSourceSurfaceTo: cr
-			surface: activeSurface getHandle
-			x: 0.0 
-			y: 0.0.
+		self setSourceSurfaceTo: cr surface: activeSurface getHandle.
 		self paint: cr ] 
 	ensure: [ 
 		drawing := false.
@@ -221,7 +230,7 @@ GtkMorphView >> newMorphSurface [
 	^ newSurface
 ]
 
-{ #category : #private }
+{ #category : #'private primitives' }
 GtkMorphView >> paint: cr [
 
 	self 
@@ -255,7 +264,17 @@ GtkMorphView >> resizeIfEnabledTo: extent [
 	self resetSurface
 ]
 
-{ #category : #private }
+{ #category : #'private primitives' }
+GtkMorphView >> setSourceSurfaceTo: cr surface: surface [
+
+	self 
+		setSourceSurfaceTo: cr 
+		surface: surface 
+		x: 0.0 
+		y: 0.0
+]
+
+{ #category : #'private primitives' }
 GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 
 	self 
