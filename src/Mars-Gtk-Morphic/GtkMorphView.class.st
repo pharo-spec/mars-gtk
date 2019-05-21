@@ -164,6 +164,12 @@ GtkMorphView >> activeHand [
 ]
 
 { #category : #'world simulation' }
+GtkMorphView >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
+	
+	self flag: #TODO.
+]
+
+{ #category : #'world simulation' }
 GtkMorphView >> beCursorOwner [
 	
 ]
@@ -303,7 +309,7 @@ GtkMorphView >> queueDraw [
 ]
 
 { #category : #'world simulation' }
-GtkMorphView >> removeAlarm: aString for: aHandMorph [ 
+GtkMorphView >> removeAlarm: aSelector for: aTarget [
 	
 	self flag: #TODO.
 ]
