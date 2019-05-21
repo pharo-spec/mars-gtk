@@ -9,7 +9,8 @@ Class {
 		'activeSurface',
 		'morphResizable',
 		'eventHandler',
-		'queued'
+		'queued',
+		'activeHand'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -65,7 +66,11 @@ GtkMorphView class >> example3 [
 
 	morph  := self 
 		newGridOf: 10 
-		with: [ :cell | cell color: Color random ].
+		with: [ :cell | 
+			cell 
+				color: Color blue;
+				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
+				on: #mouseLeave send: #value: to: [ :event | cell color: Color blue ] ].
 
 	GtkWindow new
 		title: 'Example 3';
@@ -121,7 +126,10 @@ GtkMorphView class >> newMorph: aMorph [
 { #category : #'world simulation' }
 GtkMorphView >> activeHand [
 	
-	^ ActiveHand
+	^ activeHand ifNil: [ 
+		activeHand := HandMorph new 
+			privateOwner: self;
+			yourself ]
 ]
 
 { #category : #'world simulation' }
@@ -246,6 +254,12 @@ GtkMorphView >> paint: cr [
 		module: CairoLibrary
 ]
 
+{ #category : #'world simulation' }
+GtkMorphView >> processEvent: anEvent [
+ 
+	^ self morph processEvent: anEvent
+]
+
 { #category : #private }
 GtkMorphView >> queueDraw [
 	
@@ -255,6 +269,12 @@ GtkMorphView >> queueDraw [
 	
 	self resetSurface.
 	super queueDraw.
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> removeAlarm: aString for: aHandMorph [ 
+	
+	self flag: #TODO.
 ]
 
 { #category : #private }
@@ -288,4 +308,16 @@ GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 	self 
 		ffiCall: #(void cairo_set_source_surface (void *cr, void *surface, double x,  double y))
 		module: CairoLibrary
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> transformFrom: aMorph [ 
+	
+	^ IdentityTransform new
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> world [
+
+	^ self
 ]

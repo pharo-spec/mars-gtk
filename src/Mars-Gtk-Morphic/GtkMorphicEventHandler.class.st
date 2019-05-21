@@ -37,7 +37,7 @@ GtkMorphicEventHandler >> convertModifiers: anEvent [
 { #category : #events }
 GtkMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 
-	self morph handleEvent: anEvent
+	self activeHand handleEvent: anEvent
 ]
 
 { #category : #events }
