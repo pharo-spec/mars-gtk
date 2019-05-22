@@ -126,7 +126,10 @@ GtkInfoBar >> doNotShowCloseButton [
 { #category : #accessing }
 GtkInfoBar >> hide [
 
-	^ self reveal: false
+	^ GtkLibrary uniqueInstance 
+		matchVersion: '3.22.29'
+		ifTrue: [ self reveal: false ]
+		ifFalse: [ super hide ]
 ]
 
 { #category : #accessing }
