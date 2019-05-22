@@ -44,6 +44,7 @@ GtkTypes class >> initialize [
 	GType := #gsize.
 	gssize := #long.
 	gsize := #ulong.
+	gint16 := #int16.
 	
 	gunichar := #guint32.
 ]

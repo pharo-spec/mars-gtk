@@ -1,19 +1,13 @@
-"
-struct GdkEventMotion
-
-Generated when the pointer moves.
-"
 Class {
-	#name : #GdkEventMotion,
+	#name : #GdkEventCrossing,
 	#superclass : #GdkEvent,
-	#traits : 'TGdkEventState',
-	#classTraits : 'TGdkEventState classTrait',
 	#classVars : [
-		'OFFSET_AXES',
-		'OFFSET_DEVICE',
-		'OFFSET_IS_HINT',
+		'OFFSET_DETAIL',
+		'OFFSET_FOCUS',
+		'OFFSET_MODE',
 		'OFFSET_SEND_EVENT',
 		'OFFSET_STATE',
+		'OFFSET_SUBWINDOW',
 		'OFFSET_TIME',
 		'OFFSET_TYPE',
 		'OFFSET_WINDOW',
@@ -26,189 +20,184 @@ Class {
 }
 
 { #category : #'field definition' }
-GdkEventMotion class >> fieldsDesc [
+GdkEventCrossing class >> fieldsDesc [ 
 	"self rebuildFieldAccessors"
-
+	
 	^ #(
   GdkEventType type;
-  "GdkWindow *"void *window;
+  "GdkWindow" void *window;
   gint8 send_event;
+  "GdkWindow" void *subwindow;
   guint32 time;
   gdouble x;
   gdouble y;
-  gdouble *axes;
-  guint state;
-  gint16 is_hint;
-  "GdkDevice *"void *device;
   gdouble x_root;
-  gdouble y_root; 
+  gdouble y_root;
+  GdkCrossingMode mode;
+  GdkNotifyType detail;
+  gboolean focus;
+  guint state;
 	)
 ]
 
-{ #category : #testing }
-GdkEventMotion class >> isType: aType [
-
-	^ aType = GDK_MOTION_NOTIFY
-]
-
-{ #category : #visiting }
-GdkEventMotion >> accept: aVisitor [
-
-	^ aVisitor visitMouseMoveEvent: self
+{ #category : #'accessing structure variables' }
+GdkEventCrossing >> detail [
+	"This method was automatically generated"
+	^GdkNotifyType fromInteger: (handle unsignedLongAt: OFFSET_DETAIL)
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> axes [
+GdkEventCrossing >> detail: anObject [
 	"This method was automatically generated"
-	^ExternalData fromHandle: (handle pointerAt: OFFSET_AXES) type: ExternalType double asPointerType
+	handle unsignedLongAt: OFFSET_DETAIL put: anObject value
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> axes: anObject [
+GdkEventCrossing >> focus [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_AXES put: anObject getHandle.
+	^handle booleanAt: OFFSET_FOCUS
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> device [
+GdkEventCrossing >> focus: anObject [
 	"This method was automatically generated"
-	^ExternalData fromHandle: (handle pointerAt: OFFSET_DEVICE) type: ExternalType void asPointerType
+	handle booleanAt: OFFSET_FOCUS put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> device: anObject [
+GdkEventCrossing >> mode [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_DEVICE put: anObject getHandle.
-]
-
-{ #category : #testing }
-GdkEventMotion >> isEventMotion [
-
-	^ true
+	^GdkCrossingMode fromInteger: (handle unsignedLongAt: OFFSET_MODE)
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> is_hint [
+GdkEventCrossing >> mode: anObject [
 	"This method was automatically generated"
-	^handle signedShortAt: OFFSET_IS_HINT
+	handle unsignedLongAt: OFFSET_MODE put: anObject value
 ]
 
-{ #category : #'accessing structure variables' }
-GdkEventMotion >> is_hint: anObject [
-	"This method was automatically generated"
-	handle signedShortAt: OFFSET_IS_HINT put: anObject
-]
-
-{ #category : #compatibility }
-GdkEventMotion >> position [
+{ #category : #accessing }
+GdkEventCrossing >> position [
 
 	^ self x @ self y
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> send_event [
+GdkEventCrossing >> send_event [
 	"This method was automatically generated"
 	^handle signedByteAt: OFFSET_SEND_EVENT
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> send_event: anObject [
+GdkEventCrossing >> send_event: anObject [
 	"This method was automatically generated"
 	handle signedByteAt: OFFSET_SEND_EVENT put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> state [
+GdkEventCrossing >> state [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_STATE
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> state: anObject [
+GdkEventCrossing >> state: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_STATE put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> time [
+GdkEventCrossing >> subwindow [
+	"This method was automatically generated"
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_SUBWINDOW) type: ExternalType void asPointerType
+]
+
+{ #category : #'accessing structure variables' }
+GdkEventCrossing >> subwindow: anObject [
+	"This method was automatically generated"
+	handle pointerAt: OFFSET_SUBWINDOW put: anObject getHandle.
+]
+
+{ #category : #'accessing structure variables' }
+GdkEventCrossing >> time [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_TIME
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> time: anObject [
+GdkEventCrossing >> time: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TIME put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> type [
+GdkEventCrossing >> type [
 	"This method was automatically generated"
 	^GdkEventType fromInteger: (handle signedLongAt: OFFSET_TYPE)
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> type: anObject [
+GdkEventCrossing >> type: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_TYPE put: anObject value
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> window [
+GdkEventCrossing >> window [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_WINDOW) type: ExternalType void asPointerType
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> window: anObject [
+GdkEventCrossing >> window: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> x [
+GdkEventCrossing >> x [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> x: anObject [
+GdkEventCrossing >> x: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> x_root [
+GdkEventCrossing >> x_root [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X_ROOT
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> x_root: anObject [
+GdkEventCrossing >> x_root: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X_ROOT put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> y [
+GdkEventCrossing >> y [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> y: anObject [
+GdkEventCrossing >> y: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> y_root [
+GdkEventCrossing >> y_root [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y_ROOT
 ]
 
 { #category : #'accessing structure variables' }
-GdkEventMotion >> y_root: anObject [
+GdkEventCrossing >> y_root: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y_ROOT put: anObject
 ]

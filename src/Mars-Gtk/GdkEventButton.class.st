@@ -132,6 +132,12 @@ GdkEventButton >> isSecondaryButton [
 	^ self button = GDK_BUTTON_SECONDARY
 ]
 
+{ #category : #accessing }
+GdkEventButton >> position [
+
+	^ self x @ self y
+]
+
 { #category : #'accessing structure variables' }
 GdkEventButton >> send_event [
 	"This method was automatically generated"
