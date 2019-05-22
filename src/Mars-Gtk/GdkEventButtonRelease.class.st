@@ -9,3 +9,9 @@ GdkEventButtonRelease class >> isType: aType [
 
 	^ aType = GDK_BUTTON_RELEASE
 ]
+
+{ #category : #visiting }
+GdkEventButtonRelease >> accept: aVisitor [
+ 
+	^ aVisitor visitMouseButtonReleaseEvent: self
+]

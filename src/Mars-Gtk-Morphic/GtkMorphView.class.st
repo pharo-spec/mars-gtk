@@ -249,15 +249,27 @@ GtkMorphView >> initialize [
 	self registerToAllEvents.
 	self connectToSignals.
 	
-	damageRecorder := DamageRecorder new.
-	damageRecorder doFullRepaint
+	damageRecorder := DamageRecorder new
 ]
 
 { #category : #'world simulation' }
 GtkMorphView >> invalidRect: damageRect from: aMorph [
 
-	damageRecorder recordInvalidRect: damageRect.
+	self invalidateRect: damageRect.
 	self queueDraw
+]
+
+{ #category : #private }
+GtkMorphView >> invalidate [
+
+	damageRecorder doFullRepaint
+]
+
+{ #category : #private }
+GtkMorphView >> invalidateRect: damageRect [
+
+	damageRecorder recordInvalidRect: damageRect
+
 ]
 
 { #category : #testing }
@@ -269,7 +281,7 @@ GtkMorphView >> isMorphResizable [
 { #category : #'world simulation' }
 GtkMorphView >> layoutChanged [
 
-	damageRecorder doFullRepaint.
+	self invalidate.
 	self queueDraw
 ]
 
@@ -287,7 +299,7 @@ GtkMorphView >> morph: aMorph [
 	eventHandler morph: aMorph.
 	morph privateOwner: self.
 	self sizeRequest: aMorph extent.
-	self updateAllSurface
+	self invalidate
 ]
 
 { #category : #private }
