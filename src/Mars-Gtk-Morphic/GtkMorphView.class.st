@@ -67,8 +67,8 @@ GtkMorphView class >> example3 [
 
 	morph  := self 
 		newGridOf: 10 
-		with: [ :cell | 
-			cell 
+		with: [ | cell |
+			(cell := Morph new)
 				color: Color blue;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color blue ] ].
@@ -90,8 +90,8 @@ GtkMorphView class >> example4 [
 
 	morph1 := self 
 		newGridOf: 10
-		with: [ :cell |
-			cell 
+		with: [ | cell |
+			(cell := Morph new)
 				color: Color blue;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color blue ] ].
@@ -126,7 +126,7 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 		vResizing: #spaceFill; 
 		hResizing: #spaceFill.
 
-	aNumber timesRepeat: [ | row |
+	1 to: aNumber do: [ :y | | row |
 		row := (Morph new color: Color transparent).
 		row
 			layoutPolicy: TableLayout new;
@@ -134,8 +134,8 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 			cellInset: 10;
 			vResizing: #spaceFill; 
 			hResizing: #spaceFill.
-		aNumber timesRepeat: [ | cell |
-			cell := Morph new.
+		1 to: aNumber do: [ :x | |  cell |
+			cell := aBlock cull: x@y.
 			cell
 				vResizing: #spaceFill; 
 				hResizing: #spaceFill. 
