@@ -76,7 +76,7 @@ GtkMorphView class >> example3 [
 	GtkWindow new
 		title: 'Example 3';
 		resize: 500@500;
-		add: (GtkBox newVertical 
+		add: (GtkBox newVertical
 			packStart: (GtkMorphView newMorph: morph);
 			yourself);
 		showAll
@@ -186,6 +186,22 @@ GtkMorphView >> beMorphResizable [
 	self morphResizable: true
 ]
 
+{ #category : #'private primitives' }
+GtkMorphView >> cairoCreate: target [
+
+	^ self 
+		ffiCall: #("cairo_t"void *cairo_create ("cairo_surface_t"void *target))
+		module: CairoLibrary
+]
+
+{ #category : #'private primitives' }
+GtkMorphView >> cairoDestroy: cr [
+
+	^ self 
+		ffiCall: #(void cairo_destroy ("cairo_t *"void *cr))
+		module: CairoLibrary
+]
+
 { #category : #initialization }
 GtkMorphView >> connectToSignals [
 
@@ -270,8 +286,8 @@ GtkMorphView >> morph: aMorph [
 	eventHandler := GtkMorphicEventHandler for: self.
 	eventHandler morph: aMorph.
 	morph privateOwner: self.
-	activeSurface := self newMorphSurface.
-	self sizeRequest: aMorph extent
+	self sizeRequest: aMorph extent.
+	self updateAllSurface
 ]
 
 { #category : #private }
@@ -281,12 +297,13 @@ GtkMorphView >> morphResizable: aBoolean [
 ]
 
 { #category : #private }
-GtkMorphView >> newMorphSurface [
+GtkMorphView >> newSurfaceOfMorph: aMorph [
 	| newSurface |
 
-	newSurface := AthensCairoSurface extent: self morph extent.
+	newSurface := AthensCairoSurface extent: aMorph extent.
 	newSurface drawDuring: [ :canvas |
-		self morph fullDrawOnAthensCanvas: canvas ].
+		canvas pathTransform translateBy: aMorph position negated.
+		aMorph fullDrawOnAthensCanvas: canvas ].
 	^ newSurface
 ]
 
@@ -296,6 +313,24 @@ GtkMorphView >> paint: cr [
 	self 
 		ffiCall: #(void cairo_paint (void *cr))
 		module: CairoLibrary
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> paintMorph: aMorph [
+	| cr position morphSurface |
+	
+	position := aMorph position.
+	morphSurface := self newSurfaceOfMorph: aMorph.
+	cr := self cairoCreate: activeSurface getHandle.
+	[
+		self 
+			setSourceSurfaceTo: cr 
+			surface: morphSurface getHandle
+			x: position x asFloat
+			y: position y asFloat.
+		self paint: cr ]
+	ensure: [ 
+		self cairoDestroy: cr ]
 ]
 
 { #category : #'world simulation' }
@@ -352,7 +387,7 @@ GtkMorphView >> transformFrom: aMorph [
 { #category : #'private updating' }
 GtkMorphView >> updateAllSurface [
 
-	activeSurface := self newMorphSurface
+	activeSurface := self newSurfaceOfMorph: self morph
 
 ]
 
@@ -370,9 +405,18 @@ GtkMorphView >> updateSurface [
 ]
 
 { #category : #'private updating' }
+GtkMorphView >> updateSurfaceRectangle: aRect [
+
+	self morph submorphsDo: [ :aMorph |
+		(aMorph fullBounds intersects: aRect) ifTrue: [
+			self paintMorph: aMorph ] ].
+]
+
+{ #category : #'private updating' }
 GtkMorphView >> updateSurfaceRectangles: aCollection [
 
-	
+	aCollection do: [ :each |
+		self updateSurfaceRectangle: each ]
 ]
 
 { #category : #'world simulation' }
