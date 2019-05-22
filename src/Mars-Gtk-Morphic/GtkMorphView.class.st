@@ -97,8 +97,8 @@ GtkMorphView class >> example4 [
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color blue ] ].
 	morph2 := self 
 		newGridOf: 10 
-		with: [ :cell | 
-			cell 
+		with: [ | cell | 
+			(cell := Morph new)
 				color: Color green;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color green ] ].
@@ -109,6 +109,38 @@ GtkMorphView class >> example4 [
 		add: (GtkPaned newVertical 
 			pack1: (GtkMorphView newMorph: morph1);
 			pack2: (GtkMorphView newMorph: morph2);
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
+GtkMorphView class >> example5 [
+	| morph inform |
+
+	GtkApplication ensureRunning.
+
+	inform := GtkBox newVertical.
+
+	morph  := self 
+		newGridOf: 10 
+		with: [ :pos | 
+			PluggableButtonMorph new
+				label: pos asString;
+				actionBlock: [ 
+					inform 
+						packStart: (GtkInfoBar info: pos asString)
+						expand: false
+						fill: false
+						padding: 0;
+						showAll ];
+				yourself ].
+
+	GtkWindow new
+		title: 'Example 3';
+		resize: 500@500;
+		add: (GtkBox newVertical
+			packStart: inform expand: false fill: false padding: 0;
+			packStart: (GtkMorphView newMorph: morph);
 			yourself);
 		showAll
 ]
@@ -183,6 +215,12 @@ GtkMorphView >> beMorphNotResizable [
 GtkMorphView >> beMorphResizable [
 
 	self morphResizable: true
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> becomeActiveDuring: aBlock [
+	
+	aBlock value
 ]
 
 { #category : #'private primitives' }
@@ -344,6 +382,12 @@ GtkMorphView >> paintMorph: aMorph [
 		self cairoDestroy: cr ]
 ]
 
+{ #category : #'as yet unclassified' }
+GtkMorphView >> paneColorOrNil [
+	
+	^ nil
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> processEvent: anEvent [
  
@@ -389,6 +433,17 @@ GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 		module: CairoLibrary
 ]
 
+{ #category : #'as yet unclassified' }
+GtkMorphView >> stopStepping: aMorph selector: aString [ 
+	
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> theme [
+
+	^ Smalltalk ui theme
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> transformFrom: aMorph [ 
 	
@@ -428,6 +483,12 @@ GtkMorphView >> updateSurfaceRectangles: aCollection [
 
 	aCollection do: [ :each |
 		self updateSurfaceRectangle: each ]
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> withAllOwnersDo: aBlock [
+	
+	aBlock value: self
 ]
 
 { #category : #'world simulation' }

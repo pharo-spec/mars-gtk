@@ -22,7 +22,24 @@ GtkInfoBar class >> gtkInfoBarNew [
 	^ self ffiCall: #(GtkInfoBar *gtk_info_bar_new (void))
 ]
 
-{ #category : #private }
+{ #category : #convenience }
+GtkInfoBar class >> info: aString [
+	| infoBar |
+
+	infoBar := self new. 
+	infoBar beInfo.
+	infoBar showCloseButton.
+	infoBar contentArea 
+		packStart: (GtkLabel newLabel: aString)
+		expand: false
+		fill: false
+		padding: 0.
+	infoBar connectResponse: [ :id | infoBar hide ].
+		
+	^ infoBar
+]
+
+{ #category : #'instance creation' }
 GtkInfoBar class >> new [
 
 	^ self gtkInfoBarNew initialize
