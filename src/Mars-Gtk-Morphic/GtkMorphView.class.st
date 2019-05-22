@@ -10,7 +10,8 @@ Class {
 		'morphResizable',
 		'eventHandler',
 		'queued',
-		'activeHand'
+		'activeHand',
+		'damageRecorder'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -88,8 +89,8 @@ GtkMorphView class >> example4 [
 	GtkApplication ensureRunning.
 
 	morph1 := self 
-		newGridOf: 10 
-		with: [ :cell | 
+		newGridOf: 10
+		with: [ :cell |
 			cell 
 				color: Color blue;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
@@ -101,7 +102,6 @@ GtkMorphView class >> example4 [
 				color: Color green;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color green ] ].
-
 
 	GtkWindow new
 		title: 'Example 4';
@@ -200,8 +200,10 @@ GtkMorphView >> draw: cr [
 
 	drawing := true.	
 	[
+		damageRecorder updateIsNeeded 
+			ifTrue: [ self updateSurface ].
 		self setSourceSurfaceTo: cr surface: activeSurface getHandle.
-		self paint: cr ] 
+		self paint: cr ]
 	ensure: [ 
 		drawing := false.
 		queued := false ].
@@ -230,11 +232,15 @@ GtkMorphView >> initialize [
 	self beMorphResizable.
 	self registerToAllEvents.
 	self connectToSignals.
+	
+	damageRecorder := DamageRecorder new.
+	damageRecorder doFullRepaint
 ]
 
 { #category : #'world simulation' }
 GtkMorphView >> invalidRect: damageRect from: aMorph [
 
+	damageRecorder recordInvalidRect: damageRect.
 	self queueDraw
 ]
 
@@ -247,6 +253,7 @@ GtkMorphView >> isMorphResizable [
 { #category : #'world simulation' }
 GtkMorphView >> layoutChanged [
 
+	damageRecorder doFullRepaint.
 	self queueDraw
 ]
 
@@ -300,12 +307,9 @@ GtkMorphView >> processEvent: anEvent [
 { #category : #private }
 GtkMorphView >> queueDraw [
 	
-	drawing ifTrue: [ ^ self ].
-	queued ifTrue: [ ^ self ].
+	(drawing or: [ queued ]) ifTrue: [ ^ self ].
 	queued := true.
-	
-	self resetSurface.
-	super queueDraw.
+	super queueDraw
 ]
 
 { #category : #'world simulation' }
@@ -315,18 +319,10 @@ GtkMorphView >> removeAlarm: aSelector for: aTarget [
 ]
 
 { #category : #private }
-GtkMorphView >> resetSurface [
-
-	activeSurface := self newMorphSurface
-]
-
-{ #category : #private }
 GtkMorphView >> resizeIfEnabledTo: extent [
 
-	self isMorphResizable ifFalse: [ ^ self ]. 
-			
-	self morph extent: extent.
-	self resetSurface
+	self isMorphResizable ifFalse: [ ^ self ].
+	self morph extent: extent
 ]
 
 { #category : #'private primitives' }
@@ -353,8 +349,35 @@ GtkMorphView >> transformFrom: aMorph [
 	^ IdentityTransform new
 ]
 
+{ #category : #'private updating' }
+GtkMorphView >> updateAllSurface [
+
+	activeSurface := self newMorphSurface
+
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> updateSurface [
+	| rects |
+	
+	self flag: #TODO. "Do not use the nil HACK here (add a method to DamageRecorder to know if 
+	I need to redraw all instead)."
+	rects := damageRecorder invalidRectsFullBounds: nil.
+	damageRecorder reset.
+	rects first 
+		ifNotNil: [ self updateSurfaceRectangles: rects ]
+		ifNil: [ self updateAllSurface ]
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> updateSurfaceRectangles: aCollection [
+
+	
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> world [
+	"I'm simulating being a world"
 
 	^ self
 ]
