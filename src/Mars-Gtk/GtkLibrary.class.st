@@ -61,7 +61,7 @@ GtkLibrary >> macModuleName [
 	^ '/usr/local/lib/libgtk-3.dylib'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 GtkLibrary >> matchVersion: aString ifTrue: trueBlock ifFalse: falseBlock [ 
 	| version match |
 	
@@ -77,7 +77,7 @@ GtkLibrary >> matchVersion: aString ifTrue: trueBlock ifFalse: falseBlock [
 		ifFalse: falseBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtkLibrary >> matchVersionMajor: required_major minor: required_minor micro: required_micro [ 
 	
 	"I use void * to prevent the FFI backend to free the string"

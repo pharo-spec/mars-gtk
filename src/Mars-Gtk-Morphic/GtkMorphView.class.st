@@ -382,7 +382,7 @@ GtkMorphView >> paintMorph: aMorph [
 		self cairoDestroy: cr ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'world simulation' }
 GtkMorphView >> paneColorOrNil [
 	
 	^ nil
@@ -433,9 +433,10 @@ GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 		module: CairoLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'world simulation' }
 GtkMorphView >> stopStepping: aMorph selector: aString [ 
 	
+	self flag: #TODO. "Stepping"
 ]
 
 { #category : #'world simulation' }
