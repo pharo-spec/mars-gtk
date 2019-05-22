@@ -139,8 +139,7 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 			cell
 				vResizing: #spaceFill; 
 				hResizing: #spaceFill. 
-			row addMorphBack: cell.
-			aBlock value: cell ].
+			row addMorphBack: cell ].
 		gridMorph addMorphBack: row ].
 	
 	^ gridMorph
