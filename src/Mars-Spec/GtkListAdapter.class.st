@@ -53,8 +53,8 @@ GtkListAdapter >> isShowColumnHeaders [
 { #category : #private }
 GtkListAdapter >> modelItemsAsDisplay [
 	
-	^ self model model shownItems 
-		collect: [ :each | (self model displayBlock value: each) asString ]
+	^ self presenter model items 
+		collect: [ :each | (self presenter displayBlock value: each) asString ]
 ]
 
 { #category : #private }

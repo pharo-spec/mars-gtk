@@ -251,7 +251,7 @@ GtkMorphView >> currentCursor [
 { #category : #drawing }
 GtkMorphView >> draw: cr [
 
-	drawing ifTrue: [ ^ true ].
+	(drawing or: [ self morph isNil ]) ifTrue: [ ^ true ].
 
 	drawing := true.	
 	[
@@ -290,10 +290,12 @@ GtkMorphView >> initialize [
 	super initialize.
 	queued := false.
 	drawing := false.
+
 	self beMorphResizable.
 	self registerToAllEvents.
 	self connectToSignals.
 	
+	eventHandler := GtkMorphicEventHandler for: self.
 	damageRecorder := DamageRecorder new
 ]
 
@@ -336,13 +338,22 @@ GtkMorphView >> morph [
 
 { #category : #accessing }
 GtkMorphView >> morph: aMorph [
+	| needQueue |
 
+	needQueue := false.
+	morph ifNotNil: [ 
+		"if we are replacing a morph, we will need to transmit to the new morph some properties. 
+		 Also, we will need to force a queue"
+		self isMorphResizable ifTrue: [ 
+			aMorph extent: morph extent ].
+		needQueue := true ].
 	morph := aMorph.
-	eventHandler := GtkMorphicEventHandler for: self.
 	eventHandler morph: aMorph.
 	morph privateOwner: self.
-	self sizeRequest: aMorph extent.
-	self invalidate
+	
+	"self sizeRequest: aMorph extent."
+	self invalidate.
+	needQueue ifTrue: [ self queueDraw ]
 ]
 
 { #category : #private }

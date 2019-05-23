@@ -33,7 +33,7 @@ TGtkTableAccessing >> addRows: aCollection to: store [
 TGtkTableAccessing >> addShownRowsTo: store [
 
 	self 
-		addRows: self model model shownItems
+		addRows: self presenter model items
 		to: store
 ]
 
