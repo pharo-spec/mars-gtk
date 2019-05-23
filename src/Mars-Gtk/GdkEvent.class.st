@@ -112,6 +112,12 @@ GdkEvent >> isEventButton [
 ]
 
 { #category : #testing }
+GdkEvent >> isEventConfigure [
+
+	^ false
+]
+
+{ #category : #testing }
 GdkEvent >> isEventKey [
 
 	^ false

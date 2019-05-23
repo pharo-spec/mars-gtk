@@ -127,7 +127,7 @@ GtkMorphView class >> example5 [
 			PluggableButtonMorph new
 				label: pos asString;
 				fillStyle: Color blue;
-				actionBlock: [ inform addInfo: pos asString ];
+				"actionBlock: [ inform addInfo: pos asString ];"
 				yourself ].
 
 	GtkWindow new
@@ -137,6 +137,26 @@ GtkMorphView class >> example5 [
 			packStart: inform expand: false fill: false padding: 0;
 			packStart: (GtkMorphView newMorph: morph);
 			yourself);
+		showAll
+]
+
+{ #category : #examples }
+GtkMorphView class >> example6 [
+
+	GtkApplication ensureRunning.
+	
+	GtkWindow new 
+		resize: 500@500;
+		add: (GtkMorphView newMorph: (Morph new
+			color: Color blue;
+			borderWidth: 50;
+			addMorphBack: (Morph new 
+				addMorphBack: (SimpleButtonMorph new 
+					color: Color red;
+					label: 'Test';
+					yourself)
+				yourself);
+			yourself));
 		showAll
 ]
 
@@ -241,6 +261,13 @@ GtkMorphView >> connectToSignals [
 	self connectEvent: [ :event | self handleEvent: event ]
 ]
 
+{ #category : #'world simulation' }
+GtkMorphView >> currentCursor [
+	
+	self flag: #TODO. "cursor handling"
+	^ nil
+]
+
 { #category : #drawing }
 GtkMorphView >> draw: cr [
 
@@ -268,6 +295,10 @@ GtkMorphView >> drawOnAthensCanvas: aCanvas [
 { #category : #'private events' }
 GtkMorphView >> handleEvent: event [
 
+	event isEventConfigure ifTrue: [ 
+		event extent = self morph extent ifFalse: [ 
+			self invalidate.
+			^ true  ] ].
 	^ eventHandler handleEvent: event
 ]
 
@@ -313,8 +344,6 @@ GtkMorphView >> isMorphResizable [
 { #category : #'world simulation' }
 GtkMorphView >> layoutChanged [
 
-	self invalidate.
-	self queueDraw
 ]
 
 { #category : #accessing }
@@ -467,18 +496,21 @@ GtkMorphView >> updateSurface [
 ]
 
 { #category : #'private updating' }
-GtkMorphView >> updateSurfaceRectangle: aRect [
+GtkMorphView >> updateSurfaceRectangle: aRect in: aMorph [
 
-	self morph submorphsDo: [ :aMorph |
-		(aMorph fullBounds intersects: aRect) ifTrue: [
-			self paintMorph: aMorph ] ].
+	aMorph submorphsDo: [ :submorph | | bounds |
+		bounds := submorph fullBounds.
+		(bounds intersects: aRect) ifTrue: [
+			((bounds ~= aRect) and: [ bounds containsRect: aRect ])
+				ifTrue: [ self updateSurfaceRectangle: aRect in: submorph ]
+				ifFalse: [ self paintMorph: submorph ] ] ]
 ]
 
 { #category : #'private updating' }
 GtkMorphView >> updateSurfaceRectangles: aCollection [
 
 	aCollection do: [ :each |
-		self updateSurfaceRectangle: each ]
+		self updateSurfaceRectangle: each in: self morph ]
 ]
 
 { #category : #'world simulation' }
