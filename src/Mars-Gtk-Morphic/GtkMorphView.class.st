@@ -119,24 +119,19 @@ GtkMorphView class >> example5 [
 
 	GtkApplication ensureRunning.
 
-	inform := GtkBox newVertical.
+	inform := GtkInfoArea new.
 
 	morph  := self 
-		newGridOf: 10 
+		newGridOf: 5 
 		with: [ :pos | 
 			PluggableButtonMorph new
 				label: pos asString;
-				actionBlock: [ 
-					inform 
-						packStart: (GtkInfoBar info: pos asString)
-						expand: false
-						fill: false
-						padding: 0;
-						showAll ];
+				fillStyle: Color blue;
+				actionBlock: [ inform addInfo: pos asString ];
 				yourself ].
 
 	GtkWindow new
-		title: 'Example 3';
+		title: 'Example 5';
 		resize: 500@500;
 		add: (GtkBox newVertical
 			packStart: inform expand: false fill: false padding: 0;
