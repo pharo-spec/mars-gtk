@@ -173,6 +173,7 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 
 { #category : #'instance creation' }
 GtkMorphView class >> newMorph: aMorph [
+
 	^ self new 
 		morph: aMorph;
 		yourself
@@ -273,6 +274,8 @@ GtkMorphView >> drawOnAthensCanvas: aCanvas [
 
 { #category : #'private events' }
 GtkMorphView >> handleEvent: event [
+
+	self morph ifNil: [ ^ false ].
 
 	event isEventConfigure ifTrue: [ 
 		event extent = self morph extent ifFalse: [ 
@@ -415,6 +418,7 @@ GtkMorphView >> removeAlarm: aSelector for: aTarget [
 GtkMorphView >> resizeIfEnabledTo: extent [
 
 	self isMorphResizable ifFalse: [ ^ self ].
+	self morph ifNil: [ ^ self ].
 	self morph extent: extent
 ]
 
