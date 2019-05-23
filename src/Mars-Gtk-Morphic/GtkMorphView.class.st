@@ -126,8 +126,7 @@ GtkMorphView class >> example5 [
 		with: [ :pos | 
 			PluggableButtonMorph new
 				label: pos asString;
-				fillStyle: Color blue;
-				"actionBlock: [ inform addInfo: pos asString ];"
+				actionBlock: [ inform addInfo: pos asString ];
 				yourself ].
 
 	GtkWindow new
@@ -137,26 +136,6 @@ GtkMorphView class >> example5 [
 			packStart: inform expand: false fill: false padding: 0;
 			packStart: (GtkMorphView newMorph: morph);
 			yourself);
-		showAll
-]
-
-{ #category : #examples }
-GtkMorphView class >> example6 [
-
-	GtkApplication ensureRunning.
-	
-	GtkWindow new 
-		resize: 500@500;
-		add: (GtkMorphView newMorph: (Morph new
-			color: Color blue;
-			borderWidth: 50;
-			addMorphBack: (Morph new 
-				addMorphBack: (SimpleButtonMorph new 
-					color: Color red;
-					label: 'Test';
-					yourself)
-				yourself);
-			yourself));
 		showAll
 ]
 
