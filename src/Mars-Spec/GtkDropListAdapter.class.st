@@ -44,7 +44,8 @@ GtkDropListAdapter >> displayedIcon [
 { #category : #building }
 GtkDropListAdapter >> modelItemsAsDisplay [
 	
-	^ self model model shownItems collect: [ :each | self model displayForItem: each]
+	^ self presenter model items 
+		collect: [ :each | self presenter displayForItem: each]
 	
 ]
 
@@ -59,11 +60,11 @@ GtkDropListAdapter >> newTreeStore [
 
 { #category : #building }
 GtkDropListAdapter >> newTreeStoreWithIcons [
-	
 	| store |
+	
 	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF. GType G_TYPE_STRING }.
 
-	self model model shownItems do: [ :each | 
+	self presenter model items do: [ :each | 
 		store appendNew
 			at: 0 putObject: (GdkPixbuf newForm: (self model getIconFor: each));
 			at: 1 putString: (self model displayForItem: each)].

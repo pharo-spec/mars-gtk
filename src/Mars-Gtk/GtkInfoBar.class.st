@@ -22,7 +22,7 @@ GtkInfoBar class >> gtkInfoBarNew [
 	^ self ffiCall: #(GtkInfoBar *gtk_info_bar_new (void))
 ]
 
-{ #category : #private }
+{ #category : #'instance creation' }
 GtkInfoBar class >> new [
 
 	^ self gtkInfoBarNew initialize
@@ -109,7 +109,10 @@ GtkInfoBar >> doNotShowCloseButton [
 { #category : #accessing }
 GtkInfoBar >> hide [
 
-	^ self reveal: false
+	^ GtkLibrary uniqueInstance 
+		matchVersion: '3.22.29'
+		ifTrue: [ self reveal: false ]
+		ifFalse: [ super hide ]
 ]
 
 { #category : #accessing }

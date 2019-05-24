@@ -4,6 +4,9 @@ Class {
 	#classVars : [
 		'Debug'
 	],
+	#pools : [
+		'GtkTypes'
+	],
 	#category : #'Mars-Gtk-Base'
 }
 
@@ -56,6 +59,32 @@ GtkLibrary >> macModuleName [
 
 	self class isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libgtk-3.dylib' ]. 
 	^ '/usr/local/lib/libgtk-3.dylib'
+]
+
+{ #category : #utils }
+GtkLibrary >> matchVersion: aString ifTrue: trueBlock ifFalse: falseBlock [ 
+	| version match |
+	
+	version := (aString substrings: '.') collect: #asNumber.
+	match := self 
+		matchVersionMajor: version first
+		minor: version second
+		micro: version third.
+	
+	"if null, everything is ok"
+	^ (match isNil or: [ match isNull ]) 
+		ifTrue: trueBlock
+		ifFalse: falseBlock
+]
+
+{ #category : #private }
+GtkLibrary >> matchVersionMajor: required_major minor: required_minor micro: required_micro [ 
+	
+	"I use void * to prevent the FFI backend to free the string"
+	^ self ffiCall: #("char *"void *gtk_check_version (
+		guint required_major,
+		guint required_minor,
+		guint required_micro))
 ]
 
 { #category : #'accessing platform' }

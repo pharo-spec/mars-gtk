@@ -53,7 +53,7 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	"tool bar"
 	self model hasToolBar ifTrue: [ self addToolBarTo: gtkBox ].
 	"infoArea"
-	gtkBox packStart: (infoArea := GtkBox newVertical) expand: false fill: false padding: 0. 
+	gtkBox packStart: (infoArea := GtkInfoArea new) expand: false fill: false padding: 0. 
 	"contents"
 	gtkBox packStart: (self contentWidget: aSpec).
 	"status bar"
@@ -136,46 +136,16 @@ GtkWindowAdapter >> newWidget [
 		yourself
 ]
 
-{ #category : #'private notifying' }
-GtkWindowAdapter >> notify: aString withBar: aBlock [
-	| gtkInfoBar |
-	
-	gtkInfoBar := GtkInfoBar new.
-	aBlock value: gtkInfoBar.
-
-	gtkInfoBar
-		showCloseButton;
-		connectResponse: [ :responseId |
-			gtkInfoBar hide.
-			self flag: #TODO. "I'm not sure I can do this, but seems correct to not leak"
-			infoArea remove: gtkInfoBar ].
-		
-	gtkInfoBar contentArea 
-		packStart: (GtkLabel newLabel: aString)
-		expand: false 
-		fill: false 
-		padding: 0.
-		
-	infoArea
-		packStart: gtkInfoBar expand: false fill: false padding: 0;
-		showAll.
-	
-]
-
 { #category : #notifying }
 GtkWindowAdapter >> notifyError: aSpecNotification [
 
-	self 
-		notify: aSpecNotification message 
-		withBar: #beError	
+	infoArea addError: aSpecNotification message
 ]
 
 { #category : #notifying }
 GtkWindowAdapter >> notifyInfo: aSpecNotification [
 
-	self 
-		notify: aSpecNotification message
-		withBar: #beInfo
+	infoArea addInfo: aSpecNotification message
 ]
 
 { #category : #accessing }

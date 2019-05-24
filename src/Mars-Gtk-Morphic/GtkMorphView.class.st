@@ -10,7 +10,8 @@ Class {
 		'morphResizable',
 		'eventHandler',
 		'queued',
-		'activeHand'
+		'activeHand',
+		'damageRecorder'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -66,8 +67,8 @@ GtkMorphView class >> example3 [
 
 	morph  := self 
 		newGridOf: 10 
-		with: [ :cell | 
-			cell 
+		with: [ | cell |
+			(cell := Morph new)
 				color: Color blue;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color blue ] ].
@@ -75,7 +76,7 @@ GtkMorphView class >> example3 [
 	GtkWindow new
 		title: 'Example 3';
 		resize: 500@500;
-		add: (GtkBox newVertical 
+		add: (GtkBox newVertical
 			packStart: (GtkMorphView newMorph: morph);
 			yourself);
 		showAll
@@ -88,20 +89,19 @@ GtkMorphView class >> example4 [
 	GtkApplication ensureRunning.
 
 	morph1 := self 
-		newGridOf: 10 
-		with: [ :cell | 
-			cell 
+		newGridOf: 10
+		with: [ | cell |
+			(cell := Morph new)
 				color: Color blue;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color blue ] ].
 	morph2 := self 
 		newGridOf: 10 
-		with: [ :cell | 
-			cell 
+		with: [ | cell | 
+			(cell := Morph new)
 				color: Color green;
 				on: #mouseEnter send: #value: to: [ :event | cell color: Color red ];
 				on: #mouseLeave send: #value: to: [ :event | cell color: Color green ] ].
-
 
 	GtkWindow new
 		title: 'Example 4';
@@ -109,6 +109,32 @@ GtkMorphView class >> example4 [
 		add: (GtkPaned newVertical 
 			pack1: (GtkMorphView newMorph: morph1);
 			pack2: (GtkMorphView newMorph: morph2);
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
+GtkMorphView class >> example5 [
+	| morph inform |
+
+	GtkApplication ensureRunning.
+
+	inform := GtkInfoArea new.
+
+	morph  := self 
+		newGridOf: 5 
+		with: [ :pos | 
+			PluggableButtonMorph new
+				label: pos asString;
+				actionBlock: [ inform addInfo: pos asString ];
+				yourself ].
+
+	GtkWindow new
+		title: 'Example 5';
+		resize: 500@500;
+		add: (GtkBox newVertical
+			packStart: inform expand: false fill: false padding: 0;
+			packStart: (GtkMorphView newMorph: morph);
 			yourself);
 		showAll
 ]
@@ -126,7 +152,7 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 		vResizing: #spaceFill; 
 		hResizing: #spaceFill.
 
-	aNumber timesRepeat: [ | row |
+	1 to: aNumber do: [ :y | | row |
 		row := (Morph new color: Color transparent).
 		row
 			layoutPolicy: TableLayout new;
@@ -134,13 +160,12 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 			cellInset: 10;
 			vResizing: #spaceFill; 
 			hResizing: #spaceFill.
-		aNumber timesRepeat: [ | cell |
-			cell := Morph new.
+		1 to: aNumber do: [ :x | |  cell |
+			cell := aBlock cull: x@y.
 			cell
 				vResizing: #spaceFill; 
 				hResizing: #spaceFill. 
-			row addMorphBack: cell.
-			aBlock value: cell ].
+			row addMorphBack: cell ].
 		gridMorph addMorphBack: row ].
 	
 	^ gridMorph
@@ -148,6 +173,7 @@ GtkMorphView class >> newGridOf: aNumber with: aBlock [
 
 { #category : #'instance creation' }
 GtkMorphView class >> newMorph: aMorph [
+
 	^ self new 
 		morph: aMorph;
 		yourself
@@ -186,6 +212,28 @@ GtkMorphView >> beMorphResizable [
 	self morphResizable: true
 ]
 
+{ #category : #'world simulation' }
+GtkMorphView >> becomeActiveDuring: aBlock [
+	
+	aBlock value
+]
+
+{ #category : #'private primitives' }
+GtkMorphView >> cairoCreate: target [
+
+	^ self 
+		ffiCall: #("cairo_t"void *cairo_create ("cairo_surface_t"void *target))
+		module: CairoLibrary
+]
+
+{ #category : #'private primitives' }
+GtkMorphView >> cairoDestroy: cr [
+
+	^ self 
+		ffiCall: #(void cairo_destroy ("cairo_t *"void *cr))
+		module: CairoLibrary
+]
+
 { #category : #initialization }
 GtkMorphView >> connectToSignals [
 
@@ -193,15 +241,24 @@ GtkMorphView >> connectToSignals [
 	self connectEvent: [ :event | self handleEvent: event ]
 ]
 
+{ #category : #'world simulation' }
+GtkMorphView >> currentCursor [
+	
+	self flag: #TODO. "cursor handling"
+	^ nil
+]
+
 { #category : #drawing }
 GtkMorphView >> draw: cr [
 
-	drawing ifTrue: [ ^ true ].
+	(drawing or: [ self morph isNil ]) ifTrue: [ ^ true ].
 
 	drawing := true.	
 	[
+		damageRecorder updateIsNeeded 
+			ifTrue: [ self updateSurface ].
 		self setSourceSurfaceTo: cr surface: activeSurface getHandle.
-		self paint: cr ] 
+		self paint: cr ]
 	ensure: [ 
 		drawing := false.
 		queued := false ].
@@ -218,6 +275,12 @@ GtkMorphView >> drawOnAthensCanvas: aCanvas [
 { #category : #'private events' }
 GtkMorphView >> handleEvent: event [
 
+	self morph ifNil: [ ^ false ].
+
+	event isEventConfigure ifTrue: [ 
+		event extent = self morph extent ifFalse: [ 
+			self invalidate.
+			^ true  ] ].
 	^ eventHandler handleEvent: event
 ]
 
@@ -227,15 +290,33 @@ GtkMorphView >> initialize [
 	super initialize.
 	queued := false.
 	drawing := false.
+
 	self beMorphResizable.
 	self registerToAllEvents.
 	self connectToSignals.
+	
+	eventHandler := GtkMorphicEventHandler for: self.
+	damageRecorder := DamageRecorder new
 ]
 
 { #category : #'world simulation' }
 GtkMorphView >> invalidRect: damageRect from: aMorph [
 
+	self invalidateRect: damageRect.
 	self queueDraw
+]
+
+{ #category : #private }
+GtkMorphView >> invalidate [
+
+	damageRecorder doFullRepaint
+]
+
+{ #category : #private }
+GtkMorphView >> invalidateRect: damageRect [
+
+	damageRecorder recordInvalidRect: damageRect
+
 ]
 
 { #category : #testing }
@@ -247,7 +328,6 @@ GtkMorphView >> isMorphResizable [
 { #category : #'world simulation' }
 GtkMorphView >> layoutChanged [
 
-	self queueDraw
 ]
 
 { #category : #accessing }
@@ -258,13 +338,22 @@ GtkMorphView >> morph [
 
 { #category : #accessing }
 GtkMorphView >> morph: aMorph [
+	| needQueue |
 
+	needQueue := false.
+	morph ifNotNil: [ 
+		"if we are replacing a morph, we will need to transmit to the new morph some properties. 
+		 Also, we will need to force a queue"
+		self isMorphResizable ifTrue: [ 
+			aMorph extent: morph extent ].
+		needQueue := true ].
 	morph := aMorph.
-	eventHandler := GtkMorphicEventHandler for: self.
 	eventHandler morph: aMorph.
 	morph privateOwner: self.
-	activeSurface := self newMorphSurface.
-	self sizeRequest: aMorph extent
+	
+	"self sizeRequest: aMorph extent."
+	self invalidate.
+	needQueue ifTrue: [ self queueDraw ]
 ]
 
 { #category : #private }
@@ -274,12 +363,13 @@ GtkMorphView >> morphResizable: aBoolean [
 ]
 
 { #category : #private }
-GtkMorphView >> newMorphSurface [
+GtkMorphView >> newSurfaceOfMorph: aMorph [
 	| newSurface |
 
-	newSurface := AthensCairoSurface extent: self morph extent.
+	newSurface := AthensCairoSurface extent: aMorph extent.
 	newSurface drawDuring: [ :canvas |
-		self morph fullDrawOnAthensCanvas: canvas ].
+		canvas pathTransform translateBy: aMorph position negated.
+		aMorph fullDrawOnAthensCanvas: canvas ].
 	^ newSurface
 ]
 
@@ -291,6 +381,30 @@ GtkMorphView >> paint: cr [
 		module: CairoLibrary
 ]
 
+{ #category : #'private updating' }
+GtkMorphView >> paintMorph: aMorph [
+	| cr position morphSurface |
+	
+	position := aMorph position.
+	morphSurface := self newSurfaceOfMorph: aMorph.
+	cr := self cairoCreate: activeSurface getHandle.
+	[
+		self 
+			setSourceSurfaceTo: cr 
+			surface: morphSurface getHandle
+			x: position x asFloat
+			y: position y asFloat.
+		self paint: cr ]
+	ensure: [ 
+		self cairoDestroy: cr ]
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> paneColorOrNil [
+	
+	^ nil
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> processEvent: anEvent [
  
@@ -300,12 +414,9 @@ GtkMorphView >> processEvent: anEvent [
 { #category : #private }
 GtkMorphView >> queueDraw [
 	
-	drawing ifTrue: [ ^ self ].
-	queued ifTrue: [ ^ self ].
+	(drawing or: [ queued ]) ifTrue: [ ^ self ].
 	queued := true.
-	
-	self resetSurface.
-	super queueDraw.
+	super queueDraw
 ]
 
 { #category : #'world simulation' }
@@ -315,18 +426,11 @@ GtkMorphView >> removeAlarm: aSelector for: aTarget [
 ]
 
 { #category : #private }
-GtkMorphView >> resetSurface [
-
-	activeSurface := self newMorphSurface
-]
-
-{ #category : #private }
 GtkMorphView >> resizeIfEnabledTo: extent [
 
-	self isMorphResizable ifFalse: [ ^ self ]. 
-			
-	self morph extent: extent.
-	self resetSurface
+	self isMorphResizable ifFalse: [ ^ self ].
+	self morph ifNil: [ ^ self ].
+	self morph extent: extent
 ]
 
 { #category : #'private primitives' }
@@ -348,13 +452,70 @@ GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 ]
 
 { #category : #'world simulation' }
+GtkMorphView >> stopStepping: aMorph selector: aString [ 
+	
+	self flag: #TODO. "Stepping"
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> theme [
+
+	^ Smalltalk ui theme
+]
+
+{ #category : #'world simulation' }
 GtkMorphView >> transformFrom: aMorph [ 
 	
 	^ IdentityTransform new
 ]
 
+{ #category : #'private updating' }
+GtkMorphView >> updateAllSurface [
+
+	activeSurface := self newSurfaceOfMorph: self morph
+
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> updateSurface [
+	| rects |
+	
+	self flag: #TODO. "Do not use the nil HACK here (add a method to DamageRecorder to know if 
+	I need to redraw all instead)."
+	rects := damageRecorder invalidRectsFullBounds: nil.
+	damageRecorder reset.
+	rects first 
+		ifNotNil: [ self updateSurfaceRectangles: rects ]
+		ifNil: [ self updateAllSurface ]
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> updateSurfaceRectangle: aRect in: aMorph [
+
+	aMorph submorphsDo: [ :submorph | | bounds |
+		bounds := submorph fullBounds.
+		(bounds intersects: aRect) ifTrue: [
+			((bounds ~= aRect) and: [ bounds containsRect: aRect ])
+				ifTrue: [ self updateSurfaceRectangle: aRect in: submorph ]
+				ifFalse: [ self paintMorph: submorph ] ] ]
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> updateSurfaceRectangles: aCollection [
+
+	aCollection do: [ :each |
+		self updateSurfaceRectangle: each in: self morph ]
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> withAllOwnersDo: aBlock [
+	
+	aBlock value: self
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> world [
+	"I'm simulating being a world"
 
 	^ self
 ]

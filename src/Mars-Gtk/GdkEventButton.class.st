@@ -6,6 +6,8 @@ https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEventButto
 Class {
 	#name : #GdkEventButton,
 	#superclass : #GdkEvent,
+	#traits : 'TGdkEventState',
+	#classTraits : 'TGdkEventState classTrait',
 	#classVars : [
 		'OFFSET_AXES',
 		'OFFSET_BUTTON',
@@ -132,7 +134,13 @@ GdkEventButton >> isSecondaryButton [
 	^ self button = GDK_BUTTON_SECONDARY
 ]
 
-{ #category : #accessing }
+{ #category : #compatibility }
+GdkEventButton >> isWheel [
+	
+	^ false	
+]
+
+{ #category : #compatibility }
 GdkEventButton >> position [
 
 	^ self x @ self y
