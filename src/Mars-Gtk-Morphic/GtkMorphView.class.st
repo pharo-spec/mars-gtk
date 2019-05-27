@@ -11,7 +11,8 @@ Class {
 		'eventHandler',
 		'queued',
 		'activeHand',
-		'damageRecorder'
+		'damageRecorder',
+		'alarms'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -140,6 +141,33 @@ GtkMorphView class >> example5 [
 ]
 
 { #category : #examples }
+GtkMorphView class >> example6 [
+	| morph inform |
+
+	GtkApplication ensureRunning.
+
+	inform := GtkInfoArea new.
+
+	morph  := self 
+		newGridOf: 5 
+		with: [ :pos | 
+			PluggableButtonMorph new
+				label: pos asString;
+				actionBlock: [ inform addInfo: pos asString ];
+				helpText: 'Button at ', pos asString;
+				yourself ].
+
+	GtkWindow new
+		title: 'Example 5';
+		resize: 500@500;
+		add: (GtkBox newVertical
+			packStart: inform expand: false fill: false padding: 0;
+			packStart: (GtkMorphView newMorph: morph);
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
 GtkMorphView class >> newGridOf: aNumber with: aBlock [
 	| gridMorph |
 
@@ -191,8 +219,30 @@ GtkMorphView >> activeHand [
 
 { #category : #'world simulation' }
 GtkMorphView >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
+	"Add a new alarm with the given set of parameters"
+	| newAlarm |
+
+	newAlarm := GtkMorphicAlarm 
+		scheduledAt: scheduledTime
+		receiver: aTarget
+		selector: aSelector
+		arguments: argArray.
+
+	alarms ifNil: [ alarms := Set new ].
+	alarms add: newAlarm.
 	
-	self flag: #TODO.
+	newAlarm schedule
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> addMorphFront: aMorph [
+	
+	self morph addMorphFront: aMorph
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> alarms [
+	
 ]
 
 { #category : #'world simulation' }
@@ -216,6 +266,12 @@ GtkMorphView >> beMorphResizable [
 GtkMorphView >> becomeActiveDuring: aBlock [
 	
 	aBlock value
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> bounds [ 
+
+	^ self morph bounds
 ]
 
 { #category : #'private primitives' }
@@ -344,14 +400,14 @@ GtkMorphView >> morph: aMorph [
 	morph ifNotNil: [ 
 		"if we are replacing a morph, we will need to transmit to the new morph some properties. 
 		 Also, we will need to force a queue"
-		self isMorphResizable ifTrue: [ 
+		(self isMorphResizable and: [ aMorph extent < morph extent ]) ifTrue: [ 
 			aMorph extent: morph extent ].
 		needQueue := true ].
 	morph := aMorph.
 	eventHandler morph: aMorph.
 	morph privateOwner: self.
 	
-	"self sizeRequest: aMorph extent."
+	self sizeRequest: aMorph extent.
 	self invalidate.
 	needQueue ifTrue: [ self queueDraw ]
 ]
@@ -422,7 +478,14 @@ GtkMorphView >> queueDraw [
 { #category : #'world simulation' }
 GtkMorphView >> removeAlarm: aSelector for: aTarget [
 	
-	self flag: #TODO.
+	alarms ifNil: [ ^ self ].
+	alarms
+		detect: [ :each | 
+			each receiver == aTarget 
+			and: [ each selector == aSelector ] ]
+		ifFound: [ :anAlarm | 
+			anAlarm cancel.
+			alarms remove: anAlarm ]
 ]
 
 { #category : #private }
@@ -449,6 +512,12 @@ GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 	self 
 		ffiCall: #(void cairo_set_source_surface (void *cr, void *surface, double x,  double y))
 		module: CairoLibrary
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> startStepping: aMorph [ 
+	
+	self flag: #TODO.
 ]
 
 { #category : #'world simulation' }
@@ -505,6 +574,12 @@ GtkMorphView >> updateSurfaceRectangles: aCollection [
 
 	aCollection do: [ :each |
 		self updateSurfaceRectangle: each in: self morph ]
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> viewBox [
+
+	^ self boundingBox
 ]
 
 { #category : #'world simulation' }
