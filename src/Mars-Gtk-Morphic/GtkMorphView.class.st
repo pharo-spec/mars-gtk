@@ -12,7 +12,8 @@ Class {
 		'queued',
 		'activeHand',
 		'damageRecorder',
-		'alarms'
+		'alarms',
+		'steps'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -515,15 +516,42 @@ GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 ]
 
 { #category : #'world simulation' }
-GtkMorphView >> startStepping: aMorph [ 
+GtkMorphView >> startStepping: aMorph [
 	
 	self flag: #TODO.
 ]
 
 { #category : #'world simulation' }
-GtkMorphView >> stopStepping: aMorph selector: aString [ 
+GtkMorphView >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
+	"Add the given morph to the step list. Do nothing if it is already being stepped."
+	| newStep |
+
+	self stopStepping: aMorph selector: aSelector.
 	
-	self flag: #TODO. "Stepping"
+	newStep := GtkStepMessage 
+		scheduledAt: scheduledTime
+		stepTime: stepTime
+		receiver: aMorph
+		selector: aSelector
+		arguments: args.
+		
+	steps ifNil: [ steps := Set new ].
+	steps add: newStep.
+	
+	newStep schedule
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> stopStepping: aMorph selector: aSelector [
+	
+	steps ifNil: [ ^ self ].
+	
+	(steps 
+		removeAll: (steps 
+			select:[ :each | 
+				each receiver == aMorph 
+				and: [ each selector == aSelector ] ]))
+		do: [ :each | each cancel ]
 ]
 
 { #category : #'world simulation' }
