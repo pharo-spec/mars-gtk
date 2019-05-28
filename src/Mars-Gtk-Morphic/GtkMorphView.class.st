@@ -616,6 +616,11 @@ GtkMorphView >> updateSurface [
 { #category : #'private updating' }
 GtkMorphView >> updateSurfaceRectangle: aRect in: aMorph [
 
+	"validate this morph does not needs to be drawn"
+	aMorph fullBounds = aRect ifTrue: [ 
+		self paintMorph: aMorph.
+		^ self ].
+
 	aMorph submorphsDo: [ :submorph | | bounds |
 		bounds := submorph fullBounds.
 		(bounds intersects: aRect) ifTrue: [
