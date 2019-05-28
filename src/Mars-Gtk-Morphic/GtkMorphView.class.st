@@ -13,7 +13,8 @@ Class {
 		'activeHand',
 		'damageRecorder',
 		'alarms',
-		'steps'
+		'steps',
+		'layeredMorphs'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -238,12 +239,18 @@ GtkMorphView >> addAlarm: aSelector withArguments: argArray for: aTarget at: sch
 { #category : #'world simulation' }
 GtkMorphView >> addMorphFront: aMorph [
 	
-	self morph addMorphFront: aMorph
+	self addMorphInFrontOfLayer: aMorph
 ]
 
 { #category : #'world simulation' }
-GtkMorphView >> alarms [
-	
+GtkMorphView >> addMorphInFrontOfLayer: aMorph [
+
+	layeredMorphs ifNil: [ layeredMorphs := OrderedCollection new ].
+	layeredMorphs add: aMorph.
+	aMorph privateOwner: self.
+
+	self invalidateRect: aMorph fullBounds.
+	self queueDraw
 ]
 
 { #category : #'world simulation' }
@@ -489,6 +496,16 @@ GtkMorphView >> removeAlarm: aSelector for: aTarget [
 			alarms remove: anAlarm ]
 ]
 
+{ #category : #'world simulation' }
+GtkMorphView >> removeMorph: aMorph [ 
+	
+	(layeredMorphs includes: aMorph) ifFalse: [ ^ self ].
+	
+	layeredMorphs remove: aMorph.
+	self invalidateRect: aMorph fullBounds.
+	self queueDraw
+]
+
 { #category : #private }
 GtkMorphView >> resizeIfEnabledTo: extent [
 
@@ -569,7 +586,10 @@ GtkMorphView >> transformFrom: aMorph [
 { #category : #'private updating' }
 GtkMorphView >> updateAllSurface [
 
-	activeSurface := self newSurfaceOfMorph: self morph
+	activeSurface := self newSurfaceOfMorph: self morph.
+	layeredMorphs ifNotNil: [ 
+		layeredMorphs do: [ :each |
+			self paintMorph: each ] ]
 
 ]
 
