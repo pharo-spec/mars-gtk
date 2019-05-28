@@ -26,6 +26,13 @@ GtkStepMessage >> schedule [
 	fork
 ]
 
+{ #category : #accessing }
+GtkStepMessage >> stepTime [
+
+	^ super stepTime 
+		ifNil: [ self receiver stepTime ]
+]
+
 { #category : #private }
 GtkStepMessage >> waitUntilExecution [
 

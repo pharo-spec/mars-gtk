@@ -249,8 +249,7 @@ GtkMorphView >> addMorphInFrontOfLayer: aMorph [
 	layeredMorphs add: aMorph.
 	aMorph privateOwner: self.
 
-	self invalidateRect: aMorph fullBounds.
-	self queueDraw
+	self invalidateRect: aMorph fullBounds
 ]
 
 { #category : #'world simulation' }
@@ -366,20 +365,27 @@ GtkMorphView >> initialize [
 { #category : #'world simulation' }
 GtkMorphView >> invalidRect: damageRect from: aMorph [
 
-	self invalidateRect: damageRect.
-	self queueDraw
+	self invalidateRect: damageRect
 ]
 
 { #category : #private }
 GtkMorphView >> invalidate [
 
-	damageRecorder doFullRepaint
+	self invalidate: true
+]
+
+{ #category : #private }
+GtkMorphView >> invalidate: needQueue [
+
+	damageRecorder doFullRepaint.
+	needQueue ifTrue: [ self queueDraw ]
 ]
 
 { #category : #private }
 GtkMorphView >> invalidateRect: damageRect [
 
-	damageRecorder recordInvalidRect: damageRect
+	damageRecorder recordInvalidRect: damageRect.
+	self queueDraw
 
 ]
 
@@ -416,8 +422,7 @@ GtkMorphView >> morph: aMorph [
 	morph privateOwner: self.
 	
 	self sizeRequest: aMorph extent.
-	self invalidate.
-	needQueue ifTrue: [ self queueDraw ]
+	self invalidate: needQueue
 ]
 
 { #category : #private }
@@ -502,8 +507,8 @@ GtkMorphView >> removeMorph: aMorph [
 	(layeredMorphs includes: aMorph) ifFalse: [ ^ self ].
 	
 	layeredMorphs remove: aMorph.
-	self invalidateRect: aMorph fullBounds.
-	self queueDraw
+
+	self invalidateRect: aMorph fullBounds
 ]
 
 { #category : #private }
@@ -535,7 +540,12 @@ GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 { #category : #'world simulation' }
 GtkMorphView >> startStepping: aMorph [
 	
-	self flag: #TODO.
+	self 
+		startStepping: aMorph 
+		at: Time millisecondClockValue 
+		selector: #stepAt: 
+		arguments: nil 
+		stepTime: nil
 ]
 
 { #category : #'world simulation' }
@@ -621,7 +631,11 @@ GtkMorphView >> updateSurfaceRectangle: aRect in: aMorph [
 GtkMorphView >> updateSurfaceRectangles: aCollection [
 
 	aCollection do: [ :each |
-		self updateSurfaceRectangle: each in: self morph ]
+		self updateSurfaceRectangle: each in: self morph ].
+	layeredMorphs ifNotNil: [ 
+		layeredMorphs do: [ :eachMorph | 
+			aCollection do: [ :each |
+				self updateSurfaceRectangle: each in: eachMorph ] ] ]
 ]
 
 { #category : #'world simulation' }
