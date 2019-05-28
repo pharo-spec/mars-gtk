@@ -245,7 +245,6 @@ GtkMorphView >> addMorphFront: aMorph [
 { #category : #'world simulation' }
 GtkMorphView >> addMorphInFrontOfLayer: aMorph [
 
-	layeredMorphs ifNil: [ layeredMorphs := OrderedCollection new ].
 	layeredMorphs add: aMorph.
 	aMorph privateOwner: self.
 
@@ -359,7 +358,8 @@ GtkMorphView >> initialize [
 	self connectToSignals.
 	
 	eventHandler := GtkMorphicEventHandler for: self.
-	damageRecorder := DamageRecorder new
+	damageRecorder := DamageRecorder new.
+	layeredMorphs := OrderedCollection new: 1
 ]
 
 { #category : #'world simulation' }
@@ -507,7 +507,6 @@ GtkMorphView >> removeMorph: aMorph [
 	(layeredMorphs includes: aMorph) ifFalse: [ ^ self ].
 	
 	layeredMorphs remove: aMorph.
-
 	self invalidateRect: aMorph fullBounds
 ]
 
@@ -597,10 +596,8 @@ GtkMorphView >> transformFrom: aMorph [
 GtkMorphView >> updateAllSurface [
 
 	activeSurface := self newSurfaceOfMorph: self morph.
-	layeredMorphs ifNotNil: [ 
-		layeredMorphs do: [ :each |
-			self paintMorph: each ] ]
-
+	layeredMorphs do: [ :each |
+		self paintMorph: each ]
 ]
 
 { #category : #'private updating' }
@@ -630,12 +627,16 @@ GtkMorphView >> updateSurfaceRectangle: aRect in: aMorph [
 { #category : #'private updating' }
 GtkMorphView >> updateSurfaceRectangles: aCollection [
 
+	self updateSurfaceRectangles: aCollection in: self morph. 
+	layeredMorphs do: [ :each | 
+		self updateSurfaceRectangles: aCollection in: each ] 
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> updateSurfaceRectangles: aCollection in: aMorph [
+
 	aCollection do: [ :each |
-		self updateSurfaceRectangle: each in: self morph ].
-	layeredMorphs ifNotNil: [ 
-		layeredMorphs do: [ :eachMorph | 
-			aCollection do: [ :each |
-				self updateSurfaceRectangle: each in: eachMorph ] ] ]
+		self updateSurfaceRectangle: each in: aMorph ]
 ]
 
 { #category : #'world simulation' }
