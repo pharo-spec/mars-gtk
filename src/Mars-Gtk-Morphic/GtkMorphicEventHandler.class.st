@@ -4,9 +4,6 @@ I'm used to convert Gtk events into Morphic events to be passed to GtkMorphView 
 Class {
 	#name : #GtkMorphicEventHandler,
 	#superclass : #OSWindowMorphicEventHandler,
-	#instVars : [
-		'morph'
-	],
 	#category : #'Mars-Gtk-Morphic'
 }
 
@@ -54,18 +51,6 @@ GtkMorphicEventHandler >> handleEvent: anEvent [
 	self dispatchMorphicEvent: morphicEvent.
 
 	^ morphicEvent wasHandled
-]
-
-{ #category : #accessing }
-GtkMorphicEventHandler >> morph [ 
-
-	^ morph
-]
-
-{ #category : #accessing }
-GtkMorphicEventHandler >> morph: aMorph [
-
-	morph := aMorph
 ]
 
 { #category : #visiting }

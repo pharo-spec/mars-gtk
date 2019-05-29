@@ -18,24 +18,15 @@ OSGtkDriver class >> isSupported [
 
 { #category : #'window creation' }
 OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
-	| gtkWindow window |
+	| window |
 	
 	GtkApplication ensureRunning.
 	
-	gtkWindow := GtkWindow new.
-	gtkWindow title: (attributes title ifNil: [ 'Untitled' ]).
-	gtkWindow resize: attributes width @ attributes height.
-	attributes windowCentered 
-		ifTrue: [ gtkWindow center ]
-		ifFalse: [ gtkWindow moveTo: attributes x @ attributes y ].	
-	
 	attributes visible 
-		ifTrue: [ gtkWindow showAll ]
-		ifFalse: [ gtkWindow hide ].
+		ifTrue: [ window show ]
+		ifFalse: [ window hide ].
 
-	window := OSGtkWindowHandle 
-		newWindow: gtkWindow 
-		attributes: attributes.
+	window := OSGtkWindowHandle newAttributes: attributes.
 	window osWindow: osWindow.
 		
 	osWindow setJustCreatedHandle: window.

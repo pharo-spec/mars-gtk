@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-OSGtkWindowHandle class >> newWindow: gtkWindow attributes: attributes [
+OSGtkWindowHandle class >> newAttributes: attributes [
 
 	^ self basicNew 
-		initializeWindow: gtkWindow attributes: attributes;
+		initializeAttributes: attributes;
 		yourself
 ]
 
@@ -28,16 +28,22 @@ OSGtkWindowHandle >> extent: newExtent [
 ]
 
 { #category : #accessing }
+OSGtkWindowHandle >> gtkWindow [ 
+	
+	^ gtkWindow
+]
+
+{ #category : #accessing }
 OSGtkWindowHandle >> hide [
 
 	gtkWindow hide
 ]
 
 { #category : #initialization }
-OSGtkWindowHandle >> initializeWindow: aWindow attributes: attributes [
+OSGtkWindowHandle >> initializeAttributes: attributes [
 
 	self initialize.
-	gtkWindow := aWindow.
+	gtkWindow := self newWindow: attributes.
 	attributes applyTo: self	
 ]
 
@@ -45,6 +51,28 @@ OSGtkWindowHandle >> initializeWindow: aWindow attributes: attributes [
 OSGtkWindowHandle >> isValid [
 	
 	^ gtkWindow getHandle isNull not
+]
+
+{ #category : #factory }
+OSGtkWindowHandle >> newFormRenderer: aForm [
+
+	^ renderer := OSGtkFormRenderer new 
+		form: aForm;
+		window: self;
+		yourself
+]
+
+{ #category : #factory }
+OSGtkWindowHandle >> newWindow: attributes [
+	| newWindow |
+	
+	newWindow := GtkWindow new.
+	newWindow resize: attributes width @ attributes height.
+	attributes windowCentered 
+		ifTrue: [ gtkWindow center ]
+		ifFalse: [ gtkWindow moveTo: attributes x @ attributes y ].	
+
+	^ newWindow
 ]
 
 { #category : #accessing }

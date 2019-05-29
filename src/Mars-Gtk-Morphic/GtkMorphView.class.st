@@ -3,15 +3,11 @@ I'm a widget to display morphs.
 "
 Class {
 	#name : #GtkMorphView,
-	#superclass : #GtkDrawingArea,
+	#superclass : #GtkMorphicDrawingArea,
 	#instVars : [
 		'morph',
-		'activeSurface',
 		'morphResizable',
-		'eventHandler',
-		'queued',
 		'activeHand',
-		'damageRecorder',
 		'alarms',
 		'steps',
 		'layeredMorphs'
@@ -375,11 +371,10 @@ GtkMorphView >> cairoDestroy: cr [
 		module: CairoLibrary
 ]
 
-{ #category : #initialization }
-GtkMorphView >> connectToSignals [
+{ #category : #private }
+GtkMorphView >> canDraw [
 
-	self connectSizeAllocate: [ :aRect | self resizeIfEnabledTo: aRect extent ].
-	self connectEvent: [ :event | self handleEvent: event ]
+	^ self morph notNil
 ]
 
 { #category : #'world simulation' }
@@ -395,56 +390,28 @@ GtkMorphView >> currentCursor: aCursor [
 	self flag: #TODO.
 ]
 
-{ #category : #drawing }
-GtkMorphView >> draw: cr [
+{ #category : #private }
+GtkMorphView >> currentExtent [
 
-	(drawing or: [ self morph isNil ]) ifTrue: [ ^ true ].
-
-	drawing := true.	
-	[
-		damageRecorder updateIsNeeded 
-			ifTrue: [ self updateSurface ].
-		self setSourceSurfaceTo: cr surface: activeSurface getHandle.
-		self paint: cr ]
-	ensure: [ 
-		drawing := false.
-		queued := false ].
-
-	^ true
-]
-
-{ #category : #drawing }
-GtkMorphView >> drawOnAthensCanvas: aCanvas [
-	
-	"do nothing"
+	^ self morph extent
 ]
 
 { #category : #'private events' }
 GtkMorphView >> handleEvent: event [
 
 	self morph ifNil: [ ^ false ].
+	^ super handleEvent: event
 
-	event isEventConfigure ifTrue: [ 
-		event extent = self morph extent ifFalse: [ 
-			self invalidate.
-			^ true  ] ].
-	^ eventHandler handleEvent: event
+	
 ]
 
 { #category : #initialization }
 GtkMorphView >> initialize [ 
 
 	super initialize.
-	queued := false.
-	drawing := false.
-
 	self beMorphResizable.
-	self registerToAllEvents.
-	self connectToSignals.
-	
-	eventHandler := GtkMorphicEventHandler for: self.
 	damageRecorder := DamageRecorder new.
-	layeredMorphs := OrderedCollection new: 1
+	layeredMorphs := OrderedCollection new: 1	
 ]
 
 { #category : #'private updating' }
@@ -499,27 +466,6 @@ GtkMorphView >> invalidRect: damageRect from: aMorph [
 	self invalidateRect: damageRect
 ]
 
-{ #category : #private }
-GtkMorphView >> invalidate [
-
-	self invalidate: true
-]
-
-{ #category : #private }
-GtkMorphView >> invalidate: needQueue [
-
-	damageRecorder doFullRepaint.
-	needQueue ifTrue: [ self queueDraw ]
-]
-
-{ #category : #private }
-GtkMorphView >> invalidateRect: damageRect [
-
-	damageRecorder recordInvalidRect: damageRect.
-	self queueDraw
-
-]
-
 { #category : #'world simulation' }
 GtkMorphView >> isCursorOwner [
 
@@ -555,7 +501,6 @@ GtkMorphView >> morph: aMorph [
 			aMorph extent: morph extent ].
 		needQueue := true ].
 	morph := aMorph.
-	eventHandler morph: aMorph.
 	morph privateOwner: self.
 	
 	self sizeRequest: aMorph extent.
@@ -593,7 +538,7 @@ GtkMorphView >> paintMorph: aMorph [
 	
 	position := aMorph position.
 	morphSurface := self newSurfaceOfMorph: aMorph.
-	cr := self cairoCreate: activeSurface getHandle.
+	cr := self cairoCreate: self activeSurface getHandle.
 	[
 		self 
 			setSourceSurfaceTo: cr 
@@ -615,14 +560,6 @@ GtkMorphView >> paneColorOrNil [
 GtkMorphView >> processEvent: anEvent [
  
 	^ self morph processEvent: anEvent
-]
-
-{ #category : #private }
-GtkMorphView >> queueDraw [
-	
-	(drawing or: [ queued ]) ifTrue: [ ^ self ].
-	queued := true.
-	super queueDraw
 ]
 
 { #category : #'world simulation' }
@@ -732,22 +669,9 @@ GtkMorphView >> transformFrom: aMorph [
 { #category : #'private updating' }
 GtkMorphView >> updateAllSurface [
 
-	activeSurface := self newSurfaceOfMorph: self morph.
+	self activeSurface: (self newSurfaceOfMorph: self morph).
 	layeredMorphs do: [ :each |
 		self paintMorph: each ]
-]
-
-{ #category : #'private updating' }
-GtkMorphView >> updateSurface [
-	| rects |
-	
-	self flag: #TODO. "Do not use the nil HACK here (add a method to DamageRecorder to know if 
-	I need to redraw all instead)."
-	rects := damageRecorder invalidRectsFullBounds: nil.
-	damageRecorder reset.
-	rects first 
-		ifNotNil: [ self updateSurfaceRectangles: rects ]
-		ifNil: [ self updateAllSurface ]
 ]
 
 { #category : #'private updating' }
