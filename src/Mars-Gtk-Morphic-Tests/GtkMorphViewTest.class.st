@@ -5,7 +5,7 @@ Class {
 		'morph',
 		'view'
 	],
-	#category : #'Mars-Gtk-Morphic'
+	#category : #'Mars-Gtk-Morphic-Tests'
 }
 
 { #category : #tests }
