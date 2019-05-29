@@ -170,6 +170,35 @@ GtkMorphView class >> example6 [
 ]
 
 { #category : #examples }
+GtkMorphView class >> example7 [
+	| morph inform |
+
+	GtkApplication ensureRunning.
+
+	inform := GtkInfoArea new.
+
+	morph  := self 
+		newGridOf: 5 
+		with: [ :pos | 
+			SimpleButtonMorph new
+				label: pos asString;
+				color: Color random;
+				target: [ inform addInfo: pos asString ];
+				actionSelector: #value;
+				helpText: 'Button at ', pos asString;
+				yourself ].
+
+	GtkWindow new
+		title: 'Example 5';
+		resize: 500@500;
+		add: (GtkBox newVertical
+			packStart: inform expand: false fill: false padding: 0;
+			packStart: (GtkMorphView newMorph: morph);
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
 GtkMorphView class >> newGridOf: aNumber with: aBlock [
 	| gridMorph |
 
@@ -208,6 +237,12 @@ GtkMorphView class >> newMorph: aMorph [
 		morph: aMorph;
 		yourself
 
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> activateCursor: aCursor withMask: aForm [ 
+	
+	self flag: #TODO.
 ]
 
 { #category : #'world simulation' }
@@ -307,7 +342,7 @@ GtkMorphView >> connectToSignals [
 GtkMorphView >> currentCursor [
 	
 	self flag: #TODO. "cursor handling"
-	^ nil
+	^ Cursor normal
 ]
 
 { #category : #'world simulation' }
@@ -439,6 +474,12 @@ GtkMorphView >> invalidateRect: damageRect [
 	damageRecorder recordInvalidRect: damageRect.
 	self queueDraw
 
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> isCursorOwner [
+
+	^ true
 ]
 
 { #category : #testing }
