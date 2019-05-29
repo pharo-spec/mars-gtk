@@ -362,6 +362,52 @@ GtkMorphView >> initialize [
 	layeredMorphs := OrderedCollection new: 1
 ]
 
+{ #category : #'private updating' }
+GtkMorphView >> intersectingMorphs: aMorph within: aRect [
+	| morphs |
+	
+	aMorph fullBounds = aRect
+		ifTrue: [ ^ { aMorph } ].
+	
+	morphs := OrderedCollection new.
+	aMorph submorphsDo: [ :submorph | | bounds |
+		bounds := submorph fullBounds.
+		(bounds intersects: aRect) ifTrue: [
+			((bounds ~= aRect) and: [ bounds containsRect: aRect ])
+				ifTrue: [ morphs addAll: (self intersectingMorphs: submorph within: aRect) ]
+				ifFalse: [ morphs add: submorph ] ] ].
+		
+	aRect
+		allAreasOutsideList: (morphs collect: [ :each | each fullBounds ])
+		do: [ :eachArea | ^ { aMorph } ].
+
+	^ morphs reversed
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> intersectingMorphsWithin: aRect [
+	| allMorphs intersectingMorphs |
+	
+	intersectingMorphs := OrderedCollection new.
+	allMorphs := layeredMorphs copyWithFirst: self morph.
+	allMorphs do: [ :eachMorph |
+		eachMorph fullBounds = aRect ifTrue: [ ^ { eachMorph } ].
+	
+		intersectingMorphs := OrderedCollection new.
+		eachMorph submorphsDo: [ :submorph | | bounds |
+			bounds := submorph fullBounds.
+			(bounds intersects: aRect) ifTrue: [
+				((bounds ~= aRect) and: [ bounds containsRect: aRect ])
+					ifTrue: [ intersectingMorphs addAll: (self intersectingMorphs: submorph within: aRect) ]
+					ifFalse: [ intersectingMorphs add: submorph ] ] ] ].
+	
+	aRect
+		allAreasOutsideList: (intersectingMorphs collect: [ :each | each fullBounds ])
+		do: [ :eachArea | ^ { self morph } ].
+		
+	^ intersectingMorphs	reversed
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> invalidRect: damageRect from: aMorph [
 
@@ -614,34 +660,16 @@ GtkMorphView >> updateSurface [
 ]
 
 { #category : #'private updating' }
-GtkMorphView >> updateSurfaceRectangle: aRect in: aMorph [
-
-	"validate this morph does not needs to be drawn"
-	aMorph fullBounds = aRect ifTrue: [ 
-		self paintMorph: aMorph.
-		^ self ].
-
-	aMorph submorphsDo: [ :submorph | | bounds |
-		bounds := submorph fullBounds.
-		(bounds intersects: aRect) ifTrue: [
-			((bounds ~= aRect) and: [ bounds containsRect: aRect ])
-				ifTrue: [ self updateSurfaceRectangle: aRect in: submorph ]
-				ifFalse: [ self paintMorph: submorph ] ] ]
-]
-
-{ #category : #'private updating' }
 GtkMorphView >> updateSurfaceRectangles: aCollection [
+	| rect | 
 
-	self updateSurfaceRectangles: aCollection in: self morph. 
-	layeredMorphs do: [ :each | 
-		self updateSurfaceRectangles: aCollection in: each ] 
-]
+	rect := aCollection size = 1
+		ifTrue: [ aCollection anyOne ]
+		ifFalse: [ Rectangle merging: aCollection ].
 
-{ #category : #'private updating' }
-GtkMorphView >> updateSurfaceRectangles: aCollection in: aMorph [
-
-	aCollection do: [ :each |
-		self updateSurfaceRectangle: each in: aMorph ]
+	(self intersectingMorphsWithin: rect) do: [ :eachMorph |
+		eachMorph = self morph ifTrue: [ ^ self updateAllSurface ].
+		self paintMorph: eachMorph ] 
 ]
 
 { #category : #'world simulation' }
