@@ -160,7 +160,7 @@ GtkMorphView class >> example6 [
 				yourself ].
 
 	GtkWindow new
-		title: 'Example 5';
+		title: 'PlugabbleButtonMorph Event Example';
 		resize: 500@500;
 		add: (GtkBox newVertical
 			packStart: inform expand: false fill: false padding: 0;
@@ -189,11 +189,55 @@ GtkMorphView class >> example7 [
 				yourself ].
 
 	GtkWindow new
-		title: 'Example 5';
+		title: 'SimpleButtonMorph Event Example';
 		resize: 500@500;
 		add: (GtkBox newVertical
 			packStart: inform expand: false fill: false padding: 0;
 			packStart: (GtkMorphView newMorph: morph);
+			yourself);
+		showAll
+]
+
+{ #category : #examples }
+GtkMorphView class >> example8 [
+	| morph1 morph2 inform |
+
+	GtkApplication ensureRunning.
+
+	inform := GtkInfoArea new.
+
+	morph1  := self 
+		newGridOf: 5 
+		with: [ :pos | 
+			SimpleButtonMorph new
+				label: pos asString;
+				color: Color random;
+				target: [ inform addInfo: pos asString ];
+				actionSelector: #value;
+				helpText: 'Button at ', pos asString;
+				yourself ].
+
+	morph2  := self 
+		newGridOf: 5 
+		with: [ :pos | 
+			SimpleButtonMorph new
+				label: pos asString;
+				color: Color random;
+				target: [ inform addInfo: pos asString ];
+				actionSelector: #value;
+				helpText: 'Button at ', pos asString;
+				yourself ].
+
+	GtkWindow new
+		title: 'SimpleButtonMorph Event Example';
+		resize: 500@500;
+		add: (GtkBox newVertical
+			packStart: inform expand: false fill: false padding: 0;
+			packStart: (GtkPaned newVertical
+				position: 250;
+				add: (GtkMorphView newMorph: morph1);
+				add: (GtkMorphView newMorph: morph2);
+				yourself);
 			yourself);
 		showAll
 ]

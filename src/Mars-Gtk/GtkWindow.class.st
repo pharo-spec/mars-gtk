@@ -73,6 +73,13 @@ GtkWindow >> bounds [
 ]
 
 { #category : #geometry }
+GtkWindow >> bounds: aRectangle [
+
+	self moveTo: aRectangle origin.
+	self resize: aRectangle extent
+]
+
+{ #category : #geometry }
 GtkWindow >> center [
 	"Sets position as 'center' to be applied *before* window is opened."
 	
