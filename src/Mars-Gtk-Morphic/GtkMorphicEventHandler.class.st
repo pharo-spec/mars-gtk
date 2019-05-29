@@ -1,3 +1,6 @@
+"
+I'm used to convert Gtk events into Morphic events to be passed to GtkMorphView instances.
+"
 Class {
 	#name : #GtkMorphicEventHandler,
 	#superclass : #OSWindowMorphicEventHandler,
@@ -63,4 +66,11 @@ GtkMorphicEventHandler >> morph [
 GtkMorphicEventHandler >> morph: aMorph [
 
 	morph := aMorph
+]
+
+{ #category : #visiting }
+GtkMorphicEventHandler >> visitUnknownEvent: anEvent [
+
+	anEvent type crLog.
+	^ nil
 ]

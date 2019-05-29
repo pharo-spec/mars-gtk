@@ -32,7 +32,8 @@ GdkEventAny class >> fieldsDesc [
 
 { #category : #visiting }
 GdkEventAny >> accept: aVisitor [
-	"do nothing"
+	
+	^ aVisitor visitUnknownEvent: self
 ]
 
 { #category : #testing }

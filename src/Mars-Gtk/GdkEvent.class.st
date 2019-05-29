@@ -66,7 +66,7 @@ GdkEvent class >> newType: aType [
 { #category : #visiting }
 GdkEvent >> accept: aVisitor [
 	
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #converting }

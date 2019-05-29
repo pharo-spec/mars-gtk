@@ -310,6 +310,12 @@ GtkMorphView >> currentCursor [
 	^ nil
 ]
 
+{ #category : #'world simulation' }
+GtkMorphView >> currentCursor: aCursor [
+
+	self flag: #TODO.
+]
+
 { #category : #drawing }
 GtkMorphView >> draw: cr [
 

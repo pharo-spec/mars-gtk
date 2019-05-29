@@ -1,3 +1,7 @@
+"
+I'm a recurrent alarm. 
+I'm used to implement the steping property of morphs in the context of a GtkMorphView.
+"
 Class {
 	#name : #GtkStepMessage,
 	#superclass : #StepMessage,

@@ -1,3 +1,9 @@
+"
+I represent a message to be scheduled by the WorldState.
+I'm used to implement the alarm property of morphs in the context of a GtkMorphView.
+
+once scheduled, an alarm will wait until its execution.
+"
 Class {
 	#name : #GtkMorphicAlarm,
 	#superclass : #MorphicAlarm,
