@@ -22,7 +22,8 @@ GtkMenu class >> new [
 ]
 
 { #category : #initialization }
-GtkMenu >> initialize [ 
+GtkMenu >> initialize [
+
 	super initialize.
 	self reserveToggleSize: false
 ]

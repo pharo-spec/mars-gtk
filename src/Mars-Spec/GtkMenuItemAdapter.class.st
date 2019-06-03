@@ -4,7 +4,7 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkMenuItemAdapter class >> defaultSpacing [
 
 	^ 5
@@ -60,6 +60,8 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 				fill: false 
 				padding: 0 ] ].
 		
+	gtkBox showAll.
+
 	^ gtkBox
 ]
 
