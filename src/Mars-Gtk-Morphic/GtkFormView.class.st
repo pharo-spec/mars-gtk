@@ -8,6 +8,34 @@ Class {
 }
 
 { #category : #private }
+GtkFormView class >> drawingAreaNew [
+
+	^ self ffiCall: #(GtkFormView *gtk_drawing_area_new ())
+]
+
+{ #category : #examples }
+GtkFormView class >> example1 [
+
+	GtkApplication ensureRunning.
+	
+	GtkWindow new 
+		resize: 500@500;
+		add: (GtkPaned newHorizontal
+			pack1: (GtkLabel newLabel: 'Label');
+			pack2: (GtkFormView newForm: (self iconNamed: #smallOk));
+			yourself);
+		showAll
+]
+
+{ #category : #'instance creation' }
+GtkFormView class >> newForm: aForm [
+
+	^ self new
+		form: aForm;
+		yourself
+]
+
+{ #category : #private }
 GtkFormView >> canDraw [
 
 	^ self form notNil

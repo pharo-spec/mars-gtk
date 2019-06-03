@@ -17,6 +17,7 @@ Class {
 
 { #category : #private }
 GtkMorphView class >> drawingAreaNew [
+
 	^ self ffiCall: #(GtkMorphView *gtk_drawing_area_new ())
 ]
 
