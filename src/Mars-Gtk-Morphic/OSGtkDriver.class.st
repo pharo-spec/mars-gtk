@@ -16,20 +16,26 @@ OSGtkDriver class >> isSupported [
 	^ true
 ]
 
+{ #category : #accessing }
+OSGtkDriver >> beCurrent [
+
+	Current := self
+]
+
 { #category : #'window creation' }
 OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	| window |
 	
 	GtkApplication ensureRunning.
 	
-	attributes visible 
-		ifTrue: [ window show ]
-		ifFalse: [ window hide ].
-
 	window := OSGtkWindowHandle newAttributes: attributes.
 	window osWindow: osWindow.
 		
 	osWindow setJustCreatedHandle: window.
+	
+	attributes visible 
+		ifTrue: [ window show ]
+		ifFalse: [ window hide ].
 	
 	^ window
 ]

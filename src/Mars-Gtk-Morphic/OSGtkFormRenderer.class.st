@@ -39,7 +39,8 @@ OSGtkFormRenderer >> window: aWindowHandle [
 	super window: aWindowHandle.
 	aWindowHandle gtkWindow
 		removeAll;
-		add: gtkFormView;
-		yourself.
+		add: (GtkBox newVertical 
+			packStart: gtkFormView;
+			yourself)
 	
 ]

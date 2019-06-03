@@ -43,8 +43,18 @@ OSGtkWindowHandle >> hide [
 OSGtkWindowHandle >> initializeAttributes: attributes [
 
 	self initialize.
-	gtkWindow := self newWindow: attributes.
+	self initializeWindowAttributes: attributes.
 	attributes applyTo: self	
+]
+
+{ #category : #initialization }
+OSGtkWindowHandle >> initializeWindowAttributes: attributes [
+	
+	gtkWindow := GtkWindow new.
+	gtkWindow resize: attributes width @ attributes height.
+	attributes windowCentered 
+		ifTrue: [ gtkWindow center ]
+		ifFalse: [ gtkWindow moveTo: attributes x @ attributes y ]
 ]
 
 { #category : #testing }
@@ -60,19 +70,6 @@ OSGtkWindowHandle >> newFormRenderer: aForm [
 		form: aForm;
 		window: self;
 		yourself
-]
-
-{ #category : #factory }
-OSGtkWindowHandle >> newWindow: attributes [
-	| newWindow |
-	
-	newWindow := GtkWindow new.
-	newWindow resize: attributes width @ attributes height.
-	attributes windowCentered 
-		ifTrue: [ gtkWindow center ]
-		ifFalse: [ gtkWindow moveTo: attributes x @ attributes y ].	
-
-	^ newWindow
 ]
 
 { #category : #accessing }
