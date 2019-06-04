@@ -23,6 +23,13 @@ OSGtkWindowHandle >> bounds: newBounds [
 ]
 
 { #category : #accessing }
+OSGtkWindowHandle >> extent [
+
+	self ifWindowIsNotValid: [ ^ 0@0 ].
+	^ gtkWindow size
+]
+
+{ #category : #accessing }
 OSGtkWindowHandle >> extent: newExtent [
 
 	gtkWindow resize: newExtent
@@ -39,6 +46,12 @@ OSGtkWindowHandle >> gtkWindow [
 OSGtkWindowHandle >> hide [
 
 	gtkWindow hide
+]
+
+{ #category : #private }
+OSGtkWindowHandle >> ifWindowIsNotValid: aBlock [
+
+	gtkWindow getHandle isNull ifTrue: aBlock
 ]
 
 { #category : #initialization }
@@ -77,6 +90,7 @@ OSGtkWindowHandle >> newFormRenderer: aForm [
 { #category : #accessing }
 OSGtkWindowHandle >> position [
 
+	self ifWindowIsNotValid: [ ^ 0@0 ].
 	^ gtkWindow position
 ]
 

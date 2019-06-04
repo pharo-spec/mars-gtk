@@ -49,7 +49,7 @@ GtkFormView >> handleEvent: anEvent [
 { #category : #private }
 GtkFormView >> resizeIfEnabledTo: extent [
 
-	self flag: #TODO.
+	self world checkNewWindowSize
 ]
 
 { #category : #'private updating' }
@@ -93,4 +93,10 @@ GtkFormView >> updateSurfaceRectangles: rects [
 	self updateAllSurface
 "	rects do: [ :each | 
 		self updateSurfaceRectangle: each ]"
+]
+
+{ #category : #accessing }
+GtkFormView >> world [ 
+
+	^ self eventHandler morphicWorld
 ]
