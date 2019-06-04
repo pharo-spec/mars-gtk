@@ -2,7 +2,8 @@ Class {
 	#name : #OSGtkWindowHandle,
 	#superclass : #OSWindowHandle,
 	#instVars : [
-		'gtkWindow'
+		'gtkWindow',
+		'world'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -66,7 +67,7 @@ OSGtkWindowHandle >> isValid [
 { #category : #factory }
 OSGtkWindowHandle >> newFormRenderer: aForm [
 
-	^ renderer := OSGtkFormRenderer new 
+	^ renderer := OSGtkFormRenderer new
 		form: aForm;
 		window: self;
 		yourself
@@ -102,4 +103,16 @@ OSGtkWindowHandle >> title [
 OSGtkWindowHandle >> title: aTitle [
 
 	gtkWindow title: aTitle
+]
+
+{ #category : #accessing }
+OSGtkWindowHandle >> world [
+	
+	^ world
+]
+
+{ #category : #accessing }
+OSGtkWindowHandle >> world: aWorldMorph [
+	
+	world := aWorldMorph
 ]

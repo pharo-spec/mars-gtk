@@ -19,6 +19,7 @@ OSGtkDriver class >> isSupported [
 { #category : #accessing }
 OSGtkDriver >> beCurrent [
 
+	Session := Smalltalk session. 
 	Current := self
 ]
 

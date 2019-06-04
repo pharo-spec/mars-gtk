@@ -378,6 +378,12 @@ GtkMorphView >> canDraw [
 	^ self morph notNil
 ]
 
+{ #category : #initialization }
+GtkMorphView >> createEventHandler [
+
+	^ GtkMorphicEventHandler for: self world
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> currentCursor [
 	
@@ -411,8 +417,8 @@ GtkMorphView >> initialize [
 
 	super initialize.
 	self beMorphResizable.
-	damageRecorder := DamageRecorder new.
-	layeredMorphs := OrderedCollection new: 1	
+	layeredMorphs := OrderedCollection new: 1.
+	eventHandler := self createEventHandler	
 ]
 
 { #category : #'private updating' }

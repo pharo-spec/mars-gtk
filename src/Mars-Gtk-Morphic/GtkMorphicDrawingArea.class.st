@@ -265,15 +265,6 @@ GtkMorphicDrawingArea class >> newGridOf: aNumber with: aBlock [
 	^ gridMorph
 ]
 
-{ #category : #'instance creation' }
-GtkMorphicDrawingArea class >> newMorph: aMorph [
-
-	^ self new 
-		morph: aMorph;
-		yourself
-
-]
-
 { #category : #private }
 GtkMorphicDrawingArea >> activeSurface [
 	
@@ -351,9 +342,16 @@ GtkMorphicDrawingArea >> eventHandler [
 	^ eventHandler
 ]
 
+{ #category : #accessing }
+GtkMorphicDrawingArea >> eventHandler: aHandler [
+
+	eventHandler := aHandler
+]
+
 { #category : #'private events' }
 GtkMorphicDrawingArea >> handleEvent: event [
 
+	event type crLog.
 	event isEventConfigure ifTrue: [ 
 		event extent = self currentExtent ifFalse: [ 
 			self invalidate.
@@ -371,7 +369,7 @@ GtkMorphicDrawingArea >> initialize [
 	self registerToAllEvents.
 	self connectToSignals.
 	
-	eventHandler := GtkMorphicEventHandler for: self
+	damageRecorder := DamageRecorder new	
 
 ]
 
@@ -463,6 +461,12 @@ GtkMorphicDrawingArea >> updateSurface [
 
 { #category : #'private updating' }
 GtkMorphicDrawingArea >> updateSurfaceRectangles: rects [
+
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtkMorphicDrawingArea >> world [ 
 
 	self subclassResponsibility
 ]

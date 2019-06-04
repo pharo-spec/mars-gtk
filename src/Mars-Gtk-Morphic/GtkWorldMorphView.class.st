@@ -1,20 +1,21 @@
 Class {
-	#name : #GtkFormView,
+	#name : #GtkWorldMorphView,
 	#superclass : #GtkMorphicDrawingArea,
 	#instVars : [
+		'world',
 		'form'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
 
 { #category : #private }
-GtkFormView class >> drawingAreaNew [
+GtkWorldMorphView class >> drawingAreaNew [
 
 	^ self ffiCall: #(GtkWorldMorphView *gtk_drawing_area_new ())
 ]
 
 { #category : #examples }
-GtkFormView class >> example [
+GtkWorldMorphView class >> example [
 	| world view |
 
 	GtkApplication ensureRunning.
@@ -33,13 +34,13 @@ GtkFormView class >> example [
 ]
 
 { #category : #'instance creation' }
-GtkFormView class >> new [
+GtkWorldMorphView class >> new [
 
 	self error: 'Use #newWorld:'
 ]
 
 { #category : #'instance creation' }
-GtkFormView class >> newWorld: aWorld [
+GtkWorldMorphView class >> newWorld: aWorld [
 
 	^ self drawingAreaNew
 		initialize;
@@ -48,49 +49,47 @@ GtkFormView class >> newWorld: aWorld [
 ]
 
 { #category : #private }
-GtkFormView >> canDraw [
+GtkWorldMorphView >> canDraw [
 
 	^ true
 ]
 
 { #category : #private }
-GtkFormView >> currentExtent [
+GtkWorldMorphView >> currentExtent [
 
-	^ self form extent
+	^ self world extent
 ]
 
 { #category : #accessing }
-GtkFormView >> form [
+GtkWorldMorphView >> form [
 
-	^ form
+	^ form ifNil: [ form := self world display ]
 ]
 
 { #category : #accessing }
-GtkFormView >> form: aForm [
+GtkWorldMorphView >> form: aForm [
 
-	form := aForm.
-	self sizeRequest: aForm extent.
-	self invalidate	
+	form := aForm
 ]
 
 { #category : #private }
-GtkFormView >> resizeIfEnabledTo: extent [
+GtkWorldMorphView >> resizeIfEnabledTo: extent [
 
 	self flag: #TODO.
 ]
 
 { #category : #'private updating' }
-GtkFormView >> updateAllSurface [
+GtkWorldMorphView >> updateAllSurface [
 		
 	self activeSurface: (AthensCairoSurface fromForm: (self form asFormOfDepth: 32))
 ]
 
 { #category : #'private updating' }
-GtkFormView >> updateSurfaceRectangle: aRect [
+GtkWorldMorphView >> updateSurfaceRectangle: aRect [
 	| intersection newForm newSurface cr |
 	
 	intersection := aRect
-		intersect: (0 @ 0 corner: self form extent)
+		intersect: (0 @ 0 corner: self world extent)
 		ifNone: [ ^ self ].
 		
 	newForm := Form extent: intersection extent depth: 32.
@@ -115,8 +114,20 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 ]
 
 { #category : #'private updating' }
-GtkFormView >> updateSurfaceRectangles: rects [
+GtkWorldMorphView >> updateSurfaceRectangles: rects [
 
 	rects do: [ :each | 
 		self updateSurfaceRectangle: each ]
+]
+
+{ #category : #accessing }
+GtkWorldMorphView >> world [ 
+
+	^ world
+]
+
+{ #category : #accessing }
+GtkWorldMorphView >> world: aWorldMorph [
+
+	world := aWorldMorph
 ]
