@@ -28,8 +28,9 @@ OSGtkWindowHandle >> extent: newExtent [
 	gtkWindow resize: newExtent
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 OSGtkWindowHandle >> gtkWindow [ 
+	"to be used by OSGtkFormRenderer to add the form view instance."
 	
 	^ gtkWindow
 ]

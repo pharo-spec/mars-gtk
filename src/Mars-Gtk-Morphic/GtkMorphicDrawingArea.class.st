@@ -10,11 +10,6 @@ Class {
 	#category : #'Mars-Gtk-Morphic'
 }
 
-{ #category : #private }
-GtkMorphicDrawingArea class >> drawingAreaNew [
-	^ self ffiCall: #(GtkMorphView *gtk_drawing_area_new ())
-]
-
 { #category : #examples }
 GtkMorphicDrawingArea class >> example1 [
 
@@ -351,7 +346,6 @@ GtkMorphicDrawingArea >> eventHandler: aHandler [
 { #category : #'private events' }
 GtkMorphicDrawingArea >> handleEvent: event [
 
-	event type crLog.
 	event isEventConfigure ifTrue: [ 
 		event extent = self currentExtent ifFalse: [ 
 			self invalidate.

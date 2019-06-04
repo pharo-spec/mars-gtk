@@ -39,6 +39,13 @@ GtkFormView >> form: aForm [
 	self invalidate	
 ]
 
+{ #category : #'private events' }
+GtkFormView >> handleEvent: anEvent [
+
+	anEvent type crLog.
+	^ super handleEvent: anEvent
+]
+
 { #category : #private }
 GtkFormView >> resizeIfEnabledTo: extent [
 
@@ -83,6 +90,7 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangles: rects [
 
-	rects do: [ :each | 
-		self updateSurfaceRectangle: each ]
+	self updateAllSurface
+"	rects do: [ :each | 
+		self updateSurfaceRectangle: each ]"
 ]

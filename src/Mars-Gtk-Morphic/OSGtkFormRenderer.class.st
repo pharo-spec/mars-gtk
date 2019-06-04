@@ -2,47 +2,62 @@ Class {
 	#name : #OSGtkFormRenderer,
 	#superclass : #OSWindowFormRenderer,
 	#instVars : [
-		'gtkFormView'
+		'formView'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
+
+{ #category : #private }
+OSGtkFormRenderer >> ensureEventHandler [
+	"ensure we use the correct event handler"
+		
+	formView eventHandler: (GtkMorphicEventHandler new 
+		morphicWorld: self window osWindow eventHandler morphicWorld;
+		yourself).
+
+]
+
+{ #category : #private }
+OSGtkFormRenderer >> ensureFormView [
+	"ensure window contains a world morph view"
+	
+	self window gtkWindow
+		removeAll;
+		add: formView.
+		
+	formView show
+]
 
 { #category : #accessing }
 OSGtkFormRenderer >> form: aForm [
 
 	super form: aForm.
-	gtkFormView form: aForm
+	formView form: aForm
 ]
 
 { #category : #initialization }
 OSGtkFormRenderer >> initialize [
 
 	super initialize.
-	gtkFormView := GtkFormView new
+	formView := GtkFormView new
 ]
 
 { #category : #'updating screen' }
 OSGtkFormRenderer >> updateAll [
 	
-	gtkFormView invalidate
+	formView invalidate
 ]
 
 { #category : #'updating screen' }
 OSGtkFormRenderer >> updateRectangle: aRect [
 
-	gtkFormView invalidateRect: aRect
+	formView invalidateRect: aRect
 ]
 
 { #category : #accessing }
 OSGtkFormRenderer >> window: aWindowHandle [
 
 	super window: aWindowHandle.
-	"ensure we use the correct event handler"
-	gtkFormView eventHandler: aWindowHandle osWindow eventHandler.
-	"ensure window contains a world morph view"
-	aWindowHandle gtkWindow
-		removeAll;
-		add: (GtkBox newVertical 
-			packStart: gtkFormView;
-			yourself)
+	self ensureEventHandler.
+	self ensureFormView
 ]

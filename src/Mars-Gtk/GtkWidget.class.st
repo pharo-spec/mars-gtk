@@ -618,8 +618,7 @@ GtkWidget >> show [
 { #category : #showing }
 GtkWidget >> showAll [
 
-	^ self 
-		ffiCall: #(void gtk_widget_show_all (self))
+	self ffiCall: #(void gtk_widget_show_all (self))
 ]
 
 { #category : #private }
