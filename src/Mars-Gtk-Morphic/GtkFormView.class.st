@@ -10,41 +10,7 @@ Class {
 { #category : #private }
 GtkFormView class >> drawingAreaNew [
 
-	^ self ffiCall: #(GtkWorldMorphView *gtk_drawing_area_new ())
-]
-
-{ #category : #examples }
-GtkFormView class >> example [
-	| world view |
-
-	GtkApplication ensureRunning.
-
-	world := WorldMorph new.
-	
-	view := self newWorld: world.
-	WorldMorph addExtraWorld: world.
-	world changed.
-			
-	GtkWindow new 
-		title: 'World example';
-		add: (GtkScrolledWindow newWidget: view);
-		connectHide: [ WorldMorph removeExtraWorld: world ];
-		showAll
-]
-
-{ #category : #'instance creation' }
-GtkFormView class >> new [
-
-	self error: 'Use #newWorld:'
-]
-
-{ #category : #'instance creation' }
-GtkFormView class >> newWorld: aWorld [
-
-	^ self drawingAreaNew
-		initialize;
-		world: aWorld;
-		yourself
+	^ self ffiCall: #(GtkFormView *gtk_drawing_area_new ())
 ]
 
 { #category : #private }

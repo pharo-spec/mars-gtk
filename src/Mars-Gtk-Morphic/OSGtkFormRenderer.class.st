@@ -37,11 +37,12 @@ OSGtkFormRenderer >> updateRectangle: aRect [
 OSGtkFormRenderer >> window: aWindowHandle [
 
 	super window: aWindowHandle.
+	"ensure we use the correct event handler"
+	gtkFormView eventHandler: aWindowHandle osWindow eventHandler.
 	"ensure window contains a world morph view"
 	aWindowHandle gtkWindow
 		removeAll;
 		add: (GtkBox newVertical 
 			packStart: gtkFormView;
 			yourself)
-	
 ]
