@@ -20,6 +20,36 @@ TGdkEventState >> hasAnyModifier [
 ]
 
 { #category : #testing }
+TGdkEventState >> hasButton1Modifier [
+
+	^ self hasModifier: GdkModifierType GDK_BUTTON1_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasButton2Modifier [
+
+	^ self hasModifier: GdkModifierType GDK_BUTTON2_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasButton3Modifier [
+
+	^ self hasModifier: GdkModifierType GDK_BUTTON3_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasButton4Modifier [
+
+	^ self hasModifier: GdkModifierType GDK_BUTTON4_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasButton5Modifier [
+
+	^ self hasModifier: GdkModifierType GDK_BUTTON5_MASK
+]
+
+{ #category : #testing }
 TGdkEventState >> hasControlModifier [
 
 	^ self hasModifier: GdkModifierType GDK_CONTROL_MASK

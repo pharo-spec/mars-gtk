@@ -24,11 +24,9 @@ GtkMorphicEventHandler >> convertModifiers: anEvent [
 	anEvent hasShiftModifier ifTrue: [ modifiers := modifiers | 8 ]. "Shift key"
 	anEvent hasMetaModifier ifTrue: [ modifiers := modifiers | 2r01000000 ]. "Cmd key"
 	
-	"
-	modifiers buttons button1 ifTrue:  [ buttons := buttons | MouseButtonEvent redButton ].
-	modifiers buttons button2 ifTrue:  [ buttons := buttons | MouseButtonEvent blueButton ].
-	modifiers buttons button3 ifTrue:  [ buttons := buttons | MouseButtonEvent yellowButton ].
-	"
+	anEvent hasButton1Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent redButton ].
+	anEvent hasButton2Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent blueButton ].
+	anEvent hasButton3Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent yellowButton ].
 	
 	^ modifiers
 	

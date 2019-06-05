@@ -56,7 +56,6 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 	| newForm newSurface cr origin |
 
 	origin := aRect origin.
-	
 	newForm := Form extent: aRect extent depth: 32.
 	newForm 
 		copy: (0@0 extent: aRect extent)
