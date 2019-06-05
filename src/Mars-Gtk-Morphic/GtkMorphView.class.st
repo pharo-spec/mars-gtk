@@ -599,24 +599,6 @@ GtkMorphView >> resizeIfEnabledTo: extent [
 	self morph extent: extent
 ]
 
-{ #category : #'private primitives' }
-GtkMorphView >> setSourceSurfaceTo: cr surface: surface [
-
-	self 
-		setSourceSurfaceTo: cr 
-		surface: surface 
-		x: 0.0 
-		y: 0.0
-]
-
-{ #category : #'private primitives' }
-GtkMorphView >> setSourceSurfaceTo: cr surface: surface x: x y: y [
-
-	self 
-		ffiCall: #(void cairo_set_source_surface (void *cr, void *surface, double x,  double y))
-		module: CairoLibrary
-]
-
 { #category : #'world simulation' }
 GtkMorphView >> startStepping: aMorph [
 	
