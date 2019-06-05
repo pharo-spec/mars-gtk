@@ -361,6 +361,7 @@ GtkMorphicDrawingArea >> initialize [
 	drawing := false.
 
 	self registerToAllEvents.
+	self canFocus: true.
 	self connectToSignals.
 	
 	damageRecorder := DamageRecorder new	

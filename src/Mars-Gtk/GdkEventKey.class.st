@@ -109,6 +109,12 @@ GdkEventKey >> asKeyCombination [
 	^ KMKeyCombination fromEventKey: self
 ]
 
+{ #category : #compatibility }
+GdkEventKey >> character [
+
+	^ self keyCharacter
+]
+
 { #category : #'accessing structure variables' }
 GdkEventKey >> group [
 	"This method was automatically generated"
@@ -229,6 +235,18 @@ GdkEventKey >> length: anObject [
 	handle signedLongAt: OFFSET_LENGTH put: anObject
 ]
 
+{ #category : #compatibility }
+GdkEventKey >> position [
+
+	^ 0 @ 0
+]
+
+{ #category : #compatibility }
+GdkEventKey >> scanCode [
+
+	^ self hardware_keycode
+]
+
 { #category : #'accessing structure variables' }
 GdkEventKey >> send_event [
 	"This method was automatically generated"
@@ -263,6 +281,12 @@ GdkEventKey >> string [
 GdkEventKey >> string: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_STRING put: anObject getHandle.
+]
+
+{ #category : #compatibility }
+GdkEventKey >> symbol [
+
+	^ self keyval
 ]
 
 { #category : #'accessing structure variables' }

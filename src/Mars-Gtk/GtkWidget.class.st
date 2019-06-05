@@ -141,6 +141,12 @@ GtkWidget >> canDefault: can_default [
 	self ffiCall: #(void gtk_widget_set_can_default (self, gboolean can_default))
 ]
 
+{ #category : #private }
+GtkWidget >> canFocus: can_focus [
+
+	^ self ffiCall: #(void gtk_widget_set_can_focus (self, gboolean can_focus))
+]
+
 { #category : #signaling }
 GtkWidget >> connectButtonPressEvent: aBlock [
 	"connects to button-press-event signal 

@@ -25,7 +25,8 @@ OSGtkFormRenderer >> ensureFormView [
 		removeAll;
 		add: formView.
 		
-	formView show
+	formView show.
+	formView grabFocus
 ]
 
 { #category : #accessing }
