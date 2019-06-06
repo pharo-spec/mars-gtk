@@ -11,7 +11,8 @@ Class {
 		'requestedSize'
 	],
 	#pools : [
-		'GdkEventMask'
+		'GdkEventMask',
+		'GdkEventType'
 	],
 	#category : #'Mars-Gtk-Widget'
 }

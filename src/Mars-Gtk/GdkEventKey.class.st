@@ -286,7 +286,7 @@ GdkEventKey >> string: anObject [
 { #category : #compatibility }
 GdkEventKey >> symbol [
 
-	^ self keyval
+	^ self scanCode
 ]
 
 { #category : #'accessing structure variables' }

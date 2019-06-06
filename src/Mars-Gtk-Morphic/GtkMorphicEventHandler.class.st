@@ -35,7 +35,8 @@ GtkMorphicEventHandler >> convertModifiers: anEvent [
 { #category : #events }
 GtkMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 
-	self activeHand handleEvent: anEvent
+	self processEventQueue.
+	super dispatchMorphicEvent: anEvent
 ]
 
 { #category : #events }
@@ -49,6 +50,16 @@ GtkMorphicEventHandler >> handleEvent: anEvent [
 	self dispatchMorphicEvent: morphicEvent.
 
 	^ morphicEvent wasHandled
+]
+
+{ #category : #events }
+GtkMorphicEventHandler >> processEventQueue [
+	| event |
+
+	self eventQueue isEmpty ifTrue: [ ^ self ].
+
+	[ (event := self eventQueue nextOrNil) notNil ] 
+	whileTrue: [ super dispatchMorphicEvent: event ]
 ]
 
 { #category : #visiting }

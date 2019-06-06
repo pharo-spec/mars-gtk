@@ -39,6 +39,14 @@ GtkFormView >> form: aForm [
 	self invalidate	
 ]
 
+{ #category : #'private events' }
+GtkFormView >> handleEvent: anEvent [
+
+	anEvent type = GdkEventType GDK_ENTER_NOTIFY 
+		ifTrue: [ self grabFocus ].
+	^ super handleEvent: anEvent
+]
+
 { #category : #private }
 GtkFormView >> resizeIfEnabledTo: extent [
 
@@ -62,7 +70,15 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 		from: origin 
 		in: self form 
 		rule: Form over.
-		
+
+	"debugForm := Form extent: aRect extent depth: 32.
+	debugForm fill: (0@0 extent: aRect extent) rule: Form over fillColor: Color blue.
+	newForm
+		copy: (0@0 extent: aRect extent)
+		from: 0@0
+		in: debugForm 
+		rule: Form blend."
+			
 	newSurface := AthensCairoSurface fromForm: newForm.
 	cr := self cairoCreate: self activeSurface getHandle.
 	[
@@ -79,7 +95,7 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangles: rects [
 
-	rects do: [ :eachRect |
+	rects reverseDo: [ :eachRect |
 		self updateSurfaceRectangle: eachRect ]
 ]
 

@@ -403,6 +403,12 @@ GtkMorphView >> currentExtent [
 	^ self morph extent
 ]
 
+{ #category : #'world simulation' }
+GtkMorphView >> defer: aBlock [
+
+	aBlock value
+]
+
 { #category : #'private events' }
 GtkMorphView >> handleEvent: event [
 
