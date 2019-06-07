@@ -149,7 +149,7 @@ GdkEventKey >> isEscape [
 { #category : #testing }
 GdkEventKey >> isEventKey [
 
-	^ false
+	^ true
 ]
 
 { #category : #testing }
@@ -236,20 +236,11 @@ GdkEventKey >> length: anObject [
 	handle signedLongAt: OFFSET_LENGTH put: anObject
 ]
 
-{ #category : #private }
-GdkEventKey >> pointerPositionOnWidget [
-	| gdkWindow pointer |
-	
-	gdkWindow := (GtkWindow fromHandle: self window) gdkWindow.
-	pointer := GdkDisplay default defaultSeat pointer.
-	^ gdkWindow positionOfDevice: pointer
-	
-]
-
 { #category : #compatibility }
 GdkEventKey >> position [
 
-	^ position ifNil: [ position := self pointerPositionOnWidget ]
+	^ position ifNil: [ 
+		position := (GdkWindow fromHandle: self window) positionOfPointer ]
 ]
 
 { #category : #compatibility }

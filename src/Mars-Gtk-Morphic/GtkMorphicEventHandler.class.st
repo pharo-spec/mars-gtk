@@ -85,9 +85,12 @@ GtkMorphicEventHandler >> convertModifiers: anEvent [
 	anEvent hasShiftModifier ifTrue: [ modifiers := modifiers | 8 ]. "Shift key"
 	anEvent hasMetaModifier ifTrue: [ modifiers := modifiers | 2r01000000 ]. "Cmd key"
 	
-	anEvent hasButton1Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent redButton ].
-	anEvent hasButton2Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent blueButton ].
-	anEvent hasButton3Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent yellowButton ].
+	anEvent isEventButton ifFalse: [ 
+		anEvent hasButton1Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent redButton ].
+		anEvent hasButton2Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent blueButton ].
+		anEvent hasButton3Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent yellowButton ] ].
+
+	{ anEvent type. modifiers. self activeHand lastEvent. self activeHand lastEvent anyButtonPressed } crLog.
 	
 	^ modifiers
 	
@@ -136,15 +139,16 @@ GtkMorphicEventHandler >> processEventQueue [
 
 { #category : #visiting }
 GtkMorphicEventHandler >> visitKeyDownEvent: anEvent [
-	| keyDownEvent keyStrokeEvent mods |
+	| keyDownEvent keyStrokeEvent modifiers keyValue |
 
-	mods := anEvent modifiers.
+	modifiers := self convertModifiers: anEvent modifiers.
+	keyValue := self mapSymbolToKeyValue: anEvent symbol.
 	keyDownEvent := KeyboardEvent new
 		setType: #keyDown
-		buttons: (self convertModifiers: mods)
+		buttons: modifiers
 		position: anEvent position
-		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
-		charCode: (self mapSymbolToKeyValue: anEvent symbol)
+		keyValue: keyValue
+		charCode: keyValue
 		hand:  self activeHand
 		stamp: Time millisecondClockValue.
 	keyDownEvent scanCode: anEvent scanCode.
@@ -156,30 +160,27 @@ GtkMorphicEventHandler >> visitKeyDownEvent: anEvent [
 	"That's stupid and horrible, but that's the way we doing it for now"
 	keyDownEvent keyValue = 27 "Esc" ifFalse: [
 		anEvent character ifNil: [ 
-			(mods alt or: [ mods ctrl or: [ mods cmd ] ]) ifFalse: [ 
-				^ nil
-			]]
-	].
+			(modifiers alt or: [ modifiers ctrl or: [ modifiers cmd ] ]) ifFalse: [ 
+				^ nil ] ] ].
 		
 	"Workaround for SDL<->Morphic: produce keystroke events
 	if any modifier key held down (for non-modified keys there are OSTextInputEvent)"
-	
 	keyStrokeEvent := KeyboardEvent new
 		setType: #keystroke
-		buttons: (self convertModifiers: anEvent modifiers)
+		buttons: modifiers
 		position: anEvent position
-		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
-		charCode: (self mapSymbolToKeyValue: anEvent symbol)
+		keyValue: keyValue
+		charCode: keyValue
 		hand:  morphicWorld activeHand
 		stamp: Time millisecondClockValue.
 	keyStrokeEvent scanCode: anEvent scanCode.
-keyStrokeEvent crLog.
+	
 	^ keyStrokeEvent
 ]
 
 { #category : #visiting }
 GtkMorphicEventHandler >> visitUnknownEvent: anEvent [
 
-	anEvent type crLog.
+	"anEvent type crLog."
 	^ nil
 ]

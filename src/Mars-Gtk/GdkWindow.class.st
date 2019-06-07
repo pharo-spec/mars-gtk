@@ -27,21 +27,27 @@ GdkWindow >> ffiLibraryName [
 GdkWindow >> positionOfDevice: device [
 	| xBuffer yBuffer |
 	
-	xBuffer := FFIInt32 newBuffer.
-	yBuffer := FFIInt32 newBuffer.
+	xBuffer := FFIFloat64 newBuffer.
+	yBuffer := FFIFloat64 newBuffer.
 	
 	self positionOfDevice: device x: xBuffer y: yBuffer.
 	
-	^ (xBuffer signedLongAt: 1) @ (yBuffer signedLongAt: 1)
+	^ (xBuffer doubleAt: 1) @ (yBuffer doubleAt: 1)
 ]
 
 { #category : #private }
 GdkWindow >> positionOfDevice: device x: x y: y [
 
-	^ self ffiCall: #(GdkWindow *gdk_window_get_device_position (
+	^ self ffiCall: #(GdkWindow *gdk_window_get_device_position_double (
 		self, 
 		GdkDevice *device,
-		gint *x,
-		gint *y,
+		gdouble *x,
+		gdouble *y,
 		NULL))
+]
+
+{ #category : #accessing }
+GdkWindow >> positionOfPointer [
+
+	^ self positionOfDevice: GdkDisplay default defaultSeat pointer
 ]
