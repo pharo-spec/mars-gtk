@@ -1,3 +1,9 @@
+"
+enum GdkModifierType
+A set of bit-flags to indicate the state of modifier keys and mouse buttons in various event types. Typical modifier keys are Shift, Control, Meta, Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock.
+
+https://developer.gnome.org/gdk3/stable/gdk3-Windows.html#GdkModifierType
+"
 Class {
 	#name : #GdkModifierType,
 	#superclass : #GtkEnumeration,

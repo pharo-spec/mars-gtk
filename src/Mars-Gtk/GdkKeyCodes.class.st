@@ -1,14 +1,17 @@
 "
-Key codes of the gtk platform (just the ones needed). 
+Key codes of the gtk platform (just the ones needed because they are a lot). 
 They can be found at: gdk/gdkkeysyms.h
 "
 Class {
 	#name : #GdkKeyCodes,
 	#superclass : #SharedPool,
 	#classVars : [
+		'KEY_BackSpace',
 		'KEY_Begin',
 		'KEY_Break',
 		'KEY_Cancel',
+		'KEY_Clear',
+		'KEY_Delete',
 		'KEY_Down',
 		'KEY_End',
 		'KEY_Escape',
@@ -18,19 +21,26 @@ Class {
 		'KEY_Home',
 		'KEY_Insert',
 		'KEY_Left',
+		'KEY_Linefeed',
 		'KEY_Menu',
 		'KEY_Mode_switch',
 		'KEY_Next',
 		'KEY_Num_Lock',
 		'KEY_Page_Down',
 		'KEY_Page_Up',
+		'KEY_Pause',
 		'KEY_Print',
 		'KEY_Prior',
 		'KEY_Redo',
+		'KEY_Return',
 		'KEY_Right',
+		'KEY_Scroll_Lock',
 		'KEY_Select',
+		'KEY_Sys_Req',
+		'KEY_Tab',
 		'KEY_Undo',
 		'KEY_Up',
+		'KEY_VoidSymbol',
 		'KEY_script_switch'
 	],
 	#category : #'Mars-Gtk-Base-Events'
@@ -39,7 +49,18 @@ Class {
 { #category : #'class initialization' }
 GdkKeyCodes class >> initialize [ 
 
-	KEY_Escape 	:= 16rff1b.
+	KEY_VoidSymbol := 16rffffff.
+
+	KEY_BackSpace := 16rff08.
+	KEY_Tab := 16rff09.
+	KEY_Linefeed := 16rff0a.
+	KEY_Clear := 16rff0b.
+	KEY_Return := 16rff0d.
+	KEY_Pause := 16rff13.
+	KEY_Scroll_Lock := 16rff14.
+	KEY_Sys_Req := 16rff15.
+	KEY_Escape := 16rff1b.
+	KEY_Delete := 16rffff.
 	KEY_Home := 16rff50.
 	KEY_Left := 16rff51.
 	KEY_Up := 16rff52.

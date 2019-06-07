@@ -10,7 +10,8 @@ Class {
 	#classTraits : 'TGdkEventState classTrait',
 	#instVars : [
 		'keyValue',
-		'wasHandled'
+		'wasHandled',
+		'position'
 	],
 	#classVars : [
 		'OFFSET_GROUP',
@@ -235,10 +236,20 @@ GdkEventKey >> length: anObject [
 	handle signedLongAt: OFFSET_LENGTH put: anObject
 ]
 
+{ #category : #private }
+GdkEventKey >> pointerPositionOnWidget [
+	| gdkWindow pointer |
+	
+	gdkWindow := (GtkWindow fromHandle: self window) gdkWindow.
+	pointer := GdkDisplay default defaultSeat pointer.
+	^ gdkWindow positionOfDevice: pointer
+	
+]
+
 { #category : #compatibility }
 GdkEventKey >> position [
 
-	^ 0 @ 0
+	^ position ifNil: [ position := self pointerPositionOnWidget ]
 ]
 
 { #category : #compatibility }
@@ -286,7 +297,7 @@ GdkEventKey >> string: anObject [
 { #category : #compatibility }
 GdkEventKey >> symbol [
 
-	^ self scanCode
+	^ self keyValue
 ]
 
 { #category : #'accessing structure variables' }

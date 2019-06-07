@@ -4,8 +4,69 @@ I'm used to convert Gtk events into Morphic events to be passed to GtkMorphView 
 Class {
 	#name : #GtkMorphicEventHandler,
 	#superclass : #OSWindowMorphicEventHandler,
+	#pools : [
+		'GdkKeyCodes'
+	],
+	#classInstVars : [
+		'symbolCharacterMapping'
+	],
 	#category : #'Mars-Gtk-Morphic'
 }
+
+{ #category : #'as yet unclassified' }
+GtkMorphicEventHandler class >> createSymbolCharacterMapping [
+	| mapping |
+
+	mapping := Dictionary new.
+	{
+	 	KEY_Return . Character cr.
+	  	KEY_BackSpace . Character backspace.
+	 	KEY_Tab . Character tab.
+	 	KEY_Home . Character home.
+	 	KEY_Left . Character arrowLeft.
+	 	KEY_Up . Character arrowUp.
+	 	KEY_Right . Character arrowRight.
+	 	KEY_Down . Character arrowDown.
+	 	KEY_End . Character end.
+	 	KEY_Insert . Character insert.
+	 	KEY_Page_Up . Character pageUp.
+	 	KEY_Page_Down . Character pageDown.
+	 	KEY_Delete. Character delete.
+		
+		"OSK_KP_0 . $0.
+	 	OSK_KP_1 . $1.
+	 	OSK_KP_2 . $2.
+	 	OSK_KP_3 . $3.
+	 	OSK_KP_4 . $4.
+	 	OSK_KP_5 . $5.
+	 	OSK_KP_6 . $6.
+	 	OSK_KP_7 . $7.
+	 	OSK_KP_8 . $8.
+	 	OSK_KP_9 . $9.
+	 	OSK_KP_DIVIDE . $/.
+	 	OSK_KP_MULTIPLY . $*.
+	 	OSK_KP_PLUS . $+.
+	 	OSK_KP_MINUS . $-.
+	 	OSK_KP_ENTER . Character cr.
+	 	OSK_KP_PERIOD . $. "
+	} pairsDo: [ :key :val | mapping at: key put: val charCode ].
+	
+	^ mapping
+]
+
+{ #category : #'as yet unclassified' }
+GtkMorphicEventHandler class >> symbolCharacterMapping [
+
+	^ symbolCharacterMapping ifNil: [ symbolCharacterMapping := self createSymbolCharacterMapping  ]
+]
+
+{ #category : #'as yet unclassified' }
+GtkMorphicEventHandler class >> symbolCharacterMappingAt: aKey ifAbsent: aBlock [
+
+	^ self symbolCharacterMapping 
+		at: aKey
+		ifAbsent: aBlock
+]
 
 { #category : #converting }
 GtkMorphicEventHandler >> convertModifiers: anEvent [
@@ -52,6 +113,17 @@ GtkMorphicEventHandler >> handleEvent: anEvent [
 	^ morphicEvent wasHandled
 ]
 
+{ #category : #converting }
+GtkMorphicEventHandler >> mapSymbolToKeyValue: symbol [
+
+	^ self class 
+		symbolCharacterMappingAt: symbol 
+		ifAbsent: [ 
+			symbol = KEY_VoidSymbol
+				ifTrue: [ nil ]
+				ifFalse: [ symbol ] ]
+]
+
 { #category : #events }
 GtkMorphicEventHandler >> processEventQueue [
 	| event |
@@ -60,6 +132,49 @@ GtkMorphicEventHandler >> processEventQueue [
 
 	[ (event := self eventQueue nextOrNil) notNil ] 
 	whileTrue: [ super dispatchMorphicEvent: event ]
+]
+
+{ #category : #visiting }
+GtkMorphicEventHandler >> visitKeyDownEvent: anEvent [
+	| keyDownEvent keyStrokeEvent mods |
+
+	mods := anEvent modifiers.
+	keyDownEvent := KeyboardEvent new
+		setType: #keyDown
+		buttons: (self convertModifiers: mods)
+		position: anEvent position
+		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
+		charCode: (self mapSymbolToKeyValue: anEvent symbol)
+		hand:  self activeHand
+		stamp: Time millisecondClockValue.
+	keyDownEvent scanCode: anEvent scanCode.
+	self enqueue: keyDownEvent.
+	
+	"This is for ctrl/alt held alone makes morphic think that null character is good text input"
+	keyDownEvent keyValue = 0 ifTrue: [ ^ self ].
+	
+	"That's stupid and horrible, but that's the way we doing it for now"
+	keyDownEvent keyValue = 27 "Esc" ifFalse: [
+		anEvent character ifNil: [ 
+			(mods alt or: [ mods ctrl or: [ mods cmd ] ]) ifFalse: [ 
+				^ nil
+			]]
+	].
+		
+	"Workaround for SDL<->Morphic: produce keystroke events
+	if any modifier key held down (for non-modified keys there are OSTextInputEvent)"
+	
+	keyStrokeEvent := KeyboardEvent new
+		setType: #keystroke
+		buttons: (self convertModifiers: anEvent modifiers)
+		position: anEvent position
+		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
+		charCode: (self mapSymbolToKeyValue: anEvent symbol)
+		hand:  morphicWorld activeHand
+		stamp: Time millisecondClockValue.
+	keyStrokeEvent scanCode: anEvent scanCode.
+keyStrokeEvent crLog.
+	^ keyStrokeEvent
 ]
 
 { #category : #visiting }

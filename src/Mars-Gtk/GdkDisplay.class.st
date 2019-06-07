@@ -34,6 +34,12 @@ GdkDisplay class >> getDefault [
 	^ self ffiCall: #(GdkDisplay *gdk_display_get_default (void))
 ]
 
+{ #category : #accessing }
+GdkDisplay >> defaultSeat [ 
+
+	^ GdkSeat defaultForDisplay: self
+]
+
 { #category : #'library path' }
 GdkDisplay >> ffiLibraryName [ 
 

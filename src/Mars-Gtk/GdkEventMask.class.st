@@ -1,3 +1,9 @@
+"
+enum GdkEventMask
+A set of bit-flags to indicate which events a window is to receive. Most of these masks map onto one or more of the GdkEventType event types above.
+
+https://developer.gnome.org/gdk3/stable/gdk3-Events.html#GdkEventMask
+"
 Class {
 	#name : #GdkEventMask,
 	#superclass : #GtkEnumeration,

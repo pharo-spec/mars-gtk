@@ -370,6 +370,12 @@ GtkWidget >> fontMap: font_map [
 	^ self ffiCall: #(void gtk_widget_set_font_map (self, PangoFontMap *font_map))
 ]
 
+{ #category : #accessing }
+GtkWidget >> gdkWindow [
+
+	^ self ffiCall: #(GdkWindow *gtk_widget_get_window (self))
+]
+
 { #category : #testing }
 GtkWidget >> getAllocatedHeight [
 	"Returns the height that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
