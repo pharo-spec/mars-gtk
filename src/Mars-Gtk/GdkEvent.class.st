@@ -81,6 +81,14 @@ GdkEvent >> autoRelease [
 	FFIExternalResourceManager addResource: self
 ]
 
+{ #category : #compatibility }
+GdkEvent >> button [
+	"button number pressed. 
+	 by default, zero"
+
+	^ 0
+]
+
 { #category : #accessing }
 GdkEvent >> ffiLibrary [
 

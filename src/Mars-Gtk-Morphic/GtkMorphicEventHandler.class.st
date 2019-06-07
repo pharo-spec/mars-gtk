@@ -70,7 +70,7 @@ GtkMorphicEventHandler class >> symbolCharacterMappingAt: aKey ifAbsent: aBlock 
 
 { #category : #converting }
 GtkMorphicEventHandler >> convertModifiers: anEvent [
-	| modifiers |
+	| modifiers button |
 
 	modifiers := 0.
 	
@@ -85,15 +85,15 @@ GtkMorphicEventHandler >> convertModifiers: anEvent [
 	anEvent hasShiftModifier ifTrue: [ modifiers := modifiers | 8 ]. "Shift key"
 	anEvent hasMetaModifier ifTrue: [ modifiers := modifiers | 2r01000000 ]. "Cmd key"
 	
-	anEvent isEventButton ifFalse: [ 
-		anEvent hasButton1Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent redButton ].
-		anEvent hasButton2Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent blueButton ].
-		anEvent hasButton3Modifier ifTrue:  [ modifiers := modifiers | MouseButtonEvent yellowButton ] ].
+	button := anEvent button.
+	(button ~= 1 and: [ anEvent hasButton1Modifier ]) 
+		ifTrue: [ modifiers := modifiers | MouseButtonEvent redButton ].
+	(button ~= 2 and: [ anEvent hasButton2Modifier ]) 
+		ifTrue: [ modifiers := modifiers | MouseButtonEvent blueButton ].
+	(button ~= 3 and: [ anEvent hasButton3Modifier ]) 
+		ifTrue: [ modifiers := modifiers | MouseButtonEvent yellowButton ].
 
-	{ anEvent type. modifiers. self activeHand lastEvent. self activeHand lastEvent anyButtonPressed } crLog.
-	
 	^ modifiers
-	
 ]
 
 { #category : #events }
