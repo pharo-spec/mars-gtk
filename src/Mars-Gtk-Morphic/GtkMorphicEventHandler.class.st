@@ -19,6 +19,7 @@ GtkMorphicEventHandler class >> createSymbolCharacterMapping [
 
 	mapping := Dictionary new.
 	{
+		KEY_Escape. Character escape.
 	 	KEY_Return . Character cr.
 	  	KEY_BackSpace . Character backspace.
 	 	KEY_Tab . Character tab.
@@ -57,7 +58,7 @@ GtkMorphicEventHandler class >> createSymbolCharacterMapping [
 { #category : #'as yet unclassified' }
 GtkMorphicEventHandler class >> symbolCharacterMapping [
 
-	^ symbolCharacterMapping ifNil: [ symbolCharacterMapping := self createSymbolCharacterMapping  ]
+	^ symbolCharacterMapping ifNil: [ symbolCharacterMapping := self createSymbolCharacterMapping ]
 ]
 
 { #category : #'as yet unclassified' }

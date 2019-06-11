@@ -95,8 +95,9 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangles: rects [
 
-	rects reverseDo: [ :eachRect |
+	rects do: [ :eachRect |
 		self updateSurfaceRectangle: eachRect ]
+
 ]
 
 { #category : #accessing }
