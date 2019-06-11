@@ -188,6 +188,13 @@ GdkEventKey >> isKeyUp [
 	^ self keyValue = KEY_Up
 ]
 
+{ #category : #testing }
+GdkEventKey >> isModifier [
+	"Answers if the keycode received is a modifier (for example, control or alt)"
+
+	^ (self is_modifier & 2r00000001) = 1
+]
+
 { #category : #'accessing structure variables' }
 GdkEventKey >> is_modifier [
 	"This method was automatically generated"
@@ -288,7 +295,9 @@ GdkEventKey >> string: anObject [
 { #category : #compatibility }
 GdkEventKey >> symbol [
 
-	^ self keyValue
+	^ self isModifier 
+		ifTrue: [ 0 ] 
+		ifFalse: [ self keyValue ]
 ]
 
 { #category : #'accessing structure variables' }
