@@ -9,7 +9,7 @@ Class {
 	#category : #'Mars-Gtk-Misc'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GdkSeat class >> defaultForDisplay: aDisplay [ 
 
 	^ (self getDefaultSeat: aDisplay) initialize
@@ -21,7 +21,7 @@ GdkSeat class >> ffiLibraryName [
 	^ GdkLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GdkSeat class >> getDefaultSeat: display [
 
 	^ self ffiCall: #(GdkSeat *gdk_display_get_default_seat (GdkDisplay *display))

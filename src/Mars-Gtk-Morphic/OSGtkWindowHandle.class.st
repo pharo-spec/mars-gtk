@@ -23,6 +23,18 @@ OSGtkWindowHandle >> bounds: newBounds [
 ]
 
 { #category : #accessing }
+OSGtkWindowHandle >> clipboardText [
+	
+	^ GdkDisplay default defaultClipboard waitForText
+]
+
+{ #category : #accessing }
+OSGtkWindowHandle >> clipboardText: aString [
+
+	GdkDisplay default defaultClipboard text: aString
+]
+
+{ #category : #accessing }
 OSGtkWindowHandle >> extent [
 
 	self ifWindowIsNotValid: [ ^ 0@0 ].
@@ -104,7 +116,7 @@ OSGtkWindowHandle >> position: newPosition [
 { #category : #accessing }
 OSGtkWindowHandle >> show [
 
-	gtkWindow showAll 
+	gtkWindow showAll
 ]
 
 { #category : #accessing }

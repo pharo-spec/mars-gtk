@@ -35,6 +35,12 @@ GdkDisplay class >> getDefault [
 ]
 
 { #category : #accessing }
+GdkDisplay >> defaultClipboard [
+
+	^ GtkClipboard defaultForDisplay: self
+]
+
+{ #category : #accessing }
 GdkDisplay >> defaultSeat [ 
 
 	^ GdkSeat defaultForDisplay: self
