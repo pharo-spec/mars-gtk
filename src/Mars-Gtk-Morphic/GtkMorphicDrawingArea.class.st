@@ -1,3 +1,7 @@
+"
+I'm a base morphic drawing area. 
+I define common behaviour for my children. They will be resposibly to draw Morphs or other morphic related elements (like GtkFormView, used to display a full World).
+"
 Class {
 	#name : #GtkMorphicDrawingArea,
 	#superclass : #GtkDrawingArea,

@@ -1,3 +1,7 @@
+"
+I'm a widget to display a world contained in a Form.
+Being a Form a bitmap, this component could be used to display any kind of Form, containded in a World (provided through the event handler).
+"
 Class {
 	#name : #GtkFormView,
 	#superclass : #GtkMorphicDrawingArea,

@@ -25,13 +25,13 @@ OSGtkWindowHandle >> bounds: newBounds [
 { #category : #accessing }
 OSGtkWindowHandle >> clipboardText [
 	
-	^ GdkDisplay default defaultClipboard waitForText
+	^ GtkClipboard forSelection waitForText
 ]
 
 { #category : #accessing }
 OSGtkWindowHandle >> clipboardText: aString [
 
-	GdkDisplay default defaultClipboard text: aString
+	GtkClipboard forSelection text: aString
 ]
 
 { #category : #accessing }
