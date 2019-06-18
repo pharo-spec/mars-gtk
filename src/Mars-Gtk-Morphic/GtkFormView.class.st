@@ -98,10 +98,15 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangles: rects [
+	| mergedRect |
+	
+	mergedRect := rects size = 1 
+		ifTrue: [ rects first ]
+		ifFalse:[ Rectangle merging: rects ].
 
-	rects do: [ :eachRect |
-		self updateSurfaceRectangle: eachRect ]
-
+	mergedRect extent = self currentExtent 
+		ifTrue: [ ^ self updateAllSurface ].
+	self updateSurfaceRectangle: mergedRect
 ]
 
 { #category : #accessing }
