@@ -6,7 +6,8 @@ Class {
 	#name : #GtkFormView,
 	#superclass : #GtkMorphicDrawingArea,
 	#instVars : [
-		'form'
+		'form',
+		'cr'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -15,6 +16,15 @@ Class {
 GtkFormView class >> drawingAreaNew [
 
 	^ self ffiCall: #(GtkFormView *gtk_drawing_area_new ())
+]
+
+{ #category : #accessing }
+GtkFormView >> activeSurface: aSurface [ 
+
+	super activeSurface: aSurface.
+	cr ifNotNil: [ 
+		self cairoDestroy: cr ].
+	cr := self cairoCreate: aSurface getHandle
 ]
 
 { #category : #private }
@@ -65,7 +75,7 @@ GtkFormView >> updateAllSurface [
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangle: aRect [
-	| newForm newSurface cr origin |
+	| newForm newSurface origin |
 
 	origin := aRect origin.
 	newForm := Form extent: aRect extent depth: 32.
@@ -75,25 +85,13 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 		in: self form 
 		rule: Form over.
 
-	"debugForm := Form extent: aRect extent depth: 32.
-	debugForm fill: (0@0 extent: aRect extent) rule: Form over fillColor: Color blue.
-	newForm
-		copy: (0@0 extent: aRect extent)
-		from: 0@0
-		in: debugForm 
-		rule: Form blend."
-			
 	newSurface := AthensCairoSurface fromForm: newForm.
-	cr := self cairoCreate: self activeSurface getHandle.
-	[
-		self 
-			setSourceSurfaceTo: cr 
-			surface: newSurface getHandle
-			x: origin x asFloat
-			y: origin y asFloat.
-		self paint: cr ]
-	ensure: [ 
-		self cairoDestroy: cr ]
+	self 
+		setSourceSurfaceTo: cr 
+		surface: newSurface getHandle
+		x: origin x asFloat
+		y: origin y asFloat.
+	self paint: cr
 ]
 
 { #category : #'private updating' }

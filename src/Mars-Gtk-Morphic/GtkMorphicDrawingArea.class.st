@@ -435,7 +435,7 @@ GtkMorphicDrawingArea >> setSourceSurfaceTo: cr surface: surface [
 GtkMorphicDrawingArea >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 
 	self 
-		ffiCall: #(void cairo_set_source_surface (void *cr, void *surface, double x,  double y))
+		ffiCall: #(void cairo_set_source_surface (void *cr, void *surface, double x, double y))
 		module: CairoLibrary
 ]
 
