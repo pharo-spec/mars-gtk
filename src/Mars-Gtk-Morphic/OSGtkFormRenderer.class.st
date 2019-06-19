@@ -1,3 +1,7 @@
+"
+I'm a bridge between a window and a GtkFormView to render a Form.
+
+"
 Class {
 	#name : #OSGtkFormRenderer,
 	#superclass : #OSWindowFormRenderer,

@@ -1,3 +1,6 @@
+"
+A window driver used for running things using Gtk3 library.
+"
 Class {
 	#name : #OSGtkDriver,
 	#superclass : #OSWindowDriver,

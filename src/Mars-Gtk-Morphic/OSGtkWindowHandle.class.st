@@ -1,3 +1,7 @@
+"
+I'm a window handle for Gtk3.
+my handle is a GtkWindow
+"
 Class {
 	#name : #OSGtkWindowHandle,
 	#superclass : #OSWindowHandle,
