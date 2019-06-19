@@ -44,5 +44,5 @@ BaselineOfMars >> installGtkDriver [
 	"If we installed OSGtkDriver, we want to use it as default"
 	Smalltalk globals
 		at: #OSGtkDriver
-		ifPresent: [ :driverClass | OSWindowDriver currentDriverClass: driverClass ]
+		ifPresent: [ :driverClass | OSWindowDriver driverClass: driverClass ]
 ]
