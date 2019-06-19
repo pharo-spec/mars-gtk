@@ -20,11 +20,11 @@ BaselineOfMars >> baseline: spec [
 				package: 'Mars-Pango';
 				package: 'Mars-Gtk' with: [ spec requires: #('Beacon' 'Mars-Pango') ];
 				package: 'Mars-Gtk-Morphic' with: [ spec requires: #('Mars-Gtk') ];
-				package: 'Mars-Gtk-Morphic-Adapter' with: [ spec requires: #('Mars-Gtk-Morphic') ];
 				"spec"
 				package: 'Mars-Spec-Text' with: [ spec requires: 'Mars-Gtk' ];
 				package: 'Mars-Spec-Keybindings' with: [ spec requires: 'Mars-Gtk' ];
 				package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Text' 'Mars-Spec-Keybindings') ];
+				package: 'Mars-Gtk-Morphic-Adapter' with: [ spec requires: #('Mars-Gtk-Morphic' 'Mars-Spec') ];
 				"testing"
 				package: 'Mars-GtkBackendTests' with: [ spec requires: 'Mars-Spec' ];
 				package: 'Mars-Gtk-Tests' with: [ spec requires: 'Mars-Gtk' ];
@@ -44,5 +44,5 @@ BaselineOfMars >> installGtkDriver [
 	"If we installed OSGtkDriver, we want to use it as default"
 	Smalltalk globals
 		at: #OSGtkDriver
-		ifPresent: [ :class | class new beDefault ]
+		ifPresent: [ :driverClass | OSWindowDriver currentDriverClass: driverClass ]
 ]
