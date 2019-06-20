@@ -180,6 +180,18 @@ GtkMorphicEventHandler >> visitKeyDownEvent: anEvent [
 ]
 
 { #category : #visiting }
+GtkMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
+
+	"Gtk will inform a double click AND a simple click. 
+	 This is of course better, but morphic is more low level than that and will interpret double 
+	 click from two single clicks. 
+	 In order to make the world work properly, I need to let morphic do its interpretation (even 
+	 if is worst)"
+	anEvent isDoubleClick ifTrue: [ ^ nil ].
+	^ super visitMouseButtonPressEvent: anEvent.
+]
+
+{ #category : #visiting }
 GtkMorphicEventHandler >> visitUnknownEvent: anEvent [
 
 	"anEvent type crLog."
