@@ -13,6 +13,7 @@ BaselineOfMars >> baseline: spec [
 		do: [ 
 			self beacon: spec.
 			
+			spec postLoadDoIt: #recompileStructures.
 			spec postLoadDoIt: #installGtkDriver.
 
 			spec
@@ -38,11 +39,20 @@ BaselineOfMars >> beacon: spec [
 		spec repository: 'github://pharo-project/pharo-beacon/repository' ]
 ]
 
-{ #category : #baseline }
+{ #category : #doits }
 BaselineOfMars >> installGtkDriver [
 			
 	"If we installed OSGtkDriver, we want to use it as default"
 	Smalltalk globals
 		at: #OSGtkDriver
 		ifPresent: [ :driverClass | OSWindowDriver driverClass: driverClass ]
+]
+
+{ #category : #doits }
+BaselineOfMars >> recompileStructures [
+	"Recompile structures (just to be sure we match everything we need"
+
+	(Smalltalk at: #GtkEnumeration) allSubclassesDo: #initializeEnumeration.
+	(Smalltalk at: #GtkStructure) allSubclassesDo: #compileFields.
+	(Smalltalk at: #GtkWidget) withAllSubclassesDo: #recompile
 ]
