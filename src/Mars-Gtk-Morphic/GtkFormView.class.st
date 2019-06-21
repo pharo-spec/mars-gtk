@@ -22,9 +22,9 @@ GtkFormView class >> drawingAreaNew [
 GtkFormView >> activeSurface: aSurface [ 
 
 	super activeSurface: aSurface.
-	cr ifNotNil: [ 
+	"cr ifNotNil: [ 
 		self cairoDestroy: cr ].
-	cr := self cairoCreate: aSurface getHandle
+	cr := self cairoCreate: aSurface getHandle"
 ]
 
 { #category : #private }
@@ -33,10 +33,30 @@ GtkFormView >> canDraw [
 	^ true
 ]
 
+{ #category : #'private updating' }
+GtkFormView >> clipRectangle [
+	| rect |
+	
+	rect := GdkRectangle new.
+	self getClipRectangle: rect.
+	^ rect asRectangle
+]
+
 { #category : #private }
 GtkFormView >> currentExtent [
 
 	^ self form extent
+]
+
+{ #category : #drawing }
+GtkFormView >> draw: aCr [
+
+	[ 	cr := aCr. 
+		self updateSurface ] 
+	ensure: [ 
+		cr := nil ].
+
+	^ true
 ]
 
 { #category : #accessing }
@@ -53,12 +73,34 @@ GtkFormView >> form: aForm [
 	self invalidate	
 ]
 
+{ #category : #'private updating' }
+GtkFormView >> getClipRectangle: rect [
+	
+	^ self 
+		ffiCall: #(gboolean gdk_cairo_get_clip_rectangle (
+			"cairo_t *"void *cr,
+  			GdkRectangle *rect))
+		module: GLibLibrary
+]
+
 { #category : #'private events' }
 GtkFormView >> handleEvent: anEvent [
 
 	anEvent type = GdkEventType GDK_ENTER_NOTIFY 
 		ifTrue: [ self grabFocus ].
 	^ super handleEvent: anEvent
+]
+
+{ #category : #accessing }
+GtkFormView >> invalidate [
+
+	self queueDraw
+]
+
+{ #category : #accessing }
+GtkFormView >> invalidateRect: damageRect [
+
+	self queueDrawArea: damageRect
 ]
 
 { #category : #private }
@@ -69,8 +111,17 @@ GtkFormView >> resizeIfEnabledTo: extent [
 
 { #category : #'private updating' }
 GtkFormView >> updateAllSurface [
-		
-	self activeSurface: (AthensCairoSurface fromForm: (self form asFormOfDepth: 32))
+
+	self 
+		setSourceSurfaceTo: cr 
+		surface: (GtkFormCairoSurface fromForm: (self form asFormOfDepth: 32)) getHandle.
+	self paint: cr	
+]
+
+{ #category : #'private updating' }
+GtkFormView >> updateSurface [
+
+	self updateSurfaceRectangle: self clipRectangle
 ]
 
 { #category : #'private updating' }
@@ -85,9 +136,9 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 		in: self form 
 		rule: Form over.
 
-	newSurface := AthensCairoSurface fromForm: newForm.
+	newSurface := GtkFormCairoSurface fromForm: newForm.
 	self 
-		setSourceSurfaceTo: cr 
+		setSourceSurfaceTo: cr
 		surface: newSurface getHandle
 		x: origin x asFloat
 		y: origin y asFloat.
@@ -96,15 +147,13 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangles: rects [
-	| mergedRect |
+	"| mergedRect |
 	
 	mergedRect := rects size = 1 
 		ifTrue: [ rects first ]
-		ifFalse:[ Rectangle merging: rects ].
+		ifFalse:[ Rectangle merging: rects ]."
 
-	mergedRect extent = self currentExtent 
-		ifTrue: [ ^ self updateAllSurface ].
-	self updateSurfaceRectangle: mergedRect
+	self updateSurfaceRectangle: rects first
 ]
 
 { #category : #accessing }

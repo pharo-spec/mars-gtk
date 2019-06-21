@@ -6,10 +6,7 @@ Class {
 	#name : #GtkMorphicDrawingArea,
 	#superclass : #GtkDrawingArea,
 	#instVars : [
-		'activeSurface',
-		'eventHandler',
-		'drawQueued',
-		'damageRecorder'
+		'eventHandler'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -264,18 +261,6 @@ GtkMorphicDrawingArea class >> newGridOf: aNumber with: aBlock [
 	^ gridMorph
 ]
 
-{ #category : #private }
-GtkMorphicDrawingArea >> activeSurface [
-	
-	^ activeSurface
-]
-
-{ #category : #private }
-GtkMorphicDrawingArea >> activeSurface: aSurface [
-
-	activeSurface := aSurface
-]
-
 { #category : #'private primitives' }
 GtkMorphicDrawingArea >> cairoCreate: target [
 
@@ -314,19 +299,7 @@ GtkMorphicDrawingArea >> currentExtent [
 { #category : #drawing }
 GtkMorphicDrawingArea >> draw: cr [
 
-	(drawing or: [ self canDraw not ]) ifTrue: [ ^ true ].
-
-	drawing := true.	
-	[
-		self needUpdate ifTrue: [ 
-			self updateSurface ].
-		self setSourceSurfaceTo: cr surface: activeSurface getHandle.
-		self paint: cr ]
-	ensure: [ 
-		drawing := false.
-		drawQueued := false ].
-
-	^ true
+	self subclassResponsibility
 ]
 
 { #category : #drawing }
@@ -361,42 +334,22 @@ GtkMorphicDrawingArea >> handleEvent: event [
 GtkMorphicDrawingArea >> initialize [ 
 
 	super initialize.
-	drawQueued := false.
-	drawing := false.
 
 	self registerToAllEvents.
 	self canFocus: true.
-	self connectToSignals.
-	
-	damageRecorder := DamageRecorder new	
-
+	self connectToSignals
 ]
 
 { #category : #accessing }
 GtkMorphicDrawingArea >> invalidate [
 
-	self invalidate: true
-]
-
-{ #category : #private }
-GtkMorphicDrawingArea >> invalidate: needQueue [
-
-	damageRecorder doFullRepaint.
-	needQueue ifTrue: [ self queueDraw ]
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 GtkMorphicDrawingArea >> invalidateRect: damageRect [
 
-	damageRecorder recordInvalidRect: damageRect.
-	self queueDraw
-
-]
-
-{ #category : #testing }
-GtkMorphicDrawingArea >> needUpdate [
-
-	^ damageRecorder updateIsNeeded
+	self subclassResponsibility
 ]
 
 { #category : #'private primitives' }
@@ -407,12 +360,20 @@ GtkMorphicDrawingArea >> paint: cr [
 		module: CairoLibrary
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GtkMorphicDrawingArea >> queueDraw [
 	
-	(drawing or: [ drawQueued ]) ifTrue: [ ^ self ].
-	drawQueued := true.
+	"(drawing or: [ drawQueued ]) ifTrue: [ ^ self ].
+	drawQueued := true."
 	super queueDraw
+]
+
+{ #category : #accessing }
+GtkMorphicDrawingArea >> queueDrawArea: rect [
+
+	"(drawing or: [ drawQueued ]) ifTrue: [ ^ self ].
+	drawQueued := true."
+	super queueDrawArea: rect
 ]
 
 { #category : #private }
@@ -440,26 +401,7 @@ GtkMorphicDrawingArea >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 ]
 
 { #category : #'private updating' }
-GtkMorphicDrawingArea >> updateAllSurface [
-
-	self subclassResponsibility
-]
-
-{ #category : #'private updating' }
 GtkMorphicDrawingArea >> updateSurface [
-	| rects |
-	
-	self flag: #TODO. "Do not use the nil HACK here (add a method to DamageRecorder to know if 
-	I need to redraw all instead)."
-	rects := damageRecorder invalidRectsFullBounds: nil.
-	damageRecorder reset.
-	rects first 
-		ifNotNil: [ self updateSurfaceRectangles: rects ]
-		ifNil: [ self updateAllSurface ]
-]
-
-{ #category : #'private updating' }
-GtkMorphicDrawingArea >> updateSurfaceRectangles: rects [
 
 	self subclassResponsibility
 ]

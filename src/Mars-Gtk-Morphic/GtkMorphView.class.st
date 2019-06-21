@@ -6,6 +6,9 @@ Class {
 	#superclass : #GtkMorphicDrawingArea,
 	#instVars : [
 		'morph',
+		'activeSurface',
+		'drawQueued',
+		'damageRecorder',
 		'morphResizable',
 		'activeHand',
 		'alarms',
@@ -295,6 +298,18 @@ GtkMorphView >> activeHand [
 			yourself ]
 ]
 
+{ #category : #private }
+GtkMorphView >> activeSurface [
+	
+	^ activeSurface
+]
+
+{ #category : #private }
+GtkMorphView >> activeSurface: aSurface [
+
+	activeSurface := aSurface
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
 	"Add a new alarm with the given set of parameters"
@@ -409,6 +424,24 @@ GtkMorphView >> defer: aBlock [
 	aBlock value
 ]
 
+{ #category : #drawing }
+GtkMorphView >> draw: cr [
+
+	(drawing or: [ self canDraw not ]) ifTrue: [ ^ true ].
+
+	drawing := true.	
+	[
+		self needUpdate ifTrue: [ 
+			self updateSurface ].
+		self setSourceSurfaceTo: cr surface: activeSurface getHandle.
+		self paint: cr ]
+	ensure: [ 
+		drawing := false.
+		drawQueued := false ].
+
+	^ true
+]
+
 { #category : #'private events' }
 GtkMorphView >> handleEvent: event [
 
@@ -423,6 +456,10 @@ GtkMorphView >> initialize [
 
 	super initialize.
 	self beMorphResizable.
+
+	drawQueued := false.
+	drawing := false.
+	damageRecorder := DamageRecorder new.	
 	layeredMorphs := OrderedCollection new: 1.
 	eventHandler := self createEventHandler	
 ]
@@ -479,6 +516,26 @@ GtkMorphView >> invalidRect: damageRect from: aMorph [
 	self invalidateRect: damageRect
 ]
 
+{ #category : #accessing }
+GtkMorphView >> invalidate [
+
+	self invalidate: true
+]
+
+{ #category : #private }
+GtkMorphView >> invalidate: needQueue [
+
+	damageRecorder doFullRepaint.
+	needQueue ifTrue: [ self queueDraw ]
+]
+
+{ #category : #accessing }
+GtkMorphView >> invalidateRect: damageRect [
+
+	damageRecorder recordInvalidRect: damageRect.
+	self queueDrawArea: damageRect
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> isCursorOwner [
 
@@ -524,6 +581,12 @@ GtkMorphView >> morph: aMorph [
 GtkMorphView >> morphResizable: aBoolean [
 
 	morphResizable := aBoolean
+]
+
+{ #category : #testing }
+GtkMorphView >> needUpdate [
+
+	^ damageRecorder updateIsNeeded
 ]
 
 { #category : #private }
@@ -667,6 +730,19 @@ GtkMorphView >> updateAllSurface [
 	self activeSurface: (self newSurfaceOfMorph: self morph).
 	layeredMorphs do: [ :each |
 		self paintMorph: each ]
+]
+
+{ #category : #'private updating' }
+GtkMorphView >> updateSurface [
+	| rects |
+	
+	self flag: #TODO. "Do not use the nil HACK here (add a method to DamageRecorder to know if 
+	I need to redraw all instead)."
+	rects := damageRecorder invalidRectsFullBounds: nil.
+	damageRecorder reset.
+	rects first 
+		ifNotNil: [ self updateSurfaceRectangles: rects ]
+		ifNil: [ self updateAllSurface ]
 ]
 
 { #category : #'private updating' }
