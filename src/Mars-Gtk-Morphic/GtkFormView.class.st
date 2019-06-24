@@ -83,6 +83,18 @@ GtkFormView >> getClipRectangle: rect [
 		module: GLibLibrary
 ]
 
+{ #category : #'private updating' }
+GtkFormView >> getContext: surface [
+	
+	^ self ffiCall: #(void *cairo_quartz_surface_get_cg_context (void *surface)) module: CairoLibrary
+]
+
+{ #category : #'private updating' }
+GtkFormView >> getTarget [
+	
+	^ self ffiCall: #(void *cairo_get_target (void *cr)) module: CairoLibrary
+]
+
 { #category : #'private events' }
 GtkFormView >> handleEvent: anEvent [
 
