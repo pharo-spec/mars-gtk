@@ -110,15 +110,6 @@ GtkFormView >> resizeIfEnabledTo: extent [
 ]
 
 { #category : #'private updating' }
-GtkFormView >> updateAllSurface [
-
-	self 
-		setSourceSurfaceTo: cr 
-		surface: (GtkFormCairoSurface fromForm: (self form asFormOfDepth: 32)) getHandle.
-	self paint: cr	
-]
-
-{ #category : #'private updating' }
 GtkFormView >> updateSurface [
 
 	self updateSurfaceRectangle: self clipRectangle
@@ -143,17 +134,6 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 		x: origin x asFloat
 		y: origin y asFloat.
 	self paint: cr
-]
-
-{ #category : #'private updating' }
-GtkFormView >> updateSurfaceRectangles: rects [
-	"| mergedRect |
-	
-	mergedRect := rects size = 1 
-		ifTrue: [ rects first ]
-		ifFalse:[ Rectangle merging: rects ]."
-
-	self updateSurfaceRectangle: rects first
 ]
 
 { #category : #accessing }

@@ -1,8 +1,6 @@
 "
 I'm a cairo surface to be used on form rendering. 
 It will create a cairo surface that does not needs to be mapped to RGBA (as my parent does).
-
-
 "
 Class {
 	#name : #GtkFormCairoSurface,
@@ -13,7 +11,7 @@ Class {
 { #category : #'instance creation' }
 GtkFormCairoSurface class >> extent: anExtent [
 
-	^ self 
+	^ self platformClass
 		extent: anExtent 
 		format: CAIRO_FORMAT_RGB24
 ]
@@ -33,5 +31,22 @@ GtkFormCairoSurface class >> fromForm: aForm [
 	surface markDirty.
 
 	^ surface.
+
+]
+
+{ #category : #'instance creation' }
+GtkFormCairoSurface class >> platformClass [
+		
+	OSPlatform current isMacOS ifTrue: [ ^ GtkFormQuartzCairoSurface ].
+	^ self
+]
+
+{ #category : #private }
+GtkFormCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
+
+	^ self ffiCall: #(GtkFormCairoSurface cairo_image_surface_create (
+		int aFormat,
+		int aWidth,
+		int aHeight))
 
 ]

@@ -8,7 +8,7 @@ Class {
 GtkContainerAdapter >> add: anAdapter [ 
 	
 	self widgetDo: [ :this | 
-		this packStart: anAdapter asWidget ]
+		this packStart: anAdapter widget ]
 ]
 
 { #category : #building }
