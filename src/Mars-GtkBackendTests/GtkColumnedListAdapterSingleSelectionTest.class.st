@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 GtkColumnedListAdapterSingleSelectionTest >> classToTest [
-	^ TablePresenter
+	^ SpTablePresenter
 ]
 
 { #category : #running }
@@ -16,8 +16,8 @@ GtkColumnedListAdapterSingleSelectionTest >> setUp [
 
 	window := presenter
 		beSingleSelection;
-		addColumn: (StringTableColumn evaluated: [:x | x asString ]);
-		addColumn: (StringTableColumn evaluated: [:x | (x + 1) asString ]);
+		addColumn: (SpStringTableColumn evaluated: [:x | x asString ]);
+		addColumn: (SpStringTableColumn evaluated: [:x | (x + 1) asString ]);
 		items: #(10 20 30);
 		openWithSpec.
 ]

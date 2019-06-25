@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkAdapterBindings,
-	#superclass : #SpecAdapterBindings,
+	#superclass : #SpAdapterBindings,
 	#category : #'Mars-Spec-Adapter'
 }
 

@@ -3,7 +3,7 @@ Extension { #name : #PluggableMenuSpec }
 { #category : #'*Mars-Spec' }
 PluggableMenuSpec >> asMenuBarPresenter [
 	
-	^ MenuBarPresenter new
+	^ SpMenuBarPresenter new
 		addGroup: [ :group |
 			self items do: [ :each |
 				group addMenuItem: each asMenuItemPresenter ] ]
@@ -13,7 +13,7 @@ PluggableMenuSpec >> asMenuBarPresenter [
 PluggableMenuSpec >> asMenuPresenter [
 	| presenter |
 	
-	presenter := MenuPresenter new.
+	presenter := SpMenuPresenter new.
 	(self items groupByRuns: [ :each | each separator = true ]) do: [ :eachGroup |
 		presenter addGroup: [ :group |
 			eachGroup do: [  :each |

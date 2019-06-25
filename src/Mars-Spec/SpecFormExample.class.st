@@ -1,6 +1,6 @@
 Class {
 	#name : #SpecFormExample,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'textInputLabel',
 		'textInput',
@@ -16,38 +16,9 @@ Class {
 
 { #category : #specs }
 SpecFormExample class >> defaultSpec [ 
-	<spec: #default>
-	
-	^ SpecLayout composed
-		newColumn: [ :column |
-			column
-				newRow: [ :row |
-					row 
-						newColumn: #textInputLabel;
-						newColumn: #textInput ]
-					height: 25;
-				newRow: [ :row |
-					row 
-						newColumn: #numberInputLabel;
-						newColumn: #numberInput ]
-					height: 25;
-				newRow: [ :row |
-					row 
-						newColumn: #textAreaLabel;
-						newColumn: #textArea ];
-				newRow: [ :row |
-					row 
-						newColumn: #checkBoxLabel;
-						newColumn: #checkBox ]
-					height: 25;
-				addSpacer ]
-]
-
-{ #category : #specs }
-SpecFormExample class >> gridSpec [ 
 	<spec: #grid>
 	
-	^ SpecGridLayout new 
+	^ SpGridLayout new 
 		add: #textInputLabel 				at: 1@1;
 		add: #textInput 					at: 2@1;
 		add: #numberInputLabel 			at: 1@2;
@@ -70,11 +41,9 @@ SpecFormExample class >> show [
 SpecFormExample class >> showWithGtk [
 	<example>
 	
-	SpecBindings 
+	SpBindings 
 		value: GtkAdapterBindings new
-		during: [ self new openWithSpec: #gridSpec ].
-
-
+		during: [ self new openWithSpec ]
 ]
 
 { #category : #'accessing ui' }

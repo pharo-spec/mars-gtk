@@ -1,6 +1,6 @@
 Class {
 	#name : #SpecFormExample2,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'morph'
 	],
@@ -11,8 +11,9 @@ Class {
 SpecFormExample2 class >> defaultSpec [ 
 	<spec: #default>
 	
-	^ SpecLayout composed
-		newColumn: #morph
+	^ SpBoxLayout newVertical
+		add: #morph;
+		yourself
 ]
 
 { #category : #examples }
@@ -26,7 +27,7 @@ SpecFormExample2 class >> show [
 SpecFormExample2 class >> showWithGtk [
 	<example>
 	
-	SpecBindings 
+	SpBindings 
 		value: GtkAdapterBindings new
 		during: [ self new openWithSpec ]
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkAdapter,
-	#superclass : #AbstractAdapter,
+	#superclass : #SpAbstractAdapter,
 	#instVars : [
 		'lastShownMenu'
 	],

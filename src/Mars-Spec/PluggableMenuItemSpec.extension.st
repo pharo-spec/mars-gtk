@@ -10,7 +10,7 @@ PluggableMenuItemSpec >> asMenuItemPresenter [
 			inject: KMMetaModifier new + self keyText substrings first first
 			into: [ :all :each | all, (each first) ] ].
 			
-	^ MenuItemPresenter new
+	^ SpMenuItemPresenter new
 		name: self label;
 		icon: self icon;
 		description: self help;

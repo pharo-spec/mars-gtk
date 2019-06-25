@@ -16,12 +16,12 @@ GtkToolBarAdapter >> addModelTo: gtkToolBar [
 
 	needsSeparator := false.
 	self model items 
-		at: ToolBarItemPosition left 
+		at: SpToolBarItemPosition left 
 		ifPresent: [ :items |
 			items do: [ :each | gtkToolBar add: each buildWithSpec ].
 			needsSeparator := true ].
 	self model items 
-		at: ToolBarItemPosition right 
+		at: SpToolBarItemPosition right 
 		ifPresent: [ :items |
 			needsSeparator ifTrue: [ 
 				gtkToolBar add: (GtkSeparatorToolItem new 

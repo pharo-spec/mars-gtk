@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkBackendForTest,
-	#superclass : #AbstractBackendForTest,
+	#superclass : #SpAbstractBackendForTest,
 	#instVars : [
 		'app'
 	],
@@ -104,7 +104,7 @@ GtkBackendForTest >> openInstanceOf: aTest [
 GtkBackendForTest >> runTest: aBlockClosure [ 
 		
 	GtkApplication ensureRunning. 
-	app := SpecApplication new.
+	app := SpApplication new.
 	app useBackend: #Gtk.
 	aBlockClosure value
 ]

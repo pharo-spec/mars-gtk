@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkAdapterTestCase,
-	#superclass : #SpecTestCase,
+	#superclass : #SpTestCase,
 	#category : #'Mars-GtkBackendTests'
 }
 
@@ -14,7 +14,7 @@ GtkAdapterTestCase >> adapter [
 GtkAdapterTestCase >> runCaseManaged [
 
 	GtkApplication ensureRunning. 
-	SpecBindings 
+	SpBindings 
 		value: GtkAdapterBindings new 
 		during: [ super runCaseManaged ]
 ]

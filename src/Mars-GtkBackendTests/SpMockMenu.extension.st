@@ -1,7 +1,7 @@
-Extension { #name : #SpecMockMenu }
+Extension { #name : #SpMockMenu }
 
 { #category : #'*Mars-GtkBackendTests' }
-SpecMockMenu >> children [
+SpMockMenu >> children [
 	"hack for test. 
 	 In populate-popup events (textview, entry) the callback will enter here 
 	 as a prove I'm in the right callback. 
@@ -13,17 +13,17 @@ SpecMockMenu >> children [
 ]
 
 { #category : #'*Mars-GtkBackendTests' }
-SpecMockMenu >> connectDestroy: aBlock [
+SpMockMenu >> connectDestroy: aBlock [
 
 	
 ]
 
 { #category : #'*Mars-GtkBackendTests' }
-SpecMockMenu >> popupAtPointer: event [
+SpMockMenu >> popupAtPointer: event [
 
 	self shown: true
 ]
 
 { #category : #'*Mars-GtkBackendTests' }
-SpecMockMenu >> showAll [
+SpMockMenu >> showAll [
 ]

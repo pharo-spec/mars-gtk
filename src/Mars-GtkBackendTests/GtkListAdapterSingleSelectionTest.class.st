@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 GtkListAdapterSingleSelectionTest >> classToTest [
-	^ ListPresenter
+	^ SpListPresenter
 ]
 
 { #category : #running }

@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 GtkComponentListAdapterTest >> classToTest [
-	^ ComponentListPresenter
+	^ SpComponentListPresenter
 ]
 
 { #category : #running }
@@ -15,12 +15,12 @@ GtkComponentListAdapterTest >> testAddingOnePresentersToAlreadyOpenedWidgetAddsO
 	self assert: self adapter widget items size equals: 0.
 	presenter
 		addPresenter:
-			(ButtonPresenter new
+			(SpButtonPresenter new
 				label: ' Test ';
 				yourself).
 	presenter
 		addPresenter:
-			(ButtonPresenter new
+			(SpButtonPresenter new
 				label: ' Test ';
 				yourself).
 	self assert: self adapter widget items size equals: 2
@@ -31,10 +31,10 @@ GtkComponentListAdapterTest >> testAddingTwoPresentersToAlreadyOpenedWidgetAddsO
 	self openInstance.
 	self assert: self adapter widget items size equals: 0.
 	presenter
-		addPresenter: (ButtonPresenter new label: ' Test ' yourself).
+		addPresenter: (SpButtonPresenter new label: ' Test ' yourself).
 	presenter
 		addPresenter:
-			(ButtonPresenter new
+			(SpButtonPresenter new
 				label: ' Test ';
 				yourself).
 	self assert: self adapter widget items size equals: 2
@@ -44,7 +44,7 @@ GtkComponentListAdapterTest >> testAddingTwoPresentersToAlreadyOpenedWidgetAddsO
 GtkComponentListAdapterTest >> testOpeningAComponentListPresenterWithOnePresenterGeneratesAWidgetWithOneRow [
 	presenter
 		addPresenter:
-			(ButtonPresenter new
+			(SpButtonPresenter new
 				label: ' Test ';
 				yourself).
 	self openInstance.
@@ -55,11 +55,11 @@ GtkComponentListAdapterTest >> testOpeningAComponentListPresenterWithOnePresente
 GtkComponentListAdapterTest >> testOpeningAComponentListPresenterWithTwoPresenterGeneratesAWidgetWithTwoRow [
 	presenter
 		addPresenter:
-			(ButtonPresenter new
+			(SpButtonPresenter new
 				label: ' Test ';
 				yourself);
 		addPresenter:
-			(LabelPresenter new
+			(SpLabelPresenter new
 				label: 'Test2';
 				yourself).
 	self openInstance.
