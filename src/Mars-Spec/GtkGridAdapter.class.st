@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkGridAdapter,
 	#superclass : #GtkLayoutAdapter,
+	#instVars : [
+		'layout'
+	],
 	#category : #'Mars-Spec-Layout-Grid'
 }
 
@@ -8,11 +11,14 @@ Class {
 GtkGridAdapter >> addConstraits: constraints toChild: childWidget [
 	"adds constraits by child."
 	
-	self flag: #TODO. "this should ne constraints by column, row or own."
-
-	childWidget 
-		beVAlignCenter;
-		hExpand: true
+	(layout rowConstraintsAt: constraints position y) ifNotNil: [ :c |
+		c expand ifNotNil: [ :expand | childWidget vExpand: expand ] ].
+		
+	(layout columnConstraintsAt: constraints position x) ifNotNil: [ :c |
+		c expand ifNotNil: [ :expand | childWidget hExpand: expand ] ].
+	
+	constraints hAlign ifNotNil: [ :hAlign | childWidget hAlign: hAlign asGtkAlign ].
+	constraints vAlign ifNotNil: [ :vAlign | childWidget vAlign: vAlign asGtkAlign ]
 ]
 
 { #category : #private }
@@ -39,6 +45,7 @@ GtkGridAdapter >> buildWidget [
 { #category : #building }
 GtkGridAdapter >> layout: aLayout [
 	
+	layout := aLayout.
 	self widgetDo: [ :w |
 		w 
 			borderWidth: aLayout borderWidth;
