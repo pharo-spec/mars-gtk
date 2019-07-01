@@ -277,6 +277,18 @@ GtkMorphicDrawingArea >> cairoDestroy: cr [
 		module: CairoLibrary
 ]
 
+{ #category : #'private primitives' }
+GtkMorphicDrawingArea >> cairoRectangle: aCr x: xValue y: yValue	width: aWidth height: aHeight [
+
+	self 
+		ffiCall: #(void cairo_rectangle (void *aCr,
+                 double xValue,
+                 double yValue,
+                 double aWidth,
+                 double aHeight))
+		module: CairoLibrary
+]
+
 { #category : #private }
 GtkMorphicDrawingArea >> canDraw [
 

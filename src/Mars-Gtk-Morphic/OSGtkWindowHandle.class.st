@@ -39,6 +39,12 @@ OSGtkWindowHandle >> clipboardText: aString [
 ]
 
 { #category : #accessing }
+OSGtkWindowHandle >> destroy [
+
+	gtkWindow destroy
+]
+
+{ #category : #accessing }
 OSGtkWindowHandle >> extent [
 
 	self ifWindowIsNotValid: [ ^ 0@0 ].

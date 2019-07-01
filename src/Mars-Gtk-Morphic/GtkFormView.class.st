@@ -7,7 +7,7 @@ Class {
 	#superclass : #GtkMorphicDrawingArea,
 	#instVars : [
 		'form',
-		'cr'
+		'surface'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -18,13 +18,16 @@ GtkFormView class >> drawingAreaNew [
 	^ self ffiCall: #(GtkFormView *gtk_drawing_area_new ())
 ]
 
-{ #category : #accessing }
-GtkFormView >> activeSurface: aSurface [ 
+{ #category : #private }
+GtkFormView >> cairoCreate: aSurface [.
 
-	super activeSurface: aSurface.
-	"cr ifNotNil: [ 
-		self cairoDestroy: cr ].
-	cr := self cairoCreate: aSurface getHandle"
+	self ffiCall: #("cairo_t*"void *cairo_create ("cairo_surface_t*" void *aSurface))	
+]
+
+{ #category : #private }
+GtkFormView >> cairoDestroy: aCr [.
+
+	self ffiCall: #(void cairo_destroy ("cairo_t *" void* aCr))	
 ]
 
 { #category : #private }
@@ -34,11 +37,11 @@ GtkFormView >> canDraw [
 ]
 
 { #category : #'private updating' }
-GtkFormView >> clipRectangle [
+GtkFormView >> clipRectangleFrom: aCr [
 	| rect |
 	
 	rect := GdkRectangle new.
-	self getClipRectangle: rect.
+	self getClipRectangle: rect from: aCr.
 	^ rect asRectangle
 ]
 
@@ -51,10 +54,29 @@ GtkFormView >> currentExtent [
 { #category : #drawing }
 GtkFormView >> draw: aCr [
 
-	[ 	cr := aCr. 
-		self updateSurface ] 
-	ensure: [ 
-		cr := nil ].
+	| rect |
+	surface ifNil: [ ^ false ].
+
+	rect := self clipRectangleFrom: aCr.
+
+"	cairo_set_source_surface (cr, src_surface, x_dest - x_src, y_dest - y_src);
+	cairo_rectangle (cr, x_dest, y_dest, width, height);
+	cairo_fill (cr);
+"
+	self 
+		setSourceSurfaceTo: aCr
+		surface: surface getHandle
+		x: 0.0 
+		y: 0.0.
+
+	self 
+		cairoRectangle: aCr 
+		x: rect origin x asFloat 
+		y: rect origin y asFloat 
+		width: rect width asFloat 
+		height: rect height asFloat.
+
+	self paint: aCr.
 
 	^ true
 ]
@@ -74,7 +96,7 @@ GtkFormView >> form: aForm [
 ]
 
 { #category : #'private updating' }
-GtkFormView >> getClipRectangle: rect [
+GtkFormView >> getClipRectangle: rect from: cr [
 	
 	^ self 
 		ffiCall: #(gboolean gdk_cairo_get_clip_rectangle (
@@ -90,7 +112,7 @@ GtkFormView >> getContext: surface [
 ]
 
 { #category : #'private updating' }
-GtkFormView >> getTarget [
+GtkFormView >> getTargetFrom: cr [
 	
 	^ self ffiCall: #(void *cairo_get_target (void *cr)) module: CairoLibrary
 ]
@@ -106,12 +128,14 @@ GtkFormView >> handleEvent: anEvent [
 { #category : #accessing }
 GtkFormView >> invalidate [
 
+	self updateSurface.
 	self queueDraw
 ]
 
 { #category : #accessing }
 GtkFormView >> invalidateRect: damageRect [
 
+	self updateSurfaceRectangle: damageRect.
 	self queueDrawArea: damageRect
 ]
 
@@ -124,12 +148,14 @@ GtkFormView >> resizeIfEnabledTo: extent [
 { #category : #'private updating' }
 GtkFormView >> updateSurface [
 
-	self updateSurfaceRectangle: self clipRectangle
+	surface := GtkFormCairoSurface fromForm: form.
 ]
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangle: aRect [
-	| newSurface origin newForm|
+	| newSurface origin newForm aCr|
+
+	surface ifNil: [ self updateSurface ].
 
 	origin := aRect origin.
 
@@ -141,12 +167,18 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 		rule: Form over.
 
 	newSurface := GtkFormCairoSurface fromForm: newForm.
+	aCr := self cairoCreate: surface.
+
 	self 
-		setSourceSurfaceTo: cr
+		setSourceSurfaceTo: aCr
 		surface: newSurface getHandle
 		x: origin x asFloat
 		y: origin y asFloat.
-	self paint: cr
+	
+	self paint: aCr.
+	
+	self cairoDestroy: aCr.
+	
 ]
 
 { #category : #accessing }
