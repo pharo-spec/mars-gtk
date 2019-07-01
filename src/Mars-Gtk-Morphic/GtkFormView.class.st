@@ -7,8 +7,7 @@ Class {
 	#superclass : #GtkMorphicDrawingArea,
 	#instVars : [
 		'form',
-		'cr',
-		'newForm'
+		'cr'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -130,7 +129,7 @@ GtkFormView >> updateSurface [
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangle: aRect [
-	| newSurface origin|
+	| newSurface origin newForm|
 
 	origin := aRect origin.
 
