@@ -7,7 +7,8 @@ Class {
 	#name : #GtkWindow,
 	#superclass : #GtkContainer,
 	#instVars : [
-		'acceleratorGroups'
+		'acceleratorGroups',
+		'cursor'
 	],
 	#pools : [
 		'GtkWindowPosition',
@@ -92,6 +93,13 @@ GtkWindow >> center [
 GtkWindow >> connectActivateFocus: aBlock [
 
 	self connect: 'activate-focus' do: aBlock
+]
+
+{ #category : #accessing }
+GtkWindow >> cursor: aGdkCursor [
+
+	cursor := aGdkCursor.
+	self setCursor
 ]
 
 { #category : #accessing }
@@ -229,6 +237,13 @@ GtkWindow >> resize: aPoint [
 { #category : #private }
 GtkWindow >> resizeWidth: width height: height [
 	^ self ffiCall: #(void gtk_window_resize (self, gint width, gint height))
+]
+
+{ #category : #accessing }
+GtkWindow >> setCursor [
+
+	"Use #cursor: to store the cursor in the object"
+	self ffiCall: #(void gdk_window_set_cursor (self, GdkCursor *cursor))
 ]
 
 { #category : #private }

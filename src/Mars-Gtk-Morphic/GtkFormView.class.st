@@ -7,7 +7,8 @@ Class {
 	#superclass : #GtkMorphicDrawingArea,
 	#instVars : [
 		'form',
-		'cr'
+		'cr',
+		'newForm'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -118,7 +119,7 @@ GtkFormView >> invalidateRect: damageRect [
 { #category : #private }
 GtkFormView >> resizeIfEnabledTo: extent [
 
-	self world checkNewWindowSize
+	self world worldState worldRenderer checkForNewScreenSize
 ]
 
 { #category : #'private updating' }
@@ -129,9 +130,10 @@ GtkFormView >> updateSurface [
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangle: aRect [
-	| newForm newSurface origin |
+	| newSurface origin|
 
 	origin := aRect origin.
+
 	newForm := Form extent: aRect extent depth: 32.
 	newForm 
 		copy: (0@0 extent: aRect extent)

@@ -6,10 +6,17 @@ Class {
 	#name : #OSGtkFormRenderer,
 	#superclass : #OSWindowFormRenderer,
 	#instVars : [
-		'formView'
+		'formView',
+		'buffer'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
+
+{ #category : #'updating screen' }
+OSGtkFormRenderer >> deferUpdatesWhile: aBlock [
+	
+	aBlock value
+]
 
 { #category : #private }
 OSGtkFormRenderer >> ensureEventHandler [
@@ -36,7 +43,8 @@ OSGtkFormRenderer >> ensureFormView [
 OSGtkFormRenderer >> form: aForm [
 
 	super form: aForm.
-	formView form: aForm
+	buffer := Form extent: aForm extent depth: aForm depth.
+	formView form: buffer
 ]
 
 { #category : #initialization }
@@ -49,11 +57,31 @@ OSGtkFormRenderer >> initialize [
 { #category : #'updating screen' }
 OSGtkFormRenderer >> updateAll [
 	
-	formView invalidate
+	self updateRectangle: form boundingBox
+]
+
+{ #category : #'updating screen' }
+OSGtkFormRenderer >> updateAreas: allDamage immediate: forceToScreen [
+
+	| updateUnion |
+
+	allDamage ifEmpty: [ ^ self ].
+
+	updateUnion := 	allDamage inject: allDamage first into: [ :a :b | a merge: b ].
+	buffer copy: updateUnion from: updateUnion origin in: form rule: Form over.	
+
+	formView invalidateRect: updateUnion.	
+
 ]
 
 { #category : #'updating screen' }
 OSGtkFormRenderer >> updateRectangle: aRect [
+
+	buffer 
+		copy: aRect
+		from: aRect origin 
+		in: form 
+		rule: Form over.
 
 	formView invalidateRect: aRect
 ]
