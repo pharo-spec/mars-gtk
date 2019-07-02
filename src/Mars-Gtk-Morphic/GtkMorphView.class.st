@@ -600,14 +600,6 @@ GtkMorphView >> newSurfaceOfMorph: aMorph [
 	^ newSurface
 ]
 
-{ #category : #'private primitives' }
-GtkMorphView >> paint: cr [
-
-	self 
-		ffiCall: #(void cairo_paint (void *cr))
-		module: CairoLibrary
-]
-
 { #category : #'private updating' }
 GtkMorphView >> paintMorph: aMorph [
 	| cr position morphSurface |
