@@ -105,12 +105,23 @@ GtkMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 ]
 
 { #category : #events }
+GtkMorphicEventHandler >> evaluateUserInterrupt: anEvent [
+
+	(anEvent isEventKey
+		and: [ anEvent isKeyPress
+				and: [ anEvent hasAnyModifier and: [ anEvent keyCharacter = $. ] ] ])
+		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
+]
+
+{ #category : #events }
 GtkMorphicEventHandler >> handleEvent: anEvent [
 	"convert the event to morphic one, and dispatch it whatever..."
 	| morphicEvent |
 	
 	morphicEvent := anEvent accept: self.
 	morphicEvent isMorphicEvent ifFalse: [ ^ false ].
+
+	self evaluateUserInterrupt: anEvent.
 	
 	self dispatchMorphicEvent: morphicEvent.
 
