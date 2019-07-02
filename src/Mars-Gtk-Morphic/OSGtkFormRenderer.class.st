@@ -6,8 +6,7 @@ Class {
 	#name : #OSGtkFormRenderer,
 	#superclass : #OSWindowFormRenderer,
 	#instVars : [
-		'formView',
-		'buffer'
+		'formView'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -43,8 +42,8 @@ OSGtkFormRenderer >> ensureFormView [
 OSGtkFormRenderer >> form: aForm [
 
 	super form: aForm.
-	buffer := Form extent: aForm extent depth: aForm depth.
-	formView form: buffer
+"	buffer := Form extent: aForm extent depth: aForm depth.
+"	formView form: aForm
 ]
 
 { #category : #initialization }
@@ -63,25 +62,21 @@ OSGtkFormRenderer >> updateAll [
 { #category : #'updating screen' }
 OSGtkFormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 
-	| updateUnion |
+	| intersection windowExtent |
 
 	allDamage ifEmpty: [ ^ self ].
+	windowExtent := window extent.
 
-	updateUnion := 	allDamage inject: allDamage first into: [ :a :b | a merge: b ].
-	buffer copy: updateUnion from: updateUnion origin in: form rule: Form over.	
-
-	formView invalidateRect: updateUnion.	
-
+	allDamage
+		do: [ :rectangle | 
+			intersection := rectangle
+				intersect: (0 @ 0 corner: windowExtent)
+				ifNone: [ nil ].
+			intersection ifNotNil: [ formView invalidateRect: rectangle ] ]
 ]
 
 { #category : #'updating screen' }
 OSGtkFormRenderer >> updateRectangle: aRect [
-
-	buffer 
-		copy: aRect
-		from: aRect origin 
-		in: form 
-		rule: Form over.
 
 	formView invalidateRect: aRect
 ]

@@ -17,6 +17,12 @@ GtkFormCairoSurface class >> extent: anExtent [
 ]
 
 { #category : #'instance creation' }
+GtkFormCairoSurface class >> extent: anExtent format: aFormat [
+	^ ( self primImage: aFormat width: anExtent x height: anExtent y) initialize
+
+]
+
+{ #category : #'instance creation' }
 GtkFormCairoSurface class >> fromForm: aForm [
 	| form surface |
 	
