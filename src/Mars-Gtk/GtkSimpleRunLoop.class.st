@@ -30,8 +30,8 @@ GtkSimpleRunLoop >> installRunLoop [
 GtkSimpleRunLoop >> processEvents [
 
 	[ self getEventsPending ]
-		whileTrue: [ self mainIterationDo: true ].
-	50 milliSeconds wait 
+		whileTrue: [ self mainIterationDo: false ].
+	20 milliSeconds wait 
 ]
 
 { #category : #'private installing' }
