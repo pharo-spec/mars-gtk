@@ -76,7 +76,7 @@ GtkFormView >> draw: aCr [
 		width: rect width asFloat 
 		height: rect height asFloat.
 
-	self paint: aCr.
+	self fill: aCr.
 
 	^ true
 ]

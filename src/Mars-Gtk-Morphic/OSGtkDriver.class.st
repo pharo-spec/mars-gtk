@@ -43,3 +43,7 @@ OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	
 	^ window
 ]
+
+{ #category : #'window creation' }
+OSGtkDriver >> unregisterWindowWithId: id [
+]
