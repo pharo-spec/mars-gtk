@@ -78,7 +78,7 @@ GtkFormView >> draw: aCr [
 
 	self fill: aCr.
 
-	^ true
+	^ false
 ]
 
 { #category : #accessing }
