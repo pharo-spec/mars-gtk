@@ -22,31 +22,20 @@ GdkPixbuf class >> getFromSurface: surface x: src_x y: src_y width: width height
 ]
 
 { #category : #'instance creation' }
-GdkPixbuf class >> newForm: aForm [
+GdkPixbuf class >> newFromSurface: aSurface width: width height: height [
 
-	^ self newMorph: aForm asMorph
+	^ self 
+		newFromSurface: aSurface 
+		x: 0
+		y: 0
+		width: width 
+		height: height
 ]
 
 { #category : #'instance creation' }
-GdkPixbuf class >> newMorph: anImageMorph [
-	| surface w h |
+GdkPixbuf class >> newFromSurface: surface x: x y: y width: width height: height [
 
-	surface := self surfaceFor: anImageMorph.
-	w := anImageMorph width asInteger.
-	h := anImageMorph height asInteger.
-
-	^ (self getFromSurface: surface x: 0 y: 0 width: w height: h) initialize
-]
-
-{ #category : #private }
-GdkPixbuf class >> surfaceFor: anImageMorph [
-	| surface |
-
-	surface := AthensCairoSurface extent: anImageMorph extent.
-	surface drawDuring: [ :canvas |
-		anImageMorph drawOnAthensCanvas: canvas ].
-	
-	^ surface
+	^ (self getFromSurface: surface x: x y: y width: width height: height) initialize
 ]
 
 { #category : #accessing }

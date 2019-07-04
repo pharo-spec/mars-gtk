@@ -17,6 +17,13 @@ GdkWindow class >> ffiLibraryName [
 	^ GdkLibrary
 ]
 
+{ #category : #accessing }
+GdkWindow >> cursor: cursor [
+
+	"Use #cursor: to store the cursor in the object"
+	self ffiCall: #(void gdk_window_set_cursor (self, GdkCursor *cursor))
+]
+
 { #category : #'library path' }
 GdkWindow >> ffiLibraryName [ 
 

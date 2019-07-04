@@ -99,7 +99,7 @@ GtkWindow >> connectActivateFocus: aBlock [
 GtkWindow >> cursor: aGdkCursor [
 
 	cursor := aGdkCursor.
-	self setCursor
+	self gdkWindow cursor: cursor
 ]
 
 { #category : #accessing }
@@ -237,13 +237,6 @@ GtkWindow >> resize: aPoint [
 { #category : #private }
 GtkWindow >> resizeWidth: width height: height [
 	^ self ffiCall: #(void gtk_window_resize (self, gint width, gint height))
-]
-
-{ #category : #accessing }
-GtkWindow >> setCursor [
-
-	"Use #cursor: to store the cursor in the object"
-	self ffiCall: #(void gdk_window_set_cursor (self, GdkCursor *cursor))
 ]
 
 { #category : #private }

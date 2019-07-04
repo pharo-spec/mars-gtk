@@ -7,7 +7,8 @@ Class {
 	#superclass : #OSWindowHandle,
 	#instVars : [
 		'gtkWindow',
-		'world'
+		'world',
+		'gtkCursorMap'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -77,11 +78,45 @@ OSGtkWindowHandle >> ifWindowIsNotValid: aBlock [
 ]
 
 { #category : #initialization }
+OSGtkWindowHandle >> initialize [
+
+	super initialize.
+	self initializeCursorMap
+]
+
+{ #category : #initialization }
 OSGtkWindowHandle >> initializeAttributes: attributes [
 
 	self initialize.
 	self initializeWindowAttributes: attributes.
 	attributes applyTo: self	
+]
+
+{ #category : #initialization }
+OSGtkWindowHandle >> initializeCursorMap [
+	"this is a map of cursors from morphic to existing gtk cursors. 
+	 they will be used to not always use the morphic ones, which is not what we want (unless 
+	 specified)"
+	
+	gtkCursorMap := Dictionary new
+		at: Cursor resizeBottom put: 'ns-resize';
+		at: Cursor resizeTop put: 'ns-resize';
+		at: Cursor resizeBottomLeft put: 'nesw-resize';
+		at: Cursor resizeBottomRight put: 'nwse-resize';
+		at: Cursor resizeTopLeft put: 'nwse-resize';
+		at: Cursor resizeTopRight put: 'nesw-resize';
+		at: Cursor resizeLeft put: 'ew-resize';
+		at: Cursor blank put: 'none';
+		at: Cursor crossHair put: 'crosshair';
+		at: Cursor up put: 'n-resize';
+		at: Cursor down put: 's-resize';
+		at: Cursor menu put: 'context-menu';
+		at: Cursor normal put: 'default';
+		at: Cursor overEditableText put: 'text';
+		at: Cursor wait put: 'wait';
+		at: Cursor webLink put: 'pointer';
+		at: Cursor write put: 'progress';
+		yourself
 ]
 
 { #category : #initialization }
@@ -121,6 +156,18 @@ OSGtkWindowHandle >> position: newPosition [
 
 	gtkWindow moveTo: newPosition
 	
+]
+
+{ #category : #accessing }
+OSGtkWindowHandle >> setMouseCursor: cursorForm mask: maskForm [
+	| cursor |
+	
+	cursor := gtkCursorMap 
+		at: cursorForm
+		ifPresent: [ :cursorName | GdkCursor newFromName: cursorName ]
+		ifAbsent: [ GdkCursor fromForm: cursorForm ].
+	
+	self gtkWindow cursor: cursor
 ]
 
 { #category : #accessing }
