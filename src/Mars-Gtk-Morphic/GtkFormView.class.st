@@ -148,7 +148,7 @@ GtkFormView >> resizeIfEnabledTo: extent [
 { #category : #'private updating' }
 GtkFormView >> updateSurface [
 
-	surface := GtkFormCairoSurface fromForm: form.
+	surface := GtkCairoSurface fromForm: form.
 ]
 
 { #category : #'private updating' }
@@ -166,7 +166,7 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 		in: self form 
 		rule: Form over.
 
-	newSurface := GtkFormCairoSurface fromForm: newForm.
+	newSurface := GtkCairoSurface fromForm: newForm.
 	aCr := self cairoCreate: surface.
 
 	self 

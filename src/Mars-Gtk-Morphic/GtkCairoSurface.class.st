@@ -3,13 +3,13 @@ I'm a cairo surface to be used on form rendering.
 It will create a cairo surface that does not needs to be mapped to RGBA (as my parent does).
 "
 Class {
-	#name : #GtkFormCairoSurface,
+	#name : #GtkCairoSurface,
 	#superclass : #AthensCairoSurface,
 	#category : #'Mars-Gtk-Morphic'
 }
 
 { #category : #'instance creation' }
-GtkFormCairoSurface class >> extent: anExtent [
+GtkCairoSurface class >> extent: anExtent [
 
 	^ self platformClass
 		extent: anExtent 
@@ -17,13 +17,13 @@ GtkFormCairoSurface class >> extent: anExtent [
 ]
 
 { #category : #'instance creation' }
-GtkFormCairoSurface class >> extent: anExtent format: aFormat [
+GtkCairoSurface class >> extent: anExtent format: aFormat [
 	^ ( self primImage: aFormat width: anExtent x height: anExtent y) initialize
 
 ]
 
 { #category : #'instance creation' }
-GtkFormCairoSurface class >> fromForm: aForm [
+GtkCairoSurface class >> fromForm: aForm [
 	| form surface |
 	
 	form := aForm unhibernate; asFormOfDepth: 32.
@@ -41,16 +41,27 @@ GtkFormCairoSurface class >> fromForm: aForm [
 ]
 
 { #category : #'instance creation' }
-GtkFormCairoSurface class >> platformClass [
+GtkCairoSurface class >> fromImageMorph: anImageMorph [
+	| surface |
+
+	surface := self extent: anImageMorph extent.
+	surface drawDuring: [ :canvas |
+		anImageMorph drawOnAthensCanvas: canvas ].
+	
+	^ surface
+]
+
+{ #category : #'instance creation' }
+GtkCairoSurface class >> platformClass [
 		
-	OSPlatform current isMacOS ifTrue: [ ^ GtkFormQuartzCairoSurface ].
+	OSPlatform current isMacOS ifTrue: [ ^ GtkQuartzCairoSurface ].
 	^ self
 ]
 
 { #category : #private }
-GtkFormCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
+GtkCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
 
-	^ self ffiCall: #(GtkFormCairoSurface cairo_image_surface_create (
+	^ self ffiCall: #(#GtkCairoSurface cairo_image_surface_create (
 		int aFormat,
 		int aWidth,
 		int aHeight))
