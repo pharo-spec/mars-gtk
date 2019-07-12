@@ -19,18 +19,6 @@ GtkFormView class >> drawingAreaNew [
 ]
 
 { #category : #private }
-GtkFormView >> cairoCreate: aSurface [.
-
-	self ffiCall: #("cairo_t*"void *cairo_create ("cairo_surface_t*" void *aSurface))	
-]
-
-{ #category : #private }
-GtkFormView >> cairoDestroy: aCr [.
-
-	self ffiCall: #(void cairo_destroy ("cairo_t *" void* aCr))	
-]
-
-{ #category : #private }
 GtkFormView >> canDraw [
 
 	^ true
@@ -53,30 +41,9 @@ GtkFormView >> currentExtent [
 
 { #category : #drawing }
 GtkFormView >> draw: aCr [
-
-	| rect |
-	surface ifNil: [ ^ false ].
-
-	rect := self clipRectangleFrom: aCr.
-
-"	cairo_set_source_surface (cr, src_surface, x_dest - x_src, y_dest - y_src);
-	cairo_rectangle (cr, x_dest, y_dest, width, height);
-	cairo_fill (cr);
-"
-	self 
-		setSourceSurfaceTo: aCr
-		surface: surface getHandle
-		x: 0.0 
-		y: 0.0.
-
-	self 
-		cairoRectangle: aCr 
-		x: rect origin x asFloat 
-		y: rect origin y asFloat 
-		width: rect width asFloat 
-		height: rect height asFloat.
-
-	self fill: aCr.
+	
+	surface ifNotNil: [ 
+		surface fillInto: aCr ].
 
 	^ false
 ]
@@ -153,10 +120,9 @@ GtkFormView >> updateSurface [
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangle: aRect [
-	| newSurface origin newForm aCr|
+	| newSurface origin newForm |
 
 	surface ifNil: [ self updateSurface ].
-
 	origin := aRect origin.
 
 	newForm := Form extent: aRect extent depth: 32.
@@ -167,18 +133,9 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 		rule: Form over.
 
 	newSurface := GtkCairoSurface fromForm: newForm.
-	aCr := self cairoCreate: surface.
-
-	self 
-		setSourceSurfaceTo: aCr
-		surface: newSurface getHandle
-		x: origin x asFloat
-		y: origin y asFloat.
-	
-	self paint: aCr.
-	
-	self cairoDestroy: aCr.
-	
+	newSurface 
+		paintInto: (self cairoCreate: surface)
+		at: origin
 ]
 
 { #category : #accessing }
