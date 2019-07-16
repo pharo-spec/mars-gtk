@@ -54,7 +54,7 @@ GtkCairoSurface class >> fromImageMorph: anImageMorph [
 	^ surface
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GtkCairoSurface class >> platformClass [
 		
 	OSPlatform current isMacOS ifTrue: [ ^ GtkQuartzCairoSurface ].
@@ -63,8 +63,9 @@ GtkCairoSurface class >> platformClass [
 
 { #category : #private }
 GtkCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
+	"rewrite to answer correct receiver"
 
-	^ self ffiCall: #(#GtkCairoSurface cairo_image_surface_create (
+	^ self ffiCall: #(GtkCairoSurface cairo_image_surface_create (
 		int aFormat,
 		int aWidth,
 		int aHeight))
@@ -72,9 +73,17 @@ GtkCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
 ]
 
 { #category : #'private primitives' }
-GtkCairoSurface >> cairoDestroy: cr [
+GtkCairoSurface >> cairoCreate: target [
 
 	^ self 
+		ffiCall: #("cairo_t"void *cairo_create ("cairo_surface_t"void *target))
+		module: CairoLibrary
+]
+
+{ #category : #'private primitives' }
+GtkCairoSurface >> cairoDestroy: cr [
+
+	self 
 		ffiCall: #(void cairo_destroy ("cairo_t *"void *cr))
 		module: CairoLibrary
 ]
@@ -100,6 +109,19 @@ GtkCairoSurface >> clipRectangleFrom: aCr [
 	^ rect asRectangle
 ]
 
+{ #category : #copying }
+GtkCairoSurface >> copyForm: aForm clippedBy: aRect at: aPoint [
+	"Will copy the contents of aForm into this surface at aPoint"
+	| cr newSurface |
+
+	cr := self cairoCreate: self getHandle.
+	newSurface := GtkCairoSurface fromForm: aForm.
+	newSurface 
+		paintInto: cr
+		at: aPoint.
+	self cairoDestroy: cr
+]
+
 { #category : #'private primitives' }
 GtkCairoSurface >> fill: cr [
 
@@ -108,30 +130,32 @@ GtkCairoSurface >> fill: cr [
 		module: CairoLibrary
 ]
 
-{ #category : #'as yet unclassified' }
-GtkCairoSurface >> fillInto: aCr [
+{ #category : #operations }
+GtkCairoSurface >> fillInto: cr [
+	"fills 'cr' with this surface. 
+	 it will take the clipping rectangle as the surface area to draw"
 	| rect |
 
-	rect := self clipRectangleFrom: aCr.
+	rect := self clipRectangleFrom: cr.
 
 "	cairo_set_source_surface (cr, src_surface, x_dest - x_src, y_dest - y_src);
 	cairo_rectangle (cr, x_dest, y_dest, width, height);
 	cairo_fill (cr);
 "
 	self 
-		setSourceSurfaceTo: aCr
+		setSourceSurfaceTo: cr
 		surface: self getHandle
 		x: 0.0 
 		y: 0.0.
 
 	self 
-		cairoRectangle: aCr 
+		cairoRectangle: cr 
 		x: rect origin x asFloat 
 		y: rect origin y asFloat 
 		width: rect width asFloat 
 		height: rect height asFloat.
 
-	self fill: aCr
+	self fill: cr
 ]
 
 { #category : #'private primitives' }
@@ -152,16 +176,16 @@ GtkCairoSurface >> paint: cr [
 		module: CairoLibrary
 ]
 
-{ #category : #'as yet unclassified' }
-GtkCairoSurface >> paintInto: cr at: origin [
+{ #category : #operations }
+GtkCairoSurface >> paintInto: cr at: aPoint [
+	"Paints this surface into 'cr' at specified positition"
 
 	self 
 		setSourceSurfaceTo: cr
 		surface: self getHandle
-		x: origin x asFloat
-		y: origin y asFloat.
-	self paint: cr.
-	self cairoDestroy: cr
+		x: aPoint x asFloat
+		y: aPoint y asFloat.
+	self paint: cr
 ]
 
 { #category : #'private primitives' }

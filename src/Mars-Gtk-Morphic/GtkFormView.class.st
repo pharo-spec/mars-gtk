@@ -24,15 +24,6 @@ GtkFormView >> canDraw [
 	^ true
 ]
 
-{ #category : #'private updating' }
-GtkFormView >> clipRectangleFrom: aCr [
-	| rect |
-	
-	rect := GdkRectangle new.
-	self getClipRectangle: rect from: aCr.
-	^ rect asRectangle
-]
-
 { #category : #private }
 GtkFormView >> currentExtent [
 
@@ -60,28 +51,6 @@ GtkFormView >> form: aForm [
 	form := aForm.
 	self sizeRequest: aForm extent.
 	self invalidate	
-]
-
-{ #category : #'private updating' }
-GtkFormView >> getClipRectangle: rect from: cr [
-	
-	^ self 
-		ffiCall: #(gboolean gdk_cairo_get_clip_rectangle (
-			"cairo_t *"void *cr,
-  			GdkRectangle *rect))
-		module: GLibLibrary
-]
-
-{ #category : #'private updating' }
-GtkFormView >> getContext: surface [
-	
-	^ self ffiCall: #(void *cairo_quartz_surface_get_cg_context (void *surface)) module: CairoLibrary
-]
-
-{ #category : #'private updating' }
-GtkFormView >> getTargetFrom: cr [
-	
-	^ self ffiCall: #(void *cairo_get_target (void *cr)) module: CairoLibrary
 ]
 
 { #category : #'private events' }
@@ -115,27 +84,23 @@ GtkFormView >> resizeIfEnabledTo: extent [
 { #category : #'private updating' }
 GtkFormView >> updateSurface [
 
-	surface := GtkCairoSurface fromForm: form.
+	surface := GtkCairoSurface fromForm: form
 ]
 
 { #category : #'private updating' }
 GtkFormView >> updateSurfaceRectangle: aRect [
-	| newSurface origin newForm |
-
-	surface ifNil: [ self updateSurface ].
+	| origin newForm |
+	
+	surface ifNil: [ ^ self updateSurface ].
+	
 	origin := aRect origin.
-
 	newForm := Form extent: aRect extent depth: 32.
-	newForm 
-		copy: (0@0 extent: aRect extent)
-		from: origin 
-		in: self form 
+	newForm
+		copy: (0 @ 0 extent: aRect extent)
+		from: origin
+		in: self form
 		rule: Form over.
-
-	newSurface := GtkCairoSurface fromForm: newForm.
-	newSurface 
-		paintInto: (self cairoCreate: surface)
-		at: origin
+	surface copyForm: newForm clippedBy: aRect at: origin
 ]
 
 { #category : #accessing }
