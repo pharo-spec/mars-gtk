@@ -85,7 +85,7 @@ GtkQuartzCairoSurface >> CGImageRelease: image [
 { #category : #copying }
 GtkQuartzCairoSurface >> copyForm: aForm clippedBy: aRect at: aPoint [
 	""
-	| space dataProvider image cgContext |
+	| space dataProvider image cgContext cgRect |
 
 	space := self CGColorSpaceCreateDeviceRGB.
 	dataProvider := self CGDataProviderCreateWithData: aForm bits size: aForm bitsSize.
@@ -102,11 +102,13 @@ GtkQuartzCairoSurface >> copyForm: aForm clippedBy: aRect at: aPoint [
 		shouldInterpolate: false
 		intent: 0.	
 
-	cgContext := self getContext.	
-	self CGContext: cgContext clipToRect: (self rectangleToCGRect: aRect).
+	self flush.
+	cgContext := self getContext.
+	cgRect := self rectangleToCGRect: aRect.
+	self CGContext: cgContext clipToRect: cgRect.
 	self 
 		CGContext: cgContext 
-		rect: (self rectangleToCGRect: (0@0 extent: aForm width@aForm height)) 
+		rect: cgRect 
 		drawImage: image.
 
 	self CGImageRelease: image.
