@@ -21,25 +21,25 @@ GtkAbstractListAdapterSingleSelectionTest >> testSelectManyIndexesKeepsLastSelec
 	presenter selectIndex: 1.
 	presenter selectIndex: 2.
 
-	self assert: presenter adapter widget selectedIndexes equals: #(2)
+	self assert: presenter adapter selectedIndexes equals: #(2)
 ]
 
 { #category : #'tests-model-to-widget' }
 GtkAbstractListAdapterSingleSelectionTest >> testSelectPresenterIndexOutsideRangeUnsetsSelectedIndexInWidget [
 	presenter selectIndex: 100.
-	self assert: presenter adapter widget selectedIndexes isEmpty
+	self assert: presenter adapter selectedIndexes isEmpty
 ]
 
 { #category : #'tests-model-to-widget' }
 GtkAbstractListAdapterSingleSelectionTest >> testSelectPresenterIndexSetsSelectedIndexInWidget [
 	presenter selectIndex: 1.
-	self assert: (presenter adapter widget selectedIndexes includes: 1)
+	self assert: (presenter adapter selectedIndexes includes: 1)
 ]
 
 { #category : #'tests-model-to-widget' }
 GtkAbstractListAdapterSingleSelectionTest >> testSelectPresenterItemSetsSelectedIndexInWidget [
 	presenter selectItem: 20.
-	self assert: (presenter adapter widget selectedIndexes includes: 2)
+	self assert: (presenter adapter selectedIndexes includes: 2)
 ]
 
 { #category : #'tests-widget-to-model' }
@@ -49,7 +49,7 @@ GtkAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelectio
 	presenter selection
 		whenChangedDo: [ :selection | counter := counter + 1 ].
 		
-	presenter adapter widget selectIndex: 2.
+	presenter adapter selectIndex: 2.
 	self assert: counter equals: 1
 ]
 
@@ -59,7 +59,7 @@ GtkAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelectio
 	
 	presenter selection
 		whenChangedDo: [ :selection | selectedIndex := selection selectedIndex ].
-	presenter adapter widget selection selectPath: {1}.
+	presenter adapter selection selectPath: {1}.
 	self assert: selectedIndex equals: 1
 ]
 
@@ -74,11 +74,11 @@ GtkAbstractListAdapterSingleSelectionTest >> testSubscribeToEventDoesNotRaiseEve
 GtkAbstractListAdapterSingleSelectionTest >> testUnselectAllInWidgetRaisesEmptySelectionChangeEvent [
 	| gotSelection |
 	
-	presenter adapter widget selectIndex: 1.
+	presenter adapter selectIndex: 1.
 	
 	presenter selection
 		whenChangedDo: [ :selection | gotSelection := selection ].
-	presenter adapter widget selection unselectAll.
+	presenter adapter unselectAll.
 	self assert: gotSelection isEmpty
 ]
 
@@ -87,12 +87,12 @@ GtkAbstractListAdapterSingleSelectionTest >> testUnselectAllInWidgetRaisesSelect
 	| counter |
 	counter := 0.
 
-	presenter adapter widget selectIndex: 1.
+	presenter adapter selectIndex: 1.
 
 	presenter selection
 		whenChangedDo: [ :selection | counter := counter + 1 ].
 
-	presenter adapter widget selection unselectAll.
+	presenter adapter unselectAll.
 
 	self assert: counter equals: 1
 ]
@@ -102,7 +102,7 @@ GtkAbstractListAdapterSingleSelectionTest >> testUnselectPresenterIndexUnselects
 	presenter
 		selectIndex: 1;
 		unselectIndex: 1.
-	self assert: presenter adapter widget selectedIndexes isEmpty
+	self assert: presenter adapter selectedIndexes isEmpty
 ]
 
 { #category : #'tests-model-to-widget' }
@@ -110,7 +110,7 @@ GtkAbstractListAdapterSingleSelectionTest >> testUnselectPresenterItemUnselectsI
 	presenter
 		selectItem: 20;
 		unselectItem: 20.
-	self assert: presenter adapter widget selectedIndexes isEmpty
+	self assert: presenter adapter selectedIndexes isEmpty
 ]
 
 { #category : #'tests-widget-to-model' }
@@ -118,12 +118,12 @@ GtkAbstractListAdapterSingleSelectionTest >> testUnselectUnselectedWidgetIndexRa
 	| counter |
 	counter := 0.
 
-	presenter adapter widget selectIndex: 1.
+	presenter adapter selectIndex: 1.
 
 	presenter selection
 		whenChangedDo: [ :selection | counter := counter + 1 ].
 
-	presenter adapter widget selection unselectAll.
+	presenter adapter selection unselectAll.
 	self assert: counter equals: 1
 ]
 
@@ -131,12 +131,12 @@ GtkAbstractListAdapterSingleSelectionTest >> testUnselectUnselectedWidgetIndexRa
 GtkAbstractListAdapterSingleSelectionTest >> testUnselectUnselectedWidgetIndexRaisesSelectionIndexChangeEventWithSelectedIndex [
 	| selectedIndex |
 
-	presenter adapter widget selectIndex: 1.
+	presenter adapter selectIndex: 1.
 
 	presenter selection
 		whenChangedDo: [ :selection | selectedIndex := selection selectedIndex ].
 
-	presenter adapter widget selection unselectAll.
+	presenter adapter selection unselectAll.
 
 	self assert: selectedIndex equals: 0
 ]
@@ -145,23 +145,23 @@ GtkAbstractListAdapterSingleSelectionTest >> testUnselectUnselectedWidgetIndexRa
 GtkAbstractListAdapterSingleSelectionTest >> testUnselectWidgetIndexRaisesSelectionIndexChangeEventOnce [
 	| counter |
 	counter := 0.
-	presenter adapter widget selectIndex: 1.
+	presenter adapter selectIndex: 1.
 
 	presenter selection
 		whenChangedDo: [ :selection | counter := counter + 1 ].
 
-	presenter adapter widget selection unselectPath: #(1).
+	presenter adapter selection unselectPath: #(1).
 	self assert: counter equals: 1
 ]
 
 { #category : #'tests-widget-to-model' }
 GtkAbstractListAdapterSingleSelectionTest >> testUnselectWidgetIndexRaisesSelectionIndexChangeEventWithSelectedIndex [
 	| selectedIndex |
-	presenter adapter widget selectIndex: 1.
+	presenter adapter selectIndex: 1.
 	presenter selection
 		whenChangedDo: [ :selection | selectedIndex := selection selectedIndex ].
 
-	presenter adapter widget selection unselectPath: {1}.
+	presenter adapter selection unselectPath: {1}.
 
 	self assert: selectedIndex equals: 0
 ]

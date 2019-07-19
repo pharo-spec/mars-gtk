@@ -69,6 +69,12 @@ GtkNotebookPage >> label [
 	^ label
 ]
 
+{ #category : #testing }
+GtkNotebookPage >> labelText [
+	
+	^ label children second text
+]
+
 { #category : #accessing }
 GtkNotebookPage >> notebook [
 	^ notebook

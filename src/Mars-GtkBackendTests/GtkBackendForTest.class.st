@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-GtkBackendForTest >> assertHasHeader: aGtkTreeView [ 
+GtkBackendForTest >> assertHasHeader: anAdapter [ 
 	
-	self assert: aGtkTreeView isHeadersVisible
+	self assert: anAdapter innerWidget isHeadersVisible
 ]
 
 { #category : #asserting }
@@ -39,11 +39,11 @@ GtkBackendForTest >> assertImage: aGtkImage equals: aForm [
 ]
 
 { #category : #asserting }
-GtkBackendForTest >> assertList: aGtkTreeView displayItems: aCollection [ 
+GtkBackendForTest >> assertList: aTreeTableAdapter displayItems: aCollection [ 
 	
 	| iter |
 	
-	iter := aGtkTreeView model iteratorFromPath: (GtkTreePath newFromArray: {1}).
+	iter := aTreeTableAdapter innerWidget model iteratorFromPath: (GtkTreePath newFromArray: {1}).
 
 	aCollection do: [ :aValue |  
 		self assert: (iter stringAt: 0) = aValue.
@@ -66,23 +66,23 @@ GtkBackendForTest >> canChangeFonts [
 ]
 
 { #category : #emulating }
-GtkBackendForTest >> clickFirstRowAndColumn: aGtkTreeView [ 
+GtkBackendForTest >> clickFirstRowAndColumn: anAdapter [ 
 	
 	| path |
 	path := (GtkTreePath newFromArray: {1}) autoRelease.	
-	aGtkTreeView activateRow: path column: aGtkTreeView columns first
+	anAdapter innerWidget activateRow: path column: anAdapter innerWidget columns first
 ]
 
 { #category : #accessing }
-GtkBackendForTest >> denyHasHeader: aGtkTreeView [ 
+GtkBackendForTest >> denyHasHeader: anAdapter [ 
 	
-	self assert: aGtkTreeView isHeadersVisible not
+	self assert: anAdapter innerWidget isHeadersVisible not
 ]
 
 { #category : #simulating }
-GtkBackendForTest >> doubleClickFirstRowAndColumn: aGtkTreeView [ 
+GtkBackendForTest >> doubleClickFirstRowAndColumn: anAdapter [ 
 	
-	self clickFirstRowAndColumn: aGtkTreeView
+	self clickFirstRowAndColumn: anAdapter
 ]
 
 { #category : #testing }

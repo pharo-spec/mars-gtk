@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkAdapterTestCase,
 	#superclass : #SpTestCase,
+	#instVars : [
+		'app'
+	],
 	#category : #'Mars-GtkBackendTests'
 }
 
@@ -11,10 +14,18 @@ GtkAdapterTestCase >> adapter [
 ]
 
 { #category : #running }
-GtkAdapterTestCase >> runCaseManaged [
+GtkAdapterTestCase >> initializeTestedInstance [
+	super initializeTestedInstance.
 
+	presenter application: app.
+]
+
+{ #category : #running }
+GtkAdapterTestCase >> runCaseManaged [
+	
 	GtkApplication ensureRunning. 
-	SpBindings 
-		value: GtkAdapterBindings new 
-		during: [ super runCaseManaged ]
+	app := SpApplication new.
+	app useBackend: #Gtk.
+	
+	[ super runCaseManaged  ] ensure: [ app:= nil ].
 ]

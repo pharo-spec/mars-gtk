@@ -121,7 +121,7 @@ GtkNotebookAdapter >> selectedPageName [
 
 	index := self model selectedPageIndex. 
 	^ index > 0 
-		ifTrue: [ (self widget children at: index) label text ]
+		ifTrue: [ (self widget children at: index) labelText ]
 		ifFalse: [ nil ]
 ]
 

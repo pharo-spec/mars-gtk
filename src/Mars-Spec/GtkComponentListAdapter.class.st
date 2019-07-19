@@ -36,6 +36,11 @@ GtkComponentListAdapter >> innerWidget [
 	^ widget child
 ]
 
+{ #category : #testing }
+GtkComponentListAdapter >> items [
+	^ innerWidget items
+]
+
 { #category : #building }
 GtkComponentListAdapter >> update: gtkWidget with: aCollection [
 	| listItem |
@@ -64,6 +69,7 @@ GtkComponentListAdapter >> widgetClass [
 { #category : #building }
 GtkComponentListAdapter >> wrapWidget: gtkWidget [
 
+	innerWidget := gtkWidget.
 	^ self wrapWithScrollableWindow: gtkWidget
 		
 ]

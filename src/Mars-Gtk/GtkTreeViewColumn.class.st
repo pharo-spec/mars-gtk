@@ -84,6 +84,12 @@ GtkTreeViewColumn >> initialize [
 ]
 
 { #category : #testing }
+GtkTreeViewColumn >> isEditable [
+	
+	^ renderers anySatisfy: #isEditable 
+]
+
+{ #category : #testing }
 GtkTreeViewColumn >> isResizable [ 
 
 	^ self ffiCall: #(gboolean gtk_tree_view_column_get_resizable (self))
