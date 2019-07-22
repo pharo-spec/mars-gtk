@@ -59,6 +59,14 @@ GtkQuartzCairoSurface >> CGContextRestoreGState: aContext [
 ]
 
 { #category : #'private primitives' }
+GtkQuartzCairoSurface >> CGContextSaveGState: aContext [
+	
+	self 
+		ffiCall: #(void CGContextSaveGState("CGContextRef"void *aContext))
+		module: self moduleCoreGraphics
+]
+
+{ #category : #'private primitives' }
 GtkQuartzCairoSurface >> CGDataProviderCreateWithData: data size: size [
 	
 	^ self 
@@ -104,6 +112,7 @@ GtkQuartzCairoSurface >> copyForm: aForm clippedBy: aRect at: aPoint [
 
 	self flush.
 	cgContext := self getContext.
+	self CGContextSaveGState: cgContext.
 	cgRect := self rectangleToCGRect: aRect.
 	self CGContext: cgContext clipToRect: cgRect.
 	self 
@@ -114,7 +123,7 @@ GtkQuartzCairoSurface >> copyForm: aForm clippedBy: aRect at: aPoint [
 	self CGImageRelease: image.
 	self CGDataProviderRelease: dataProvider.
 	self CGColorSpaceRelease: space.
-	"self CGContextRestoreGState: cgContext."
+	self CGContextRestoreGState: cgContext.
 	
 	self markDirty
 	"super copyForm: aForm clippedBy: aRect at: aPoint"
