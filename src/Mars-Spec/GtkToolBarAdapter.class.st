@@ -15,20 +15,15 @@ GtkToolBarAdapter >> addModelTo: gtkToolBar [
 	self model isDisplayModeBoth ifTrue: [ gtkToolBar beBoth ].
 
 	needsSeparator := false.
-	self model items 
-		at: SpToolBarItemPosition left 
-		ifPresent: [ :items |
-			items do: [ :each | gtkToolBar add: each buildWithSpec ].
+	self model leftItems do: [ :each |
+			gtkToolBar add: each buildWithSpec.
 			needsSeparator := true ].
-	self model items 
-		at: SpToolBarItemPosition right 
-		ifPresent: [ :items |
-			needsSeparator ifTrue: [ 
-				gtkToolBar add: (GtkSeparatorToolItem new 
-					show;
-					yourself) ]. 
-			items reverseDo: [ :each |
-				gtkToolBar add: each buildWithSpec ] ]
+	self model rightItems reverseDo: [ :each |
+		needsSeparator ifTrue: [ 
+			gtkToolBar add: (GtkSeparatorToolItem new 
+				show;
+				yourself) ]. 
+		gtkToolBar add: each buildWithSpec ]
 ]
 
 { #category : #building }
