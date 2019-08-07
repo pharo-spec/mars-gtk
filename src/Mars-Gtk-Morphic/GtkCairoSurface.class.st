@@ -165,7 +165,7 @@ GtkCairoSurface >> getClipRectangle: rect from: cr [
 		ffiCall: #(gboolean gdk_cairo_get_clip_rectangle (
 			"cairo_t *"void *cr,
   			GdkRectangle *rect))
-		module: GLibLibrary
+		module: GdkLibrary
 ]
 
 { #category : #'private primitives' }
