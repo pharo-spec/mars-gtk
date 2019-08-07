@@ -338,7 +338,7 @@ GtkMorphicDrawingArea >> handleEvent: event [
 	event isEventConfigure ifTrue: [ 
 		event extent = self currentExtent ifFalse: [ 
 			self invalidate.
-			^ true  ] ].
+			^ true ] ].
 	^ eventHandler handleEvent: event
 ]
 

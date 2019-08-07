@@ -57,7 +57,7 @@ GtkCairoSurface class >> fromImageMorph: anImageMorph [
 { #category : #private }
 GtkCairoSurface class >> platformClass [
 		
-	OSPlatform current isMacOS ifTrue: [ ^ GtkQuartzCairoSurface ].
+	"OSPlatform current isMacOS ifTrue: [ ^ GtkQuartzCairoSurface ]."
 	^ self
 ]
 
