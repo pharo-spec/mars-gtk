@@ -83,9 +83,9 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	
 	gtkWidget connectSelectionChanged: [ self updatePresenterSelection ].
 	
-	self model doubleClickAction ifNotNil: [ :action |
+	"self model doubleClickAction ifNotNil: [ :action |
 		gtkWidget connectDoubleClicked: [ 
-			action cull: self model selectedItem ] ].
+			action cull: self model selectedItem ] ]."
 
 	gtkWidget connectRowExpanded: [ :iter |
 		"it will be an orfan iterator (store not setted since it comes from a callback)"
