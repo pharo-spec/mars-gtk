@@ -49,6 +49,12 @@ GtkBoxAdapter >> buildWidget [
 	^ nil
 ]
 
+{ #category : #testing }
+GtkBoxAdapter >> childrenWidgets [
+	
+	^ self widget children
+]
+
 { #category : #building }
 GtkBoxAdapter >> layout: aLayout [
 
@@ -81,4 +87,10 @@ GtkBoxAdapter >> newHorizontal [
 GtkBoxAdapter >> newVertical [
 
 	^ GtkBox newVertical
+]
+
+{ #category : #'accessing - children' }
+GtkBoxAdapter >> remove: aPresenter [
+
+	^ self widget remove: aPresenter adapter widget
 ]
