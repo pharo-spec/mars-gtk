@@ -371,22 +371,6 @@ GtkMorphView >> bounds [
 	^ self morph bounds
 ]
 
-{ #category : #'private primitives' }
-GtkMorphView >> cairoCreate: target [
-
-	^ self 
-		ffiCall: #("cairo_t"void *cairo_create ("cairo_surface_t"void *target))
-		module: CairoLibrary
-]
-
-{ #category : #'private primitives' }
-GtkMorphView >> cairoDestroy: cr [
-
-	^ self 
-		ffiCall: #(void cairo_destroy ("cairo_t *"void *cr))
-		module: CairoLibrary
-]
-
 { #category : #private }
 GtkMorphView >> canDraw [
 

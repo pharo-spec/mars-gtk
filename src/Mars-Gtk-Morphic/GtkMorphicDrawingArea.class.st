@@ -332,21 +332,13 @@ GtkMorphicDrawingArea >> eventHandler: aHandler [
 	eventHandler := aHandler
 ]
 
-{ #category : #'private primitives' }
-GtkMorphicDrawingArea >> fill: cr [
-
-	self 
-		ffiCall: #(void cairo_fill (void *cr))
-		module: CairoLibrary
-]
-
 { #category : #'private events' }
 GtkMorphicDrawingArea >> handleEvent: event [
 
 	event isEventConfigure ifTrue: [ 
 		event extent = self currentExtent ifFalse: [ 
 			self invalidate.
-			^ true  ] ].
+			^ true ] ].
 	^ eventHandler handleEvent: event
 ]
 

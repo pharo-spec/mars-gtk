@@ -22,7 +22,7 @@ GtkSimpleRunLoop >> installRunLoop [
 		[ self isRunning and: [ session == Smalltalk session ] ] 
 		whileTrue: [
 			self processEvents ] ]
-		forkAt: Processor highIOPriority 
+		forkAt: Processor lowIOPriority 
 		named: 'GtkRunLoop'
 ]
 
@@ -31,7 +31,7 @@ GtkSimpleRunLoop >> processEvents [
 
 	[ self getEventsPending ]
 		whileTrue: [ self mainIterationDo: false ].
-	20 milliSeconds wait 
+	(Delay forMilliseconds: 5) wait 
 ]
 
 { #category : #'private installing' }
