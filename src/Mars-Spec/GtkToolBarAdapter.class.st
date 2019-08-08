@@ -6,7 +6,6 @@ Class {
 
 { #category : #building }
 GtkToolBarAdapter >> addModelTo: gtkToolBar [
-	| needsSeparator |
 
 	super addModelTo: gtkToolBar.
 
@@ -14,21 +13,44 @@ GtkToolBarAdapter >> addModelTo: gtkToolBar [
 	self model isDisplayModeText ifTrue: [ gtkToolBar beText ].
 	self model isDisplayModeBoth ifTrue: [ gtkToolBar beBoth ].
 
-	needsSeparator := false.
-	self model items 
-		at: SpToolBarItemPosition left 
-		ifPresent: [ :items |
-			items do: [ :each | gtkToolBar add: each buildWithSpec ].
-			needsSeparator := true ].
-	self model items 
-		at: SpToolBarItemPosition right 
-		ifPresent: [ :items |
-			needsSeparator ifTrue: [ 
-				gtkToolBar add: (GtkSeparatorToolItem new 
-					show;
-					yourself) ]. 
-			items reverseDo: [ :each |
-				gtkToolBar add: each buildWithSpec ] ]
+	self model whenItemsChangeDo: [ self updateItems: gtkToolBar ].
+
+	self updateItems: gtkToolBar 
+]
+
+{ #category : #testing }
+GtkToolBarAdapter >> hasButtonWithLabel: aString [ 
+	
+	^ self widget children anySatisfy: [ :e | (e isKindOf: GtkToolButton) and: [ e label = aString ]  ]
+]
+
+{ #category : #building }
+GtkToolBarAdapter >> needsSeparator [
+
+	^ self model leftItems isNotEmpty and: [self model rightItems isNotEmpty]
+]
+
+{ #category : #building }
+GtkToolBarAdapter >> numberOfItems [
+
+	^ self needsSeparator
+		ifTrue: [ self widget size - 1 ]
+		ifFalse: [ self widget size ]
+]
+
+{ #category : #building }
+GtkToolBarAdapter >> updateItems: gtkToolBar [ 
+
+	gtkToolBar removeAll.
+
+	self model leftItems do: [ :each | gtkToolBar add: each buildWithSpec ].
+
+	self needsSeparator ifTrue: [ 
+		gtkToolBar add: (GtkSeparatorToolItem new 
+			show;
+			yourself) ].
+
+	self model rightItems reverseDo: [ :each | gtkToolBar add: each buildWithSpec ]
 ]
 
 { #category : #building }
