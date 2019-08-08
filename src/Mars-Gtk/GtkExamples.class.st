@@ -2067,6 +2067,79 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInColumn [
 	^ tree
 ]
 
+{ #category : #'private-examples-lists' }
+GtkExamples class >> gtkExampleTreeViewWithIconsInColumnWithColor [
+	<gtkExample>
+	<title: 'Tree View with Icons in Column with Background color'>
+	<category: #Lists>
+	<layoutFillContainer>
+	| store tree pixbufRenderer textRenderer child |
+
+	store := GtkTreeStore
+		newColumnTypes:
+			{GType GDK_TYPE_PIXBUF.
+			GType G_TYPE_STRING.
+			GType GDK_TYPE_RGBA}.
+
+	100 timesRepeat: [ | row iconName |
+			iconName := Smalltalk ui icons icons keys atRandom.
+			row := store appendNew
+				at: 0
+					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 1 putString: iconName asString;
+				at: 2 putObject: Color random gtkRGBA;
+				yourself.
+			iconName := Smalltalk ui icons icons keys atRandom.
+			(child := row appendNew)
+				at: 0
+					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 1 putString: iconName asString;
+				at: 2 putObject: Color random gtkRGBA.
+			child appendNew
+				at: 0
+					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 1 putString: iconName asString;
+				at: 2 putObject: Color random gtkRGBA.
+			row appendNew
+				at: 0
+					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 1 putString: iconName asString;
+				at: 2 putObject: Color random gtkRGBA.
+			row appendNew
+				at: 0
+					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 1 putString: iconName asString;
+				at: 2 putObject: Color random gtkRGBA ].
+
+	tree := GtkTreeView new.
+	tree model: store.
+	pixbufRenderer := GtkCellRendererPixbuf new.
+	textRenderer := GtkCellRendererText new.
+
+	tree
+		appendColumn:
+			(GtkTreeViewColumn new
+				title: 'Icon';
+				packStart: pixbufRenderer;
+				addAttribute: 'pixbuf' column: 0 renderer: pixbufRenderer).
+
+	tree
+		appendColumn:
+			(GtkTreeViewColumn new
+				title: 'Name';
+				packStart: textRenderer;
+				addAttribute: 'text' column: 1 renderer: textRenderer;
+				addAttribute: 'cell-background-rgba'
+					column: 2
+					renderer: textRenderer).
+	
+	tree addExpanderColumn.
+	
+	tree enableTreeLines.
+	
+	^ tree
+]
+
 { #category : #'private-examples-containers' }
 GtkExamples class >> gtkExampleVerticalBox [
 	<gtkExample>
