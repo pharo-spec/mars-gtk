@@ -54,11 +54,21 @@ GtkBoxAdapter >> layout: aLayout [
 
 	"build of widget was differed up to here (to know what is the direction)"
 	widget := aLayout direction newWidgetOn: self.
+
+	model whenVisibleChangedDo: [ 	
+		model isVisible 
+			ifTrue: [ widget show ] 
+			ifFalse: [ widget hide ]].
+
 	widget 
 		homogeneous: aLayout isHomogeneous;
 		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth;
-		show.
+		borderWidth: aLayout borderWidth.
+		
+	model isVisible 
+		ifTrue: [ widget show ] 
+		ifFalse: [ widget hide ].
+	
 ]
 
 { #category : #factory }
