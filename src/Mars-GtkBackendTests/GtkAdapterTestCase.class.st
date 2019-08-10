@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkAdapterTestCase,
-	#superclass : #SpTestCase,
+	#superclass : #SpTest,
 	#category : #'Mars-GtkBackendTests'
 }
 
