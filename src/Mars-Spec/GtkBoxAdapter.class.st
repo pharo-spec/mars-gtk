@@ -49,16 +49,32 @@ GtkBoxAdapter >> buildWidget [
 	^ nil
 ]
 
+{ #category : #testing }
+GtkBoxAdapter >> childrenWidgets [
+	
+	^ self widget children
+]
+
 { #category : #building }
 GtkBoxAdapter >> layout: aLayout [
 
 	"build of widget was differed up to here (to know what is the direction)"
 	widget := aLayout direction newWidgetOn: self.
+
+	model whenVisibleChangedDo: [ 	
+		model isVisible 
+			ifTrue: [ widget show ] 
+			ifFalse: [ widget hide ]].
+
 	widget 
 		homogeneous: aLayout isHomogeneous;
 		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth;
-		show.
+		borderWidth: aLayout borderWidth.
+		
+	model isVisible 
+		ifTrue: [ widget show ] 
+		ifFalse: [ widget hide ].
+	
 ]
 
 { #category : #factory }
@@ -71,4 +87,10 @@ GtkBoxAdapter >> newHorizontal [
 GtkBoxAdapter >> newVertical [
 
 	^ GtkBox newVertical
+]
+
+{ #category : #'accessing - children' }
+GtkBoxAdapter >> remove: aPresenter [
+
+	^ self widget remove: aPresenter adapter widget
 ]

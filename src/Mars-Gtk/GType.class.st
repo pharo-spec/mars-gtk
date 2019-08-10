@@ -46,6 +46,12 @@ GType class >> GDK_TYPE_PIXBUF [
 ]
 
 { #category : #accessing }
+GType class >> GDK_TYPE_RGBA [
+
+	^ self gdkRGBAGetType 
+]
+
+{ #category : #accessing }
 GType class >> G_TYPE_BOOLEAN [
 	^ G_TYPE_BOOLEAN
 ]
@@ -169,6 +175,12 @@ GType class >> ffiLibraryName [
 GType class >> gdkPixbufGetType [
 
 	^ self ffiCall: #(GType gdk_pixbuf_get_type()) module: GdkPixbufLibrary
+]
+
+{ #category : #private }
+GType class >> gdkRGBAGetType [
+
+	^ self ffiCall: #(GType gdk_rgba_get_type ()) module: GdkLibrary
 ]
 
 { #category : #initialization }

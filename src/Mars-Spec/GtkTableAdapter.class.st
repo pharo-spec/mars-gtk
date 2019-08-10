@@ -82,3 +82,8 @@ GtkTableAdapter >> refreshWidgetHeaderTitleTo: gtkTreeView [
 		with: gtkTreeView columns 
 		do: [ :modelColumn :widgetColumn | widgetColumn title: modelColumn title ]
 ]
+
+{ #category : #testing }
+GtkTableAdapter >> unselectAll [
+	innerWidget selection unselectAll
+]

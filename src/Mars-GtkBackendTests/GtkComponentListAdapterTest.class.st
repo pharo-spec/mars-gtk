@@ -12,7 +12,7 @@ GtkComponentListAdapterTest >> classToTest [
 { #category : #running }
 GtkComponentListAdapterTest >> testAddingOnePresentersToAlreadyOpenedWidgetAddsOneRow [
 	self openInstance.
-	self assert: self adapter widget items size equals: 0.
+	self assert: self adapter items size equals: 0.
 	presenter
 		addPresenter:
 			(SpButtonPresenter new
@@ -23,13 +23,13 @@ GtkComponentListAdapterTest >> testAddingOnePresentersToAlreadyOpenedWidgetAddsO
 			(SpButtonPresenter new
 				label: ' Test ';
 				yourself).
-	self assert: self adapter widget items size equals: 2
+	self assert: self adapter items size equals: 2
 ]
 
 { #category : #running }
 GtkComponentListAdapterTest >> testAddingTwoPresentersToAlreadyOpenedWidgetAddsOneTwo [
 	self openInstance.
-	self assert: self adapter widget items size equals: 0.
+	self assert: self adapter items size equals: 0.
 	presenter
 		addPresenter: (SpButtonPresenter new label: ' Test ' yourself).
 	presenter
@@ -37,7 +37,7 @@ GtkComponentListAdapterTest >> testAddingTwoPresentersToAlreadyOpenedWidgetAddsO
 			(SpButtonPresenter new
 				label: ' Test ';
 				yourself).
-	self assert: self adapter widget items size equals: 2
+	self assert: self adapter items size equals: 2
 ]
 
 { #category : #running }
@@ -69,7 +69,7 @@ GtkComponentListAdapterTest >> testOpeningAComponentListPresenterWithTwoPresente
 { #category : #running }
 GtkComponentListAdapterTest >> testOpeningAnEmptyComponentListPresenterGeneratesAWidgetWithZeroRows [
 	self openInstance.
-	self assert: self adapter widget items isEmpty
+	self assert: self adapter items isEmpty
 ]
 
 { #category : #running }
