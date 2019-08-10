@@ -8,6 +8,12 @@ Class {
 	#category : #'Mars-Gtk-Base'
 }
 
+{ #category : #accessing }
+GtkSimpleRunLoop class >> fps [
+	
+	^ 60
+]
+
 { #category : #initialization }
 GtkSimpleRunLoop >> initialize [
 	super initialize.
@@ -22,16 +28,19 @@ GtkSimpleRunLoop >> installRunLoop [
 		[ self isRunning and: [ session == Smalltalk session ] ] 
 		whileTrue: [
 			self processEvents ] ]
-		forkAt: Processor lowIOPriority 
+		forkAt: Processor highIOPriority 
 		named: 'GtkRunLoop'
 ]
 
 { #category : #'private installing' }
 GtkSimpleRunLoop >> processEvents [
-
-	[ self getEventsPending ]
-		whileTrue: [ self mainIterationDo: false ].
-	(Delay forMilliseconds: 5) wait 
+	| elapsedTime |
+	
+	elapsedTime := Time millisecondsToRun: [ 
+		[ self getEventsPending ]
+			whileTrue: [ self mainIterationDo: false ] ].
+	"ensure FPS: 60"
+	(Delay forMilliseconds: (((1000 - elapsedTime) / self class fps) asInteger max: 5)) wait 
 ]
 
 { #category : #'private installing' }

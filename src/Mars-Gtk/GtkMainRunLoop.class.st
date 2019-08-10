@@ -16,7 +16,10 @@ GtkMainRunLoop >> gtkMainQuit [
 
 { #category : #'private installing' }
 GtkMainRunLoop >> installRunLoop [
-	self gtkMain
+
+	[ self gtkMain ]
+		forkAt: Processor lowIOPriority 
+		named: 'GtkRunLoop'
 ]
 
 { #category : #'private installing' }
