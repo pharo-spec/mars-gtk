@@ -50,6 +50,13 @@ TGdkEventState >> hasButton5Modifier [
 ]
 
 { #category : #testing }
+TGdkEventState >> hasCommandModifier [
+	"by testing, it seems that macOS command is being mapped to mod2"
+	
+	^ self hasMod2
+]
+
+{ #category : #testing }
 TGdkEventState >> hasControlModifier [
 
 	^ self hasModifier: GdkModifierType GDK_CONTROL_MASK
@@ -74,6 +81,30 @@ TGdkEventState >> hasMod1 [
 ]
 
 { #category : #testing }
+TGdkEventState >> hasMod2 [
+
+	^ self hasModifier: GdkModifierType GDK_MOD2_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasMod3 [
+
+	^ self hasModifier: GdkModifierType GDK_MOD3_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasMod4 [
+
+	^ self hasModifier: GdkModifierType GDK_MOD4_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasMod5 [
+
+	^ self hasModifier: GdkModifierType GDK_MOD5_MASK
+]
+
+{ #category : #testing }
 TGdkEventState >> hasModifier: aModifier [
 
 	^ (self state & (aModifier value)) = aModifier value
@@ -83,6 +114,12 @@ TGdkEventState >> hasModifier: aModifier [
 TGdkEventState >> hasShiftModifier [
 
 	^ self hasModifier: GdkModifierType GDK_SHIFT_MASK
+]
+
+{ #category : #testing }
+TGdkEventState >> hasSuperModifier [
+
+	^ self hasModifier: GdkModifierType GDK_SUPER_MASK
 ]
 
 { #category : #compatibility }
