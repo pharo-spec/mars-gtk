@@ -48,7 +48,7 @@ GdkEventKey class >> fieldsDesc [
   gchar *string;
   guint16 hardware_keycode;
   guint8 group;
-  guint8 is_modifier	
+  FFIUBit is_modifier	
 	)
 ]
 
@@ -198,13 +198,13 @@ GdkEventKey >> isModifier [
 { #category : #'accessing structure variables' }
 GdkEventKey >> is_modifier [
 	"This method was automatically generated"
-	^handle unsignedByteAt: OFFSET_IS_MODIFIER
+	^handle platformUnsignedBitAt: OFFSET_IS_MODIFIER
 ]
 
 { #category : #'accessing structure variables' }
 GdkEventKey >> is_modifier: anObject [
 	"This method was automatically generated"
-	handle unsignedByteAt: OFFSET_IS_MODIFIER put: anObject
+	^handle platformUnsignedBitAt: OFFSET_IS_MODIFIER put: anObject
 ]
 
 { #category : #compatibility }
