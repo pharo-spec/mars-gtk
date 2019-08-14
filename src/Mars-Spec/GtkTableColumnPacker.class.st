@@ -89,6 +89,25 @@ GtkTableColumnPacker >> newTextRenderer [
 	^ GtkCellRendererText new
 ]
 
+{ #category : #'private factory' }
+GtkTableColumnPacker >> newToggleRenderer [
+
+	^ GtkCellRendererToggle new
+]
+
+{ #category : #visiting }
+GtkTableColumnPacker >> visitCheckboxColumn: aTableColumn [
+	| renderer |
+
+	renderer := self newToggleRenderer.
+	self addRendererPropertiesTo: renderer column: aTableColumn.
+	column packStart: renderer expand: self isExpand.
+	column 
+		addAttribute: 'active' 
+		column: (self columnIndexOf: aTableColumn)
+		renderer: renderer
+]
+
 { #category : #visiting }
 GtkTableColumnPacker >> visitCompositeColumn: aTableColumn [
 	

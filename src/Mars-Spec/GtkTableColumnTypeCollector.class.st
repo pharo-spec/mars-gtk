@@ -21,6 +21,12 @@ GtkTableColumnTypeCollector >> types [
 ]
 
 { #category : #visiting }
+GtkTableColumnTypeCollector >> visitCheckboxColumn: aTableColumn [
+
+	types add: GType G_TYPE_BOOLEAN
+]
+
+{ #category : #visiting }
 GtkTableColumnTypeCollector >> visitImageColumn: aTableColumn [
 
 	types add: GType GDK_TYPE_PIXBUF

@@ -40,6 +40,14 @@ GtkTableRowFiller >> rowIndex: anObject [
 ]
 
 { #category : #visiting }
+GtkTableRowFiller >> visitCheckboxColumn: aTableColumn [
+
+	self gtkRow
+		at: (self columnIndexOf: aTableColumn)
+		putBoolean: (aTableColumn readObject: self row)
+]
+
+{ #category : #visiting }
 GtkTableRowFiller >> visitImageColumn: aTableColumn [
 	| imageForm |
 

@@ -11,15 +11,15 @@ BaselineOfMars >> baseline: spec [
 	spec
 		for: #common
 		do: [ 
+			self threadedffi: spec.
 			self beacon: spec.
 			
-			spec postLoadDoIt: #recompileStructures.
-			spec postLoadDoIt: #installGtkDriver.
+			spec postLoadDoIt: #postLoad.
 
 			spec
 				"core"
 				package: 'Mars-Pango';
-				package: 'Mars-Gtk' with: [ spec requires: #('Beacon' 'Mars-Pango') ];
+				package: 'Mars-Gtk' with: [ spec requires: #('ThreadedFFI' 'Beacon' 'Mars-Pango') ];
 				package: 'Mars-Gtk-Morphic' with: [ spec requires: #('Mars-Gtk') ];
 				"spec"
 				package: 'Mars-Spec-Text' with: [ spec requires: 'Mars-Gtk' ];
@@ -49,10 +49,24 @@ BaselineOfMars >> installGtkDriver [
 ]
 
 { #category : #doits }
+BaselineOfMars >> postLoad [
+
+	self installGtkDriver.
+	self recompileStructures
+]
+
+{ #category : #doits }
 BaselineOfMars >> recompileStructures [
 	"Recompile structures (just to be sure we match everything we need"
 
 	(Smalltalk at: #GtkEnumeration) allSubclassesDo: #initializeEnumeration.
 	(Smalltalk at: #GtkStructure) allSubclassesDo: #compileFields.
 	(Smalltalk at: #GtkWidget) withAllSubclassesDo: #recompile
+]
+
+{ #category : #'external projects' }
+BaselineOfMars >> threadedffi: spec [
+
+	spec baseline: 'ThreadedFFI' with: [ 
+		spec repository: 'github://pharo-project/threadedFFI-Plugin' ]
 ]

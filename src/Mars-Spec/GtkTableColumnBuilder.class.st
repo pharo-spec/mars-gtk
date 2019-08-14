@@ -81,6 +81,12 @@ GtkTableColumnBuilder >> view: anObject [
 ]
 
 { #category : #visiting }
+GtkTableColumnBuilder >> visitCheckboxColumn: aTableColumn [
+	
+	self visitStringColumn: aTableColumn
+]
+
+{ #category : #visiting }
 GtkTableColumnBuilder >> visitCompositeColumn: aTableColumn [
 	| column packer |
 	
