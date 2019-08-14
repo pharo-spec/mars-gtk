@@ -36,6 +36,13 @@ GtkTreeIter >> appendNewRoot [
 ]
 
 { #category : #private }
+GtkTreeIter >> atColumnIndex: index setBoolean: aValue [
+	"Just a convenience method to avoid adding an extra zero to all Strings"
+
+	 self ffiCall: #(void gtk_tree_store_set (GtkTreeStore *store, self, uint index, gboolean aValue, -1))
+]
+
+{ #category : #private }
 GtkTreeIter >> atColumnIndex: index setString: aValue [
 	"Just a convenience method to avoid adding an extra zero to all Strings"
 

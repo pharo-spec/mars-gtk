@@ -11,6 +11,13 @@ GtkListIter >> appendNew [
 ]
 
 { #category : #private }
+GtkListIter >> atColumnIndex: index setBoolean: aValue [
+	"Just a convenience method to avoid adding an extra zero to all Strings"
+
+	 self ffiCall: #(void gtk_list_store_set (GtkListStore *store, self, uint index, gboolean aValue, -1))
+]
+
+{ #category : #private }
 GtkListIter >> atColumnIndex: index setString: aValue [
 	"Just a convenience method to avoid adding an extra zero to all Strings"
 

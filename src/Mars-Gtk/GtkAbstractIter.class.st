@@ -48,6 +48,14 @@ GtkAbstractIter >> at: index put: aValue [
 ]
 
 { #category : #accessing }
+GtkAbstractIter >> at: index putBoolean: aValue [
+
+	self 
+		atColumnIndex: index 
+		setBoolean: aValue
+]
+
+{ #category : #accessing }
 GtkAbstractIter >> at: index putObject: aGBaseObject [
 
 	self 
@@ -61,6 +69,12 @@ GtkAbstractIter >> at: index putString: aValue [
 	self 
 		atColumnIndex: index 
 		setString: aValue
+]
+
+{ #category : #private }
+GtkAbstractIter >> atColumnIndex: index setBoolean: aValue [
+
+	 self subclassResponsibility
 ]
 
 { #category : #private }

@@ -9,6 +9,18 @@ Class {
 	#category : #'Mars-Gtk-Widget-CellRenderers'
 }
 
+{ #category : #private }
+GtkCellRenderer class >> cellRendererNew [
+
+	self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
+GtkCellRenderer class >> new [
+	
+	^ self cellRendererNew initialize
+]
+
 { #category : #accessing }
 GtkCellRenderer >> width [
 

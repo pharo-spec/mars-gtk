@@ -10,14 +10,7 @@ Class {
 }
 
 { #category : #private }
-GtkCellRendererPixbuf class >> cellRendererPixbufNew [
+GtkCellRendererPixbuf class >> cellRendererNew [
 
-	^ self ffiCall: #(GtkCellRendererPixbuf *
-gtk_cell_renderer_pixbuf_new (void))
-]
-
-{ #category : #'instance creation' }
-GtkCellRendererPixbuf class >> new [
-
-	^ self cellRendererPixbufNew initialize
+	^ self ffiCall: #(GtkCellRendererPixbuf *gtk_cell_renderer_pixbuf_new (void))
 ]
