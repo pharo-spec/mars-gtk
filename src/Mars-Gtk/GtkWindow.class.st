@@ -212,6 +212,12 @@ GtkWindow >> position [
 ]
 
 { #category : #accessing }
+GtkWindow >> present [
+
+	self ffiCall: #(void gtk_window_present (self))
+]
+
+{ #category : #accessing }
 GtkWindow >> removeAcceleratorGroup: anAcceleratorGroup [
 
 	(acceleratorGroups includes: anAcceleratorGroup) ifFalse: [ ^ self ].

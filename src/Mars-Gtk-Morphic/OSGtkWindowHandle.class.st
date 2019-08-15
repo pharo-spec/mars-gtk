@@ -159,6 +159,12 @@ OSGtkWindowHandle >> position: newPosition [
 ]
 
 { #category : #accessing }
+OSGtkWindowHandle >> raise [
+
+	self gtkWindow present
+]
+
+{ #category : #accessing }
 OSGtkWindowHandle >> setMouseCursor: cursorForm mask: maskForm [
 	| cursor |
 	
