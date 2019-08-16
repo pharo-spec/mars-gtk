@@ -52,7 +52,7 @@ GtkDropListAdapter >> modelItemsAsDisplay [
 { #category : #building }
 GtkDropListAdapter >> newTreeStore [
 
-	self model hasIcons 
+	self presenter hasIcons 
 		ifFalse: [ ^ GtkTreeStore newStrings: self modelItemsAsDisplay ].
 		
 	^ self newTreeStoreWithIcons
@@ -80,29 +80,16 @@ GtkDropListAdapter >> selectedIndexes [
 
 { #category : #building }
 GtkDropListAdapter >> setModelTo: gtkComboBox [
-	| pixbufRenderer textRenderer |
-	
-	gtkComboBox model: self newTreeStore.
-	gtkComboBox activeIndex: self model selectedIndex - 1.
+	| columnIndex |
 
-	textRenderer := GtkCellRendererText new.
-	
-	self model hasIcons ifFalse: [ 
-		gtkComboBox
-			clear;
-			packStart: textRenderer;
-			addAttribute:  textRenderer attribute: 'text' column: 0.
-		^ self ].
+	columnIndex := 0.
+	gtkComboBox clear.
+	self presenter hasIcons ifTrue: [ 
+		gtkComboBox appendPixbufColumn: columnIndex.
+		columnIndex := columnIndex + 1 ].
+	gtkComboBox appendTextColumn: columnIndex.
+	gtkComboBox model: self newTreeStore	
 
-
-	pixbufRenderer := GtkCellRendererPixbuf new.
-	
-	gtkComboBox
-		clear;
-		packStart: pixbufRenderer expand: false;
-		packStart: textRenderer;
-		addAttribute:  pixbufRenderer attribute: 'pixbuf' column: 0;
-		addAttribute:  textRenderer attribute: 'text' column: 1
 ]
 
 { #category : #building }

@@ -60,13 +60,29 @@ GtkTreeView >> appendColumn: column [
 ]
 
 { #category : #'convenience columns' }
+GtkTreeView >> appendPixbufColumn: columnIndex [
+	| renderer |
+
+	renderer := GtkCellRendererPixbuf new.
+	self appendColumn: (GtkTreeViewColumn new
+		packStart: renderer expand: false;
+		addAttribute: 'pixbuf' column: columnIndex renderer: renderer)
+]
+
+{ #category : #'convenience columns' }
 GtkTreeView >> appendTextColumn [
+
+	self appendTextColumn: 0
+]
+
+{ #category : #'convenience columns' }
+GtkTreeView >> appendTextColumn: columnIndex [
 	| renderer |
 
 	renderer := GtkCellRendererText new.
 	self appendColumn: (GtkTreeViewColumn new
 		packStart: renderer;
-		addAttribute: 'text' column: 0 renderer: renderer)
+		addAttribute: 'text' column: columnIndex renderer: renderer)
 ]
 
 { #category : #private }
