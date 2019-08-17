@@ -1,5 +1,8 @@
 Trait {
 	#name : #TGtkTableAccessing,
+	#instVars : [
+		'objectCache'
+	],
 	#category : #'Mars-Spec'
 }
 
@@ -25,8 +28,11 @@ TGtkTableAccessing >> addColumnsTo: gtkWidget [
 { #category : #building }
 TGtkTableAccessing >> addRows: aCollection to: store [
 
-	aCollection withIndexDo: [ :anItem :index |
-		self doAddRow: anItem index: index into: store ]
+	GtkTableRowFillerCache 
+		value: self objectCache
+		during: [ 
+			aCollection withIndexDo: [ :anItem :index |
+			self doAddRow: anItem index: index into: store ] ]
 ]
 
 { #category : #building }
@@ -64,4 +70,10 @@ TGtkTableAccessing >> newTreeStore [
 	self addShownRowsTo: store.
 
 	^ store
+]
+
+{ #category : #private }
+TGtkTableAccessing >> objectCache [
+
+	^ objectCache ifNil: [ objectCache := IdentityDictionary new ]
 ]

@@ -9,6 +9,19 @@ Class {
 	#category : #'Mars-Spec-Adapter-Table'
 }
 
+{ #category : #private }
+GtkTableRowFiller >> cacheAt: anObject ifAbsentPut: aBlock [ 
+	| cache |
+	
+	"cache may not be set"
+	cache := GtkTableRowFillerCache value.
+	cache ifNil: [ ^ aBlock value ].
+	
+	^ cache 
+		at: anObject 
+		ifAbsentPut: aBlock
+]
+
 { #category : #accessing }
 GtkTableRowFiller >> gtkRow [
 	^ gtkRow
@@ -54,9 +67,12 @@ GtkTableRowFiller >> visitImageColumn: aTableColumn [
 	self flag: #TODO. "I'm assuming the image is a Form, which may not be the case in the future"
 	imageForm := aTableColumn readObject: self row.
 	imageForm ifNil: [ ^ self ].
+	
 	self gtkRow
 		at: (self columnIndexOf: aTableColumn) 
-		putObject: (GdkPixbuf newForm: imageForm)
+		putObject: (self 
+			cacheAt: imageForm 
+			ifAbsentPut: [ GdkPixbuf newForm: imageForm ])
 ]
 
 { #category : #visiting }

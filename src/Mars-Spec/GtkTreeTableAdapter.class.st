@@ -26,7 +26,8 @@ Class {
 	#traits : 'TGtkDisconnectSelectionEvents + TGtkHaveWrappingScrollBars',
 	#classTraits : 'TGtkDisconnectSelectionEvents classTrait + TGtkHaveWrappingScrollBars classTrait',
 	#instVars : [
-		'levelsAdded'
+		'levelsAdded',
+		'objectCache'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
@@ -142,9 +143,12 @@ GtkTreeTableAdapter >> doAddRow: anObject index: rowIndex into: store [
 		row: anObject;
 		rowIndex: rowIndex;
 		yourself.
-		
-	self model columns do: [ :eachColumn | 
-		filler visit: eachColumn ].
+
+	GtkTableRowFillerCache 
+		value: self objectCache
+		during: [ 		
+			self model columns do: [ :eachColumn | 
+				filler visit: eachColumn ] ].
 
 	^ gtkRow
 ]
@@ -213,6 +217,12 @@ GtkTreeTableAdapter >> newStoreFrom: aCollection [
 		with: aCollection.
 
 	^ store
+]
+
+{ #category : #private }
+GtkTreeTableAdapter >> objectCache [
+
+	^ objectCache ifNil: [ objectCache := IdentityDictionary new ]
 ]
 
 { #category : #building }
