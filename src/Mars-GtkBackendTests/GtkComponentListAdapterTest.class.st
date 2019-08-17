@@ -48,7 +48,9 @@ GtkComponentListAdapterTest >> testOpeningAComponentListPresenterWithOnePresente
 				label: ' Test ';
 				yourself).
 	self openInstance.
-	self assert: self adapter widget items size equals: 1
+	self 
+		assert: self adapter widget children size 
+		equals: 1
 ]
 
 { #category : #running }
@@ -63,7 +65,9 @@ GtkComponentListAdapterTest >> testOpeningAComponentListPresenterWithTwoPresente
 				label: 'Test2';
 				yourself).
 	self openInstance.
-	self assert: self adapter widget items size equals: 2
+	self 
+		assert: self adapter widget children size 
+		equals: 2
 ]
 
 { #category : #running }

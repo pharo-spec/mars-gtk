@@ -48,8 +48,8 @@ GtkComponentListAdapter >> update: gtkWidget with: aCollection [
 	gtkWidget removeAll.
 	aCollection doWithIndex: [ :presenter :index | 
 		listItem := presenter buildWithSpec asListBoxRow.
-		gtkWidget add: listItem.
-		widget showAll ]
+		gtkWidget add: listItem ].
+	gtkWidget showAll
 ]
 
 { #category : #building }
