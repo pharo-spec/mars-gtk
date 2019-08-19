@@ -30,7 +30,7 @@ OSGtkDriver >> beCurrent [
 OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	| window |
 	
-	GtkApplication ensureRunning.
+	self ensureGtkRunning.
 	
 	window := OSGtkWindowHandle newAttributes: attributes.
 	window osWindow: osWindow.
@@ -42,6 +42,13 @@ OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		ifFalse: [ window hide ].
 	
 	^ window
+]
+
+{ #category : #'window creation' }
+OSGtkDriver >> ensureGtkRunning [
+	
+	GtkApplication ensureRunning.
+	OSGtkDriverConfiguration new apply
 ]
 
 { #category : #'window creation' }
