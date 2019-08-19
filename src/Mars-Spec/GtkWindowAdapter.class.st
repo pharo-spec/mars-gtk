@@ -39,27 +39,36 @@ GtkWindowAdapter >> addModelTo: gtkWindow [
 { #category : #accessing }
 GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
-
 	self addModelTo: gtkWindow.
 
 	"window properties"
-	gtkWindow resize: self model initialExtent.
+	self model initialExtent
+		ifNotNil: [ :extent | gtkWindow resize: extent ].
+	self model initialPosition
+		ifNotNil: [ :position | gtkWindow moveTo: position ].
 
-	"inner contents of window"	
+	"inner contents of window"
 	gtkBox := GtkBox newVertical.
 	gtkBox show.
 	"menu bar"
-	self model hasMenu ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
+	self model hasMenu
+		ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
 	"tool bar"
-	self model hasToolBar ifTrue: [ self addToolBarTo: gtkBox ].
+	self model hasToolbar
+		ifTrue: [ self addToolBarTo: gtkBox ].
 	"infoArea"
-	gtkBox packStart: (infoArea := GtkInfoArea new) expand: false fill: false padding: 0. 
+	gtkBox
+		packStart: (infoArea := GtkInfoArea new)
+		expand: false
+		fill: false
+		padding: 0.
 	"contents"
 	gtkBox packStart: (self contentWidget: aSpec).
 	"status bar"
-	self model hasStatusBar ifTrue: [ self addStatusBarTo: gtkBox ].
+	self model hasStatusBar
+		ifTrue: [ self addStatusBarTo: gtkBox ].
 	"... and add all that to window"
-	self add: gtkBox toWindow: gtkWindow.
+	self add: gtkBox toWindow: gtkWindow
 ]
 
 { #category : #private }
