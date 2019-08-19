@@ -7,15 +7,19 @@ Class {
 { #category : #building }
 GtkActionBarAdapter >> addModelTo: gtkWidget [
 	
-	(self model items 
-		at: #start 
-		ifAbsent: [ #() ]) 
+	(self itemsAt: #start) 
 		do: [ :each | gtkWidget packStart: each buildWithSpec ].
+	(self itemsAt: #end) 
+		reverseDo: [ :each | gtkWidget packEnd: each buildWithSpec ]
+]
 
-	(self model items 
-		at: #end 
-		ifAbsent: [ #() ]) 
-		do: [ :each | gtkWidget packEnd: each buildWithSpec ]		
+{ #category : #private }
+GtkActionBarAdapter >> itemsAt: placeSymbol [
+
+	^ self model items 
+		at: placeSymbol
+		ifAbsent: [ #() ] 
+
 ]
 
 { #category : #building }
