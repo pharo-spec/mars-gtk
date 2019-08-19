@@ -17,8 +17,8 @@ GtkNumberInputFieldAdapter >> addModelTo: gtkSpinButton [
 	
 	self model isFloat ifTrue: [ 
 		gtkSpinButton digits: self model digits ].
-	self model climbRate ifNotNil: [ 
-		gtkSpinButton climbRate: self model climbRate ]
+	self model climbRate ifNotNil: [ :rate |
+		gtkSpinButton climbRate: rate ]
 ]
 
 { #category : #private }
@@ -26,6 +26,12 @@ GtkNumberInputFieldAdapter >> refreshText [
 	
 	self widgetDo: [ :w |
 		w value: self model number ]
+]
+
+{ #category : #accessing }
+GtkNumberInputFieldAdapter >> setText: aString to: gtkWidget [
+
+	gtkWidget value: aString asNumber asFloat
 ]
 
 { #category : #building }

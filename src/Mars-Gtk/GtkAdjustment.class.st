@@ -32,7 +32,7 @@ GtkAdjustment class >> newDefault [
 		lower: 0 
 		upper: 100 
 		stepIncrement: 1 
-		pageIncrement: 0 
+		pageIncrement: 10
 		pageSize: 0
 ]
 

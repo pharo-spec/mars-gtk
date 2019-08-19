@@ -55,6 +55,16 @@ GtkSpinButton class >> newDigits: aNumber [
 		digits: aNumber
 ]
 
+{ #category : #'instance creation' }
+GtkSpinButton class >> newWithRangeMinimum: min maximum: max step: step [
+
+	 ^ (self 
+		spinButtonNewWithRangeMin: min 
+			max: max 
+			step: step)
+		initialize
+]
+
 { #category : #private }
 GtkSpinButton class >> spinButtonNewAdjustment: adjustment climbRate: climb_rate digits: digits [
 
@@ -62,6 +72,15 @@ GtkSpinButton class >> spinButtonNewAdjustment: adjustment climbRate: climb_rate
 		GtkAdjustment *adjustment,
 		gdouble climb_rate,
  		guint digits))
+]
+
+{ #category : #private }
+GtkSpinButton class >> spinButtonNewWithRangeMin: min max: max step: step [
+
+	^ self ffiCall: #(GtkSpinButton *gtk_spin_button_new_with_range (
+		gdouble min,
+		gdouble max,
+		gdouble step))
 ]
 
 { #category : #accessing }
