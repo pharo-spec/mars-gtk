@@ -11,6 +11,7 @@ BaselineOfMars >> baseline: spec [
 	spec
 		for: #common
 		do: [ 
+			self spec2: spec.
 			self threadedffi: spec.
 			self beacon: spec.
 			
@@ -62,6 +63,13 @@ BaselineOfMars >> recompileStructures [
 	(Smalltalk at: #GtkEnumeration) allSubclassesDo: #initializeEnumeration.
 	(Smalltalk at: #GtkStructure) allSubclassesDo: #compileFields.
 	(Smalltalk at: #GtkWidget) withAllSubclassesDo: #recompile
+]
+
+{ #category : #'external projects' }
+BaselineOfMars >> spec2: spec [
+
+	spec baseline: 'Spec2' with: [ 
+		spec repository: 'github://pharo-spec/Spec' ]
 ]
 
 { #category : #'external projects' }
