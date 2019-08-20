@@ -11,7 +11,6 @@ GtkNumberInputFieldAdapter >> addModelTo: gtkSpinButton [
 	
 	gtkSpinButton 
 		beNumber;
-		adjustment: GtkAdjustment newDefault;
 		rangeMinimum: (self model minimum ifNil: [ Float fmin ]) 
 			maximum: (self model maximum ifNil: [ Float fmax ]).
 	
@@ -19,6 +18,15 @@ GtkNumberInputFieldAdapter >> addModelTo: gtkSpinButton [
 		gtkSpinButton digits: self model digits ].
 	self model climbRate ifNotNil: [ :rate |
 		gtkSpinButton climbRate: rate ]
+]
+
+{ #category : #building }
+GtkNumberInputFieldAdapter >> newWidget [ 
+
+	^ self widgetClass 
+		newAdjustment: GtkAdjustment newDefault
+		climbRate: 1.0 
+		digits: 0
 ]
 
 { #category : #private }
