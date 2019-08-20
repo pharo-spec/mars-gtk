@@ -608,6 +608,12 @@ GtkMorphView >> paneColorOrNil [
 	^ nil
 ]
 
+{ #category : #'as yet unclassified' }
+GtkMorphView >> privateRemove: aMorph [
+	
+	^ aMorph
+]
+
 { #category : #'world simulation' }
 GtkMorphView >> processEvent: anEvent [
  
@@ -634,6 +640,10 @@ GtkMorphView >> removeMorph: aMorph [
 	
 	layeredMorphs remove: aMorph.
 	self invalidateRect: aMorph fullBounds
+]
+
+{ #category : #'as yet unclassified' }
+GtkMorphView >> removedMorph: aMorph [
 ]
 
 { #category : #private }
