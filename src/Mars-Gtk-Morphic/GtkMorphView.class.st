@@ -556,6 +556,7 @@ GtkMorphView >> morph: aMorph [
 		needQueue := true ].
 	morph := aMorph.
 	morph privateOwner: self.
+	morph wantsSteps ifTrue: [ self startStepping: morph ].
 	
 	self sizeRequest: aMorph extent.
 	self invalidate: needQueue
@@ -656,7 +657,7 @@ GtkMorphView >> resizeIfEnabledTo: extent [
 
 { #category : #'world simulation' }
 GtkMorphView >> startStepping: aMorph [
-	
+
 	self 
 		startStepping: aMorph 
 		at: Time millisecondClockValue 
