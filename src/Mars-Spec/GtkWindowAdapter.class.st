@@ -162,6 +162,7 @@ GtkWindowAdapter >> open [
 
 	self widgetDo: [ :w | 
 		w show.
+		w present.
 		self announceOpened ].
 ]
 
