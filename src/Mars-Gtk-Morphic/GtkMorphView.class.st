@@ -608,7 +608,7 @@ GtkMorphView >> paneColorOrNil [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'world simulation' }
 GtkMorphView >> privateRemove: aMorph [
 	
 	^ aMorph
@@ -642,7 +642,7 @@ GtkMorphView >> removeMorph: aMorph [
 	self invalidateRect: aMorph fullBounds
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'world simulation' }
 GtkMorphView >> removedMorph: aMorph [
 ]
 
