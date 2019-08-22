@@ -22,6 +22,15 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 		self handleKeyEvent: event ]
 ]
 
+{ #category : #'spec protocol' }
+GtkTextAdapter >> setSelectionFromModel: aSelection [
+ 
+	self innerWidget ifNotNil: [ :w | 
+		w textBuffer 
+			selectFrom: aSelection first - 1
+			to: aSelection last ]
+]
+
 { #category : #building }
 GtkTextAdapter >> widgetClass [
 

@@ -247,6 +247,24 @@ GtkTextBuffer >> removeAllTagsFrom: start to: end [
 		const GtkTextIter *end))
 ]
 
+{ #category : #accessing }
+GtkTextBuffer >> selectFrom: start to: end [
+	| startIter endIter |
+
+	startIter := self offsetIter: start.
+	endIter := self offsetIter: end.
+	self selectRangeInsert: startIter bound: endIter
+]
+
+{ #category : #private }
+GtkTextBuffer >> selectRangeInsert: ins bound: bound [
+
+	self ffiCall: #(void gtk_text_buffer_select_range (
+		self,
+		const GtkTextIter *ins,
+		const GtkTextIter *bound))
+]
+
 { #category : #private }
 GtkTextBuffer >> startIter [ 
 	| start |
