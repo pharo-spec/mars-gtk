@@ -549,6 +549,7 @@ GtkMorphView >> morph: aMorph [
 
 	needQueue := false.
 	morph ifNotNil: [ 
+		self stopStepping.
 		"if we are replacing a morph, we will need to transmit to the new morph some properties. 
 		 Also, we will need to force a queue"
 		(self isMorphResizable and: [ aMorph extent < morph extent ]) ifTrue: [ 
@@ -683,7 +684,19 @@ GtkMorphView >> startStepping: aMorph at: scheduledTime selector: aSelector argu
 	steps ifNil: [ steps := Set new ].
 	steps add: newStep.
 	
-	newStep schedule
+	newStep schedule.
+	
+	self connectDestroy: [ 
+		self stopStepping ]
+]
+
+{ #category : #'world simulation' }
+GtkMorphView >> stopStepping [
+	
+	steps ifNil: [ ^ self ].
+	
+	steps do: [ :each | each cancel ].
+	steps := nil
 ]
 
 { #category : #'world simulation' }
