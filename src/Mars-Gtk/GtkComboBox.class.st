@@ -69,6 +69,30 @@ GtkComboBox >> activeIndex: index [
 	^ self ffiCall: #(void gtk_combo_box_set_active (self, gint index))
 ]
 
+{ #category : #'convenience columns' }
+GtkComboBox >> appendPixbufColumn: columnIndex [
+	| renderer |
+
+	renderer := GtkCellRendererPixbuf new.
+	self	
+		packStart: renderer expand: false;
+		addAttribute: 'pixbuf' 
+			column: columnIndex 
+			renderer: renderer
+]
+
+{ #category : #'convenience columns' }
+GtkComboBox >> appendTextColumn: columnIndex [
+	| renderer |
+
+	renderer := GtkCellRendererText new.
+	self 
+		packStart: renderer;
+		addAttribute: 'text' 
+			column: columnIndex 
+			renderer: renderer
+]
+
 { #category : #private }
 GtkComboBox >> basicActiveId [
 
@@ -90,7 +114,7 @@ GtkComboBox >> beText [
 	
 	cell := GtkCellRendererText new.
 	self packStart: cell expand: true.
-	self addAttribute: cell attribute: 'text' column: 0
+	self addAttribute: 'text' column: 0 renderer: cell
 ]
 
 { #category : #accessing }
