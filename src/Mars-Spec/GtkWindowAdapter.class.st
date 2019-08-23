@@ -32,8 +32,8 @@ GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 GtkWindowAdapter >> addModelTo: gtkWindow [
 
 	super addModelTo: gtkWindow.
-	gtkWindow connectHide: [ 
-		self announceClosed ]
+	gtkWindow connectDeleteEvent: [ self announceWillClose. false ].
+	gtkWindow connectHide: [ self announceClosed ]
 ]
 
 { #category : #accessing }
@@ -105,6 +105,14 @@ GtkWindowAdapter >> announceClosed [
 GtkWindowAdapter >> announceOpened [
 
 	self model windowIsOpening
+]
+
+{ #category : #private }
+GtkWindowAdapter >> announceWillClose [
+
+	self presenter announcer announce: (SpWindowWillClose new
+		window: self presenter;
+		yourself)
 ]
 
 { #category : #accessing }
