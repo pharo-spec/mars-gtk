@@ -100,6 +100,18 @@ GtkTextBuffer >> connectChanged: aBlock [
 		do: [ :textBuffer :data | aBlock value ]
 ]
 
+{ #category : #signals }
+GtkTextBuffer >> connectMarkSet: aBlock [
+
+	self 
+		connect: 'mark-set' 
+		signature: #(void (void *textBuffer, void *iter, void *mark, gpointer data))
+		do: [ :textBuffer :iter :mark :data | 
+			aBlock 
+				value: (GtkTextIter fromHandle: iter)
+				value: (GtkTextMark fromHandle: mark) ]	
+]
+
 { #category : #'accessing mark' }
 GtkTextBuffer >> createMarkNamed: mark_name where: where leftGravity: left_gravity [
 
@@ -144,6 +156,15 @@ GtkTextBuffer >> endIter: iter [
 GtkTextBuffer >> endUserAction [
 	
 	self ffiCall: #(void gtk_text_buffer_end_user_action (self))
+]
+
+{ #category : #private }
+GtkTextBuffer >> getSelectionBoundsStart: start end: end [ 
+
+	^ self ffiCall: #(gboolean gtk_text_buffer_get_selection_bounds (
+		self,
+		GtkTextIter *start,
+		GtkTextIter *end))
 ]
 
 { #category : #private }
@@ -263,6 +284,20 @@ GtkTextBuffer >> selectRangeInsert: ins bound: bound [
 		self,
 		const GtkTextIter *ins,
 		const GtkTextIter *bound))
+]
+
+{ #category : #accessing }
+GtkTextBuffer >> selection [ 
+	"answer an interval of current selection"
+	| start end |
+
+	start := GtkTextIter new.
+	end := GtkTextIter new.
+	^ (self getSelectionBoundsStart: start end: end)
+		ifTrue: [ start offset to: end offset ]
+		ifFalse: [ nil ]
+	
+	
 ]
 
 { #category : #private }

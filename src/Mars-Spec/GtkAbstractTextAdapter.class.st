@@ -87,6 +87,28 @@ GtkAbstractTextAdapter >> selectAll [
 	self widget selectAll
 ]
 
+{ #category : #'spec protocol' }
+GtkAbstractTextAdapter >> selection [ 
+
+	^ self innerWidget 
+		ifNotNil: [ :w | 
+			| selection |
+			selection := w textBuffer selection.
+			selection ifNotNil: [ 
+				selection first + 1 to: selection last ] ]	
+		ifNil: [ 
+			1 to: 0 ]
+]
+
+{ #category : #'spec protocol' }
+GtkAbstractTextAdapter >> setSelectionFromModel: aSelection [
+ 
+	self innerWidget ifNotNil: [ :w | 
+		w textBuffer 
+			selectFrom: aSelection first - 1
+			to: aSelection last ]
+]
+
 { #category : #accessing }
 GtkAbstractTextAdapter >> setText: aString to: gtkWidget [
 

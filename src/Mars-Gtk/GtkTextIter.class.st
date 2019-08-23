@@ -269,6 +269,12 @@ GtkTextIter >> forwardLines: count [
 ]
 
 { #category : #accessing }
+GtkTextIter >> offset [ 
+	
+	^ self ffiCall: #(gint gtk_text_iter_get_offset (self))
+]
+
+{ #category : #accessing }
 GtkTextIter >> tags [
 	| tagList tags |
 

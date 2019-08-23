@@ -19,16 +19,7 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 	super addModelTo: gtkTextView.
 	gtkTextView beWrapWord.
 	gtkTextView connectKeyPressEvent: [ :event |
-		self handleKeyEvent: event ]
-]
-
-{ #category : #'spec protocol' }
-GtkTextAdapter >> setSelectionFromModel: aSelection [
- 
-	self innerWidget ifNotNil: [ :w | 
-		w textBuffer 
-			selectFrom: aSelection first - 1
-			to: aSelection last ]
+		self handleKeyEvent: event ].
 ]
 
 { #category : #building }

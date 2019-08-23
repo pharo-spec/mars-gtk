@@ -23,3 +23,9 @@ GtkTextMark class >> textMarkNewName: aName leftGravity: left_gravity [
 
 	^ self ffiCall: #(GtkTextMark *gtk_text_mark_new (const gchar *aName, gboolean left_gravity))
 ]
+
+{ #category : #accessing }
+GtkTextMark >> name [ 
+
+	^ self ffiCall: #(const gchar *gtk_text_mark_get_name (self))
+]

@@ -555,8 +555,13 @@ GtkMorphView >> morph: aMorph [
 		(self isMorphResizable and: [ aMorph extent < morph extent ]) ifTrue: [ 
 			aMorph extent: morph extent ].
 		needQueue := true ].
+	
 	morph := aMorph.
+	"I will be the owner (and I will act as a world)"
 	morph privateOwner: self.
+	"in this view, position of the morph is always 0@0"
+	morph position: 0@0.
+	"check for the need of steppiong stepping"
 	morph wantsSteps ifTrue: [ self startStepping: morph ].
 	
 	self sizeRequest: aMorph extent.
