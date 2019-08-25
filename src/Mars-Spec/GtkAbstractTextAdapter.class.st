@@ -97,6 +97,13 @@ GtkAbstractTextAdapter >> selectAll [
 ]
 
 { #category : #'spec protocol' }
+GtkAbstractTextAdapter >> selectLine [
+
+	self innerWidget ifNotNil: [ :w | 
+		w textBuffer selectLineAtCursor ]
+]
+
+{ #category : #'spec protocol' }
 GtkAbstractTextAdapter >> selection [ 
 
 	^ self innerWidget 

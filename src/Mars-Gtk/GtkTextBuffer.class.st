@@ -123,6 +123,12 @@ GtkTextBuffer >> createMarkNamed: mark_name where: where leftGravity: left_gravi
 ]
 
 { #category : #accessing }
+GtkTextBuffer >> cursorPosition [
+
+	^ self gObjectGetInteger: 'cursor-position'
+]
+
+{ #category : #accessing }
 GtkTextBuffer >> deleteAll [ 
 
 	self 
@@ -283,6 +289,25 @@ GtkTextBuffer >> selectFrom: start to: end [
 	startIter := self offsetIter: start.
 	endIter := self offsetIter: end.
 	self selectRangeInsert: startIter bound: endIter
+]
+
+{ #category : #accessing }
+GtkTextBuffer >> selectLineAt: offset [
+	| start end |
+	
+	start := self offsetIter: offset.
+	start backwardChars: start lineOffset.
+
+	end := self offsetIter: offset.
+	end forwardToLineEnd.
+		
+	self selectRangeInsert: start bound: end
+]
+
+{ #category : #accessing }
+GtkTextBuffer >> selectLineAtCursor [
+
+	self selectLineAt: self cursorPosition
 ]
 
 { #category : #private }

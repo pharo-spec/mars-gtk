@@ -64,7 +64,7 @@ GtkTextIter >> backwardChar [
 { #category : #accessing }
 GtkTextIter >> backwardChars: count [
 
-	^ self ffiCall: #(gboolean gtk_text_iter_backward_char (self, gint count))
+	^ self ffiCall: #(gboolean gtk_text_iter_backward_chars (self, gint count))
 ]
 
 { #category : #accessing }
@@ -266,6 +266,24 @@ GtkTextIter >> forwardChars: count [
 GtkTextIter >> forwardLines: count [
 
 	^ self ffiCall: #(gboolean gtk_text_iter_forward_lines (self, gint count))
+]
+
+{ #category : #accessing }
+GtkTextIter >> forwardToLineEnd [
+
+	^ self ffiCall: #(gboolean gtk_text_iter_forward_to_line_end (self))
+]
+
+{ #category : #accessing }
+GtkTextIter >> line [
+
+	^ self ffiCall: #(gint gtk_text_iter_get_line (self))
+]
+
+{ #category : #accessing }
+GtkTextIter >> lineOffset [
+
+	^ self ffiCall: #(gint gtk_text_iter_get_line_offset (self))
 ]
 
 { #category : #accessing }
