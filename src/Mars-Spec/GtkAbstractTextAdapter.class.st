@@ -54,6 +54,15 @@ GtkAbstractTextAdapter >> handleKeyEvent: event [
 	^ false
 ]
 
+{ #category : #'spec protocol' }
+GtkAbstractTextAdapter >> insert: aString at: positionIndex [
+
+	self innerWidgetDo: [ :w |
+		w textBuffer 
+			insertText: aString 
+			at: positionIndex - 1 ]
+]
+
 { #category : #building }
 GtkAbstractTextAdapter >> populatePopup: menuWidget [
 	| newMenu menuPresenter |

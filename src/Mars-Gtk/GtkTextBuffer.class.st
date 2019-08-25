@@ -208,6 +208,14 @@ GtkTextBuffer >> insertText: aString [
 ]
 
 { #category : #accessing }
+GtkTextBuffer >> insertText: aString at: offset [
+
+	self 
+		insertIter: (self offsetIter: offset)
+		text: aString
+]
+
+{ #category : #accessing }
 GtkTextBuffer >> insertTextAtCursor: text [
 
 	^ self ffiCall: #(void gtk_text_buffer_insert_at_cursor (self, const gchar *text, -1))
