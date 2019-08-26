@@ -79,7 +79,9 @@ GtkKMDispatcher >> dispatchKeyEvent: aKeyEvent [
 
 	KMLog log: aKeyEvent.
 	buffer addEvent: aKeyEvent.
-	^ self dispatch: buffer buffer copy
+	self dispatch: buffer buffer copy.
+	aKeyEvent wasHandled ifFalse: [ 
+		buffer clearBuffer ]
 ]
 
 { #category : #initialization }

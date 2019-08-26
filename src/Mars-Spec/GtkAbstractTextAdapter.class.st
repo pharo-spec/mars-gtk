@@ -47,7 +47,9 @@ GtkAbstractTextAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 { #category : #private }
 GtkAbstractTextAdapter >> handleKeyEvent: event [
 
-	dispatcher ifNotNil: [ 
+	event isModifier ifTrue: [ ^ false ].
+
+	dispatcher ifNotNil: [
 		dispatcher dispatchKeyEvent: event.
 		^ event wasHandled ].
 	

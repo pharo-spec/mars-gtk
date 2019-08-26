@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #building }
+GtkCodeAdapter >> addModelTo: gtkTextView [ 
+
+	self model contextKeyBindings ifNotNil: [ :aDispatcher | 
+		aDispatcher directKeymaps allEntries keymaps do: [ :each |
+			self bindKeyCombination: each shortcut toAction: each action ] ].
+	
+	super addModelTo: gtkTextView
+]
+
+{ #category : #building }
 GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 	
 	gtkTextView styleContext addProvider: self model application cssProviderCode
