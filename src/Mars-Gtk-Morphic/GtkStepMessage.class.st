@@ -40,5 +40,5 @@ GtkStepMessage >> stepTime [
 { #category : #private }
 GtkStepMessage >> waitUntilExecution [
 
-	self stepTime milliseconds wait
+	self stepTime milliSeconds wait
 ]
