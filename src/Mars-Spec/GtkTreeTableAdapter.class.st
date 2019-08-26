@@ -266,6 +266,7 @@ GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 	self addLevelsUpTo: aPath to: gtkWidget.
 	gtkWidget expandToPath: aPath.
 	gtkWidget selection selectPath: aPath.
+	gtkWidget scrollToPath: aPath.
 
 	(gtkWidget selection isSelected: aPath)
 		ifFalse: [ gtkWidget selection unselectAll ].

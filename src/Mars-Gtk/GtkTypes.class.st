@@ -10,6 +10,7 @@ Class {
 		'gboolean',
 		'gchar',
 		'gdouble',
+		'gfloat',
 		'gint',
 		'gint16',
 		'gint8',
@@ -39,6 +40,7 @@ GtkTypes class >> initialize [
 	guint16 := #uint16.
 	guint := #uint.
 	guint32 := #uint32.
+	gfloat := #float.
 	gdouble := #double.
 	GQuark := #guint32.
 	GType := #gsize.

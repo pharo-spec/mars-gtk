@@ -288,6 +288,40 @@ GtkTreeView >> removeColumn: aGtkTreeViewColumn [
 	self basicRemoveColumn: aGtkTreeViewColumn
 ]
 
+{ #category : #private }
+GtkTreeView >> scrollToCellPath: path column: column useAlign: use_align rowAlign: row_align colAlign: col_align [
+
+	self ffiCall: #(void gtk_tree_view_scroll_to_cell (
+		self,
+		GtkTreePath *path,
+		GtkTreeViewColumn *column,
+		gboolean use_align,
+		gfloat row_align,
+		gfloat col_align))
+]
+
+{ #category : #accessing }
+GtkTreeView >> scrollToPath: path [
+	
+	self 
+		scrollToPath: (GtkTreePath newFromArray: path) autoRelease
+		useAlign: true 
+		rowAlign: 1.0 
+		colAlign: 0.0
+]
+
+{ #category : #private }
+GtkTreeView >> scrollToPath: path useAlign: use_align rowAlign: row_align colAlign: col_align [
+
+	self ffiCall: #(void gtk_tree_view_scroll_to_cell (
+		self,
+		GtkTreePath *path,
+		NULL,
+		gboolean use_align,
+		gfloat row_align,
+		gfloat col_align))
+]
+
 { #category : #selection }
 GtkTreeView >> selectIndex: anInteger [ 
 	

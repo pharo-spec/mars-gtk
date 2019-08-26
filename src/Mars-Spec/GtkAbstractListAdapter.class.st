@@ -46,13 +46,23 @@ GtkAbstractListAdapter >> resetSelection [
 	self innerWidget selection unselectAll
 ]
 
+{ #category : #private }
+GtkAbstractListAdapter >> scrollToSelectionIfNeeded: index [
+
+	self innerWidgetDo: [ :w |
+		w scrollToPath: { index } ]
+]
+
 { #category : #accessing }
 GtkAbstractListAdapter >> selectIndex: anInteger [ 
 	
 	self innerWidgetDo: [ :w |
 		anInteger ~= 0
-			ifTrue: [ w selectIndex: anInteger ]
-			ifFalse: [ self resetSelection ] ]
+			ifTrue: [ 
+				w selectIndex: anInteger.
+				self scrollToSelectionIfNeeded: anInteger ]
+			ifFalse: [ 
+				self resetSelection ] ]
 ]
 
 { #category : #building }
