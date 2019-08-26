@@ -7,9 +7,11 @@ Class {
 { #category : #building }
 GtkCodeAdapter >> addModelTo: gtkTextView [ 
 
-	self model contextKeyBindings ifNotNil: [ :aDispatcher | 
-		aDispatcher directKeymaps allEntries keymaps do: [ :each |
-			self bindKeyCombination: each shortcut toAction: each action ] ].
+	self model contextKeyBindings ifNotNil: [ :aCategory | 
+		aCategory allEntries keymaps do: [ :each |
+			self 
+				bindKeyCombination: each shortcut 
+				toAction: each action ] ].
 	
 	super addModelTo: gtkTextView
 ]
