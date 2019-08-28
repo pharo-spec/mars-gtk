@@ -6,6 +6,10 @@ https://developer.gnome.org/gtk3/stable/GtkCssProvider.html
 Class {
 	#name : #GtkCssProvider,
 	#superclass : #GtkStyleProvider,
+	#classVars : [
+		'GTK_STYLE_PROVIDER_PRIORITY_APPLICATION',
+		'GTK_STYLE_PROVIDER_PRIORITY_USER'
+	],
 	#pools : [
 		'GtkTypes'
 	],
@@ -51,6 +55,13 @@ GtkCssProvider class >> fileNameToUTF8: opsysstring len: len read: bytes_read wr
 		module: GLibLibrary
 ]
 
+{ #category : #'class initialization' }
+GtkCssProvider class >> initialize [ 
+
+	GTK_STYLE_PROVIDER_PRIORITY_APPLICATION := 600.
+	GTK_STYLE_PROVIDER_PRIORITY_USER := 800
+]
+
 { #category : #'instance creation' }
 GtkCssProvider class >> new [ 
 	^ self cssProviderNew initialize
@@ -72,6 +83,31 @@ GtkCssProvider class >> newFromReference: aFileReference [
 GtkCssProvider class >> newFromString: aString [
 
 	^ self new loadFromData: aString
+]
+
+{ #category : #accessing }
+GtkCssProvider >> addForApplicationToDefaultScreen [
+
+	self 
+		addForScreen: GdkScreen default 
+		priority: GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
+]
+
+{ #category : #private }
+GtkCssProvider >> addForScreen: screen priority: priority [
+
+	^ self ffiCall: #(void gtk_style_context_add_provider_for_screen(
+		GdkScreen *screen,
+		self,
+		guint priority))
+]
+
+{ #category : #accessing }
+GtkCssProvider >> addForUserToDefaultScreen [
+
+	self 
+		addForScreen: GdkScreen default 
+		priotity: GTK_STYLE_PROVIDER_PRIORITY_USER
 ]
 
 { #category : #accessing }
