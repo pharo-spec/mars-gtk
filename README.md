@@ -22,7 +22,7 @@ unzip Gtk3.zip
 
 You need Gtk3 (installed by brew because paths are fixed for now)
 ```
-sudo brew install gtk+3
+brew install gtk+3
 ```
 
 ### On Linux
