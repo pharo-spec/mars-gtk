@@ -26,6 +26,12 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 ]
 
 { #category : #building }
+GtkTextAdapter >> bufferClass [
+
+	^ GtkTextBuffer
+]
+
+{ #category : #building }
 GtkTextAdapter >> widgetClass [
 
 	^ GtkTextView

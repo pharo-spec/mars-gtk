@@ -37,6 +37,8 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 		indentOnTab: true;
 		tabWidth: 4.
 
+	gtkSourceView textBuffer 
+		infiniteUndoLevels
 ]
 
 { #category : #building }
@@ -47,7 +49,7 @@ GtkCodeAdapter >> addTextTo: gtkTextView [
 	"add style table"
 	self model hasSyntaxHighlight ifTrue: [ 
 		self flag: #TODO. "What do we do when color style changes?"
-		gtkTextView textBuffer: (GtkTextBuffer newTable: GtkTextTagTable newForCode).
+		gtkTextView textBuffer: (self bufferClass newTable: GtkTextTagTable newForCode).
 		"I need to recalculate style each time I get a change"
 		gtkTextView textBuffer connectChanged: [ 
 			self applyFullStyleTo: gtkTextView textBuffer ] ]	.
@@ -79,6 +81,14 @@ GtkCodeAdapter >> applyStyleTo: textBuffer [
 GtkCodeAdapter >> behavior [
 
 	^ self model behavior
+]
+
+{ #category : #building }
+GtkCodeAdapter >> bufferClass [
+
+	^ GtkSourceViewLibrary uniqueInstance isAvailable 
+		ifTrue: [ GtkSourceBuffer ]
+		ifFalse: [ super bufferClass ]
 ]
 
 { #category : #'private-shout' }

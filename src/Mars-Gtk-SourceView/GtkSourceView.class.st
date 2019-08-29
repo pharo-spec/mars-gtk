@@ -103,7 +103,9 @@ GtkSourceView >> autoIndent: enable [
 { #category : #private }
 GtkSourceView >> getBuffer [
 
-	self ffiCall: #(GtkSourceBuffer *gtk_text_view_get_buffer (self))
+	^ self 
+		ffiCall: #(GtkSourceBuffer *gtk_text_view_get_buffer (self))
+		module: GtkSourceViewLibrary
 ]
 
 { #category : #accessing }

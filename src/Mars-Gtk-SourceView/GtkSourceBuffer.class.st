@@ -8,3 +8,82 @@ Class {
 	#superclass : #GtkTextBuffer,
 	#category : #'Mars-Gtk-SourceView'
 }
+
+{ #category : #'instance creation' }
+GtkSourceBuffer class >> newTable: table [
+
+	^ (self sourceBufferNew: table) initialize
+]
+
+{ #category : #private }
+GtkSourceBuffer class >> sourceBufferNew: table [
+
+	^ self 
+		ffiCall: #(GtkSourceBuffer *gtk_source_buffer_new (GtkTextTagTable *table))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #testing }
+GtkSourceBuffer >> canRedo [
+
+	^ self 
+		ffiCall: #(gboolean gtkgtk_source_buffer_can_redo(self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #testing }
+GtkSourceBuffer >> canUndo [
+
+	^ self 
+		ffiCall: #(gboolean gtkgtk_source_buffer_can_undo(self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceBuffer >> highlightMatchingBrackets: highlight [
+
+	^ self 
+		ffiCall: #(void gtk_source_buffer_set_highlight_matching_brackets (self, gboolean highlight))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceBuffer >> infiniteUndoLevels [
+
+	self maxUndoLevels: -1
+		
+]
+
+{ #category : #testing }
+GtkSourceBuffer >> isHighlightMatchingBrackets [
+
+	^ self 
+		ffiCall: #(gboolean gtk_source_buffer_get_highlight_matching_brackets(self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceBuffer >> maxUndoLevels: max_undo_levels [
+
+	^ self 
+		ffiCall: #(void gtk_source_buffer_set_max_undo_levels (
+			self,
+   			gint max_undo_levels))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceBuffer >> redo [
+
+	^ self 
+		ffiCall: #(void gtk_source_buffer_redo (self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceBuffer >> undo [
+
+	^ self 
+		ffiCall: #(void gtk_source_buffer_undo (self))
+		module: GtkSourceViewLibrary
+]
