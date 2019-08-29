@@ -7,6 +7,12 @@ Class {
 { #category : #building }
 GtkCodeAdapter >> addModelTo: gtkTextView [ 
 
+	gtkTextView 
+		showLineNumbers: true;
+		autoIndent: true;
+		indentOnTab: true;
+		tabWidth: 4.
+
 	self model contextKeyBindings ifNotNil: [ :aCategory | 
 		aCategory allEntries keymaps do: [ :each |
 			self 
