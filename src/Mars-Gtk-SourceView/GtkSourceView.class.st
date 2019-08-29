@@ -70,6 +70,7 @@ GtkSourceView class >> example3 [
 	sourceView := GtkSourceView new
 		showLineNumbers: true;
 		autoIndent: true;
+		showRightMargin: true;
 		yourself.
 
 	GtkWindow new

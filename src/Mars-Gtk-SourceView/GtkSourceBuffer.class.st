@@ -48,6 +48,16 @@ GtkSourceBuffer >> highlightMatchingBrackets: highlight [
 ]
 
 { #category : #accessing }
+GtkSourceBuffer >> implicitTrailingNewline: implicit_trailing_newline [
+
+	self 
+		ffiCall: #(void gtk_source_buffer_set_implicit_trailing_newline(
+			self,
+			gboolean implicit_trailing_newline))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
 GtkSourceBuffer >> infiniteUndoLevels [
 
 	self maxUndoLevels: -1
@@ -59,6 +69,14 @@ GtkSourceBuffer >> isHighlightMatchingBrackets [
 
 	^ self 
 		ffiCall: #(gboolean gtk_source_buffer_get_highlight_matching_brackets(self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #testing }
+GtkSourceBuffer >> isImplicitTrailingNewline [
+
+	^ self 
+		ffiCall: #(gboolean gtk_source_buffer_get_implicit_trailing_newline (self))
 		module: GtkSourceViewLibrary
 ]
 

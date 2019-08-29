@@ -38,7 +38,8 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 		tabWidth: 4.
 
 	gtkSourceView textBuffer 
-		infiniteUndoLevels
+		infiniteUndoLevels;
+		highlightMatchingBrackets: true
 ]
 
 { #category : #building }
