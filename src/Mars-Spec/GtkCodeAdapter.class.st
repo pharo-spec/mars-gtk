@@ -7,12 +7,8 @@ Class {
 { #category : #building }
 GtkCodeAdapter >> addModelTo: gtkTextView [ 
 
-	gtkTextView 
-		showLineNumbers: true;
-		autoIndent: true;
-		indentOnTab: true;
-		tabWidth: 4.
-
+	self addSourceFeaturesTo: gtkTextView.
+	
 	self model contextKeyBindings ifNotNil: [ :aCategory | 
 		aCategory allEntries keymaps do: [ :each |
 			self 
@@ -26,6 +22,20 @@ GtkCodeAdapter >> addModelTo: gtkTextView [
 GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 	
 	gtkTextView styleContext addClass: 'code'
+]
+
+{ #category : #building }
+GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
+	
+	self flag: #TODO. "Find a better way to validate this"
+	(gtkSourceView isKindOf: GtkSourceView) ifFalse: [ ^ self ].
+	  
+	gtkSourceView 
+		showLineNumbers: true;
+		autoIndent: true;
+		indentOnTab: true;
+		tabWidth: 4.
+
 ]
 
 { #category : #building }
@@ -105,5 +115,7 @@ GtkCodeAdapter >> textWithStyle [
 { #category : #building }
 GtkCodeAdapter >> widgetClass [
 
-	^ GtkSourceView
+	^ GtkSourceViewLibrary uniqueInstance isAvailable 
+		ifTrue: [ GtkSourceView ]
+		ifFalse: [ super widgetClass ]
 ]

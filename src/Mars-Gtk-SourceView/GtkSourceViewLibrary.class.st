@@ -4,6 +4,14 @@ Class {
 	#category : #'Mars-Gtk-SourceView'
 }
 
+{ #category : #testing }
+GtkSourceViewLibrary >> isAvailable [
+
+	self flag: #TODO. "Find a way to do this just once"
+	^ self moduleName asFileReference exists
+		and: [ (DynamicLoader loadLibrary: self moduleName) notNil ]
+]
+
 { #category : #'accessing platform' }
 GtkSourceViewLibrary >> macModuleName [
 
