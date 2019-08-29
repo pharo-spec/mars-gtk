@@ -95,3 +95,9 @@ GtkCodeAdapter >> textWithStyle [
 
 	^ self innerWidget textBuffer asText
 ]
+
+{ #category : #building }
+GtkCodeAdapter >> widgetClass [
+
+	^ GtkSourceView
+]
