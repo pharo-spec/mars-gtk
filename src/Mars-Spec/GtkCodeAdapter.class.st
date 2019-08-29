@@ -30,6 +30,7 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 	self flag: #TODO. "Find a better way to validate this"
 	(gtkSourceView isKindOf: GtkSourceView) ifFalse: [ ^ self ].
 	  
+	self flag: #TODO. "All this needs to come from settings"
 	gtkSourceView 
 		showLineNumbers: true;
 		autoIndent: true;

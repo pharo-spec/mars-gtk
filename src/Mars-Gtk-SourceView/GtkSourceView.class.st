@@ -1,3 +1,17 @@
+"
+GtkSourceView is the main class of the GtkSourceView library. 
+Use a GtkSourceBuffer to display text with a GtkSourceView.
+This class provides:
+- Show the line numbers;
+- Show a right margin;
+- Highlight the current line;
+- Indentation settings;
+- Configuration for the Home and End keyboard keys;
+- Configure and show line marks;
+- And a few other things.
+
+https://developer.gnome.org/gtksourceview/stable/GtkSourceView.html
+"
 Class {
 	#name : #GtkSourceView,
 	#superclass : #GtkTextView,
@@ -84,6 +98,12 @@ GtkSourceView >> autoIndent: enable [
 	^ self 
 		ffiCall: #(void gtk_source_view_set_auto_indent (self, gboolean enable))
 		module: GtkSourceViewLibrary
+]
+
+{ #category : #private }
+GtkSourceView >> getBuffer [
+
+	self ffiCall: #(GtkSourceBuffer *gtk_text_view_get_buffer (self))
 ]
 
 { #category : #accessing }
