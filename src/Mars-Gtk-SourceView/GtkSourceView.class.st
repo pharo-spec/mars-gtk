@@ -102,11 +102,19 @@ GtkSourceView >> indentOnTab: enable [
 		module: GtkSourceViewLibrary
 ]
 
+{ #category : #accessing }
+GtkSourceView >> insertSpacesInsteadOfTabs: enable [
+
+	^ self 
+		ffiCall: #(void gtk_source_view_set_insert_spaces_instead_of_tabs (self, gboolean enable))
+		module: GtkSourceViewLibrary
+]
+
 { #category : #testing }
 GtkSourceView >> isAutoIndent [
 
 	^ self 
-		ffiCall: #(void gtk_source_view_get_auto_indent (self))
+		ffiCall: #(gboolean gtk_source_view_get_auto_indent (self))
 		module: GtkSourceViewLibrary
 ]
 
@@ -114,7 +122,7 @@ GtkSourceView >> isAutoIndent [
 GtkSourceView >> isHighlightCurrentLine [
 
 	^ self 
-		ffiCall: #(void gtk_source_view_set_highlight_current_line (self))
+		ffiCall: #(gboolean gtk_source_view_set_highlight_current_line (self))
 		module: GtkSourceViewLibrary
 ]
 
@@ -122,7 +130,15 @@ GtkSourceView >> isHighlightCurrentLine [
 GtkSourceView >> isIndentOnTab [
 
 	^ self 
-		ffiCall: #(void gtk_source_view_set_indent_on_tab (self))
+		ffiCall: #(gboolean gtk_source_view_set_indent_on_tab (self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #testing }
+GtkSourceView >> isInsertSpacesInsteadOfTabs [
+
+	^ self 
+		ffiCall: #(gboolean gtk_source_view_get_insert_spaces_instead_of_tabs (self))
 		module: GtkSourceViewLibrary
 ]
 
@@ -130,7 +146,7 @@ GtkSourceView >> isIndentOnTab [
 GtkSourceView >> isShowLineNumbers [
 
 	^ self 
-		ffiCall: #(void gtk_source_view_get_show_line_numbers (self))
+		ffiCall: #(gboolean gtk_source_view_get_show_line_numbers (self))
 		module: GtkSourceViewLibrary
 ]
 
@@ -138,7 +154,7 @@ GtkSourceView >> isShowLineNumbers [
 GtkSourceView >> isShowRightMargin [
 
 	^ self 
-		ffiCall: #(void gtk_source_view_get_show_right_margin (self))
+		ffiCall: #(gboolean gtk_source_view_get_show_right_margin (self))
 		module: GtkSourceViewLibrary
 ]
 
