@@ -12,7 +12,7 @@ Class {
 { #category : #'instance creation' }
 GtkSourceLanguageManager class >> default [
 
-	^ self getDefault initialize
+	^ self getDefault
 ]
 
 { #category : #'library path' }
@@ -24,7 +24,7 @@ GtkSourceLanguageManager class >> ffiLibraryName [
 { #category : #private }
 GtkSourceLanguageManager class >> getDefault [ 
 
-	^ self ffiCall: #(GtkSourceLanguageManager *gtk_source_language_manager_get_default(void))
+	^ self ffiCall: #(GtkSourceLanguageManager *gtk_source_language_manager_get_default())
 ]
 
 { #category : #'library path' }
@@ -41,7 +41,27 @@ GtkSourceLanguageManager >> getLanguageIds [
 
 { #category : #accessing }
 GtkSourceLanguageManager >> languageIds [ 
-	| ids |
+	| ids idsHandle lastId |
 
-	ids := self getLanguageIds.
+	idsHandle := self getLanguageIds asExternalAddress.
+	(idsHandle isNil or: [ idsHandle isNull ]) ifTrue: [ ^ #() ].
+
+	ids := Array new writeStream.
+	[ 
+		lastId := idsHandle pointerAt: 1.
+		lastId isNull ifFalse: [ 
+			ids nextPut: lastId readStringUTF8.
+			idsHandle := idsHandle + FFIExternalType pointerSize ] ]
+	doWhileFalse: [ 
+		lastId isNull ].
+
+	^ ids contents
+]
+
+{ #category : #accessing }
+GtkSourceLanguageManager >> languageWithId: id [ 
+
+	^ self ffiCall: #(GtkSourceLanguage *gtk_source_language_manager_get_language(
+		self,
+		const gchar *id))
 ]
