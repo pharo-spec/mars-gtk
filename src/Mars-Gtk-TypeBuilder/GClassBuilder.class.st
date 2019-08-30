@@ -65,10 +65,10 @@ GClassBuilder >> defineGetType [
 GClassBuilder >> defineInit [
 
 	initCallback := GCallback 
-		signature: #(void (gpointer ginstance))
-		block: [ :ginstance |
-			instanceInit ifNotNil: [ instanceInit value: ginstance ] ].
-
+		signature: #(void (gpointer object))
+		block: [ :object |
+			parentClass gInit: object.
+			instanceInit ifNotNil: [ instanceInit value: object ] ].
 ]
 
 { #category : #private }

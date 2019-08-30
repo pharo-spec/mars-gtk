@@ -3,19 +3,9 @@ This class contains tests for GClassBuilder
 "
 Class {
 	#name : #GClassBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #GClassBaseTest,
 	#category : #'Mars-Gtk-TypeBuilder'
 }
-
-{ #category : #private }
-GClassBuilderTest >> randomNameForTest [
-
-	^ 'Test',
-	((self toByteArray: DateAndTime now asDuration asMilliSeconds size: 4),
-	 (self toByteArray: 9999 atRandom size: 2))
-	 asInteger
-	 asString
-]
 
 { #category : #tests }
 GClassBuilderTest >> testExtendGObject [
@@ -39,14 +29,4 @@ GClassBuilderTest >> testExtendGObject [
 					name: name;
 					parent: GObject ] ]
 		raise: Error
-]
-
-{ #category : #private }
-GClassBuilderTest >> toByteArray: aNumber size: sizeNumber [
-	| result |
-	
-	result := aNumber asByteArray.
-	result size < sizeNumber 
-		ifTrue: [ result := (ByteArray new: sizeNumber - result size), result ].
-	^ result
 ]

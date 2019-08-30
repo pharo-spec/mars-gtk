@@ -38,9 +38,8 @@ GObject class >> gClassSize [
 
 { #category : #accessing }
 GObject class >> gInit: object [ 
-	"This method was automatically generated"
 
-	^ self ffiCall: #(void g_object_init(void *object))
+	"There is no g_object_init, I'm using this as base hierarchy"
 ]
 
 { #category : #accessing }
