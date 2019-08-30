@@ -55,6 +55,9 @@ GObject class >> generateGTypeMethod [
 
 { #category : #utils }
 GObject class >> generateGTypeMethods [
+	"you can use this method to generate ALL missing gType methods. 
+	 BEWARE: You will be adding incorrect gType methods since the hierarchy here is different than 
+	 Gtk hierarchy. Better use #generateGTypeMethod when creating your new class"
 	<script>
 
 	self withAllSubclassesDo: [ :each |

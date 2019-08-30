@@ -12,13 +12,6 @@ GtkAthensExampleView class >> drawingAreaNew [
 	^ self ffiCall: #( GtkAthensExampleView *gtk_drawing_area_new () )
 ]
 
-{ #category : #accessing }
-GtkAthensExampleView class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_athens_example_view_get_type())
-]
-
 { #category : #drawing }
 GtkAthensExampleView >> drawOnAthensCanvas: aCanvas [
 

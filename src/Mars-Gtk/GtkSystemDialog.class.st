@@ -17,13 +17,6 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
-{ #category : #accessing }
-GtkSystemDialog class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_system_dialog_get_type())
-]
-
 { #category : #events }
 GtkSystemDialog >> connectResponse: aBlock [
 

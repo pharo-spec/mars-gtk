@@ -242,13 +242,6 @@ GtkMorphView class >> example8 [
 		showAll
 ]
 
-{ #category : #accessing }
-GtkMorphView class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_morph_view_get_type())
-]
-
 { #category : #examples }
 GtkMorphView class >> newGridOf: aNumber with: aBlock [
 	| gridMorph |

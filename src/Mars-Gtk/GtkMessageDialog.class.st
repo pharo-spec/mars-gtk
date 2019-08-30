@@ -30,13 +30,6 @@ GtkMessageDialog class >> defaultTitle [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtkMessageDialog class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_message_dialog_get_type())
-]
-
 { #category : #'instance creation' }
 GtkMessageDialog class >> newMessage: aString [
 

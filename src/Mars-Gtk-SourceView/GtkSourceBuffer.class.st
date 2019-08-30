@@ -11,9 +11,10 @@ Class {
 
 { #category : #accessing }
 GtkSourceBuffer class >> gType [ 
-	"This method was automatically generated"
 
-	^ self ffiCall: #(gsize gtk_source_buffer_get_type())
+	^ self 
+		ffiCall: #(gsize gtk_source_buffer_get_type())
+		module: GtkSourceViewLibrary
 ]
 
 { #category : #'instance creation' }

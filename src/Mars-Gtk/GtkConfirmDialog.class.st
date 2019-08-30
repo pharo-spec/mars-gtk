@@ -31,13 +31,6 @@ GtkConfirmDialog class >> defaultTitle [
 	^ 'Confirm'
 ]
 
-{ #category : #accessing }
-GtkConfirmDialog class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_confirm_dialog_get_type())
-]
-
 { #category : #private }
 GtkConfirmDialog class >> windowNew: type [ 
 

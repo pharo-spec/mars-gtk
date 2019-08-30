@@ -23,13 +23,6 @@ GtkFontChooserDialog class >> fontChooserDialogNewTitle: title [
 	^ self ffiCall: #(GtkFontChooserDialog *gtk_font_chooser_dialog_new (const gchar *title, NULL))
 ]
 
-{ #category : #accessing }
-GtkFontChooserDialog class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_font_chooser_dialog_get_type())
-]
-
 { #category : #'instance creation' }
 GtkFontChooserDialog class >> newTitle: aString [ 
 

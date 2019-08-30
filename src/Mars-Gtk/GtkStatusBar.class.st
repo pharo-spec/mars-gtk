@@ -14,7 +14,7 @@ Class {
 GtkStatusBar class >> gType [ 
 	"This method was automatically generated"
 
-	^ self ffiCall: #(gsize gtk_status_bar_get_type())
+	^ self ffiCall: #(gsize gtk_statusbar_get_type())
 ]
 
 { #category : #private }

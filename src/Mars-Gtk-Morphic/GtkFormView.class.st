@@ -18,13 +18,6 @@ GtkFormView class >> drawingAreaNew [
 	^ self ffiCall: #(GtkFormView *gtk_drawing_area_new ())
 ]
 
-{ #category : #accessing }
-GtkFormView class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_form_view_get_type())
-]
-
 { #category : #private }
 GtkFormView >> canDraw [
 

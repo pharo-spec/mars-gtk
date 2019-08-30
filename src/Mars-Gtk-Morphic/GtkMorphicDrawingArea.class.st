@@ -229,13 +229,6 @@ GtkMorphicDrawingArea class >> example8 [
 		showAll
 ]
 
-{ #category : #accessing }
-GtkMorphicDrawingArea class >> gType [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(gsize gtk_morphic_drawing_area_get_type())
-]
-
 { #category : #examples }
 GtkMorphicDrawingArea class >> newGridOf: aNumber with: aBlock [
 	| gridMorph |

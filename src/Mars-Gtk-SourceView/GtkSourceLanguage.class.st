@@ -11,9 +11,10 @@ Class {
 
 { #category : #accessing }
 GtkSourceLanguage class >> gType [ 
-	"This method was automatically generated"
 
-	^ self ffiCall: #(gsize gtk_source_language_get_type())
+	^ self 
+		ffiCall: #(gsize gtk_source_language_get_type())
+		module: GtkSourceViewLibrary
 ]
 
 { #category : #'instance creation' }

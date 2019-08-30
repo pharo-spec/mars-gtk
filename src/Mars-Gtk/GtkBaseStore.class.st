@@ -16,9 +16,8 @@ GtkBaseStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 
 { #category : #accessing }
 GtkBaseStore class >> gType [ 
-	"This method was automatically generated"
 
-	^ self ffiCall: #(gsize gtk_base_store_get_type())
+	^ nil
 ]
 
 { #category : #'instance creation' }
