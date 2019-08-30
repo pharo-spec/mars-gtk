@@ -37,6 +37,13 @@ GObject class >> gClassSize [
 ]
 
 { #category : #accessing }
+GObject class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void g_object_init(void *object))
+]
+
+{ #category : #accessing }
 GObject class >> gSize [
 
 	^ 136
@@ -74,6 +81,29 @@ GObject class >> generateGTypeMethods [
 
 	self withAllSubclassesDo: [ :each |
 		each generateGTypeMethod ]
+]
+
+{ #category : #utils }
+GObject class >> generateInitMethod [
+
+	(self class selectors includes: #gType) ifFalse: [ ^ self ].
+	(self class selectors includes: #gInit:) ifTrue: [ ^ self ].
+	
+	self class
+		compile: ('gInit: object 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void {1}_init(void *object))'
+			format: { self gtkPrefix })
+		classified: #accessing
+]
+
+{ #category : #utils }
+GObject class >> generateInitMethods [
+	<script>
+
+	self withAllSubclassesDo: [ :each |
+		each generateInitMethod ]
 ]
 
 { #category : #utils }

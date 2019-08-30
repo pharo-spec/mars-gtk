@@ -12,6 +12,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkGrid class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_grid_init(void *object))
+]
+
+{ #category : #accessing }
 GtkGrid class >> gType [ 
 	"This method was automatically generated"
 

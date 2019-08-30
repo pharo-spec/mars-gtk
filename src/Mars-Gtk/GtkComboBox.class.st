@@ -28,6 +28,13 @@ GtkComboBox class >> comboBoxNewWithEntry [
 ]
 
 { #category : #accessing }
+GtkComboBox class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_combo_box_init(void *object))
+]
+
+{ #category : #accessing }
 GtkComboBox class >> gType [ 
 	"This method was automatically generated"
 

@@ -35,6 +35,13 @@ GtkLinkButton class >> buttonNewWithUri: utf8EncodedUrl withLabel: utf8EncodedSt
 ]
 
 { #category : #accessing }
+GtkLinkButton class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_link_button_init(void *object))
+]
+
+{ #category : #accessing }
 GtkLinkButton class >> gType [ 
 	"This method was automatically generated"
 

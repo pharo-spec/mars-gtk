@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkOverlay class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_overlay_init(void *object))
+]
+
+{ #category : #accessing }
 GtkOverlay class >> gType [ 
 	"This method was automatically generated"
 

@@ -80,6 +80,13 @@ GtkSourceView class >> example3 [
 ]
 
 { #category : #accessing }
+GtkSourceView class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_source_view_init(void *object))
+]
+
+{ #category : #accessing }
 GtkSourceView class >> gType [ 
 
 	^ self 

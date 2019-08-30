@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkRadioToolButton class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_radio_tool_button_init(void *object))
+]
+
+{ #category : #accessing }
 GtkRadioToolButton class >> gType [ 
 	"This method was automatically generated"
 

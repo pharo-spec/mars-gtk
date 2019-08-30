@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkStack class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_stack_init(void *object))
+]
+
+{ #category : #accessing }
 GtkStack class >> gType [ 
 	"This method was automatically generated"
 

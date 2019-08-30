@@ -26,6 +26,13 @@ GtkClipboard class >> forSelection [
 ]
 
 { #category : #accessing }
+GtkClipboard class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_clipboard_init(void *object))
+]
+
+{ #category : #accessing }
 GtkClipboard class >> gType [ 
 	"This method was automatically generated"
 

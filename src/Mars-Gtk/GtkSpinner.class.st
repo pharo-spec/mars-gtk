@@ -14,6 +14,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkSpinner class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_spinner_init(void *object))
+]
+
+{ #category : #accessing }
 GtkSpinner class >> gType [ 
 	"This method was automatically generated"
 

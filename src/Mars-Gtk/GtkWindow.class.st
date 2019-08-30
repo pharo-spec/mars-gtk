@@ -27,6 +27,13 @@ GtkWindow class >> finalizeResourceData: aHandle [
 ]
 
 { #category : #accessing }
+GtkWindow class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_window_init(void *object))
+]
+
+{ #category : #accessing }
 GtkWindow class >> gType [ 
 	"This method was automatically generated"
 

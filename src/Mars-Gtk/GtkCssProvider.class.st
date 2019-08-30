@@ -56,6 +56,13 @@ GtkCssProvider class >> fileNameToUTF8: opsysstring len: len read: bytes_read wr
 ]
 
 { #category : #accessing }
+GtkCssProvider class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_css_provider_init(void *object))
+]
+
+{ #category : #accessing }
 GtkCssProvider class >> gType [ 
 	"This method was automatically generated"
 

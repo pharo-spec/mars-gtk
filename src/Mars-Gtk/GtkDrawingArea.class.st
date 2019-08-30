@@ -24,6 +24,13 @@ GtkDrawingArea class >> drawingAreaNew [
 ]
 
 { #category : #accessing }
+GtkDrawingArea class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_drawing_area_init(void *object))
+]
+
+{ #category : #accessing }
 GtkDrawingArea class >> gType [ 
 	"This method was automatically generated"
 

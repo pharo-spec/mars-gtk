@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkScrolledWindow class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_scrolled_window_init(void *object))
+]
+
+{ #category : #accessing }
 GtkScrolledWindow class >> gType [ 
 	"This method was automatically generated"
 

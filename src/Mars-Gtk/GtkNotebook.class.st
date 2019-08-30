@@ -13,6 +13,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkNotebook class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_notebook_init(void *object))
+]
+
+{ #category : #accessing }
 GtkNotebook class >> gType [ 
 	"This method was automatically generated"
 

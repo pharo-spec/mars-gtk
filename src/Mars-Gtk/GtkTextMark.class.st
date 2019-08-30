@@ -13,6 +13,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkTextMark class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_text_mark_init(void *object))
+]
+
+{ #category : #accessing }
 GtkTextMark class >> gType [ 
 	"This method was automatically generated"
 

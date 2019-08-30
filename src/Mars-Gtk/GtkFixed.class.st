@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkFixed class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_fixed_init(void *object))
+]
+
+{ #category : #accessing }
 GtkFixed class >> gType [ 
 	"This method was automatically generated"
 

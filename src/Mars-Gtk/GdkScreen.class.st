@@ -16,6 +16,13 @@ GdkScreen class >> default [
 ]
 
 { #category : #accessing }
+GdkScreen class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gdk_screen_init(void *object))
+]
+
+{ #category : #accessing }
 GdkScreen class >> gType [ 
 	"This method was automatically generated"
 

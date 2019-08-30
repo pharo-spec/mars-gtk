@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkProgressBar class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_progress_bar_init(void *object))
+]
+
+{ #category : #accessing }
 GtkProgressBar class >> gType [ 
 	"This method was automatically generated"
 

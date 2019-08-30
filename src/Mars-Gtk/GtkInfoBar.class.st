@@ -17,6 +17,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkInfoBar class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_info_bar_init(void *object))
+]
+
+{ #category : #accessing }
 GtkInfoBar class >> gType [ 
 	"This method was automatically generated"
 

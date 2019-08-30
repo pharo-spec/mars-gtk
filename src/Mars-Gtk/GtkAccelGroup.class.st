@@ -16,6 +16,13 @@ GtkAccelGroup class >> accelGroupNew [
 ]
 
 { #category : #accessing }
+GtkAccelGroup class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_accel_group_init(void *object))
+]
+
+{ #category : #accessing }
 GtkAccelGroup class >> gType [ 
 	"This method was automatically generated"
 

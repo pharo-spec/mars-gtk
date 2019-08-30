@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkSourceBuffer class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_source_buffer_init(void *object))
+]
+
+{ #category : #accessing }
 GtkSourceBuffer class >> gType [ 
 
 	^ self 

@@ -16,6 +16,13 @@ GdkDevice class >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GdkDevice class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gdk_device_init(void *object))
+]
+
+{ #category : #accessing }
 GdkDevice class >> gType [ 
 	"This method was automatically generated"
 

@@ -29,6 +29,13 @@ GdkDisplay class >> forceRectangleToFitLimits: aRect [
 ]
 
 { #category : #accessing }
+GdkDisplay class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gdk_display_init(void *object))
+]
+
+{ #category : #accessing }
 GdkDisplay class >> gType [ 
 	"This method was automatically generated"
 

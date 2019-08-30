@@ -18,6 +18,13 @@ GdkWindow class >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GdkWindow class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gdk_window_init(void *object))
+]
+
+{ #category : #accessing }
 GdkWindow class >> gType [ 
 	"This method was automatically generated"
 

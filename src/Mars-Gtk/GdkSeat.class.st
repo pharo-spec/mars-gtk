@@ -22,6 +22,13 @@ GdkSeat class >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GdkSeat class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gdk_seat_init(void *object))
+]
+
+{ #category : #accessing }
 GdkSeat class >> gType [ 
 	"This method was automatically generated"
 

@@ -18,6 +18,13 @@ GtkEntry class >> entryNew [
 ]
 
 { #category : #accessing }
+GtkEntry class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_entry_init(void *object))
+]
+
+{ #category : #accessing }
 GtkEntry class >> gType [ 
 	"This method was automatically generated"
 

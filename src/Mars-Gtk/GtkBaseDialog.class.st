@@ -17,6 +17,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkBaseDialog class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_base_dialog_init(void *object))
+]
+
+{ #category : #accessing }
 GtkBaseDialog class >> gType [ 
 
 	^ nil

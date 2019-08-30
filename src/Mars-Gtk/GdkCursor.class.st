@@ -29,6 +29,13 @@ GdkCursor class >> ffiLibrary [
 ]
 
 { #category : #accessing }
+GdkCursor class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gdk_cursor_init(void *object))
+]
+
+{ #category : #accessing }
 GdkCursor class >> gType [ 
 	"This method was automatically generated"
 

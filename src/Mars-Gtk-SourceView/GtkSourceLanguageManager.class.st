@@ -22,6 +22,13 @@ GtkSourceLanguageManager class >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GtkSourceLanguageManager class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_source_language_manager_init(void *object))
+]
+
+{ #category : #accessing }
 GtkSourceLanguageManager class >> gType [ 
 	"This method was automatically generated"
 

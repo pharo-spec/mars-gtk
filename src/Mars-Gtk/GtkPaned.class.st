@@ -13,6 +13,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkPaned class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_paned_init(void *object))
+]
+
+{ #category : #accessing }
 GtkPaned class >> gType [ 
 	"This method was automatically generated"
 

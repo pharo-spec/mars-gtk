@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkListBoxRow class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_list_box_row_init(void *object))
+]
+
+{ #category : #accessing }
 GtkListBoxRow class >> gType [ 
 	"This method was automatically generated"
 

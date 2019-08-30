@@ -21,6 +21,13 @@ GtkSettings class >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GtkSettings class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_settings_init(void *object))
+]
+
+{ #category : #accessing }
 GtkSettings class >> gType [ 
 	"This method was automatically generated"
 

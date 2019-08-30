@@ -17,6 +17,13 @@ GtkStackSidebar class >> forStack: aStack [
 ]
 
 { #category : #accessing }
+GtkStackSidebar class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_stack_sidebar_init(void *object))
+]
+
+{ #category : #accessing }
 GtkStackSidebar class >> gType [ 
 	"This method was automatically generated"
 

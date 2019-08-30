@@ -33,6 +33,13 @@ GtkWidget class >> fromHandle: handle [
 ]
 
 { #category : #accessing }
+GtkWidget class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_widget_init(void *object))
+]
+
+{ #category : #accessing }
 GtkWidget class >> gType [ 
 	"This method was automatically generated"
 

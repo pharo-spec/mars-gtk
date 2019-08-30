@@ -27,6 +27,13 @@ GtkButton class >> buttonNewWithLabel: label [
 ]
 
 { #category : #accessing }
+GtkButton class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_button_init(void *object))
+]
+
+{ #category : #accessing }
 GtkButton class >> gType [ 
 	"This method was automatically generated"
 

@@ -23,6 +23,13 @@ GtkLockButton class >> buttonNewWithLabel: utf8EncodedString [
 ]
 
 { #category : #accessing }
+GtkLockButton class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_lock_button_init(void *object))
+]
+
+{ #category : #accessing }
 GtkLockButton class >> gType [ 
 	"This method was automatically generated"
 

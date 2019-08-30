@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkCheckMenuItem class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_check_menu_item_init(void *object))
+]
+
+{ #category : #accessing }
 GtkCheckMenuItem class >> gType [ 
 	"This method was automatically generated"
 

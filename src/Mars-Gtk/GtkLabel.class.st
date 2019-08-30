@@ -15,6 +15,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkLabel class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_label_init(void *object))
+]
+
+{ #category : #accessing }
 GtkLabel class >> gType [ 
 	"This method was automatically generated"
 

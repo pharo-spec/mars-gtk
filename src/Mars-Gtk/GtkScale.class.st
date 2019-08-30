@@ -15,6 +15,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkScale class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gtk_scale_init(void *object))
+]
+
+{ #category : #accessing }
 GtkScale class >> gType [ 
 	"This method was automatically generated"
 

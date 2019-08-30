@@ -17,6 +17,13 @@ GdkMonitor class >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GdkMonitor class >> gInit: object [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(void gdk_monitor_init(void *object))
+]
+
+{ #category : #accessing }
 GdkMonitor class >> gType [ 
 	"This method was automatically generated"
 
