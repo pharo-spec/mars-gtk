@@ -24,7 +24,7 @@ GdkRGBA class >> ffiLibraryName [
 	^ GtkLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'field definition' }
 GdkRGBA class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
@@ -33,6 +33,12 @@ GdkRGBA class >> fieldsDesc [
   	gdouble blue;
   	gdouble alpha;
 	)
+]
+
+{ #category : #accessing }
+GdkRGBA class >> gType [
+
+	^ self ffiCall: #(gsize gdk_rgba_get_type ()) 
 ]
 
 { #category : #'accessing structure variables' }

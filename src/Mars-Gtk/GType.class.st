@@ -42,13 +42,13 @@ Class {
 { #category : #accessing }
 GType class >> GDK_TYPE_PIXBUF [
 
-	^ self gdkPixbufGetType
+	^ GdkPixbuf gType
 ]
 
 { #category : #accessing }
 GType class >> GDK_TYPE_RGBA [
 
-	^ self gdkRGBAGetType 
+	^ GdkRGBA gType
 ]
 
 { #category : #accessing }
@@ -169,18 +169,6 @@ GType class >> G_TYPE_VARIANT [
 { #category : #'library path' }
 GType class >> ffiLibraryName [
 	^ GtkLibrary
-]
-
-{ #category : #private }
-GType class >> gdkPixbufGetType [
-
-	^ self ffiCall: #(GType gdk_pixbuf_get_type()) module: GdkPixbufLibrary
-]
-
-{ #category : #private }
-GType class >> gdkRGBAGetType [
-
-	^ self ffiCall: #(GType gdk_rgba_get_type ()) module: GdkLibrary
 ]
 
 { #category : #initialization }

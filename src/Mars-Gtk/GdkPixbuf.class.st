@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : #private }
+GdkPixbuf class >> gType [
+
+	^ self 
+		ffiCall: #(gsize gdk_pixbuf_get_type()) 
+		module: GdkPixbufLibrary
+]
+
+{ #category : #private }
 GdkPixbuf class >> getFromSurface: surface x: src_x y: src_y width: width height: height [
 	"https://developer.gnome.org/gdk3/stable/gdk3-Pixbufs.html#gdk-pixbuf-get-from-surface"
 	
