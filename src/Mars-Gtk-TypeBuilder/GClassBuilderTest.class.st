@@ -1,10 +1,13 @@
+"
+This class contains tests for GClassBuilder
+"
 Class {
 	#name : #GClassBuilderTest,
 	#superclass : #TestCase,
 	#category : #'Mars-Gtk-TypeBuilder'
 }
 
-{ #category : #tests }
+{ #category : #private }
 GClassBuilderTest >> randomNameForTest [
 
 	^ 'Test',
@@ -38,7 +41,7 @@ GClassBuilderTest >> testExtendGObject [
 		raise: Error
 ]
 
-{ #category : #tests }
+{ #category : #private }
 GClassBuilderTest >> toByteArray: aNumber size: sizeNumber [
 	| result |
 	
