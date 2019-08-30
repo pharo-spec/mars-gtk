@@ -113,7 +113,7 @@ GClassBuilder >> gTypeRegisterStaticSimpleParent: parent_type name: type_name cl
 ]
 
 { #category : #accessing }
-GClassBuilder >> implement: anInterface withInit: interfaceInitBlock [
+GClassBuilder >> implement: anInterface init: interfaceInitBlock [
 
 	interfaces 
 		at: anInterface 
@@ -138,6 +138,7 @@ GClassBuilder >> install [
 	self defineGetType.
 
 	typeId := self registerType.
+	typeId = 0 ifTrue: [ GClassBuilderError signal: 'Class not installed.' ].
 
 	interfaces keysAndValuesDo: [ :interfaceType :initBlock |
 		self addInterfaceType: interfaces init: initBlock ].
