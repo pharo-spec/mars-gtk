@@ -10,4 +10,7 @@ GClassTest >> testNew [
 
 	gClass := GObject gSubclass: self randomNameForTest.
 	object := gClass new.	
+	
+	self assert: object notNil.
+	self assert: object isObject
 ]

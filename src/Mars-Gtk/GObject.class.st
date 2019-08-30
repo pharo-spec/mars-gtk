@@ -430,7 +430,7 @@ GObject >> instanceIsFundamentallyA: fundamental_type [
 
 	self ffiCall: #(gboolean g_type_check_instance_is_fundamentally_a (
 		self,
-		GType fundamental_type))
+		gsize fundamental_type))
 ]
 
 { #category : #testing }
