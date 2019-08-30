@@ -11,6 +11,13 @@ Class {
 	#category : #'Mars-Gtk-Styles'
 }
 
+{ #category : #accessing }
+GtkStyleContext class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_style_context_get_type())
+]
+
 { #category : #'class initialization' }
 GtkStyleContext class >> initialize [ 
 

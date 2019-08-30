@@ -20,6 +20,13 @@ GtkBox class >> boxNewOrientation: orientation spacing: spacing [
 	^ self ffiCall: #(GtkBox *gtk_box_new (GtkOrientation orientation, gint spacing))
 ]
 
+{ #category : #accessing }
+GtkBox class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_box_get_type())
+]
+
 { #category : #'instance creation' }
 GtkBox class >> new [ 
 	self error: 'Use one of my siblings'

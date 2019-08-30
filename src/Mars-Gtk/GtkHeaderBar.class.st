@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkHeaderBar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_header_bar_get_type())
+]
+
 { #category : #private }
 GtkHeaderBar class >> headerBarNew [
 

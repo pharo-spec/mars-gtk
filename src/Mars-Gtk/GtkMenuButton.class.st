@@ -29,6 +29,13 @@ GtkMenuButton class >> buttonNewWithLabel: utf8EncodedString [
 ]
 
 { #category : #accessing }
+GtkMenuButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_menu_button_get_type())
+]
+
+{ #category : #accessing }
 GtkMenuButton >> alignMenuWithWidget: aWidget [
 
 	^ self ffiCall: #(void gtk_menu_button_set_align_widget (self, GtkWidget *aWidget))

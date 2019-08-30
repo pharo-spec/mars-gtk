@@ -15,6 +15,13 @@ GtkActionBar class >> actionBarNew [
 	^ self ffiCall: #(GtkActionBar *gtk_action_bar_new (void))
 ]
 
+{ #category : #accessing }
+GtkActionBar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_action_bar_get_type())
+]
+
 { #category : #'instance creation' }
 GtkActionBar class >> new [
 

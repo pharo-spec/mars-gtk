@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkBin class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_bin_get_type())
+]
+
 { #category : #'instance creation' }
 GtkBin class >> newWidget: aWidget [
 	^ self new 

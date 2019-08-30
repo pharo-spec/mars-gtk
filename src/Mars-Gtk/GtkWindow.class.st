@@ -26,6 +26,13 @@ GtkWindow class >> finalizeResourceData: aHandle [
 	aHandle beNull
 ]
 
+{ #category : #accessing }
+GtkWindow class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_window_get_type())
+]
+
 { #category : #'instance creation' }
 GtkWindow class >> new [ 
 	^ (self windowNew: GTK_WINDOW_TOPLEVEL) initialize

@@ -15,6 +15,13 @@ GdkScreen class >> default [
 	^ self getDefault initialize
 ]
 
+{ #category : #accessing }
+GdkScreen class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gdk_screen_get_type())
+]
+
 { #category : #private }
 GdkScreen class >> getDefault [
 

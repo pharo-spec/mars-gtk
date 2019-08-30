@@ -17,6 +17,13 @@ GtkEntry class >> entryNew [
 	^ self ffiCall: #(GtkEntry *gtk_entry_new ())
 ]
 
+{ #category : #accessing }
+GtkEntry class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_entry_get_type())
+]
+
 { #category : #'instance creation' }
 GtkEntry class >> new [ 
 	^ self entryNew initialize

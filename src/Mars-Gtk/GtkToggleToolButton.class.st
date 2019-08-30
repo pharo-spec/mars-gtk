@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #accessing }
+GtkToggleToolButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_toggle_tool_button_get_type())
+]
+
 { #category : #private }
 GtkToggleToolButton class >> toolItemNew [
 

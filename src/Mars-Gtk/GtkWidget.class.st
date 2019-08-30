@@ -32,6 +32,13 @@ GtkWidget class >> fromHandle: handle [
 	^ (self basicNew setHandle: handle) initialize
 ]
 
+{ #category : #accessing }
+GtkWidget class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_widget_get_type())
+]
+
 { #category : #private }
 GtkWidget class >> widgetDestroy: widget [
 	"I get a handle here (a void *) so I need to remap the function"

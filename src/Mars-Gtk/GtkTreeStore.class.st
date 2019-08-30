@@ -21,6 +21,13 @@ GtkTreeStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 		andTypes: anExternalArray
 ]
 
+{ #category : #accessing }
+GtkTreeStore class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_tree_store_get_type())
+]
+
 { #category : #private }
 GtkTreeStore class >> gtkTreeStoreNewWithNumberOfColums: numberoOfColumns andTypes: types [
 

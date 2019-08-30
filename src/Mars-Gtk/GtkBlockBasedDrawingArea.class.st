@@ -12,6 +12,13 @@ GtkBlockBasedDrawingArea class >> drawingAreaNew [
 	^ self ffiCall: #( GtkBlockBasedDrawingArea *gtk_drawing_area_new () )
 ]
 
+{ #category : #accessing }
+GtkBlockBasedDrawingArea class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_block_based_drawing_area_get_type())
+]
+
 { #category : #drawing }
 GtkBlockBasedDrawingArea >> drawBlock [
 	^ drawBlock

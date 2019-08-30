@@ -16,6 +16,13 @@ GtkStackSwitcher class >> forStack: aStack [
 	^ self new stack: aStack; yourself
 ]
 
+{ #category : #accessing }
+GtkStackSwitcher class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_stack_switcher_get_type())
+]
+
 { #category : #'instance creation' }
 GtkStackSwitcher class >> gtkNewStackSwitcher [
 

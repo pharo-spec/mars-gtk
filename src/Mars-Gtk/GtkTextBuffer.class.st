@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Misc'
 }
 
+{ #category : #accessing }
+GtkTextBuffer class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_text_buffer_get_type())
+]
+
 { #category : #'instance creation' }
 GtkTextBuffer class >> newTable: table [ 
 

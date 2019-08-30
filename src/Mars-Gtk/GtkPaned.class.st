@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkPaned class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_paned_get_type())
+]
+
 { #category : #'instance creation' }
 GtkPaned class >> new [ 
 	self error: 'Use one of my siblings'

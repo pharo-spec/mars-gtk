@@ -22,6 +22,13 @@ GtkToggleButton class >> buttonNewWithLabel: utf8EncodedString [
 ]
 
 { #category : #accessing }
+GtkToggleButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_toggle_button_get_type())
+]
+
+{ #category : #accessing }
 GtkToggleButton >> active: aBoolean [
 
 	^ self ffiCall: #(gboolean gtk_toggle_button_set_active (self, gboolean aBoolean))

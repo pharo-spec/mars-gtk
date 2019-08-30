@@ -18,6 +18,13 @@ GdkWindow class >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GdkWindow class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gdk_window_get_type())
+]
+
+{ #category : #accessing }
 GdkWindow >> cursor: cursor [
 
 	"Use #cursor: to store the cursor in the object"

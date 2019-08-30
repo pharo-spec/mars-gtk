@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Menu'
 }
 
+{ #category : #accessing }
+GtkSeparatorMenuItem class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_separator_menu_item_get_type())
+]
+
 { #category : #'instance creation' }
 GtkSeparatorMenuItem class >> new [
 

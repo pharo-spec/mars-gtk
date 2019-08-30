@@ -44,6 +44,13 @@ GtkRadioButton class >> buttonNewInSameGroupAs: aRadioButton withLabel: utf8Enco
 	^ self ffiCall: #(GtkRadioButton *gtk_radio_button_new_with_label_from_widget (GtkRadioButton *aRadioButton, String utf8EncodedString))
 ]
 
+{ #category : #accessing }
+GtkRadioButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_radio_button_get_type())
+]
+
 { #category : #'instance creation' }
 GtkRadioButton class >> newInGroup: aGroup [
 

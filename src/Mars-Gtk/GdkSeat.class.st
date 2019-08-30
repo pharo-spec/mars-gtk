@@ -21,6 +21,13 @@ GdkSeat class >> ffiLibraryName [
 	^ GdkLibrary
 ]
 
+{ #category : #accessing }
+GdkSeat class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gdk_seat_get_type())
+]
+
 { #category : #private }
 GdkSeat class >> getDefaultSeat: display [
 

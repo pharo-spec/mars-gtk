@@ -16,6 +16,13 @@ GdkMonitor class >> ffiLibraryName [
 	^ GdkLibrary
 ]
 
+{ #category : #accessing }
+GdkMonitor class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gdk_monitor_get_type())
+]
+
 { #category : #private }
 GdkMonitor class >> getOn: display number: monitor_num [
 

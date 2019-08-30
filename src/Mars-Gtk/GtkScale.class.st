@@ -14,6 +14,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Input'
 }
 
+{ #category : #accessing }
+GtkScale class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_scale_get_type())
+]
+
 { #category : #private }
 GtkScale class >> gtkNewOrientation: orientation min: min max: max step: step [
 

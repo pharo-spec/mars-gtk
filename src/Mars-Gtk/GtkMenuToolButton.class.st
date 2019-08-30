@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #accessing }
+GtkMenuToolButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_menu_tool_button_get_type())
+]
+
 { #category : #private }
 GtkMenuToolButton class >> toolButtonNew: icon_widget label: label [ 
 

@@ -15,6 +15,13 @@ GtkCellRenderer class >> cellRendererNew [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+GtkCellRenderer class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_cell_renderer_get_type())
+]
+
 { #category : #'instance creation' }
 GtkCellRenderer class >> new [
 	

@@ -28,6 +28,13 @@ GdkDisplay class >> forceRectangleToFitLimits: aRect [
 	^ self default primaryMonitor forceRectangleToFitLimits: aRect
 ]
 
+{ #category : #accessing }
+GdkDisplay class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gdk_display_get_type())
+]
+
 { #category : #private }
 GdkDisplay class >> getDefault [
 

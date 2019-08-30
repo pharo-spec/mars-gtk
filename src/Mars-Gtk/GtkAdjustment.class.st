@@ -24,6 +24,13 @@ GtkAdjustment class >> adjustementValue: value lower: lower upper: upper stepInc
 		gdouble page_size))
 ]
 
+{ #category : #accessing }
+GtkAdjustment class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_adjustment_get_type())
+]
+
 { #category : #'instance creation' }
 GtkAdjustment class >> newDefault [ 
 	

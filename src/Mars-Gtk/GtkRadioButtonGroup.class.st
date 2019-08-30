@@ -9,3 +9,10 @@ Class {
 	#superclass : #GObject,
 	#category : #'Mars-Gtk-Widget-Buttons'
 }
+
+{ #category : #accessing }
+GtkRadioButtonGroup class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_radio_button_group_get_type())
+]

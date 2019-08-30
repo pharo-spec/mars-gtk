@@ -17,6 +17,13 @@ GtkCellRendererText class >> cellRendererNew [
 ]
 
 { #category : #accessing }
+GtkCellRendererText class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_cell_renderer_text_get_type())
+]
+
+{ #category : #accessing }
 GtkCellRendererText >> beEditable [
 
 	self editable: true

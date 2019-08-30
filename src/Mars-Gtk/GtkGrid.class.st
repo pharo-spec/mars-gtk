@@ -11,6 +11,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkGrid class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_grid_get_type())
+]
+
 { #category : #private }
 GtkGrid class >> gridNew [
 	^ self ffiCall: #(GtkGrid *gtk_grid_new (void))

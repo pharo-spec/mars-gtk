@@ -21,6 +21,13 @@ GtkInfoArea class >> boxNewOrientation: orientation spacing: spacing [
 	^ self ffiCall: #(GtkInfoArea *gtk_box_new (GtkOrientation orientation, gint spacing))
 ]
 
+{ #category : #accessing }
+GtkInfoArea class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_info_area_get_type())
+]
+
 { #category : #'instance creation' }
 GtkInfoArea class >> new [
 

@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkStack class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_stack_get_type())
+]
+
 { #category : #private }
 GtkStack class >> gtkStackNew [
 

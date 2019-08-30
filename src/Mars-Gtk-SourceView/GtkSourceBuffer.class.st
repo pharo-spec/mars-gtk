@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-SourceView'
 }
 
+{ #category : #accessing }
+GtkSourceBuffer class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_source_buffer_get_type())
+]
+
 { #category : #'instance creation' }
 GtkSourceBuffer class >> newTable: table [
 

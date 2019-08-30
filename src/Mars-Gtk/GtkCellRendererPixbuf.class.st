@@ -14,3 +14,10 @@ GtkCellRendererPixbuf class >> cellRendererNew [
 
 	^ self ffiCall: #(GtkCellRendererPixbuf *gtk_cell_renderer_pixbuf_new (void))
 ]
+
+{ #category : #accessing }
+GtkCellRendererPixbuf class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_cell_renderer_pixbuf_get_type())
+]

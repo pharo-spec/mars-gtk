@@ -15,6 +15,13 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #accessing }
+GtkTextView class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_text_view_get_type())
+]
+
 { #category : #'instance creation' }
 GtkTextView class >> new [
 	^ self textViewNew initialize

@@ -14,6 +14,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #accessing }
+GtkFileChooserDialog class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_file_chooser_dialog_get_type())
+]
+
 { #category : #'instance creation' }
 GtkFileChooserDialog class >> newOpenDirectoryTitle: aString [
 

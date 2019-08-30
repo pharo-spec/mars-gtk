@@ -22,6 +22,13 @@ GtkInformDialog class >> defaultTitle [
 	^ 'Information'
 ]
 
+{ #category : #accessing }
+GtkInformDialog class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_inform_dialog_get_type())
+]
+
 { #category : #private }
 GtkInformDialog class >> windowNew: type [ 
 

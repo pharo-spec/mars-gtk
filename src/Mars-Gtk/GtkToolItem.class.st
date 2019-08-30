@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #accessing }
+GtkToolItem class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_tool_item_get_type())
+]
+
 { #category : #'instance creation' }
 GtkToolItem class >> new [
 	^ self toolItemNew initialize

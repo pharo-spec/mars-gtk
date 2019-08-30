@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Misc'
 }
 
+{ #category : #accessing }
+GtkTextTagTable class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_text_tag_table_get_type())
+]
+
 { #category : #'instance creation' }
 GtkTextTagTable class >> new [ 
 

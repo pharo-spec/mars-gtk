@@ -13,6 +13,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkContainer class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_container_get_type())
+]
+
+{ #category : #accessing }
 GtkContainer >> add: widget [
 
 	self keepWidget: widget.

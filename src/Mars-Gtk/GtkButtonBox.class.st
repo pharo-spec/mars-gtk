@@ -18,6 +18,13 @@ GtkButtonBox class >> buttonBoxNewOrientation: orientation [
 	^ self ffiCall: #(GtkButtonBox *gtk_button_box_new (GtkOrientation orientation))
 ]
 
+{ #category : #accessing }
+GtkButtonBox class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_button_box_get_type())
+]
+
 { #category : #'instance creation' }
 GtkButtonBox class >> newHorizontal [
 	^ (self buttonBoxNewOrientation: GTK_ORIENTATION_HORIZONTAL) initialize

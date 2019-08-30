@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-SourceView'
 }
 
+{ #category : #accessing }
+GtkSourceLanguage class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_source_language_get_type())
+]
+
 { #category : #'instance creation' }
 GtkSourceLanguage class >> new [
 

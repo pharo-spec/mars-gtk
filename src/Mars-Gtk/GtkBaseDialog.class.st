@@ -16,6 +16,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #accessing }
+GtkBaseDialog class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_base_dialog_get_type())
+]
+
 { #category : #initialization }
 GtkBaseDialog >> initialize [ 
 

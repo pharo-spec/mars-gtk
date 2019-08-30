@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkTreeSelection class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_tree_selection_get_type())
+]
+
+{ #category : #accessing }
 GtkTreeSelection >> allSelected [
 	| function paths |
 	

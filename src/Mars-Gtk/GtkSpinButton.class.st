@@ -18,6 +18,13 @@ GtkSpinButton class >> defaultAdjustment [
 	^ GtkAdjustment new
 ]
 
+{ #category : #accessing }
+GtkSpinButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_spin_button_get_type())
+]
+
 { #category : #'instance creation' }
 GtkSpinButton class >> new [ 
 	

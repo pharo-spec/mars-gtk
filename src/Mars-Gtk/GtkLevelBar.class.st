@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
+{ #category : #accessing }
+GtkLevelBar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_level_bar_get_type())
+]
+
 { #category : #private }
 GtkLevelBar class >> gtkLevelBarNew [
 

@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
+{ #category : #accessing }
+GtkStatusBar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_status_bar_get_type())
+]
+
 { #category : #private }
 GtkStatusBar class >> gtkStatusBarNew [
 

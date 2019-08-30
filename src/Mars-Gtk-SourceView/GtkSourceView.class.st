@@ -79,6 +79,13 @@ GtkSourceView class >> example3 [
 		showAll
 ]
 
+{ #category : #accessing }
+GtkSourceView class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_source_view_get_type())
+]
+
 { #category : #'instance creation' }
 GtkSourceView class >> new [ 
 

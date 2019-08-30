@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkRevealer class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_revealer_get_type())
+]
+
 { #category : #'instance creation' }
 GtkRevealer class >> new [
 

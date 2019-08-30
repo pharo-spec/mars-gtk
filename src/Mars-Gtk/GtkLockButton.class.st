@@ -22,6 +22,13 @@ GtkLockButton class >> buttonNewWithLabel: utf8EncodedString [
 	self shouldNotImplement
 ]
 
+{ #category : #accessing }
+GtkLockButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_lock_button_get_type())
+]
+
 { #category : #private }
 GtkLockButton class >> newWithPermission: permission [
 

@@ -32,6 +32,13 @@ GtkScaleButton class >> buttonNewWithLabel: utf8EncodedString [
 	self shouldNotImplement
 ]
 
+{ #category : #accessing }
+GtkScaleButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_scale_button_get_type())
+]
+
 { #category : #'instance creation' }
 GtkScaleButton class >> newWithIconSize: size min: min max: max step: step icons: icons [
 

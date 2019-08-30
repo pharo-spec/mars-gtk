@@ -15,6 +15,13 @@ GtkAccelGroup class >> accelGroupNew [
 	^ self ffiCall: #(GtkAccelGroup *gtk_accel_group_new (void))
 ]
 
+{ #category : #accessing }
+GtkAccelGroup class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_accel_group_get_type())
+]
+
 { #category : #'instance creation' }
 GtkAccelGroup class >> new [
 

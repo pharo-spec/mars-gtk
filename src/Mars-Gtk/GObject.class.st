@@ -30,6 +30,46 @@ GObject class >> finalizeResourceData: handle [
 	handle beNull
 ]
 
+{ #category : #'as yet unclassified' }
+GObject class >> gType [
+	"answers the GType of a Gtk class. 
+	 This methiod needs to be override in all my subclasses (see #generateGTypeMethods)
+	 WARNING: While the type is named GType, we have a collision with the GType shared pool, 
+	 that's why we use its mapped type: gsize"
+
+	^ self ffiCall: #(gsize g_object_get_type()) module: GObjectLibrary 
+]
+
+{ #category : #utils }
+GObject class >> generateGTypeMethod [
+
+	(self class selectors includes: #gType) ifTrue: [ ^ self ].
+	self class
+		compile: ('gType 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize {1}_get_type())'
+			format: { self gtkPrefix })
+		classified: #accessing
+]
+
+{ #category : #utils }
+GObject class >> generateGTypeMethods [
+	<script>
+
+	self withAllSubclassesDo: [ :each |
+		each generateGTypeMethod ]
+]
+
+{ #category : #utils }
+GObject class >> gtkPrefix [
+		
+	^ String streamContents: [ :stream |
+		(self name normalizeCamelCase) substrings
+			do: [ :each | stream << (each asLowercase) ]
+			separatedBy: [ stream << '_' ] ]
+]
+
 { #category : #private }
 GObject class >> objectUnref: handle [
 	

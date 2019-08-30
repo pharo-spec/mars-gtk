@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkLayout class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_layout_get_type())
+]
+
 { #category : #private }
 GtkLayout class >> gtkNewLayoutWithHorizontalAdjustment: horizontalAdjustment withVerticalAdjustment: verticalAdjustment [ 
 

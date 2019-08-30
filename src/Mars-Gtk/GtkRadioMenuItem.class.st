@@ -22,6 +22,13 @@ GtkRadioMenuItem class >> basicNewLabel: utf8EncodedLabel fromWidget: aRadioMenu
 	^ self ffiCall: #(GtkRadioMenuItem *gtk_radio_menu_item_new_with_label_from_widget (GtkRadioMenuItem *aRadioMenuItem, String utf8EncodedLabel))
 ]
 
+{ #category : #accessing }
+GtkRadioMenuItem class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_radio_menu_item_get_type())
+]
+
 { #category : #'instance creation' }
 GtkRadioMenuItem class >> newLabel: aString [
 

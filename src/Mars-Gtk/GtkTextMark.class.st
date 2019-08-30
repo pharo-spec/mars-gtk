@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Misc'
 }
 
+{ #category : #accessing }
+GtkTextMark class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_text_mark_get_type())
+]
+
 { #category : #'instance creation' }
 GtkTextMark class >> newName: aString [
 

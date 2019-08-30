@@ -13,6 +13,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
+{ #category : #accessing }
+GtkSpinner class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_spinner_get_type())
+]
+
 { #category : #private }
 GtkSpinner class >> gtkSpinnerNew [
 

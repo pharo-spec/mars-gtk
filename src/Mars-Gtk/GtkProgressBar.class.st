@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
+{ #category : #accessing }
+GtkProgressBar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_progress_bar_get_type())
+]
+
 { #category : #private }
 GtkProgressBar class >> gtkProgressBarNew [
 

@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Menu'
 }
 
+{ #category : #accessing }
+GtkMenuItem class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_menu_item_get_type())
+]
+
 { #category : #private }
 GtkMenuItem class >> menuItemNew [
 

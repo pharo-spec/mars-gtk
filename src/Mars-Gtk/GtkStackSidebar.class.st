@@ -16,6 +16,13 @@ GtkStackSidebar class >> forStack: aStack [
 	^ self new stack: aStack; yourself
 ]
 
+{ #category : #accessing }
+GtkStackSidebar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_stack_sidebar_get_type())
+]
+
 { #category : #private }
 GtkStackSidebar class >> gtkNewStackSidebar [
 

@@ -20,6 +20,13 @@ GtkSettings class >> ffiLibraryName [
 	^ GtkLibrary
 ]
 
+{ #category : #accessing }
+GtkSettings class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_settings_get_type())
+]
+
 { #category : #private }
 GtkSettings class >> gtkSettingsGetDefault [
 

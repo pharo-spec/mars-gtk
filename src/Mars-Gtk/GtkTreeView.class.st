@@ -15,6 +15,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 
+{ #category : #accessing }
+GtkTreeView class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_tree_view_get_type())
+]
+
 { #category : #'instance creation' }
 GtkTreeView class >> new [
 

@@ -21,3 +21,10 @@ GtkCheckButton class >> buttonNewWithLabel: utf8EncodedString [
 
 	^ self ffiCall: #(GtkCheckButton *gtk_check_button_new_with_label (String utf8EncodedString))
 ]
+
+{ #category : #accessing }
+GtkCheckButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_check_button_get_type())
+]

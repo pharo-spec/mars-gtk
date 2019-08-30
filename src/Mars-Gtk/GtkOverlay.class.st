@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkOverlay class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_overlay_get_type())
+]
+
 { #category : #'instance  creation' }
 GtkOverlay class >> new [
 

@@ -19,6 +19,13 @@ GtkImage class >> basicNewEmpty [
 	^ self ffiCall: #(GtkImage * gtk_image_new ())
 ]
 
+{ #category : #accessing }
+GtkImage class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_image_get_type())
+]
+
 { #category : #private }
 GtkImage class >> imageNewFromIconName: iconNameString size: aSize [
 

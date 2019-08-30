@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkFixed class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_fixed_get_type())
+]
+
 { #category : #private }
 GtkFixed class >> gtkFixedNew [
 

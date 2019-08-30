@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #accessing }
+GtkListBox class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_list_box_get_type())
+]
+
 { #category : #private }
 GtkListBox class >> listBoxNew [
 	^ self ffiCall: #(GtkListBox *gtk_list_box_new (void))

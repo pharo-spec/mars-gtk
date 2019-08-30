@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #accessing }
+GtkRadioToolButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_radio_tool_button_get_type())
+]
+
 { #category : #'instance creation' }
 GtkRadioToolButton class >> newInSameGroupAs: aRadioButton [
 

@@ -28,6 +28,13 @@ GdkCursor class >> ffiLibrary [
 	^ GdkLibrary
 ]
 
+{ #category : #accessing }
+GdkCursor class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gdk_cursor_get_type())
+]
+
 { #category : #'instance creation' }
 GdkCursor class >> newFromName: aName [
 

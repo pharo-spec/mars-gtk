@@ -11,6 +11,13 @@ GtkCellRendererToggle class >> cellRendererNew [
 ]
 
 { #category : #accessing }
+GtkCellRendererToggle class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_cell_renderer_toggle_get_type())
+]
+
+{ #category : #accessing }
 GtkCellRendererToggle >> activatable: setting [
 
 	self ffiCall: #(void gtk_cell_renderer_toggle_set_activatable (self, gboolean setting))

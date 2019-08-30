@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #accessing }
+GtkPopover class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_popover_get_type())
+]
+
 { #category : #private }
 GtkPopover class >> newRelativeTo: aWidget [
 

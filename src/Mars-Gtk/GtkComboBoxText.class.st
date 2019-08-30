@@ -21,6 +21,13 @@ GtkComboBoxText class >> comboBoxTextNewWithEntry [
 	^ self ffiCall: #(GtkComboBoxText *gtk_combo_box_text_new_with_entry (void))
 ]
 
+{ #category : #accessing }
+GtkComboBoxText class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_combo_box_text_get_type())
+]
+
 { #category : #'instance creation' }
 GtkComboBoxText class >> new [
 

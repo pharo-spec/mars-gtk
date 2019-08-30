@@ -14,6 +14,13 @@ GtkBaseStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+GtkBaseStore class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_base_store_get_type())
+]
+
 { #category : #'instance creation' }
 GtkBaseStore class >> newColumnTypes: columnTypes [
 	| columnTypesExternalArray longSize |

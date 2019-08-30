@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #accessing }
+GtkSeparatorToolItem class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_separator_tool_item_get_type())
+]
+
 { #category : #'instance creation' }
 GtkSeparatorToolItem class >> new [
 	^ self separatorToolItemNew initialize

@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Input'
 }
 
+{ #category : #accessing }
+GtkSearchBar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_search_bar_get_type())
+]
+
 { #category : #private }
 GtkSearchBar class >> gtkSearchBarNew [
 

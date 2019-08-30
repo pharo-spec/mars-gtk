@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkScrolledWindow class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_scrolled_window_get_type())
+]
+
 { #category : #'instance creation' }
 GtkScrolledWindow class >> new [
 	^ self scrolledWindowNew initialize

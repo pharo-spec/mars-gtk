@@ -10,6 +10,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Window'
 }
 
+{ #category : #accessing }
+GtkAboutDialog class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_about_dialog_get_type())
+]
+
 { #category : #private }
 GtkAboutDialog class >> gtkDialogNew [
 

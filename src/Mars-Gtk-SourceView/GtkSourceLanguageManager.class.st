@@ -21,6 +21,13 @@ GtkSourceLanguageManager class >> ffiLibraryName [
 	^ GtkSourceViewLibrary 
 ]
 
+{ #category : #accessing }
+GtkSourceLanguageManager class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_source_language_manager_get_type())
+]
+
 { #category : #private }
 GtkSourceLanguageManager class >> getDefault [ 
 

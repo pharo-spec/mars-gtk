@@ -23,6 +23,13 @@ GtkDrawingArea class >> drawingAreaNew [
 	^ self ffiCall: #(GtkDrawingArea *gtk_drawing_area_new ())
 ]
 
+{ #category : #accessing }
+GtkDrawingArea class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_drawing_area_get_type())
+]
+
 { #category : #'instance creation' }
 GtkDrawingArea class >> new [
 	^ self drawingAreaNew initialize

@@ -12,6 +12,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Container'
 }
 
+{ #category : #accessing }
+GtkNotebook class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_notebook_get_type())
+]
+
 { #category : #'instance creation' }
 GtkNotebook class >> new [
 	^ self notebookNew initialize 

@@ -19,6 +19,13 @@ GtkListStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 ]
 
 { #category : #accessing }
+GtkListStore class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_list_store_get_type())
+]
+
+{ #category : #accessing }
 GtkListStore class >> gtkListStoreNewWithNumberOfColums: numberoOfColumns andTypes: types [
 
 	^ self ffiCall: #(GtkListStore *gtk_list_store_newv (gint numberoOfColumns, void *types))

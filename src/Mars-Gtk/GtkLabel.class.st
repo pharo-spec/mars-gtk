@@ -14,6 +14,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
+{ #category : #accessing }
+GtkLabel class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_label_get_type())
+]
+
 { #category : #private }
 GtkLabel class >> labelNew: str [
 	^ self ffiCall: #(GtkLabel *gtk_label_new (String str))

@@ -27,6 +27,13 @@ GtkComboBox class >> comboBoxNewWithEntry [
 	^ self ffiCall: #(GtkComboBox *GtkWidget *gtk_combo_box_new_with_entry (void))
 ]
 
+{ #category : #accessing }
+GtkComboBox class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_combo_box_get_type())
+]
+
 { #category : #'instance creation' }
 GtkComboBox class >> new [
 

@@ -30,6 +30,13 @@ GtkAccelLabel class >> createSymbolTable [
 		#Enter. 	(Character value: 16r23ce) asString }
 ]
 
+{ #category : #accessing }
+GtkAccelLabel class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_accel_label_get_type())
+]
+
 { #category : #'instance creation' }
 GtkAccelLabel class >> new [
 

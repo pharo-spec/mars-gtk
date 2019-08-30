@@ -16,6 +16,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
+{ #category : #accessing }
+GtkInfoBar class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_info_bar_get_type())
+]
+
 { #category : #private }
 GtkInfoBar class >> gtkInfoBarNew [
 

@@ -16,6 +16,13 @@ GtkSwitch class >> buttonNew [
 	^ self ffiCall: #(GtkSwitch *gtk_switch_new (void))
 ]
 
+{ #category : #accessing }
+GtkSwitch class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_switch_get_type())
+]
+
 { #category : #'instance creation' }
 GtkSwitch class >> new [ 
 	^ self buttonNew initialize

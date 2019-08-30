@@ -32,6 +32,13 @@ GtkDialogWindow class >> defaultSpacing [
 	^ 5
 ]
 
+{ #category : #accessing }
+GtkDialogWindow class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_dialog_window_get_type())
+]
+
 { #category : #'instance creation' }
 GtkDialogWindow class >> newParent: aWindow [
 

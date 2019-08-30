@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #accessing }
+GtkMenuShell class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_menu_shell_get_type())
+]
+
+{ #category : #accessing }
 GtkMenuShell >> addFirst: aWidget [
 
 	self keepWidgetFirst: aWidget.

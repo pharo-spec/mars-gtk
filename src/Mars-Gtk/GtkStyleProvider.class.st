@@ -13,3 +13,10 @@ Class {
 	],
 	#category : #'Mars-Gtk-Misc'
 }
+
+{ #category : #accessing }
+GtkStyleProvider class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_style_provider_get_type())
+]

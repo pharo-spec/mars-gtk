@@ -25,6 +25,13 @@ GtkClipboard class >> forSelection [
 	^ (self gtkClipboardGet: (ExternalAddress fromAddress: 69)) initialize
 ]
 
+{ #category : #accessing }
+GtkClipboard class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_clipboard_get_type())
+]
+
 { #category : #private }
 GtkClipboard class >> getDefaultClipboard: display [
 

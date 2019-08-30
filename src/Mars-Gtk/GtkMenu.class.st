@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Menu'
 }
 
+{ #category : #accessing }
+GtkMenu class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_menu_get_type())
+]
+
 { #category : #private }
 GtkMenu class >> menuNew [ 
 

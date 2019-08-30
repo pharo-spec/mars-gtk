@@ -9,6 +9,13 @@ Class {
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
+{ #category : #accessing }
+GtkToolButton class >> gType [ 
+	"This method was automatically generated"
+
+	^ self ffiCall: #(gsize gtk_tool_button_get_type())
+]
+
 { #category : #'instance creation' }
 GtkToolButton class >> newForm: aForm label: aString [
 
