@@ -2,28 +2,35 @@ Class {
 	#name : #GClass,
 	#superclass : #Object,
 	#instVars : [
-		'type'
+		'gType',
+		'parentClass'
 	],
 	#category : #'Mars-Gtk-TypeBuilder'
 }
 
 { #category : #'instance creation' }
-GClass class >> new [
+GClass class >> newGType: aType parent: aGtkClass [
 
-	self error: 'Use #newType:'
-]
-
-{ #category : #'instance creation' }
-GClass class >> newType: aType [
-
-	^ self basicNew
-		initializeType: aType;
+	^ self basicNew 
+		initializeGType: aType parent: aGtkClass;
 		yourself
 ]
 
+{ #category : #accessing }
+GClass >> gType [
+	^ gType
+]
+
 { #category : #initialization }
-GClass >> initializeType: aType [
+GClass >> initializeGType: aType parent: aGtkClass [
 
 	self initialize.
-	type := aType
+	gType := aType.
+	parentClass := aGtkClass
+]
+
+{ #category : #accessing }
+GClass >> parent [
+
+	^ parentClass
 ]

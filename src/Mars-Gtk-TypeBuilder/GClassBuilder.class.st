@@ -2,7 +2,6 @@ Class {
 	#name : #GClassBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'parentClass',
 		'offset',
 		'typeId',
 		'getTypeCallback',
@@ -12,16 +11,29 @@ Class {
 		'instanceInitCallback',
 		'classInit',
 		'classInitCallback',
-		'parent',
-		'interfaces'
+		'interfaces',
+		'parentClassStructPointer',
+		'parentClass'
+	],
+	#pools : [
+		'GtkTypes'
 	],
 	#category : #'Mars-Gtk-TypeBuilder'
 }
 
+{ #category : #building }
+GClassBuilder class >> build: aBlock [ 
+	| builder |
+	
+	builder := self new.
+	aBlock value: builder.
+	^ builder install
+]
+
 { #category : #private }
 GClassBuilder >> addInterfaceType: interfaceType init: initBlock [
 
-		
+	self halt
 ]
 
 { #category : #accessing }
@@ -36,7 +48,7 @@ GClassBuilder >> defineClassInit [
 	classInitCallback := GCallback 
 		signature: #(void (gpointer klass))
 		block: [ :klass |
-			parentClass := self gTypeClassPeekParent: klass.
+			parentClassStructPointer := self gTypeClassPeekParent: klass.
 			classInit ifNotNil: [ classInit value: klass ] ].
 
 ]
@@ -50,6 +62,16 @@ GClassBuilder >> defineGetType [
 ]
 
 { #category : #private }
+GClassBuilder >> defineInit [
+
+	initCallback := GCallback 
+		signature: #(void (gpointer ginstance))
+		block: [ :ginstance |
+			instanceInit ifNotNil: [ instanceInit value: ginstance ] ].
+
+]
+
+{ #category : #private }
 GClassBuilder >> defineInstanceInit [
 
 	instanceInitCallback := GCallback 
@@ -57,6 +79,12 @@ GClassBuilder >> defineInstanceInit [
 		block: [ :g_class |
 			instanceInit ifNotNil: [ instanceInit value: g_class ] ].
 
+]
+
+{ #category : #'library path' }
+GClassBuilder >> ffiLibraryName [
+
+	^ GObjectLibrary
 ]
 
 { #category : #private }
@@ -75,7 +103,7 @@ GClassBuilder >> gTypeClassPeekParent: g_class [
 GClassBuilder >> gTypeRegisterStaticSimpleParent: parent_type name: type_name classSize: class_size classInit: class_init instanceSize: instance_size instanceInit: instance_init flags: flags [
 
 	^ self ffiCall: #(GType g_type_register_static_simple (
-		GType parent_type,
+		"GType"gsize parent_type,
 		const gchar *type_name,
 		guint class_size,
 		GCallback class_init,
@@ -102,10 +130,11 @@ GClassBuilder >> initialize [
 { #category : #installing }
 GClassBuilder >> install [
 
-	parentClass := nil.
+	parentClassStructPointer := nil.
 	offset := 0.
 
 	self defineClassInit.
+	self defineInit.
 	self defineGetType.
 
 	typeId := self registerType.
@@ -113,7 +142,7 @@ GClassBuilder >> install [
 	interfaces keysAndValuesDo: [ :interfaceType :initBlock |
 		self addInterfaceType: interfaces init: initBlock ].
 
-	^ GClass newType: typeId
+	^ GClass newGType: typeId parent: parentClass
 ]
 
 { #category : #accessing }
@@ -131,27 +160,18 @@ GClassBuilder >> name: aString [
 { #category : #accessing }
 GClassBuilder >> parent: aGtkClass [
 
-	parent := aGtkClass
-]
-
-{ #category : #private }
-GClassBuilder >> parentType [
-	
-	
+	parentClass := aGtkClass
 ]
 
 { #category : #private }
 GClassBuilder >> registerType [
-	| id |
 
-	id := self 
-		gTypeRegisterStaticSimpleParent: self parentType
-		name: (self gInternStaticString: self name)
-		classSize: "class_size" 0
+	^ self 
+		gTypeRegisterStaticSimpleParent: parentClass gType
+		name: (self gInternStaticString: name)
+		classSize: parentClass gClassSize
 		classInit: classInitCallback
-		instanceSize: 0
+		instanceSize: parentClass gSize
 		instanceInit: initCallback
-		flags: 0.
-
-	^ id
+		flags: 0
 ]

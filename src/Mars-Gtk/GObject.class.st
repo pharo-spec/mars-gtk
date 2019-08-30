@@ -31,6 +31,18 @@ GObject class >> finalizeResourceData: handle [
 ]
 
 { #category : #accessing }
+GObject class >> gClassSize [
+
+	^ 136
+]
+
+{ #category : #accessing }
+GObject class >> gSize [
+
+	^ 136
+]
+
+{ #category : #accessing }
 GObject class >> gType [
 	"answers the GType of a Gtk class. 
 	 This methiod needs to be override in all my subclasses (see #generateGTypeMethods)

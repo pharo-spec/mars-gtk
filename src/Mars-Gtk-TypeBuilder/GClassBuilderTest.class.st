@@ -6,9 +6,13 @@ Class {
 
 { #category : #tests }
 GClassBuilderTest >> testExtendGObject [
+	| gClass |
 
-	GClassBuilder new 
-		name: 'GTestClass';
-		parent: GObject;
-		install. 
+	gClass := GClassBuilder build: [ :builder |
+		builder 
+			name: 'TestGObject';
+			parent: GObject ].
+		
+	gClass gType crLog.
+	self assert: gClass gType notNil
 ]
