@@ -403,6 +403,19 @@ GObject >> gObjectSet: aName toString: aString [
 		module: GObjectLibrary	
 ]
 
+{ #category : #accessing }
+GObject >> gType [
+
+	^ self class gType
+	
+]
+
+{ #category : #'private primitives' }
+GObject >> gTypeName: type [
+
+	^ self ffiCall: #(gchar *g_type_name (gsize type))
+]
+
 { #category : #'GT-Inspector-Extension' }
 GObject >> gtInspectorCallbacksIn: composite [
 	<gtInspectorPresentationOrder: 90>  
@@ -504,6 +517,12 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 		gpointer 	aData,
 		uint64 variable,
 		uint64 connectFlags ) ) module: GObjectLibrary
+]
+
+{ #category : #accessing }
+GObject >> typeName [
+
+	^ self gTypeName: self gType	
 ]
 
 { #category : #'private referencing' }

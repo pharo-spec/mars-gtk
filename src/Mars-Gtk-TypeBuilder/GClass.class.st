@@ -2,8 +2,7 @@ Class {
 	#name : #GClass,
 	#superclass : #Object,
 	#instVars : [
-		'gType',
-		'parentClass'
+		'builder'
 	],
 	#pools : [
 		'GtkTypes'
@@ -12,10 +11,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-GClass class >> newGType: aType parent: aGtkClass [
+GClass class >> newBuilder: aBuilder [
 
 	^ self basicNew 
-		initializeGType: aType parent: aGtkClass;
+		initializeBuilder: aBuilder;
 		yourself
 ]
 
@@ -25,7 +24,7 @@ GClass >> ffiLibraryName [
 	^ GObjectLibrary
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 GClass >> gObjectNew: object_type [
 
 	^ self ffiCall: #(void *g_object_new (gsize object_type, NULL))
@@ -33,15 +32,15 @@ GClass >> gObjectNew: object_type [
 
 { #category : #accessing }
 GClass >> gType [
-	^ gType
+
+	^ builder typeId
 ]
 
 { #category : #initialization }
-GClass >> initializeGType: aType parent: aGtkClass [
+GClass >> initializeBuilder: aBuilder [
 
 	self initialize.
-	gType := aType.
-	parentClass := aGtkClass
+	builder := aBuilder
 ]
 
 { #category : #'instance creation' }
@@ -55,5 +54,5 @@ GClass >> new [
 { #category : #accessing }
 GClass >> parent [
 
-	^ parentClass
+	^ builder parentClass
 ]

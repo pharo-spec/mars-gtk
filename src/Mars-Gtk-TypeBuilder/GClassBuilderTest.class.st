@@ -30,3 +30,21 @@ GClassBuilderTest >> testExtendGObject [
 					parent: GObject ] ]
 		raise: Error
 ]
+
+{ #category : #tests }
+GClassBuilderTest >> testImplementInterface [
+	"This is just a smoke test (real test will be in GClassTest"
+	| gClass name |
+
+	"If I execute this a lot I will have a leak problem ;)"
+	name := self randomNameForTest.
+
+	gClass := GClassBuilder build: [ :builder |
+		builder 
+			name: name;
+			parent: GObject;
+			implementGType: GtkSourceCompletionProviderIface gType init: [ :ifaz | ] ].
+		
+	self assert: gClass gType notNil.
+	self deny: gClass gType equals: 0
+]

@@ -2,18 +2,17 @@ Class {
 	#name : #GClassBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'offset',
 		'typeId',
 		'getTypeCallback',
 		'name',
-		'initCallback',
 		'instanceInit',
 		'instanceInitCallback',
 		'classInit',
 		'classInitCallback',
 		'interfaces',
 		'parentClassStructPointer',
-		'parentClass'
+		'parentClass',
+		'interfaceCallbacks'
 	],
 	#pools : [
 		'GtkTypes'
@@ -31,12 +30,22 @@ GClassBuilder class >> build: aBlock [
 ]
 
 { #category : #private }
-GClassBuilder >> addInterfaceType: interfaceType init: initBlock [
+GClassBuilder >> addInterfaceGType: interfaceType init: initBlock [
+	| info initInterfaceCallback |
 
-	self halt
+	initInterfaceCallback := GCallback 
+		signature: #(void (void *ifaz)) 
+		block: initBlock.
+	interfaceCallbacks add: initInterfaceCallback.	
+	
+	info := GInterfaceInfo new 
+		interface_init: initInterfaceCallback;
+		yourself.
+		
+	self gTypeAddInterfaceStaticType: typeId interfaceType: interfaceType info: info.
 ]
 
-{ #category : #accessing }
+{ #category : #building }
 GClassBuilder >> classInit: aBlock [ 
 
 	classInit := aBlock
@@ -62,23 +71,13 @@ GClassBuilder >> defineGetType [
 ]
 
 { #category : #private }
-GClassBuilder >> defineInit [
+GClassBuilder >> defineInstanceInit [
 
-	initCallback := GCallback 
+	instanceInitCallback := GCallback 
 		signature: #(void (gpointer object))
 		block: [ :object |
 			parentClass gInit: object.
 			instanceInit ifNotNil: [ instanceInit value: object ] ].
-]
-
-{ #category : #private }
-GClassBuilder >> defineInstanceInit [
-
-	instanceInitCallback := GCallback 
-		signature: #(gpointer (gpointer g_class))
-		block: [ :g_class |
-			instanceInit ifNotNil: [ instanceInit value: g_class ] ].
-
 ]
 
 { #category : #'library path' }
@@ -91,6 +90,21 @@ GClassBuilder >> ffiLibraryName [
 GClassBuilder >> gInternStaticString: string [
 
 	^ self ffiCall: #(gchar *g_intern_static_string (const gchar *string))
+]
+
+{ #category : #accessing }
+GClassBuilder >> gType [
+
+	^ typeId
+]
+
+{ #category : #private }
+GClassBuilder >> gTypeAddInterfaceStaticType: instance_type interfaceType: interface_type info: info [
+
+	^ self ffiCall: #(void g_type_add_interface_static (
+		"GType"gsize instance_type,
+		"GType"gsize interface_type,
+		GInterfaceInfo *info))
 ]
 
 { #category : #private }
@@ -112,8 +126,8 @@ GClassBuilder >> gTypeRegisterStaticSimpleParent: parent_type name: type_name cl
  		"GTypeFlags"int32 flags))
 ]
 
-{ #category : #accessing }
-GClassBuilder >> implement: anInterface init: interfaceInitBlock [
+{ #category : #building }
+GClassBuilder >> implementGType: anInterface init: interfaceInitBlock [
 
 	interfaces 
 		at: anInterface 
@@ -124,44 +138,48 @@ GClassBuilder >> implement: anInterface init: interfaceInitBlock [
 GClassBuilder >> initialize [
 
 	super initialize.
-	interfaces := OrderedDictionary new
+	interfaces := OrderedDictionary new.
+	interfaceCallbacks := Set new.
 ]
 
 { #category : #installing }
 GClassBuilder >> install [
 
-	parentClassStructPointer := nil.
-	offset := 0.
-
 	self defineClassInit.
-	self defineInit.
+	self defineInstanceInit.
 	self defineGetType.
 
 	typeId := self registerType.
 	typeId = 0 ifTrue: [ GClassBuilderError signal: 'Class not installed.' ].
 
 	interfaces keysAndValuesDo: [ :interfaceType :initBlock |
-		self addInterfaceType: interfaces init: initBlock ].
+		self addInterfaceGType: interfaceType init: initBlock ].
 
-	^ GClass newGType: typeId parent: parentClass
+	^ GClass newBuilder: self
 ]
 
-{ #category : #accessing }
+{ #category : #building }
 GClassBuilder >> instanceInit: aBlock [ 
 
 	instanceInit := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #building }
 GClassBuilder >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : #building }
 GClassBuilder >> parent: aGtkClass [
 
 	parentClass := aGtkClass
+]
+
+{ #category : #accessing }
+GClassBuilder >> parentClass [
+
+	^ parentClass
 ]
 
 { #category : #private }
@@ -173,6 +191,6 @@ GClassBuilder >> registerType [
 		classSize: parentClass gClassSize
 		classInit: classInitCallback
 		instanceSize: parentClass gSize
-		instanceInit: initCallback
+		instanceInit: instanceInitCallback
 		flags: 0
 ]
