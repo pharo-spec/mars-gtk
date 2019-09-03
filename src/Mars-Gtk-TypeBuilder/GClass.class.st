@@ -33,7 +33,23 @@ GClass >> gObjectNew: object_type [
 { #category : #accessing }
 GClass >> gType [
 
-	^ builder typeId
+	^ builder gType
+]
+
+{ #category : #accessing }
+GClass >> gTypeInterfaces [
+	| interfaces |
+	
+	interfaces := self gTypeInterfaces: self gType.
+	^ interfaces
+		readArrayOf: (GObject resolveType: #gsize) 
+		until: [ :each | each isZero ]
+]
+
+{ #category : #private }
+GClass >> gTypeInterfaces: type [ 
+
+	^ self ffiCall: #(gsize *g_type_interfaces (gsize type, NULL))
 ]
 
 { #category : #initialization }
@@ -55,4 +71,12 @@ GClass >> new [
 GClass >> parent [
 
 	^ builder parentClass
+]
+
+{ #category : #accessing }
+GClass >> typeInterfaces [
+
+	^ self gTypeInterfaces collect: [ :eachType |
+		GInterface allSubclasses 
+			detect: [ :eachClass | eachClass gType = eachType ] ]
 ]

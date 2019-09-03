@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkSourceCompletionProviderIface,
-	#superclass : #GInterface,
+	#superclass : #GInterfaceDefinition,
 	#classVars : [
 		'OFFSET_ACTIVATE_PROPOSAL',
 		'OFFSET_GET_ACTIVATION',

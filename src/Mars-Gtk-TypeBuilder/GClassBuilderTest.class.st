@@ -46,5 +46,7 @@ GClassBuilderTest >> testImplementInterface [
 			implementGType: GtkSourceCompletionProviderIface gType init: [ :ifaz | ] ].
 		
 	self assert: gClass gType notNil.
-	self deny: gClass gType equals: 0
+	self deny: gClass gType equals: 0.
+	self assert: gClass gTypeInterfaces size equals: 1.
+	self assert: gClass gTypeInterfaces first equals: GtkSourceCompletionProviderIface gType
 ]
