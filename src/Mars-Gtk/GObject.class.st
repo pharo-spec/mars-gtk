@@ -522,7 +522,7 @@ GObject >> signal: signalName connect: callback data: aData flags: connectFlags 
 { #category : #accessing }
 GObject >> typeName [
 
-	^ self gTypeName: self gType	
+	^ self gTypeName: self gType
 ]
 
 { #category : #'private referencing' }

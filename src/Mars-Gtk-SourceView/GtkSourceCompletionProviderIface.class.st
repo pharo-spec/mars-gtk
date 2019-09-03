@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkSourceCompletionProviderIface,
-	#superclass : #GInterfaceDefinition,
+	#superclass : #GInterface,
 	#classVars : [
 		'OFFSET_ACTIVATE_PROPOSAL',
 		'OFFSET_GET_ACTIVATION',
@@ -17,7 +17,7 @@ Class {
 		'OFFSET_POPULATE',
 		'OFFSET_UPDATE_INFO'
 	],
-	#category : #'Mars-Gtk-TypeBuilder'
+	#category : #'Mars-Gtk-SourceView'
 }
 
 { #category : #'field definition' }
