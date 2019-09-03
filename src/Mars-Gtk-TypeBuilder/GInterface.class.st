@@ -1,11 +1,13 @@
 Class {
 	#name : #GInterface,
-	#superclass : #Object,
+	#superclass : #GtkStructure,
 	#category : #'Mars-Gtk-TypeBuilder'
 }
 
-{ #category : #'as yet unclassified' }
-GInterface class >> definitionClass [
+{ #category : #'field definition' }
+GInterface class >> fieldsDesc [
 
-	^ self subclassResponsibility
+	^ #(
+	GTypeInterface g_iface;
+	)
 ]
