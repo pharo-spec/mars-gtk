@@ -55,21 +55,16 @@ GtkSourceLanguageManager >> getLanguageIds [
 
 { #category : #accessing }
 GtkSourceLanguageManager >> languageIds [ 
-	| ids idsHandle lastId |
+	| ids |
 
-	idsHandle := self getLanguageIds asExternalAddress.
-	(idsHandle isNil or: [ idsHandle isNull ]) ifTrue: [ ^ #() ].
+	ids := self getLanguageIds asExternalAddress.
+	(ids isNil or: [ ids isNull ]) ifTrue: [ ^ #() ].
 
-	ids := Array new writeStream.
-	[ 
-		lastId := idsHandle pointerAt: 1.
-		lastId isNull ifFalse: [ 
-			ids nextPut: lastId readStringUTF8.
-			idsHandle := idsHandle + FFIExternalType pointerSize ] ]
-	doWhileFalse: [ 
-		lastId isNull ].
+	^ (ids 
+		readArrayOf: (GObject resolveType: #gpointer) 
+		until: [ :each | each isNull ])
+		collect: [ :each | each readStringUTF8 ]
 
-	^ ids contents
 ]
 
 { #category : #accessing }
