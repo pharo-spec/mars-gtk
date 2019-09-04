@@ -96,11 +96,24 @@ GClass class >> install: aClass withName: aName [
 		with: [ :gClass | gClass name: aName ]
 ]
 
+{ #category : #accessing }
+GClass class >> reset [
+
+	GClasses := nil
+]
+
 { #category : #'class initialization' }
 GClass class >> shutDown: quitting [ 
 
 	quitting ifFalse: [ ^ self ].
-	GClasses := nil
+	self reset
+]
+
+{ #category : #'class initialization' }
+GClass class >> startUp: resuming [ 
+
+	resuming ifFalse: [ ^ self ].
+	self reset
 ]
 
 { #category : #accessing }
