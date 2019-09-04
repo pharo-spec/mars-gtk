@@ -24,14 +24,27 @@ Class {
 { #category : #private }
 GClass class >> gClassAt: aClass [
 
-	^ GClasses at: aClass
+	^ self gClasses at: aClass
+]
+
+{ #category : #private }
+GClass class >> gClassAt: aClass ifAbsent: aBlock [
+
+	^ self gClasses
+		at: aClass 
+		ifAbsent: aBlock
 ]
 
 { #category : #private }
 GClass class >> gClassAt: aClass put: gClass [
 	
-	GClasses ifNil: [ GClasses := IdentityDictionary new ].
-	GClasses at: aClass put: gClass
+	^ self gClasses at: aClass put: gClass
+]
+
+{ #category : #private }
+GClass class >> gClasses [
+
+	^ GClasses ifNil: [ GClasses := IdentityDictionary new ]
 ]
 
 { #category : #accessing }
@@ -41,7 +54,7 @@ GClass class >> gDefinitionAt: aClass [
 	 the #gDefine: hook method."
 	| gClass |
 
-	gClass := GClasses at: aClass ifAbsent: [ nil ].
+	gClass := self gClassAt: aClass ifAbsent: [ nil ].
 	gClass ifNil: [
 		gClass := self 
 			install: aClass 

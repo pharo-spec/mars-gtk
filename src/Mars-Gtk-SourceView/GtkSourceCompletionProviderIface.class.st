@@ -186,7 +186,7 @@ GtkSourceCompletionProviderIface >> get_name: anObject [
 	handle 
 		pointerAt: OFFSET_GET_NAME
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -202,7 +202,7 @@ GtkSourceCompletionProviderIface >> get_priority: anObject [
 	handle 
 		pointerAt: OFFSET_GET_PRIORITY
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -250,7 +250,7 @@ GtkSourceCompletionProviderIface >> populate: anObject [
 	handle 
 		pointerAt: OFFSET_POPULATE
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 

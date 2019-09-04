@@ -79,6 +79,26 @@ GtkSourceView class >> example3 [
 		showAll
 ]
 
+{ #category : #example }
+GtkSourceView class >> example4 [
+	| sourceView |
+	
+	GtkApplication ensureRunning.
+	
+	sourceView := GtkSourceView new
+		showLineNumbers: true;
+		autoIndent: true;
+		showRightMargin: true;
+		yourself.
+		
+	sourceView completion addProvider: GtkPharoCompletionProvider new.
+
+	GtkWindow new
+		title: 'Source view auto indent';
+		add: (GtkScrolledWindow newWidget: sourceView);
+		showAll
+]
+
 { #category : #accessing }
 GtkSourceView class >> gType [ 
 
@@ -106,6 +126,14 @@ GtkSourceView >> autoIndent: enable [
 
 	^ self 
 		ffiCall: #(void gtk_source_view_set_auto_indent (self, gboolean enable))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceView >> completion [
+
+	^ self 
+		ffiCall: #(GtkSourceCompletion *gtk_source_view_get_completion (self))
 		module: GtkSourceViewLibrary
 ]
 
