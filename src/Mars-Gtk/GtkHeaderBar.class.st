@@ -11,13 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkHeaderBar class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_header_bar_init(void *object))
-]
-
-{ #category : #accessing }
 GtkHeaderBar class >> gType [ 
 	"This method was automatically generated"
 

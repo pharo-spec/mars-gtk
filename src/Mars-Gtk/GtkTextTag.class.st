@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkTextTag class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_text_tag_init(void *object))
-]
-
-{ #category : #accessing }
 GtkTextTag class >> gType [ 
 	"This method was automatically generated"
 

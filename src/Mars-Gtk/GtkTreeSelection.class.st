@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkTreeSelection class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_tree_selection_init(void *object))
-]
-
-{ #category : #accessing }
 GtkTreeSelection class >> gType [ 
 	"This method was automatically generated"
 

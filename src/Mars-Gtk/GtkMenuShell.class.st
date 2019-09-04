@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkMenuShell class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_menu_shell_init(void *object))
-]
-
-{ #category : #accessing }
 GtkMenuShell class >> gType [ 
 	"This method was automatically generated"
 

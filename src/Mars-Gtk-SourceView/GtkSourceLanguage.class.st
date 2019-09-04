@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkSourceLanguage class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_source_language_init(void *object))
-]
-
-{ #category : #accessing }
 GtkSourceLanguage class >> gType [ 
 
 	^ self 

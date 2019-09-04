@@ -31,13 +31,6 @@ GtkAccelLabel class >> createSymbolTable [
 ]
 
 { #category : #accessing }
-GtkAccelLabel class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_accel_label_init(void *object))
-]
-
-{ #category : #accessing }
 GtkAccelLabel class >> gType [ 
 	"This method was automatically generated"
 

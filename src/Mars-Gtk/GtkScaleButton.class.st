@@ -33,13 +33,6 @@ GtkScaleButton class >> buttonNewWithLabel: utf8EncodedString [
 ]
 
 { #category : #accessing }
-GtkScaleButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_scale_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkScaleButton class >> gType [ 
 	"This method was automatically generated"
 

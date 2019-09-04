@@ -19,13 +19,6 @@ GtkSpinButton class >> defaultAdjustment [
 ]
 
 { #category : #accessing }
-GtkSpinButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_spin_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkSpinButton class >> gType [ 
 	"This method was automatically generated"
 

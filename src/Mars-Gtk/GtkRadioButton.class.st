@@ -45,13 +45,6 @@ GtkRadioButton class >> buttonNewInSameGroupAs: aRadioButton withLabel: utf8Enco
 ]
 
 { #category : #accessing }
-GtkRadioButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_radio_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkRadioButton class >> gType [ 
 	"This method was automatically generated"
 

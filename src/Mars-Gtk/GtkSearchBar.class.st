@@ -11,13 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkSearchBar class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_search_bar_init(void *object))
-]
-
-{ #category : #accessing }
 GtkSearchBar class >> gType [ 
 	"This method was automatically generated"
 

@@ -11,13 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkLayout class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_layout_init(void *object))
-]
-
-{ #category : #accessing }
 GtkLayout class >> gType [ 
 	"This method was automatically generated"
 

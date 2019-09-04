@@ -14,13 +14,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkTreeViewColumn class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_tree_view_column_init(void *object))
-]
-
-{ #category : #accessing }
 GtkTreeViewColumn class >> gType [ 
 	"This method was automatically generated"
 

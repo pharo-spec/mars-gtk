@@ -29,13 +29,6 @@ GtkMenuButton class >> buttonNewWithLabel: utf8EncodedString [
 ]
 
 { #category : #accessing }
-GtkMenuButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_menu_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkMenuButton class >> gType [ 
 	"This method was automatically generated"
 

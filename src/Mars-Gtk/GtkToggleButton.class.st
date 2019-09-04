@@ -22,13 +22,6 @@ GtkToggleButton class >> buttonNewWithLabel: utf8EncodedString [
 ]
 
 { #category : #accessing }
-GtkToggleButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_toggle_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkToggleButton class >> gType [ 
 	"This method was automatically generated"
 

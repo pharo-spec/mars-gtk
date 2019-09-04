@@ -25,13 +25,6 @@ GtkAdjustment class >> adjustementValue: value lower: lower upper: upper stepInc
 ]
 
 { #category : #accessing }
-GtkAdjustment class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_adjustment_init(void *object))
-]
-
-{ #category : #accessing }
 GtkAdjustment class >> gType [ 
 	"This method was automatically generated"
 

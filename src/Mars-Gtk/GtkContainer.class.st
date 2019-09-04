@@ -13,13 +13,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkContainer class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_container_init(void *object))
-]
-
-{ #category : #accessing }
 GtkContainer class >> gType [ 
 	"This method was automatically generated"
 

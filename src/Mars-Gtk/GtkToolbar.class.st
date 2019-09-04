@@ -14,13 +14,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkToolbar class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_toolbar_init(void *object))
-]
-
-{ #category : #accessing }
 GtkToolbar class >> gType [ 
 	"This method was automatically generated"
 

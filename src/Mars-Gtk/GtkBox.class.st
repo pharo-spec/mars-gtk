@@ -21,13 +21,6 @@ GtkBox class >> boxNewOrientation: orientation spacing: spacing [
 ]
 
 { #category : #accessing }
-GtkBox class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_box_init(void *object))
-]
-
-{ #category : #accessing }
 GtkBox class >> gType [ 
 	"This method was automatically generated"
 

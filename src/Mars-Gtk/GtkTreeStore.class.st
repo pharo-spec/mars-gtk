@@ -22,13 +22,6 @@ GtkTreeStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 ]
 
 { #category : #accessing }
-GtkTreeStore class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_tree_store_init(void *object))
-]
-
-{ #category : #accessing }
 GtkTreeStore class >> gType [ 
 	"This method was automatically generated"
 

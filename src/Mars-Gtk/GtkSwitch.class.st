@@ -17,13 +17,6 @@ GtkSwitch class >> buttonNew [
 ]
 
 { #category : #accessing }
-GtkSwitch class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_switch_init(void *object))
-]
-
-{ #category : #accessing }
 GtkSwitch class >> gType [ 
 	"This method was automatically generated"
 

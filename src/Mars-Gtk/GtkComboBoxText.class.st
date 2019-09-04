@@ -22,13 +22,6 @@ GtkComboBoxText class >> comboBoxTextNewWithEntry [
 ]
 
 { #category : #accessing }
-GtkComboBoxText class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_combo_box_text_init(void *object))
-]
-
-{ #category : #accessing }
 GtkComboBoxText class >> gType [ 
 	"This method was automatically generated"
 

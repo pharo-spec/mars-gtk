@@ -13,13 +13,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkListBox class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_list_box_init(void *object))
-]
-
-{ #category : #accessing }
 GtkListBox class >> gType [ 
 	"This method was automatically generated"
 

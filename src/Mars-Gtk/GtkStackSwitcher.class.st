@@ -17,13 +17,6 @@ GtkStackSwitcher class >> forStack: aStack [
 ]
 
 { #category : #accessing }
-GtkStackSwitcher class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_stack_switcher_init(void *object))
-]
-
-{ #category : #accessing }
 GtkStackSwitcher class >> gType [ 
 	"This method was automatically generated"
 

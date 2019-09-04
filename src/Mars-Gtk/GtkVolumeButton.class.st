@@ -17,13 +17,6 @@ GtkVolumeButton class >> buttonNew [
 ]
 
 { #category : #accessing }
-GtkVolumeButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_volume_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkVolumeButton class >> gType [ 
 	"This method was automatically generated"
 

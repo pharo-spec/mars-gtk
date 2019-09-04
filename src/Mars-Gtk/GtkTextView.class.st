@@ -16,13 +16,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkTextView class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_text_view_init(void *object))
-]
-
-{ #category : #accessing }
 GtkTextView class >> gType [ 
 	"This method was automatically generated"
 

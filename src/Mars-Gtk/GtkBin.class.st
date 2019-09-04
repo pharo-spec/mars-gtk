@@ -13,13 +13,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkBin class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_bin_init(void *object))
-]
-
-{ #category : #accessing }
 GtkBin class >> gType [ 
 	"This method was automatically generated"
 

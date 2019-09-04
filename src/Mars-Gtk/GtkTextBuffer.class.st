@@ -13,13 +13,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkTextBuffer class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_text_buffer_init(void *object))
-]
-
-{ #category : #accessing }
 GtkTextBuffer class >> gType [ 
 	"This method was automatically generated"
 

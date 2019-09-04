@@ -19,13 +19,6 @@ GtkButtonBox class >> buttonBoxNewOrientation: orientation [
 ]
 
 { #category : #accessing }
-GtkButtonBox class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_button_box_init(void *object))
-]
-
-{ #category : #accessing }
 GtkButtonBox class >> gType [ 
 	"This method was automatically generated"
 

@@ -11,13 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkPopover class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_popover_init(void *object))
-]
-
-{ #category : #accessing }
 GtkPopover class >> gType [ 
 	"This method was automatically generated"
 

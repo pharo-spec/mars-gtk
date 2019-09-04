@@ -16,13 +16,6 @@ GtkCellRendererPixbuf class >> cellRendererNew [
 ]
 
 { #category : #accessing }
-GtkCellRendererPixbuf class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_cell_renderer_pixbuf_init(void *object))
-]
-
-{ #category : #accessing }
 GtkCellRendererPixbuf class >> gType [ 
 	"This method was automatically generated"
 

@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkToolButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_tool_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkToolButton class >> gType [ 
 	"This method was automatically generated"
 

@@ -23,13 +23,6 @@ GtkCheckButton class >> buttonNewWithLabel: utf8EncodedString [
 ]
 
 { #category : #accessing }
-GtkCheckButton class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_check_button_init(void *object))
-]
-
-{ #category : #accessing }
 GtkCheckButton class >> gType [ 
 	"This method was automatically generated"
 

@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkSeparatorMenuItem class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_separator_menu_item_init(void *object))
-]
-
-{ #category : #accessing }
 GtkSeparatorMenuItem class >> gType [ 
 	"This method was automatically generated"
 

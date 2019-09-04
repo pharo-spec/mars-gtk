@@ -15,13 +15,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkStyleProvider class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_style_provider_init(void *object))
-]
-
-{ #category : #accessing }
 GtkStyleProvider class >> gType [ 
 	"This method was automatically generated"
 

@@ -11,13 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkSeparatorToolItem class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_separator_tool_item_init(void *object))
-]
-
-{ #category : #accessing }
 GtkSeparatorToolItem class >> gType [ 
 	"This method was automatically generated"
 

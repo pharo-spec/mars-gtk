@@ -15,13 +15,6 @@ GtkBaseStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 ]
 
 { #category : #accessing }
-GtkBaseStore class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_base_store_init(void *object))
-]
-
-{ #category : #accessing }
 GtkBaseStore class >> gType [ 
 
 	^ nil

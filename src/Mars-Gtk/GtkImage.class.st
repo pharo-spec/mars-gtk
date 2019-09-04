@@ -20,13 +20,6 @@ GtkImage class >> basicNewEmpty [
 ]
 
 { #category : #accessing }
-GtkImage class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_image_init(void *object))
-]
-
-{ #category : #accessing }
 GtkImage class >> gType [ 
 	"This method was automatically generated"
 

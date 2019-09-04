@@ -17,13 +17,6 @@ GtkCellRendererText class >> cellRendererNew [
 ]
 
 { #category : #accessing }
-GtkCellRendererText class >> gInit: object [ 
-	"This method was automatically generated"
-
-	^ self ffiCall: #(void gtk_cell_renderer_text_init(void *object))
-]
-
-{ #category : #accessing }
 GtkCellRendererText class >> gType [ 
 	"This method was automatically generated"
 
