@@ -2,7 +2,6 @@ Class {
 	#name : #GClass,
 	#superclass : #Object,
 	#instVars : [
-		'builder',
 		'type',
 		'name',
 		'parent',
@@ -10,7 +9,8 @@ Class {
 		'initialize',
 		'targetClass',
 		'instances',
-		'interfaces'
+		'interfaces',
+		'interfaceStructures'
 	],
 	#classVars : [
 		'GClasses'
@@ -104,13 +104,16 @@ GClass class >> shutDown: quitting [
 ]
 
 { #category : #accessing }
-GClass >> addInterface: ifazClass initialize: aBlock [
+GClass >> addInterface: interfaceClass initialize: aBlock [
 
 	interfaces 
-		at: ifazClass 
+		at: interfaceClass
 		put: (GCallback 
 			signature: #(void (void *handle)) 
-			block: [ :handle | aBlock value: (ifazClass fromHandle: handle) ])
+			block: [ :handle | | interface | 
+				interface := interfaceClass fromHandle: handle.
+				interfaceStructures add: interface.
+				aBlock value: interface ])
 ]
 
 { #category : #'private installing' }
@@ -212,6 +215,7 @@ GClass >> initialize [
 	super initialize.
 	instances := WeakSet new.
 	interfaces := OrderedDictionary new.
+	interfaceStructures := Set new.
 	self initialize: [ :instance | instance initialize ].
 	self classInitialize: [ :gclass | ].	
 	
@@ -240,7 +244,6 @@ GClass >> install [
 	self class 
 		gClassAt: targetClass 
 		put: self
-
 ]
 
 { #category : #accessing }
