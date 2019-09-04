@@ -2,7 +2,6 @@ Class {
 	#name : #GClassForTestWithInterface,
 	#superclass : #GtkWidget,
 	#classInstVars : [
-		'gClass',
 		'initializedInterface'
 	],
 	#category : #'Mars-Gtk-TypeBuilder'
@@ -11,7 +10,7 @@ Class {
 { #category : #accessing }
 GClassForTestWithInterface class >> gClass [ 
 
-	^ gClass
+	^ GClass gClassAt: self
 ]
 
 { #category : #accessing }
@@ -46,6 +45,5 @@ GClassForTestWithInterface class >> isInterfaceInitialized [
 { #category : #accessing }
 GClassForTestWithInterface class >> reset [
 
-	super reset.
 	initializedInterface := false
 ]

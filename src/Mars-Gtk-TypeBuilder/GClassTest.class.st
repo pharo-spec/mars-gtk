@@ -28,7 +28,7 @@ GClassTest >> testInstall [
 	name := self randomNameForTest.
 	gClass := GClass 
 		install: GClassForTest
-		as: name.
+		withName: name.
 		
 	self assert: gClass notNil.
 	self assert: gClass type notNil.
@@ -42,7 +42,7 @@ GClassTest >> testInstallWithInterface [
 	
 	gClass := GClass
 		install: GClassForTestWithInterface
-		as: self randomNameForTest.
+		withName: self randomNameForTest.
 		
 	self assert: gClass notNil.
 	self assert: gClass type notNil.
@@ -52,32 +52,25 @@ GClassTest >> testInstallWithInterface [
 
 { #category : #tests }
 GClassTest >> testNew [
-	| name gClass object |
+	| name gClass object initialized interfaceInitialized |
 
 	name := self randomNameForTest.
-	gClass := GClass install: GClassForTest as: name.
+	gClass := 	gClass := GClass 
+		install: GClassForTest 
+		with: [ :aGClass |
+			aGClass
+				name: name;
+				parent: GtkWidget;
+				classInitialize: [ :klass | initialized := true ];
+				addInterface: GInterfaceForTest initialize: [ :ifaz | interfaceInitialized := true ] ].
 	object := gClass new.	
 
 	self assert: object notNil.
 	self assert: object isObject.
 	self assert: (object gTypeName: gClass type) equals: name.
-	self assert: object gType equals: gClass type
-]
-
-{ #category : #tests }
-GClassTest >> testNewWithInterface [
-	| name gClass object |
-
-	name := self randomNameForTest.
-	gClass := GObject 
-		gSubclass: name
-		"implements: GtkSourceCompletionProviderIface -> GtkSourceCompletionProviderForTest".
-	object := gClass new.	
-
-	self assert: object notNil.
-	self assert: object isObject.
-	self assert: (object gTypeName: gClass gType) equals: name.
-	"self assert: object gType equals: gClass gType"
+	self assert: object gType equals: gClass type.
+	self assert: initialized.
+	self assert: interfaceInitialized
 ]
 
 { #category : #private }

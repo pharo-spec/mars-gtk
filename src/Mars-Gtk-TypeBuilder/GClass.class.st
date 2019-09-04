@@ -28,7 +28,7 @@ GClass class >> gClassAt: aClass [
 ]
 
 { #category : #private }
-GClass class >> gClassesAt: aClass put: gClass [
+GClass class >> gClassAt: aClass put: gClass [
 	
 	GClasses ifNil: [ GClasses := IdentityDictionary new ].
 	GClasses at: aClass put: gClass
@@ -42,31 +42,29 @@ GClass class >> initialize [
 
 { #category : #installing }
 GClass class >> install: aClass [
-	| gClass |
 
-	gClass := self new.
-	gClass targetClass: aClass.
-	aClass install.
-
-	self gClassesAt: aClass put: gClass.
-
-	^ gClass
+	^ self 
+		install: aClass 
+		with: [ :gClass | ]
 ]
 
 { #category : #installing }
-GClass class >> install: aClass as: aName [
+GClass class >> install: aClass with: aBlock [
+
+	^ self new 
+		targetClass: aClass;
+		prepare: aBlock;
+		install
+]
+
+{ #category : #installing }
+GClass class >> install: aClass withName: aName [
 	"Overrides the name in Gtk side. 
 	 This is mostly used to allow test to install several times same class"
-	| gClass |
 
-	gClass := self new.
-	gClass targetClass: aClass.
-	gClass name: aName.
-	gClass install.
-	
-	self gClassesAt: aClass put: gClass.
-
-	^ gClass
+	^ self 
+		install: aClass 
+		with: [ :gClass | gClass name: aName ]
 ]
 
 { #category : #'class initialization' }
@@ -183,10 +181,11 @@ GClass >> gTypeRegisterStaticSimpleParent: parent_type name: type_name classSize
 GClass >> initialize [
 
 	super initialize.
+	instances := WeakSet new.
 	interfaces := OrderedDictionary new.
 	self initialize: [ :instance | instance initialize ].
+	self classInitialize: [ :gclass | ].	
 	
-	instances := WeakSet new
 ]
 
 { #category : #accessing }
@@ -194,9 +193,7 @@ GClass >> initialize: aBlock [
 	
 	initialize := GCallback
 		signature: #(void (gpointer object))
-		block: [ :object |
-			parent gInit: object.
-			aBlock value: object ]
+		block: [ :object | aBlock value: object ]
 ]
 
 { #category : #installing }
@@ -209,7 +206,12 @@ GClass >> install [
 	interfaces keysAndValuesDo: [ :interfaceClass :initCallback |
 		self 
 			addInterfaceGType: interfaceClass gType 
-			initialize: initCallback ]
+			initialize: initCallback ].
+		
+	self class 
+		gClassAt: targetClass 
+		put: self
+
 ]
 
 { #category : #accessing }
@@ -257,6 +259,12 @@ GClass >> parent: aClass [
 	parent := aClass
 ]
 
+{ #category : #initialization }
+GClass >> prepare: aBlock [
+
+	aBlock value: self
+]
+
 { #category : #'private installing' }
 GClass >> registerType [
 
@@ -274,12 +282,10 @@ GClass >> registerType [
 GClass >> targetClass: aClass [ 
 
 	targetClass := aClass.
-	
+	"some defaults (they can be override in the prepare block)"
 	self 
 		name: aClass name;
-		parent: aClass superclass;
-		classInitialize: [ :gclass | aClass initialize: gclass ].	
-	aClass initializeInterfaces: self
+		parent: aClass superclass
 ]
 
 { #category : #accessing }
