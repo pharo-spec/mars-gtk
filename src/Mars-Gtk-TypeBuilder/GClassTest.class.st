@@ -26,9 +26,11 @@ GClassTest >> testInstall [
 	| gClass name |
 
 	name := self randomNameForTest.
-	gClass := GClass 
-		install: GClassForTest
-		withName: name.
+	gClass := GClass install: GClassForTest with: [ :definition |
+		definition
+			name: name;
+			parent: GtkWidget;
+			addInterface: GInterfaceForTest initialize: [ :ifaz | ] ].
 		
 	self assert: gClass notNil.
 	self assert: gClass type notNil.
@@ -37,17 +39,19 @@ GClassTest >> testInstall [
 ]
 
 { #category : #tests }
-GClassTest >> testInstallWithInterface [
-	| gClass |
-	
-	gClass := GClass
-		install: GClassForTestWithInterface
-		withName: self randomNameForTest.
-		
-	self assert: gClass notNil.
-	self assert: gClass type notNil.
-	self deny: gClass type equals: 0. 
-	self assert: (gClass interfaces includes: GInterfaceForTest)
+GClassTest >> testInstallOnNew [
+	| gClass name annonClass object |
+
+	name := self randomNameForTest.
+
+	annonClass := GClassForTest newAnonymousSubclass
+		setName: name;
+		yourself.
+
+	object := annonClass new.
+	gClass := GClass gClassAt: annonClass.
+	self assert: (gClass interfaces includes: GInterfaceForTest).
+	self assert: object gType equals: gClass type
 ]
 
 { #category : #tests }

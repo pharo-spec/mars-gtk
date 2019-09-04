@@ -13,7 +13,15 @@ Class {
 { #category : #accessing }
 GClassForTest class >> gClass [ 
 
-	^ GClass gClassAt: self
+	^ GClass gDefinitionAt: self
+]
+
+{ #category : #'class initialization' }
+GClassForTest class >> gDefine: gClass [
+	"this method is executed by the creator to define the GClass to be instantiated"
+	gClass 
+		parent: GtkWidget;
+		addInterface: GInterfaceForTest initialize: [ :ifaz | ]
 ]
 
 { #category : #accessing }
@@ -32,11 +40,6 @@ GClassForTest class >> initialize [
 GClassForTest class >> initialize: aHandle [
 	
 	initialized := true
-]
-
-{ #category : #'class initialization' }
-GClassForTest class >> initializeInterfaces: aGClass [
-
 ]
 
 { #category : #testing }

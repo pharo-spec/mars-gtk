@@ -21,7 +21,7 @@ Class {
 	#category : #'Mars-Gtk-TypeBuilder'
 }
 
-{ #category : #accessing }
+{ #category : #private }
 GClass class >> gClassAt: aClass [
 
 	^ GClasses at: aClass
@@ -32,6 +32,22 @@ GClass class >> gClassAt: aClass put: gClass [
 	
 	GClasses ifNil: [ GClasses := IdentityDictionary new ].
 	GClasses at: aClass put: gClass
+]
+
+{ #category : #accessing }
+GClass class >> gDefinitionAt: aClass [
+	"Answers a GClass definition of aClass. 
+	 if the definition does not yet exits, it tries to install a new definition by calling
+	 the #gDefine: hook method."
+	| gClass |
+
+	gClass := GClasses at: aClass ifAbsent: [ nil ].
+	gClass ifNil: [
+		gClass := self 
+			install: aClass 
+			with: [ :c | aClass gDefine: c ] ].
+	
+	^ gClass
 ]
 
 { #category : #'class initialization' }

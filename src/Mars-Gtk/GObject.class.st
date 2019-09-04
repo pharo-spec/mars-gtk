@@ -36,6 +36,11 @@ GObject class >> gClassSize [
 	^ 136
 ]
 
+{ #category : #'class initialization' }
+GObject class >> gDefine: aClass [
+	"To be called by the new method of pharo classes who extent gtk classes"
+]
+
 { #category : #accessing }
 GObject class >> gSize [
 
