@@ -14,13 +14,20 @@ GClassTest >> randomNameForTest [
 	 asString
 ]
 
+{ #category : #running }
+GClassTest >> setUp [
+	
+	super setUp.
+	GClassForTest reset
+]
+
 { #category : #tests }
 GClassTest >> testInstall [
 	| gClass name |
-	
+
 	name := self randomNameForTest.
 	gClass := GClass 
-		install: GtkTestProvider
+		install: GClassForTest
 		as: name.
 		
 	self assert: gClass notNil.
@@ -33,13 +40,14 @@ GClassTest >> testInstall [
 GClassTest >> testInstallWithInterface [
 	| gClass |
 	
-	gClass := GClass 
-		install: GtkTestProvider
+	gClass := GClass
+		install: GClassForTestWithInterface
 		as: self randomNameForTest.
 		
 	self assert: gClass notNil.
 	self assert: gClass type notNil.
-	self deny: gClass type equals: 0 
+	self deny: gClass type equals: 0. 
+	self assert: (gClass interfaces includes: GInterfaceForTest)
 ]
 
 { #category : #tests }
@@ -47,13 +55,13 @@ GClassTest >> testNew [
 	| name gClass object |
 
 	name := self randomNameForTest.
-	gClass := GClass install: GtkTestProvider as: name.
+	gClass := GClass install: GClassForTest as: name.
 	object := gClass new.	
 
 	self assert: object notNil.
 	self assert: object isObject.
 	self assert: (object gTypeName: gClass type) equals: name.
-	self assert: object gType equals: gClass gType
+	self assert: object gType equals: gClass type
 ]
 
 { #category : #tests }

@@ -45,7 +45,7 @@ GObject class >> gInit: object [
 { #category : #accessing }
 GObject class >> gSize [
 
-	^ 136
+	^ 24
 ]
 
 { #category : #accessing }

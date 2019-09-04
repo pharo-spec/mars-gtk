@@ -6,17 +6,39 @@ Class {
 		'type',
 		'name',
 		'parent',
-		'callbacks',
 		'classInitialize',
 		'initialize',
 		'targetClass',
-		'instances'
+		'instances',
+		'interfaces'
+	],
+	#classVars : [
+		'GClasses'
 	],
 	#pools : [
 		'GtkTypes'
 	],
 	#category : #'Mars-Gtk-TypeBuilder'
 }
+
+{ #category : #accessing }
+GClass class >> gClassAt: aClass [
+
+	^ GClasses at: aClass
+]
+
+{ #category : #private }
+GClass class >> gClassesAt: aClass put: gClass [
+	
+	GClasses ifNil: [ GClasses := IdentityDictionary new ].
+	GClasses at: aClass put: gClass
+]
+
+{ #category : #'class initialization' }
+GClass class >> initialize [
+
+	SessionManager default registerSystemClassNamed: self name
+]
 
 { #category : #installing }
 GClass class >> install: aClass [
@@ -25,6 +47,8 @@ GClass class >> install: aClass [
 	gClass := self new.
 	gClass targetClass: aClass.
 	aClass install.
+
+	self gClassesAt: aClass put: gClass.
 
 	^ gClass
 ]
@@ -39,8 +63,45 @@ GClass class >> install: aClass as: aName [
 	gClass targetClass: aClass.
 	gClass name: aName.
 	gClass install.
+	
+	self gClassesAt: aClass put: gClass.
 
 	^ gClass
+]
+
+{ #category : #'class initialization' }
+GClass class >> shutDown: quitting [ 
+
+	quitting ifFalse: [ ^ self ].
+	GClasses := nil
+]
+
+{ #category : #accessing }
+GClass >> addInterface: ifazClass initialize: aBlock [
+
+	interfaces 
+		at: ifazClass 
+		put: (GCallback 
+			signature: #(void (void *handle)) 
+			block: [ :handle | aBlock value: (ifazClass fromHandle: handle) ])
+]
+
+{ #category : #'private installing' }
+GClass >> addInterfaceGType: interfaceType initialize: initCallback [
+	| info originSize |
+
+	info := GInterfaceInfo new 
+		interface_init: initCallback;
+		yourself.
+		
+	self 
+		gTypeAddInterfaceStaticType: type 
+		interfaceType: interfaceType
+		info: info.
+	"I need to verify the implemented interfaces includes the type I just addded to 
+	 be sure it was added (not all interfaces can be added to any class)"
+	(self gTypeInterfaces includes: interfaceType)
+		ifFalse: [ GClassError signal: 'Interface can not be added.' ]
 ]
 
 { #category : #accessing }
@@ -60,15 +121,18 @@ GClass >> ffiLibraryName [
 ]
 
 { #category : #private }
-GClass >> findInstance: object [
+GClass >> findInstance: handle [
+	| address |
 
-	^ instances detect: [ :each | each getHandle = object ]
+	address := handle asInteger.
+	^ instances detect: [ :each | 
+		each getHandle asInteger = address ]
 ]
 
 { #category : #'private primitives' }
 GClass >> gInternStaticString: string [
 
-	^ self ffiCall: #(gchar *g_intern_static_string (const gchar *string))
+	^ self ffiCall: #(void *g_intern_static_string (const gchar *string))
 ]
 
 { #category : #'private primitives' }
@@ -88,18 +152,18 @@ GClass >> gTypeAddInterfaceStaticType: instance_type interfaceType: interface_ty
 
 { #category : #private }
 GClass >> gTypeInterfaces [
-	| interfaces |
+	| interfaceTypes |
 	
-	interfaces := self gTypeInterfaces: self gType.
-	^ interfaces
+	interfaceTypes := self gTypeInterfaces: type.
+	^ interfaceTypes
 		readArrayOf: (GObject resolveType: #gsize) 
 		until: [ :each | each isZero ]
 ]
 
 { #category : #'private primitives' }
-GClass >> gTypeInterfaces: type [ 
+GClass >> gTypeInterfaces: object_type [
 
-	^ self ffiCall: #(gsize *g_type_interfaces (gsize type, NULL))
+	^ self ffiCall: #(gsize *g_type_interfaces (gsize object_type, NULL))
 ]
 
 { #category : #'private primitives' }
@@ -107,7 +171,7 @@ GClass >> gTypeRegisterStaticSimpleParent: parent_type name: type_name classSize
 
 	^ self ffiCall: #(GType g_type_register_static_simple (
 		"GType"gsize parent_type,
-		const gchar *type_name,
+		"const gchar *"void *type_name,
 		guint class_size,
 		GCallback class_init,
  		guint instance_size,
@@ -119,9 +183,10 @@ GClass >> gTypeRegisterStaticSimpleParent: parent_type name: type_name classSize
 GClass >> initialize [
 
 	super initialize.
-	instances := WeakSet new.
-	callbacks := Set new.
-	self initialize: [ :instance | ]
+	interfaces := OrderedDictionary new.
+	self initialize: [ :instance | instance initialize ].
+	
+	instances := WeakSet new
 ]
 
 { #category : #accessing }
@@ -131,7 +196,7 @@ GClass >> initialize: aBlock [
 		signature: #(void (gpointer object))
 		block: [ :object |
 			parent gInit: object.
-			aBlock value: (self findInstance: object) ].
+			aBlock value: object ]
 ]
 
 { #category : #installing }
@@ -141,16 +206,20 @@ GClass >> install [
 	type = 0 ifTrue: [ 
 		GClassError signal: 'Class not installed.' ].
 
-	"interfaces keysAndValuesDo: [ :interfaceType :initBlock |
-		self addInterfaceGType: interfaceType init: initBlock ]."
+	interfaces keysAndValuesDo: [ :interfaceClass :initCallback |
+		self 
+			addInterfaceGType: interfaceClass gType 
+			initialize: initCallback ]
 ]
 
 { #category : #accessing }
 GClass >> interfaces [
 
+	self flag: #TODO. "What I do with unknown interfaces?"
 	^ self gTypeInterfaces collect: [ :eachType |
 		GInterface allSubclasses 
-			detect: [ :eachClass | eachClass gType = eachType ] ]
+			detect: [ :eachClass | eachClass gType = eachType ]
+			ifNone: [ nil ] ]
 ]
 
 { #category : #accessing }
@@ -170,8 +239,9 @@ GClass >> new [
 	| handle instance |
 
 	handle := self gObjectNew: self type.
-	instance := targetClass fromHandle: handle.
+	instance := targetClass basicNew setHandle: handle.
 	instances add: instance.
+	instance initialize.
 	^ instance
 ]
 
@@ -192,7 +262,7 @@ GClass >> registerType [
 
 	^ self 
 		gTypeRegisterStaticSimpleParent: parent gType
-		name: (self gInternStaticString: name)
+		name: (self gInternStaticString: (name utf8Encoded copyWith: 0))
 		classSize: parent gClassSize
 		classInit: classInitialize
 		instanceSize: parent gSize
@@ -209,7 +279,7 @@ GClass >> targetClass: aClass [
 		name: aClass name;
 		parent: aClass superclass;
 		classInitialize: [ :gclass | aClass initialize: gclass ].	
-	"aClass initializeInterfaces: self"
+	aClass initializeInterfaces: self
 ]
 
 { #category : #accessing }
