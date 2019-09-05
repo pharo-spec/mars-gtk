@@ -7,6 +7,12 @@ Class {
 	#category : #'Mars-Gtk-SourceView'
 }
 
+{ #category : #converting }
+GtkSourceViewLibrary >> calloutAPIClass [ 
+
+	^ TFCalloutAPI
+]
+
 { #category : #testing }
 GtkSourceViewLibrary >> isAvailable [
 
@@ -20,6 +26,12 @@ GtkSourceViewLibrary >> macModuleName [
 
 	GtkLibrary isDebug ifTrue: [ ^ self notYetImplemented ]. 
 	^ '/usr/local/lib/libgtksourceview-4.dylib'
+]
+
+{ #category : #converting }
+GtkSourceViewLibrary >> runner [
+	
+	^ TFSameThreadRunner new
 ]
 
 { #category : #'accessing platform' }

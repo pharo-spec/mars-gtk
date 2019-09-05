@@ -1,6 +1,21 @@
 Class {
 	#name : #GtkSourceCompletionProviderIface,
 	#superclass : #GInterface,
+	#instVars : [
+		'activate_proposal',
+		'get_activation',
+		'get_gicon',
+		'get_icon',
+		'get_icon_name',
+		'get_info_widget',
+		'get_interactive_delay',
+		'get_name',
+		'get_priority',
+		'get_start_iter',
+		'match',
+		'populate',
+		'update_info'
+	],
 	#classVars : [
 		'OFFSET_ACTIVATE_PROPOSAL',
 		'OFFSET_GET_ACTIVATION',
@@ -59,10 +74,11 @@ GtkSourceCompletionProviderIface >> activate_proposal [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> activate_proposal: anObject [
 	"This method was automatically generated"
+	activate_proposal := anObject.
 	handle 
 		pointerAt: OFFSET_ACTIVATE_PROPOSAL
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -87,10 +103,11 @@ GtkSourceCompletionProviderIface >> get_activation [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_activation: anObject [
 	"This method was automatically generated"
+	get_activation := anObject.
 	handle 
 		pointerAt: OFFSET_GET_ACTIVATION
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -103,10 +120,11 @@ GtkSourceCompletionProviderIface >> get_gicon [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_gicon: anObject [
 	"This method was automatically generated"
+	get_gicon := anObject.
 	handle 
 		pointerAt: OFFSET_GET_GICON
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -119,10 +137,11 @@ GtkSourceCompletionProviderIface >> get_icon [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_icon: anObject [
 	"This method was automatically generated"
+	get_icon := anObject.
 	handle 
 		pointerAt: OFFSET_GET_ICON
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -135,10 +154,11 @@ GtkSourceCompletionProviderIface >> get_icon_name [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_icon_name: anObject [
 	"This method was automatically generated"
+	get_icon_name := anObject.
 	handle 
 		pointerAt: OFFSET_GET_ICON_NAME
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -151,10 +171,11 @@ GtkSourceCompletionProviderIface >> get_info_widget [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_info_widget: anObject [
 	"This method was automatically generated"
+	get_info_widget := anObject.
 	handle 
 		pointerAt: OFFSET_GET_INFO_WIDGET
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -167,10 +188,12 @@ GtkSourceCompletionProviderIface >> get_interactive_delay [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_interactive_delay: anObject [
 	"This method was automatically generated"
+	
+	get_interactive_delay := anObject.
 	handle 
 		pointerAt: OFFSET_GET_INTERACTIVE_DELAY
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -183,6 +206,8 @@ GtkSourceCompletionProviderIface >> get_name [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_name: anObject [
 	"This method was automatically generated"
+	
+	get_name := anObject.
 	handle 
 		pointerAt: OFFSET_GET_NAME
 		put: (anObject 
@@ -199,6 +224,8 @@ GtkSourceCompletionProviderIface >> get_priority [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_priority: anObject [
 	"This method was automatically generated"
+	
+	get_priority := anObject.
 	handle 
 		pointerAt: OFFSET_GET_PRIORITY
 		put: (anObject 
@@ -215,10 +242,12 @@ GtkSourceCompletionProviderIface >> get_start_iter [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> get_start_iter: anObject [
 	"This method was automatically generated"
+	
+	get_start_iter := anObject.
 	handle 
 		pointerAt: OFFSET_GET_START_ITER
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -231,10 +260,12 @@ GtkSourceCompletionProviderIface >> match [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> match: anObject [
 	"This method was automatically generated"
+	
+	match := anObject.
 	handle 
 		pointerAt: OFFSET_MATCH
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -247,6 +278,8 @@ GtkSourceCompletionProviderIface >> populate [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> populate: anObject [
 	"This method was automatically generated"
+	
+	populate := anObject.
 	handle 
 		pointerAt: OFFSET_POPULATE
 		put: (anObject 
@@ -263,9 +296,11 @@ GtkSourceCompletionProviderIface >> update_info [
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> update_info: anObject [
 	"This method was automatically generated"
+	
+	update_info := anObject.
 	handle 
 		pointerAt: OFFSET_UPDATE_INFO
 		put: (anObject 
-			ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]
+			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]

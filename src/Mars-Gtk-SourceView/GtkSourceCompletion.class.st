@@ -43,5 +43,5 @@ GtkSourceCompletion >> ffiLibraryName [
 GtkSourceCompletion >> keepProvider: provider [
 	
 	providers ifNil: [ providers := Set new ].
-	providers add: provider	
+	providers add: provider
 ]

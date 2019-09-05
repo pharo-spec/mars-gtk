@@ -14,7 +14,13 @@ GtkSourceCompletionContext >> addProposals: proposals provider: provider finishe
 
 	self ffiCall: #(void gtk_source_completion_context_add_proposals (
 		self,
-		GtkSourceCompletionProvider *provider,
+		"GtkSourceCompletionProvider *"GObject *provider,
  		GList *proposals,
  		gboolean finished))
+]
+
+{ #category : #'library path' }
+GtkSourceCompletionContext >> ffiLibraryName [
+
+	^ GtkSourceViewLibrary
 ]

@@ -15,6 +15,9 @@ https://developer.gnome.org/gtksourceview/stable/GtkSourceView.html
 Class {
 	#name : #GtkSourceView,
 	#superclass : #GtkTextView,
+	#instVars : [
+		'completion'
+	],
 	#category : #'Mars-Gtk-SourceView'
 }
 
@@ -88,14 +91,15 @@ GtkSourceView class >> example4 [
 	sourceView := GtkSourceView new
 		showLineNumbers: true;
 		autoIndent: true;
-		showRightMargin: true;
 		yourself.
 		
 	sourceView completion addProvider: GtkPharoCompletionProvider new.
 
 	GtkWindow new
-		title: 'Source view auto indent';
+		title: 'Source view autocompletion';
+		resize: 600@400;
 		add: (GtkScrolledWindow newWidget: sourceView);
+		center;
 		showAll
 ]
 
@@ -132,9 +136,7 @@ GtkSourceView >> autoIndent: enable [
 { #category : #accessing }
 GtkSourceView >> completion [
 
-	^ self 
-		ffiCall: #(GtkSourceCompletion *gtk_source_view_get_completion (self))
-		module: GtkSourceViewLibrary
+	^ completion ifNil: [ completion := self getCompletion ]
 ]
 
 { #category : #private }
@@ -142,6 +144,14 @@ GtkSourceView >> getBuffer [
 
 	^ self 
 		ffiCall: #(GtkSourceBuffer *gtk_text_view_get_buffer (self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #private }
+GtkSourceView >> getCompletion [
+
+	^ self 
+		ffiCall: #(GtkSourceCompletion *gtk_source_view_get_completion (self))
 		module: GtkSourceViewLibrary
 ]
 
