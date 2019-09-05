@@ -1,3 +1,35 @@
+"
+I represent a class in the Gtk environment. 
+I'm used to extent GObject, installing methods that will be executed in Pharo from the context of Gtk3. 
+
+Basically, I'm used to extend Gtk classes from within the Pharo environment. 
+This is used when we want to implement our own interfaces (like for example for tree stores or source completion implementations).
+
+How to use it is somehow complicated (but of course, doable).
+This is a list of minimal requirements: 
+
+1. You need to subclass first from the component you want to extent (usually GObject, but 
+you can extend any Gtk class). To be able to extend a class, the class needs to have defined the 
+#gSize and #gClassSize methods! (otherwise your system will crash).
+See GObject class>>gSize and GObject class>>gClassSize for examples.
+
+2. You need to override the class method #gDefine: (see GObject class>>#gDefine: and overrides as 
+examples).
+
+3. Tipically, you will want to implement an interface. You will need to map this interface as a 
+child of GInterface and you will need to add it in your #gDefine: method. See GtkSourceCompletionProvider>>#gDefine: as an example.
+
+4. You need to override new and replace it for: 
+
+new 
+
+	^ (GClass gDefinitionAt: self) new
+	
+There are several examples in the system that does this: GtkSourceCompletionProvider, GtkDataSource. 
+You can check at them as examples.
+ 
+
+"
 Class {
 	#name : #GClass,
 	#superclass : #Object,

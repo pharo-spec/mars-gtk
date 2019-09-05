@@ -1,3 +1,7 @@
+"
+I'm a base interface to be extended for real Gtk interfaces. 
+My children needs to define #fieldsDesc but they can use the fieldsDesc implementation I keep as a base (since all interfaces needs to start with same field, the GTypeInterface)
+"
 Class {
 	#name : #GInterface,
 	#superclass : #GtkStructure,
