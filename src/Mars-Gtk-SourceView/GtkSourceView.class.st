@@ -93,7 +93,7 @@ GtkSourceView class >> example4 [
 		autoIndent: true;
 		yourself.
 		
-	sourceView completion addProvider: GtkPharoCompletionProvider new.
+	sourceView completion addProvider: GtkSourceCompletionProvider new.
 
 	GtkWindow new
 		title: 'Source view autocompletion';

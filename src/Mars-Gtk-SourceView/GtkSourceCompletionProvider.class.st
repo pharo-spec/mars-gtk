@@ -1,6 +1,9 @@
 Class {
-	#name : #GtkPharoCompletionProvider,
+	#name : #GtkSourceCompletionProvider,
 	#superclass : #GObject,
+	#instVars : [
+		'completionContext'
+	],
 	#pools : [
 		'GtkSourceCompletionActivation'
 	],
@@ -8,13 +11,13 @@ Class {
 }
 
 { #category : #'class initialization' }
-GtkPharoCompletionProvider class >> gClass [
+GtkSourceCompletionProvider class >> gClass [
 
 	^ GClass gClassAt: self
 ]
 
 { #category : #'class initialization' }
-GtkPharoCompletionProvider class >> gDefine: gClass [
+GtkSourceCompletionProvider class >> gDefine: gClass [
 
 	gClass
 		addInterface: GtkSourceCompletionProviderIface 
@@ -22,7 +25,7 @@ GtkPharoCompletionProvider class >> gDefine: gClass [
 ]
 
 { #category : #'class initialization' }
-GtkPharoCompletionProvider class >> gDefineCompletionProviderInterface: interface [
+GtkSourceCompletionProvider class >> gDefineCompletionProviderInterface: interface [
 
 	interface
 		get_name: (GCallback
@@ -64,19 +67,19 @@ GtkPharoCompletionProvider class >> gDefineCompletionProviderInterface: interfac
 ]
 
 { #category : #'class initialization' }
-GtkPharoCompletionProvider class >> gInstance: handle [
+GtkSourceCompletionProvider class >> gInstance: handle [
 
 	^ self gClass findInstance: handle
 ]
 
 { #category : #'instance creation' }
-GtkPharoCompletionProvider class >> new [
+GtkSourceCompletionProvider class >> new [
 
 	^ (GClass gDefinitionAt: self) new
 ]
 
 { #category : #accessing }
-GtkPharoCompletionProvider >> activateProposal: proposal iter: iter [
+GtkSourceCompletionProvider >> activateProposal: proposal iter: iter [
 	| word |
 	
 	word := self currentWord: iter.
@@ -87,13 +90,29 @@ GtkPharoCompletionProvider >> activateProposal: proposal iter: iter [
 ]
 
 { #category : #accessing }
-GtkPharoCompletionProvider >> activation [
+GtkSourceCompletionProvider >> activation [
 
 	^ GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE value
 ]
 
 { #category : #private }
-GtkPharoCompletionProvider >> currentWord: iter [
+GtkSourceCompletionProvider >> completionEntriesFor: word [
+	completionContext ifNil: [ 
+		completionContext := NECContext
+			controller: NECController new
+			class: Object
+			source: ''
+			position: 0.
+		completionContext model ].
+	
+	completionContext narrowWith: word.
+	^ completionContext model entries
+		
+	
+]
+
+{ #category : #private }
+GtkSourceCompletionProvider >> currentWord: iter [
 	| start line |
 		
 	start := iter copyInMemory lineOffset: 0.
@@ -107,29 +126,28 @@ GtkPharoCompletionProvider >> currentWord: iter [
 ]
 
 { #category : #accessing }
-GtkPharoCompletionProvider >> match: context [
+GtkSourceCompletionProvider >> match: context [
 	
 	^ true
 ]
 
 { #category : #accessing }
-GtkPharoCompletionProvider >> name [
+GtkSourceCompletionProvider >> name [
 
 	^ 'Pharo'
 ]
 
 { #category : #accessing }
-GtkPharoCompletionProvider >> populate: context [
+GtkSourceCompletionProvider >> populate: context [
 	| proposals iter word |
 
 	(iter := context iter) ifNil: [ ^ self ].
 	word := self currentWord: iter.
 	word ifNil: [ ^ self ].
 
-	proposals := GList new. 
-	proposals append: (GtkSourceCompletionItem newLabel: word, '1').
-	proposals append: (GtkSourceCompletionItem newLabel: word, '2').
-	proposals append: (GtkSourceCompletionItem newLabel: word, '3').
+	proposals := GList new.
+	(self completionEntriesFor: word) do: [ :each |
+		proposals append: (GtkSourceCompletionItem newLabel: each contents) ].
 	
 	context 
 		addProposals: proposals 
@@ -138,13 +156,13 @@ GtkPharoCompletionProvider >> populate: context [
 ]
 
 { #category : #accessing }
-GtkPharoCompletionProvider >> priority [
+GtkSourceCompletionProvider >> priority [
 
 	^ 1
 ]
 
 { #category : #accessing }
-GtkPharoCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
+GtkSourceCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
 
 	^ true
 ]
