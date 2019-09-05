@@ -48,15 +48,33 @@ GtkSourceCompletionItem >> icon: icon [
 ]
 
 { #category : #accessing }
+GtkSourceCompletionItem >> label [ 
+
+	^ self gObjectGetString: 'label'
+]
+
+{ #category : #accessing }
 GtkSourceCompletionItem >> label: label [
 
 	^ self ffiCall: #(void gtk_source_completion_item_set_label (self, const gchar *label))
 ]
 
 { #category : #accessing }
+GtkSourceCompletionItem >> markup [
+
+	^ self gObjectGetString: 'markup'
+]
+
+{ #category : #accessing }
 GtkSourceCompletionItem >> markup: markup [
 
 	^ self ffiCall: #(void gtk_source_completion_item_set_markup (self, const gchar *markup))
+]
+
+{ #category : #accessing }
+GtkSourceCompletionItem >> text [
+
+	^ self gObjectGetString: 'text'
 ]
 
 { #category : #accessing }

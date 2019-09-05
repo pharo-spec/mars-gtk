@@ -82,6 +82,12 @@ GtkTextIter >> basicTags [
 	^ self ffiCall: #("GSList"void *gtk_text_iter_get_tags (self))
 ]
 
+{ #category : #accessing }
+GtkTextIter >> buffer [
+
+	^ self ffiCall: #(GtkTextBuffer *gtk_text_iter_get_buffer (self))
+]
+
 { #category : #'accessing structure variables' }
 GtkTextIter >> dummy1 [
 	"This method was automatically generated"
@@ -284,6 +290,12 @@ GtkTextIter >> line [
 GtkTextIter >> lineOffset [
 
 	^ self ffiCall: #(gint gtk_text_iter_get_line_offset (self))
+]
+
+{ #category : #accessing }
+GtkTextIter >> lineOffset: char_on_line [
+
+	^ self ffiCall: #(void gtk_text_iter_set_line_offset (self, gint char_on_line))
 ]
 
 { #category : #accessing }

@@ -49,12 +49,18 @@ GtkPharoCompletionProvider class >> gDefineCompletionProviderInterface: interfac
 			block: [ :provider :context :proposal :iter | 
 				(self gInstance: provider) 
 					startIterContext: (GtkSourceCompletionContext fromHandle: context)
-					proposal: proposal
+					proposal: (GtkSourceCompletionItem fromHandle: proposal)
 					iter: (GtkTextIter fromHandle: iter) ]);
 		populate: (GCallback
 			signature: #(void (void *provider, void *context))
 			block: [ :provider :context | 
-				(self gInstance: provider) populate: (GtkSourceCompletionContext fromHandle: context) ])
+				(self gInstance: provider) populate: (GtkSourceCompletionContext fromHandle: context) ]);
+		activate_proposal: (GCallback 
+			signature: #(gboolean (void *provider, void *proposal, void *iter))
+			block: [ :provider :proposal :iter |
+				(self gInstance: provider) 
+					activateProposal: (GtkSourceCompletionItem fromHandle: proposal)
+					iter: (GtkTextIter fromHandle: iter) ])
 ]
 
 { #category : #'class initialization' }
@@ -70,16 +76,39 @@ GtkPharoCompletionProvider class >> new [
 ]
 
 { #category : #accessing }
+GtkPharoCompletionProvider >> activateProposal: proposal iter: iter [
+	| word |
+	
+	word := self currentWord: iter.
+	word ifNil: [ ^ false ].
+	iter buffer insertTextAtCursor: (proposal label allButFirst: word size).
+ 
+	^ true
+]
+
+{ #category : #accessing }
 GtkPharoCompletionProvider >> activation [
 
-	'ACTIVATION' crLog.
 	^ GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE value
+]
+
+{ #category : #private }
+GtkPharoCompletionProvider >> currentWord: iter [
+	| start line |
+		
+	start := iter copyInMemory lineOffset: 0.
+	line := (iter buffer 
+		textStart: start 
+		end: iter
+		includeHiddenChars: false).
+	(line isEmpty or: [ Character separators includes: line last ]) 
+		ifTrue: [ ^ nil ].
+	^ line substrings last
 ]
 
 { #category : #accessing }
 GtkPharoCompletionProvider >> match: context [
 	
-	'MATCH' crLog.
 	^ true
 ]
 
@@ -91,13 +120,16 @@ GtkPharoCompletionProvider >> name [
 
 { #category : #accessing }
 GtkPharoCompletionProvider >> populate: context [
-	| proposals |
+	| proposals iter word |
 
-	'POPULATE' crLog.	
-	proposals := GList new.
-	proposals append: (GtkSourceCompletionItem newLabel: 'a1').
-	proposals append: (GtkSourceCompletionItem newLabel: 'a2').
-	proposals append: (GtkSourceCompletionItem newLabel: 'a3').
+	(iter := context iter) ifNil: [ ^ self ].
+	word := self currentWord: iter.
+	word ifNil: [ ^ self ].
+
+	proposals := GList new. 
+	proposals append: (GtkSourceCompletionItem newLabel: word, '1').
+	proposals append: (GtkSourceCompletionItem newLabel: word, '2').
+	proposals append: (GtkSourceCompletionItem newLabel: word, '3').
 	
 	context 
 		addProposals: proposals 
@@ -108,11 +140,10 @@ GtkPharoCompletionProvider >> populate: context [
 { #category : #accessing }
 GtkPharoCompletionProvider >> priority [
 
-	'PRIORITY' crLog.
-	^ 10
+	^ 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkPharoCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
 
 	^ true

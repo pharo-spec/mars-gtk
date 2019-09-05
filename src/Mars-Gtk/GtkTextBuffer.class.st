@@ -372,6 +372,18 @@ GtkTextBuffer >> text: text [
 	self ffiCall: #(void gtk_text_buffer_set_text (self, String text, "gint len" -1))
 ]
 
+{ #category : #accessing }
+GtkTextBuffer >> textFrom: start to: end [
+	| startIter endIter |
+
+	startIter := self offsetIter: start.
+	endIter := self offsetIter: end.
+	^ self 
+		textStart: self startIter 
+		end: self endIter
+		includeHiddenChars: false
+]
+
 { #category : #private }
 GtkTextBuffer >> textStart: start end: end includeHiddenChars: include_hidden_chars [ 
 
