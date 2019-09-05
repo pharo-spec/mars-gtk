@@ -8,7 +8,8 @@ Class {
 	#name : #GtkPharoSourceCompletionProvider,
 	#superclass : #GObject,
 	#instVars : [
-		'completionClass'
+		'completionClass',
+		'iconsCache'
 	],
 	#pools : [
 		'GtkSourceCompletionActivation'
@@ -124,7 +125,6 @@ GtkPharoSourceCompletionProvider >> completionEntriesFor: iter [
 	word ifNil: [ ^ #() ].
 
 	completionContext narrowWith: word.
-	
 	^ completionContext model entries
 ]
 
@@ -140,6 +140,15 @@ GtkPharoSourceCompletionProvider >> currentWord: iter in: textBuffer [
 	(line isEmpty or: [ Character separators includes: line last ]) 
 		ifTrue: [ ^ nil ].
 	^ line substrings last
+]
+
+{ #category : #private }
+GtkPharoSourceCompletionProvider >> iconAt: icon ifAbsentPut: aBlock [ 
+
+	iconsCache ifNil: [ iconsCache := IdentityDictionary new ].
+	^ iconsCache 
+		at: icon 
+		ifAbsentPut: aBlock
 ]
 
 { #category : #accessing }
@@ -184,6 +193,12 @@ GtkPharoSourceCompletionProvider >> startIterContext: context proposal: proposal
 
 { #category : #private }
 GtkPharoSourceCompletionProvider >> toItem: aCompletionEntry [
+	| item |
 
-	^ GtkSourceCompletionItem newLabel: aCompletionEntry contents
+	item := GtkSourceCompletionItem newLabel: aCompletionEntry contents.
+	aCompletionEntry icon ifNotNil: [ :icon |
+		item icon: (self 
+			iconAt: icon
+			ifAbsentPut: [ GdkPixbuf newForm: icon ]) ].
+	^ item
 ]
