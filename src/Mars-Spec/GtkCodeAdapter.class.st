@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkCodeAdapter,
 	#superclass : #GtkTextAdapter,
+	#instVars : [
+		'completionProvider'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -39,7 +42,14 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 
 	gtkSourceView textBuffer 
 		infiniteUndoLevels;
-		highlightMatchingBrackets: true
+		highlightMatchingBrackets: true.
+		
+	gtkSourceView completion
+		showHeaders: false;
+		showIcons: true;
+		addProvider: (completionProvider := GtkPharoSourceCompletionProvider new
+			completionClass: self behavior;
+			yourself)
 ]
 
 { #category : #building }
@@ -96,7 +106,8 @@ GtkCodeAdapter >> bufferClass [
 GtkCodeAdapter >> classOrMetaClass: aClass [
 	"I will take the behavior from model, I just need to fire a refresh"
 
-	self applyStyleTo: self innerWidget textBuffer
+	self applyStyleTo: self innerWidget textBuffer.
+	self updateCompletionProvider	
 ]
 
 { #category : #'private-shout' }
@@ -122,6 +133,13 @@ GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [
 GtkCodeAdapter >> textWithStyle [
 
 	^ self innerWidget textBuffer asText
+]
+
+{ #category : #'private-shout' }
+GtkCodeAdapter >> updateCompletionProvider [	
+	
+	completionProvider ifNotNil: [ :p | 
+		p completionClass: self behavior ]
 ]
 
 { #category : #building }
