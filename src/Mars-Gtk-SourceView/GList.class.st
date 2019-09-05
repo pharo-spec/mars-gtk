@@ -26,13 +26,13 @@ GList class >> new [
 	^ self basicNew setHandle: ExternalAddress null
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GList >> append: aGObject [
 
 	self setHandle: (self gListAppend: aGObject getHandle)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GList >> gListAppend: data [
 
 	^ self ffiCall: #(void *g_list_append (void *handle, gpointer data))

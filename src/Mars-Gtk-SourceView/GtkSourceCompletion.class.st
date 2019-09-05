@@ -45,3 +45,19 @@ GtkSourceCompletion >> keepProvider: provider [
 	providers ifNil: [ providers := Set new ].
 	providers add: provider
 ]
+
+{ #category : #accessing }
+GtkSourceCompletion >> showHeaders: aBoolean [ 
+
+	self 
+		gObjectSet: 'show-headers' 
+		toBoolean: aBoolean
+]
+
+{ #category : #accessing }
+GtkSourceCompletion >> showIcons: aBoolean [ 
+
+	self 
+		gObjectSet: 'show-icons' 
+		toBoolean: aBoolean
+]

@@ -1,8 +1,14 @@
+"
+This is a completion provider for Pharo Source.
+It implements a GtkSourceCompletionProviderIface (see gDefine: and gDefineCompletionProviderInterface: interface)
+It uses CompletionContext to provide useful completions in editors.
+
+"
 Class {
-	#name : #GtkSourceCompletionProvider,
+	#name : #GtkPharoSourceCompletionProvider,
 	#superclass : #GObject,
 	#instVars : [
-		'completionContext'
+		'completionClass'
 	],
 	#pools : [
 		'GtkSourceCompletionActivation'
@@ -11,13 +17,13 @@ Class {
 }
 
 { #category : #'class initialization' }
-GtkSourceCompletionProvider class >> gClass [
+GtkPharoSourceCompletionProvider class >> gClass [
 
 	^ GClass gClassAt: self
 ]
 
 { #category : #'class initialization' }
-GtkSourceCompletionProvider class >> gDefine: gClass [
+GtkPharoSourceCompletionProvider class >> gDefine: gClass [
 
 	gClass
 		addInterface: GtkSourceCompletionProviderIface 
@@ -25,7 +31,7 @@ GtkSourceCompletionProvider class >> gDefine: gClass [
 ]
 
 { #category : #'class initialization' }
-GtkSourceCompletionProvider class >> gDefineCompletionProviderInterface: interface [
+GtkPharoSourceCompletionProvider class >> gDefineCompletionProviderInterface: interface [
 
 	interface
 		get_name: (GCallback
@@ -67,56 +73,67 @@ GtkSourceCompletionProvider class >> gDefineCompletionProviderInterface: interfa
 ]
 
 { #category : #'class initialization' }
-GtkSourceCompletionProvider class >> gInstance: handle [
+GtkPharoSourceCompletionProvider class >> gInstance: handle [
 
 	^ self gClass findInstance: handle
 ]
 
 { #category : #'instance creation' }
-GtkSourceCompletionProvider class >> new [
+GtkPharoSourceCompletionProvider class >> new [
 
 	^ (GClass gDefinitionAt: self) new
 ]
 
 { #category : #accessing }
-GtkSourceCompletionProvider >> activateProposal: proposal iter: iter [
+GtkPharoSourceCompletionProvider >> activateProposal: proposal iter: iter [
 	| word |
 	
-	word := self currentWord: iter.
+	word := self currentWord: iter in: iter buffer.
 	word ifNil: [ ^ false ].
-	iter buffer insertTextAtCursor: (proposal label allButFirst: word size).
+	self flag: #TODO. "Decide if we add a space at the end is a decision that can be configurable"
+	iter buffer insertTextAtCursor: ((proposal label allButFirst: word size) copyWith: Character space).
  
 	^ true
 ]
 
 { #category : #accessing }
-GtkSourceCompletionProvider >> activation [
+GtkPharoSourceCompletionProvider >> activation [
 
 	^ GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE value
 ]
 
-{ #category : #private }
-GtkSourceCompletionProvider >> completionEntriesFor: word [
-	completionContext ifNil: [ 
-		completionContext := NECContext
-			controller: NECController new
-			class: Object
-			source: ''
-			position: 0.
-		completionContext model ].
-	
-	completionContext narrowWith: word.
-	^ completionContext model entries
-		
-	
+{ #category : #accessing }
+GtkPharoSourceCompletionProvider >> completionClass: aClass [
+	"The class in which we execute the completion (it can be nil)"
+
+	completionClass := aClass
 ]
 
 { #category : #private }
-GtkSourceCompletionProvider >> currentWord: iter [
+GtkPharoSourceCompletionProvider >> completionEntriesFor: iter [
+	| completionContext word textBuffer |
+
+	textBuffer := iter buffer.
+	completionContext := CompletionContext
+		controller: nil
+		class: completionClass
+		source: textBuffer text
+		position: iter offset.
+
+	word := self currentWord: iter in: textBuffer.
+	word ifNil: [ ^ #() ].
+
+	completionContext narrowWith: word.
+	
+	^ completionContext model entries
+]
+
+{ #category : #private }
+GtkPharoSourceCompletionProvider >> currentWord: iter in: textBuffer [
 	| start line |
 		
 	start := iter copyInMemory lineOffset: 0.
-	line := (iter buffer 
+	line := (textBuffer 
 		textStart: start 
 		end: iter
 		includeHiddenChars: false).
@@ -126,28 +143,26 @@ GtkSourceCompletionProvider >> currentWord: iter [
 ]
 
 { #category : #accessing }
-GtkSourceCompletionProvider >> match: context [
+GtkPharoSourceCompletionProvider >> match: context [
 	
 	^ true
 ]
 
 { #category : #accessing }
-GtkSourceCompletionProvider >> name [
+GtkPharoSourceCompletionProvider >> name [
 
 	^ 'Pharo'
 ]
 
 { #category : #accessing }
-GtkSourceCompletionProvider >> populate: context [
-	| proposals iter word |
+GtkPharoSourceCompletionProvider >> populate: context [
+	| proposals iter |
 
 	(iter := context iter) ifNil: [ ^ self ].
-	word := self currentWord: iter.
-	word ifNil: [ ^ self ].
 
 	proposals := GList new.
-	(self completionEntriesFor: word) do: [ :each |
-		proposals append: (GtkSourceCompletionItem newLabel: each contents) ].
+	(self completionEntriesFor: iter) do: [ :each |
+		proposals append: (self toItem: each) ].
 	
 	context 
 		addProposals: proposals 
@@ -156,13 +171,19 @@ GtkSourceCompletionProvider >> populate: context [
 ]
 
 { #category : #accessing }
-GtkSourceCompletionProvider >> priority [
+GtkPharoSourceCompletionProvider >> priority [
 
 	^ 1
 ]
 
 { #category : #accessing }
-GtkSourceCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
+GtkPharoSourceCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
 
 	^ true
+]
+
+{ #category : #private }
+GtkPharoSourceCompletionProvider >> toItem: aCompletionEntry [
+
+	^ GtkSourceCompletionItem newLabel: aCompletionEntry contents
 ]
