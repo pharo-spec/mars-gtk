@@ -197,11 +197,8 @@ GClass >> ffiLibraryName [
 
 { #category : #private }
 GClass >> findInstance: handle [
-	| address |
 
-	address := handle asInteger.
-	^ instances detect: [ :each | 
-		each getHandle asInteger = address ]
+	^ instances at: handle asInteger
 ]
 
 { #category : #'private primitives' }
@@ -258,7 +255,7 @@ GClass >> gTypeRegisterStaticSimpleParent: parent_type name: type_name classSize
 GClass >> initialize [
 
 	super initialize.
-	instances := WeakSet new.
+	instances := WeakIdentityValueDictionary new.
 	interfaces := OrderedDictionary new.
 	interfaceStructures := Set new.
 	self initialize: [ :instance | instance initialize ].
@@ -319,7 +316,7 @@ GClass >> new [
 
 	handle := self gObjectNew: self type.
 	instance := targetClass basicNew setHandle: handle.
-	instances add: instance.
+	instances at: handle asInteger put: instance.
 	instance initialize.
 	^ instance
 ]
