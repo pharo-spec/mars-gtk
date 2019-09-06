@@ -44,3 +44,10 @@ GtkLayoutAdapter >> buildWithSpec: aSpec [
 	
 	^ self widget
 ]
+
+{ #category : #protocol }
+GtkLayoutAdapter >> removeSubWidgets [
+
+	self widgetDo: [ :w |
+		w removeAll ]
+]
