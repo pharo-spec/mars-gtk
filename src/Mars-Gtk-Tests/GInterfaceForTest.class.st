@@ -13,7 +13,7 @@ Class {
 		'OFFSET_SET_ACTION_NAME',
 		'OFFSET_SET_ACTION_TARGET_VALUE'
 	],
-	#category : #'Mars-Gtk-ClassBuilder-Tests'
+	#category : #'Mars-Gtk-Tests'
 }
 
 { #category : #'field definition' }

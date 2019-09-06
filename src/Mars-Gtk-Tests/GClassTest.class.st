@@ -1,7 +1,7 @@
 Class {
 	#name : #GClassTest,
 	#superclass : #TestCase,
-	#category : #'Mars-Gtk-ClassBuilder-Tests'
+	#category : #'Mars-Gtk-Tests'
 }
 
 { #category : #private }

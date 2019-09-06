@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'initialized'
 	],
-	#category : #'Mars-Gtk-ClassBuilder-Tests'
+	#category : #'Mars-Gtk-Tests'
 }
 
 { #category : #accessing }
