@@ -9,6 +9,13 @@ Class {
 }
 
 { #category : #'field definition' }
+GInterface class >> compileFields [
+
+	self = GInterface ifTrue: [ ^ self ].	
+	^ super compileFields
+]
+
+{ #category : #'field definition' }
 GInterface class >> fieldsDesc [
 
 	^ #(
