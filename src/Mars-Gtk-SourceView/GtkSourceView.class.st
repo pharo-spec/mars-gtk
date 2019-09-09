@@ -261,3 +261,10 @@ GtkSourceView >> tabWidth: width [
 		ffiCall: #(void gtk_source_view_set_tab_width (self, guint width))
 		module: GtkSourceViewLibrary
 ]
+
+{ #category : #accessing }
+GtkSourceView >> text: aString [
+
+	self completion blockInteractiveDuring: [ 
+		super text: aString ]
+]

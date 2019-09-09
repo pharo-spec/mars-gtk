@@ -33,6 +33,20 @@ GtkSourceCompletion >> addProvider: provider error: error [
    		GError *error))
 ]
 
+{ #category : #private }
+GtkSourceCompletion >> blockInteractive [
+
+	^ self ffiCall: #(void gtk_source_completion_block_interactive(self))
+]
+
+{ #category : #accessing }
+GtkSourceCompletion >> blockInteractiveDuring: aBlock [ 
+
+	self blockInteractive.
+	aBlock ensure: [ 
+		self unblockInteractive ]
+]
+
 { #category : #'library path' }
 GtkSourceCompletion >> ffiLibraryName [
 
@@ -60,4 +74,10 @@ GtkSourceCompletion >> showIcons: aBoolean [
 	self 
 		gObjectSet: 'show-icons' 
 		toBoolean: aBoolean
+]
+
+{ #category : #private }
+GtkSourceCompletion >> unblockInteractive [
+
+	^ self ffiCall: #(void gtk_source_completion_unblock_interactive(self))
 ]
