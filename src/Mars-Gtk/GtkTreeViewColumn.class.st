@@ -10,6 +10,9 @@ Class {
 	#instVars : [
 		'renderers'
 	],
+	#pools : [
+		'GtkTreeViewColumnSizing'
+	],
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 
@@ -46,6 +49,24 @@ GtkTreeViewColumn >> addAttribute: attribute column: column renderer: aRenderer 
 GtkTreeViewColumn >> beResizable [
 
 	self resizable: true
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> beSizingAutosize [
+
+	self sizing: GTK_TREE_VIEW_COLUMN_AUTOSIZE
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> beSizingFixed [
+
+	self sizing: GTK_TREE_VIEW_COLUMN_FIXED
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> beSizingGrowOnly [
+
+	self sizing: GTK_TREE_VIEW_COLUMN_GROW_ONLY
 ]
 
 { #category : #private }
@@ -87,6 +108,7 @@ GtkTreeViewColumn >> id [
 GtkTreeViewColumn >> initialize [
 
 	super initialize.
+	self beSizingFixed.
 	renderers := #()
 ]
 
@@ -161,6 +183,18 @@ GtkTreeViewColumn >> packStart: aRenderer expand: aBoolean [
 GtkTreeViewColumn >> resizable: resizable [
 
 	^ self ffiCall: #(void gtk_tree_view_column_set_resizable (self, gboolean resizable))
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> sizing [
+
+	^ self ffiCall: #(GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing (self))
+]
+
+{ #category : #private }
+GtkTreeViewColumn >> sizing: type [
+	
+	self ffiCall: #(void gtk_tree_view_column_set_sizing (self, GtkTreeViewColumnSizing type))
 ]
 
 { #category : #accessing }

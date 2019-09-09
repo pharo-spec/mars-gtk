@@ -192,6 +192,12 @@ GtkTreeView >> expandToPath: pathArray [
 	self doExpandToPath: (GtkTreePath newFromArray: pathArray) autoRelease 
 ]
 
+{ #category : #accessing }
+GtkTreeView >> fixedHeightMode: enable [
+
+	^ self ffiCall: #(void gtk_tree_view_set_fixed_height_mode (self, gboolean enable))
+]
+
 { #category : #private }
 GtkTreeView >> getModel [
 
@@ -220,6 +226,7 @@ GtkTreeView >> hoverExpand: expand [
 GtkTreeView >> initialize [
 
 	super initialize.
+	self fixedHeightMode: true.
 	columns := OrderedCollection new: 1
 ]
 
@@ -236,6 +243,12 @@ GtkTreeView >> isActivateOnSingleClick [
 GtkTreeView >> isEnableSearch [
 
 	^ self ffiCall: #(gboolean gtk_tree_view_get_enable_search (self))
+]
+
+{ #category : #testing }
+GtkTreeView >> isFixedHeightMode [
+
+	^ self ffiCall: #(gboolean gtk_tree_view_get_fixed_height_mode (self))
 ]
 
 { #category : #testing }
