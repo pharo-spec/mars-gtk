@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkSourceCompletionProviderIface,
-	#superclass : #AnObsoleteGInterface,
+	#superclass : #GInterface,
 	#instVars : [
 		'activate_proposal',
 		'get_activation',
