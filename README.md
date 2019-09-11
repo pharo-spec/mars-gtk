@@ -14,8 +14,8 @@ You need Gtk3! And you need to put it at the same place of the `Pharo.exe` execu
 We packaged a version for you: 
 ```
 cd pharo-vm
-curl http://files.pharo.org/vm/pharo-spur64-headless/win/third-party/Gtk3.zip
-unzip Gtk3.zip
+curl http://files.pharo.org/vm/pharo-spur64-headless/win/third-party/Gtk.zip
+unzip Gtk.zip
 ```
 
 ### On macOS: 
