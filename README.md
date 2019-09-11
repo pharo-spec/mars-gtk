@@ -30,14 +30,15 @@ You need to have Gtk3 installed.
 
 ## Installing in your image
 
-```Smalltalk
- Metacello new
+You need to install it from the command line since you do not have the Playground in the UI:
+```
+./PharoConsole.exe '.\Pharo.image' eval --save " Metacello new
         repository: 'github://pharo-spec/mars-gtk';
         baseline: 'Mars';
         onConflict: [ :e | e useIncoming ];
         onUpgrade: [ :e | e useIncoming ];
         ignoreImage;
-        load
+        load"
 ```
 
-Then you will need to save and restart your image to let Gtk3 to take over the event loop.
+Then you will need to restart your image to let Gtk3 to take over the event loop.
