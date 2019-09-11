@@ -9,7 +9,8 @@ Class {
 
 { #category : #building }
 GtkAbstractTextAdapter >> addMenu: aValuable to: gtkWidget [ 
-
+	"for tests, this is solved with #populatePopup:, see there to follow 
+	 how it works."
 	self shouldNotImplement
 ]
 
