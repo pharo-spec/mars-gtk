@@ -94,3 +94,9 @@ GtkBoxAdapter >> remove: aPresenter [
 
 	^ self widget remove: aPresenter adapter widget
 ]
+
+{ #category : #'accessing - children' }
+GtkBoxAdapter >> removeAll [
+
+	self widget removeAll
+]
