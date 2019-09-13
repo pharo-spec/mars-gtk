@@ -6,16 +6,18 @@ Class {
 
 { #category : #building }
 GtkDropListAdapter >> addModelTo: gtkComboBox [
-
+	
 	super addModelTo: gtkComboBox.
 	self setModelTo: gtkComboBox.
+	
 	gtkComboBox connectChanged: [ 
 		self widgetDo: [ :w | 
-			self model selectedIndex: w activeIndex + 1 ] ].
+			self model selectIndex: w activeIndex + 1 ] ].
+	
 	self model whenSelectionChangedDo: [ 
 		gtkComboBox activeIndex: self model selectedIndex - 1 ].
 	self model model whenChangedDo: [ 
-		self 
+		self
 			disconnectSelectionEventsOf: gtkComboBox
 			during: [ self setModelTo: gtkComboBox ] ]
 ]
@@ -70,6 +72,13 @@ GtkDropListAdapter >> newTreeStoreWithIcons [
 			at: 1 putString: (self model displayForItem: each)].
 
 	^ store
+]
+
+{ #category : #accessing }
+GtkDropListAdapter >> selectIndex: anInteger [ 
+	
+	self widgetDo: [ :w |
+		w selectIndex: anInteger ]
 ]
 
 { #category : #accessing }
