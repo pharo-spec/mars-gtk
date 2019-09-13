@@ -110,5 +110,5 @@ GtkDropListAdapter >> takeKeyboardFocus [
 { #category : #building }
 GtkDropListAdapter >> widgetClass [
 	
-	^ GtkComboBoxText
+	^ GtkComboBox
 ]
