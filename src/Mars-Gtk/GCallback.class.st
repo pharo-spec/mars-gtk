@@ -6,5 +6,5 @@ Class {
 	#pools : [
 		'GtkTypes'
 	],
-	#category : #'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base-Callbacks'
 }

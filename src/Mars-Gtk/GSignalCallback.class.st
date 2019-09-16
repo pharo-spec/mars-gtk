@@ -12,24 +12,10 @@ Class {
 	#superclass : #GCallback,
 	#instVars : [
 		'registerId',
-		'signalName',
 		'linkedCallbacks'
 	],
-	#pools : [
-		'GtkTypes'
-	],
-	#category : #'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base-Callbacks'
 }
-
-{ #category : #'instance creation' }
-GSignalCallback class >> signal: aString signature: aSignature block: aBlock [
-
-	^ (self 
-		signature: aSignature 
-		block: aBlock)
-		signalName: aString;
-		yourself
-]
 
 { #category : #evaluating }
 GSignalCallback >> basicValueWithArguments: args [
@@ -85,18 +71,13 @@ GSignalCallback >> registerId: anObject [
 { #category : #accessing }
 GSignalCallback >> signalName [
 
-	^ signalName
-]
-
-{ #category : #accessing }
-GSignalCallback >> signalName: aString [
-
-	signalName := aString
+	^ self subclassResponsibility
 ]
 
 { #category : #evaluating }
 GSignalCallback >> valueWithArguments: args [
-	"same as my parent, but with logging"
+	"chain linked callbacks, answer last result (ideally, there are just one callback, 
+	 but sometimes...)"
 	| result |
 	
 	result := self basicValueWithArguments: args.

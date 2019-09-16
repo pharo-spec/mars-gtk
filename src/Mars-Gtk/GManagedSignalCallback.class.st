@@ -1,13 +1,10 @@
 Class {
 	#name : #GManagedSignalCallback,
-	#superclass : #GCallback,
-	#instVars : [
-		'registerId'
-	],
+	#superclass : #GSignalCallback,
 	#pools : [
 		'GtkTypes'
 	],
-	#category : #'Mars-Gtk-Base'
+	#category : #'Mars-Gtk-Base-Callbacks'
 }
 
 { #category : #'instance creation' }
@@ -36,23 +33,6 @@ GManagedSignalCallback >> do: aBlock [
 		block: aBlock
 ]
 
-{ #category : #printing }
-GManagedSignalCallback >> printOn: stream [ 
-
-	super printOn: stream.
-	stream << '(' << self signalName << ')'
-]
-
-{ #category : #accessing }
-GManagedSignalCallback >> registerId [
-	^ registerId
-]
-
-{ #category : #accessing }
-GManagedSignalCallback >> registerId: anObject [
-	registerId := anObject
-]
-
 { #category : #accessing }
 GManagedSignalCallback >> signalName [
 
@@ -63,18 +43,4 @@ GManagedSignalCallback >> signalName [
 GManagedSignalCallback >> signature [
 
 	^ #(void (void *widget, void *data))
-]
-
-{ #category : #evaluating }
-GManagedSignalCallback >> valueWithArguments: args [
-	"same as my parent, but with logging"
-
-	GtkWidgetSignaledSignal emitSignal: self signalName.
-	^ [ block valueWithArguments: args ]
-		on: Error
-		fork: [ :e | 
-			e emit.
-			e debug ]
-		return: [ 
-			self returnOnError ]
 ]
