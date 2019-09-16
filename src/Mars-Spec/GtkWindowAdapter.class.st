@@ -39,8 +39,10 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
 
 	"add close events (delete is sent before)"
-	gtkWindow connectDeleteEvent: [ self announceWillClose. false ].
-	gtkWindow connectHide: [ self announceClosed ].
+	gtkWindow 
+		connectDeleteEvent: [ self announceWillClose. false ];
+		connectHide: [ self announceClosed ];
+		connectSizeAllocate: [ :aRect | self announceResized: aRect extent ].
 
 	"add window properties"
 	self model initialExtent
@@ -106,6 +108,15 @@ GtkWindowAdapter >> announceClosed [
 GtkWindowAdapter >> announceOpened [
 
 	self model windowIsOpening
+]
+
+{ #category : #private }
+GtkWindowAdapter >> announceResized: aPoint [
+
+	self presenter announcer announce: (WindowResizing new
+		window: self presenter;
+		newSize: aPoint;	
+		yourself)	
 ]
 
 { #category : #private }

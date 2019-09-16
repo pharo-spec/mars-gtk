@@ -14,6 +14,14 @@ Class {
 }
 
 { #category : #accessing }
+GClickedCallback >> do: aBlock [
+
+	self 
+		signature: self signature 
+		block: [ :widget :user_data | aBlock value ]
+]
+
+{ #category : #accessing }
 GClickedCallback >> signalName [
 
 	^ 'clicked'
