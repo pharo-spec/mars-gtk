@@ -44,7 +44,7 @@ GtkStackSidebar >> basicStack: aStack [
 { #category : #private }
 GtkStackSidebar >> stack [
 
-	^ self ffiCall: #(GtkStack gtk_stack_sidebar_get_stack (self))
+	^ self ffiCall: #(GtkStack *gtk_stack_sidebar_get_stack (self))
 ]
 
 { #category : #accessing }
