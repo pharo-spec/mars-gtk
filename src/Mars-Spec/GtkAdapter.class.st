@@ -80,7 +80,7 @@ GtkAdapter >> backendUpdatingDo: aBlock [
 	oldStatus := backendUpdating.
 	backendUpdating := true.
 	aBlock ensure: [ 
-		backendUpdating := oldStatus  ]
+		backendUpdating := oldStatus ]
 ]
 
 { #category : #building }
