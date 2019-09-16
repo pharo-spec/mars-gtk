@@ -21,7 +21,8 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 	gtkTextView beWrapWord.
 	gtkTextView connectKeyPressEvent: [ :event |
 		self handleKeyEvent: event ].
-
+	gtkTextView textBuffer connectChanged: [ 
+		self updatePresenterText: gtkTextView text ]
 
 ]
 
@@ -29,6 +30,20 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 GtkTextAdapter >> bufferClass [
 
 	^ GtkTextBuffer
+]
+
+{ #category : #building }
+GtkTextAdapter >> setText: aString to: gtkWidget [
+
+	self backendDetectCyclesDo: [
+		super setText: aString to: gtkWidget	]
+]
+
+{ #category : #private }
+GtkTextAdapter >> updatePresenterText: aString [
+
+	self backendUpdatingDo: [ 
+		self presenter text: aString ]
 ]
 
 { #category : #building }

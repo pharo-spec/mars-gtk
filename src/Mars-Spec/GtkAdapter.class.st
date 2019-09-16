@@ -2,7 +2,8 @@ Class {
 	#name : #GtkAdapter,
 	#superclass : #SpAbstractAdapter,
 	#instVars : [
-		'lastShownMenu'
+		'lastShownMenu',
+		'backendUpdating'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -58,6 +59,28 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 		aValuable value
 			ifTrue: [ gtkWidget show ]
 			ifFalse: [ gtkWidget hide ] ].
+]
+
+{ #category : #'private cycle detection' }
+GtkAdapter >> backendDetectCyclesDo: aBlock [ 
+
+	self isBackendUpdating ifTrue: [ ^ self ].
+	^ aBlock value
+]
+
+{ #category : #'private cycle detection' }
+GtkAdapter >> backendUpdatingDo: aBlock [ 
+	"This is a general mechanism to avoid colisions. 
+	 I'm adding it for the cases where a presenter can be updated in two directions: from the 
+	 user and from the backend. 
+	 A tipical example of this is SpTextPresenter>>text:, who can be updated from the UI, but 
+	 also needs to be updated from the backend to keep the text property updated."
+	| oldStatus |
+
+	oldStatus := backendUpdating.
+	backendUpdating := true.
+	aBlock ensure: [ 
+		backendUpdating := oldStatus  ]
 ]
 
 { #category : #building }
@@ -118,6 +141,13 @@ GtkAdapter >> helpText [
 	^ self innerWidget tooltipText
 ]
 
+{ #category : #testing }
+GtkAdapter >> initialize [
+
+	super initialize.
+	backendUpdating := false
+]
+
 { #category : #'private accessing' }
 GtkAdapter >> innerWidget [
 	"this is the widget to be used internally (to operate). 
@@ -133,6 +163,12 @@ GtkAdapter >> innerWidgetDo: aBlock [
 
 	self hasWidget ifFalse: [ ^ nil ].
 	^ aBlock value: self innerWidget
+]
+
+{ #category : #'private cycle detection' }
+GtkAdapter >> isBackendUpdating [
+
+	^ backendUpdating
 ]
 
 { #category : #visibility }

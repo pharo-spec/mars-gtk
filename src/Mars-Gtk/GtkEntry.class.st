@@ -139,7 +139,7 @@ GtkEntry >> beUrl [
 { #category : #signals }
 GtkEntry >> connectChanged: aBlock [
 
-	self connect: 'changed' do: aBlock
+	(GChangedCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signals }

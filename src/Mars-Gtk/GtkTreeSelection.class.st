@@ -46,7 +46,7 @@ GtkTreeSelection >> basicUnselectPath: path [
 { #category : #signals }
 GtkTreeSelection >> connectChanged: aBlock [
 
-	self connect: 'changed' do: aBlock
+	(GChangedCallback do: aBlock) connectTo: self
 ]
 
 { #category : #testing }

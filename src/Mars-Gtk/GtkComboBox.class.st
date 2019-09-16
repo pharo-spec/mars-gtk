@@ -151,7 +151,7 @@ GtkComboBox >> columnSpanColumn: columnSpan [
 { #category : #signals }
 GtkComboBox >> connectChanged: aBlock [
 
-	self connect: 'changed' do: aBlock
+	(GChangedCallback do: aBlock) connectTo: self
 ]
 
 { #category : #accessing }

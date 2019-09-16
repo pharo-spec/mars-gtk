@@ -101,10 +101,7 @@ GtkTextBuffer >> charCount [
 { #category : #signals }
 GtkTextBuffer >> connectChanged: aBlock [ 
 
-	self 
-		connect: 'changed' 
-		signature: #(void (void *textBuffer, gpointer data))
-		do: [ :textBuffer :data | aBlock value ]
+	(GChangedCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signals }

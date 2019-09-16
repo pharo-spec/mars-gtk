@@ -15,6 +15,12 @@ Class {
 }
 
 { #category : #accessing }
+GChangedCallback >> do: aBlock [ 
+
+	^ super do: [ :widget :user_data | aBlock value ]
+]
+
+{ #category : #accessing }
 GChangedCallback >> signalName [
 
 	^ 'changed'
