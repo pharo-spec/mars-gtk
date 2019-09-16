@@ -3,7 +3,8 @@ Class {
 	#superclass : #GCallback,
 	#instVars : [
 		'registerId',
-		'signalName'
+		'signalName',
+		'linkedCallbacks'
 	],
 	#pools : [
 		'GtkTypes'
@@ -21,10 +22,38 @@ GSignalCallback class >> signal: aString signature: aSignature block: aBlock [
 		yourself
 ]
 
+{ #category : #evaluating }
+GSignalCallback >> basicValueWithArguments: args [
+	"same as my parent, but with logging"
+
+	GtkWidgetSignaledSignal emitSignal: self signalName.
+	^ [ block valueWithArguments: args ]
+		on: Error
+		fork: [ :e | 
+			e emit.
+			e debug ]
+		return: [ 
+			self returnOnError ]
+]
+
 { #category : #connecting }
 GSignalCallback >> connectTo: aWidget [
 
 	aWidget connectSignal: self
+]
+
+{ #category : #testing }
+GSignalCallback >> hasLinkedCallbacks [
+
+	^ linkedCallbacks notNil
+]
+
+{ #category : #accessing }
+GSignalCallback >> link: aCallback [
+
+	linkedCallbacks := linkedCallbacks
+		ifNotNil: [ linkedCallbacks copyWith: aCallback ] 
+		ifNil: [ { aCallback } ]
 ]
 
 { #category : #printing }
@@ -59,13 +88,12 @@ GSignalCallback >> signalName: aString [
 { #category : #evaluating }
 GSignalCallback >> valueWithArguments: args [
 	"same as my parent, but with logging"
-
-	GtkWidgetSignaledSignal emitSignal: self signalName.
-	^ [ block valueWithArguments: args ]
-		on: Error
-		fork: [ :e | 
-			e emit.
-			e debug ]
-		return: [ 
-			self returnOnError ]
+	| result |
+	
+	result := self basicValueWithArguments: args.
+	linkedCallbacks ifNotNil: [ 
+		linkedCallbacks do: [ :each | 
+			result := each basicValueWithArguments: args ] ].
+	
+	^ result
 ]

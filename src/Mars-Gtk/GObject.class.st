@@ -127,6 +127,18 @@ GObject class >> resolveType: aType [
 		resolveType: aType
 ]
 
+{ #category : #'private signaling' }
+GObject >> basicConnectSignal: callback [
+	| id |
+	
+	self registerCallback: callback.
+	id := self 
+		signal: callback signalName
+		connect: callback 
+		data: callback thunk.
+	callback registerId: id
+]
+
 { #category : #accessing }
 GObject >> callbacks [
 
@@ -160,17 +172,26 @@ GObject >> connect: aString signature: signature do: aBlock [
 ]
 
 { #category : #'private signaling' }
-GObject >> connectSignal: callback [ 
-	| id |
+GObject >> connectSignal: callback [
+
+	self 
+		detectCallbackBySignal: callback signalName
+		ifFound:  [ :aCallback | aCallback link: callback ]
+		ifNone: [ self basicConnectSignal: callback ]. 
 	
-	self registerCallback: callback.
-	id := self 
-		signal: callback signalName
-		connect: callback 
-		data: callback thunk.
-	callback registerId: id.
 	GtkConnectSignalSignal emitWidget: self signal: callback signalName.
+	
 	^ callback
+]
+
+{ #category : #private }
+GObject >> detectCallbackBySignal: aName ifFound: foundBlock ifNone: noneBlock [
+
+	callbacks ifNil: [ ^ noneBlock value ].
+	^ callbacks 
+		detect: [ :each | each signalName = aName ]
+		ifFound: foundBlock
+		ifNone: noneBlock
 ]
 
 { #category : #signaling }
