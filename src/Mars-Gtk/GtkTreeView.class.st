@@ -122,12 +122,7 @@ GtkTreeView >> columns [
 { #category : #events }
 GtkTreeView >> connectRowActivated: aBlock [ 
 	
-	self
-		connect: 'row-activated'
-		signature: #(void (void *treeView, void *path, void *column, void *userData))  
- 		do: [ :treeView :pathHandle :columnHandle :userData | | path |
-			path := GtkTreePath fromHandle: pathHandle.
-			aBlock cull: path ]
+	^ (GRowActivatedCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signals }

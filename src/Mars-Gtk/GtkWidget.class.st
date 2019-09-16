@@ -178,27 +178,20 @@ GtkWidget >> connectButtonPressEvent: aBlock [
 { #category : #signaling }
 GtkWidget >> connectClicked: aBlock [
 
-	self connect: 'clicked' do: aBlock
+	(GClickedCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
 GtkWidget >> connectDeleteEvent: aBlock [
 	"answers whether the widget can be deleted ot not"
 	
-	self 
-		connect: 'delete-event'
-		signature: #(gboolean (void *widget, void *event, void *user_data))
-		do: [ :widget :event :user_data | aBlock value ]
+	^ (GDeleteEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
 GtkWidget >> connectDestroy: aBlock [
 
-	self 
-		connect: 'destroy' 
-		signature: #(void (void *widget, void *aData))  
- 		do: [ :widget :aData | aBlock value ]
-
+	(GDestroyCallback do: [ :widget :aData | aBlock value ]) connectTo: self
 ]
 
 { #category : #signaling }
