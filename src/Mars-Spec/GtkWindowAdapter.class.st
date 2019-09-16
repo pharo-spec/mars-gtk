@@ -30,18 +30,19 @@ GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 
 { #category : #building }
 GtkWindowAdapter >> addModelTo: gtkWindow [
-
-	super addModelTo: gtkWindow.
-	gtkWindow connectDeleteEvent: [ self announceWillClose. false ].
-	gtkWindow connectHide: [ self announceClosed ]
+	"model is not added here but in #addPresenterIn:withSpecLayout:. 
+	 Spec windows may have just ONE presenter"
 ]
 
 { #category : #accessing }
 GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
-	self addModelTo: gtkWindow.
 
-	"window properties"
+	"add close events (delete is sent before)"
+	gtkWindow connectDeleteEvent: [ self announceWillClose. false ].
+	gtkWindow connectHide: [ self announceClosed ].
+
+	"add window properties"
 	self model initialExtent
 		ifNotNil: [ :extent | gtkWindow resize: extent ].
 	self model initialPosition
