@@ -8,7 +8,7 @@ Class {
 	#name : #GtkMenuButton,
 	#superclass : #GtkToggleButton,
 	#instVars : [
-		'children'
+		'popUpMenu'
 	],
 	#pools : [
 		'GtkArrowType'
@@ -118,12 +118,6 @@ GtkMenuButton >> bePopupDirectionUp [
 ]
 
 { #category : #accessing }
-GtkMenuButton >> initialize [
-	super initialize.
-	children := Set new
-]
-
-{ #category : #accessing }
 GtkMenuButton >> menuModel [
 
 	^ self ffiCall: #(GMenuModel *gtk_menu_button_get_menu_model (self))
@@ -160,7 +154,7 @@ GtkMenuButton >> popUp [
 { #category : #accessing }
 GtkMenuButton >> popUp: aMenu [
 
-	children add: aMenu.
+	popUpMenu := aMenu.
 	self basicPopUp: aMenu
 ]
 

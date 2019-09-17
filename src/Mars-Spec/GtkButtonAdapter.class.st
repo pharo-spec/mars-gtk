@@ -8,6 +8,10 @@ Class {
 GtkButtonAdapter >> addModelTo: gtkButton [
 
 	super addModelTo: gtkButton.
+
+	self presenter contextMenu ifNotNil: [ :menu |
+		self addMenu: menu to: gtkButton ].
+
 	gtkButton connectClicked: [ 
 		self presenter performAction ]
 ]

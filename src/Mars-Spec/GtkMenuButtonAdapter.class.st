@@ -8,18 +8,19 @@ Class {
 GtkMenuButtonAdapter >> addModelTo: gtkButton [
 
 	super addModelTo: gtkButton.
-	self presenter menu ifNotNil: [ self updateMenu ].
-	self presenter whenMenuChangedDo: [ self updateMenu ].
+	gtkButton 
+		connect: 'button-press-event'
+		signature: #(gboolean (void *widget, void *event, void *data))
+		do: [ :w :event :data | 
+			self updateMenu.
+			false ]
 	
-
 ]
 
 { #category : #building }
-GtkMenuButtonAdapter >> buildMenu [
-	| menuPresenter |
+GtkMenuButtonAdapter >> buildMenu: menuPresenter [
 
-	menuPresenter := self presenter menu.
-	menuPresenter ifNil: [ ^ nil ].
+	menuPresenter owner: self presenter.
 	^ SpBindings
 		value: self presenter application adapterBindings
 		during: [ menuPresenter buildWithSpec ]
@@ -28,7 +29,9 @@ GtkMenuButtonAdapter >> buildMenu [
 { #category : #updating }
 GtkMenuButtonAdapter >> updateMenu [
 
-	self widget popUp: self buildMenu
+	self presenter menu ifNotNil: [ :aValuable |
+		aValuable value ifNotNil: [ :aMenu |
+			self widget popUp: (self buildMenu: aMenu) showAll ] ]
 ]
 
 { #category : #building }

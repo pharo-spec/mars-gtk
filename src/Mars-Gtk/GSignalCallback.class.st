@@ -23,10 +23,11 @@ GSignalCallback >> basicValueWithArguments: args [
 
 	GtkWidgetSignaledSignal emitSignal: self signalName.
 	^ [ block valueWithArguments: args ]
-		on: Error
+		on: Exception
 		fork: [ :e | 
 			e emit.
-			e debug ]
+			self halt.
+			e resumeUnchecked: e defaultAction ]
 		return: [ 
 			self returnOnError ]
 ]

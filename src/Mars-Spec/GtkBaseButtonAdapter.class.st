@@ -14,9 +14,6 @@ GtkBaseButtonAdapter >> addModelTo: gtkButton [
 	self presenter label isEmptyOrNil ifFalse: [ self updateLabel ].
 	self presenter icon ifNotNil: [ self updateIcon ].
 	
-	self presenter contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: gtkButton ].
-	
 	model whenLabelChangedDo: [ self updateLabel ].
 	model whenIconChangedDo: [ self updateIcon ]
 ]
