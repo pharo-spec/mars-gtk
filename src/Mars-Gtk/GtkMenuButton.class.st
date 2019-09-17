@@ -28,6 +28,46 @@ GtkMenuButton class >> buttonNewWithLabel: utf8EncodedString [
 	self shouldNotImplement
 ]
 
+{ #category : #example }
+GtkMenuButton class >> example [
+	| button menu |
+
+	GtkApplication ensureRunning.
+	
+	(button := (GtkButton newLabel: 'Choose...'))
+		connectClicked: [ self inform: button label ].
+		
+	menu := GtkMenu new.
+	#('One' 'Two' 'Three') do: [ :each | | menuItem |
+		menuItem := GtkMenuItem newLabel: each.
+		menuItem connectActivate: [ button label: each ].
+		menu add: menuItem ].
+	menu showAll.
+	
+	GtkWindow new
+		title: 'Menu Button Example';
+		add: (GtkBox newVertical
+			homogeneous: false; 
+			packStart: (GtkBox newHorizontal
+				homogeneous: false;
+				packStart: button 
+					expand: false
+					fill: false
+					padding: 0;
+				packStart: (GtkMenuButton new
+						popUp: menu;
+						yourself)
+					expand: false
+					fill: false
+					padding: 0;
+				yourself)
+			expand: false 
+			fill: false
+			padding: 0;
+			yourself);
+		showAll
+]
+
 { #category : #accessing }
 GtkMenuButton class >> gType [ 
 	"This method was automatically generated"
