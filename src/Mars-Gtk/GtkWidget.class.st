@@ -61,8 +61,8 @@ GtkWidget class >> widgetDestroy: widget [
 GtkWidget >> addAccelerator: aString group: anAccelGroup shortcut: aShortcut [
 	| charValue modifiers |
 
-	charValue := aShortcut currentCharacter asciiValue.
-	modifiers := aShortcut modifier asGdkModifierType.
+	charValue := aShortcut spCurrentCharacter asciiValue.
+	modifiers := aShortcut spModifier asGdkModifierType.
 		
 	self 
 		widgetAddAccelerator: aString 
