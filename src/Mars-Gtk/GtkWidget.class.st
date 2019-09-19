@@ -673,7 +673,7 @@ GtkWidget >> showAll [
 	self ffiCall: #(void gtk_widget_show_all (self))
 ]
 
-{ #category : #private }
+{ #category : #geometry }
 GtkWidget >> size [
 
 	^  self width @ self height

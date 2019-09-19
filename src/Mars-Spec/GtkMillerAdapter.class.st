@@ -3,7 +3,9 @@ Class {
 	#superclass : #GtkLayoutAdapter,
 	#instVars : [
 		'layout',
-		'innerWidget'
+		'innerWidget',
+		'lastExtent',
+		'lastPageSize'
 	],
 	#category : #'Mars-Spec-Layout-Box'
 }
@@ -114,7 +116,7 @@ GtkMillerAdapter >> recalculatePageHeights [
 		
 	"since the container box is homogeneous, I just need to change the size of 
 	 first element to get all the rest to follow"
-	widgets first height: newHeight
+	widgets first sizeRequest: (widgets first preferredSizeMinimum x)@newHeight
 ]
 
 { #category : #private }
@@ -129,14 +131,22 @@ GtkMillerAdapter >> recalculatePageWidths [
 	
 	"since the container box is homogeneous, I just need to change the size of 
 	 first element to get all the rest to follow"
-	widgets first width: newWidth
+	widgets first sizeRequest: newWidth @ (widgets first preferredSizeMinimum y) 
 ]
 
 { #category : #private }
 GtkMillerAdapter >> recalculatePages [
 
 	self widget ifNil: [ ^ self ].
-	layout direction recalculatePages: self
+	self childrenWidgets ifEmpty: [ ^ self ].
+	((lastExtent = self widget size) 
+		and: [ lastPageSize = self childrenWidgets size ]) 
+		ifTrue: [ ^ self ].
+
+	[ layout direction recalculatePages: self ]
+	ensure: [ 
+		lastExtent := self widget size.
+		lastPageSize := self childrenWidgets size ]
 ]
 
 { #category : #removing }
