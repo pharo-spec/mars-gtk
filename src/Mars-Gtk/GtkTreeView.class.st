@@ -35,9 +35,9 @@ GtkTreeView class >> treeViewNew [
 ]
 
 { #category : #accessing }
-GtkTreeView >> activateOnSingleClick: aBoolean [
+GtkTreeView >> activateOnSingleClick: single [
 
-	self gObjectSet: 'activate-on-single-click' toBoolean: aBoolean
+	self ffiCall: #(void gtk_tree_view_set_activate_on_single_click (self, gboolean single))
 ]
 
 { #category : #simulating }
@@ -227,11 +227,8 @@ GtkTreeView >> initialize [
 
 { #category : #testing }
 GtkTreeView >> isActivateOnSingleClick [
-	| buffer |
 	
-	buffer := FFIBool newBuffer.
-	self gObjectGet: 'activate-on-single-click' into: buffer.
-	^ buffer booleanAt: 1
+	^ self ffiCall: #(gboolean gtk_tree_view_get_activate_on_single_click (self))
 ]
 
 { #category : #testing }

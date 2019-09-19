@@ -83,11 +83,9 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 		ifFalse: [ self updateSelectionOf: gtkWidget ].
 	
 	gtkWidget connectSelectionChanged: [ self updatePresenterSelection ].
+	gtkWidget connectRowActivated: [ :path | 
+		self model doActivateAtPath: path toArray ].
 	
-	"self model doubleClickAction ifNotNil: [ :action |
-		gtkWidget connectDoubleClicked: [ 
-			action cull: self model selectedItem ] ]."
-
 	gtkWidget connectRowExpanded: [ :iter |
 		"it will be an orfan iterator (store not setted since it comes from a callback)"
 		iter store: self store.
@@ -112,7 +110,8 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	self model whenColumnsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
+			during: [ self recreateStore: gtkWidget generateColumns: true ] ].
+
 ]
 
 { #category : #private }
