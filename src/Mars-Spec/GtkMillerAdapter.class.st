@@ -74,19 +74,20 @@ GtkMillerAdapter >> layout: aLayout [
 	"build of widget was differed up to here (to know what is the direction)"
 	innerWidget := layout direction newWidgetOn: self.
 
+	innerWidget 
+		homogeneous: true;
+		spacing: aLayout spacing;
+		borderWidth: aLayout borderWidth;
+		show.
+		
+	widget := GtkScrolledWindow newWidget: innerWidget.
+	widget connectSizeAllocate: [ :aRect | self recalculatePages ].
+		
+	self toggleVisible: model isVisible.
 	model whenVisibleChangedDo: [ 	
 		self toggleVisible: model isVisible ] .
 
-	innerWidget 
-		homogeneous: false;
-		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth.
-		
-	widget := GtkScrolledWindow newWidget: innerWidget.
-		
-	widget connectSizeAllocate: [ :aRect | self recalculatePages ].
-		
-	self toggleVisible: model isVisible
+	
 ]
 
 { #category : #factory }
