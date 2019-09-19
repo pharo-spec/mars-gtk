@@ -343,7 +343,7 @@ GtkWidget >> display [
 	^ self ffiCall: #(GdkDisplay *gtk_widget_get_display (self))
 ]
 
-{ #category : #testing }
+{ #category : #private }
 GtkWidget >> dragDestSetFlags: flags targetsTypes: targets targetsAmount: n_targets actions: actions [
 "Sets a widget as a potential drop destination, and adds default behaviors.
 
@@ -357,7 +357,7 @@ There’s no way to set a default action here, you can use the “drag-motion”
 			#(void gtk_drag_dest_set #(self , GtkDestDefaults flags , const GtkTargetEntry * targets , gint n_targets , GdkDragAction actions))
 ]
 
-{ #category : #testing }
+{ #category : #private }
 GtkWidget >> dragDestUnset [
 	"Clears information about a drop destination set with gtk_drag_dest_set(). The widget will no longer receive notification of drags."
 	^ self ffiCall: #(void gtk_drag_dest_unset #(self))
@@ -388,14 +388,14 @@ GtkWidget >> gdkWindow [
 	^ self ffiCall: #(GdkWindow *gtk_widget_get_window (self))
 ]
 
-{ #category : #testing }
+{ #category : #private }
 GtkWidget >> getAllocatedHeight [
 	"Returns the height that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
 
 	^ self ffiCall: #(int gtk_widget_get_allocated_height(self))
 ]
 
-{ #category : #testing }
+{ #category : #private }
 GtkWidget >> getAllocatedWidth [
 	"Returns the width that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
 
@@ -426,7 +426,7 @@ GtkWidget >> getTopLevel [
 	^ self ffiCall: #("GtkWidget *"void *gtk_widget_get_toplevel (self))
 ]
 
-{ #category : #testing }
+{ #category : #private }
 GtkWidget >> getWindow [
 	"Returns the height that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function."
 
@@ -471,6 +471,12 @@ GtkWidget >> hAlign: align [
 GtkWidget >> hExpand: expand [
 
 	self ffiCall: #(void gtk_widget_set_hexpand (self, gboolean expand))
+]
+
+{ #category : #accessing }
+GtkWidget >> height [
+
+	^ self getAllocatedHeight
 ]
 
 { #category : #showing }
@@ -663,7 +669,8 @@ GtkWidget >> showAll [
 
 { #category : #private }
 GtkWidget >> size [
-	^  self getAllocatedWidth @ self getAllocatedHeight 
+
+	^  self width @ self height
 ]
 
 { #category : #geometry }
@@ -763,6 +770,12 @@ GtkWidget >> widgetAddAccelerator: accel_signal group: accel_group key: accel_ke
 { #category : #private }
 GtkWidget >> widgetPathLength: path_length path: path reversed: path_reversed [
 	^ self ffiCall: #(void gtk_widget_path (self, guint *path_length, gchar **path, gchar **path_reversed))
+]
+
+{ #category : #accessing }
+GtkWidget >> width [
+
+	^ self getAllocatedWidth
 ]
 
 { #category : #'private deferring' }
