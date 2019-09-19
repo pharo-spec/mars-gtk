@@ -46,8 +46,8 @@ GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget 
 	self addConstraits: constraints toChild: childWidget.
 	gtkWidget 
 		packStart: childWidget 
-		expand: false 
-		fill: false
+		expand: true
+		fill: true
 		padding: 0.
 			
 	^ gtkWidget
@@ -126,8 +126,8 @@ GtkMillerAdapter >> recalculatePageWidths [
 		ifTrue: [ width ]
 		ifFalse: [ width / (layout visiblePages min: widgets size) ].
 		
-	widgets reverseDo: [ :each |
-		each sizeRequest: newWidth @ each height ]	
+	widgets first in: [ :each |
+		each sizeRequest: newWidth @ each height ]
 ]
 
 { #category : #private }
