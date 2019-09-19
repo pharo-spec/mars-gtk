@@ -151,8 +151,12 @@ GtkMillerAdapter >> recalculatePages [
 
 { #category : #removing }
 GtkMillerAdapter >> remove: aPresenter [
+	| childWidget |
 
-	^ self widget remove: aPresenter adapter widget
+	childWidget := aPresenter adapter widget.
+	(innerWidget children includes: childWidget) ifTrue: [  
+		innerWidget remove: childWidget.
+		self recalculatePages ]
 ]
 
 { #category : #removing }
