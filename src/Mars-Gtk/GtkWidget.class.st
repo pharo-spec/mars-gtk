@@ -473,10 +473,16 @@ GtkWidget >> hExpand: expand [
 	self ffiCall: #(void gtk_widget_set_hexpand (self, gboolean expand))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> height [
 
 	^ self getAllocatedHeight
+]
+
+{ #category : #geometry }
+GtkWidget >> height: aNumber [
+
+	self sizeRequest: self width @ aNumber
 ]
 
 { #category : #showing }
@@ -772,10 +778,16 @@ GtkWidget >> widgetPathLength: path_length path: path reversed: path_reversed [
 	^ self ffiCall: #(void gtk_widget_path (self, guint *path_length, gchar **path, gchar **path_reversed))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> width [
 
 	^ self getAllocatedWidth
+]
+
+{ #category : #geometry }
+GtkWidget >> width: aNumber [
+
+	self sizeRequest: aNumber @ self height
 ]
 
 { #category : #'private deferring' }

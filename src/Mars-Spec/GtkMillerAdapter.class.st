@@ -112,8 +112,9 @@ GtkMillerAdapter >> recalculatePageHeights [
 		ifTrue: [ height ]
 		ifFalse: [ height / (layout visiblePages min: widgets size) ].
 		
-	widgets reverseDo: [ :each |
-		each sizeRequest: each width @ newHeight ]	
+	"since the container box is homogeneous, I just need to change the size of 
+	 first element to get all the rest to follow"
+	widgets first height: newHeight
 ]
 
 { #category : #private }
@@ -125,9 +126,10 @@ GtkMillerAdapter >> recalculatePageWidths [
 	newWidth := widgets size = 1
 		ifTrue: [ width ]
 		ifFalse: [ width / (layout visiblePages min: widgets size) ].
-		
-	widgets first in: [ :each |
-		each sizeRequest: newWidth @ each height ]
+	
+	"since the container box is homogeneous, I just need to change the size of 
+	 first element to get all the rest to follow"
+	widgets first width: newWidth
 ]
 
 { #category : #private }
