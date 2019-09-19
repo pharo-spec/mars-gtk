@@ -2,16 +2,33 @@ Class {
 	#name : #GtkMillerAdapter,
 	#superclass : #GtkLayoutAdapter,
 	#instVars : [
-		'layout'
+		'layout',
+		'innerWidget'
 	],
 	#category : #'Mars-Spec-Layout-Box'
 }
 
+{ #category : #protocol }
+GtkMillerAdapter >> add: aPresenter [
+
+	self add: aPresenter constraints: SpLayoutConstraints new
+]
+
 { #category : #private }
 GtkMillerAdapter >> add: aPresenter constraints: constraints [
+	| childWidget |
+	
+	self widget ifNil: [ ^ self ].
  
-	super add: aPresenter constraints: constraints.
-	self recalculatePages 
+	childWidget := self 
+		basicAdd: aPresenter 
+		constraints: constraints 
+		to: innerWidget.
+	"I'm keeping a reference to aPresenter into the built widget because in some cases 
+	 it can be GC (in case of the on-the-fly creation, for example). 
+	 Now this can be a real bad idea :)"
+	childWidget data: aPresenter.
+	self recalculatePages
 ]
 
 { #category : #private }
@@ -46,7 +63,7 @@ GtkMillerAdapter >> buildWidget [
 { #category : #private }
 GtkMillerAdapter >> childrenWidgets [
 	
-	^ self widget children
+	^ innerWidget children
 ]
 
 { #category : #building }
@@ -55,15 +72,19 @@ GtkMillerAdapter >> layout: aLayout [
 	layout := aLayout.
 	
 	"build of widget was differed up to here (to know what is the direction)"
-	widget := layout direction newWidgetOn: self.
+	innerWidget := layout direction newWidgetOn: self.
 
 	model whenVisibleChangedDo: [ 	
 		self toggleVisible: model isVisible ] .
 
-	widget 
-		homogeneous: true;
+	innerWidget 
+		homogeneous: false;
 		spacing: aLayout spacing;
 		borderWidth: aLayout borderWidth.
+		
+	widget := GtkScrolledWindow newWidget: innerWidget.
+		
+	widget connectSizeAllocate: [ :aRect | self recalculatePages ].
 		
 	self toggleVisible: model isVisible
 ]
