@@ -1,10 +1,10 @@
 Trait {
-	#name : #TGtkDisconnectSelectionEvents,
+	#name : #GtkTDisconnectSelectionEvents,
 	#category : #'Mars-Spec-Adapter-Table'
 }
 
 { #category : #private }
-TGtkDisconnectSelectionEvents >> disconnectSelectionEventsOf: aWidget during: aBlock [
+GtkTDisconnectSelectionEvents >> disconnectSelectionEventsOf: aWidget during: aBlock [
 
 	aWidget selection 
 		disconnect: 'changed' 

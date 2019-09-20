@@ -1,8 +1,8 @@
 Class {
 	#name : #GtkAbstractListAdapter,
 	#superclass : #GtkAdapter,
-	#traits : 'TGtkDisconnectSelectionEvents',
-	#classTraits : 'TGtkDisconnectSelectionEvents classTrait',
+	#traits : 'GtkTDisconnectSelectionEvents',
+	#classTraits : 'GtkTDisconnectSelectionEvents classTrait',
 	#category : #'Mars-Spec-Adapter-List'
 }
 
