@@ -7,6 +7,8 @@ https://developer.gnome.org/gtk3/stable/GtkTreeView.html
 Class {
 	#name : #GtkTreeView,
 	#superclass : #GtkContainer,
+	#traits : 'GtkTScrollable',
+	#classTraits : 'GtkTScrollable classTrait',
 	#instVars : [
 		'listStore',
 		'selection',
