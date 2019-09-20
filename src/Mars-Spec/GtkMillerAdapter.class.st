@@ -30,7 +30,8 @@ GtkMillerAdapter >> add: aPresenter constraints: constraints [
 	 it can be GC (in case of the on-the-fly creation, for example). 
 	 Now this can be a real bad idea :)"
 	childWidget data: aPresenter.
-	self recalculatePages
+	self recalculatePages.
+	self scrollToShowLastPage
 ]
 
 { #category : #private }
@@ -156,13 +157,24 @@ GtkMillerAdapter >> remove: aPresenter [
 	childWidget := aPresenter adapter widget.
 	(innerWidget children includes: childWidget) ifTrue: [  
 		innerWidget remove: childWidget.
-		self recalculatePages ]
+		self recalculatePages.
+		self scrollToShowLastPage ]
 ]
 
 { #category : #removing }
 GtkMillerAdapter >> removeAll [
 
 	self widget removeAll
+]
+
+{ #category : #private }
+GtkMillerAdapter >> scrollToShowLastPage [
+	| adjustment pos |
+
+	pos := innerWidget children last positionInTopLevel.
+	
+	adjustment := self widget hAdjustment.
+	adjustment value: pos x
 ]
 
 { #category : #private }

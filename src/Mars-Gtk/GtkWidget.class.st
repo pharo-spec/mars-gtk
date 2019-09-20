@@ -577,6 +577,7 @@ GtkWidget >> path [
 { #category : #drawing }
 GtkWidget >> positionInTopLevel [
 
+	self parentWindow ifNil: [ ^ 0@0 ].
 	^ self 
 		translateCoordinates: 0@0
 		to: self parentWindow
