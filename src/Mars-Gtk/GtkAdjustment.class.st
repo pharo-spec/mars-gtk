@@ -75,6 +75,12 @@ GtkAdjustment >> lower [
 ]
 
 { #category : #accessing }
+GtkAdjustment >> maxValue [
+
+	^ self upper - self pageSize
+]
+
+{ #category : #accessing }
 GtkAdjustment >> pageIncrement [
 
 	^ self ffiCall: #(gdouble gtk_adjustment_get_page_increment (self))

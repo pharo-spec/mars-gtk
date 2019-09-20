@@ -56,6 +56,18 @@ GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget 
 	^ gtkWidget
 ]
 
+{ #category : #private }
+GtkMillerAdapter >> basicScrollToShowLastPage [
+	| lastWidget pos |
+
+	lastWidget := innerWidget children last.
+	pos := lastWidget 
+		translateCoordinates: 0@0 
+		to: innerWidget.
+	self widget hAdjustment value: pos x.
+	self widget vAdjustment value: pos y
+]
+
 { #category : #building }
 GtkMillerAdapter >> buildWidget [
 	"We defer this until layout: (because then I will know what I have to create)"
@@ -169,12 +181,21 @@ GtkMillerAdapter >> removeAll [
 
 { #category : #private }
 GtkMillerAdapter >> scrollToShowLastPage [
-	| adjustment pos |
 
-	pos := innerWidget children last positionInTopLevel.
+	innerWidget children ifEmpty: [ ^ self ].
 	
-	adjustment := self widget hAdjustment.
-	adjustment value: pos x
+	self flag: #HACK. "This is needed because once added a children, the children will 
+	not have immediately a real position, so we cannot scroll. 
+	Positions and sizes in Gtk3 are calculated in the redrawing loop, to prevent multiple 
+	sizing at once. We need to wait until this happens so the scrolling has sense."
+	[
+		5 milliSecond wait.
+		[ self basicScrollToShowLastPage ]
+		on: Error do: [ :e | 
+			"do not lost the error if any, but do not stop because of it"
+			e emit. 
+			e messageText crTrace ]
+	] fork
 ]
 
 { #category : #private }
