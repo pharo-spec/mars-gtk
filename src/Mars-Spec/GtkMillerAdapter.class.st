@@ -64,6 +64,10 @@ GtkMillerAdapter >> basicScrollToShowLastPage [
 	pos := lastWidget 
 		translateCoordinates: 0@0 
 		to: innerWidget.
+	pos = (-1@ -1) ifTrue: [ 
+		"reschedule to be sure is executed"
+		^ self scrollToShowLastPage ].
+	
 	self widget hAdjustment value: pos x.
 	self widget vAdjustment value: pos y
 ]
@@ -125,7 +129,7 @@ GtkMillerAdapter >> recalculatePageHeights [
 	widgets := self childrenWidgets.
 	newHeight := widgets size = 1
 		ifTrue: [ height ]
-		ifFalse: [ height / (layout visiblePages min: widgets size) ].
+		ifFalse: [ height / (layout visiblePages min: widgets size) - (layout spacing / (layout visiblePages min: widgets size)) ].
 		
 	"since the container box is homogeneous, I just need to change the size of 
 	 first element to get all the rest to follow"
@@ -140,7 +144,7 @@ GtkMillerAdapter >> recalculatePageWidths [
 	widgets := self childrenWidgets.
 	newWidth := widgets size = 1
 		ifTrue: [ width ]
-		ifFalse: [ width / (layout visiblePages min: widgets size) ].
+		ifFalse: [ width / (layout visiblePages min: widgets size) - (layout spacing / (layout visiblePages min: widgets size)) ].
 	
 	"since the container box is homogeneous, I just need to change the size of 
 	 first element to get all the rest to follow"
@@ -189,7 +193,7 @@ GtkMillerAdapter >> scrollToShowLastPage [
 	Positions and sizes in Gtk3 are calculated in the redrawing loop, to prevent multiple 
 	sizing at once. We need to wait until this happens so the scrolling has sense."
 	[
-		5 milliSecond wait.
+		1 milliSecond wait.
 		[ self basicScrollToShowLastPage ]
 		on: Error do: [ :e | 
 			"do not lost the error if any, but do not stop because of it"
