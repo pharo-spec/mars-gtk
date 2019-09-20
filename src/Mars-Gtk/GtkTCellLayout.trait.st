@@ -4,12 +4,12 @@ GtkCellLayout — An interface for packing cells
 https://developer.gnome.org/gtk3/stable/GtkCellLayout.html
 "
 Trait {
-	#name : #TGtkCellLayout,
+	#name : #GtkTCellLayout,
 	#category : #'Mars-Gtk-Widget'
 }
 
 { #category : #private }
-TGtkCellLayout >> addAttribute: attribute column: column renderer: cell [
+GtkTCellLayout >> addAttribute: attribute column: column renderer: cell [
 
 	self ffiCall: #(void gtk_cell_layout_add_attribute (self,
 		GtkCellRenderer *cell,
@@ -18,19 +18,19 @@ TGtkCellLayout >> addAttribute: attribute column: column renderer: cell [
 ]
 
 { #category : #private }
-TGtkCellLayout >> clear [
+GtkTCellLayout >> clear [
 
 	self ffiCall: #(void gtk_cell_layout_clear (self))
 ]
 
 { #category : #private }
-TGtkCellLayout >> packStart: cell [
+GtkTCellLayout >> packStart: cell [
 
 	^ self packStart: cell expand: true
 ]
 
 { #category : #private }
-TGtkCellLayout >> packStart: cell expand: expand [
+GtkTCellLayout >> packStart: cell expand: expand [
 
 	self ffiCall: #(void gtk_cell_layout_pack_start (self, GtkCellRenderer *cell, gboolean expand))
 ]

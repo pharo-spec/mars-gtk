@@ -6,8 +6,8 @@ https://developer.gnome.org/gtk3/stable/GtkComboBox.html
 Class {
 	#name : #GtkComboBox,
 	#superclass : #GtkBin,
-	#traits : 'TGtkCellLayout',
-	#classTraits : 'TGtkCellLayout classTrait',
+	#traits : 'GtkTCellLayout',
+	#classTraits : 'GtkTCellLayout classTrait',
 	#instVars : [
 		'model',
 		'columns'
