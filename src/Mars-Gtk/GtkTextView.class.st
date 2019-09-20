@@ -6,6 +6,8 @@ https://developer.gnome.org/gtk3/stable/GtkTextView.html
 Class {
 	#name : #GtkTextView,
 	#superclass : #GtkWidget,
+	#traits : 'GtkTScrollable',
+	#classTraits : 'GtkTScrollable classTrait',
 	#instVars : [
 		'textBuffer'
 	],
@@ -77,18 +79,6 @@ GtkTextView >> editable: setting [
 GtkTextView >> getBuffer [
 
 	self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
-]
-
-{ #category : #accessing }
-GtkTextView >> hAdjustment [
-
-	^ self ffiCall: #(GtkAdjustment *gtk_scrollable_get_hadjustment (self))
-]
-
-{ #category : #accessing }
-GtkTextView >> hAdjustment: adjustment [
-
-	^ self ffiCall: #(void gtk_scrollable_set_hadjustment (self, GtkAdjustment *adjustment))
 ]
 
 { #category : #testing }
@@ -175,18 +165,6 @@ GtkTextView >> textBuffer: aTextBuffer [
 
 	self setBuffer: aTextBuffer.
 	textBuffer := aTextBuffer
-]
-
-{ #category : #accessing }
-GtkTextView >> vAdjustment [
-
-	^ self ffiCall: #(GtkAdjustment *gtk_scrollable_get_vadjustment (self))
-]
-
-{ #category : #accessing }
-GtkTextView >> vAdjustment: adjustment [
-
-	^ self ffiCall: #(void gtk_scrollable_set_vadjustment (self, GtkAdjustment *adjustment))
 ]
 
 { #category : #accessing }

@@ -33,6 +33,18 @@ GtkScrolledWindow class >> scrolledWindowNewHAdjustment: hadjustment vAdjustment
 		GtkAdjustment *vadjustment))
 ]
 
+{ #category : #accessing }
+GtkScrolledWindow >> hAdjustment [
+
+	^ self ffiCall: #(GtkAdjustment *gtk_scrolled_window_get_hadjustment (self))
+]
+
+{ #category : #accessing }
+GtkScrolledWindow >> hAdjustment: adjustment [
+
+	^ self ffiCall: #(void gtk_scrolled_window_set_hadjustment (self, GtkAdjustment *adjustment))
+]
+
 { #category : #'as yet unclassified' }
 GtkScrolledWindow >> isKineticScrolling [
 
@@ -43,4 +55,16 @@ GtkScrolledWindow >> isKineticScrolling [
 GtkScrolledWindow >> kineticScrolling: kinetic_scrolling [
 
 	^ self ffiCall: #(void gtk_scrolled_window_set_kinetic_scrolling (self, gboolean kinetic_scrolling))
+]
+
+{ #category : #accessing }
+GtkScrolledWindow >> vAdjustment [
+
+	^ self ffiCall: #(GtkAdjustment *gtk_scrolled_window_get_vadjustment (self))
+]
+
+{ #category : #accessing }
+GtkScrolledWindow >> vAdjustment: adjustment [
+
+	^ self ffiCall: #(void gtk_scrolled_window_set_vadjustment (self, GtkAdjustment *adjustment))
 ]
