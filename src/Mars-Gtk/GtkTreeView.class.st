@@ -219,6 +219,12 @@ GtkTreeView >> hoverExpand: expand [
 	self ffiCall: #(void gtk_tree_view_set_hover_expand (self, gboolean expand))
 ]
 
+{ #category : #accessing }
+GtkTreeView >> hoverSelection: hover [
+
+	self ffiCall: #(void gtk_tree_view_set_hover_selection (self, gboolean hover))
+]
+
 { #category : #initialization }
 GtkTreeView >> initialize [
 
@@ -259,6 +265,12 @@ GtkTreeView >> isHeadersVisible [
 GtkTreeView >> isHoverExpand [ 
 
 	^ self ffiCall: #(gboolean gtk_tree_view_get_hover_expand (self))
+]
+
+{ #category : #testing }
+GtkTreeView >> isHoverSelection [ 
+
+	^ self ffiCall: #(gboolean gtk_tree_view_get_hover_selection (self))
 ]
 
 { #category : #accessing }

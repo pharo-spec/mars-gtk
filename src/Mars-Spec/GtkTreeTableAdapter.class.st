@@ -82,7 +82,9 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	self model selection isEmpty 
 		ifFalse: [ self updateSelectionOf: gtkWidget ].
 	
-	gtkWidget connectSelectionChanged: [ self updatePresenterSelection ].
+	gtkWidget connectSelectionChanged: [ 
+		self backendUpdatingDo: [ 
+			self updatePresenterSelection ] ].
 	gtkWidget connectRowActivated: [ :path | 
 		self model doActivateAtPath: path toArray ].
 	
@@ -100,9 +102,10 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 			ifFalse: [ gtkWidget beSingleSelectionMode ] ].
 
 	self model whenSelectionChangedDo: [
-		self 
-			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self updateSelectionOf: gtkWidget ] ].
+		self backendDetectCyclesDo: [  
+			self 
+				disconnectSelectionEventsOf: gtkWidget 
+				during: [ self updateSelectionOf: gtkWidget ] ] ].
 	self model whenRootsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
@@ -110,8 +113,7 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	self model whenColumnsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self recreateStore: gtkWidget generateColumns: true ] ].
-
+			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
 ]
 
 { #category : #private }
