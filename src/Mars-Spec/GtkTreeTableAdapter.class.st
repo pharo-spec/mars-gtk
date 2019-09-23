@@ -73,44 +73,44 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 
 	self recreateStore: gtkWidget generateColumns: true.	
-	gtkWidget headersVisible: self model isShowingColumnHeaders.
+	gtkWidget headersVisible: self presenter isShowingColumnHeaders.
 
 	self presenter selection isMultipleSelection 
 		ifTrue: [ gtkWidget beMultipleSelectionMode ]
 		ifFalse: [ gtkWidget beSingleSelectionMode ].
 
-	self model selection isEmpty 
+	self presenter selection isEmpty 
 		ifFalse: [ self updateSelectionOf: gtkWidget ].
 	
 	gtkWidget connectSelectionChanged: [ 
 		self backendUpdatingDo: [ 
 			self updatePresenterSelection ] ].
 	gtkWidget connectRowActivated: [ :path | 
-		self model doActivateAtPath: path toArray ].
+		self presenter doActivateAtPath: path toArray ].
 	
 	gtkWidget connectRowExpanded: [ :iter |
 		"it will be an orfan iterator (store not setted since it comes from a callback)"
 		iter store: self store.
-		self addLevelTo: (self model itemAtPath: iter toPathArray) parent: iter ].
+		self addLevelTo: (self presenter itemAtPath: iter toPathArray) parent: iter ].
 	
-	self model whenShowColumnHeadersChangedDo: [ 
-		gtkWidget headersVisible: self model isShowingColumnHeaders ].
+	self presenter whenShowColumnHeadersChangedDo: [ 
+		gtkWidget headersVisible: self presenter isShowingColumnHeaders ].
 
-	self model whenMultiSelectionChangedDo: [ 
+	self presenter whenMultiSelectionChangedDo: [ 
 		self presenter selection isMultipleSelection 
 			ifTrue: [ gtkWidget beMultipleSelectionMode ]
 			ifFalse: [ gtkWidget beSingleSelectionMode ] ].
 
-	self model whenSelectionChangedDo: [
+	self presenter whenSelectionChangedDo: [
 		self backendDetectCyclesDo: [  
 			self 
 				disconnectSelectionEventsOf: gtkWidget 
 				during: [ self updateSelectionOf: gtkWidget ] ] ].
-	self model whenRootsChangedDo: [ 
+	self presenter whenRootsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
 			during: [ self recreateStore: gtkWidget generateColumns: false ] ].
-	self model whenColumnsChangedDo: [ 
+	self presenter whenColumnsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
 			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
