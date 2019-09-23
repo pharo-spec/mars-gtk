@@ -113,7 +113,10 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	self presenter whenColumnsChangedDo: [ 
 		self 
 			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
+			during: [ self recreateStore: gtkWidget generateColumns: true ] ].
+		
+	self model contextMenu ifNotNil: [ :menu |
+		self addMenu: menu to: gtkWidget ]	
 ]
 
 { #category : #private }
