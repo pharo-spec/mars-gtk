@@ -72,51 +72,11 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 
-	self recreateStore: gtkWidget generateColumns: true.	
-	gtkWidget headersVisible: self presenter isShowingColumnHeaders.
-
-	self presenter selection isMultipleSelection 
-		ifTrue: [ gtkWidget beMultipleSelectionMode ]
-		ifFalse: [ gtkWidget beSingleSelectionMode ].
-
-	self presenter selection isEmpty 
-		ifFalse: [ self updateSelectionOf: gtkWidget ].
+	self recreateStore: gtkWidget generateColumns: true.
+	self configureInitialState: gtkWidget.
+	self connectToGtkSignals: gtkWidget.
+	self connectToSpecEvents: gtkWidget.
 	
-	gtkWidget connectSelectionChanged: [ 
-		self backendUpdatingDo: [ 
-			self updatePresenterSelection ] ].
-	gtkWidget connectRowActivated: [ :path | 
-		self presenter doActivateAtPath: path toArray ].
-	
-	gtkWidget connectRowExpanded: [ :iter |
-		"it will be an orfan iterator (store not setted since it comes from a callback)"
-		iter store: self store.
-		self addLevelTo: (self presenter itemAtPath: iter toPathArray) parent: iter ].
-	
-	self presenter whenShowColumnHeadersChangedDo: [ 
-		gtkWidget headersVisible: self presenter isShowingColumnHeaders ].
-
-	self presenter whenMultiSelectionChangedDo: [ 
-		self presenter selection isMultipleSelection 
-			ifTrue: [ gtkWidget beMultipleSelectionMode ]
-			ifFalse: [ gtkWidget beSingleSelectionMode ] ].
-
-	self presenter whenSelectionChangedDo: [
-		self backendDetectCyclesDo: [  
-			self 
-				disconnectSelectionEventsOf: gtkWidget 
-				during: [ self updateSelectionOf: gtkWidget ] ] ].
-	self presenter whenRootsChangedDo: [ 
-		self 
-			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self recreateStore: gtkWidget generateColumns: false ] ].
-	self presenter whenColumnsChangedDo: [ 
-		self 
-			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self recreateStore: gtkWidget generateColumns: true ] ].
-		
-	self model contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: gtkWidget ]	
 ]
 
 { #category : #private }
@@ -134,6 +94,64 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 GtkTreeTableAdapter >> columnCount [
 	
 	^ self innerWidget model numberOfColumns
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> configureInitialState: gtkWidget [
+
+	gtkWidget headersVisible: self presenter isShowingColumnHeaders.
+	
+	self presenter selection isMultipleSelection 
+		ifTrue: [ gtkWidget beMultipleSelectionMode ]
+		ifFalse: [ gtkWidget beSingleSelectionMode ].
+	
+	self presenter selection isEmpty
+		ifFalse: [ self updateSelectionOf: gtkWidget ]	.
+	
+	self presenter contextMenu ifNotNil: [ :menu |
+		self addMenu: menu to: gtkWidget ]
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> connectToGtkSignals: gtkWidget [
+	
+	gtkWidget connectSelectionChanged: [ 
+		self backendUpdatingDo: [ 
+			self updatePresenterSelection ] ].
+	gtkWidget connectRowActivated: [ :path | 
+		self presenter doActivateAtPath: path toArray ].
+	gtkWidget connectRowExpanded: [ :iter |
+		"it will be an orfan iterator (store not setted since it comes from a callback)"
+		iter store: self store.
+		self addLevelTo: (self presenter itemAtPath: iter toPathArray) parent: iter ]
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> connectToSpecEvents: gtkWidget [
+
+	self presenter whenShowColumnHeadersChangedDo: [ 
+		gtkWidget headersVisible: self presenter isShowingColumnHeaders ].
+
+	self presenter whenMultiSelectionChangedDo: [ 
+		self presenter selection isMultipleSelection 
+			ifTrue: [ gtkWidget beMultipleSelectionMode ]
+			ifFalse: [ gtkWidget beSingleSelectionMode ] ].
+
+	self presenter whenSelectionChangedDo: [
+		self backendDetectCyclesDo: [  
+			self 
+				disconnectSelectionEventsOf: gtkWidget 
+				during: [ self updateSelectionOf: gtkWidget ] ] ].
+
+	self presenter whenRootsChangedDo: [ 
+		self 
+			disconnectSelectionEventsOf: gtkWidget 
+			during: [ self recreateStore: gtkWidget generateColumns: false ] ].
+
+	self presenter whenColumnsChangedDo: [ 
+		self 
+			disconnectSelectionEventsOf: gtkWidget 
+			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
 ]
 
 { #category : #building }

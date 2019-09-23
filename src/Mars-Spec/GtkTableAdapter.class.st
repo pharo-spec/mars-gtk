@@ -1,3 +1,6 @@
+"
+I'm an adapter to render a TablePresenter with Gtk3.
+"
 Class {
 	#name : #GtkTableAdapter,
 	#superclass : #GtkBaseListAdapter,
