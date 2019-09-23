@@ -1,5 +1,5 @@
 Trait {
-	#name : #TGtkHaveWrappingScrollBars,
+	#name : #GtkTHaveWrappingScrollBars,
 	#instVars : [
 		'innerWidget'
 	],
@@ -7,13 +7,13 @@ Trait {
 }
 
 { #category : #'private accessing' }
-TGtkHaveWrappingScrollBars >> innerWidget [
+GtkTHaveWrappingScrollBars >> innerWidget [
 	
 	^ innerWidget
 ]
 
 { #category : #building }
-TGtkHaveWrappingScrollBars >> wrapWidget: gtkWidget [
+GtkTHaveWrappingScrollBars >> wrapWidget: gtkWidget [
 
 	innerWidget := gtkWidget.
 	self model hasScrollBars ifFalse: [ ^ super wrapWidget: gtkWidget ].

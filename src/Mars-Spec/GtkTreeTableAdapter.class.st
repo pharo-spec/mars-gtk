@@ -23,8 +23,8 @@ After processing, we will the full tree.
 Class {
 	#name : #GtkTreeTableAdapter,
 	#superclass : #GtkAdapter,
-	#traits : 'GtkTDisconnectSelectionEvents + TGtkHaveWrappingScrollBars',
-	#classTraits : 'GtkTDisconnectSelectionEvents classTrait + TGtkHaveWrappingScrollBars classTrait',
+	#traits : 'GtkTDisconnectSelectionEvents + GtkTHaveWrappingScrollBars',
+	#classTraits : 'GtkTDisconnectSelectionEvents classTrait + GtkTHaveWrappingScrollBars classTrait',
 	#instVars : [
 		'levelsAdded',
 		'objectCache'
