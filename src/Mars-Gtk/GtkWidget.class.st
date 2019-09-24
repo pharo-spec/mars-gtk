@@ -176,6 +176,15 @@ GtkWidget >> connectButtonPressEvent: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectButtonReleaseEvent: aBlock [
+	"connects to button-release-event signal 
+	 aBlock needs to answer a boolean to stop or not event propagation"
+
+	^ (GButtonReleaseEventCallback do: aBlock) connectTo: self
+
+]
+
+{ #category : #signaling }
 GtkWidget >> connectClicked: aBlock [
 
 	(GClickedCallback do: aBlock) connectTo: self
@@ -198,6 +207,14 @@ GtkWidget >> connectDestroy: aBlock [
 GtkWidget >> connectDoubleClicked: aBlock [
 	
 	(GDoubleClickButtonPressEventCallback do: aBlock) connectTo: self
+]
+
+{ #category : #signaling }
+GtkWidget >> connectEnterNotify: aBlock [
+	"connects to motion_notify_event signal.
+	 aBlock needs to answer a boolean to stop or not event propagation"
+
+	^ (GEnterNotifyEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
@@ -251,6 +268,23 @@ GtkWidget >> connectKeyPressEvent: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectLeaveNotify: aBlock [
+	"connects to motion_notify_event signal.
+	 aBlock needs to answer a boolean to stop or not event propagation"
+
+	^ (GLeaveNotifyEventCallback do: aBlock) connectTo: self
+
+]
+
+{ #category : #signaling }
+GtkWidget >> connectMotionNotify: aBlock [
+	"connects to motion_notify_event signal.
+	 aBlock needs to answer a boolean to stop or not event propagation"
+
+	^ (GMotionNotifyEventCallback do: aBlock) connectTo: self
+]
+
+{ #category : #signaling }
 GtkWidget >> connectRealize: aBlock [
 
 	^ self 
@@ -265,6 +299,15 @@ GtkWidget >> connectRightClicked: aBlock [
 	 aBlock needs to answer a boolean to stop or not event propagation"
 	
 	(GSecondaryButtonPressEventCallback do: aBlock) connectTo: self
+]
+
+{ #category : #signaling }
+GtkWidget >> connectScroll: aBlock [
+	"connects to scroll_event signal.
+	 aBlock needs to answer a boolean to stop or not event propagation"
+
+	^ (GScrollEventCallback do: aBlock) connectTo: self
+
 ]
 
 { #category : #signaling }
