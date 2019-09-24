@@ -100,6 +100,14 @@ GtkCairoSurface >> cairoRectangle: aCr x: xValue y: yValue	width: aWidth height:
 		module: CairoLibrary
 ]
 
+{ #category : #'private primitives' }
+GtkCairoSurface >> cairoScale: cr x: sx y: sy [
+
+	self 
+		ffiCall: #(void cairo_scale (void *cr, double sx, double sy)) 
+		module: CairoLibrary
+]
+
 { #category : #private }
 GtkCairoSurface >> clipRectangleFrom: aCr [
 	| rect |
@@ -186,6 +194,12 @@ GtkCairoSurface >> paintInto: cr at: aPoint [
 		x: aPoint x asFloat
 		y: aPoint y asFloat.
 	self paint: cr
+]
+
+{ #category : #copying }
+GtkCairoSurface >> scale: cr [ 
+
+	self cairoScale: cr x: 0.5 y: 0.5
 ]
 
 { #category : #'private primitives' }
