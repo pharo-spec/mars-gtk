@@ -14,8 +14,8 @@ You need Gtk3! And you need to put it at the same place of the `Pharo.exe` execu
 We packaged a version for you: 
 ```
 cd pharo-vm
-curl http://files.pharo.org/vm/pharo-spur64-headless/win/third-party/Gtk3.zip
-unzip Gtk3.zip
+curl -o "Gtk.zip" http://files.pharo.org/vm/pharo-spur64-headless/win/third-party/Gtk.zip
+Expand-Archive -Path Gtk.zip -DestinationPath .
 ```
 
 ### On macOS: 
@@ -30,14 +30,15 @@ You need to have Gtk3 installed.
 
 ## Installing in your image
 
-```Smalltalk
- Metacello new
+You need to install it from the command line since you do not have the Playground in the UI:
+```
+./PharoConsole.exe '.\Pharo.image' eval --save " Metacello new
         repository: 'github://pharo-spec/mars-gtk';
         baseline: 'Mars';
         onConflict: [ :e | e useIncoming ];
         onUpgrade: [ :e | e useIncoming ];
         ignoreImage;
-        load
+        load"
 ```
 
-Then you will need to save and restart your image to let Gtk3 to take over the event loop.
+Then you will need to restart your image to let Gtk3 to take over the event loop.
