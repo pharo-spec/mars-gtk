@@ -138,7 +138,7 @@ GtkAdapter >> configureKeyBindings: gtkWidget [
 GtkAdapter >> doTakeKeyboardFocus [
 
 	self innerWidgetDo: [ :w | 
-		self model window ifNotNil: [ :window | 
+		self presenter withWindowDo: [ :window | 
 			window adapter
 				ifNotNil: [ w grabFocus ]
 				ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
