@@ -55,5 +55,6 @@ GtkLayoutAdapter >> removeSubWidgets [
 { #category : #protocol }
 GtkLayoutAdapter >> takeKeyboardFocus [
 
-	self presenter presentersInFocusOrder first takeKeyboardFocus
+	self presenter presentersInFocusOrder 
+		ifNotEmpty: [ :presenters | presenters first takeKeyboardFocus ]
 ]

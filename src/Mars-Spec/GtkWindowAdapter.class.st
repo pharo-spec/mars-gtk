@@ -13,7 +13,17 @@ GtkWindowAdapter >> add: gtkBox toWindow: gtkWindow [
 	gtkWindow add: gtkBox
 ]
 
-{ #category : #private }
+{ #category : #'private building' }
+GtkWindowAdapter >> addDefaultKeyBindings: gtkWindow [
+	
+	self flag: #TODO. "In fact, this thingy needs to came from a configuration. Here is just 
+	hardcoded crap."
+	self 
+		bindKeyCombination: $w command mac | $w control win | $w control unix 
+		toAction: [ self close ]
+]
+
+{ #category : #'private building' }
 GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
 	| gtkMenuBar |
 	
@@ -38,11 +48,8 @@ GtkWindowAdapter >> addModelTo: gtkWindow [
 GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
 
-	"add close events (delete is sent before)"
-	gtkWindow 
-		connectDeleteEvent: [ self announceWillClose. false ];
-		connectHide: [ self announceClosed ];
-		connectSizeAllocate: [ :aRect | self announceResized: aRect extent ].
+	self connectToGtkSignals: gtkWindow.
+	self addDefaultKeyBindings: gtkWindow.
 
 	"add window properties"
 	self model initialExtent
@@ -149,6 +156,16 @@ GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [
 GtkWindowAdapter >> close [
 
 	self widgetDo: [ :w | w hide ]
+]
+
+{ #category : #'private building' }
+GtkWindowAdapter >> connectToGtkSignals: gtkWindow [
+
+	"add close events (delete is sent before)"
+	gtkWindow 
+		connectDeleteEvent: [ self announceWillClose. false ];
+		connectHide: [ self announceClosed ];
+		connectSizeAllocate: [ :aRect | self announceResized: aRect extent ]
 ]
 
 { #category : #private }
