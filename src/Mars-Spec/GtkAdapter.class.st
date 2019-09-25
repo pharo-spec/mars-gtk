@@ -3,7 +3,8 @@ Class {
 	#superclass : #SpAbstractAdapter,
 	#instVars : [
 		'lastShownMenu',
-		'backendUpdating'
+		'backendUpdating',
+		'dispatcher'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -26,6 +27,17 @@ GtkAdapter class >> allAdapters [
 GtkAdapter class >> isAbstract [ 
 
 	^ self = GtkAdapter
+]
+
+{ #category : #building }
+GtkAdapter >> addKeyBindingsTo: gtkWidget [
+
+	self presenter contextKeyBindings ifNotNil: [ :aCategory | 
+		self configureKeyBindings: gtkWidget. 
+		aCategory allEntries keymaps do: [ :each |
+			self 
+				bindKeyCombination: each shortcut 
+				toAction: each action ] ]
 ]
 
 { #category : #building }
@@ -83,6 +95,17 @@ GtkAdapter >> backendUpdatingDo: aBlock [
 		backendUpdating := oldStatus ]
 ]
 
+{ #category : #protocol }
+GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock [ 
+	
+	dispatcher ifNil: [ 
+		self configureKeyBindings: self widget ].
+	
+	dispatcher 
+		bindKeyCombination: aShortcut 
+		toAction: aBlock
+]
+
 { #category : #building }
 GtkAdapter >> buildMenu: aMenuPresenter [
 
@@ -97,8 +120,18 @@ GtkAdapter >> buildWidget [
 	
 	gtkWidget := self newWidget.
 	self addSettingsTo: gtkWidget.
+	self addKeyBindingsTo: gtkWidget.
 	self addModelTo: gtkWidget.
 	^ self wrapWidget: gtkWidget
+]
+
+{ #category : #private }
+GtkAdapter >> configureKeyBindings: gtkWidget [
+		
+	dispatcher := GtkKMDispatcher on: self presenter.
+	gtkWidget connectKeyPressEvent: [ :event |
+		self handleKeyEvent: event ].
+	
 ]
 
 { #category : #protocol }
@@ -127,6 +160,18 @@ GtkAdapter >> enabled: aBoolean [
 { #category : #'as yet unclassified' }
 GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 	"Do nothing at the moment"
+]
+
+{ #category : #private }
+GtkAdapter >> handleKeyEvent: event [
+
+	event isModifier ifTrue: [ ^ false ].
+
+	dispatcher ifNotNil: [
+		dispatcher dispatchKeyEvent: event.
+		^ event wasHandled ].
+	
+	^ false
 ]
 
 { #category : #testing }

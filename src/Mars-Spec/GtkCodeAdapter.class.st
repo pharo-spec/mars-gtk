@@ -10,14 +10,7 @@ Class {
 { #category : #building }
 GtkCodeAdapter >> addModelTo: gtkTextView [ 
 
-	self addSourceFeaturesTo: gtkTextView.
-	
-	self model contextKeyBindings ifNotNil: [ :aCategory | 
-		aCategory allEntries keymaps do: [ :each |
-			self 
-				bindKeyCombination: each shortcut 
-				toAction: each action ] ].
-	
+	self addSourceFeaturesTo: gtkTextView.	
 	super addModelTo: gtkTextView
 ]
 
