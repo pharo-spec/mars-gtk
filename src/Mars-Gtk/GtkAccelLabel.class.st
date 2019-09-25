@@ -61,6 +61,11 @@ GtkAccelLabel class >> newLabel: aString [
 GtkAccelLabel class >> shortcutToString: aShortcut [
 	| keyParts |
 	
+	self flag: #REVIEW. "This is replicated from what you can find in StShortcutPrinter (NewTools), 
+	but since we do not want to depend on the upper layer, we copied here. 
+	In fact, what we should do is to promote StShortcutPrinter to its own package and then both 
+	projects can depend on the same"
+	
 	"if this is not mac, we need just to print its string"
 	OSPlatform current isMacOS 
 		ifFalse: [ ^ aShortcut asString ].

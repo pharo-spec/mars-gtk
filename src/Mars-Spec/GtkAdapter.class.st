@@ -36,7 +36,7 @@ GtkAdapter >> addKeyBindingsTo: gtkWidget [
 		self configureKeyBindings: gtkWidget. 
 		aCategory allEntries keymaps do: [ :each |
 			self 
-				bindKeyCombination: each shortcut 
+				bindKeyCombination: each shortcut
 				toAction: each action ] ]
 ]
 
