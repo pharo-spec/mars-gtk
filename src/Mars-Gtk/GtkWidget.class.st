@@ -171,7 +171,7 @@ GtkWidget >> connectButtonPressEvent: aBlock [
 	"connects to button-press-event signal 
 	 aBlock needs to answer a boolean to stop or not event propagation"
 
-	^ GButtonPressEventCallback do: aBlock	
+	^ (GButtonPressEventCallback do: aBlock) connectTo: self	
 
 ]
 
