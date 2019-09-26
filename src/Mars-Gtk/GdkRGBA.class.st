@@ -38,7 +38,9 @@ GdkRGBA class >> fieldsDesc [
 { #category : #accessing }
 GdkRGBA class >> gType [
 
-	^ self ffiCall: #(gsize gdk_rgba_get_type ()) 
+	^ self 
+		ffiCall: #(gsize gdk_rgba_get_type ())
+		module: GdkLibrary
 ]
 
 { #category : #'accessing structure variables' }
