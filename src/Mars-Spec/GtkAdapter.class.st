@@ -62,7 +62,7 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	
 	gtkWidget sensitive: self presenter isEnabled.
 	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
-	self presenter whenEnabledChanged: [ gtkWidget sensitive: self presenter isEnabled ].
+	self presenter whenEnabledChangedDo: [ gtkWidget sensitive: self presenter isEnabled ].
 	
 	self presenter isVisible
 		ifTrue: [ gtkWidget show ]
