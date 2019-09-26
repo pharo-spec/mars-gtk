@@ -3,19 +3,17 @@ The Gtk3 bindings for Pharo and Spec
 
 # How to install
 
-## Prerequisites
-You need the headless VM: 
-```
-curl https://get.pharo.org/64/vmHeadlessLatest80 | bash
-```
-
 ### On Windows
-You need Gtk3! And you need to put it at the same place of the `Pharo.exe` executable. 
-We packaged a version for you: 
+You need Gtk3!  
+And you need to put it at the same place of the `Pharo.exe` executable.  
+To simplify the process we created a VM bundled with all the DLL and resources needed to execute GTK+3
+
+You can get it from: http://files.pharo.org/vm/pharo-spur64-headless/win/latest-win64-GTK.zip
+
+Then, you can just download a new Pharo 8.0 image: 
+
 ```
-cd pharo-vm
-curl -o "Gtk.zip" http://files.pharo.org/vm/pharo-spur64-headless/win/third-party/Gtk.zip
-Expand-Archive -Path Gtk.zip -DestinationPath .
+curl https://get.pharo.org/64/80 | bash
 ```
 
 ### On macOS: 
@@ -25,8 +23,22 @@ You need Gtk3 (installed by brew because paths are fixed for now)
 brew install gtk+3
 ```
 
+And you need the headless VM and a Pharo 8.0 image. You can get them from the zero-conf scripts: 
+
+```
+curl https://get.pharo.org/64/80+vmHeadlessLatest | bash
+```
+
+
 ### On Linux
 You need to have Gtk3 installed.
+
+And you need the headless VM and a Pharo 80 image. You can get them from the zero-conf scripts: 
+
+```
+curl https://get.pharo.org/64/80+vmHeadlessLatest | bash
+```
+
 
 ## Installing in your image
 
