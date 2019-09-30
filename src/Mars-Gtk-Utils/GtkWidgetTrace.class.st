@@ -18,6 +18,12 @@ GtkWidgetTrace >> handle: anObject [
 	handle := anObject
 ]
 
+{ #category : #printing }
+GtkWidgetTrace >> printOn: stream [ 
+
+	stream << self widgetClass name << '(' << self handle printString << ')'
+]
+
 { #category : #accessing }
 GtkWidgetTrace >> widgetClass [
 	^ widgetClass

@@ -15,6 +15,21 @@ GtkLeakFinder >> ensureLoggingSignals [
 	self signals do: #resume
 ]
 
+{ #category : #initialize }
+GtkLeakFinder >> initialize [
+
+	super initialize.
+	mutex := Mutex new.
+	created := Set new.
+	destroyed := Set new
+]
+
+{ #category : #'as yet unclassified' }
+GtkLeakFinder >> leaks [
+
+	^ created select: [ :each | (destroyed includes: each handle) not ]
+]
+
 { #category : #'as yet unclassified' }
 GtkLeakFinder >> logCreateSignal: aSignal [
 
