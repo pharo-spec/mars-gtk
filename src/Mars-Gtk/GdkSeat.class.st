@@ -12,7 +12,9 @@ Class {
 { #category : #'instance creation' }
 GdkSeat class >> defaultForDisplay: aDisplay [ 
 
-	^ (self getDefaultSeat: aDisplay) initialize
+	"do not send #initialize here because we do not need it (and keeping a reference 
+	 is useless since this is kept in Gtk3."
+	^ (self getDefaultSeat: aDisplay) "initialize"
 ]
 
 { #category : #'library path' }
@@ -49,5 +51,7 @@ GdkSeat >> gtkGetPointer [
 { #category : #accessing }
 GdkSeat >> pointer [
 
-	^ self gtkGetPointer initialize
+	"do not send #initialize here because we do not need it (and keeping a reference 
+	 is useless since this is kept in Gtk3."
+	^ self gtkGetPointer "initialize"
 ]
