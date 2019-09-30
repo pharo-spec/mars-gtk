@@ -99,23 +99,23 @@ OSGtkWindowHandle >> initializeCursorMap [
 	 specified)"
 	
 	gtkCursorMap := Dictionary new
-		at: Cursor resizeBottom put: 'ns-resize';
-		at: Cursor resizeTop put: 'ns-resize';
-		at: Cursor resizeBottomLeft put: 'nesw-resize';
-		at: Cursor resizeBottomRight put: 'nwse-resize';
-		at: Cursor resizeTopLeft put: 'nwse-resize';
-		at: Cursor resizeTopRight put: 'nesw-resize';
-		at: Cursor resizeLeft put: 'ew-resize';
-		at: Cursor blank put: 'none';
-		at: Cursor crossHair put: 'crosshair';
-		at: Cursor up put: 'n-resize';
-		at: Cursor down put: 's-resize';
-		at: Cursor menu put: 'context-menu';
-		at: Cursor normal put: 'default';
-		at: Cursor overEditableText put: 'text';
-		at: Cursor wait put: 'wait';
-		at: Cursor webLink put: 'pointer';
-		at: Cursor write put: 'progress';
+		at: Cursor resizeBottom put: (GdkCursor newFromName: 'ns-resize');
+		at: Cursor resizeTop put: (GdkCursor newFromName: 'ns-resize');
+		at: Cursor resizeBottomLeft put: (GdkCursor newFromName: 'nesw-resize');
+		at: Cursor resizeBottomRight put: (GdkCursor newFromName: 'nwse-resize');
+		at: Cursor resizeTopLeft put: (GdkCursor newFromName: 'nwse-resize');
+		at: Cursor resizeTopRight put: (GdkCursor newFromName: 'nesw-resize');
+		at: Cursor resizeLeft put: (GdkCursor newFromName: 'ew-resize');
+		at: Cursor blank put: (GdkCursor newFromName: 'none');
+		at: Cursor crossHair put: (GdkCursor newFromName: 'crosshair');
+		at: Cursor up put: (GdkCursor newFromName: 'n-resize');
+		at: Cursor down put: (GdkCursor newFromName: 's-resize');
+		at: Cursor menu put: (GdkCursor newFromName: 'context-menu');
+		at: Cursor normal put: (GdkCursor newFromName: 'default');
+		at: Cursor overEditableText put: (GdkCursor newFromName: 'text');
+		at: Cursor wait put: (GdkCursor newFromName: 'wait');
+		at: Cursor webLink put: (GdkCursor newFromName: 'pointer');
+		at: Cursor write put: (GdkCursor newFromName: 'progress');
 		yourself
 ]
 
@@ -170,8 +170,7 @@ OSGtkWindowHandle >> setMouseCursor: cursorForm mask: maskForm [
 	
 	cursor := gtkCursorMap 
 		at: cursorForm
-		ifPresent: [ :cursorName | GdkCursor newFromName: cursorName ]
-		ifAbsent: [ GdkCursor fromForm: cursorForm ].
+		ifAbsentPut: [ GdkCursor fromForm: cursorForm ].
 	
 	self gtkWindow cursor: cursor
 ]
