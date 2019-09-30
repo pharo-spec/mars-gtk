@@ -21,7 +21,8 @@ GtkCairoSurface class >> extent: anExtent [
 
 { #category : #'instance creation' }
 GtkCairoSurface class >> extent: anExtent format: aFormat [
-	^ ( self primImage: aFormat width: anExtent x height: anExtent y) initialize
+
+	^ (self primImage: aFormat width: anExtent x height: anExtent y) initialize
 
 ]
 
@@ -29,7 +30,7 @@ GtkCairoSurface class >> extent: anExtent format: aFormat [
 GtkCairoSurface class >> fromForm: aForm [
 	| form surface |
 	
-	form := aForm unhibernate; asFormOfDepth: 32.
+	form := aForm "unhibernate; "asFormOfDepth: 32.
 	surface := self extent: aForm extent.
 	
 	LibC 
