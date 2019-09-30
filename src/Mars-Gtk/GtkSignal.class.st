@@ -26,10 +26,11 @@ GtkSignal class >> filter [
 ]
 
 { #category : #accessing }
-GtkSignal class >> filterExcept: classesList [
-	
-	self filter.
-	tracingClasses := classesList 
+GtkSignal class >> filterAllSignalsExcept: aListOfSignals [
+
+	self allSubclasses 
+		reject: [ :each | aListOfSignals includes: each ]
+		thenDo: [ :each | each filter ]
 ]
 
 { #category : #'class initialization' }
