@@ -187,6 +187,7 @@ GtkMillerAdapter >> removeAll [
 GtkMillerAdapter >> scrollToShowLastPage [
 
 	innerWidget children ifEmpty: [ ^ self ].
+	innerWidget children size = 1 ifTrue: [ ^ self ].
 	
 	self flag: #HACK. "This is needed because once added a children, the children will 
 	not have immediately a real position, so we cannot scroll. 
@@ -199,7 +200,7 @@ GtkMillerAdapter >> scrollToShowLastPage [
 			"do not lost the error if any, but do not stop because of it"
 			e emit. 
 			e messageText crTrace ]
-	] fork
+	] schedule
 ]
 
 { #category : #private }
