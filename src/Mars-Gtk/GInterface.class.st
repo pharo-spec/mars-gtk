@@ -5,6 +5,9 @@ My children needs to define #fieldsDesc but they can use the fieldsDesc implemen
 Class {
 	#name : #GInterface,
 	#superclass : #GtkStructure,
+	#classVars : [
+		'OFFSET_G_IFACE'
+	],
 	#category : #'Mars-Gtk-ClassBuilder'
 }
 
