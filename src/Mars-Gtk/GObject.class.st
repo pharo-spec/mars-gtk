@@ -547,7 +547,9 @@ GObject >> typeName [
 { #category : #'private referencing' }
 GObject >> weakRef: notify [ 
 
-	^ self ffiCall: #(void g_object_weak_ref (self, GCallback notify, 0)) module: GObjectLibrary
+	^ self 
+		ffiCall: #(void g_object_weak_ref (self, GCallback notify, NULL)) 
+		module: GObjectLibrary
 ]
 
 { #category : #accessing }
