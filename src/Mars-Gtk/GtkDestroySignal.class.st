@@ -13,14 +13,14 @@ Class {
 	#category : #'Mars-Gtk-Signal'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #installing }
 GtkDestroySignal class >> installFor: aWidget [
 	
-	(self isFiltered and: [ (self isTracing: aWidget) not ]) ifTrue: [ ^ self ].
+	(self isFiltered and: [ (self isTracingWidget: aWidget) not ]) ifTrue: [ ^ self ].
 	aWidget weakRef: self notifyCallback
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GtkDestroySignal class >> notifyCallback [
 
 	^ NotifyCallback ifNil: [ 
@@ -32,7 +32,7 @@ GtkDestroySignal class >> notifyCallback [
 					 emit ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GtkDestroySignal class >> reset [ 
 	<script>
 	
