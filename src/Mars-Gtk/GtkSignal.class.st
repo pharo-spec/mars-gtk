@@ -28,6 +28,7 @@ GtkSignal class >> filter [
 { #category : #accessing }
 GtkSignal class >> filterAllSignalsExcept: aListOfSignals [
 
+	self resetFilters.
 	self allSubclasses 
 		reject: [ :each | aListOfSignals includes: each ]
 		thenDo: [ :each | each filter ]
@@ -36,7 +37,7 @@ GtkSignal class >> filterAllSignalsExcept: aListOfSignals [
 { #category : #'class initialization' }
 GtkSignal class >> initialize [ 
 
-	FilteredSignals := Set new
+	self resetFilters
 ]
 
 { #category : #accessing }
@@ -49,6 +50,12 @@ GtkSignal class >> isFiltered [
 GtkSignal class >> isTracing: aWidget [
 
 	^ self tracingClasses includes: aWidget class
+]
+
+{ #category : #private }
+GtkSignal class >> resetFilters [
+
+	FilteredSignals := Set new	
 ]
 
 { #category : #private }
