@@ -9,7 +9,6 @@ Class {
 		'OFFSET_ACTION_NAME',
 		'OFFSET_GET_ACTION_NAME',
 		'OFFSET_GET_ACTION_TARGET_VALUE',
-		'OFFSET_G_IFACE',
 		'OFFSET_SET_ACTION_NAME',
 		'OFFSET_SET_ACTION_TARGET_VALUE'
 	],
@@ -49,18 +48,6 @@ GInterfaceForTest >> action_name: anObject [
 		put: (anObject 
 			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
-]
-
-{ #category : #'accessing structure variables' }
-GInterfaceForTest >> g_iface [
-	"This method was automatically generated"
-	^ GTypeInterface fromHandle: (handle referenceStructAt: OFFSET_G_IFACE length: GTypeInterface byteSize)
-]
-
-{ #category : #'accessing structure variables' }
-GInterfaceForTest >> g_iface: anObject [
-	"This method was automatically generated"
-	handle structAt: OFFSET_G_IFACE put: anObject getHandle length: GTypeInterface byteSize
 ]
 
 { #category : #'accessing structure variables' }
