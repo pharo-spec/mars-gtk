@@ -46,7 +46,7 @@ GtkCairoSurface class >> finalizeResourceData: data [
 GtkCairoSurface class >> fromForm: aForm [
 	| form surface |
 	
-	form := aForm "unhibernate; "asFormOfDepth: 32.
+	form := aForm unhibernate; asFormOfDepth: 32.
 	surface := self extent: aForm extent.
 	
 	LibC 
