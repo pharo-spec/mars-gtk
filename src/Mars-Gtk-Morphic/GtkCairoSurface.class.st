@@ -26,6 +26,22 @@ GtkCairoSurface class >> extent: anExtent format: aFormat [
 
 ]
 
+{ #category : #'finalize resources' }
+GtkCairoSurface class >> finalizeResourceData: data [
+	| handle id contextHandle |
+
+	handle := data first.
+	id := data second.
+	contextHandle := data third.
+	
+	self destroyContextHandle: contextHandle value. 
+	self destroySurfaceHandle: handle value.
+	
+	(self findSurface: id) = handle value 
+		ifFalse: [  ^ self ].	
+	self unregisterSurfaceWithId: id
+]
+
 { #category : #'instance creation' }
 GtkCairoSurface class >> fromForm: aForm [
 	| form surface |
@@ -125,10 +141,9 @@ GtkCairoSurface >> copyForm: aForm clippedBy: aRect at: aPoint [
 
 	cr := self cairoCreate: self getHandle.
 	newSurface := GtkCairoSurface fromForm: aForm.
-	newSurface 
-		paintInto: cr
-		at: aPoint.
-	self cairoDestroy: cr
+	[ newSurface paintInto: cr at: aPoint ]
+	ensure: [ 
+		self cairoDestroy: cr ]
 ]
 
 { #category : #'private primitives' }

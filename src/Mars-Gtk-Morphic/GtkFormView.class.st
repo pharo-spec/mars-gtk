@@ -96,7 +96,7 @@ GtkFormView >> updateSurfaceRectangle: aRect [
 	origin := aRect origin.
 	newForm := Form extent: aRect extent depth: 32.
 	newForm
-		copy: (0 @ 0 extent: aRect extent)
+		copy: (0@0 extent: aRect extent)
 		from: origin
 		in: self form
 		rule: Form over.
