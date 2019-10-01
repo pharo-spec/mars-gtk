@@ -31,6 +31,12 @@ GtkLeakFinder >> leaks [
 ]
 
 { #category : #'as yet unclassified' }
+GtkLeakFinder >> leaksWithReferenceCount [
+
+	^ (self leaks collect: [ :each | each -> (each referenceCount) ]) asDictionary
+]
+
+{ #category : #'as yet unclassified' }
 GtkLeakFinder >> logCreateSignal: aSignal [
 
 	mutex critical: [ 

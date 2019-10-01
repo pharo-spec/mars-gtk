@@ -25,6 +25,12 @@ GtkWidgetTrace >> printOn: stream [
 ]
 
 { #category : #accessing }
+GtkWidgetTrace >> referenceCount [
+
+	^ (GtkWidget basicNew setHandle: self handle) referenceCount
+]
+
+{ #category : #accessing }
 GtkWidgetTrace >> widgetClass [
 	^ widgetClass
 ]

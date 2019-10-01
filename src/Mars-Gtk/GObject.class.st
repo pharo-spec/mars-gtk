@@ -495,6 +495,32 @@ GObject >> objectUnref [
 	self ffiCall: #(gpointer g_object_unref (self)) module: GObjectLibrary
 ]
 
+{ #category : #'private debugging' }
+GObject >> referenceCount [
+	"Access the reference count of this object."
+	
+	self flag: #HACK. "I do not have a clean way to access ref_count, but Since I know 
+the structure of a GObject, I know where ref_count field is stored. I will access it 
+directly.
+ From gobject.h: 
+/**
+ * GObject:
+ * 
+ * All the fields in the GObject structure are private 
+ * to the #GObject implementation and should never be accessed directly.
+ */
+struct  _GObject
+{
+  GTypeInstance  g_type_instance;
+  
+  /*< private >*/
+  volatile guint ref_count;
+  GData         *qdata;
+};"
+	
+	^ self getHandle unsignedLongAt: (self class resolveType: 'gsize') externalTypeSize + 1
+]
+
 { #category : #private }
 GObject >> registerCallback: aCallback [
 
