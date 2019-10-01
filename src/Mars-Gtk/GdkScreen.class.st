@@ -12,7 +12,9 @@ Class {
 { #category : #'instance creation' }
 GdkScreen class >> default [
 
-	^ self getDefault initialize
+	"do not send #initialize here because we do not need it (and keeping a reference 
+	 is useless since this is kept in Gtk3."
+	^ self getDefault "initialize"
 ]
 
 { #category : #accessing }
