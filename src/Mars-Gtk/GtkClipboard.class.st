@@ -12,8 +12,9 @@ Class {
 { #category : #'instance creation' }
 GtkClipboard class >> defaultForDisplay: aDisplay [
 
-	^ (self getDefaultClipboard: aDisplay) initialize
-
+	"do not send #initialize here because we do not need it (and keeping a reference 
+	 is useless since this is kept in Gtk3."
+	^ (self getDefaultClipboard: aDisplay) "initialize"
 ]
 
 { #category : #'instance creation' }
@@ -22,7 +23,10 @@ GtkClipboard class >> forSelection [
 	"from documentation: https://developer.gnome.org/gdk3/stable/gdk3-Selections.html#GDK-SELECTION-CLIPBOARD:CAPS
 	
 	#define GDK_SELECTION_CLIPBOARD 	_GDK_MAKE_ATOM (69)"
-	^ (self gtkClipboardGet: (ExternalAddress fromAddress: 69)) initialize
+
+	"do not send #initialize here because we do not need it (and keeping a reference 
+	 is useless since this is kept in Gtk3."
+	^ (self gtkClipboardGet: (ExternalAddress fromAddress: 69)) "initialize"
 ]
 
 { #category : #accessing }
