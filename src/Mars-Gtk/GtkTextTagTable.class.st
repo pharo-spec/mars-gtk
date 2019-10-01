@@ -37,6 +37,17 @@ GtkTextTagTable >> add: tag [
 	^ self ffiCall: #(gboolean gtk_text_tag_table_add (self, GtkTextTag *tag))
 ]
 
+{ #category : #initialization }
+GtkTextTagTable >> initialize [
+
+	super initialize.
+	self autoRelease
+]
+
+{ #category : #initialization }
+GtkTextTagTable >> referenceAfterCreation [
+]
+
 { #category : #accessing }
 GtkTextTagTable >> size [
 
