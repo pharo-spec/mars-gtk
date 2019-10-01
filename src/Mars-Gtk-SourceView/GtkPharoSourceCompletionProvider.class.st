@@ -151,6 +151,13 @@ GtkPharoSourceCompletionProvider >> iconAt: icon ifAbsentPut: aBlock [
 		ifAbsentPut: aBlock
 ]
 
+{ #category : #initialization }
+GtkPharoSourceCompletionProvider >> initialize [
+
+	super initialize.
+	self autoRelease
+]
+
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> match: context [
 	
