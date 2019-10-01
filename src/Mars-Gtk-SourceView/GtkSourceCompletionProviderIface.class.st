@@ -27,7 +27,6 @@ Class {
 		'OFFSET_GET_NAME',
 		'OFFSET_GET_PRIORITY',
 		'OFFSET_GET_START_ITER',
-		'OFFSET_G_IFACE',
 		'OFFSET_MATCH',
 		'OFFSET_POPULATE',
 		'OFFSET_UPDATE_INFO'
@@ -80,18 +79,6 @@ GtkSourceCompletionProviderIface >> activate_proposal: anObject [
 		put: (anObject 
 			ifNotNil: [ anObject thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
-]
-
-{ #category : #'accessing structure variables' }
-GtkSourceCompletionProviderIface >> g_iface [
-	"This method was automatically generated"
-	^ GTypeInterface fromHandle: (handle referenceStructAt: OFFSET_G_IFACE length: GTypeInterface byteSize)
-]
-
-{ #category : #'accessing structure variables' }
-GtkSourceCompletionProviderIface >> g_iface: anObject [
-	"This method was automatically generated"
-	handle structAt: OFFSET_G_IFACE put: anObject getHandle length: GTypeInterface byteSize
 ]
 
 { #category : #'accessing structure variables' }
