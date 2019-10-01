@@ -25,3 +25,15 @@ GInterface class >> fieldsDesc [
 	GTypeInterface g_iface;
 	)
 ]
+
+{ #category : #'accessing structure variables' }
+GInterface >> g_iface [
+	"This method was automatically generated"
+	^ GTypeInterface fromHandle: (handle referenceStructAt: OFFSET_G_IFACE length: GTypeInterface byteSize)
+]
+
+{ #category : #'accessing structure variables' }
+GInterface >> g_iface: anObject [
+	"This method was automatically generated"
+	handle structAt: OFFSET_G_IFACE put: anObject getHandle length: GTypeInterface byteSize
+]
