@@ -64,6 +64,11 @@ GtkSourceCompletionProviderIface class >> gType [
 		module: GtkSourceViewLibrary
 ]
 
+{ #category : #private }
+GtkSourceCompletionProviderIface class >> rebuildFieldAccessors [
+	"Prevent rebuild"
+]
+
 { #category : #'accessing structure variables' }
 GtkSourceCompletionProviderIface >> activate_proposal [
 	"This method was automatically generated"
