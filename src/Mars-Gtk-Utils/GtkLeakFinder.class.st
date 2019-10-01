@@ -24,19 +24,36 @@ GtkLeakFinder >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+GtkLeakFinder >> inspectorLeaks [
+	<inspectorPresentationOrder: 0 title: 'Leaks'>
+	| table |
+
+	^ (table := SpTablePresenter new)
+		addColumn: (SpStringTableColumn title: 'Widget' evaluated: [ :assoc | assoc key asString ]);
+		addColumn: (SpStringTableColumn title: 'Widget' evaluated: [ :assoc | assoc value ]);
+		items: self leaksWithReferenceCount;
+		contextMenu: (SpMenuPresenter new 
+			addItem: [ :item | item 
+				name: 'Explore pointers'; 
+				action: [ StInspector inspect: table selectedItem findAllPaths ] ];
+			yourself);
+		yourself
+]
+
+{ #category : #accessing }
 GtkLeakFinder >> leaks [
 
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 	^ created select: [ :each | (destroyed includes: each handle) not ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkLeakFinder >> leaksWithReferenceCount [
 
 	^ (self leaks collect: [ :each | each -> (each referenceCount) ]) asDictionary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #registering }
 GtkLeakFinder >> logCreateSignal: aSignal [
 
 	mutex critical: [ 
@@ -46,7 +63,7 @@ GtkLeakFinder >> logCreateSignal: aSignal [
 			yourself) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #registering }
 GtkLeakFinder >> logDestroySignal: aSignal [
 
 	mutex critical: [ 
