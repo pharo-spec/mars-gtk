@@ -114,7 +114,7 @@ GtkCssProvider >> addForUserToDefaultScreen [
 
 	self 
 		addForScreen: GdkScreen default 
-		priotity: GTK_STYLE_PROVIDER_PRIORITY_USER
+		priority: GTK_STYLE_PROVIDER_PRIORITY_USER
 ]
 
 { #category : #accessing }

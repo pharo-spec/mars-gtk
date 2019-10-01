@@ -40,14 +40,6 @@ GtkTreeStore >> appendNew [
 	^ (GtkTreeIter on: self) appendNewRoot
 ]
 
-{ #category : #initialization }
-GtkTreeStore >> initialize [ 
-
-	"super initialize."
-	"Stores need to be unreferenced after set"
-	self autoRelease
-]
-
 { #category : #testing }
 GtkTreeStore >> numberOfColumns [
 

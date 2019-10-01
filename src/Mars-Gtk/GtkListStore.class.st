@@ -36,9 +36,3 @@ GtkListStore >> appendNew [
 	
 	^ (GtkListIter on: self) appendNew
 ]
-
-{ #category : #initialization }
-GtkListStore >> initialize [ 
-	super initialize.
-	"self autoRelease"
-]

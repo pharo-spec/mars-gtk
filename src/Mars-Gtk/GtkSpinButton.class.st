@@ -15,7 +15,7 @@ Class {
 { #category : #accessing }
 GtkSpinButton class >> defaultAdjustment [
 
-	^ GtkAdjustment new
+	^ GtkAdjustment newDefault
 ]
 
 { #category : #accessing }

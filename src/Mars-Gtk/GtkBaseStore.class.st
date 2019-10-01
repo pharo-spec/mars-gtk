@@ -34,10 +34,13 @@ GtkBaseStore class >> newColumnTypes: columnTypes [
 
 	columnTypesExternalArray pinInMemory.
 
-	^ [(self 
-		basicNewWithNumberOfColumns: columnTypes size 
-		andTypes: columnTypesExternalArray) 
-		initialize] ensure: [ columnTypesExternalArray unpinInMemory ]
+	^ [
+		(self 
+			basicNewWithNumberOfColumns: columnTypes size 
+			andTypes: columnTypesExternalArray) 
+			initialize ] 
+		ensure: [ 
+			columnTypesExternalArray unpinInMemory ]
 ]
 
 { #category : #'instance creation' }

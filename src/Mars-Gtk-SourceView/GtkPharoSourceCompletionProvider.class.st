@@ -151,13 +151,6 @@ GtkPharoSourceCompletionProvider >> iconAt: icon ifAbsentPut: aBlock [
 		ifAbsentPut: aBlock
 ]
 
-{ #category : #initialization }
-GtkPharoSourceCompletionProvider >> initialize [
-
-	super initialize.
-	self autoRelease
-]
-
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> match: context [
 	
@@ -190,14 +183,6 @@ GtkPharoSourceCompletionProvider >> populate: context [
 GtkPharoSourceCompletionProvider >> priority [
 
 	^ 1
-]
-
-{ #category : #initialization }
-GtkPharoSourceCompletionProvider >> referenceAfterCreation [
-	"do not reference it, otherwise Gtk will not know what to do 
-	 (since is not directly referenced by a GtkWidget, it will not be removed when 
-	 removed the window)"
-
 ]
 
 { #category : #accessing }

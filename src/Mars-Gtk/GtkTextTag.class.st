@@ -60,19 +60,8 @@ GtkTextTag >> foregroundRGBA [
 	^ self gObjectGetHandle: 'foreground-rgba' as: GdkRGBA
 ]
 
-{ #category : #initialization }
-GtkTextTag >> initialize [
-
-	super initialize.
-	self autoRelease
-]
-
 { #category : #testing }
 GtkTextTag >> isForegroundSet [
 
 	^ self gObjectGetBoolean: 'foreground-set'
-]
-
-{ #category : #initialization }
-GtkTextTag >> referenceAfterCreation [
 ]

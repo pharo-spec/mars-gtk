@@ -127,6 +127,12 @@ GObject class >> resolveType: aType [
 		resolveType: aType
 ]
 
+{ #category : #initialization }
+GObject >> autoObjectUnref [
+	
+	self autoRelease
+]
+
 { #category : #'private signaling' }
 GObject >> basicConnectSignal: callback [
 	| id |
@@ -451,6 +457,7 @@ GObject >> initialize [
 	super initialize.
 	self isValidHandle ifTrue: [ 
 		self referenceAfterCreation.
+		self autoObjectUnref.
 		self installDebugSignals	]
 ]
 
@@ -502,9 +509,7 @@ GObject >> objectUnref [
 
 { #category : #initialization }
 GObject >> referenceAfterCreation [
-	"I retain a reference to ensure it is not destroyed until I actually want to doit."
-	
-	self objectRef
+
 ]
 
 { #category : #'private debugging' }

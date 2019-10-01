@@ -177,13 +177,6 @@ GtkTextBuffer >> getSelectionBoundsStart: start end: end [
 		GtkTextIter *end))
 ]
 
-{ #category : #initialization }
-GtkTextBuffer >> initialize [ 
-
-	super initialize.
-	self autoRelease
-]
-
 { #category : #private }
 GtkTextBuffer >> insertIter: iter text: text [
 
@@ -274,10 +267,6 @@ GtkTextBuffer >> offsetIter: iter pos: char_offset [
 	
 	^ self ffiCall: #(void gtk_text_buffer_get_iter_at_offset (self, GtkTextIter *iter, gint char_offset))
 	
-]
-
-{ #category : #initialization }
-GtkTextBuffer >> referenceAfterCreation [
 ]
 
 { #category : #'accessing tags' }
