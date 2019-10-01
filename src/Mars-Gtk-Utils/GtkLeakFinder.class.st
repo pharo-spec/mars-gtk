@@ -27,6 +27,7 @@ GtkLeakFinder >> initialize [
 { #category : #'as yet unclassified' }
 GtkLeakFinder >> leaks [
 
+	3 timesRepeat: [ Smalltalk garbageCollect ].
 	^ created select: [ :each | (destroyed includes: each handle) not ]
 ]
 

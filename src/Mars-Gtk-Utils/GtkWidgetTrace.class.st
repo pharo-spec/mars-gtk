@@ -9,6 +9,16 @@ Class {
 }
 
 { #category : #accessing }
+GtkWidgetTrace >> findAllPaths [
+	| instance |
+	
+	instance := self widgetClass allInstances 
+		detect: [ :each | each getHandle = self handle ]. 
+
+	^ ReferenceFinder findAllPathsTo: instance
+]
+
+{ #category : #accessing }
 GtkWidgetTrace >> handle [
 	^ handle
 ]
