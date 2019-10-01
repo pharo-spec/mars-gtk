@@ -28,6 +28,12 @@ GtkWidgetTrace >> handle: anObject [
 	handle := anObject
 ]
 
+{ #category : #accessing }
+GtkWidgetTrace >> instanceCount [
+
+	^ self widgetClass instanceCount
+]
+
 { #category : #printing }
 GtkWidgetTrace >> printOn: stream [ 
 

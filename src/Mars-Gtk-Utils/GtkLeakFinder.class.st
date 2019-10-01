@@ -48,6 +48,12 @@ GtkLeakFinder >> leaks [
 ]
 
 { #category : #accessing }
+GtkLeakFinder >> leaksWithInstancesCount [
+
+	^ (self leaks collect: [ :each | each -> (each instanceCount) ]) asDictionary
+]
+
+{ #category : #accessing }
 GtkLeakFinder >> leaksWithReferenceCount [
 
 	^ (self leaks collect: [ :each | each -> (each referenceCount) ]) asDictionary
