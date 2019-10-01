@@ -30,7 +30,7 @@ GtkLeakFinder >> inspectorLeaks [
 
 	^ (table := SpTablePresenter new)
 		addColumn: (SpStringTableColumn title: 'Widget' evaluated: [ :assoc | assoc key asString ]);
-		addColumn: (SpStringTableColumn title: 'Widget' evaluated: [ :assoc | assoc value ]);
+		addColumn: (SpStringTableColumn title: 'References' evaluated: [ :assoc | assoc value ]);
 		items: self leaksWithReferenceCount;
 		contextMenu: (SpMenuPresenter new 
 			addItem: [ :item | item 
