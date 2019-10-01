@@ -452,9 +452,15 @@ GObject >> initialize [
 	self isValidHandle ifTrue: [ 
 		"I retain a reference to ensure it is not destroyed until I actually want to doit."
 		self objectRef.
-		"emit signals to debug"
-		GtkCreateSignal emitWidget: self.
-		GtkDestroySignal installFor: self	]
+		self installDebugSignals	]
+]
+
+{ #category : #'private debugging' }
+GObject >> installDebugSignals [
+	"emit signals to debug"
+	
+	GtkCreateSignal emitWidget: self.
+	GtkDestroySignal installFor: self
 ]
 
 { #category : #private }
