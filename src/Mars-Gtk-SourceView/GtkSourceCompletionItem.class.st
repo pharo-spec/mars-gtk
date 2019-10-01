@@ -47,6 +47,13 @@ GtkSourceCompletionItem >> icon: icon [
 	^ self ffiCall: #(void gtk_source_completion_item_set_icon (self, GdkPixbuf *icon))
 ]
 
+{ #category : #initialization }
+GtkSourceCompletionItem >> initialize [
+
+	super initialize.
+	self autoRelease
+]
+
 { #category : #accessing }
 GtkSourceCompletionItem >> label [ 
 
