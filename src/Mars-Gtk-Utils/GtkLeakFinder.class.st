@@ -20,8 +20,7 @@ GtkLeakFinder >> initialize [
 
 	super initialize.
 	mutex := Mutex new.
-	created := Set new.
-	destroyed := Set new
+	self reset
 ]
 
 { #category : #'as yet unclassified' }
@@ -58,6 +57,13 @@ GtkLeakFinder >> logDestroySignal: aSignal [
 GtkLeakFinder >> nextPut: aSignal [
 
 	aSignal logIn: self
+]
+
+{ #category : #initialize }
+GtkLeakFinder >> reset [
+	
+	created := Set new.
+	destroyed := Set new	
 ]
 
 { #category : #registering }

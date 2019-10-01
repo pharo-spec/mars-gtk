@@ -71,6 +71,11 @@ GtkSourceCompletionItem >> markup: markup [
 	^ self ffiCall: #(void gtk_source_completion_item_set_markup (self, const gchar *markup))
 ]
 
+{ #category : #initialization }
+GtkSourceCompletionItem >> referenceAfterCreation [
+	"do not reference, we already have one because we do #new"
+]
+
 { #category : #accessing }
 GtkSourceCompletionItem >> text [
 

@@ -450,8 +450,7 @@ GObject >> initialize [
 
 	super initialize.
 	self isValidHandle ifTrue: [ 
-		"I retain a reference to ensure it is not destroyed until I actually want to doit."
-		self objectRef.
+		self referenceAfterCreation.
 		self installDebugSignals	]
 ]
 
@@ -499,6 +498,13 @@ GObject >> objectRefSink [
 GObject >> objectUnref [
 
 	self ffiCall: #(gpointer g_object_unref (self)) module: GObjectLibrary
+]
+
+{ #category : #initialization }
+GObject >> referenceAfterCreation [
+	"I retain a reference to ensure it is not destroyed until I actually want to doit."
+	
+	self objectRef
 ]
 
 { #category : #'private debugging' }

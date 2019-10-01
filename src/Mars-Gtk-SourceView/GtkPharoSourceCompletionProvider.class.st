@@ -192,6 +192,14 @@ GtkPharoSourceCompletionProvider >> priority [
 	^ 1
 ]
 
+{ #category : #initialization }
+GtkPharoSourceCompletionProvider >> referenceAfterCreation [
+	"do not reference it, otherwise Gtk will not know what to do 
+	 (since is not directly referenced by a GtkWidget, it will not be removed when 
+	 removed the window)"
+
+]
+
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
 
