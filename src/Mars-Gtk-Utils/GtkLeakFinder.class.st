@@ -57,9 +57,7 @@ GtkLeakFinder >> logDestroySignal: aSignal [
 { #category : #registering }
 GtkLeakFinder >> nextPut: aSignal [
 
-	(self signals includes: aSignal class) ifFalse: [ ^ self ].
-	
-	aSignal logIn: self. 
+	aSignal logIn: self
 ]
 
 { #category : #registering }
