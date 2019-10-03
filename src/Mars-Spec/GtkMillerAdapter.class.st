@@ -56,8 +56,21 @@ GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget 
 	^ gtkWidget
 ]
 
+{ #category : #building }
+GtkMillerAdapter >> buildWidget [
+	"We defer this until layout: (because then I will know what I have to create)"
+	
+	^ nil
+]
+
 { #category : #private }
-GtkMillerAdapter >> basicScrollToShowLastPage [
+GtkMillerAdapter >> childrenWidgets [
+	
+	^ innerWidget children
+]
+
+{ #category : #private }
+GtkMillerAdapter >> doScrollToShowLastPage [
 	| lastWidget pos |
 
 	lastWidget := innerWidget children last.
@@ -70,19 +83,6 @@ GtkMillerAdapter >> basicScrollToShowLastPage [
 	
 	self widget hAdjustment value: pos x.
 	self widget vAdjustment value: pos y
-]
-
-{ #category : #building }
-GtkMillerAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
-{ #category : #private }
-GtkMillerAdapter >> childrenWidgets [
-	
-	^ innerWidget children
 ]
 
 { #category : #building }
@@ -195,12 +195,12 @@ GtkMillerAdapter >> scrollToShowLastPage [
 	sizing at once. We need to wait until this happens so the scrolling has sense."
 	[
 		1 milliSecond wait.
-		[ self basicScrollToShowLastPage ]
+		[ self doScrollToShowLastPage ]
 		on: Error do: [ :e | 
 			"do not lost the error if any, but do not stop because of it"
 			e emit. 
 			e messageText crTrace ]
-	] schedule
+	] asTask schedule: TKTNewProcessTaskRunner new
 ]
 
 { #category : #private }
