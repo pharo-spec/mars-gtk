@@ -82,8 +82,8 @@ GtkLeakFinder >> logZombieSignal: aSignal [
 
 	mutex critical: [ 
 		zombies add: (GtkWidgetTrace new 
-			widgetClass: aSignal widget class;
-			handle: aSignal widget getHandle copy;
+			widgetClass: aSignal target;
+			handle: aSignal handle copy;
 			yourself) ]
 ]
 
@@ -112,4 +112,11 @@ GtkLeakFinder >> start [
 
 	self ensureLoggingSignals.
 	super start
+]
+
+{ #category : #accessing }
+GtkLeakFinder >> zombies [
+
+	3 timesRepeat: [ Smalltalk garbageCollect ].
+	^ zombies
 ]
