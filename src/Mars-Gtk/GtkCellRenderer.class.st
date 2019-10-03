@@ -25,7 +25,7 @@ GtkCellRenderer class >> gType [
 { #category : #'instance creation' }
 GtkCellRenderer class >> new [
 	
-	^ self cellRendererNew initialize
+	^ self cellRendererNew
 ]
 
 { #category : #accessing }

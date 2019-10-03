@@ -45,6 +45,12 @@ GtkTreeViewColumn >> addAttribute: attribute column: column renderer: aRenderer 
 		gint column))
 ]
 
+{ #category : #initialization }
+GtkTreeViewColumn >> autoObjectUnref [
+
+	"do not unref"
+]
+
 { #category : #accessing }
 GtkTreeViewColumn >> beResizable [
 

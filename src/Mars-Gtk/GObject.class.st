@@ -502,7 +502,6 @@ GObject >> initialize [
 
 	super initialize.
 	self isValidHandle ifTrue: [ 
-		self referenceAfterCreation.
 		self autoObjectUnref.
 		self installDebugSignals	]
 ]
@@ -551,11 +550,6 @@ GObject >> objectRefSink [
 GObject >> objectUnref [
 
 	self ffiCall: #(gpointer g_object_unref (self)) module: GObjectLibrary
-]
-
-{ #category : #initialization }
-GObject >> referenceAfterCreation [
-
 ]
 
 { #category : #'private debugging' }

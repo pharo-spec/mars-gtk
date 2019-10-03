@@ -372,7 +372,7 @@ GtkTreeView >> selectedIndexes [
 { #category : #private }
 GtkTreeView >> selection [ 
 
-	^ selection ifNil: [ selection := self getSelection initialize ]
+	^ selection ifNil: [ selection := self getSelection ]
 ]
 
 { #category : #private }

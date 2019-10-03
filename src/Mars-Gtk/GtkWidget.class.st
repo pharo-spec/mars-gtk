@@ -97,6 +97,7 @@ GtkWidget >> asListBoxRow [
 { #category : #initialization }
 GtkWidget >> autoObjectUnref [
 
+	"do not unref"
 ]
 
 { #category : #'external resource management' }
@@ -677,13 +678,6 @@ GtkWidget >> queueDrawArea: rect [
 GtkWidget >> queueDrawAreaX: x y: y width: width height: height [
 
 	self ffiCall: #(void gtk_widget_queue_draw_area (self, gint x, gint y, gint width, gint height))
-]
-
-{ #category : #initialization }
-GtkWidget >> referenceAfterCreation [
-	"I retain a reference to ensure it is not destroyed until I actually want to doit."
-	
-	"self objectRef"
 ]
 
 { #category : #style }
