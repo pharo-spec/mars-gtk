@@ -683,7 +683,7 @@ GtkWidget >> queueDrawAreaX: x y: y width: width height: height [
 GtkWidget >> referenceAfterCreation [
 	"I retain a reference to ensure it is not destroyed until I actually want to doit."
 	
-	self objectRef
+	"self objectRef"
 ]
 
 { #category : #style }

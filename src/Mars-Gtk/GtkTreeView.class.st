@@ -277,9 +277,7 @@ GtkTreeView >> isHoverSelection [
 GtkTreeView >> model [
 
 	^ listStore ifNil: [ 
-		listStore := self getModel 
-			objectRef;
-			yourself ]
+		listStore := self getModel ]
 ]
 
 { #category : #accessing }
@@ -287,7 +285,6 @@ GtkTreeView >> model: aListStore [
 
 	listStore ifNotNil: [ listStore objectUnref ].
 	listStore := aListStore.
-	listStore objectRef.
 	
 	self setModel: aListStore
 ]

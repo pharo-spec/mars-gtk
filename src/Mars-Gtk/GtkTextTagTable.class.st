@@ -37,8 +37,7 @@ GtkTextTagTable class >> textTagTableNew [
 { #category : #adding }
 GtkTextTagTable >> add: tag [
 
-	tags add: tag.
-	self basicAdd: tag
+	^ self ffiCall: #(gboolean gtk_text_tag_table_add (self, GtkTextTag *tag))
 ]
 
 { #category : #adding }
