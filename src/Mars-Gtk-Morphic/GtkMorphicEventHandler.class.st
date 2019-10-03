@@ -84,7 +84,9 @@ GtkMorphicEventHandler >> convertModifiers: anEvent [
 	
 	anEvent hasControlModifier ifTrue: [ modifiers := modifiers | 2r00010000 ]. "Control key"
 	anEvent hasShiftModifier ifTrue: [ modifiers := modifiers | 8 ]. "Shift key"
-	anEvent hasMod2 ifTrue: [ modifiers := modifiers | 2r01000000 ]. "Cmd key"
+	self flag: #TODO. "In mac this mod2 is command, but not in linux."
+	Smalltalk os isMacOS ifTrue: [ 
+		anEvent hasMod2 ifTrue: [ modifiers := modifiers | 2r01000000 ]. "Cmd key" ].
 	
 	button := anEvent button.
 	(button ~= 1 and: [ anEvent hasButton1Modifier ]) 
