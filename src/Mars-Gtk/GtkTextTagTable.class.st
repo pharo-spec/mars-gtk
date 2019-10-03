@@ -6,6 +6,9 @@ https://developer.gnome.org/gtk3/stable/GtkTextTagTable.html
 Class {
 	#name : #GtkTextTagTable,
 	#superclass : #GObject,
+	#instVars : [
+		'tags'
+	],
 	#pools : [
 		'GtkTypes'
 	],
@@ -34,7 +37,21 @@ GtkTextTagTable class >> textTagTableNew [
 { #category : #adding }
 GtkTextTagTable >> add: tag [
 
+	tags add: tag.
+	self basicAdd: tag
+]
+
+{ #category : #adding }
+GtkTextTagTable >> basicAdd: tag [
+
 	^ self ffiCall: #(gboolean gtk_text_tag_table_add (self, GtkTextTag *tag))
+]
+
+{ #category : #initialization }
+GtkTextTagTable >> initialize [
+
+	super initialize.
+	tags := OrderedCollection new
 ]
 
 { #category : #accessing }

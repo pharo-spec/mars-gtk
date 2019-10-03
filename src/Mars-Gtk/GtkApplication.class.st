@@ -71,8 +71,7 @@ GtkApplication class >> startUp: resuming [
 { #category : #private }
 GtkApplication >> initArgC: argc argV: argv [
 
-	^ self 
-		ffiCall: #( void gtk_init ( ulong argc, ulong argv ) )
+	^ self ffiCall: #(void gtk_init (ulong argc, ulong argv))
 ]
 
 { #category : #private }
