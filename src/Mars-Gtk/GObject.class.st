@@ -25,8 +25,12 @@ GObject class >> finalizeResourceData: handle [
 
 	(self isValidHandle: handle) ifFalse: [ ^ self ].
 
-	GtkFinalizeSignal emitTarget: self handle: handle.
-	self objectUnref: handle.
+	(self instanceIsObject: handle) 
+		ifTrue: [ 
+			GtkFinalizeSignal emitTarget: self handle: handle.
+			self objectUnref: handle ]
+		ifFalse: [
+			GtkZombieSignal emitTarget: self handle: handle ].
 	handle beNull
 ]
 
@@ -114,9 +118,51 @@ GObject class >> gtkPrefix [
 ]
 
 { #category : #private }
+GObject class >> instance: handle isFundamentallyA: fundamental_type [
+
+	^ self ffiCall: #(gboolean g_type_check_instance_is_fundamentally_a (
+		void *handle,
+		gsize fundamental_type))
+]
+
+{ #category : #private }
+GObject class >> instanceIsObject: handle [
+		
+	^ self 
+		instance: handle 
+		isFundamentallyA: G_TYPE_OBJECT
+]
+
+{ #category : #private }
 GObject class >> objectUnref: handle [
 	
 	^ self ffiCall: #(gpointer g_object_unref (void *handle)) module: GObjectLibrary
+]
+
+{ #category : #private }
+GObject class >> referenceCountOf: handle [
+
+	self flag: #HACK. "I do not have a clean way to access ref_count, but Since I know 
+the structure of a GObject, I know where ref_count field is stored. I will access it 
+directly.
+ From gobject.h: 
+/**
+ * GObject:
+ * 
+ * All the fields in the GObject structure are private 
+ * to the #GObject implementation and should never be accessed directly.
+ */
+struct  _GObject
+{
+  GTypeInstance  g_type_instance;
+  
+  /*< private >*/
+  volatile guint ref_count;
+  GData         *qdata;
+};"
+	
+
+	^ handle unsignedLongAt: (self resolveType: 'gsize') externalTypeSize + 1
 ]
 
 { #category : #private }
@@ -515,27 +561,8 @@ GObject >> referenceAfterCreation [
 { #category : #'private debugging' }
 GObject >> referenceCount [
 	"Access the reference count of this object."
-	
-	self flag: #HACK. "I do not have a clean way to access ref_count, but Since I know 
-the structure of a GObject, I know where ref_count field is stored. I will access it 
-directly.
- From gobject.h: 
-/**
- * GObject:
- * 
- * All the fields in the GObject structure are private 
- * to the #GObject implementation and should never be accessed directly.
- */
-struct  _GObject
-{
-  GTypeInstance  g_type_instance;
-  
-  /*< private >*/
-  volatile guint ref_count;
-  GData         *qdata;
-};"
-	
-	^ self getHandle unsignedLongAt: (self class resolveType: 'gsize') externalTypeSize + 1
+
+	^ self class referenceCountOf: self getHandle
 ]
 
 { #category : #private }

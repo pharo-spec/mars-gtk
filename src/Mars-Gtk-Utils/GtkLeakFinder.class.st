@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'created',
 		'destroyed',
-		'mutex'
+		'mutex',
+		'zombies'
 	],
 	#category : #'Mars-Gtk-Utils'
 }
@@ -77,6 +78,16 @@ GtkLeakFinder >> logDestroySignal: aSignal [
 ]
 
 { #category : #registering }
+GtkLeakFinder >> logZombieSignal: aSignal [
+
+	mutex critical: [ 
+		zombies add: (GtkWidgetTrace new 
+			widgetClass: aSignal widget class;
+			handle: aSignal widget getHandle copy;
+			yourself) ]
+]
+
+{ #category : #registering }
 GtkLeakFinder >> nextPut: aSignal [
 
 	aSignal logIn: self
@@ -86,7 +97,8 @@ GtkLeakFinder >> nextPut: aSignal [
 GtkLeakFinder >> reset [
 	
 	created := Set new.
-	destroyed := Set new	
+	destroyed := Set new.
+	zombies := Set new
 ]
 
 { #category : #registering }
