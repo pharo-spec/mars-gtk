@@ -1970,30 +1970,31 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInCell [
 	<category: #Lists>
 	<layoutFillContainer>
 	
-	| store tree pixbufRenderer textRenderer child |
+	| store tree pixbufRenderer textRenderer child icons |
 	
 	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF. GType G_TYPE_STRING }.
 
+	icons := ThemeIcons current allIconNames.
 	100 timesRepeat: [ | row iconName |
 		
-		iconName := Smalltalk ui icons icons keys atRandom.
+		iconName := icons atRandom.
 		row := store appendNew
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString;
 			yourself.
 			
-		iconName := Smalltalk ui icons icons keys atRandom.
+		iconName := icons atRandom.
 		(child := row appendNew)
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString.
 		child appendNew 
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString.
 		row appendNew
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString.
 		row appendNew
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString ].
 	
 	tree := GtkTreeView new.
@@ -2021,30 +2022,31 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInColumn [
 	<category: #Lists>
 	<layoutFillContainer>
 	
-	| store tree pixbufRenderer textRenderer child |
+	| store tree pixbufRenderer textRenderer child icons |
 	
 	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF.  GType G_TYPE_STRING }.
 
+	icons := ThemeIcons current allIconNames.
 	100 timesRepeat: [ | row iconName |
 		
-		iconName := Smalltalk ui icons icons keys atRandom.
+		iconName := icons atRandom.
 		row := store appendNew
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString;
 			yourself.
 			
-		iconName := Smalltalk ui icons icons keys atRandom.
+		iconName := icons atRandom.
 		(child := row appendNew)
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString.
 		child appendNew 
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString.
 		row appendNew
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString.
 		row appendNew
-			at: 0 putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+			at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 			at: 1 putString: iconName asString ].
 	
 	tree := GtkTreeView new.
@@ -2073,7 +2075,9 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInColumnWithColor [
 	<title: 'Tree View with Icons in Column with Background color'>
 	<category: #Lists>
 	<layoutFillContainer>
-	| store tree pixbufRenderer textRenderer child |
+	| store tree pixbufRenderer textRenderer child icons |
+
+	icons := ThemeIcons current allIconNames.
 
 	store := GtkTreeStore
 		newColumnTypes:
@@ -2082,32 +2086,27 @@ GtkExamples class >> gtkExampleTreeViewWithIconsInColumnWithColor [
 			GType GDK_TYPE_RGBA}.
 
 	100 timesRepeat: [ | row iconName |
-			iconName := Smalltalk ui icons icons keys atRandom.
+			iconName := icons atRandom.
 			row := store appendNew
-				at: 0
-					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 				at: 1 putString: iconName asString;
 				at: 2 putObject: Color random gtkRGBA;
 				yourself.
-			iconName := Smalltalk ui icons icons keys atRandom.
+			iconName := icons atRandom.
 			(child := row appendNew)
-				at: 0
-					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 				at: 1 putString: iconName asString;
 				at: 2 putObject: Color random gtkRGBA.
 			child appendNew
-				at: 0
-					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 				at: 1 putString: iconName asString;
 				at: 2 putObject: Color random gtkRGBA.
 			row appendNew
-				at: 0
-					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 				at: 1 putString: iconName asString;
 				at: 2 putObject: Color random gtkRGBA.
 			row appendNew
-				at: 0
-					putObject: (GdkPixbuf newForm: (Smalltalk ui icons iconNamed: iconName));
+				at: 0 putObject: (GdkPixbuf newForm: (self iconNamed: iconName));
 				at: 1 putString: iconName asString;
 				at: 2 putObject: Color random gtkRGBA ].
 
