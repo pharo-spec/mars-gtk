@@ -120,9 +120,11 @@ GObject class >> gtkPrefix [
 { #category : #private }
 GObject class >> instance: handle isFundamentallyA: fundamental_type [
 
-	^ self ffiCall: #(gboolean g_type_check_instance_is_fundamentally_a (
-		void *handle,
-		gsize fundamental_type))
+	^ self 
+		ffiCall: #(gboolean g_type_check_instance_is_fundamentally_a (
+			void *handle,
+			gsize fundamental_type))
+		module: GObjectLibrary
 ]
 
 { #category : #private }
