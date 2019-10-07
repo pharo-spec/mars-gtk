@@ -163,7 +163,6 @@ struct  _GObject
   GData         *qdata;
 };"
 	
-
 	^ handle unsignedLongAt: (self resolveType: 'gsize') externalTypeSize + 1
 ]
 
