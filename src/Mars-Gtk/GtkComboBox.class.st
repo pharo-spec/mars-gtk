@@ -24,7 +24,7 @@ GtkComboBox class >> comboBoxNew [
 { #category : #private }
 GtkComboBox class >> comboBoxNewWithEntry [
 
-	^ self ffiCall: #(GtkComboBox *GtkWidget *gtk_combo_box_new_with_entry (void))
+	^ self ffiCall: #(GtkComboBox *gtk_combo_box_new_with_entry (void))
 ]
 
 { #category : #accessing }
