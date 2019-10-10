@@ -59,7 +59,7 @@ GtkAccelLabel class >> newLabel: aString [
 
 { #category : #private }
 GtkAccelLabel class >> shortcutToString: aShortcut [
-
+	
 	^ KMShortcutPrinter toString: aShortcut
 ]
 
