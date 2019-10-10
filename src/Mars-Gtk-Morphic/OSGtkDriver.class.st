@@ -32,14 +32,14 @@ OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	
 	self ensureGtkRunning.
 	
-	window := OSGtkWindowHandle newAttributes: attributes.
+	GtkLibrary defer: [	window := OSGtkWindowHandle newAttributes: attributes.
 	window osWindow: osWindow.
 		
 	osWindow setJustCreatedHandle: window.
 	
 	attributes visible 
 		ifTrue: [ window show ]
-		ifFalse: [ window hide ].
+		ifFalse: [ window hide ]].
 	
 	^ window
 ]

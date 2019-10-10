@@ -80,6 +80,8 @@ GSignalCallback >> valueWithArguments: args [
 	 but sometimes...)"
 	| result |
 	
+	GCallbackVariable value: true.
+	
 	result := self basicValueWithArguments: args.
 	linkedCallbacks ifNotNil: [ 
 		linkedCallbacks do: [ :each | 

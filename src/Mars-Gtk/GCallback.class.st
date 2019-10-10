@@ -8,3 +8,11 @@ Class {
 	],
 	#category : #'Mars-Gtk-Base-Callbacks'
 }
+
+{ #category : #evaluating }
+GCallback >> valueWithArguments: args [
+
+	GCallbackVariable value: true.
+
+	^ super valueWithArguments: args
+]

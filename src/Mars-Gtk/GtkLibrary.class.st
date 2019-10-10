@@ -24,6 +24,12 @@ GtkLibrary class >> beForProduction [
 	Debug := false
 ]
 
+{ #category : #accessing }
+GtkLibrary class >> defer: aBlock [ 
+
+	^ self uniqueInstance defer:  aBlock
+]
+
 { #category : #testing }
 GtkLibrary class >> isDebug [ 
 
@@ -34,6 +40,31 @@ GtkLibrary class >> isDebug [
 GtkLibrary >> calloutAPIClass [ 
 
 	^ TFCalloutAPI
+]
+
+{ #category : #private }
+GtkLibrary >> defer:  aBlock [
+
+	| aSemaphore aCallback |
+
+	GCallbackVariable value ifTrue: [ ^ aBlock value ].
+
+	aSemaphore := Semaphore new.
+	aCallback := GCallback signature: #(gboolean (void* data)) block: [:data | 
+		Stdio stdout << 'Entro.'; crlf; flush. 
+		[aBlock value] ensure: [aSemaphore signal]. 
+		Stdio stdout << 'Salio.'; crlf; flush. 
+		false ].
+
+	self idleAdd: aCallback.
+	
+	aSemaphore wait.
+]
+
+{ #category : #'accessing platform' }
+GtkLibrary >> ffiLibraryName [ 
+
+	^ self
 ]
 
 { #category : #private }
@@ -54,11 +85,23 @@ GtkLibrary >> getMinorVersion [
 	^ self ffiCall: #(guint gtk_get_minor_version (void))
 ]
 
+{ #category : #private }
+GtkLibrary >> idleAdd: aCallback [
+
+	self ffiCall: #(void g_idle_add( FFICallback aCallback, NULL))
+]
+
 { #category : #'accessing platform' }
 GtkLibrary >> macModuleName [
 
 	self class isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libgtk-3.dylib' ]. 
 	^ '/usr/local/lib/libgtk-3.dylib'
+]
+
+{ #category : #private }
+GtkLibrary >> mainContextInvoke: aCallback [
+
+	self ffiCall: #(void g_main_context_invoke( NULL, FFICallback aCallback, NULL))
 ]
 
 { #category : #utils }
@@ -90,7 +133,7 @@ GtkLibrary >> matchVersionMajor: required_major minor: required_minor micro: req
 { #category : #'accessing platform' }
 GtkLibrary >> runner [
 	
-	^ TFSameThreadRunner new
+	^ TFMainThreadRunner uniqueInstance 
 ]
 
 { #category : #'accessing platform' }

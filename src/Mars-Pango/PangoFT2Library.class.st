@@ -23,7 +23,7 @@ PangoFT2Library >> macModuleName [
 { #category : #accessing }
 PangoFT2Library >> runner [
 	
-	^ TFSameThreadRunner new
+	^ TFMainThreadRunner uniqueInstance 
 ]
 
 { #category : #'accessing platform' }

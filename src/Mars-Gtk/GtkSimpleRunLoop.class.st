@@ -34,14 +34,9 @@ GtkSimpleRunLoop >> installRunLoop [
 
 { #category : #'private installing' }
 GtkSimpleRunLoop >> processEvents [
-	| elapsedTime |
-	
-	elapsedTime := Time millisecondsToRun: [ 
-		[ self getEventsPending ] whileTrue: [ 
-			"FrameCounter countEvent."
-			self mainIterationDo: false ] ].
-	"ensure FPS: 60"
-	(Delay forMilliseconds: (((1000 - elapsedTime) / self class fps) asInteger max: 5)) wait 
+
+	self mainIterationDo: true.
+
 ]
 
 { #category : #'private installing' }

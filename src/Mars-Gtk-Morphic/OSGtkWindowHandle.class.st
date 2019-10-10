@@ -48,14 +48,18 @@ OSGtkWindowHandle >> destroy [
 { #category : #accessing }
 OSGtkWindowHandle >> extent [
 
+	| size |
+
 	self ifWindowIsNotValid: [ ^ 0@0 ].
-	^ gtkWindow size
+	GtkLibrary defer: [ size := gtkWindow size ].
+	
+	^ size.
 ]
 
 { #category : #accessing }
 OSGtkWindowHandle >> extent: newExtent [
 
-	gtkWindow resize: newExtent
+	GtkLibrary defer: [ gtkWindow resize: newExtent ]
 ]
 
 { #category : #private }
@@ -138,10 +142,13 @@ OSGtkWindowHandle >> isValid [
 { #category : #factory }
 OSGtkWindowHandle >> newFormRenderer: aForm [
 
-	^ renderer := OSGtkFormRenderer new
+	GtkLibrary defer: [
+		renderer := OSGtkFormRenderer new
 		form: aForm;
 		window: self;
-		yourself
+		yourself].
+		
+	^ renderer
 ]
 
 { #category : #accessing }
