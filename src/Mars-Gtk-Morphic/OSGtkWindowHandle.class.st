@@ -51,7 +51,7 @@ OSGtkWindowHandle >> extent [
 	| size |
 
 	self ifWindowIsNotValid: [ ^ 0@0 ].
-	GtkLibrary defer: [ size := gtkWindow size ].
+	GtkDefer runInGtk: [ size := gtkWindow size ].
 	
 	^ size.
 ]
@@ -59,7 +59,7 @@ OSGtkWindowHandle >> extent [
 { #category : #accessing }
 OSGtkWindowHandle >> extent: newExtent [
 
-	GtkLibrary defer: [ gtkWindow resize: newExtent ]
+	GtkDefer runInGtk: [ gtkWindow resize: newExtent ]
 ]
 
 { #category : #private }
@@ -142,7 +142,7 @@ OSGtkWindowHandle >> isValid [
 { #category : #factory }
 OSGtkWindowHandle >> newFormRenderer: aForm [
 
-	GtkLibrary defer: [
+	GtkDefer runInGtk: [
 		renderer := OSGtkFormRenderer new
 		form: aForm;
 		window: self;
@@ -168,7 +168,7 @@ OSGtkWindowHandle >> position: newPosition [
 { #category : #accessing }
 OSGtkWindowHandle >> raise [
 
-	self gtkWindow present
+	GtkDefer runInGtk: [self gtkWindow present]
 ]
 
 { #category : #accessing }

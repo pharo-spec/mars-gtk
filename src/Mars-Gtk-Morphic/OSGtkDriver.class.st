@@ -32,7 +32,7 @@ OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	
 	self ensureGtkRunning.
 	
-	GtkLibrary defer: [	window := OSGtkWindowHandle newAttributes: attributes.
+	GtkDefer runInGtk: [	window := OSGtkWindowHandle newAttributes: attributes.
 	window osWindow: osWindow.
 		
 	osWindow setJustCreatedHandle: window.
@@ -48,7 +48,7 @@ OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 OSGtkDriver >> ensureGtkRunning [
 	
 	GtkApplication ensureRunning.
-	OSGtkDriverConfiguration new apply
+	"OSGtkDriverConfiguration new apply"
 ]
 
 { #category : #'window creation' }

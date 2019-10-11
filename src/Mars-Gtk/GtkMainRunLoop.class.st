@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkMainRunLoop,
 	#superclass : #GtkRunLoop,
+	#instVars : [
+		'process'
+	],
 	#category : #'Mars-Gtk-Base'
 }
 
@@ -25,4 +28,10 @@ GtkMainRunLoop >> installRunLoop [
 { #category : #'private installing' }
 GtkMainRunLoop >> uninstallRunLoop [
 	
+	GtkDefer runInGtk: [ self gtkMainQuit ].
+	
+	process ifNil: [ ^ self ].
+
+	process terminate.
+	process := nil.
 ]

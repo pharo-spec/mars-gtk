@@ -3,7 +3,9 @@ Extension { #name : #CairoLibrary }
 { #category : #'*Mars-Gtk' }
 CairoLibrary >> calloutAPIClass [ 
 
-	^ TFCalloutAPI
+	^ super calloutAPIClass 
+
+	"^ TFCalloutAPI"
 ]
 
 { #category : #'*Mars-Gtk' }
@@ -18,5 +20,6 @@ CairoLibrary >> macModuleName [
 { #category : #'*Mars-Gtk' }
 CairoLibrary >> runner [
 	
-	^ TFMainThreadRunner uniqueInstance 
+	^ super runner
+	"^ TFMainThreadRunner uniqueInstance "
 ]

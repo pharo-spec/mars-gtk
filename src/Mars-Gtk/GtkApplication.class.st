@@ -57,15 +57,23 @@ GtkApplication class >> reset [
 GtkApplication class >> shutDown: quitting [
 	"ensure Gtk3 is stop when shutting down"
 
-	quitting ifFalse: [ ^ self ].
-	self reset
+	Current ifNil: [ ^ self ].
+	Current shutDown: quitting.
+
 ]
 
 { #category : #'system startup' }
 GtkApplication class >> startUp: resuming [
 	
-	resuming ifFalse: [ ^ self ].
-	self reset
+	Stdio stdout << 'Resuming'  << resuming printString ; crlf; flush.
+	
+	resuming ifTrue: [ 
+		Current := nil.
+		self flag: #TODO. "I'm placing this here, not sure is the right place but for now it works"
+		GtkDestroySignal reset  ].
+	
+	Current ifNil: [ ^ self ].
+	Current startUp: resuming
 ]
 
 { #category : #private }
@@ -109,6 +117,9 @@ GtkApplication >> resourceManager [
 
 { #category : #running }
 GtkApplication >> run [
+
+	Stdio stdout << 'Current:' << Current printString; crlf; flush.
+
 	Current ifNotNil: [ Current stop ].
 	Current := nil.
 	self start.
@@ -117,11 +128,30 @@ GtkApplication >> run [
 ]
 
 { #category : #'private running' }
-GtkApplication >> start [ 
+GtkApplication >> shutDown:  quitting [
+
+	self isRunning ifFalse: [ ^ self ].
+	runLoop stop.
+]
+
+{ #category : #'private running' }
+GtkApplication >> start [
+
 	self isRunning ifTrue: [ self stop ].
 	self initGtk3.
 	GtkApplicationStartSignal emit.
 	runLoop start
+]
+
+{ #category : #'private running' }
+GtkApplication >> startUp:  resuming [
+
+"	resuming ifTrue: [  
+		self initGtk3.
+		GtkDestroySignal reset.
+		GtkApplicationStartSignal emit ].
+"
+	resuming ifFalse: [  runLoop start ]
 ]
 
 { #category : #'private running' }

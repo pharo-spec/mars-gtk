@@ -35,7 +35,9 @@ GtkSimpleRunLoop >> installRunLoop [
 { #category : #'private installing' }
 GtkSimpleRunLoop >> processEvents [
 
+	Stdio stdout << 'Evento'; crlf; flush.
 	self mainIterationDo: true.
+	20 milliSeconds wait. 
 
 ]
 
