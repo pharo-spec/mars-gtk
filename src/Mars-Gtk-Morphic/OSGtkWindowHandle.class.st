@@ -123,6 +123,10 @@ OSGtkWindowHandle >> initializeCursorMap [
 OSGtkWindowHandle >> initializeWindowAttributes: attributes [
 	
 	gtkWindow := GtkWindow new.
+	gtkWindow connectDeleteEvent: [ 
+		self quitSession.
+		true ].	
+	
 	gtkWindow resize: attributes width @ attributes height.
 	attributes windowCentered 
 		ifTrue: [ gtkWindow center ]
@@ -156,6 +160,13 @@ OSGtkWindowHandle >> position: newPosition [
 
 	gtkWindow moveTo: newPosition
 	
+]
+
+{ #category : #private }
+OSGtkWindowHandle >> quitSession [
+
+	UIManager default 
+		defer: [ WorldState quitSession ]
 ]
 
 { #category : #accessing }
