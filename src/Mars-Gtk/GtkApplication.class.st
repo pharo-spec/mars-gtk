@@ -64,9 +64,7 @@ GtkApplication class >> shutDown: quitting [
 
 { #category : #'system startup' }
 GtkApplication class >> startUp: resuming [
-	
-	Stdio stdout << 'Resuming'  << resuming printString ; crlf; flush.
-	
+		
 	resuming ifTrue: [ 
 		Current := nil.
 		self flag: #TODO. "I'm placing this here, not sure is the right place but for now it works"
@@ -117,8 +115,6 @@ GtkApplication >> resourceManager [
 
 { #category : #running }
 GtkApplication >> run [
-
-	Stdio stdout << 'Current:' << Current printString; crlf; flush.
 
 	Current ifNotNil: [ Current stop ].
 	Current := nil.
