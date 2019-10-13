@@ -27,7 +27,10 @@ GtkComponentListAdapter >> addModelTo: gtkListBox [
 			
 	self
 		update: gtkListBox 
-		with: self presenter presenters
+		with: self presenter presenters.
+		
+	self presenter selection isEmpty ifFalse: [ 
+		self refreshWidgetSelectionOf: gtkListBox ]
 ]
 
 { #category : #private }
@@ -52,26 +55,20 @@ GtkComponentListAdapter >> items [
 
 { #category : #factory }
 GtkComponentListAdapter >> refreshWidgetSelection [
-	| rowIndex |
 
 	self hasWidget ifFalse: [ ^ self ].
-
-	rowIndex := self presenter selection selectedIndex.
-	self 
-		disconnectSelectionEventsOf: self innerWidget 
-		during: [ 		
-			self innerWidget unselectAll.
-			(self rowAt: rowIndex)
-				ifNotNil: [ :row | self innerWidget selectRow: row ] ]
+	self refreshWidgetSelectionOf: self innerWidget
 ]
 
 { #category : #private }
-GtkComponentListAdapter >> rowAt: rowIndex [
-	
-	rowIndex ifNil: [ ^ nil ].
-	^ self innerWidget children
-		at: rowIndex
-		ifAbsent: [ nil ]
+GtkComponentListAdapter >> refreshWidgetSelectionOf: gtkListBox [
+
+	self 
+		disconnectSelectionEventsOf: gtkListBox 
+		during: [
+			self presenter selection selectedIndexes do: [ :rowIndex |
+				(gtkListBox children at: rowIndex ifAbsent: [ nil ]) 
+					ifNotNil: [ :row | gtkListBox selectRow: row ] ] ]
 ]
 
 { #category : #accessing }
@@ -79,8 +76,9 @@ GtkComponentListAdapter >> selectedIndexes [
 	| selectedRow |
 
 	selectedRow := self innerWidget selectedRow.
-	^ selectedRow ifNotNil: [ 
-		{ self innerWidget children indexOf: selectedRow } ]
+	^ selectedRow 
+		ifNotNil: [ { self innerWidget children indexOf: selectedRow } ]
+		ifNil: [ #() ]
 ]
 
 { #category : #building }
