@@ -20,12 +20,13 @@ GtkComponentListAdapter class >> adaptingAliases [
 { #category : #building }
 GtkComponentListAdapter >> addModelTo: gtkListBox [
 
-	self presenter 
-		property: #presenters
-		whenChangedDo: [ :collection | 
-			self updateWith: collection ].	
+	self model whenSelectionChangedDo: [ 
+		"gtkListBox activeIndex: self presenter selectedIndex - 1" ].
+
+	self presenter whenPresentersChangedDo: [ :collection | 
+		self updateWith: collection ].	
 			
-	self 
+	self
 		update: gtkListBox 
 		with: self presenter presenters
 ]
@@ -38,6 +39,7 @@ GtkComponentListAdapter >> innerWidget [
 
 { #category : #testing }
 GtkComponentListAdapter >> items [
+
 	^ innerWidget items
 ]
 
