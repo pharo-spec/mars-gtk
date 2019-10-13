@@ -41,18 +41,20 @@ GtkListBox >> basicInsert: child at: position [
 
 { #category : #private }
 GtkListBox >> basicSelectedRow [
-	"Answer void* because I use it as address, to find the row I already have"
+	"Answer void* because I use it as address, to find the row I already have, and I do not want 
+	 to create a duplicated row."
 	^ self ffiCall: #("GtkListBoxRow *" void *gtk_list_box_get_selected_row (self))
 ]
 
 { #category : #private }
 GtkListBox >> bindModel: aListModel [
+	
 	self ffiCall: #(void gtk_list_box_bind_model (
 		self,
 		GListModelInterface *aListModel,
-		"GtkListBoxCreateWidgetFunc create_widget_func" 0,
-		"gpointer user_data" 0,
-		"GDestroyNotify user_data_free_func" 0))
+		"GtkListBoxCreateWidgetFunc create_widget_func" NULL,
+		"gpointer user_data" NULL,
+		"GDestroyNotify user_data_free_func" NULL))
 ]
 
 { #category : #signaling }
@@ -75,11 +77,13 @@ GtkListBox >> insert: aWidget at: position [
 
 { #category : #convenience }
 GtkListBox >> items [
+
 	^ self children
 ]
 
 { #category : #accessing }
 GtkListBox >> listModel: aListModel [
+
 	listModel := aListModel. 
 	self bindModel: aListModel interface
 ]
@@ -91,12 +95,14 @@ GtkListBox >> prependWidget: aWidget [
 ]
 
 { #category : #accessing }
-GtkListBox >> selectRow: aRow [
+GtkListBox >> selectRow: row [
+
 	self ffiCall: #(void gtk_list_box_select_row (self, GtkListBoxRow *row))
 ]
 
 { #category : #accessing }
 GtkListBox >> selectedRow [
+
 	^ self findChildByHandle: self basicSelectedRow
 ]
 

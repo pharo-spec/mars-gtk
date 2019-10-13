@@ -277,7 +277,10 @@ GObject >> disconnectAll [
 GObject >> disconnectAll: aCollection during: aBlock [
 	| matching |
 
-	callbacks isEmptyOrNil ifTrue: [ ^ self ].
+	callbacks isEmptyOrNil ifTrue: [ 
+		aBlock value.
+		^ self ].
+	
 	matching := callbacks select: [ :each | aCollection includes: each signalName ].
 	matching do: [ :each | | numberDisconnected |
 		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 

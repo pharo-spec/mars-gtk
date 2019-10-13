@@ -1,6 +1,8 @@
 Class {
 	#name : #GtkComponentListAdapter,
 	#superclass : #GtkAdapter,
+	#traits : 'GtkTDisconnectSelectionEvents',
+	#classTraits : 'GtkTDisconnectSelectionEvents classTrait',
 	#instVars : [
 		'innerWidget'
 	],
@@ -20,15 +22,20 @@ GtkComponentListAdapter class >> adaptingAliases [
 { #category : #building }
 GtkComponentListAdapter >> addModelTo: gtkListBox [
 
-	self model whenSelectionChangedDo: [ 
-		"gtkListBox activeIndex: self presenter selectedIndex - 1" ].
-
 	self presenter whenPresentersChangedDo: [ :collection | 
 		self updateWith: collection ].	
 			
 	self
 		update: gtkListBox 
 		with: self presenter presenters
+]
+
+{ #category : #private }
+GtkComponentListAdapter >> disconnectSelectionEventsOf: aWidget during: aBlock [
+
+	aWidget 
+		disconnect: 'selected-rows-changed' 
+		during: aBlock
 ]
 
 { #category : #'private accessing' }
@@ -41,6 +48,36 @@ GtkComponentListAdapter >> innerWidget [
 GtkComponentListAdapter >> items [
 
 	^ innerWidget items
+]
+
+{ #category : #factory }
+GtkComponentListAdapter >> refreshWidgetSelection [
+	| rowIndex |
+
+	self hasWidget ifFalse: [ ^ self ].
+
+	rowIndex := self presenter selection selectedIndex.
+	self 
+		disconnectSelectionEventsOf: self innerWidget 
+		during: [ 		
+			self innerWidget unselectAll.
+			(self rowAt: rowIndex)
+				ifNotNil: [ :row | self innerWidget selectRow: row ] ]
+]
+
+{ #category : #private }
+GtkComponentListAdapter >> rowAt: rowIndex [
+	
+	rowIndex ifNil: [ ^ nil ].
+	^ self innerWidget children
+		at: rowIndex
+		ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+GtkComponentListAdapter >> selectedIndexes [
+	
+	^ { self innerWidget selectedIndex }
 ]
 
 { #category : #building }
