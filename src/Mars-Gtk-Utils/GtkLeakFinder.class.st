@@ -22,7 +22,7 @@ GtkLeakFinder >> collectedWithInstancesCount [
 	^ (self collected collect: [ :each | each -> (each instanceCount) ]) asDictionary
 ]
 
-{ #category : #registering }
+{ #category : #private }
 GtkLeakFinder >> ensureLoggingSignals [
 	
 	self signals do: #resume
@@ -113,7 +113,7 @@ GtkLeakFinder >> reset [
 	zombies := Set new
 ]
 
-{ #category : #registering }
+{ #category : #private }
 GtkLeakFinder >> signals [
 
 	^ { GtkCreateSignal. GtkDestroySignal. GtkZombieSignal }

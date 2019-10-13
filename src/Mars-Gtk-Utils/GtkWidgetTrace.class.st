@@ -31,7 +31,19 @@ GtkWidgetTrace >> handle: anObject [
 { #category : #accessing }
 GtkWidgetTrace >> instanceCount [
 
-	^ self widgetClass instanceCount
+	^ self instances size
+]
+
+{ #category : #accessing }
+GtkWidgetTrace >> instances [
+	| stream |
+
+	stream := Array new writeStream.
+	self widgetClass allInstancesDo: [ :each |
+		(each getHandle = handle) ifTrue: [ 
+			stream nextPut: each ] ].
+	
+	^ stream contents
 ]
 
 { #category : #printing }
