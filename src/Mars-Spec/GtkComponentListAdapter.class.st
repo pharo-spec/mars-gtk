@@ -76,8 +76,11 @@ GtkComponentListAdapter >> rowAt: rowIndex [
 
 { #category : #accessing }
 GtkComponentListAdapter >> selectedIndexes [
-	
-	^ { self innerWidget selectedIndex }
+	| selectedRow |
+
+	selectedRow := self innerWidget selectedRow.
+	^ selectedRow ifNotNil: [ 
+		{ self innerWidget children indexOf: selectedRow } ]
 ]
 
 { #category : #building }
