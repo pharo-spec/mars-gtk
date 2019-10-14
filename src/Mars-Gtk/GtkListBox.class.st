@@ -66,6 +66,15 @@ GtkListBox >> connectRowSelected: aBlock [
 		do: [ :box :row :user_data | aBlock value: (self findChildByHandle: row) ]
 ]
 
+{ #category : #signaling }
+GtkListBox >> connectSelectedRowsChanged: aBlock [
+
+	self 
+		connect: 'selected-rows-changed' 
+		signature: #(void (void *box, void *user_data))
+		do: [ :box :user_data | aBlock value ]
+]
+
 { #category : #accessing }
 GtkListBox >> insert: aWidget at: position [ 
 	| row |
@@ -95,9 +104,28 @@ GtkListBox >> prependWidget: aWidget [
 ]
 
 { #category : #accessing }
+GtkListBox >> selectIndex: rowIndex [
+	"WARNING: Since this is exclusive pharo-side, indexes are one-based"
+
+	(self children at: rowIndex ifAbsent: [ nil ]) 
+		ifNotNil: [ :row | self selectRow: row ]
+]
+
+{ #category : #accessing }
 GtkListBox >> selectRow: row [
 
 	self ffiCall: #(void gtk_list_box_select_row (self, GtkListBoxRow *row))
+]
+
+{ #category : #accessing }
+GtkListBox >> selectedIndexes [
+	"WARNING: Since this is exclusive pharo-side, indexes are one-based"
+	| selectedRow |
+	
+	selectedRow := self selectedRow.
+	^ selectedRow 
+		ifNotNil: [ { self children indexOf: selectedRow } ]
+		ifNil: [ #() ]
 ]
 
 { #category : #accessing }

@@ -30,14 +30,18 @@ GtkComponentListAdapter >> addModelTo: gtkListBox [
 		with: self presenter presenters.
 		
 	self presenter selection isEmpty ifFalse: [ 
-		self refreshWidgetSelectionOf: gtkListBox ]
+		self refreshWidgetSelectionOf: gtkListBox ].
+	
+	gtkListBox connectSelectedRowsChanged: [ 
+		self backendUpdatingDo: [  
+			self presenter selection selectIndexes: self innerWidget selectedIndexes ] ]
 ]
 
 { #category : #private }
 GtkComponentListAdapter >> disconnectSelectionEventsOf: aWidget during: aBlock [
 
 	aWidget 
-		disconnect: 'selected-rows-changed' 
+		disconnectAll: #('row-selected' 'selected-rows-changed')
 		during: aBlock
 ]
 
@@ -64,21 +68,37 @@ GtkComponentListAdapter >> refreshWidgetSelection [
 GtkComponentListAdapter >> refreshWidgetSelectionOf: gtkListBox [
 
 	self 
+		refreshWidgetSelectionOf: gtkListBox 
+		indexes: self presenter selection selectedIndexes
+]
+
+{ #category : #private }
+GtkComponentListAdapter >> refreshWidgetSelectionOf: gtkListBox indexes: aCollection [
+
+	self 
 		disconnectSelectionEventsOf: gtkListBox 
 		during: [
-			self presenter selection selectedIndexes do: [ :rowIndex |
-				(gtkListBox children at: rowIndex ifAbsent: [ nil ]) 
-					ifNotNil: [ :row | gtkListBox selectRow: row ] ] ]
+			aCollection do: [ :rowIndex | 
+				gtkListBox selectIndex: rowIndex ] ]
+]
+
+{ #category : #accessing }
+GtkComponentListAdapter >> selectIndex: rowIndex [
+
+	self innerWidgetDo: [ :w |
+		rowIndex ~= 0 
+			ifTrue: [ 
+				w selectIndex: rowIndex.
+				self flag: #TODO. "Not implemented directly in listbox, I need to do it by hand"
+				"self scrollToSelectionIfNeeded: rowIndex" ]
+			ifFalse: [ 
+				w unselectAll ] ]
 ]
 
 { #category : #accessing }
 GtkComponentListAdapter >> selectedIndexes [
-	| selectedRow |
 
-	selectedRow := self innerWidget selectedRow.
-	^ selectedRow 
-		ifNotNil: [ { self innerWidget children indexOf: selectedRow } ]
-		ifNil: [ #() ]
+	^ self innerWidget selectedIndexes
 ]
 
 { #category : #building }
