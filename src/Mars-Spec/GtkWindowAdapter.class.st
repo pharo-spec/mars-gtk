@@ -155,15 +155,9 @@ GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [
 { #category : #accessing }
 GtkWindowAdapter >> close [
 
-	self widgetDo: [ :w | w hide ]
-]
-
-{ #category : #private }
-GtkWindowAdapter >> closeWindow [
-		
-	self announceClosed.
-	self widget isAlive ifTrue: [ 
-		self widget destroy ]
+	self widgetDo: [ :w | 
+		w hide. 
+		w isAlive ifTrue: [ w destroy ] ]
 ]
 
 { #category : #'private building' }
@@ -172,7 +166,7 @@ GtkWindowAdapter >> connectToGtkSignals: gtkWindow [
 	"add close events (delete is sent before)"
 	gtkWindow 
 		connectDeleteEvent: [ self announceWillClose. false ];
-		connectHide: [ self closeWindow ];
+		connectHide: [ self announceClosed ];
 		connectSizeAllocate: [ :aRect | self announceResized: aRect extent ]
 ]
 

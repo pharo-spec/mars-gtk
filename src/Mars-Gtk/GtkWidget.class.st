@@ -377,6 +377,7 @@ GtkWidget >> deferAction: aBlock [
 { #category : #initialization }
 GtkWidget >> delete [
 
+	self isAlive ifFalse: [ ^ self ].
 	self destroy
 ]
 
