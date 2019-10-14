@@ -162,7 +162,8 @@ GtkWindowAdapter >> close [
 GtkWindowAdapter >> closeWindow [
 		
 	self announceClosed.
-	self widget destroy
+	self widget isAlive ifTrue: [ 
+		self widget destroy ]
 ]
 
 { #category : #'private building' }

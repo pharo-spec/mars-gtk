@@ -527,13 +527,20 @@ GObject >> instanceIsFundamentallyA: fundamental_type [
 ]
 
 { #category : #testing }
+GObject >> isAlive [
+	"Apparently, if #isObject returns true, then the object is still there."
+	
+	^ self isObject and: [ self referenceCount > 0 ]
+]
+
+{ #category : #testing }
 GObject >> isFloating [ 
 
 	^ self ffiCall: #(gboolean g_object_is_floating (self))
 ]
 
 { #category : #testing }
-GObject >> isObject [ 
+GObject >> isObject [
 
 	^ self instanceIsFundamentallyA: G_TYPE_OBJECT
 ]
