@@ -57,7 +57,7 @@ GtkLibrary >> getMinorVersion [
 { #category : #'accessing platform' }
 GtkLibrary >> macModuleName [
 
-	self class isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libgtk-3.dylib' ]. 
+	self class isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libgtk-3.dylib' ]. 
 	^ '/usr/local/lib/libgtk-3.dylib'
 ]
 

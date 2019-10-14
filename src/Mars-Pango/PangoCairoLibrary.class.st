@@ -16,7 +16,7 @@ PangoCairoLibrary >> calloutAPIClass [
 { #category : #'accessing platform' }
 PangoCairoLibrary >> macModuleName [
 
-	GtkLibrary isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libpangocairo-1.0.0.dylib' ]. 
+	GtkLibrary isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libpangocairo-1.0.0.dylib' ]. 
 	^ '/usr/local/lib/libpangocairo-1.0.0.dylib'
 
 ]

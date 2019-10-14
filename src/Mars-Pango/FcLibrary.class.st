@@ -25,7 +25,7 @@ FcLibrary >> fcInit [
 { #category : #'accessing platform' }
 FcLibrary >> macModuleName [
 
-	GtkLibrary isDebug ifTrue: [ '/opt/gtk/inst/lib/libfontconfig.dylib' ].
+	GtkLibrary isDebug ifTrue: [ '/Users/gtk3/gtk/inst/lib/libfontconfig.dylib' ].
 	^ '/usr/local/lib/libfontconfig.dylib'
 ]
 
