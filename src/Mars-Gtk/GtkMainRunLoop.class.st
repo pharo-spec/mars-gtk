@@ -22,6 +22,14 @@ GtkMainRunLoop >> installRunLoop [
 		named: 'GtkRunLoop'
 ]
 
+{ #category : #running }
+GtkMainRunLoop >> spawnNewRunLoop [
+
+	^ self class basicNew initialize 
+		start;
+		yourself
+]
+
 { #category : #'private installing' }
 GtkMainRunLoop >> uninstallRunLoop [
 	

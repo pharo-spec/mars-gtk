@@ -23,11 +23,11 @@ GSignalCallback >> basicValueWithArguments: args [
 
 	GtkWidgetSignaledSignal emitSignal: self signalName.
 	^ [ block valueWithArguments: args ]
-		on: Error
-		fork: [ :e | 
-			e emit.
-			e debug ]
-		return: [ 
+		on: Exception
+		do: [ :e | | runLoop |
+			runLoop := GtkRunLoop current spawnNewRunLoop.
+			[ e debug ]
+			ensure: [ runLoop stop ].
 			self returnOnError ]
 ]
 

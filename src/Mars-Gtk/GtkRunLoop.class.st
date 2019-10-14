@@ -116,6 +116,12 @@ GtkRunLoop >> processEvents [
 ]
 
 { #category : #running }
+GtkRunLoop >> spawnNewRunLoop [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #running }
 GtkRunLoop >> start [
 	self isRunning ifTrue: [ ^ self ].
 	
