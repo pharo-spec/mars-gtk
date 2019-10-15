@@ -25,7 +25,8 @@ GtkMainRunLoop >> installRunLoop [
 { #category : #running }
 GtkMainRunLoop >> spawnNewRunLoop [
 
-	^ self class basicNew initialize 
+	self flag: #TODO. "This is like this for now waiting for a test of using a nested gtk_main"
+	^ GtkSimpleRunLoop basicNew initialize 
 		start;
 		yourself
 ]
