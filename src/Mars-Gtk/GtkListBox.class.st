@@ -9,6 +9,9 @@ Class {
 	#instVars : [
 		'listModel'
 	],
+	#pools : [
+		'GtkSelectionMode'
+	],
 	#category : #'Mars-Gtk-Widget'
 }
 
@@ -39,11 +42,16 @@ GtkListBox >> basicInsert: child at: position [
 	self ffiCall: #(void gtk_list_box_insert (self, GtkWidget *child, gint position))
 ]
 
-{ #category : #private }
-GtkListBox >> basicSelectedRow [
-	"Answer void* because I use it as address, to find the row I already have, and I do not want 
-	 to create a duplicated row."
-	^ self ffiCall: #("GtkListBoxRow *" void *gtk_list_box_get_selected_row (self))
+{ #category : #configuring }
+GtkListBox >> beMultipleSelectionMode [
+
+	self selectionMode: GTK_SELECTION_MULTIPLE
+]
+
+{ #category : #configuring }
+GtkListBox >> beSingleSelectionMode [
+
+	self selectionMode: GTK_SELECTION_SINGLE
 ]
 
 { #category : #private }
@@ -73,6 +81,19 @@ GtkListBox >> connectSelectedRowsChanged: aBlock [
 		connect: 'selected-rows-changed' 
 		signature: #(void (void *box, void *user_data))
 		do: [ :box :user_data | aBlock value ]
+]
+
+{ #category : #private }
+GtkListBox >> getSelectedRow [
+	"Answer void* because I use it as address, to find the row I already have, and I do not want 
+	 to create a duplicated row."
+	^ self ffiCall: #("GtkListBoxRow *" void *gtk_list_box_get_selected_row (self))
+]
+
+{ #category : #private }
+GtkListBox >> getSelectedRows [
+
+	^ self ffiCall: #("GList *"void *gtk_list_box_get_selected_rows (self))
 ]
 
 { #category : #accessing }
@@ -120,18 +141,35 @@ GtkListBox >> selectRow: row [
 { #category : #accessing }
 GtkListBox >> selectedIndexes [
 	"WARNING: Since this is exclusive pharo-side, indexes are one-based"
-	| selectedRow |
-	
-	selectedRow := self selectedRow.
-	^ selectedRow 
-		ifNotNil: [ { self children indexOf: selectedRow } ]
-		ifNil: [ #() ]
+
+	^ self selectedRows
+		collect: [ :each | self children indexOf: each ]
 ]
 
 { #category : #accessing }
 GtkListBox >> selectedRow [
 
-	^ self findChildByHandle: self basicSelectedRow
+	^ self findChildByHandle: self getSelectedRow
+]
+
+{ #category : #accessing }
+GtkListBox >> selectedRows [
+	| gList handles |
+	
+	handles := Array new writeStream.
+	gList := (GList fromHandle: self getSelectedRows) autoRelease.
+	[ gList getHandle isNull ] 
+	whileFalse: [ 
+		handles nextPut: gList data.	
+		gList := gList next ].
+	
+	^ handles contents collect: [ :each | self findChildByHandle: each ]
+]
+
+{ #category : #private }
+GtkListBox >> selectionMode: mode [
+
+	self ffiCall: #(void gtk_list_box_set_selection_mode (self, GtkSelectionMode mode))
 ]
 
 { #category : #accessing }

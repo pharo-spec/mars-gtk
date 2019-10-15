@@ -22,6 +22,10 @@ GtkComponentListAdapter class >> adaptingAliases [
 { #category : #building }
 GtkComponentListAdapter >> addModelTo: gtkListBox [
 
+	self model selection isMultipleSelection 
+		ifTrue: [ gtkListBox beMultipleSelectionMode ]
+		ifFalse: [ gtkListBox beSingleSelectionMode ].
+
 	self presenter whenPresentersChangedDo: [ :collection | 
 		self updateWith: collection ].	
 			
