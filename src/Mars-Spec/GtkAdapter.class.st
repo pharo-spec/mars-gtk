@@ -66,6 +66,9 @@ GtkAdapter >> addModelTo: gtkWidget [
 { #category : #building }
 GtkAdapter >> addSettingsTo: gtkWidget [
 	"A secondary initialization generic to all widgets"
+
+	self presenter styles 
+		do: [ :each | gtkWidget addClass: each ].
 	
 	gtkWidget sensitive: self presenter isEnabled.
 	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
