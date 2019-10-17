@@ -4,18 +4,19 @@ Class {
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
 	#instVars : [
-		'session',
-		'running',
-		'executing'
+		'#session',
+		'#running',
+		'#executing',
+		'#inCallback => ProcessLocalSlot'
 	],
 	#classVars : [
-		'Current'
+		'#Current'
 	],
 	#pools : [
 		'GtkTypes'
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		'#uniqueInstance'
 	],
 	#category : #'Mars-Gtk-Base'
 }
@@ -35,6 +36,12 @@ GtkRunLoop class >> current: aRunLoop [
 GtkRunLoop class >> defaultRunLoopClass [
 
 	^ GtkSimpleRunLoop
+]
+
+{ #category : #accessing }
+GtkRunLoop class >> defer: aBlock [
+
+	^ self current defer: aBlock
 ]
 
 { #category : #accessing }
@@ -62,9 +69,21 @@ GtkRunLoop class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self basicNew initialize ]
 ]
 
+{ #category : #accessing }
+GtkRunLoop >> callbackEnter [
+
+	inCallback := true
+]
+
 { #category : #private }
 GtkRunLoop >> checkSession [
 	^ session == Smalltalk session
+]
+
+{ #category : #accessing }
+GtkRunLoop >> defer: aBlock [
+
+	^ aBlock value
 ]
 
 { #category : #private }
@@ -83,7 +102,9 @@ GtkRunLoop >> getEventsPending [
 ]
 
 { #category : #initialization }
-GtkRunLoop >> initialize [ 
+GtkRunLoop >> initialize [
+	
+	self class initializeSlots: self. 
 	super initialize.
 	running := false.
 	executing := false
@@ -92,6 +113,12 @@ GtkRunLoop >> initialize [
 { #category : #'private installing' }
 GtkRunLoop >> installRunLoop [
 	self subclassResponsibility
+]
+
+{ #category : #testing }
+GtkRunLoop >> isInCallback [
+
+	^ inCallback == true
 ]
 
 { #category : #testing }

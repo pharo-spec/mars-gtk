@@ -97,7 +97,8 @@ GSignalCallback >> valueWithArguments: args [
 	"chain linked callbacks, answer last result (ideally, there are just one callback, 
 	 but sometimes...)"
 	| result |
-	
+
+	GtkRunLoop current callbackEnter.	
 	result := self basicValueWithArguments: args.
 	linkedCallbacks ifNotNil: [ 
 		linkedCallbacks do: [ :each | 
