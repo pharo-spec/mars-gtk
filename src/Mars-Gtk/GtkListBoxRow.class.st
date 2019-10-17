@@ -31,5 +31,5 @@ GtkListBoxRow >> asListBoxRow [
 
 { #category : #accessing }
 GtkListBoxRow >> content [
-	^ self children first
+	^ self child
 ]

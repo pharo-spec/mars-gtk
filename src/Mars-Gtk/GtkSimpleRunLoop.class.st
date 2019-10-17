@@ -44,6 +44,14 @@ GtkSimpleRunLoop >> processEvents [
 	(Delay forMilliseconds: (((1000 - elapsedTime) / self class fps) asInteger max: 5)) wait 
 ]
 
+{ #category : #running }
+GtkSimpleRunLoop >> spawnNewRunLoop [
+
+	^ self class basicNew initialize 
+		start;
+		yourself
+]
+
 { #category : #'private installing' }
 GtkSimpleRunLoop >> uninstallRunLoop [
 	

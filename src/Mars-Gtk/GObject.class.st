@@ -277,7 +277,10 @@ GObject >> disconnectAll [
 GObject >> disconnectAll: aCollection during: aBlock [
 	| matching |
 
-	callbacks isEmptyOrNil ifTrue: [ ^ self ].
+	callbacks isEmptyOrNil ifTrue: [ 
+		aBlock value.
+		^ self ].
+	
 	matching := callbacks select: [ :each | aCollection includes: each signalName ].
 	matching do: [ :each | | numberDisconnected |
 		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 
@@ -524,13 +527,22 @@ GObject >> instanceIsFundamentallyA: fundamental_type [
 ]
 
 { #category : #testing }
+GObject >> isAlive [
+	"Apparently, if #isObject returns true, then the object is still there."
+
+	^ self getHandle isNull not 
+		and: [ self isObject 
+		and: [ self referenceCount > 0 ] ]
+]
+
+{ #category : #testing }
 GObject >> isFloating [ 
 
 	^ self ffiCall: #(gboolean g_object_is_floating (self))
 ]
 
 { #category : #testing }
-GObject >> isObject [ 
+GObject >> isObject [
 
 	^ self instanceIsFundamentallyA: G_TYPE_OBJECT
 ]

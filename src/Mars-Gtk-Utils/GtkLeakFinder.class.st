@@ -10,7 +10,19 @@ Class {
 	#category : #'Mars-Gtk-Utils'
 }
 
-{ #category : #registering }
+{ #category : #accessing }
+GtkLeakFinder >> collected [
+
+	^ created \ (self leaks)
+]
+
+{ #category : #accessing }
+GtkLeakFinder >> collectedWithInstancesCount [
+
+	^ (self collected collect: [ :each | each -> (each instanceCount) ]) asDictionary
+]
+
+{ #category : #private }
 GtkLeakFinder >> ensureLoggingSignals [
 	
 	self signals do: #resume
@@ -101,10 +113,10 @@ GtkLeakFinder >> reset [
 	zombies := Set new
 ]
 
-{ #category : #registering }
+{ #category : #private }
 GtkLeakFinder >> signals [
 
-	^ { GtkCreateSignal. GtkDestroySignal }
+	^ { GtkCreateSignal. GtkDestroySignal. GtkZombieSignal }
 ]
 
 { #category : #registering }

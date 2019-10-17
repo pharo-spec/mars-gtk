@@ -9,7 +9,7 @@ FT2FFILibrary >> calloutAPIClass [
 { #category : #'*Mars-Gtk' }
 FT2FFILibrary >> macModuleName [ 
 	
-	GtkLibrary isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libfreetype.dylib' ]. 
+	GtkLibrary isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libfreetype.dylib' ]. 
 	^ '/usr/local/lib/libfreetype.dylib'
 	"^ 'libfreetype.dylib'"
 ]

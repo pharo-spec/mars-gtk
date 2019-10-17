@@ -23,11 +23,11 @@ GSignalCallback >> basicValueWithArguments: args [
 
 	GtkWidgetSignaledSignal emitSignal: self signalName.
 	^ [ block valueWithArguments: args ]
-		on: Error
-		fork: [ :e | 
-			e emit.
-			e debug ]
-		return: [ 
+		on: Exception
+		do: [ :e | | runLoop |
+			runLoop := GtkRunLoop current spawnNewRunLoop.
+			[ e debug ]
+			ensure: [ runLoop stop ].
 			self returnOnError ]
 ]
 
@@ -86,18 +86,4 @@ GSignalCallback >> valueWithArguments: args [
 			result := each basicValueWithArguments: args ] ].
 	
 	^ result
-]
-
-{ #category : #evaluating }
-GSignalCallback >> xbasicValueWithArguments: args [
-	"same as my parent, but with logging"
-
-	GtkWidgetSignaledSignal emitSignal: self signalName.
-	^ [ block valueWithArguments: args ]
-		on: Exception
-		do: [ :e | | runLoop |
-			(runLoop := GtkSimpleRunLoop basicNew initialize) start.
-			[ e debug ]
-			ensure: [ runLoop stop ].
-			self returnOnError ]
 ]

@@ -1,3 +1,9 @@
+"
+enum GtkSelectionMode
+Used to control what selections users are allowed to make.
+
+https://developer.gnome.org/gtk3/stable/gtk3-Standard-Enumerations.html#GtkSelectionMode
+"
 Class {
 	#name : #GtkSelectionMode,
 	#superclass : #GtkEnumeration,

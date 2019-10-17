@@ -24,7 +24,7 @@ GtkSourceViewLibrary >> isAvailable [
 { #category : #'accessing platform' }
 GtkSourceViewLibrary >> macModuleName [
 
-	GtkLibrary isDebug ifTrue: [ ^ self notYetImplemented ]. 
+	GtkLibrary isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libgtksourceview-4.dylib' ]. 
 	^ '/usr/local/lib/libgtksourceview-4.dylib'
 ]
 

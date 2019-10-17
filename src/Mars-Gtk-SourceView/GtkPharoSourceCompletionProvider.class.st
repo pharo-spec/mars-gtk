@@ -171,10 +171,10 @@ GtkPharoSourceCompletionProvider >> populate: context [
 
 	proposals := GList new.
 	(self completionEntriesFor: iter) do: [ :each |
-		proposals append: (self toItem: each) ].
+		proposals := proposals append: (self toItem: each) ].
 	
 	context 
-		addProposals: proposals 
+		addProposals: proposals first autoRelease
 		provider: self 
 		finished: true
 ]

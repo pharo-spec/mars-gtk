@@ -16,7 +16,7 @@ PangoFT2Library >> calloutAPIClass [
 { #category : #'accessing platform' }
 PangoFT2Library >> macModuleName [
 
-	GtkLibrary isDebug ifTrue: [ ^ '/opt/gtk/inst/lib/libpangoft2-1.0.0.dylib' ]. 
+	GtkLibrary isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libpangoft2-1.0.0.dylib' ]. 
 	^ '/usr/local/lib/libpangoft2-1.0.0.dylib'
 ]
 
