@@ -14,7 +14,7 @@ Class {
 { #category : #'updating screen' }
 OSGtkFormRenderer >> deferUpdatesWhile: aBlock [
 	
-	aBlock value
+	GtkRunLoop defer: aBlock
 ]
 
 { #category : #private }
