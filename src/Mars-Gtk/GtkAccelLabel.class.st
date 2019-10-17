@@ -6,9 +6,6 @@ https://developer.gnome.org/gtk3/stable/GtkAccelLabel.html
 Class {
 	#name : #GtkAccelLabel,
 	#superclass : #GtkLabel,
-	#classVars : [
-		'SymbolTable'
-	],
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
@@ -16,18 +13,6 @@ Class {
 GtkAccelLabel class >> accelLabelNew: string [
 
 	^ self ffiCall: #(GtkAccelLabel* gtk_accel_label_new (String string))
-]
-
-{ #category : #private }
-GtkAccelLabel class >> createSymbolTable [
-
-	^ Dictionary newFromPairs: { 
-		#Cmd. 		(Character value: 16r2318) asString.
-		#Meta. 	(Character value: 16r2318) asString.
-		#Alt. 		(Character value: 16r2325) asString. 
-		#Ctrl.  	(Character value: 16r2303) asString. 
-		#Shift. 	(Character value: 16r21E7) asString.
-		#Enter. 	(Character value: 16r23ce) asString }
 ]
 
 { #category : #accessing }
@@ -61,20 +46,6 @@ GtkAccelLabel class >> newLabel: aString [
 GtkAccelLabel class >> shortcutToString: aShortcut [
 	
 	^ KMShortcutPrinter toString: aShortcut
-]
-
-{ #category : #private }
-GtkAccelLabel class >> symbolTable [
-
-	^ SymbolTable ifNil: [ SymbolTable := self createSymbolTable ]
-]
-
-{ #category : #private }
-GtkAccelLabel class >> symbolTableAt: anObject ifAbsent: aBlock [
-
-	^ self symbolTable 
-		at: anObject 
-		ifAbsent: aBlock
 ]
 
 { #category : #private }
