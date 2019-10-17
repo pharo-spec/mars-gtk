@@ -29,6 +29,13 @@ GtkAdapter class >> isAbstract [
 	^ self = GtkAdapter
 ]
 
+{ #category : #initialization }
+GtkAdapter >> adapt: aPresenter [
+
+	GtkRunLoop defer: [ 
+		^ super adapt: aPresenter ]
+]
+
 { #category : #building }
 GtkAdapter >> addKeyBindingsTo: gtkWidget [
 
