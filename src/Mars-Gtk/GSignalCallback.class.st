@@ -19,8 +19,7 @@ Class {
 
 { #category : #evaluating }
 GSignalCallback >> basicValueWithArguments: args [
-	"
-	This method is ugly because it has to solve three scenarios: 
+	"This method is ugly because it has to solve three scenarios: 
 	1) everythign works ok (nor ensure or exception code is executed)
 	2) error happens and debugger is proceed (resuming normal execution)
 	3) error happens and debugger is closed (making current process to be terminated).
