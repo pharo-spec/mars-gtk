@@ -20,7 +20,7 @@ GtkWindowAdapter >> addDefaultKeyBindings: gtkWindow [
 	hardcoded crap."
 	self 
 		bindKeyCombination: $w command mac | $w control win | $w control unix 
-		toAction: [ self close ]
+		toAction: [ self closeFromKeyboard ]
 ]
 
 { #category : #'private building' }
@@ -158,6 +158,13 @@ GtkWindowAdapter >> close [
 	self widgetDo: [ :w | 
 		w hide. 
 		w isAlive ifTrue: [ w destroy ] ]
+]
+
+{ #category : #accessing }
+GtkWindowAdapter >> closeFromKeyboard [
+
+	self announceWillClose.
+	self close
 ]
 
 { #category : #'private building' }
