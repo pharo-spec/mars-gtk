@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'accessing platform' }
-GdkPixbufLibrary >> win32ModuleName [
+GdkPixbufLibrary >> win32LibraryName [
 
 	^ 'libgdk_pixbuf-2.0-0.dll'
 ]

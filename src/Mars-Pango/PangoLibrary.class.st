@@ -14,7 +14,7 @@ PangoLibrary >> calloutAPIClass [
 ]
 
 { #category : #'accessing platform' }
-PangoLibrary >> macModuleName [
+PangoLibrary >> macLibraryName [
 
 	^ '/usr/local/lib/libpango-1.0.0.dylib'
 ]
@@ -26,19 +26,19 @@ PangoLibrary >> runner [
 ]
 
 { #category : #'accessing platform' }
-PangoLibrary >> unix32ModuleName [ 
+PangoLibrary >> unix32LibraryName [ 
 
 	^ '/usr/lib/i386-linux-gnu/libpango-1.0.so.0'
 ]
 
 { #category : #'accessing platform' }
-PangoLibrary >> unix64ModuleName [ 
+PangoLibrary >> unix64LibraryName [ 
 
 	^ '/usr/lib/x86_64-linux-gnu/libpango-1.0.so.0'
 ]
 
 { #category : #'accessing platform' }
-PangoLibrary >> win32ModuleName [
+PangoLibrary >> win32LibraryName [
 	
 	"this could be  libpangowin32-1.0-0.dll instead"
 	^ 'libpango-1.0-0.dll'

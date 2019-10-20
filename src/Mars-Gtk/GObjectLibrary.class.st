@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-GObjectLibrary >> win32ModuleName [
+GObjectLibrary >> win32LibraryName [
 
 	^ 'libgobject-2.0-0.dll'
 ]

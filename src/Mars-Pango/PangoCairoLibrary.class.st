@@ -14,7 +14,7 @@ PangoCairoLibrary >> calloutAPIClass [
 ]
 
 { #category : #'accessing platform' }
-PangoCairoLibrary >> macModuleName [
+PangoCairoLibrary >> macLibraryName [
 
 	GtkLibrary isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libpangocairo-1.0.0.dylib' ]. 
 	^ '/usr/local/lib/libpangocairo-1.0.0.dylib'
@@ -28,19 +28,19 @@ PangoCairoLibrary >> runner [
 ]
 
 { #category : #'accessing platform' }
-PangoCairoLibrary >> unix32ModuleName [ 
+PangoCairoLibrary >> unix32LibraryName [ 
 
 	^ '/usr/lib/i386-linux-gnu/libpangocairo-1.0.so.0'
 ]
 
 { #category : #'accessing platform' }
-PangoCairoLibrary >> unix64ModuleName [ 
+PangoCairoLibrary >> unix64LibraryName [ 
 
 	^ '/usr/lib/x86_64-linux-gnu/libpangocairo-1.0.so.0'
 ]
 
 { #category : #'accessing platform' }
-PangoCairoLibrary >> win32ModuleName [
+PangoCairoLibrary >> win32LibraryName [
 
 	^ 'libpangocairo-1.0-0.dll'
 ]

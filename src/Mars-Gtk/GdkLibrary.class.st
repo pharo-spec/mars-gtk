@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'accessing platform' }
-GdkLibrary >> win32ModuleName [
+GdkLibrary >> win32LibraryName [
 
 	^ 'libgdk-3-0.dll'
 ]

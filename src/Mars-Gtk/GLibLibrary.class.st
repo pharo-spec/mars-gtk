@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'accessing platform' }
-GLibLibrary >> win32ModuleName [
+GLibLibrary >> win32LibraryName [
 
 	^ 'libglib-2.0-0.dll'
 ]

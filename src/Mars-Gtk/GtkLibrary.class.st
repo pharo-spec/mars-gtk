@@ -55,7 +55,7 @@ GtkLibrary >> getMinorVersion [
 ]
 
 { #category : #'accessing platform' }
-GtkLibrary >> macModuleName [
+GtkLibrary >> macLibraryName [
 
 	self class isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libgtk-3.dylib' ]. 
 	^ '/usr/local/lib/libgtk-3.dylib'
@@ -94,12 +94,12 @@ GtkLibrary >> runner [
 ]
 
 { #category : #'accessing platform' }
-GtkLibrary >> unix32ModuleName [ 
+GtkLibrary >> unix32LibraryName [ 
 	^ '/usr/lib/i386-linux-gnu/libgtk-3.so.0'
 ]
 
 { #category : #'accessing platform' }
-GtkLibrary >> unix64ModuleName [ 
+GtkLibrary >> unix64LibraryName [ 
 	^ '/usr/lib/x86_64-linux-gnu/libgtk-3.so.0'
 ]
 
@@ -113,7 +113,7 @@ GtkLibrary >> version [
 ]
 
 { #category : #'accessing platform' }
-GtkLibrary >> win32ModuleName [
+GtkLibrary >> win32LibraryName [
 	
 	^ 'libgtk-3-0.dll'
 ]

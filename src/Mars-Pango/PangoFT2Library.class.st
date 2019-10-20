@@ -14,7 +14,7 @@ PangoFT2Library >> calloutAPIClass [
 ]
 
 { #category : #'accessing platform' }
-PangoFT2Library >> macModuleName [
+PangoFT2Library >> macLibraryName [
 
 	GtkLibrary isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libpangoft2-1.0.0.dylib' ]. 
 	^ '/usr/local/lib/libpangoft2-1.0.0.dylib'
@@ -27,19 +27,19 @@ PangoFT2Library >> runner [
 ]
 
 { #category : #'accessing platform' }
-PangoFT2Library >> unix32ModuleName [ 
+PangoFT2Library >> unix32LibraryName [ 
 
 	^ '/usr/lib/i386-linux-gnu/libpangoft2-1.0.so.0'
 ]
 
 { #category : #'accessing platform' }
-PangoFT2Library >> unix64ModuleName [ 
+PangoFT2Library >> unix64LibraryName [ 
 
 	^ '/usr/lib/x86_64-linux-gnu/libpangoft2-1.0.so.0'
 ]
 
 { #category : #'accessing platform' }
-PangoFT2Library >> win32ModuleName [
+PangoFT2Library >> win32LibraryName [
 	
 	^ 'libpangoft2-1.0-0.dll'
 ]

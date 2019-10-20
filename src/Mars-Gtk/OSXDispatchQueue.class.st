@@ -85,7 +85,7 @@ OSXDispatchQueue >> initialize [
 ]
 
 { #category : #'accessing platform' }
-OSXDispatchQueue >> macModuleName [ 
+OSXDispatchQueue >> macLibraryName [ 
 
 	^ 'libobjc.dylib'
 ]
@@ -93,7 +93,7 @@ OSXDispatchQueue >> macModuleName [
 { #category : #accessing }
 OSXDispatchQueue >> mainQueue [
 	mainQueue isNull ifTrue: [ 
-		mainQueue := ExternalAddress loadSymbol: '_dispatch_main_q' from: self macModuleName ].
+		mainQueue := ExternalAddress loadSymbol: '_dispatch_main_q' from: self macLibraryName ].
 
 	^ mainQueue
 ]

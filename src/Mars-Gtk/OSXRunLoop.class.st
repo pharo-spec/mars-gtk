@@ -26,7 +26,7 @@ OSXRunLoop >> install [
 ]
 
 { #category : #'accessing platform' }
-OSXRunLoop >> macModuleName [ 
+OSXRunLoop >> macLibraryName [ 
 
 	^ '/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation'
 ]

@@ -22,7 +22,7 @@ GtkSourceViewLibrary >> isAvailable [
 ]
 
 { #category : #'accessing platform' }
-GtkSourceViewLibrary >> macModuleName [
+GtkSourceViewLibrary >> macLibraryName [
 
 	GtkLibrary isDebug ifTrue: [ ^ '/Users/gtk3/gtk/inst/lib/libgtksourceview-4.dylib' ]. 
 	^ '/usr/local/lib/libgtksourceview-4.dylib'
@@ -35,13 +35,13 @@ GtkSourceViewLibrary >> runner [
 ]
 
 { #category : #'accessing platform' }
-GtkSourceViewLibrary >> unix64ModuleName [ 
+GtkSourceViewLibrary >> unix64LibraryName [ 
 
 	^ '/usr/lib/x86_64-linux-gnu/libgtksourceview-3.0.so.1'
 ]
 
 { #category : #'accessing platform' }
-GtkSourceViewLibrary >> win32ModuleName [ 
+GtkSourceViewLibrary >> win32LibraryName [ 
 
 	^ 'libgtksourceview-3.0-1.dll'
 ]
