@@ -105,6 +105,27 @@ GtkLeakFinder >> nextPut: aSignal [
 	aSignal logIn: self
 ]
 
+{ #category : #accessing }
+GtkLeakFinder >> remainingReferences [
+	<script: 'self new remainingReferences inspect'>
+	
+
+	3 timesRepeat: [ Smalltalk garbageCollect ].
+	^ (Smalltalk allClasses
+		select: [ :each | 
+			(each name beginsWith: 'Gtk') 
+				and: [ each canUnderstand: #getHandle ] ]
+		thenCollect: [ :eachClass | 
+			eachClass allInstances 
+				reject: [ :each | each getHandle isNull ]
+				thenCollect: [ :each | 
+					GtkWidgetTrace new 
+						widgetClass: eachClass;
+						handle: each getHandle;
+						yourself ] ])
+		flattened
+]
+
 { #category : #initialize }
 GtkLeakFinder >> reset [
 	
