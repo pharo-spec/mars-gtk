@@ -164,7 +164,7 @@ GtkWindowAdapter >> close [
 GtkWindowAdapter >> closeFromKeyboard [
 
 	self announceWillClose.
-	self close
+	self presenter close
 ]
 
 { #category : #'private building' }
