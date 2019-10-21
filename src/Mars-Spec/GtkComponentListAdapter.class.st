@@ -22,6 +22,8 @@ GtkComponentListAdapter class >> adaptingAliases [
 { #category : #building }
 GtkComponentListAdapter >> addModelTo: gtkListBox [
 
+	gtkListBox canFocus: true.
+
 	self model selection isMultipleSelection 
 		ifTrue: [ gtkListBox beMultipleSelectionMode ]
 		ifFalse: [ gtkListBox beSingleSelectionMode ].
