@@ -55,7 +55,7 @@ GtkComponentListAdapter >> innerWidget [
 	^ widget child
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 GtkComponentListAdapter >> isNonEditableRow: aRow column: aColumn [ 
 	"no rows are directly editable in a component list (they can be 
 	 if defined like that in the inner presenters, but it is handled different)"
@@ -66,6 +66,15 @@ GtkComponentListAdapter >> isNonEditableRow: aRow column: aColumn [
 GtkComponentListAdapter >> items [
 
 	^ innerWidget items
+]
+
+{ #category : #updating }
+GtkComponentListAdapter >> refreshList [
+	
+	self innerWidgetDo: [ :w |
+		self 
+			disconnectSelectionEventsOf: w
+			during: [ self update: w with: self presenter items ] ]
 ]
 
 { #category : #factory }
