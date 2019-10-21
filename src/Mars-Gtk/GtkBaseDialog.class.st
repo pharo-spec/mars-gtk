@@ -58,7 +58,8 @@ GtkBaseDialog >> isRunning [
 GtkBaseDialog >> respond [ 
 
 	self runContext resume.
-	self hide
+	self hide.
+	self destroy
 ]
 
 { #category : #running }
