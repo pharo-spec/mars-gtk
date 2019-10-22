@@ -8,7 +8,8 @@ Class {
 	#instVars : [
 		'gtkWindow',
 		'world',
-		'gtkCursorMap'
+		'gtkCursorMap',
+		'lastKeyboardFocus'
 	],
 	#category : #'Mars-Gtk-Morphic'
 }
@@ -126,9 +127,10 @@ OSGtkWindowHandle >> initializeCursorMap [
 OSGtkWindowHandle >> initializeWindowAttributes: attributes [
 	
 	gtkWindow := GtkWindow new.
-	gtkWindow connectDeleteEvent: [ 
-		self quitSession.
-		true ].	
+	gtkWindow 
+		connectDeleteEvent: [ self quitSession. true ];
+		connectFocusOutEvent: [ self resetKeyboardFocus. false ];
+		connectFocusInEvent: [ self restoreKeyboardFocus. false ].
 	
 	gtkWindow resize: attributes width @ attributes height.
 	attributes windowCentered 
@@ -179,6 +181,21 @@ OSGtkWindowHandle >> quitSession [
 OSGtkWindowHandle >> raise [
 
 	GtkRunLoop defer: [ self gtkWindow present ]
+]
+
+{ #category : #private }
+OSGtkWindowHandle >> resetKeyboardFocus [
+		
+	ActiveHand ifNil: [ ^ self ].
+	lastKeyboardFocus := ActiveHand keyboardFocus
+]
+
+{ #category : #private }
+OSGtkWindowHandle >> restoreKeyboardFocus [
+	
+	ActiveHand ifNil: [ ^ self ].
+	[ ActiveHand keyboardFocus: lastKeyboardFocus ]
+	ensure: [ lastKeyboardFocus := nil ]
 ]
 
 { #category : #accessing }
