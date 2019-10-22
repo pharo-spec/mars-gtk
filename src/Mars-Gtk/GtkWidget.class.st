@@ -245,28 +245,14 @@ GtkWidget >> connectEventAfter: aBlock [
 
 { #category : #signaling }
 GtkWidget >> connectFocusInEvent: aBlock [
-	"The ::focus-in-event signal will be emitted when the keyboard focus enters the widget 's window.
-	 Returns
-		true to stop other handlers from being invoked for the event.
-	   false to propagate the event further."
 	
-	self 
-		connect: 'focus-in-event' 
-		signature: #(gboolean (void *widget, void *event, gpointer user_data))  
-		do: [ :widget :event :user_data | aBlock value ]
+	(GFocusInEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
 GtkWidget >> connectFocusOutEvent: aBlock [
-	"The ::focus-out-event signal will be emitted when the keyboard focus leaves the widget 's window.
-	 Returns
-		true to stop other handlers from being invoked for the event.
-	   false to propagate the event further."
 
-	self 
-		connect: 'focus-out-event' 
-		signature: #(gboolean (void *widget, void *event, gpointer user_data))  
-		do: [ :widget :event :user_data | aBlock value ]
+	(GFocusOutEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
