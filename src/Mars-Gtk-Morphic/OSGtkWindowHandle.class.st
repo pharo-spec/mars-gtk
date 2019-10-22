@@ -131,7 +131,7 @@ OSGtkWindowHandle >> initializeWindowAttributes: attributes [
 		connectDeleteEvent: [ self quitSession. true ];
 		connectFocusOutEvent: [ self resetKeyboardFocus. false ];
 		connectFocusInEvent: [ self restoreKeyboardFocus. false ].
-	
+
 	gtkWindow resize: attributes width @ attributes height.
 	attributes windowCentered 
 		ifTrue: [ gtkWindow center ]
@@ -192,10 +192,15 @@ OSGtkWindowHandle >> resetKeyboardFocus [
 
 { #category : #private }
 OSGtkWindowHandle >> restoreKeyboardFocus [
+
+	(gtkWindow isNil 
+		or: [ lastKeyboardFocus isNil 
+		or: [ ActiveHand isNil ] ])
+		ifTrue: [ ^ self ].
 	
-	ActiveHand ifNil: [ ^ self ].
 	[ ActiveHand keyboardFocus: lastKeyboardFocus ]
-	ensure: [ lastKeyboardFocus := nil ]
+	ensure: [ 
+		lastKeyboardFocus := nil ]
 ]
 
 { #category : #accessing }
