@@ -253,8 +253,7 @@ GtkWidget >> connectFocusInEvent: aBlock [
 	self 
 		connect: 'focus-in-event' 
 		signature: #(gboolean (void *widget, void *event, gpointer user_data))  
-		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent fromHandle: event) ]
+		do: [ :widget :event :user_data | aBlock value ]
 ]
 
 { #category : #signaling }
@@ -267,8 +266,7 @@ GtkWidget >> connectFocusOutEvent: aBlock [
 	self 
 		connect: 'focus-out-event' 
 		signature: #(gboolean (void *widget, void *event, gpointer user_data))  
-		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent fromHandle: event) ]
+		do: [ :widget :event :user_data | aBlock value ]
 ]
 
 { #category : #signaling }
