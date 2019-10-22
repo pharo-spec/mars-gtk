@@ -1,3 +1,7 @@
+"
+This run loop executes gtk_main. 
+For it to work, vm needs to run in a separate thread other than the gtk thread (which is usually the application main thread)
+"
 Class {
 	#name : #GtkMainRunLoop,
 	#superclass : #GtkRunLoop,
@@ -26,7 +30,7 @@ GtkMainRunLoop >> installRunLoop [
 GtkMainRunLoop >> spawnNewRunLoop [
 
 	self flag: #TODO. "This is like this for now waiting for a test of using a nested gtk_main"
-	^ GtkSimpleRunLoop basicNew initialize 
+	^ GtkPollingRunLoop basicNew initialize 
 		start;
 		yourself
 ]

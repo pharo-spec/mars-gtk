@@ -1,5 +1,9 @@
+"
+I am a polling run loop.
+I run by polling for events, which means I'm not as efficient as I could be, but I work on most situations.
+"
 Class {
-	#name : #GtkSimpleRunLoop,
+	#name : #GtkPollingRunLoop,
 	#superclass : #GtkRunLoop,
 	#instVars : [
 		'inputSemaphore',
@@ -9,20 +13,20 @@ Class {
 }
 
 { #category : #accessing }
-GtkSimpleRunLoop class >> fps [
+GtkPollingRunLoop class >> fps [
 	
 	^ 60
 ]
 
 { #category : #initialization }
-GtkSimpleRunLoop >> initialize [
+GtkPollingRunLoop >> initialize [
 	super initialize.
 	inputSemaphore := Semaphore new
 
 ]
 
 { #category : #'private installing' }
-GtkSimpleRunLoop >> installRunLoop [
+GtkPollingRunLoop >> installRunLoop [
 
 	process := [
 		[ self isRunning and: [ session == Smalltalk session ] ] 
@@ -33,7 +37,7 @@ GtkSimpleRunLoop >> installRunLoop [
 ]
 
 { #category : #'private installing' }
-GtkSimpleRunLoop >> processEvents [
+GtkPollingRunLoop >> processEvents [
 	| elapsedTime |
 	
 	elapsedTime := Time millisecondsToRun: [ 
@@ -45,7 +49,7 @@ GtkSimpleRunLoop >> processEvents [
 ]
 
 { #category : #running }
-GtkSimpleRunLoop >> spawnNewRunLoop [
+GtkPollingRunLoop >> spawnNewRunLoop [
 
 	^ self class basicNew initialize 
 		start;
@@ -53,7 +57,7 @@ GtkSimpleRunLoop >> spawnNewRunLoop [
 ]
 
 { #category : #'private installing' }
-GtkSimpleRunLoop >> uninstallRunLoop [
+GtkPollingRunLoop >> uninstallRunLoop [
 	
 	process terminate
 ]

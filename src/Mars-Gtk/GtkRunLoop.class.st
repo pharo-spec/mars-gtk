@@ -1,3 +1,12 @@
+"
+I'm a base run loop for gtk applications.
+I define teh base behaviour of a run loop: 
+
+- start/stop 
+- event processing
+
+I also can handle deferred actions to be executed when the process allows it. This is specially useful to keep safeness of execution when the execution control is on gtk side (see GtkMainRunLoop)
+"
 Class {
 	#name : #GtkRunLoop,
 	#superclass : #Object,
@@ -35,7 +44,7 @@ GtkRunLoop class >> current: aRunLoop [
 { #category : #private }
 GtkRunLoop class >> defaultRunLoopClass [
 
-	^ GtkSimpleRunLoop
+	^ GtkPollingRunLoop
 ]
 
 { #category : #accessing }
