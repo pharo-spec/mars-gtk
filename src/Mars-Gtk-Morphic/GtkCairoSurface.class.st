@@ -34,8 +34,9 @@ GtkCairoSurface class >> finalizeResourceData: data [
 	id := data second.
 	contextHandle := data third.
 	
-	self destroyContextHandle: contextHandle value. 
-	self destroySurfaceHandle: handle value.
+	GtkRunLoop defer: [ 
+		self destroyContextHandle: contextHandle value. 
+		self destroySurfaceHandle: handle value ].
 	
 	(self findSurface: id) = handle value 
 		ifFalse: [  ^ self ].	

@@ -144,6 +144,15 @@ OSGtkWindowHandle >> isValid [
 	^ gtkWindow getHandle isNull not
 ]
 
+{ #category : #private }
+OSGtkWindowHandle >> newCursorFromForm: cursorForm [
+	| newCursor |
+
+	GtkRunLoop defer: [ 
+		newCursor := GdkCursor fromForm: cursorForm	].
+	^ newCursor
+]
+
 { #category : #factory }
 OSGtkWindowHandle >> newFormRenderer: aForm [
 
@@ -210,9 +219,10 @@ OSGtkWindowHandle >> setMouseCursor: cursorForm mask: maskForm [
 	
 	cursor := gtkCursorMap 
 		at: cursorForm
-		ifAbsentPut: [ GdkCursor fromForm: cursorForm ].
+		ifAbsentPut: [ self newCursorFromForm: cursorForm ].
 	
-	self gtkWindow cursor: cursor
+	GtkRunLoop defer: [
+		self gtkWindow cursor: cursor ]
 ]
 
 { #category : #accessing }
