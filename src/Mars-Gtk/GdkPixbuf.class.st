@@ -46,6 +46,11 @@ GdkPixbuf class >> newFromSurface: surface x: x y: y width: width height: height
 	^ (self getFromSurface: surface x: x y: y width: width height: height) initialize
 ]
 
+{ #category : #converting }
+GdkPixbuf >> asGdkPixbuf [
+	^ self
+]
+
 { #category : #accessing }
 GdkPixbuf >> depth [
 	
