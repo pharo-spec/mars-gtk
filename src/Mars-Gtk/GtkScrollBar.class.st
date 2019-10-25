@@ -16,29 +16,31 @@ Class {
 	#category : #'Mars-Gtk-Widget-ScrollBar'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'instance creation - private' }
 GtkScrollBar class >> basicOrientation: orientation adjustment: adjustment [
 
 	^ self ffiCall: #(GtkScrollBar *gtk_scrollbar_new  (GtkOrientation orientation, GtkAdjustment *adjustment))
 ]
 
-{ #category : #'instance creation' }
+{ #category : #examples }
 GtkScrollBar class >> example [ 
 
 	<script>
 	
-	| o adjustment sb box win lastAdjustmentValueHolder |
+	| adjustment sb box win lastAdjustmentValueHolder |
 	
 	GtkApplication ensureRunning.
 	
+	"We use a value holder here to keep reference to the adjustment object from the window.
+	It is required only for this simple example but you need to protect the adjustment
+	object from being grabage-collected too."
 	lastAdjustmentValueHolder := NewValueHolder new.
 	
-	o := GtkOrientation GTK_ORIENTATION_VERTICAL.
 	adjustment := GtkAdjustment newDefault.
 	adjustment pinInMemory.
 	adjustment configureValue: 100 lower: 0 upper: 400 stepIncrement: 10 pageIncrement: 50 pageSize: 50.
 
-	sb := GtkScrollBar orientation: o adjustment: adjustment.
+	sb := GtkScrollBar newVerticalAdjustment: adjustment.
 	
 	(GtkAdjustmentValueChangedCallback do: [ :anAdjustment | 
 		anAdjustment pinInMemory.
@@ -60,7 +62,7 @@ GtkScrollBar class >> example [
 			
 ]
 
-{ #category : #'instance creation' }
+{ #category : #accessing }
 GtkScrollBar class >> gType [ 
 	"This method was automatically generated"
 
@@ -68,6 +70,18 @@ GtkScrollBar class >> gType [
 ]
 
 { #category : #'instance creation' }
+GtkScrollBar class >> newHorizontalAdjustment: adjustment [
+
+	^ self orientation: GtkOrientation GTK_ORIENTATION_HORIZONTAL adjustment: adjustment
+]
+
+{ #category : #'instance creation' }
+GtkScrollBar class >> newVerticalAdjustment: adjustment [
+
+	^ self orientation: GtkOrientation GTK_ORIENTATION_VERTICAL adjustment: adjustment
+]
+
+{ #category : #'instance creation - private' }
 GtkScrollBar class >> orientation: orientation adjustment: adjustment [
 
 	| widget |

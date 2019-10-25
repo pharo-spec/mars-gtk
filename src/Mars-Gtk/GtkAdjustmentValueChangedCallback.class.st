@@ -46,5 +46,5 @@ GtkAdjustmentValueChangedCallback >> signalName [
 { #category : #accessing }
 GtkAdjustmentValueChangedCallback >> signature [
 
-	^ #(void (GtkAdjustment *adjustment, void *user_data))
+	^ #(void (void *adjustment, void *user_data))
 ]
