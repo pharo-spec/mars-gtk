@@ -1,3 +1,9 @@
+"
+GtkScrollbar
+GtkScrollbar — A Scrollbar
+
+https://developer.gnome.org/gtk3/stable/GtkScrollbar.html
+"
 Class {
 	#name : #GtkScrollBar,
 	#superclass : #GtkWidget,
@@ -34,7 +40,7 @@ GtkScrollBar class >> example [
 
 	sb := GtkScrollBar orientation: o adjustment: adjustment.
 	
-	(GtkScrollBarValueChangedCallback do: [ :anAdjustment | 
+	(GtkAdjustmentValueChangedCallback do: [ :anAdjustment | 
 		anAdjustment pinInMemory.
 		lastAdjustmentValueHolder value: anAdjustment.
 		anAdjustment value traceCr ]) connectTo: adjustment.
