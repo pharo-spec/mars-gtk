@@ -136,13 +136,6 @@ GtkWindow >> getPositionX: root_x y: root_y [
 	^ self ffiCall: #(void gtk_window_get_position (self, gint *root_x, gint *root_y))
 ]
 
-{ #category : #geometry }
-GtkWindow >> getScaleFactor [
-	"See https://developer.gnome.org/gdk3/stable/gdk3-Windows.html#gdk-window-get-scale-factor"
-
-	^ self ffiCall: #(gint gdk_window_get_scale_factor #(self))
-]
-
 { #category : #private }
 GtkWindow >> getSizeWidth: width height: height [
 
@@ -257,6 +250,13 @@ GtkWindow >> resize: aPoint [
 { #category : #private }
 GtkWindow >> resizeWidth: width height: height [
 	^ self ffiCall: #(void gtk_window_resize (self, gint width, gint height))
+]
+
+{ #category : #geometry }
+GtkWindow >> scaleFactor [
+	"See https://developer.gnome.org/gdk3/stable/gdk3-Windows.html#gdk-window-get-scale-factor"
+
+	^ self ffiCall: #(gint gdk_window_get_scale_factor #(self))
 ]
 
 { #category : #private }

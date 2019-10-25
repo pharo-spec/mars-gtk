@@ -462,13 +462,6 @@ GtkWidget >> getPreferredSizeMin: minimum_size natural: natural_size [
 		GtkRequisition *natural_size))
 ]
 
-{ #category : #geometry }
-GtkWidget >> getScaleFactor [
-	"See https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-scale-factor"
-
-	^ self ffiCall: #(gint gtk_widget_get_scale_factor #(self))
-]
-
 { #category : #private }
 GtkWidget >> getTopLevel [
 	"I will get the window from GtkApplication (to keep identity), so I answer just the 
@@ -691,6 +684,13 @@ GtkWidget >> removeClass: aString [
 { #category : #'external resource management' }
 GtkWidget >> resourceData [
 	^ handle
+]
+
+{ #category : #geometry }
+GtkWidget >> scaleFactor [
+	"See https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-scale-factor"
+
+	^ self ffiCall: #(gint gtk_widget_get_scale_factor #(self))
 ]
 
 { #category : #accessing }
