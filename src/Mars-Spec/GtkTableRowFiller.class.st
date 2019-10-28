@@ -62,17 +62,15 @@ GtkTableRowFiller >> visitCheckboxColumn: aTableColumn [
 
 { #category : #visiting }
 GtkTableRowFiller >> visitImageColumn: aTableColumn [
-	| imageForm |
-
-	self flag: #TODO. "I'm assuming the image is a Form, which may not be the case in the future"
-	imageForm := aTableColumn readObject: self row.
-	imageForm ifNil: [ ^ self ].
+	| image |
+	image := aTableColumn readObject: self row.
+	image ifNil: [ ^ self ].
 	
 	self gtkRow
 		at: (self columnIndexOf: aTableColumn) 
 		putObject: (self 
-			cacheAt: imageForm 
-			ifAbsentPut: [ GdkPixbuf newForm: imageForm ])
+			cacheAt: image 
+			ifAbsentPut: [ image asGdkPixbuf ])
 ]
 
 { #category : #visiting }
