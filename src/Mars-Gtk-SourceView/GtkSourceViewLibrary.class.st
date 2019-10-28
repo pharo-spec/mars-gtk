@@ -15,10 +15,9 @@ GtkSourceViewLibrary >> calloutAPIClass [
 
 { #category : #testing }
 GtkSourceViewLibrary >> isAvailable [
-
-	self flag: #TODO. "Find a way to do this just once"
-	^ self moduleName asFileReference exists
-		and: [ (DynamicLoader loadLibrary: self moduleName) notNil ]
+	self flag: #TODO.	"Find a way to do this just once"
+	^ self libraryName asFileReference exists
+		and: [ (DynamicLoader loadLibrary: self libraryName) notNil ]
 ]
 
 { #category : #'accessing platform' }
