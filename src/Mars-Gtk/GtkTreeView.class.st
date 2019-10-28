@@ -121,7 +121,7 @@ GtkTreeView >> columns [
 	^ columns
 ]
 
-{ #category : #events }
+{ #category : #signals }
 GtkTreeView >> connectRowActivated: aBlock [ 
 	
 	^ (GRowActivatedCallback do: aBlock) connectTo: self
@@ -208,6 +208,18 @@ GtkTreeView >> getSelection [
 ]
 
 { #category : #accessing }
+GtkTreeView >> headersClickable [
+
+	self headersClickable: true
+]
+
+{ #category : #private }
+GtkTreeView >> headersClickable: setting [
+
+	self ffiCall: #(void gtk_tree_view_set_headers_clickable (self, gboolean setting))
+]
+
+{ #category : #accessing }
 GtkTreeView >> headersVisible: aBoolean [
 
 	self gObjectSet: 'headers-visible' toBoolean: aBoolean
@@ -249,6 +261,12 @@ GtkTreeView >> isEnableSearch [
 GtkTreeView >> isFixedHeightMode [
 
 	^ self ffiCall: #(gboolean gtk_tree_view_get_fixed_height_mode (self))
+]
+
+{ #category : #testing }
+GtkTreeView >> isHeadersClickable [
+
+	^ self ffiCall: #(gboolean gtk_tree_view_get_headers_clickable (self))
 ]
 
 { #category : #testing }
