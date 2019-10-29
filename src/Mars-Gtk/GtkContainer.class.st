@@ -113,6 +113,21 @@ GtkContainer >> initialize [
 	children := #()
 ]
 
+{ #category : #'GT-Inspector-Extension' }
+GtkContainer >> inspectionWidgets [
+	<inspectorPresentationOrder: 10 
+		title: 'Widgets'
+		if: #hasChildren>
+
+	^ SpTreeTablePresenter new
+		roots: self children;
+		children: [ :each | 
+			(each isKindOf: GtkContainer) 
+				ifTrue: [ each children ]
+				ifFalse: [ #() ] ];
+		yourself
+]
+
 { #category : #private }
 GtkContainer >> keepWidget: widget [
 
