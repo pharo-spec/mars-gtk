@@ -113,7 +113,7 @@ GtkContainer >> initialize [
 	children := #()
 ]
 
-{ #category : #'GT-Inspector-Extension' }
+{ #category : #inspecting }
 GtkContainer >> inspectionWidgets [
 	<inspectorPresentationOrder: 10 
 		title: 'Widgets'

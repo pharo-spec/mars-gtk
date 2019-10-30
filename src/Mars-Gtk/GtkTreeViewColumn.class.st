@@ -204,6 +204,18 @@ GtkTreeViewColumn >> sizing: type [
 ]
 
 { #category : #accessing }
+GtkTreeViewColumn >> sortColumnId [
+	
+	^ self ffiCall: #(gint gtk_tree_view_column_get_sort_column_id(self))
+]
+
+{ #category : #accessing }
+GtkTreeViewColumn >> sortColumnId: sort_column_id [
+	
+	self ffiCall: #(void gtk_tree_view_column_set_sort_column_id (self, gint sort_column_id))
+]
+
+{ #category : #accessing }
 GtkTreeViewColumn >> title [
 
 	^ self gtkTreeViewColumnGetTitle

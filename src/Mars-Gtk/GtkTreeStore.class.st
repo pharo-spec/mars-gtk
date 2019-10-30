@@ -7,6 +7,8 @@ https://developer.gnome.org/gtk3/stable/GtkTreeStore.html
 Class {
 	#name : #GtkTreeStore,
 	#superclass : #GtkBaseStore,
+	#traits : 'GtkTreeSortable',
+	#classTraits : 'GtkTreeSortable classTrait',
 	#pools : [
 		'GType'
 	],
@@ -44,4 +46,17 @@ GtkTreeStore >> appendNew [
 GtkTreeStore >> numberOfColumns [
 
 	^ self ffiCall: #(gint gtk_tree_model_get_n_columns(self))
+]
+
+{ #category : #sorting }
+GtkTreeStore >> sortBy: aBlock columnId: id [
+
+	self 
+		sortFunc: (GCallback 
+			signature: #(gint (void *model, void *a, void *b, gpointer user_data))  
+			block: [ :model :a :b :user_data |
+				aBlock 
+					cull: (GtkTreeIter fromHandle: a)
+					cull: (GtkTreeIter fromHandle: b) ] )
+		columnId: id
 ]

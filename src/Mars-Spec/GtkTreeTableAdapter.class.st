@@ -176,6 +176,26 @@ GtkTreeTableAdapter >> doAddRow: anObject index: rowIndex into: store [
 ]
 
 { #category : #private }
+GtkTreeTableAdapter >> doRecreateStore: gtkTreeView [
+
+	gtkTreeView model: (self newStoreFrom: self items)
+]
+
+{ #category : #private }
+GtkTreeTableAdapter >> doRegenerateColumns: gtkTreeView [
+	| columnBuilder |
+
+	gtkTreeView removeAllColumns.
+
+	columnBuilder := self newColumnBuilderOn: self presenter.
+	columnBuilder view: gtkTreeView. 
+
+	self presenter columns 
+		do: [ :each | columnBuilder visit: each ].
+
+]
+
+{ #category : #private }
 GtkTreeTableAdapter >> fillStore: store with: aCollection [
 	
 	aCollection withIndexDo: [ :each :index | 
@@ -248,22 +268,11 @@ GtkTreeTableAdapter >> objectCache [
 ]
 
 { #category : #building }
-GtkTreeTableAdapter >> recreateStore: gtkWidget	generateColumns: doesGenerateColumns [
-	| store columnBuilder |
+GtkTreeTableAdapter >> recreateStore: gtkTreeView	generateColumns: doesGenerateColumns [
 	
-	store := self newStoreFrom: self items.
-	gtkWidget model: store.
-
+	self doRecreateStore: gtkTreeView.
 	doesGenerateColumns ifFalse: [ ^ self ].
-	
-	columnBuilder := self newColumnBuilderOn: self model.
-	columnBuilder view: gtkWidget. 
-
-	gtkWidget removeAllColumns.
-
-	self model columns do: [ :each | 
-		columnBuilder visit: each ].
-
+	self doRegenerateColumns: gtkTreeView
 ]
 
 { #category : #updating }
