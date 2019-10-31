@@ -23,8 +23,8 @@ After processing, we will the full tree.
 Class {
 	#name : #GtkTreeTableAdapter,
 	#superclass : #GtkAdapter,
-	#traits : 'GtkTDisconnectSelectionEvents + GtkTHaveWrappingScrollBars',
-	#classTraits : 'GtkTDisconnectSelectionEvents classTrait + GtkTHaveWrappingScrollBars classTrait',
+	#traits : 'GtkTDisconnectSelectionEvents + GtkTHaveWrappingScrollBars + GtkTSortableColumns',
+	#classTraits : 'GtkTDisconnectSelectionEvents classTrait + GtkTHaveWrappingScrollBars classTrait + GtkTSortableColumns classTrait',
 	#instVars : [
 		'levelsAdded',
 		'objectCache'
@@ -189,25 +189,6 @@ GtkTreeTableAdapter >> doRecreateColumns: gtkTreeView [
 
 ]
 
-{ #category : #building }
-GtkTreeTableAdapter >> doRecreateSorting: gtkTreeView [
-	| nextSortableId |
-	
-	nextSortableId := 0.
-	self presenter 	columns withIndexDo: [ :each :index |
-		each isSortable ifTrue: [ 
-			| gtkColumn |
-			gtkColumn := gtkTreeView columnAt: index.
-			gtkColumn sortColumnId: nextSortableId.
-			gtkTreeView model 
-				sortBy: [ :itA :itB | 
-					each sortFunction 
-						collate: (self presenter roots at: (itA toPathArray first))
-						with: (self presenter roots at: (itB toPathArray first)) ] 
-				columnId: nextSortableId.
-			nextSortableId := nextSortableId + 1 ] ]
-]
-
 { #category : #private }
 GtkTreeTableAdapter >> doRecreateStore: gtkTreeView [
 
@@ -292,7 +273,7 @@ GtkTreeTableAdapter >> recreateStore: gtkTreeView	generateColumns: doesGenerateC
 	doesGenerateColumns 
 		ifTrue: [ self doRecreateColumns: gtkTreeView ].
 	self doRecreateStore: gtkTreeView.
-	self doRecreateSorting: gtkTreeView.
+	self addSortableColumnsTo: gtkTreeView
 ]
 
 { #category : #updating }
@@ -339,6 +320,12 @@ GtkTreeTableAdapter >> selectedItem [
 GtkTreeTableAdapter >> selectedPaths [
 	
 	^ self innerWidget allSelected
+]
+
+{ #category : #private }
+GtkTreeTableAdapter >> sortableItemAt: index [ 
+	
+	^ self presenter roots at: index
 ]
 
 { #category : #private }

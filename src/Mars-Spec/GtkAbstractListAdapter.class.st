@@ -1,8 +1,8 @@
 Class {
 	#name : #GtkAbstractListAdapter,
 	#superclass : #GtkAdapter,
-	#traits : 'GtkTDisconnectSelectionEvents',
-	#classTraits : 'GtkTDisconnectSelectionEvents classTrait',
+	#traits : 'GtkTDisconnectSelectionEvents + GtkTSortableColumns',
+	#classTraits : 'GtkTDisconnectSelectionEvents classTrait + GtkTSortableColumns classTrait',
 	#category : #'Mars-Spec-Adapter-List'
 }
 
@@ -18,7 +18,13 @@ GtkAbstractListAdapter >> refreshList [
 	self innerWidgetDo: [ :w |
 		self 
 			disconnectSelectionEventsOf: w
-			during: [ w model: self newTreeStore ] ]
+			during: [ self refreshListOf: w] ]
+]
+
+{ #category : #events }
+GtkAbstractListAdapter >> refreshListOf: gtkWidget [
+
+	gtkWidget model: self newTreeStore
 ]
 
 { #category : #accessing }

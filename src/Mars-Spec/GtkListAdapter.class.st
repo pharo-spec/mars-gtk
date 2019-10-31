@@ -83,6 +83,13 @@ GtkListAdapter >> newTreeStoreWithIcons [
 	^ store
 ]
 
+{ #category : #building }
+GtkListAdapter >> refreshListOf: gtkWidget [
+
+	super refreshListOf: gtkWidget.
+	self addSortableColumnsTo: gtkWidget
+]
+
 { #category : #events }
 GtkListAdapter >> refreshWidgetHeaderTitle [
 	
@@ -107,6 +114,7 @@ GtkListAdapter >> setModelTo: gtkList [
 		gtkList appendPixbufColumn: columnIndex.
 		columnIndex := columnIndex + 1 ].
 	gtkList appendTextColumn: columnIndex.
-	gtkList model: self newTreeStore	
+	gtkList model: self newTreeStore.
+	self addSortableColumnsTo: gtkList
 
 ]

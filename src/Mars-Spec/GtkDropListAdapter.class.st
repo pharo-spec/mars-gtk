@@ -99,7 +99,7 @@ GtkDropListAdapter >> setModelTo: gtkComboBox [
 		gtkComboBox appendPixbufColumn: columnIndex.
 		columnIndex := columnIndex + 1 ].
 	gtkComboBox appendTextColumn: columnIndex.
-	gtkComboBox model: self newTreeStore	
+	gtkComboBox model: self newTreeStore
 
 ]
 

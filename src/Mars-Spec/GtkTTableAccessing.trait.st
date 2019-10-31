@@ -1,5 +1,5 @@
 Trait {
-	#name : #TGtkTableAccessing,
+	#name : #GtkTTableAccessing,
 	#instVars : [
 		'objectCache'
 	],
@@ -7,7 +7,7 @@ Trait {
 }
 
 { #category : #building }
-TGtkTableAccessing >> addColumn: aTableColumn to: aGtkTreeView [ 
+GtkTTableAccessing >> addColumn: aTableColumn to: aGtkTreeView [ 
 	| addColumnVisitor |
 	
 	addColumnVisitor := GtkTableColumnBuilder new
@@ -19,14 +19,14 @@ TGtkTableAccessing >> addColumn: aTableColumn to: aGtkTreeView [
 ]
 
 { #category : #building }
-TGtkTableAccessing >> addColumnsTo: gtkWidget [
+GtkTTableAccessing >> addColumnsTo: gtkWidget [
 
 	self model columns do: [ :aColumn | 
 		self addColumn: aColumn to: gtkWidget ].	
 ]
 
 { #category : #building }
-TGtkTableAccessing >> addRows: aCollection to: store [
+GtkTTableAccessing >> addRows: aCollection to: store [
 
 	GtkTableRowFillerCache 
 		value: self objectCache
@@ -36,7 +36,7 @@ TGtkTableAccessing >> addRows: aCollection to: store [
 ]
 
 { #category : #building }
-TGtkTableAccessing >> addShownRowsTo: store [
+GtkTTableAccessing >> addShownRowsTo: store [
 
 	self 
 		addRows: self presenter model items
@@ -44,7 +44,7 @@ TGtkTableAccessing >> addShownRowsTo: store [
 ]
 
 { #category : #building }
-TGtkTableAccessing >> doAddRow: anObject index: rowIndex into: store [
+GtkTTableAccessing >> doAddRow: anObject index: rowIndex into: store [
 	| row valueTransformer |
 
 	row := store appendNew.
@@ -60,7 +60,7 @@ TGtkTableAccessing >> doAddRow: anObject index: rowIndex into: store [
 ]
 
 { #category : #factory }
-TGtkTableAccessing >> newTreeStore [
+GtkTTableAccessing >> newTreeStore [
 	| typeCollector store |
 	
 	typeCollector := GtkTableColumnTypeCollector new.
@@ -73,7 +73,13 @@ TGtkTableAccessing >> newTreeStore [
 ]
 
 { #category : #private }
-TGtkTableAccessing >> objectCache [
+GtkTTableAccessing >> objectCache [
 
 	^ objectCache ifNil: [ objectCache := IdentityDictionary new ]
+]
+
+{ #category : #private }
+GtkTTableAccessing >> sortableItemAt: index [ 
+	
+	^ self presenter model items at: index
 ]

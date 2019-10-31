@@ -4,8 +4,8 @@ I'm an adapter to render a TablePresenter with Gtk3.
 Class {
 	#name : #GtkTableAdapter,
 	#superclass : #GtkBaseListAdapter,
-	#traits : 'TGtkTableAccessing',
-	#classTraits : 'TGtkTableAccessing classTrait',
+	#traits : 'GtkTTableAccessing',
+	#classTraits : 'GtkTTableAccessing classTrait',
 	#category : #'Mars-Spec-Adapter-Table'
 }
 
@@ -23,7 +23,8 @@ GtkTableAdapter >> addModelTo: gtkTreeView [
 	self addColumnsTo: gtkTreeView.
 	
 	self model columns ifNotEmpty: [
-		gtkTreeView model: self newTreeStore ].
+		gtkTreeView model: self newTreeStore.
+		self addSortableColumnsTo: gtkTreeView ].
 	
 	gtkTreeView selection unselectAll.
 
@@ -66,6 +67,13 @@ GtkTableAdapter >> appendAddedColumns [
 GtkTableAdapter >> isShowColumnHeaders [
 
 	^ self innerWidget isHeadersVisible
+]
+
+{ #category : #building }
+GtkTableAdapter >> refreshListOf: gtkWidget [
+
+	super refreshListOf: gtkWidget.
+	self addSortableColumnsTo: gtkWidget
 ]
 
 { #category : #events }

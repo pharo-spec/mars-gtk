@@ -1,8 +1,8 @@
 Class {
 	#name : #GtkColumnedListAdapter,
 	#superclass : #GtkBaseListAdapter,
-	#traits : 'TGtkTableAccessing',
-	#classTraits : 'TGtkTableAccessing classTrait',
+	#traits : 'GtkTTableAccessing',
+	#classTraits : 'GtkTTableAccessing classTrait',
 	#category : #'Mars-Spec-Adapter-List'
 }
 
@@ -16,6 +16,7 @@ GtkColumnedListAdapter >> addModelTo: gtkList [
 		beSingleSelectionMode.	
 	self addColumnsTo: gtkList.
 	gtkList model: self newTreeStore.
+	self addSortableColumnsTo: gtkList.
 	
 	gtkList selection unselectAll.
 	self presenter selection isEmpty ifFalse: [ 
