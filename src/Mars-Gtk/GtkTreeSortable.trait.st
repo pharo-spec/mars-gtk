@@ -19,7 +19,7 @@ GtkTreeSortable >> initialize [
 ]
 
 { #category : #private }
-GtkTreeSortable >> setSortFunc: aFunction columnId: sort_column_id [
+GtkTreeSortable >> setSortFunc: sort_func columnId: sort_column_id [
 
 	self ffiCall: #(void gtk_tree_sortable_set_sort_func (
 		self,

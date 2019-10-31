@@ -117,6 +117,12 @@ GtkTreeView >> beSingleSelectionMode [
 ]
 
 { #category : #columns }
+GtkTreeView >> columnAt: index [
+	
+	^ columns at: index
+]
+
+{ #category : #columns }
 GtkTreeView >> columns [
 	^ columns
 ]

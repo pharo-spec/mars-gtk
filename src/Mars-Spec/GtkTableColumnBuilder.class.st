@@ -51,8 +51,6 @@ GtkTableColumnBuilder >> newColumnFor: aTableColumn [
 	column title: aTableColumn title.
 	aTableColumn width ifNotNil: [ :w | 
 		column minWidth: w ].
-	aTableColumn isSortable ifTrue: [ 
-		column sortColumnId: self nextSortColumnId ].
 	
 	^ column
 ]
@@ -65,15 +63,6 @@ GtkTableColumnBuilder >> newColumnPackerFor: column [
 		column: column;
 		builder: self;
 		yourself
-]
-
-{ #category : #private }
-GtkTableColumnBuilder >> nextSortColumnId [
-
-	^ sortColumnId := sortColumnId 
-		ifNotNil: [ sortColumnId + 1 ]
-		ifNil: [ 0 ]
-		
 ]
 
 { #category : #private }

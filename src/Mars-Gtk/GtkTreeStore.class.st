@@ -48,6 +48,17 @@ GtkTreeStore >> numberOfColumns [
 	^ self ffiCall: #(gint gtk_tree_model_get_n_columns(self))
 ]
 
+{ #category : #private }
+GtkTreeStore >> setSortFunc: sort_func columnId: sort_column_id [
+
+	self ffiCall: #(void gtk_tree_sortable_set_sort_func (
+		self,
+		gint sort_column_id,
+		GCallback sort_func,
+		NULL,
+		NULL))
+]
+
 { #category : #sorting }
 GtkTreeStore >> sortBy: aBlock columnId: id [
 
@@ -56,7 +67,7 @@ GtkTreeStore >> sortBy: aBlock columnId: id [
 			signature: #(gint (void *model, void *a, void *b, gpointer user_data))  
 			block: [ :model :a :b :user_data |
 				aBlock 
-					cull: (GtkTreeIter fromHandle: a)
-					cull: (GtkTreeIter fromHandle: b) ] )
+					value: (GtkTreeIter fromHandle: a)
+					value: (GtkTreeIter fromHandle: b) ] )
 		columnId: id
 ]

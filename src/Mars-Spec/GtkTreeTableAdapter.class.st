@@ -176,13 +176,7 @@ GtkTreeTableAdapter >> doAddRow: anObject index: rowIndex into: store [
 ]
 
 { #category : #private }
-GtkTreeTableAdapter >> doRecreateStore: gtkTreeView [
-
-	gtkTreeView model: (self newStoreFrom: self items)
-]
-
-{ #category : #private }
-GtkTreeTableAdapter >> doRegenerateColumns: gtkTreeView [
+GtkTreeTableAdapter >> doRecreateColumns: gtkTreeView [
 	| columnBuilder |
 
 	gtkTreeView removeAllColumns.
@@ -193,6 +187,31 @@ GtkTreeTableAdapter >> doRegenerateColumns: gtkTreeView [
 	self presenter columns 
 		do: [ :each | columnBuilder visit: each ].
 
+]
+
+{ #category : #building }
+GtkTreeTableAdapter >> doRecreateSorting: gtkTreeView [
+	| nextSortableId |
+	
+	nextSortableId := 0.
+	self presenter 	columns withIndexDo: [ :each :index |
+		each isSortable ifTrue: [ 
+			| gtkColumn |
+			gtkColumn := gtkTreeView columnAt: index.
+			gtkColumn sortColumnId: nextSortableId.
+			gtkTreeView model 
+				sortBy: [ :itA :itB | 
+					each sortFunction 
+						collate: (self presenter roots at: (itA toPathArray first))
+						with: (self presenter roots at: (itB toPathArray first)) ] 
+				columnId: nextSortableId.
+			nextSortableId := nextSortableId + 1 ] ]
+]
+
+{ #category : #private }
+GtkTreeTableAdapter >> doRecreateStore: gtkTreeView [
+
+	gtkTreeView model: (self newStoreFrom: self items)
 ]
 
 { #category : #private }
@@ -270,9 +289,10 @@ GtkTreeTableAdapter >> objectCache [
 { #category : #building }
 GtkTreeTableAdapter >> recreateStore: gtkTreeView	generateColumns: doesGenerateColumns [
 	
+	doesGenerateColumns 
+		ifTrue: [ self doRecreateColumns: gtkTreeView ].
 	self doRecreateStore: gtkTreeView.
-	doesGenerateColumns ifFalse: [ ^ self ].
-	self doRegenerateColumns: gtkTreeView
+	self doRecreateSorting: gtkTreeView.
 ]
 
 { #category : #updating }
