@@ -12,6 +12,20 @@ Trait {
 	#category : #'Mars-Gtk-Widget-Tree'
 }
 
+{ #category : #private }
+GtkTreeSortable >> compare: aBlock store: model a: a b: b [
+	| store |
+				
+	store := GtkTreeStore fromHandle: model.
+	^ aBlock 
+		value: ((GtkTreeIter fromHandle: a)
+			store: store;
+			yourself)
+		value: ((GtkTreeIter fromHandle: b)
+			store: store;
+			yourself)
+]
+
 { #category : #initialization }
 GtkTreeSortable >> initialize [
 
@@ -35,10 +49,12 @@ GtkTreeSortable >> sortBy: aBlock columnId: id [
 	self 
 		sortFunc: (GCallback 
 			signature: #(gint (void *model, void *a, void *b, gpointer user_data))
-			block: [ :model :a :b :user_data |
-				aBlock 
-					value: (GtkTreeIter fromHandle: a)
-					value: (GtkTreeIter fromHandle: b) ])
+			block: [ :model :a :b :user_data | 
+				self 
+					compare: aBlock 
+					store: model 
+					a: a
+					b: b ])
 		columnId: id
 ]
 

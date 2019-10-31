@@ -58,16 +58,3 @@ GtkTreeStore >> setSortFunc: sort_func columnId: sort_column_id [
 		NULL,
 		NULL))
 ]
-
-{ #category : #sorting }
-GtkTreeStore >> sortBy: aBlock columnId: id [
-
-	self 
-		sortFunc: (GCallback 
-			signature: #(gint (void *model, void *a, void *b, gpointer user_data))  
-			block: [ :model :a :b :user_data |
-				aBlock 
-					value: (GtkTreeIter fromHandle: a)
-					value: (GtkTreeIter fromHandle: b) ] )
-		columnId: id
-]
