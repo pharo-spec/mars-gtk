@@ -25,3 +25,10 @@ GtkColumnedListAdapter >> addModelTo: gtkList [
 	gtkList connectSelectionChanged: [ 
 		self presenter selection selectIndexes: gtkList allSelected flattened ]
 ]
+
+{ #category : #events }
+GtkColumnedListAdapter >> refreshListOf: gtkWidget [
+
+	super refreshListOf: gtkWidget.
+	self addSortableColumnsTo: gtkWidget
+]
