@@ -90,7 +90,7 @@ GtkLibrary >> matchVersionMajor: required_major minor: required_minor micro: req
 { #category : #'accessing platform' }
 GtkLibrary >> runner [
 	
-	^ TFSameThreadRunner new
+	^ TFSameThreadRunner uniqueInstance
 ]
 
 { #category : #'accessing platform' }

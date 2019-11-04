@@ -32,5 +32,5 @@ FcLibrary >> macLibraryName [
 { #category : #converting }
 FcLibrary >> runner [
 	
-	^ TFSameThreadRunner new
+	^ TFSameThreadRunner uniqueInstance
 ]

@@ -23,7 +23,7 @@ PangoFT2Library >> macLibraryName [
 { #category : #accessing }
 PangoFT2Library >> runner [
 	
-	^ TFSameThreadRunner new
+	^ TFSameThreadRunner uniqueInstance
 ]
 
 { #category : #'accessing platform' }

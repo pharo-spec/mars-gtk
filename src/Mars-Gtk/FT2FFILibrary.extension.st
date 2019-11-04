@@ -17,5 +17,5 @@ FT2FFILibrary >> macLibraryName [
 { #category : #'*Mars-Gtk' }
 FT2FFILibrary >> runner [
 	
-	^ TFSameThreadRunner new
+	^ TFSameThreadRunner uniqueInstance
 ]
