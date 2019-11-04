@@ -28,10 +28,10 @@ GtkToggleButton class >> gType [
 	^ self ffiCall: #(gsize gtk_toggle_button_get_type())
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkToggleButton >> active: aBoolean [
 
-	^ self ffiCall: #(gboolean gtk_toggle_button_set_active (self, gboolean aBoolean))
+	^ self ffiCall: #(void gtk_toggle_button_set_active (self, gboolean aBoolean))
 ]
 
 { #category : #accessing }
@@ -64,13 +64,13 @@ GtkToggleButton >> drawIndicator [
 	^ self drawIndicator: true
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkToggleButton >> drawIndicator: aBoolean [
 
 	^ self ffiCall: #(void gtk_toggle_button_set_mode (self, gboolean aBoolean))
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkToggleButton >> getActive [
 	^ self ffiCall: #(gboolean gtk_toggle_button_get_active (self))
 ]
@@ -81,19 +81,19 @@ GtkToggleButton >> inconsistent: aBoolean [
 	^ self ffiCall: #(void gtk_toggle_button_set_inconsistent (self, gboolean aBoolean))
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 GtkToggleButton >> isActive [
 
 	^ self ffiCall: #(gboolean gtk_toggle_button_get_active (self))
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 GtkToggleButton >> isDrawingIndicator [
 
 	^ self ffiCall: #(gboolean gtk_toggle_button_get_mode (self))
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 GtkToggleButton >> isInconsistent [
 
 	^ self ffiCall: #(gboolean gtk_toggle_button_get_inconsistent (self))
