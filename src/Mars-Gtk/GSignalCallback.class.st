@@ -41,7 +41,7 @@ GSignalCallback >> basicValueWithArguments: args [
 			on: Exception
 			do: [ :e |
 				runLoop := GtkRunLoop current spawnNewRunLoop.
-				e debug ] ]
+				e defaultAction ] ]
 		ensure: [ 
 			runLoop ifNotNil: #stop.
 			finished ifFalse: [ 
