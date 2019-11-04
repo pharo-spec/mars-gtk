@@ -150,8 +150,14 @@ GtkAdapter >> doTakeKeyboardFocus [
 	self innerWidgetDo: [ :w | 
 		self presenter withWindowDo: [ :window | 
 			window adapter
-				ifNotNil: [ w grabFocus ]
-				ifNil: [ w deferAction: [ w grabFocus ] ] ] ]
+				ifNotNil: [ self doTakeKeyboardFocus: w ]
+				ifNil: [ w deferAction: [ self doTakeKeyboardFocus: w ] ] ] ]
+]
+
+{ #category : #protocol }
+GtkAdapter >> doTakeKeyboardFocus: gtkWidget [
+
+	gtkWidget grabFocus
 ]
 
 { #category : #accessing }

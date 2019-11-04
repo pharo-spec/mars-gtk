@@ -51,6 +51,15 @@ GtkComponentListAdapter >> disconnectSelectionEventsOf: aWidget during: aBlock [
 		during: aBlock
 ]
 
+{ #category : #protocol }
+GtkComponentListAdapter >> doTakeKeyboardFocus: gtkListBox [
+
+	gtkListBox hasChildren ifFalse: [ ^ super doTakeKeyboardFocus: gtkListBox ].
+	(gtkListBox selectedRow 
+		ifNil: [ gtkListBox children first ])
+		grabFocus
+]
+
 { #category : #'private accessing' }
 GtkComponentListAdapter >> innerWidget [
 
