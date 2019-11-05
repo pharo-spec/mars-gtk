@@ -7,21 +7,29 @@ Trait {
 }
 
 { #category : #private }
+GtkTSortableColumns >> addSortableColumn: aColumn at: index sortableId: sortableId to: gtkTreeView [
+	| gtkColumn sortFunction |
+
+	gtkColumn := gtkTreeView columnAt: index.
+	gtkColumn sortColumnId: sortableId.
+	sortFunction := aColumn sortFunction.
+	gtkTreeView model
+		connectSortColumnChanged: [ sortFunction := sortFunction reversed ];
+		sortBy: [ :itA :itB | 
+			sortFunction
+				collate: (self sortableItemAt: (itA toPathArray first))
+				with: (self sortableItemAt: (itB toPathArray first)) ] 
+		columnId: sortableId
+]
+
+{ #category : #private }
 GtkTSortableColumns >> addSortableColumnsTo: gtkTreeView [
 	| nextSortableId |
 	
 	nextSortableId := 0.
 	self presenter 	columns withIndexDo: [ :each :index |
 		each isSortable ifTrue: [ 
-			| gtkColumn |
-			gtkColumn := gtkTreeView columnAt: index.
-			gtkColumn sortColumnId: nextSortableId.
-			gtkTreeView model 
-				sortBy: [ :itA :itB | 
-					each sortFunction 
-						collate: (self sortableItemAt: (itA toPathArray first))
-						with: (self sortableItemAt: (itB toPathArray first)) ] 
-				columnId: nextSortableId.
+			self addSortableColumn: each at: index sortableId: nextSortableId to: gtkTreeView.
 			nextSortableId := nextSortableId + 1 ] ]
 ]
 

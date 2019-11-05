@@ -26,6 +26,12 @@ GtkTreeSortable >> compare: aBlock store: model a: a b: b [
 			yourself)
 ]
 
+{ #category : #signaling }
+GtkTreeSortable >> connectSortColumnChanged: aBlock [
+
+	self connect: 'sort-column-changed' do: aBlock
+]
+
 { #category : #initialization }
 GtkTreeSortable >> initialize [
 
