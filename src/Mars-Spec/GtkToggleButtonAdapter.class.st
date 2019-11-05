@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #factory }
-GtkToggleButtonAdapter >> newWidget [
+GtkToggleButtonAdapter >> widgetClass [
 
-	^ GtkToggleButton buttonNew
+	^ GtkToggleButton
 ]

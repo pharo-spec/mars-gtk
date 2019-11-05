@@ -4,22 +4,23 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #emulating }
+{ #category : #building }
 GtkCheckBoxAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 	
-	gtkWidget label: self model label.
-	gtkWidget active: self model state.
+	gtkWidget label: self presenter label.
+	gtkWidget active: self presenter state.
 	
 	gtkWidget connectToggled: [ 
-		self backendUpdatingDo: [ self model state: self state ] ].
+		self backendUpdatingDo: [ self presenter state: self state ] ].
 	
-	self model whenLabelChangedDo: [ gtkWidget label: self model label ].
-	self model whenChangedDo: [ 
-		self backendDetectCyclesDo: [ 
-			self model state = gtkWidget isActive ifFalse: [ 
-				gtkWidget active: self model state ] ] ]
+	self presenter whenLabelChangedDo: [ gtkWidget label: self presenter label ].
+	self presenter whenChangedDo: [ 
+		self backendDetectCyclesDo: [
+			Stdio stdout print: gtkWidget; crlf. 
+			(self presenter state == gtkWidget isActive) ifFalse: [ 
+				gtkWidget active: self presenter state ] ] ]
 ]
 
 { #category : #emulating }
@@ -28,14 +29,14 @@ GtkCheckBoxAdapter >> clicked [
 	widget clicked
 ]
 
-{ #category : #factory }
-GtkCheckBoxAdapter >> newWidget [
-
-	^ GtkCheckButton buttonNew
-]
-
 { #category : #accessing }
 GtkCheckBoxAdapter >> state [
 	
 	^ widget getActive
+]
+
+{ #category : #factory }
+GtkCheckBoxAdapter >> widgetClass [
+
+	^ GtkCheckButton
 ]

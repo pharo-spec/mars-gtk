@@ -13,7 +13,7 @@ Class {
 { #category : #private }
 GtkCheckButton class >> buttonNew [
 
-	^ self ffiCall: #(GtkCheckButton* gtk_check_button_new (void))
+	^ self ffiCall: #(GtkCheckButton *gtk_check_button_new (void))
 ]
 
 { #category : #private }

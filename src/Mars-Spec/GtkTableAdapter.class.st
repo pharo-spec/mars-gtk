@@ -63,17 +63,17 @@ GtkTableAdapter >> appendAddedColumns [
 			to: self innerWidget ]	
 ]
 
+{ #category : #building }
+GtkTableAdapter >> doRefreshList: gtkWidget [
+
+	super doRefreshList: gtkWidget.
+	self addSortableColumnsTo: gtkWidget
+]
+
 { #category : #testing }
 GtkTableAdapter >> isShowColumnHeaders [
 
 	^ self innerWidget isHeadersVisible
-]
-
-{ #category : #building }
-GtkTableAdapter >> refreshListOf: gtkWidget [
-
-	super refreshListOf: gtkWidget.
-	self addSortableColumnsTo: gtkWidget
 ]
 
 { #category : #events }

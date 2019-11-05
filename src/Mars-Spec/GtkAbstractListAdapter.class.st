@@ -6,6 +6,12 @@ Class {
 	#category : #'Mars-Spec-Adapter-List'
 }
 
+{ #category : #events }
+GtkAbstractListAdapter >> doRefreshList: gtkWidget [
+
+	gtkWidget model: self newTreeStore
+]
+
 { #category : #private }
 GtkAbstractListAdapter >> newTreeStore [
 
@@ -18,13 +24,7 @@ GtkAbstractListAdapter >> refreshList [
 	self innerWidgetDo: [ :w |
 		self 
 			disconnectSelectionEventsOf: w
-			during: [ self refreshListOf: w] ]
-]
-
-{ #category : #events }
-GtkAbstractListAdapter >> refreshListOf: gtkWidget [
-
-	gtkWidget model: self newTreeStore
+			during: [ self doRefreshList: w ] ]
 ]
 
 { #category : #accessing }

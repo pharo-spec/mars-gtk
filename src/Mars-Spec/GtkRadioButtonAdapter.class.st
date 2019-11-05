@@ -29,14 +29,14 @@ GtkRadioButtonAdapter >> clicked [
 	widget clicked
 ]
 
-{ #category : #factory }
-GtkRadioButtonAdapter >> newWidget [
-
-	^ GtkRadioButton buttonNew
-]
-
 { #category : #accessing }
 GtkRadioButtonAdapter >> state [
 	
 	^ widget getActive
+]
+
+{ #category : #factory }
+GtkRadioButtonAdapter >> widgetClass [
+
+	^ GtkRadioButton
 ]

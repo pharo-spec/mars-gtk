@@ -29,12 +29,15 @@ GtkSliderAdapter >> marks: newValue into: gtkWidget [
 
 { #category : #building }
 GtkSliderAdapter >> newWidget [
+
 	^ self presenter isHorizontal
-		ifTrue: [ self widgetClass
+		ifTrue: [ 
+			self widgetClass
 				newHorizontalMin: 0
 				max: 1
 				step: (self presenter quantum / self presenter max) asFloat ]
-		ifFalse: [ self widgetClass
+		ifFalse: [ 
+			self widgetClass
 				newVerticalMin: 0
 				max: 1
 				step: (self presenter quantum / self presenter max) asFloat ]

@@ -27,8 +27,8 @@ GtkColumnedListAdapter >> addModelTo: gtkList [
 ]
 
 { #category : #events }
-GtkColumnedListAdapter >> refreshListOf: gtkWidget [
+GtkColumnedListAdapter >> doRefreshList: gtkWidget [
 
-	super refreshListOf: gtkWidget.
+	super doRefreshList: gtkWidget.
 	self addSortableColumnsTo: gtkWidget
 ]
