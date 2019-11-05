@@ -12,10 +12,14 @@ GtkCheckBoxAdapter >> addModelTo: gtkWidget [
 	gtkWidget label: self model label.
 	gtkWidget active: self model state.
 	
-	gtkWidget connectToggled: [ self model state: self state ].
+	gtkWidget connectToggled: [ 
+		self backendUpdatingDo: [ self model state: self state ] ].
 	
 	self model whenLabelChangedDo: [ gtkWidget label: self model label ].
-	self model whenChangedDo: [ 	gtkWidget active: self model state ].
+	self model whenChangedDo: [ 
+		self backendDetectCyclesDo: [ 
+			self model state = gtkWidget isActive ifFalse: [ 
+				gtkWidget active: self model state ] ] ]
 ]
 
 { #category : #emulating }

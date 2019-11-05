@@ -39,7 +39,7 @@ GtkComponentListAdapter >> addModelTo: gtkListBox [
 		self refreshWidgetSelectionOf: gtkListBox ].
 	
 	gtkListBox connectSelectedRowsChanged: [ 
-		self backendUpdatingDo: [  
+		self backendUpdatingDo: [
 			self presenter selection selectIndexes: self innerWidget selectedIndexes ] ]
 ]
 
