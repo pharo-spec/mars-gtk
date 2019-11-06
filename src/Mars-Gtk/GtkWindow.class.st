@@ -337,7 +337,11 @@ GtkWindow >> windowDestroyed [
 	 Seems to mean if I receive the destroy signal, window no longer exist (and I do not need 
 	 to re-trigger destroy on it."	
 	handle beNull.
-	self application unregisterWindow: self
+	"if this is the last window and I'm closing the app, it can happen than a destroy 
+	 is called after the GtkApplication is disposed. I need to verify if is nil to avoid 
+	 saving errors."
+	self application ifNotNil: [ :app | 
+		app unregisterWindow: self ]
 ]
 
 { #category : #private }
