@@ -18,5 +18,6 @@ CairoLibrary >> macLibraryName [
 { #category : #'*Mars-Gtk' }
 CairoLibrary >> runner [
 	
-	^ TFSameThreadRunner uniqueInstance
+	^ super runner
+	"^ TFMainThreadRunner uniqueInstance "
 ]
