@@ -24,7 +24,7 @@ PangoCairoLibrary >> macLibraryName [
 { #category : #accessing }
 PangoCairoLibrary >> runner [
 	
-	^ TFSameThreadRunner uniqueInstance
+	^ TFMainThreadRunner uniqueInstance
 ]
 
 { #category : #'accessing platform' }

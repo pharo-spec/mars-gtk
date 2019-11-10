@@ -19,7 +19,7 @@ GtkMainRunLoop >> defer: aBlock [
 		ifTrue: [ ^ aBlock value ].
 
 	sem := Semaphore new.
-	self idleAddFull: (deferCallback ifNil: [ 
+	GIdle uniqueInstance idleAddFull: (deferCallback ifNil: [ 
 		deferCallback := GCallback 
 			signature: #(guint (void *data)) 
 			block: [ :data | 

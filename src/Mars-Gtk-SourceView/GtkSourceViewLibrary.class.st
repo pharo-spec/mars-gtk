@@ -30,7 +30,7 @@ GtkSourceViewLibrary >> macLibraryName [
 { #category : #converting }
 GtkSourceViewLibrary >> runner [
 	
-	^ TFSameThreadRunner uniqueInstance
+	^ TFMainThreadRunner uniqueInstance
 ]
 
 { #category : #'accessing platform' }
