@@ -6,7 +6,8 @@ Class {
 	#name : #GtkMainRunLoop,
 	#superclass : #GtkRunLoop,
 	#instVars : [
-		'deferCallback'
+		'deferCallback',
+		'process'
 	],
 	#category : #'Mars-Gtk-Base'
 }
@@ -40,19 +41,11 @@ GtkMainRunLoop >> gtkMainQuit [
 	self ffiCall: #(void gtk_main_quit ())
 ]
 
-{ #category : #'private primitives' }
-GtkMainRunLoop >> idleAddFull: aCallback [
-
-	self 
-		ffiCall: #(void g_idle_add_full(gint 100,  FFICallback aCallback, NULL, NULL)) 
-		module: GLibLibrary
-]
-
 { #category : #'private installing' }
 GtkMainRunLoop >> installRunLoop [
 
 	deferCallback := nil. "Ensure install a new deferCallback"
-	[ self gtkMain ]
+	process := [ self gtkMain ]
 		forkAt: Processor lowIOPriority 
 		named: 'GtkRunLoop'
 ]
@@ -69,4 +62,10 @@ GtkMainRunLoop >> spawnNewRunLoop [
 { #category : #'private installing' }
 GtkMainRunLoop >> uninstallRunLoop [
 	
+	GtkDefer runInGtk: [ self gtkMainQuit ].
+	
+	process ifNil: [ ^ self ].
+
+	process terminate.
+	process := nil.
 ]
