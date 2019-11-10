@@ -8,3 +8,10 @@ Class {
 	],
 	#category : #'Mars-Gtk-Base-Callbacks'
 }
+
+{ #category : #evaluating }
+GCallback >> valueWithArguments: args [
+
+	GtkRunLoop current callbackEnter.	
+	^ super valueWithArguments: args
+]
