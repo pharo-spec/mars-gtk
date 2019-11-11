@@ -16,7 +16,9 @@ Class {
 		'#session',
 		'#running',
 		'#executing',
-		'#inCallback => ProcessLocalSlot'
+		'#deferring',
+		'#inCallback => ProcessLocalSlot',
+		'#mutex'
 	],
 	#classVars : [
 		'#Current'
@@ -31,6 +33,17 @@ Class {
 }
 
 { #category : #accessing }
+GtkRunLoop class >> activateDeferVerification [
+	<script>
+
+	TFCalloutAPI activateTraceWith: [ :sender |
+		 self current isDeferring ifFalse: [ 
+			((sender methodClass = GtkRunLoop) 
+				or: [ (sender methodClass name beginsWith: 'Gtk') not ]) 
+				ifFalse: [ Stdio stdout << sender printString; crlf  ] ] ]
+]
+
+{ #category : #accessing }
 GtkRunLoop class >> current [
 	^ Current ifNil: [ Current := self defaultRunLoopClass uniqueInstance ]
 ]
@@ -39,6 +52,13 @@ GtkRunLoop class >> current [
 GtkRunLoop class >> current: aRunLoop [
 	Current ifNotNil: [ Current stop ].
 	Current := aRunLoop
+]
+
+{ #category : #accessing }
+GtkRunLoop class >> deactivateDeferVerification [
+	<script>
+
+	TFCalloutAPI resetTrace
 ]
 
 { #category : #private }
@@ -59,6 +79,11 @@ GtkRunLoop class >> install [
 	self = GtkRunLoop ifTrue: [ 
 		self error: 'I''m an abstract class. You need to install one of my subclasses.' ].
 	^ self current: self uniqueInstance
+]
+
+{ #category : #testing }
+GtkRunLoop class >> isDeferring [
+	
 ]
 
 { #category : #'instance creation' }
@@ -86,6 +111,7 @@ GtkRunLoop >> callbackEnter [
 
 { #category : #private }
 GtkRunLoop >> checkSession [
+
 	^ session == Smalltalk session
 ]
 
@@ -114,14 +140,20 @@ GtkRunLoop >> getEventsPending [
 GtkRunLoop >> initialize [
 	
 	self class initializeSlots: self. 
-	super initialize.
 	running := false.
-	executing := false
+	executing := false.
+	super initialize
 ]
 
 { #category : #'private installing' }
 GtkRunLoop >> installRunLoop [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtkRunLoop >> isDeferring [
+
+	^ deferring == true or: [ self isInCallback ]
 ]
 
 { #category : #testing }
@@ -132,6 +164,7 @@ GtkRunLoop >> isInCallback [
 
 { #category : #testing }
 GtkRunLoop >> isRunning [
+
 	^ running
 ]
 

@@ -6,7 +6,8 @@ Class {
 	#instVars : [
 		'runLoop',
 		'windowRegistry',
-		'resourceManager'
+		'resourceManager',
+		'mutex'
 	],
 	#classVars : [
 		'Current'
@@ -92,11 +93,13 @@ GtkApplication >> initialize [
 
 	super initialize.
 	windowRegistry := Set new.
+	mutex := Mutex new.
 	runLoop := GtkRunLoop current
 ]
 
 { #category : #testing }
 GtkApplication >> isRunning [ 
+
 	^ runLoop isRunning
 ]
 
@@ -124,6 +127,8 @@ GtkApplication >> run [
 
 { #category : #'system startup' }
 GtkApplication >> shutDown: quitting [
+	
+	Stdio stdout << 'DOWN LOOP'; crlf.
 
 	self isRunning ifFalse: [ ^ self ].
 	runLoop stop
@@ -132,6 +137,7 @@ GtkApplication >> shutDown: quitting [
 { #category : #'private running' }
 GtkApplication >> start [ 
 	self isRunning ifTrue: [ self stop ].
+
 	self initGtk3.
 	GtkApplicationStartSignal emit.
 	runLoop start
@@ -145,7 +151,8 @@ GtkApplication >> startUp: resuming [
 		GtkDestroySignal reset.
 		GtkApplicationStartSignal emit ].
 "
-	resuming ifFalse: [  runLoop start ]
+	resuming ifFalse: [ 
+		 runLoop start ]
 ]
 
 { #category : #'private running' }

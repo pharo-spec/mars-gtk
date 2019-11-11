@@ -7,29 +7,10 @@ Class {
 	#superclass : #GtkRunLoop,
 	#instVars : [
 		'inputSemaphore',
-		'process',
-		'deferring'
+		'process'
 	],
 	#category : #'Mars-Gtk-Base'
 }
-
-{ #category : #accessing }
-GtkPollingRunLoop class >> activateDeferVerification [
-	<script>
-
-	TFCalloutAPI activateTraceWith: [ :sender |
-		 self current isDeferring ifFalse: [ 
-			((sender methodClass = GtkRunLoop) 
-				or: [ (sender methodClass name beginsWith: 'Gtk') not ]) 
-				ifFalse: [ sender crTrace ] ] ]
-]
-
-{ #category : #accessing }
-GtkPollingRunLoop class >> deactivateDeferVerification [
-	<script>
-
-	TFCalloutAPI resetTrace
-]
 
 { #category : #accessing }
 GtkPollingRunLoop class >> fps [
@@ -63,12 +44,6 @@ GtkPollingRunLoop >> installRunLoop [
 			self processEvents ] ]
 		forkAt: Processor highIOPriority 
 		named: 'GtkRunLoop'
-]
-
-{ #category : #accessing }
-GtkPollingRunLoop >> isDeferring [
-
-	^ deferring == true or: [ self isInCallback ]
 ]
 
 { #category : #'private installing' }

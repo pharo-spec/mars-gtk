@@ -14,17 +14,24 @@ Class {
 
 { #category : #accessing }
 GtkMainRunLoop >> defer: aBlock [
-	| sem result |
+	| sem result oldDefer |
 
 	(self isRunning not or: [ self isInCallback ]) 
-		ifTrue: [ ^ aBlock value ].
+		ifTrue: [ 
+			Stdio stdout << 'NOT RUNNING'; crlf.
+			^ aBlock value ].
 
 	sem := Semaphore new.
 	GIdle uniqueInstance idleAddFull: (deferCallback ifNil: [ 
 		deferCallback := GCallback 
 			signature: #(guint (void *data)) 
-			block: [ :data | 
-				result := aBlock ensure: [ sem signal ]. 
+			block: [ :data |
+				oldDefer := deferring.
+				deferring := true.
+				Stdio stdout << 'IN CALLBACK'; crlf.
+				result := aBlock ensure: [ 
+					deferring := oldDefer. 
+					sem signal ]. 
 				0 ] ]).
 	sem wait.
 
@@ -45,6 +52,8 @@ GtkMainRunLoop >> gtkMainQuit [
 GtkMainRunLoop >> installRunLoop [
 
 	deferCallback := nil. "Ensure install a new deferCallback"
+	Stdio stdout << 'INSTALL LOOP'; crlf.
+
 	process := [ self gtkMain ]
 		forkAt: Processor lowIOPriority 
 		named: 'GtkRunLoop'

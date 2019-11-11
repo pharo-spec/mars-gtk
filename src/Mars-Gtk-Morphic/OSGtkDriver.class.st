@@ -29,6 +29,8 @@ OSGtkDriver >> beCurrent [
 { #category : #'window creation' }
 OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	| window |
+
+	Stdio stdout << 'CREATE'; crlf.
 	
 	self ensureGtkRunning.
 	
@@ -45,9 +47,10 @@ OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 
 { #category : #'window creation' }
 OSGtkDriver >> ensureGtkRunning [
-	
+	Stdio stdout << 'ENSURE'; crlf.
+
 	GtkApplication ensureRunning.
-	OSGtkDriverConfiguration new apply
+	"OSGtkDriverConfiguration new apply"
 ]
 
 { #category : #'window creation' }
