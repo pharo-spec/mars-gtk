@@ -6,8 +6,7 @@ Class {
 	#instVars : [
 		'runLoop',
 		'windowRegistry',
-		'resourceManager',
-		'mutex'
+		'resourceManager'
 	],
 	#classVars : [
 		'Current'
@@ -78,14 +77,16 @@ GtkApplication class >> startUp: resuming [
 { #category : #private }
 GtkApplication >> initArgC: argc argV: argv [
 
-	^ self ffiCall: #(void gtk_init (ulong argc, ulong argv))
+	^ self ffiCall: #(void gtk_init ("int *"void *argc, "char ***"void *argv))
 ]
 
 { #category : #private }
 GtkApplication >> initGtk3 [
 	"Initialize Gtk3"
 
-	self initArgC: 0 argV: 0
+	self 
+		initArgC: ExternalAddress null 
+		argV: ExternalAddress null
 ]
 
 { #category : #initialization }
@@ -93,7 +94,6 @@ GtkApplication >> initialize [
 
 	super initialize.
 	windowRegistry := Set new.
-	mutex := Mutex new.
 	runLoop := GtkRunLoop current
 ]
 
