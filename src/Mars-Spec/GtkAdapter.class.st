@@ -32,8 +32,7 @@ GtkAdapter class >> isAbstract [
 { #category : #initialization }
 GtkAdapter >> adapt: aPresenter [
 
-	GtkRunLoop defer: [ 
-		^ super adapt: aPresenter ]
+	^ GtkRunLoop defer: [ super adapt: aPresenter ]
 ]
 
 { #category : #building }
@@ -132,7 +131,7 @@ GtkAdapter >> buildWidget [
 	self addSettingsTo: gtkWidget.
 	self addKeyBindingsTo: gtkWidget.
 	self addModelTo: gtkWidget.
-	^ self wrapWidget: gtkWidget
+	self wrapWidget: gtkWidget
 ]
 
 { #category : #private }

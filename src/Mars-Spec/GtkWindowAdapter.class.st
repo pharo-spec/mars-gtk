@@ -207,8 +207,9 @@ GtkWindowAdapter >> notifyInfo: aSpecNotification [
 GtkWindowAdapter >> open [
 
 	self widgetDo: [ :w | 
-		w show.
-		w present.
+		GtkRunLoop defer: [ 
+			w show.
+			w present ].
 		self announceOpened ].
 ]
 
