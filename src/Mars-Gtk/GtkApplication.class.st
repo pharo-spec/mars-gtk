@@ -23,7 +23,7 @@ GtkApplication class >> current [
 ]
 
 { #category : #accessing }
-GtkApplication class >> ensureRunning [ 
+GtkApplication class >> ensureRunning [
 
 	self isRunning ifTrue: [ ^ self ]. 
 	self new run
@@ -128,8 +128,6 @@ GtkApplication >> run [
 { #category : #'system startup' }
 GtkApplication >> shutDown: quitting [
 	
-	Stdio stdout << 'DOWN LOOP'; crlf.
-
 	self isRunning ifFalse: [ ^ self ].
 	runLoop stop
 ]

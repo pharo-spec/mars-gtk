@@ -191,10 +191,10 @@ GtkRunLoop >> start [
 
 { #category : #running }
 GtkRunLoop >> stop [ 
+
 	self isRunning ifFalse: [ ^ self ].
 	self uninstallRunLoop.	
 	running := false
-
 ]
 
 { #category : #'private installing' }

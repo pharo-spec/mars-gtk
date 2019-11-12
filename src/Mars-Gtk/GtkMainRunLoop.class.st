@@ -6,7 +6,6 @@ Class {
 	#name : #GtkMainRunLoop,
 	#superclass : #GtkRunLoop,
 	#instVars : [
-		'deferCallback',
 		'process'
 	],
 	#category : #'Mars-Gtk-Base'
@@ -14,25 +13,19 @@ Class {
 
 { #category : #accessing }
 GtkMainRunLoop >> defer: aBlock [
-	| sem result oldDefer |
+	| sem result |
 
 	(self isRunning not or: [ self isInCallback ]) 
-		ifTrue: [ 
-			Stdio stdout << 'NOT RUNNING'; crlf.
-			^ aBlock value ].
+		ifTrue: [ ^ aBlock value ].
 
 	sem := Semaphore new.
-	GIdle uniqueInstance idleAddFull: (deferCallback ifNil: [ 
-		deferCallback := GCallback 
-			signature: #(guint (void *data)) 
-			block: [ :data |
-				oldDefer := deferring.
-				deferring := true.
-				Stdio stdout << 'IN CALLBACK'; crlf.
-				result := aBlock ensure: [ 
-					deferring := oldDefer. 
-					sem signal ]. 
-				0 ] ]).
+	GIdle uniqueInstance idleAddFull: (GSourceFunc do: [ :data | 
+		| oldDefer |
+		oldDefer := deferring.
+		deferring := true.
+		result := aBlock ensure: [ 
+			deferring := oldDefer. 
+			sem signal ] ]).
 	sem wait.
 
 	^ result
@@ -40,19 +33,18 @@ GtkMainRunLoop >> defer: aBlock [
 
 { #category : #'private primitives' }
 GtkMainRunLoop >> gtkMain [
+
 	self ffiCall: #(void gtk_main ())
 ]
 
 { #category : #'private primitives' }
 GtkMainRunLoop >> gtkMainQuit [
+
 	self ffiCall: #(void gtk_main_quit ())
 ]
 
 { #category : #'private installing' }
 GtkMainRunLoop >> installRunLoop [
-
-	deferCallback := nil. "Ensure install a new deferCallback"
-	Stdio stdout << 'INSTALL LOOP'; crlf.
 
 	process := [ self gtkMain ]
 		forkAt: Processor lowIOPriority 
@@ -71,10 +63,9 @@ GtkMainRunLoop >> spawnNewRunLoop [
 { #category : #'private installing' }
 GtkMainRunLoop >> uninstallRunLoop [
 	
-	GtkDefer runInGtk: [ self gtkMainQuit ].
+	self defer: [ self gtkMainQuit ].
 	
 	process ifNil: [ ^ self ].
-
 	process terminate.
-	process := nil.
+	process := nil
 ]
