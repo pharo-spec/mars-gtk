@@ -15,10 +15,8 @@ Class {
 	#instVars : [
 		'#session',
 		'#running',
-		'#executing',
 		'#deferring',
-		'#inCallback => ProcessLocalSlot',
-		'#mutex'
+		'#inCallback => ProcessLocalSlot'
 	],
 	#classVars : [
 		'#Current'
@@ -122,14 +120,6 @@ GtkRunLoop >> defer: aBlock [
 ]
 
 { #category : #private }
-GtkRunLoop >> doNotOverlap: aBlock [
-	executing ifTrue: [ ^ self ].
-	executing := true.
-	aBlock ensure: [ executing := false ]
-
-]
-
-{ #category : #private }
 GtkRunLoop >> getEventsPending [
 
 	^ self 
@@ -141,7 +131,6 @@ GtkRunLoop >> initialize [
 	
 	self class initializeSlots: self. 
 	running := false.
-	executing := false.
 	super initialize
 ]
 
@@ -153,7 +142,7 @@ GtkRunLoop >> installRunLoop [
 { #category : #accessing }
 GtkRunLoop >> isDeferring [
 
-	^ deferring == true or: [ self isInCallback ]
+	^ (deferring == true) or: [ self isInCallback ]
 ]
 
 { #category : #testing }
@@ -177,11 +166,11 @@ GtkRunLoop >> mainIterationDo: blocking [
 
 { #category : #private }
 GtkRunLoop >> processEvents [
-	self doNotOverlap: [
-		[ (self isRunning and: [ self checkSession ])
-			ifTrue: [ self getEventsPending ]
-			ifFalse: [ false ] ]
-		whileTrue: [ self mainIterationDo: false ] ]
+
+	[ (self isRunning and: [ self checkSession ])
+		ifTrue: [ self getEventsPending ]
+		ifFalse: [ false ] ]
+	whileTrue: [ self mainIterationDo: false ]
 ]
 
 { #category : #running }
@@ -192,11 +181,12 @@ GtkRunLoop >> spawnNewRunLoop [
 
 { #category : #running }
 GtkRunLoop >> start [
+
 	self isRunning ifTrue: [ ^ self ].
 	
-	running := true.
 	session := Smalltalk session. 
 	self installRunLoop.
+	running := true
 ]
 
 { #category : #running }
