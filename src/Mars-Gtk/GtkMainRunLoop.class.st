@@ -15,17 +15,16 @@ Class {
 GtkMainRunLoop >> defer: aBlock [
 	| sem result |
 
-	(self isRunning not or: [ self isInCallback ]) 
-		ifTrue: [ ^ aBlock value ].
+	(self isRunning not or: [ self isInCallback ]) ifTrue: [ ^ aBlock value ].
 
 	sem := Semaphore new.
-	GIdle uniqueInstance idleAddFull: (GSourceFunc do: [ :data | 
+	GIdle uniqueInstance idleAddFull: [ 
 		| oldDefer |
 		oldDefer := deferring.
 		deferring := true.
 		result := aBlock ensure: [ 
 			deferring := oldDefer. 
-			sem signal ] ]).
+			sem signal ] ].
 	sem wait.
 
 	^ result
