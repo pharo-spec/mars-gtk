@@ -343,18 +343,21 @@ GtkTreeTableAdapter >> storeClass [
 
 { #category : #private }
 GtkTreeTableAdapter >> takeKeyboardFocus [
-	| needToCleanUP |
+
+	self innerWidgetDo: [ :w |
+		| needToCleanUP |
 	
-	needToCleanUP := self presenter selection isEmpty.
-	self flag: #hack.
-	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
-	needToCleanUP 
-		ifTrue: [ 
-			self disconnectSelectionEventsOf: self innerWidget during: [ 
-				self doTakeKeyboardFocus.
-				self innerWidget selection unselectAll ] ]
-		ifFalse: [ 
-			self doTakeKeyboardFocus ]
+		needToCleanUP := self presenter selection isEmpty.
+		self flag: #hack.
+		"GTK has an issue when giving the focus to a List. When it gives 
+		 the focus selects the first element"
+		needToCleanUP 
+			ifTrue: [ 
+				self disconnectSelectionEventsOf: w during: [ 
+					self doTakeKeyboardFocus.
+					w selection unselectAll ] ]
+			ifFalse: [ 
+				self doTakeKeyboardFocus ] ]
 ]
 
 { #category : #building }
