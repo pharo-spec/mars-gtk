@@ -18,20 +18,20 @@ GtkMillerAdapter >> add: aPresenter [
 
 { #category : #private }
 GtkMillerAdapter >> add: aPresenter constraints: constraints [
-	| childWidget |
 	
-	self widget ifNil: [ ^ self ].
- 
-	childWidget := self 
-		basicAdd: aPresenter 
-		constraints: constraints 
-		to: innerWidget.
-	"I'm keeping a reference to aPresenter into the built widget because in some cases 
-	 it can be GC (in case of the on-the-fly creation, for example). 
-	 Now this can be a real bad idea :)"
-	childWidget data: aPresenter.
-	self recalculatePages.
-	self scrollToShowLastPage
+	self widgetDo: [ :w |
+		| childWidget |
+		
+		childWidget := self 
+			basicAdd: aPresenter 
+			constraints: constraints 
+			to: innerWidget.
+		"I'm keeping a reference to aPresenter into the built widget because in some cases 
+		 it can be GC (in case of the on-the-fly creation, for example). 
+		 Now this can be a real bad idea :)"
+		childWidget data: aPresenter.
+		self recalculatePages.
+		self scrollToShowLastPage ]
 ]
 
 { #category : #private }
@@ -170,17 +170,18 @@ GtkMillerAdapter >> recalculatePages [
 GtkMillerAdapter >> remove: aPresenter [
 	| childWidget |
 
-	childWidget := aPresenter adapter widget.
-	(innerWidget children includes: childWidget) ifTrue: [  
-		innerWidget remove: childWidget.
-		self recalculatePages.
-		self scrollToShowLastPage ]
+	self innerWidgetDo: [ :w |
+		childWidget := aPresenter adapter widget.
+		(w children includes: childWidget) ifTrue: [  
+			w remove: childWidget.
+			self recalculatePages.
+			self scrollToShowLastPage ] ]
 ]
 
 { #category : #removing }
 GtkMillerAdapter >> removeAll [
 
-	self widget removeAll
+	self widgetDo: #removeAll
 ]
 
 { #category : #private }

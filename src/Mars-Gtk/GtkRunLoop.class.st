@@ -42,6 +42,17 @@ GtkRunLoop class >> activateDeferVerification [
 ]
 
 { #category : #accessing }
+GtkRunLoop class >> activateDeferVerification2 [
+	<script>
+
+	TFCalloutAPI activateTraceWith: [ :sender |
+		 "self current isDeferring ifFalse: [" 
+			((sender methodClass = GtkRunLoop) 
+				or: [ (sender methodClass name beginsWith: 'Gtk') not ]) 
+				ifFalse: [ Stdio stdout << sender printString; crlf  ] ] "]"
+]
+
+{ #category : #accessing }
 GtkRunLoop class >> current [
 	^ Current ifNil: [ Current := self defaultRunLoopClass uniqueInstance ]
 ]

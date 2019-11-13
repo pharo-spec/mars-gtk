@@ -21,7 +21,7 @@ GtkAthensStaticAdapter >> addModelTo: gtkWidget [
 { #category : #drawing }
 GtkAthensStaticAdapter >> redraw [
 
-	self widget queueDraw
+	self widgetDo: #queueDraw
 ]
 
 { #category : #building }

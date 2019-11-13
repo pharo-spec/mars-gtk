@@ -86,7 +86,8 @@ GtkListAdapter >> newTreeStoreWithIcons [
 { #category : #events }
 GtkListAdapter >> refreshWidgetHeaderTitle [
 	
-	self refreshWidgetHeaderTitleTo: self innerWidget
+	self innerWidgetDo: [ :w |
+		self refreshWidgetHeaderTitleTo: w ]
 ]
 
 { #category : #events }

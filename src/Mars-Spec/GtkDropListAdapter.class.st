@@ -86,7 +86,7 @@ GtkDropListAdapter >> selectIndex: anInteger [
 { #category : #accessing }
 GtkDropListAdapter >> selectedIndexes [
 	
-	^ self widget selectedIndexes 
+	^ self widgetDo: #selectedIndexes 
 ]
 
 { #category : #building }

@@ -102,9 +102,8 @@ GtkNotebookAdapter >> removePageContent: gtkPage [
 { #category : #updating }
 GtkNotebookAdapter >> selectPage: aPage [ 
 	
-	self widget ifNil: [ ^ self ].
-
-	(self widget pageWithData: aPage) select
+	self widgetDo: [ :w |
+		(w pageWithData: aPage) select ]
 ]
 
 { #category : #updating }
@@ -144,16 +143,14 @@ GtkNotebookAdapter >> updatePageTitle: aPage [
 
 { #category : #building }
 GtkNotebookAdapter >> updatePagesWith: aCollection [
-	| pagesToRemove |
 	
-	self widget ifNil: [ ^ self ].
-		
-	pagesToRemove := self widget children 
-		reject: [ :eachPage | aCollection includes: eachPage data ].
-	pagesToRemove do: [ :eachPage | self widget remove: eachPage ].
-	aCollection 
-		reject: [ :page | (self widget pageWithData: page ifNone: [ nil ]) notNil ]
-		thenDo: [ :page | self appendPage: page to: self widget ]
+	self widgetDo: [ :w | | pagesToRemove |
+		pagesToRemove := w children 
+			reject: [ :eachPage | aCollection includes: eachPage data ].
+		pagesToRemove do: [ :eachPage | w remove: eachPage ].
+		aCollection 
+			reject: [ :page | (w pageWithData: page ifNone: [ nil ]) notNil ]
+			thenDo: [ :page | self appendPage: page to: w ] ]
 ]
 
 { #category : #building }

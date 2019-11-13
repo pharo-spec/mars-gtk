@@ -56,11 +56,13 @@ GtkTableAdapter >> addModelTo: gtkTreeView [
 GtkTableAdapter >> appendAddedColumns [
 	| columns |
 	
-	columns := self model columns.  
-	(columns last: (columns size - self innerWidget columns size)) do: [ :aTableColumn | 
-		self 
-			addColumn: aTableColumn 
-			to: self innerWidget ]	
+	self innerWidgetDo: [ :w |
+		columns := self presenter columns.  
+		(columns last: (columns size - w columns size)) 
+			do: [ :aTableColumn | 
+				self 
+					addColumn: aTableColumn 
+					to: w ] ]
 ]
 
 { #category : #building }
@@ -79,7 +81,8 @@ GtkTableAdapter >> isShowColumnHeaders [
 { #category : #events }
 GtkTableAdapter >> refreshWidgetHeaderTitle [
 	
-	self refreshWidgetHeaderTitleTo: self innerWidget
+	self innerWidgetDo: [ :w |
+		self refreshWidgetHeaderTitleTo: w ]
 ]
 
 { #category : #events }

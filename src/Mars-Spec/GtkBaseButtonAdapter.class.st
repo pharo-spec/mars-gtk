@@ -26,18 +26,22 @@ GtkBaseButtonAdapter >> icon [
 { #category : #updating }
 GtkBaseButtonAdapter >> updateIcon [
 
-	self widget
-		alwaysShowImage;
-		image: (GtkImage newForm: self model icon)
+	self widgetDo: [ :w |
+		w
+			alwaysShowImage;
+			image: (GtkImage newForm: self model icon) ]
 ]
 
 { #category : #updating }
 GtkBaseButtonAdapter >> updateLabel [
 
-	self widget label: self model label asString
+	self widgetDo: [ :w | 
+		w label: self presenter model label asString ]
 ]
 
 { #category : #updating }
 GtkBaseButtonAdapter >> updateTooltip [
-	self widget tooltipText: self model help
+
+	self widgetDo: [ :w | 
+		w tooltipText: self presenter help ]
 ]

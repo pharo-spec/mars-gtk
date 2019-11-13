@@ -108,7 +108,8 @@ GtkAdapter >> backendUpdatingDo: aBlock [
 GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock [ 
 	
 	dispatcher ifNil: [ 
-		self configureKeyBindings: self widget ].
+		self widgetDo: [ :w |
+			self configureKeyBindings: w ] ].
 	
 	dispatcher 
 		bindKeyCombination: aShortcut 
@@ -131,7 +132,7 @@ GtkAdapter >> buildWidget [
 	self addSettingsTo: gtkWidget.
 	self addKeyBindingsTo: gtkWidget.
 	self addModelTo: gtkWidget.
-	self wrapWidget: gtkWidget
+	^ self wrapWidget: gtkWidget
 ]
 
 { #category : #private }
@@ -222,7 +223,7 @@ GtkAdapter >> innerWidget [
 GtkAdapter >> innerWidgetDo: aBlock [
 
 	self hasWidget ifFalse: [ ^ nil ].
-	^ aBlock value: self innerWidget
+	^ GtkRunLoop defer: [ aBlock value: self innerWidget ]
 ]
 
 { #category : #'private cycle detection' }
@@ -282,8 +283,8 @@ GtkAdapter >> rightClicked [
 { #category : #accessing }
 GtkAdapter >> setBalloonText: aString [ 
 	
-	^ self innerWidget ifNotNil: [ 
-		self innerWidget tooltipText: aString ]
+	self innerWidgetDo: [ :w | 
+		w tooltipText: aString ]
 ]
 
 { #category : #protocol }
@@ -303,30 +304,37 @@ GtkAdapter >> update: aSymbol with: anArray [
 
 { #category : #updating }
 GtkAdapter >> updateMenu [
-	| existingCallbacks menu |
 
-	self hasWidget ifFalse: [ ^ self ].
+	self innerWidgetDo: [ :w |
+		| existingCallbacks menu |
 
-	existingCallbacks := Set new.
-	self innerWidget 
-		withCallbacksOfType: GSecondaryButtonPressEventCallback 
-		do: [ :each | existingCallbacks add: each ].
-		
-	menu := self model contextMenu. 
-	menu ifNil: [ 
-		existingCallbacks do: [ :each | each disconnectFrom: self innerWidget ].
-		^ self ].
-	"if there is already a callback, I do not need to do anything (because it will be 
-	 evaluated each time)"
-	existingCallbacks ifNotEmpty: [ ^ self ].
-	"Now, actually add the menu callback"
-	self addMenu: menu to: self innerWidget
+		existingCallbacks := Set new.
+		w 
+			withCallbacksOfType: GSecondaryButtonPressEventCallback 
+			do: [ :each | existingCallbacks add: each ].
+			
+		menu := self model contextMenu. 
+		menu ifNil: [ 
+			existingCallbacks do: [ :each | each disconnectFrom: w ].
+			^ self ].
+		"if there is already a callback, I do not need to do anything (because it will be 
+		 evaluated each time)"
+		existingCallbacks ifNotEmpty: [ ^ self ].
+		"Now, actually add the menu callback"
+		self addMenu: menu to: w ]
 ]
 
 { #category : #building }
 GtkAdapter >> widgetClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #private }
+GtkAdapter >> widgetDo: aBlock [ 
+
+	self hasWidget ifFalse: [ ^ nil ].
+	^ GtkRunLoop defer: [ aBlock value: widget ]
 ]
 
 { #category : #building }

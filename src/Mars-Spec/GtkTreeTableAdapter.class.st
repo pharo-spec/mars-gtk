@@ -279,7 +279,8 @@ GtkTreeTableAdapter >> recreateStore: gtkTreeView	generateColumns: doesGenerateC
 { #category : #updating }
 GtkTreeTableAdapter >> refreshList [
 
-	self innerWidget model: (self newStoreFrom: self model items)
+	self innerWidgetDo: [ :w | 
+		w model: (self newStoreFrom: self presenter items) ]
 ]
 
 { #category : #private }

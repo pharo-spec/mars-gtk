@@ -92,11 +92,12 @@ GtkBoxAdapter >> newVertical [
 { #category : #'accessing - children' }
 GtkBoxAdapter >> remove: aPresenter [
 
-	^ self widget remove: aPresenter adapter widget
+	^ self widgetDo: [ :w | 
+		w remove: aPresenter adapter widget ]
 ]
 
 { #category : #'accessing - children' }
 GtkBoxAdapter >> removeAll [
 
-	self widget removeAll
+	self widgetDo: #removeAll
 ]

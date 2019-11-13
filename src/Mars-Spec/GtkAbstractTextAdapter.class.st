@@ -69,13 +69,13 @@ GtkAbstractTextAdapter >> rightClicked [
 { #category : #selection }
 GtkAbstractTextAdapter >> selectAll [
 	
-	self widget selectAll
+	self widgetDo: #selectAll
 ]
 
 { #category : #'spec protocol' }
 GtkAbstractTextAdapter >> selectLine [
 
-	self innerWidget ifNotNil: [ :w | 
+	self innerWidgetDo: [ :w | 
 		w textBuffer selectLineAtCursor ]
 ]
 
@@ -95,7 +95,7 @@ GtkAbstractTextAdapter >> selection [
 { #category : #'spec protocol' }
 GtkAbstractTextAdapter >> setSelectionFromModel: aSelection [
  
-	self innerWidget ifNotNil: [ :w | 
+	self innerWidgetDo: [ :w | 
 		w textBuffer 
 			selectFrom: aSelection first - 1
 			to: aSelection last ]

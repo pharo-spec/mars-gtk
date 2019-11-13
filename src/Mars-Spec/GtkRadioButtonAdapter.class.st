@@ -10,7 +10,7 @@ GtkRadioButtonAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 
 	self model associatedRadioButtons do: [ :e |  
-		e withWidgetDo: [ :w | gtkWidget joinGroupOf: w widget ]	].
+		e withWidgetDo: [ :w | gtkWidget joinGroupOf: w widget ] ].
 	
 	gtkWidget label: self model label.
 	gtkWidget active: self model state.

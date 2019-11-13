@@ -91,8 +91,8 @@ GtkComponentListAdapter >> refreshList [
 { #category : #factory }
 GtkComponentListAdapter >> refreshWidgetSelection [
 
-	self hasWidget ifFalse: [ ^ self ].
-	self refreshWidgetSelectionOf: self innerWidget
+	self innerWidgetDo: [ :w |
+		self refreshWidgetSelectionOf: w ]
 ]
 
 { #category : #private }
@@ -146,9 +146,8 @@ GtkComponentListAdapter >> update: gtkWidget with: aCollection [
 { #category : #building }
 GtkComponentListAdapter >> updateWith: aCollection [
 
-	self 
-		update: self innerWidget 
-		with: aCollection
+	self innerWidgetDo: [ :w |
+		self update: w with: aCollection ]
 ]
 
 { #category : #building }
