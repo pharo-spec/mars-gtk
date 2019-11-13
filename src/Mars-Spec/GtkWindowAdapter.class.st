@@ -46,39 +46,11 @@ GtkWindowAdapter >> addModelTo: gtkWindow [
 
 { #category : #accessing }
 GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
-	| gtkBox |
-
-	self connectToGtkSignals: gtkWindow.
-	self addDefaultKeyBindings: gtkWindow.
-
-	"add window properties"
-	self model initialExtent
-		ifNotNil: [ :extent | gtkWindow resize: extent ].
-	self model initialPosition
-		ifNotNil: [ :position | gtkWindow moveTo: position ].
-
-	"inner contents of window"
-	gtkBox := GtkBox newVertical.
-	gtkBox show.
-	"menu bar"
-	self model hasMenu
-		ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
-	"tool bar"
-	self model hasToolbar
-		ifTrue: [ self addToolBarTo: gtkBox ].
-	"infoArea"
-	gtkBox
-		packStart: (infoArea := GtkInfoArea new)
-		expand: false
-		fill: false
-		padding: 0.
-	"contents"
-	gtkBox packStart: (self contentWidget: aSpec).
-	"status bar"
-	self model hasStatusBar
-		ifTrue: [ self addStatusBarTo: gtkBox ].
-	"... and add all that to window"
-	self add: gtkBox toWindow: gtkWindow
+	
+	GtkRunLoop defer: [ 
+		self 
+			deferredAddPresenterIn: gtkWindow 
+			withSpecLayout: aSpec ]
 ]
 
 { #category : #private }
@@ -182,6 +154,43 @@ GtkWindowAdapter >> connectToGtkSignals: gtkWindow [
 GtkWindowAdapter >> contentWidget: aSpec [
 
 	^ self model presenter buildWithSpecLayout: aSpec
+]
+
+{ #category : #private }
+GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
+	| gtkBox |
+
+	self connectToGtkSignals: gtkWindow.
+	self addDefaultKeyBindings: gtkWindow.
+
+	"add window properties"
+	self model initialExtent
+		ifNotNil: [ :extent | gtkWindow resize: extent ].
+	self model initialPosition
+		ifNotNil: [ :position | gtkWindow moveTo: position ].
+
+	"inner contents of window"
+	gtkBox := GtkBox newVertical.
+	gtkBox show.
+	"menu bar"
+	self model hasMenu
+		ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
+	"tool bar"
+	self model hasToolbar
+		ifTrue: [ self addToolBarTo: gtkBox ].
+	"infoArea"
+	gtkBox
+		packStart: (infoArea := GtkInfoArea new)
+		expand: false
+		fill: false
+		padding: 0.
+	"contents"
+	gtkBox packStart: (self contentWidget: aSpec).
+	"status bar"
+	self model hasStatusBar
+		ifTrue: [ self addStatusBarTo: gtkBox ].
+	"... and add all that to window"
+	self add: gtkBox toWindow: gtkWindow
 ]
 
 { #category : #building }

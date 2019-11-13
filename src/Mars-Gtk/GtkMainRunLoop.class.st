@@ -15,7 +15,9 @@ Class {
 GtkMainRunLoop >> defer: aBlock [
 	| sem result |
 
-	(self isRunning not or: [ self isInCallback ]) ifTrue: [ ^ aBlock value ].
+	(self isRunning not 
+		or: [ self isInCallback ]) 
+		ifTrue: [ ^ aBlock value ].
 
 	sem := Semaphore new.
 	GIdle uniqueInstance idleAddFull: [ 
