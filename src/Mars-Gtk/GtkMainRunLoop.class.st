@@ -53,8 +53,7 @@ GtkMainRunLoop >> installRunLoop [
 { #category : #running }
 GtkMainRunLoop >> spawnNewRunLoop [
 
-	self flag: #TODO. "This is like this for now waiting for a test of using a nested gtk_main"
-	^ GtkPollingRunLoop basicNew initialize 
+	^ self class basicNew initialize 
 		start;
 		yourself
 ]

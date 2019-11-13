@@ -36,7 +36,7 @@ GtkBaseButtonAdapter >> updateIcon [
 GtkBaseButtonAdapter >> updateLabel [
 
 	self widgetDo: [ :w | 
-		w label: self presenter model label asString ]
+		w label: self presenter label asString ]
 ]
 
 { #category : #updating }
