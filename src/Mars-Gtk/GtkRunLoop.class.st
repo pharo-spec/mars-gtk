@@ -15,7 +15,6 @@ Class {
 	#instVars : [
 		'#session',
 		'#running',
-		'#deferring',
 		'#inCallback => ProcessLocalSlot'
 	],
 	#classVars : [
@@ -153,7 +152,7 @@ GtkRunLoop >> installRunLoop [
 { #category : #accessing }
 GtkRunLoop >> isDeferring [
 
-	^ (deferring == true) or: [ self isInCallback ]
+	^ false
 ]
 
 { #category : #testing }

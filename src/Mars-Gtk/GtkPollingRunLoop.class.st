@@ -7,7 +7,8 @@ Class {
 	#superclass : #GtkRunLoop,
 	#instVars : [
 		'inputSemaphore',
-		'process'
+		'process',
+		'deferring'
 	],
 	#category : #'Mars-Gtk-Base'
 }
@@ -44,6 +45,12 @@ GtkPollingRunLoop >> installRunLoop [
 			self processEvents ] ]
 		forkAt: Processor highIOPriority 
 		named: 'GtkRunLoop'
+]
+
+{ #category : #accessing }
+GtkPollingRunLoop >> isDeferring [
+
+	^ (deferring == true) or: [ self isInCallback ]
 ]
 
 { #category : #'private installing' }

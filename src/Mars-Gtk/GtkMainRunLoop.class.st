@@ -21,12 +21,7 @@ GtkMainRunLoop >> defer: aBlock [
 
 	sem := Semaphore new.
 	GIdle uniqueInstance idleAddFull: [ 
-		| oldDefer |
-		oldDefer := deferring.
-		deferring := true.
-		result := aBlock ensure: [ 
-			deferring := oldDefer. 
-			sem signal ] ].
+		result := aBlock ensure: [ sem signal ] ].
 	sem wait.
 
 	^ result
@@ -50,6 +45,12 @@ GtkMainRunLoop >> installRunLoop [
 	process := [ self gtkMain ]
 		forkAt: Processor lowIOPriority 
 		named: 'GtkRunLoop'
+]
+
+{ #category : #accessing }
+GtkMainRunLoop >> isDeferring [
+
+	^ self isInCallback
 ]
 
 { #category : #running }
