@@ -20,15 +20,15 @@ GtkTreeSelection class >> gType [
 GtkTreeSelection >> allSelected [
 	| function paths |
 	
-	paths := OrderedCollection new.
+	paths := Array new writeStream.
 	function := GCallback 
 		signature: #(void (void *model, void *path, void *iter, void *data)) 
 		block: [ :model :path :iter :data |
-			paths add: (GtkTreePath fromHandle: path) toArray ].
+			paths nextPut: (GtkTreePath fromHandle: path) toArray ].
 		
 	self selectedForEach: function data: ExternalAddress null.
-	
-	^ paths
+
+	^ paths contents
 ]
 
 { #category : #private }

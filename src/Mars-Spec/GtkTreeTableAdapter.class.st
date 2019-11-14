@@ -306,6 +306,13 @@ GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 ]
 
 { #category : #accessing }
+GtkTreeTableAdapter >> selectPath: aPath [
+
+	self innerWidgetDo: [ :w |
+		w selectPath: aPath ]
+]
+
+{ #category : #accessing }
 GtkTreeTableAdapter >> selectedItem [
 	| selectedPath |
 	
