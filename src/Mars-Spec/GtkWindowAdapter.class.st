@@ -193,6 +193,14 @@ GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
 	self add: gtkBox toWindow: gtkWindow
 ]
 
+{ #category : #accessing }
+GtkWindowAdapter >> delete [
+
+	self widgetDo: [ :w | 
+		w delete. 
+		self presenter application windowClosed: self ]
+]
+
 { #category : #building }
 GtkWindowAdapter >> newWidget [
 
