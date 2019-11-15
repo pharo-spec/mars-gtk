@@ -385,8 +385,8 @@ GtkTreeTableAdapter >> updatePresenterSelection [
 GtkTreeTableAdapter >> updateSelectionOf: gtkWidget [
 
 	GtkRunLoop defer: [ 
-		self model selection selectedPaths do: [ :selectedPath | 
-			self selectItemIn: gtkWidget path: selectedPath ] ]
+		self presenter selection selectedPaths 
+			do: [ :selectedPath | self selectItemIn: gtkWidget path: selectedPath ] ]
 ]
 
 { #category : #building }

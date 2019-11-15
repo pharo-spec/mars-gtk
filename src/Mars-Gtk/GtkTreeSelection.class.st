@@ -18,17 +18,15 @@ GtkTreeSelection class >> gType [
 
 { #category : #accessing }
 GtkTreeSelection >> allSelected [
-	| function paths |
+	| list next |
 	
-	paths := Array new writeStream.
-	function := GCallback 
-		signature: #(void (void *model, void *path, void *iter, void *data)) 
-		block: [ :model :path :iter :data |
-			paths nextPut: (GtkTreePath fromHandle: path) toArray ].
-		
-	self selectedForEach: function data: ExternalAddress null.
-
-	^ paths contents
+	^ Array streamContents: [ :stream |
+		list := self getSelectedRows.
+		next := list.
+		[ next isNull ] whileFalse: [ 
+		 	stream nextPut: (GtkTreePath fromHandle: next data) toArray.
+			next := next next ]. 
+		list freeFull ]
 ]
 
 { #category : #private }
@@ -47,6 +45,12 @@ GtkTreeSelection >> basicUnselectPath: path [
 GtkTreeSelection >> connectChanged: aBlock [
 
 	(GChangedCallback do: aBlock) connectTo: self
+]
+
+{ #category : #private }
+GtkTreeSelection >> getSelectedRows [
+
+	^ self ffiCall: #(GList *gtk_tree_selection_get_selected_rows (self, NULL))
 ]
 
 { #category : #testing }
