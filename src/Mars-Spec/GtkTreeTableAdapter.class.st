@@ -56,7 +56,7 @@ GtkTreeTableAdapter >> addLevelTo: item parent: iter [
 ]
 
 { #category : #building }
-GtkTreeTableAdapter >> addLevelsUpTo: aPath to: gtkWidget [	
+GtkTreeTableAdapter >> addLevelsUpTo: aPath to: gtkWidget [
 	| segments |	
 		
 	segments := OrderedCollection new.
@@ -205,6 +205,12 @@ GtkTreeTableAdapter >> fillStore: store with: aCollection [
 			into: store ]
 ]
 
+{ #category : #accessing }
+GtkTreeTableAdapter >> firstSelectedPath [
+	
+	^ self innerWidgetDo: [ :w | w selection selectedPath ]
+]
+
 { #category : #private }
 GtkTreeTableAdapter >> initialize [
 
@@ -318,8 +324,7 @@ GtkTreeTableAdapter >> selectPath: aPath [
 GtkTreeTableAdapter >> selectedItem [
 	| selectedPath |
 	
-	selectedPath := self innerWidget selection selectedPath.
-
+	selectedPath := self firstSelectedPath.
 	selectedPath ifNil: [ ^ nil ].
 	selectedPath ifEmpty: [ ^ nil ].
 
@@ -329,7 +334,7 @@ GtkTreeTableAdapter >> selectedItem [
 { #category : #accessing }
 GtkTreeTableAdapter >> selectedPaths [
 	
-	^ self innerWidget allSelected
+	^ self innerWidgetDo: [ :w | w allSelected ]
 ]
 
 { #category : #private }
@@ -379,8 +384,9 @@ GtkTreeTableAdapter >> updatePresenterSelection [
 { #category : #building }
 GtkTreeTableAdapter >> updateSelectionOf: gtkWidget [
 
-	self model selection selectedPaths do: [ :selectedPath | 
-		self selectItemIn: gtkWidget path: selectedPath ]
+	GtkRunLoop defer: [ 
+		self model selection selectedPaths do: [ :selectedPath | 
+			self selectItemIn: gtkWidget path: selectedPath ] ]
 ]
 
 { #category : #building }

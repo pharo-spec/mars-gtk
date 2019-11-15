@@ -27,8 +27,8 @@ GtkOverlayAdapter >> buildWidget [
 	^ nil
 ]
 
-{ #category : #building }
-GtkOverlayAdapter >> layout: aLayout [
+{ #category : #private }
+GtkOverlayAdapter >> doLayout: aLayout [
 
 	widget := GtkOverlay new.
 	widget showAll.

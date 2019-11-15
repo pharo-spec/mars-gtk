@@ -28,8 +28,8 @@ GtkScrollableAdapter >> buildWidget [
 	^ nil
 ]
 
-{ #category : #building }
-GtkScrollableAdapter >> layout: aLayout [
+{ #category : #private }
+GtkScrollableAdapter >> doLayout: aLayout [
 
 	widget := GtkScrolledWindow new.
 	widget show

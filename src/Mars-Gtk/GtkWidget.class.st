@@ -378,7 +378,9 @@ GtkWidget >> delete [
 { #category : #accessing }
 GtkWidget >> destroy [
 	
-	^ self ffiCall: #(void gtk_widget_destroy (self))
+	self isValidHandle 
+		ifFalse: [ ^ 'Trying to destroy an already destroyed widget' crTrace ].
+	self widgetDestroy
 ]
 
 { #category : #private }
@@ -816,6 +818,12 @@ GtkWidget >> widgetAddAccelerator: accel_signal group: accel_group key: accel_ke
 		guint accel_key,
 		GdkModifierType accel_mods,
 		GtkAccelFlags accel_flags))
+]
+
+{ #category : #private }
+GtkWidget >> widgetDestroy [
+	
+	^ self ffiCall: #(void gtk_widget_destroy (self))
 ]
 
 { #category : #private }

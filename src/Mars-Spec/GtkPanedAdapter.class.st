@@ -57,8 +57,8 @@ GtkPanedAdapter >> calculatePercentAtDirectionOf: aWidget extent: aPoint [
 	^ (pos * layout position) asInteger
 ]
 
-{ #category : #building }
-GtkPanedAdapter >> layout: aLayout [
+{ #category : #private }
+GtkPanedAdapter >> doLayout: aLayout [
 
 	layout := aLayout.	
 	widget := aLayout direction newWidgetOn: self.

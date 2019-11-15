@@ -36,14 +36,8 @@ GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	^ gtkWidget
 ]
 
-{ #category : #building }
-GtkGridAdapter >> buildWidget [
-
-	^ GtkGrid new
-]
-
-{ #category : #building }
-GtkGridAdapter >> layout: aLayout [
+{ #category : #private }
+GtkGridAdapter >> doLayout: aLayout [
 	
 	layout := aLayout.
 	self widgetDo: [ :w |

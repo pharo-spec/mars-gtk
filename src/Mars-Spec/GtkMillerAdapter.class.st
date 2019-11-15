@@ -70,23 +70,7 @@ GtkMillerAdapter >> childrenWidgets [
 ]
 
 { #category : #private }
-GtkMillerAdapter >> doScrollToShowLastPage [
-	| lastWidget pos |
-
-	lastWidget := innerWidget children last.
-	pos := lastWidget 
-		translateCoordinates: 0@0 
-		to: innerWidget.
-	pos = (-1@ -1) ifTrue: [ 
-		"reschedule to be sure is executed"
-		^ self scrollToShowLastPage ].
-	
-	self widget hAdjustment value: pos x.
-	self widget vAdjustment value: pos y
-]
-
-{ #category : #building }
-GtkMillerAdapter >> layout: aLayout [
+GtkMillerAdapter >> doLayout: aLayout [
 
 	layout := aLayout.
 	
@@ -104,9 +88,23 @@ GtkMillerAdapter >> layout: aLayout [
 		
 	self toggleVisible: model isVisible.
 	model whenVisibleChangedDo: [ 	
-		self toggleVisible: model isVisible ] .
+		self toggleVisible: model isVisible ]
+]
 
+{ #category : #private }
+GtkMillerAdapter >> doScrollToShowLastPage [
+	| lastWidget pos |
+
+	lastWidget := innerWidget children last.
+	pos := lastWidget 
+		translateCoordinates: 0@0 
+		to: innerWidget.
+	pos = (-1@ -1) ifTrue: [ 
+		"reschedule to be sure is executed"
+		^ self scrollToShowLastPage ].
 	
+	self widget hAdjustment value: pos x.
+	self widget vAdjustment value: pos y
 ]
 
 { #category : #factory }

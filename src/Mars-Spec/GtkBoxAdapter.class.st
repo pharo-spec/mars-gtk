@@ -55,8 +55,8 @@ GtkBoxAdapter >> childrenWidgets [
 	^ self widget children
 ]
 
-{ #category : #building }
-GtkBoxAdapter >> layout: aLayout [
+{ #category : #private }
+GtkBoxAdapter >> doLayout: aLayout [
 
 	"build of widget was differed up to here (to know what is the direction)"
 	widget := aLayout direction newWidgetOn: self.
