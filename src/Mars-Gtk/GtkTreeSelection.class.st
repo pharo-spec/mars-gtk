@@ -102,7 +102,7 @@ GtkTreeSelection >> selectedPath [
 { #category : #selection }
 GtkTreeSelection >> unselectAll [
 	
-	^ self ffiCall: #(void gtk_tree_selection_unselect_all (self))
+	self ffiCall: #(void gtk_tree_selection_unselect_all (self))
 ]
 
 { #category : #accessing }

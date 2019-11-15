@@ -309,7 +309,9 @@ GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 GtkTreeTableAdapter >> selectPath: aPath [
 
 	self innerWidgetDo: [ :w |
-		w selectPath: aPath ]
+		aPath 
+			ifNotEmpty: [ w selection selectPath: aPath ]
+			ifEmpty: [ w selection unselectAll ] ]
 ]
 
 { #category : #accessing }

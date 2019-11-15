@@ -223,7 +223,8 @@ GtkAdapter >> innerWidget [
 GtkAdapter >> innerWidgetDo: aBlock [
 
 	self hasWidget ifFalse: [ ^ nil ].
-	^ GtkRunLoop defer: [ aBlock value: self innerWidget ]
+	^ GtkRunLoop defer: [ 
+		aBlock value: self innerWidget ]
 ]
 
 { #category : #'private cycle detection' }
