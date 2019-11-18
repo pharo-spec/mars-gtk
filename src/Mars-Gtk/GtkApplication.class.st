@@ -74,6 +74,19 @@ GtkApplication class >> startUp: resuming [
 	Current startUp: resuming
 ]
 
+{ #category : #'system startup' }
+GtkApplication >> ensureRunLoop [
+	| runLoopClass |
+	
+	runLoopClass := GtkRunLoop bestStrategyClass.
+	(runLoop notNil 
+		and: [ runLoop class = runLoopClass ])
+		ifTrue: [ ^ self ].
+		
+	runLoopClass install.
+	^ GtkRunLoop current
+]
+
 { #category : #private }
 GtkApplication >> initArgC: argc argV: argv [
 
@@ -94,7 +107,7 @@ GtkApplication >> initialize [
 
 	super initialize.
 	windowRegistry := Set new.
-	runLoop := GtkRunLoop current
+	runLoop := self ensureRunLoop
 ]
 
 { #category : #testing }
@@ -144,13 +157,10 @@ GtkApplication >> start [
 { #category : #'system startup' }
 GtkApplication >> startUp: resuming [
 
-"	resuming ifTrue: [  
-		self initGtk3.
-		GtkDestroySignal reset.
-		GtkApplicationStartSignal emit ].
-"
-	resuming ifFalse: [ 
-		 runLoop start ]
+	resuming ifTrue: [ 
+		"This should not be reached anyway, since Current is niled on class side startUp"
+		^ self ]. 
+	runLoop start
 ]
 
 { #category : #'private running' }

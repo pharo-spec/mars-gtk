@@ -52,6 +52,14 @@ GtkRunLoop class >> activateDeferVerification2 [
 ]
 
 { #category : #accessing }
+GtkRunLoop class >> bestStrategyClass [
+
+	^ Smalltalk vm isSecondaryThread 
+		ifTrue: [ GtkMainRunLoop ]
+		ifFalse: [ GtkPollingRunLoop ]
+]
+
+{ #category : #accessing }
 GtkRunLoop class >> current [
 	^ Current ifNil: [ Current := self defaultRunLoopClass uniqueInstance ]
 ]
@@ -172,6 +180,13 @@ GtkRunLoop >> mainIterationDo: blocking [
 	
 	^ self 
 		ffiCall: #( void gtk_main_iteration_do ( gboolean blocking ) )
+]
+
+{ #category : #accessing }
+GtkRunLoop >> naturalRunner [
+	"Answer the 'natural' FFI client to run Gtk."
+
+	^ TFSameThreadRunner uniqueInstance
 ]
 
 { #category : #private }

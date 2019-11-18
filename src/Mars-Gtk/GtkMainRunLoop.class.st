@@ -53,6 +53,16 @@ GtkMainRunLoop >> isDeferring [
 	^ self isInCallback
 ]
 
+{ #category : #accessing }
+GtkMainRunLoop >> naturalRunner [
+	"Answer the 'natural' FFI client to run Gtk.
+	 When using this run loop, gtk_main needs to be running in the main thread which means
+	 the VM is running in secondary thread. This means ultimately that every Gtk call needs 
+	 to be send to the main thread."
+
+	^ TFMainThreadRunner uniqueInstance
+]
+
 { #category : #running }
 GtkMainRunLoop >> spawnNewRunLoop [
 

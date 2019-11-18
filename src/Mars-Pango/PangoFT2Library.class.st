@@ -23,7 +23,7 @@ PangoFT2Library >> macLibraryName [
 { #category : #accessing }
 PangoFT2Library >> runner [
 	
-	^ TFMainThreadRunner uniqueInstance
+	^ GtkLibrary naturalRunner
 ]
 
 { #category : #'accessing platform' }

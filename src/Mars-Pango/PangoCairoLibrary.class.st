@@ -24,7 +24,7 @@ PangoCairoLibrary >> macLibraryName [
 { #category : #accessing }
 PangoCairoLibrary >> runner [
 	
-	^ TFMainThreadRunner uniqueInstance
+	^ GtkLibrary naturalRunner
 ]
 
 { #category : #'accessing platform' }

@@ -30,6 +30,13 @@ GtkLibrary class >> isDebug [
 	^ Debug ifNil: [ Debug := false ]
 ]
 
+{ #category : #accessing }
+GtkLibrary class >> naturalRunner [
+	"Answer the 'natural' FFI client to run Gtk"
+	
+	^ GtkRunLoop current naturalRunner
+]
+
 { #category : #'accessing platform' }
 GtkLibrary >> calloutAPIClass [ 
 
@@ -90,7 +97,7 @@ GtkLibrary >> matchVersionMajor: required_major minor: required_minor micro: req
 { #category : #'accessing platform' }
 GtkLibrary >> runner [
 	
-	^ TFMainThreadRunner uniqueInstance
+	^ self class naturalRunner
 ]
 
 { #category : #'accessing platform' }
