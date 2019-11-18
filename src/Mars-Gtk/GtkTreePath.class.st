@@ -78,6 +78,12 @@ GtkTreePath >> firstChild [
 	^ path
 ]
 
+{ #category : #'initialize-release' }
+GtkTreePath >> free [
+
+	self ffiCall: #(void gtk_tree_path_free (self))
+]
+
 { #category : #accessing }
 GtkTreePath >> moveNext [
 

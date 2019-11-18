@@ -87,9 +87,9 @@ GList >> free [
 ]
 
 { #category : #'as yet unclassified' }
-GList >> freeFull [
+GList >> freeFull: aNotifyCallback [
 
-	self ffiCall: #(void g_list_free_full(self, NULL))
+	self ffiCall: #(void g_list_free_full(self, GCallback aNotifyCallback))
 ]
 
 { #category : #private }

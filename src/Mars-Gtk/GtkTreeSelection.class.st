@@ -18,15 +18,22 @@ GtkTreeSelection class >> gType [
 
 { #category : #accessing }
 GtkTreeSelection >> allSelected [
-	| list next |
+	| listHandle list result |
 	
-	^ Array streamContents: [ :stream |
-		list := self getSelectedRows.
+	listHandle := self getSelectedRows.
+	listHandle isNull ifTrue: [ ^ #() ].
+	
+	list := GList fromHandle: listHandle.
+	result := Array streamContents: [ :stream | | next path |
 		next := list.
 		[ next isNull ] whileFalse: [ 
-		 	stream nextPut: (GtkTreePath fromHandle: next data) toArray.
-			next := next next ]. 
-		list freeFull ]
+		 	path := GtkTreePath fromHandle: next data.
+			stream nextPut: path toArray.
+			next := next next.
+			path free ] ].
+	list free.
+
+	^ result
 ]
 
 { #category : #private }
@@ -50,7 +57,7 @@ GtkTreeSelection >> connectChanged: aBlock [
 { #category : #private }
 GtkTreeSelection >> getSelectedRows [
 
-	^ self ffiCall: #(GList *gtk_tree_selection_get_selected_rows (self, NULL))
+	^ self ffiCall: #("GList *"void *gtk_tree_selection_get_selected_rows (self, NULL))
 ]
 
 { #category : #testing }
