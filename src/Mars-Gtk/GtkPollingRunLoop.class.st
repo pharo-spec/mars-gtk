@@ -25,8 +25,7 @@ GtkPollingRunLoop >> defer: aBlock [
 
 	oldDefer := deferring.
 	deferring := true.
-	aBlock ensure: [ 
-		deferring := oldDefer ]
+	^ aBlock ensure: [ deferring := oldDefer ]
 ]
 
 { #category : #initialization }
