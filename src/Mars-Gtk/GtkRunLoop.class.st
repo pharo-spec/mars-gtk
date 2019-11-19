@@ -54,7 +54,7 @@ GtkRunLoop class >> activateDeferVerification2 [
 { #category : #accessing }
 GtkRunLoop class >> bestStrategyClass [
 
-	^ Smalltalk vm isSecondaryThread 
+	^ Smalltalk vm isRunningInWorkerThread 
 		ifTrue: [ GtkMainRunLoop ]
 		ifFalse: [ GtkPollingRunLoop ]
 ]
