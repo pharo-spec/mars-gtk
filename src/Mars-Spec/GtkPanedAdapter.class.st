@@ -66,6 +66,7 @@ GtkPanedAdapter >> doLayout: aLayout [
 		pos < 1 
 			ifTrue: [ self setPositionDeferred: aLayout position to: widget ]
 			ifFalse: [ self setPosition: aLayout position to: widget ] ].
+	widget wideHandle: true.
 	widget show.
 ]
 
