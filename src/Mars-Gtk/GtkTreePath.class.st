@@ -36,7 +36,6 @@ GtkTreePath class >> newFromArray: anArray [
 GtkTreePath class >> newFromString: aString [
 
 	^ (self treePathNewFromString: aString) initialize
-	
 ]
 
 { #category : #private }
@@ -55,6 +54,12 @@ GtkTreePath class >> treePathNew [
 GtkTreePath class >> treePathNewFromString: path [
 
 	^ self ffiCall: #(GtkTreePath *gtk_tree_path_new_from_string (const gchar *path))
+]
+
+{ #category : #private }
+GtkTreePath >> basicFree [
+
+	self ffiCall: #(void gtk_tree_path_free (self))
 ]
 
 { #category : #copying }
@@ -81,7 +86,8 @@ GtkTreePath >> firstChild [
 { #category : #'initialize-release' }
 GtkTreePath >> free [
 
-	self ffiCall: #(void gtk_tree_path_free (self))
+	self basicFree.
+	handle beNull
 ]
 
 { #category : #accessing }

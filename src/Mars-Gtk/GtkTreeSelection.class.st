@@ -86,8 +86,9 @@ GtkTreeSelection >> selectPath: pathArray [
 	"if is already selected, skip"
 	(self allSelected includes: pathArray) ifTrue: [ ^ self ].
 	
-	path := (GtkTreePath newFromArray: pathArray) autoRelease.
-	self basicSelectPath: path
+	path := GtkTreePath newFromArray: pathArray.
+	[ self basicSelectPath: path ]
+	ensure: [ path free ]
 ]
 
 { #category : #private }

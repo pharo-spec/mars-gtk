@@ -224,6 +224,13 @@ GtkTreeTableAdapter >> isLevelAddedFor: item [
 	^ levelsAdded includes: item
 ]
 
+{ #category : #testing }
+GtkTreeTableAdapter >> isNonEditableRow: aRow column: aColumn [ 
+	"no rows are directly editable in a component list (they can be 
+	 if defined like that in the inner presenters, but it is handled different)"
+	^ true
+]
+
 { #category : #private }
 GtkTreeTableAdapter >> items [
 
