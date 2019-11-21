@@ -12,7 +12,8 @@ Class {
 	#instVars : [
 		'listStore',
 		'selection',
-		'columns'
+		'columns',
+		'searchFunction'
 	],
 	#category : #'Mars-Gtk-Widget-Tree'
 }
@@ -369,6 +370,13 @@ GtkTreeView >> scrollToPath: path useAlign: use_align rowAlign: row_align colAli
 		gfloat col_align))
 ]
 
+{ #category : #accessing }
+GtkTreeView >> searchFunction: aBlock [
+
+	searchFunction := GtkTreeViewSearchEqualFunc do: aBlock.
+	self setSearchEqualFunc: searchFunction
+]
+
 { #category : #selection }
 GtkTreeView >> selectIndex: anInteger [ 
 	
@@ -409,4 +417,14 @@ GtkTreeView >> setExpanderColumn: aColumn [
 GtkTreeView >> setModel: aListStore [
 
 	^ self ffiCall: #(void gtk_tree_view_set_model (self, GtkTreeStore *aListStore))
+]
+
+{ #category : #private }
+GtkTreeView >> setSearchEqualFunc: search_equal_func [
+
+	self ffiCall: #(void gtk_tree_view_set_search_equal_func (
+		self,
+ 		GCallback search_equal_func,
+ 		NULL,
+ 		NULL))
 ]

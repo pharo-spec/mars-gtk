@@ -42,6 +42,17 @@ GtkTreeStore >> appendNew [
 	^ (GtkTreeIter on: self) appendNewRoot
 ]
 
+{ #category : #private }
+GtkTreeStore >> getString: buffer column: column iter: iter [
+	
+	self ffiCall: #(void gtk_tree_model_get (
+		self,
+		GtkTreeIter *iter,
+		gint column,
+		void **buffer,
+		gint -1))
+]
+
 { #category : #testing }
 GtkTreeStore >> numberOfColumns [
 
@@ -57,4 +68,13 @@ GtkTreeStore >> setSortFunc: sort_func columnId: sort_column_id [
 		GCallback sort_func,
 		NULL,
 		NULL))
+]
+
+{ #category : #accessing }
+GtkTreeStore >> stringAt: iter column: columnNumber [
+	| buffer |
+	
+	buffer := ExternalAddress new.
+	self getString: buffer column: columnNumber iter: iter.
+	^ buffer readStringUTF8
 ]
