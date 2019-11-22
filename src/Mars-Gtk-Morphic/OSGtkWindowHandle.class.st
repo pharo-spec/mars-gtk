@@ -51,7 +51,7 @@ OSGtkWindowHandle >> extent [
 	| size |
 
 	self ifWindowIsNotValid: [ ^ 0@0 ].
-	size := gtkWindow size.
+	GtkRunLoop defer: [ size := gtkWindow size ].
 	
 	^ size
 ]
