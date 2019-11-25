@@ -77,6 +77,7 @@ GtkMainRunLoop >> uninstallRunLoop [
 	self defer: [ self gtkMainQuit ].
 	
 	process ifNil: [ ^ self ].
-	process terminate.
+	"No need to do this since quitting gtk main will cause the process to end"
+	"process terminate."
 	process := nil
 ]
