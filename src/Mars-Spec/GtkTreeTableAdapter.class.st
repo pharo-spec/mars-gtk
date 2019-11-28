@@ -71,6 +71,7 @@ GtkTreeTableAdapter >> addLevelsUpTo: aPath to: gtkWidget [
 GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
+
 	gtkWidget enableSearch: self presenter isSearchEnabled.
 	self recreateStore: gtkWidget generateColumns: true.
 	self configureInitialState: gtkWidget.
