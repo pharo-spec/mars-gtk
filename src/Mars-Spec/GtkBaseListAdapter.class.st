@@ -10,7 +10,8 @@ Class {
 GtkBaseListAdapter >> addModelTo: gtkList [
 
 	super addModelTo: gtkList.
-	self model contextMenu ifNotNil: [ :menu |
+	gtkList enableSearch: self presenter isSearchEnabled.
+	self presenter contextMenu ifNotNil: [ :menu |
 		self addMenu: menu to: gtkList ]
 ]
 
@@ -35,6 +36,16 @@ GtkBaseListAdapter >> selectedIndexes [
 GtkBaseListAdapter >> selection [
 	
 	^ innerWidget selection
+]
+
+{ #category : #emulating }
+GtkBaseListAdapter >> type: aString [
+	"this will be used to test search"
+	| entry |
+
+	GtkRunLoop defer: [ 
+		entry := self innerWidget searchEntry ].
+	entry isNull inspect
 ]
 
 { #category : #testing }

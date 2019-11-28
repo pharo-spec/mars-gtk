@@ -371,6 +371,12 @@ GtkTreeView >> scrollToPath: path useAlign: use_align rowAlign: row_align colAli
 ]
 
 { #category : #accessing }
+GtkTreeView >> searchEntry [
+
+	^ self ffiCall: #(GtkEntry *gtk_tree_view_get_search_entry (self))
+]
+
+{ #category : #accessing }
 GtkTreeView >> searchFunction: aBlock [
 
 	searchFunction := GtkTreeViewSearchEqualFunc do: aBlock.
