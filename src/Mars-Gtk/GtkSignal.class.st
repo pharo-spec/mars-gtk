@@ -5,13 +5,23 @@ Class {
 	#name : #GtkSignal,
 	#superclass : #BeaconSignal,
 	#classVars : [
+		'ActiveFilter',
 		'FilteredSignals'
-	],
-	#classInstVars : [
-		'tracingClasses'
 	],
 	#category : #'Mars-Gtk-Signal'
 }
+
+{ #category : #private }
+GtkSignal class >> activeFilter [
+
+	^ ActiveFilter ifNil: [ ActiveFilter := GtkSignalFilterAll new ]
+]
+
+{ #category : #private }
+GtkSignal class >> activeFilter: aFilter [
+
+	ActiveFilter := aFilter
+]
 
 { #category : #'instance creation' }
 GtkSignal class >> emit [ 
@@ -19,19 +29,26 @@ GtkSignal class >> emit [
 	^ self new emit
 ]
 
-{ #category : #accessing }
-GtkSignal class >> filter [
-	
-	FilteredSignals add: self
+{ #category : #private }
+GtkSignal class >> ensureTracingFilter [
+
+	self activeFilter isTracingFilter 
+		ifFalse: [ ActiveFilter := GtkSignalTracingFilter new ].
+	^ ActiveFilter
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing filtering' }
+GtkSignal class >> filter [
+	
+	self ensureTracingFilter trace: self
+	 
+	
+]
+
+{ #category : #'accessing filtering' }
 GtkSignal class >> filterAllSignalsExcept: aListOfSignals [
 
-	self resetFilters.
-	self allSubclasses 
-		reject: [ :each | aListOfSignals includes: each ]
-		thenDo: [ :each | each filter ]
+	ActiveFilter := GtkSignalTracingFilter newTraceSignals: aListOfSignals
 ]
 
 { #category : #'class initialization' }
@@ -40,41 +57,22 @@ GtkSignal class >> initialize [
 	self resetFilters
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing filtering' }
 GtkSignal class >> isFiltered [
 	
-	^ FilteredSignals includes: self
-]
-
-{ #category : #testing }
-GtkSignal class >> isTracing: aWidget [
-
-	^ self tracingClasses includes: aWidget class
+	^ self activeFilter isFilteredClass: self
 ]
 
 { #category : #private }
 GtkSignal class >> resetFilters [
 
-	FilteredSignals := Set new	
+	ActiveFilter := GtkSignalFilterAll new
 ]
 
-{ #category : #private }
-GtkSignal class >> resetTrace [
-
-	tracingClasses := nil
-]
-
-{ #category : #accessing }
+{ #category : #'accessing filtering' }
 GtkSignal class >> resume [
 	
-	FilteredSignals remove: self ifAbsent: [ ].
-	self resetTrace
-]
-
-{ #category : #private }
-GtkSignal class >> tracingClasses [
-
-	^ tracingClasses ifNil: [ #() ]
+	self ensureTracingFilter removeTraceFor: self
 ]
 
 { #category : #emitting }
@@ -87,11 +85,5 @@ GtkSignal >> emit [
 { #category : #testing }
 GtkSignal >> isFiltered [
 
-	^ self class isFiltered
-]
-
-{ #category : #testing }
-GtkSignal >> isTracing: anObject [ 
-
-	^ self class isTracing: anObject
+	^ self class activeFilter isFiltered: self
 ]

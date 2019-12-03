@@ -20,7 +20,7 @@ Class {
 { #category : #evaluating }
 GSignalCallback >> basicValueWithArguments: args [
 
-	GtkWidgetSignaledSignal emitSignal: self signalName.
+	GtkWidgetSignaledSignal emitSignal: self.
 	^ super basicValueWithArguments: args
 ]
 

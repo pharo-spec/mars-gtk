@@ -25,8 +25,7 @@ GtkWidgetSignaledSignal class >> newSignal: aString [
 { #category : #printing }
 GtkWidgetSignaledSignal >> printOneLineContentsOn: stream [
 	
-	stream << self signal
-		
+	stream << self signal signalName
 ]
 
 { #category : #accessing }

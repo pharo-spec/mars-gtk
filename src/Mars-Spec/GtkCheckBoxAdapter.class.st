@@ -6,7 +6,7 @@ Class {
 
 { #category : #building }
 GtkCheckBoxAdapter >> addModelTo: gtkWidget [
-	
+
 	super addModelTo: gtkWidget.
 	
 	gtkWidget label: self presenter label.
@@ -43,8 +43,7 @@ GtkCheckBoxAdapter >> updateState [
 
 	self backendDetectCyclesDo: [
 		self widgetDo: [ :w |
-			(self presenter state == w isActive) 
-				ifFalse: [ w active: self presenter state ] ] ]
+			w active: self presenter state ] ]
 ]
 
 { #category : #factory }

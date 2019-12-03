@@ -38,5 +38,5 @@ GtkToggleToolButton >> active: aBoolean [
 { #category : #accessing }
 GtkToggleToolButton >> connectToggled: aBlock [
 
-	self connect: 'toggled' do: aBlock
+	(GToggledCallback do: aBlock) connectTo: self
 ]

@@ -56,7 +56,7 @@ GtkCheckMenuItem >> beNonActive [
 { #category : #events }
 GtkCheckMenuItem >> connectToggled: aBlock [
 
-	self connect: 'toggled' do: aBlock
+	(GToggledCallback do: aBlock) connectTo: self
 ]
 
 { #category : #accessing }
