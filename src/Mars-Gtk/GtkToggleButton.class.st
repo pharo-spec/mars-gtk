@@ -49,7 +49,7 @@ GtkToggleButton >> beNonActive [
 { #category : #signaling }
 GtkToggleButton >> connectToggled: aBlock [
 
-	self connect: 'toggled' do: aBlock
+	(GToggledCallback do: aBlock) connectTo: self
 ]
 
 { #category : #accessing }
