@@ -4,7 +4,8 @@ Class {
 	#traits : 'GtkTDisconnectSelectionEvents',
 	#classTraits : 'GtkTDisconnectSelectionEvents classTrait',
 	#instVars : [
-		'innerWidget'
+		'innerWidget',
+		'currentShownItems'
 	],
 	#classInstVars : [
 		'gtkWidget',
@@ -134,12 +135,17 @@ GtkComponentListAdapter >> selectedIndexes [
 
 { #category : #building }
 GtkComponentListAdapter >> update: gtkWidget with: aCollection [
-	| listItem |
-	
+
+	"This is a workaround to prevent double geneation of list. If I am updating the same 
+	 presenters I already have, I skip the process."
+	currentShownItems = aCollection ifTrue: [ ^ self ]. 
+	currentShownItems := aCollection.
 	gtkWidget removeAll.
-	aCollection doWithIndex: [ :presenter :index | 
-		listItem := presenter buildWithSpec asListBoxRow.
-		gtkWidget add: listItem ].
+	aCollection do: [ :presenter |
+		self flag: #TODO. "WARNING. Rebuild presenters may keep value holders in 
+		weird status (also, it may prevent old adaptors to be collected, creating 
+		a leak)."
+		gtkWidget add: presenter buildWithSpec asListBoxRow ].
 	gtkWidget showAll
 ]
 

@@ -12,11 +12,12 @@ GtkCheckBoxAdapter >> addModelTo: gtkWidget [
 	gtkWidget label: self presenter label.
 	gtkWidget active: self presenter state.
 	
-	gtkWidget connectToggled: [ 
-		self backendUpdatingDo: [ self presenter state: self state ] ].
+	gtkWidget connectToggled: [
+		self backendUpdatingDo: [ self updatePresenterState ] ].
+	self presenter whenChangedDo: [
+		self backendDetectCyclesDo: [ self updateState ] ].
 	
-	self presenter whenLabelChangedDo: [ self updateLabel ].
-	self presenter whenChangedDo: [ self updateState ]
+	self presenter whenLabelChangedDo: [ self updateLabel ]
 ]
 
 { #category : #emulating }
@@ -39,11 +40,17 @@ GtkCheckBoxAdapter >> updateLabel [
 ]
 
 { #category : #updating }
+GtkCheckBoxAdapter >> updatePresenterState [
+	
+	self presenter state: self state
+]
+
+{ #category : #updating }
 GtkCheckBoxAdapter >> updateState [
 
-	self backendDetectCyclesDo: [
-		self widgetDo: [ :w |
-			w active: self presenter state ] ]
+	self widgetDo: [ :w | 
+		self presenter state = w isActive
+			ifFalse: [ w active: self presenter state ] ]
 ]
 
 { #category : #factory }
