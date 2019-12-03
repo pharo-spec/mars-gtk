@@ -32,7 +32,7 @@ GtkRadioButtonAdapter >> clicked [
 { #category : #accessing }
 GtkRadioButtonAdapter >> state [
 	
-	^ widget getActive
+	^ widget isActive
 ]
 
 { #category : #factory }
