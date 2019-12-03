@@ -41,7 +41,6 @@ GtkCheckBoxAdapter >> updateLabel [
 { #category : #updating }
 GtkCheckBoxAdapter >> updateState [
 
-	self presenter inspect.
 	self backendDetectCyclesDo: [
 		self widgetDo: [ :w |
 			(self presenter state == w isActive) 
