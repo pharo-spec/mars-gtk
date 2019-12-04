@@ -210,8 +210,9 @@ GtkRunLoop >> start [
 	self isRunning ifTrue: [ ^ self ].
 	
 	session := Smalltalk session. 
+	running := true.
 	self installRunLoop.
-	running := true
+	
 ]
 
 { #category : #running }
