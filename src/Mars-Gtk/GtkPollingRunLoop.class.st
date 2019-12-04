@@ -14,24 +14,6 @@ Class {
 }
 
 { #category : #accessing }
-GtkPollingRunLoop class >> activateDeferVerification [
-	<script>
-
-	TFCalloutAPI activateTraceWith: [ :sender |
-		 self current isDeferring ifFalse: [ 
-			((sender methodClass = GtkRunLoop) 
-				or: [ (sender methodClass name beginsWith: 'Gtk') not ]) 
-				ifFalse: [ sender crTrace ] ] ]
-]
-
-{ #category : #accessing }
-GtkPollingRunLoop class >> deactivateDeferVerification [
-	<script>
-
-	TFCalloutAPI resetTrace
-]
-
-{ #category : #accessing }
 GtkPollingRunLoop class >> fps [
 	
 	^ 60
@@ -43,8 +25,7 @@ GtkPollingRunLoop >> defer: aBlock [
 
 	oldDefer := deferring.
 	deferring := true.
-	aBlock ensure: [ 
-		deferring := oldDefer ]
+	^ aBlock ensure: [ deferring := oldDefer ]
 ]
 
 { #category : #initialization }
@@ -68,7 +49,7 @@ GtkPollingRunLoop >> installRunLoop [
 { #category : #accessing }
 GtkPollingRunLoop >> isDeferring [
 
-	^ deferring == true or: [ self isInCallback ]
+	^ (deferring == true) or: [ self isInCallback ]
 ]
 
 { #category : #'private installing' }

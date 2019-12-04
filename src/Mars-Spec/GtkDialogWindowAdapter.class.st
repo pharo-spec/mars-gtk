@@ -22,17 +22,17 @@ GtkDialogWindowAdapter >> add: gtkBox toWindow: gtkDialog [
 ]
 
 { #category : #accessing }
-GtkDialogWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
-
-	gtkWindow showAll.
-	self model isCentered ifTrue: [ gtkWindow center ].
-	super addPresenterIn: gtkWindow withSpecLayout: aSpec	
-]
-
-{ #category : #accessing }
 GtkDialogWindowAdapter >> close [
 
 	self widgetDo: [ :w | w respond ]
+]
+
+{ #category : #private }
+GtkDialogWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
+
+	gtkWindow showAll.
+	self model isCentered ifTrue: [ gtkWindow center ].
+	super deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec	
 ]
 
 { #category : #building }
@@ -47,8 +47,8 @@ GtkDialogWindowAdapter >> newWidget [
 { #category : #accessing }
 GtkDialogWindowAdapter >> open [ 
 
-	self widgetDo: [ :w | 
+	^ self widgetDo: [ :w | 
 		w show.
 		self announceOpened.
-		^ w run ]
+		w run ]
 ]

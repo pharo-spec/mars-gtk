@@ -69,6 +69,15 @@ GtkContainer >> children [
 	^ children
 ]
 
+{ #category : #accessing }
+GtkContainer >> destroy [
+	"Do not let gtk destroy container children. Instead, dereference them and let the regular
+	 GC/reference count to act."
+
+	self removeAll.
+	super destroy
+]
+
 { #category : #private }
 GtkContainer >> findChildByHandle: anExternalAddress [
 	| address |

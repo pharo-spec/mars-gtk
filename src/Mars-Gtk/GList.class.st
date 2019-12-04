@@ -80,6 +80,18 @@ GList >> first [
 	^ GList fromHandle: self gListFirst
 ]
 
+{ #category : #'as yet unclassified' }
+GList >> free [
+
+	self ffiCall: #(void g_list_free(self))
+]
+
+{ #category : #'as yet unclassified' }
+GList >> freeFull: aNotifyCallback [
+
+	self ffiCall: #(void g_list_free_full(self, GCallback aNotifyCallback))
+]
+
 { #category : #private }
 GList >> gListAppend: data [
 

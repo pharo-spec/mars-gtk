@@ -36,7 +36,7 @@ GtkLeakFinder >> initialize [
 	self reset
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkLeakFinder >> inspectorLeaks [
 	<inspectorPresentationOrder: 0 title: 'Leaks'>
 	| table |

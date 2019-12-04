@@ -45,6 +45,19 @@ GtkLayoutAdapter >> buildWithSpec: aSpec [
 	^ self widget
 ]
 
+{ #category : #private }
+GtkLayoutAdapter >> doLayout: aLayout [
+
+	self subclassResponsibility
+]
+
+{ #category : #protocol }
+GtkLayoutAdapter >> layout: aLayout [
+
+	GtkRunLoop defer: [ 
+		self doLayout: aLayout ]
+]
+
 { #category : #protocol }
 GtkLayoutAdapter >> removeSubWidgets [
 

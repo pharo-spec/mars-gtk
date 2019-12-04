@@ -100,3 +100,9 @@ GtkPaned >> position: position [
 
 	self ffiCall: #(void gtk_paned_set_position (self, gint position))
 ]
+
+{ #category : #accessing }
+GtkPaned >> wideHandle: aBoolean [
+
+	self gObjectSet: 'wide-handle' toBoolean: aBoolean
+]

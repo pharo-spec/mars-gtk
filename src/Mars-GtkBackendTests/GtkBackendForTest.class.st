@@ -40,16 +40,12 @@ GtkBackendForTest >> assertImage: aGtkImage equals: aForm [
 
 { #category : #asserting }
 GtkBackendForTest >> assertList: aTreeTableAdapter displayItems: aCollection [ 
-	
 	| iter |
 	
-	iter := aTreeTableAdapter innerWidget model iteratorFromPath: (GtkTreePath newFromArray: {1}).
-
+	iter := aTreeTableAdapter innerWidget model iteratorFromPath: (GtkTreePath newFromArray: #(1)).
 	aCollection do: [ :aValue |  
 		self assert: (iter stringAt: 0) = aValue.
-		iter next 
-	].
-
+		iter next ]
 ]
 
 { #category : #asserting }
@@ -67,10 +63,12 @@ GtkBackendForTest >> canChangeFonts [
 
 { #category : #emulating }
 GtkBackendForTest >> clickFirstRowAndColumn: anAdapter [ 
-	
 	| path |
-	path := (GtkTreePath newFromArray: {1}) autoRelease.	
-	anAdapter innerWidget activateRow: path column: anAdapter innerWidget columns first
+	path := (GtkTreePath newFromArray: #(1)) autoRelease.	
+	anAdapter innerWidgetDo: [ :w |
+		w 
+			activateRow: path 
+			column: w columns first ]
 ]
 
 { #category : #accessing }

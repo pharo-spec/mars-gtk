@@ -125,7 +125,7 @@ OSGtkWindowHandle >> initializeCursorMap [
 
 { #category : #initialization }
 OSGtkWindowHandle >> initializeWindowAttributes: attributes [
-	
+
 	gtkWindow := GtkWindow new.
 	gtkWindow 
 		connectFocusOutEvent: [ self resetKeyboardFocus. false ];

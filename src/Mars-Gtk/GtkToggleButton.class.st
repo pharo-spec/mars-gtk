@@ -49,7 +49,7 @@ GtkToggleButton >> beNonActive [
 { #category : #signaling }
 GtkToggleButton >> connectToggled: aBlock [
 
-	self connect: 'toggled' do: aBlock
+	(GToggledCallback do: aBlock) connectTo: self
 ]
 
 { #category : #accessing }
@@ -70,9 +70,10 @@ GtkToggleButton >> drawIndicator: aBoolean [
 	^ self ffiCall: #(void gtk_toggle_button_set_mode (self, gboolean aBoolean))
 ]
 
-{ #category : #private }
+{ #category : #testing }
 GtkToggleButton >> getActive [
-	^ self ffiCall: #(gboolean gtk_toggle_button_get_active (self))
+
+	^ self isActive
 ]
 
 { #category : #accessing }

@@ -29,7 +29,7 @@ OSGtkDriver >> beCurrent [
 { #category : #'window creation' }
 OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	| window |
-	
+
 	self ensureGtkRunning.
 	
 	GtkRunLoop defer: [ 
@@ -45,9 +45,9 @@ OSGtkDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
 
 { #category : #'window creation' }
 OSGtkDriver >> ensureGtkRunning [
-	
+
 	GtkApplication ensureRunning.
-	OSGtkDriverConfiguration new apply
+	"OSGtkDriverConfiguration new apply"
 ]
 
 { #category : #'window creation' }

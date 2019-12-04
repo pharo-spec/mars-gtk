@@ -656,23 +656,18 @@ GtkWidget >> preferredSizeNatural [
 { #category : #accessing }
 GtkWidget >> queueDraw [
 
-	^ self ffiCall: #(void gtk_widget_queue_draw (self))
+	^ GtkQueueDraw uniqueInstance queueDraw: self
 ]
 
 { #category : #accessing }
 GtkWidget >> queueDrawArea: rect [
 
-	^ self 
-		queueDrawAreaX: rect left 
+	^ GtkQueueDraw uniqueInstance 
+		queueDrawArea: self
+		x: rect left 
 		y: rect top
 		width: rect width 
 		height: rect height
-]
-
-{ #category : #private }
-GtkWidget >> queueDrawAreaX: x y: y width: width height: height [
-
-	self ffiCall: #(void gtk_widget_queue_draw_area (self, gint x, gint y, gint width, gint height))
 ]
 
 { #category : #style }

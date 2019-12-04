@@ -55,8 +55,8 @@ GtkBoxAdapter >> childrenWidgets [
 	^ self widget children
 ]
 
-{ #category : #building }
-GtkBoxAdapter >> layout: aLayout [
+{ #category : #private }
+GtkBoxAdapter >> doLayout: aLayout [
 
 	"build of widget was differed up to here (to know what is the direction)"
 	widget := aLayout direction newWidgetOn: self.
@@ -92,11 +92,12 @@ GtkBoxAdapter >> newVertical [
 { #category : #'accessing - children' }
 GtkBoxAdapter >> remove: aPresenter [
 
-	^ self widget remove: aPresenter adapter widget
+	^ self widgetDo: [ :w | 
+		w remove: aPresenter adapter widget ]
 ]
 
 { #category : #'accessing - children' }
 GtkBoxAdapter >> removeAll [
 
-	self widget removeAll
+	self widgetDo: #removeAll
 ]

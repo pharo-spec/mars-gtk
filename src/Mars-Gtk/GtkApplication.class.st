@@ -23,7 +23,7 @@ GtkApplication class >> current [
 ]
 
 { #category : #accessing }
-GtkApplication class >> ensureRunning [ 
+GtkApplication class >> ensureRunning [
 
 	self isRunning ifTrue: [ ^ self ]. 
 	self new run
@@ -57,28 +57,49 @@ GtkApplication class >> reset [
 GtkApplication class >> shutDown: quitting [
 	"ensure Gtk3 is stop when shutting down"
 
-	quitting ifFalse: [ ^ self ].
-	self reset
+	Current ifNil: [ ^ self ].
+	Current shutDown: quitting.
+
 ]
 
 { #category : #'system startup' }
 GtkApplication class >> startUp: resuming [
 	
-	resuming ifFalse: [ ^ self ].
-	self reset
+	resuming ifTrue: [ 
+		Current := nil.
+		self flag: #TODO. "I'm placing this here, not sure is the right place but for now it works"
+		GtkDestroySignal reset ].
+	
+	Current ifNil: [ ^ self ].
+	Current startUp: resuming
+]
+
+{ #category : #'system startup' }
+GtkApplication >> ensureRunLoop [
+	| runLoopClass |
+	
+	runLoopClass := GtkRunLoop bestStrategyClass.
+	(runLoop notNil 
+		and: [ runLoop class = runLoopClass ])
+		ifTrue: [ ^ self ].
+		
+	runLoopClass install.
+	^ GtkRunLoop current
 ]
 
 { #category : #private }
 GtkApplication >> initArgC: argc argV: argv [
 
-	^ self ffiCall: #(void gtk_init (ulong argc, ulong argv))
+	^ self ffiCall: #(void gtk_init ("int *"void *argc, "char ***"void *argv))
 ]
 
 { #category : #private }
 GtkApplication >> initGtk3 [
 	"Initialize Gtk3"
 
-	self initArgC: 0 argV: 0
+	self 
+		initArgC: ExternalAddress null 
+		argV: ExternalAddress null
 ]
 
 { #category : #initialization }
@@ -86,11 +107,12 @@ GtkApplication >> initialize [
 
 	super initialize.
 	windowRegistry := Set new.
-	runLoop := GtkRunLoop current
+	runLoop := self ensureRunLoop
 ]
 
 { #category : #testing }
 GtkApplication >> isRunning [ 
+
 	^ runLoop isRunning
 ]
 
@@ -116,11 +138,28 @@ GtkApplication >> run [
 	
 ]
 
+{ #category : #'system startup' }
+GtkApplication >> shutDown: quitting [
+	
+	self isRunning ifFalse: [ ^ self ].
+	runLoop stop
+]
+
 { #category : #'private running' }
 GtkApplication >> start [ 
 	self isRunning ifTrue: [ self stop ].
+
 	self initGtk3.
 	GtkApplicationStartSignal emit.
+	runLoop start
+]
+
+{ #category : #'system startup' }
+GtkApplication >> startUp: resuming [
+
+	resuming ifTrue: [ 
+		"This should not be reached anyway, since Current is niled on class side startUp"
+		^ self ]. 
 	runLoop start
 ]
 

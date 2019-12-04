@@ -18,17 +18,22 @@ GtkTreeSelection class >> gType [
 
 { #category : #accessing }
 GtkTreeSelection >> allSelected [
-	| function paths |
+	| listHandle list result |
 	
-	paths := OrderedCollection new.
-	function := GCallback 
-		signature: #(void (void *model, void *path, void *iter, void *data)) 
-		block: [ :model :path :iter :data |
-			paths add: (GtkTreePath fromHandle: path) toArray ].
-		
-	self selectedForEach: function data: ExternalAddress null.
+	listHandle := self getSelectedRows.
+	listHandle isNull ifTrue: [ ^ #() ].
 	
-	^ paths
+	list := GList fromHandle: listHandle.
+	result := Array streamContents: [ :stream | | next path |
+		next := list.
+		[ next isNull ] whileFalse: [ 
+		 	path := GtkTreePath fromHandle: next data.
+			stream nextPut: path toArray.
+			next := next next.
+			path free ] ].
+	list free.
+
+	^ result
 ]
 
 { #category : #private }
@@ -47,6 +52,12 @@ GtkTreeSelection >> basicUnselectPath: path [
 GtkTreeSelection >> connectChanged: aBlock [
 
 	(GChangedCallback do: aBlock) connectTo: self
+]
+
+{ #category : #private }
+GtkTreeSelection >> getSelectedRows [
+
+	^ self ffiCall: #("GList *"void *gtk_tree_selection_get_selected_rows (self, NULL))
 ]
 
 { #category : #testing }
@@ -75,8 +86,9 @@ GtkTreeSelection >> selectPath: pathArray [
 	"if is already selected, skip"
 	(self allSelected includes: pathArray) ifTrue: [ ^ self ].
 	
-	path := (GtkTreePath newFromArray: pathArray) autoRelease.
-	self basicSelectPath: path
+	path := GtkTreePath newFromArray: pathArray.
+	[ self basicSelectPath: path ]
+	ensure: [ path free ]
 ]
 
 { #category : #private }
@@ -102,7 +114,7 @@ GtkTreeSelection >> selectedPath [
 { #category : #selection }
 GtkTreeSelection >> unselectAll [
 	
-	^ self ffiCall: #(void gtk_tree_selection_unselect_all (self))
+	self ffiCall: #(void gtk_tree_selection_unselect_all (self))
 ]
 
 { #category : #accessing }

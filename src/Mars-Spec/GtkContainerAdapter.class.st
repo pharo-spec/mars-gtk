@@ -7,8 +7,8 @@ Class {
 { #category : #protocol }
 GtkContainerAdapter >> add: anAdapter [ 
 	
-	self widgetDo: [ :this | 
-		this packStart: anAdapter widget ]
+	self widgetDo: [ :w | 
+		w packStart: anAdapter widget ]
 ]
 
 { #category : #building }

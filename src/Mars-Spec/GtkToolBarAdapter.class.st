@@ -21,7 +21,8 @@ GtkToolBarAdapter >> addModelTo: gtkToolBar [
 { #category : #testing }
 GtkToolBarAdapter >> hasButtonWithLabel: aString [ 
 	
-	^ self widget children anySatisfy: [ :e | (e isKindOf: GtkToolButton) and: [ e label = aString ]  ]
+	^ self widget children anySatisfy: [ :e | 
+		(e isKindOf: GtkToolButton) and: [ e label = aString ] ]
 ]
 
 { #category : #building }

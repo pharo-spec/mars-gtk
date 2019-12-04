@@ -5,32 +5,68 @@ For it to work, vm needs to run in a separate thread other than the gtk thread (
 Class {
 	#name : #GtkMainRunLoop,
 	#superclass : #GtkRunLoop,
+	#instVars : [
+		'process'
+	],
 	#category : #'Mars-Gtk-Base'
 }
 
-{ #category : #'private installing' }
+{ #category : #accessing }
+GtkMainRunLoop >> defer: aBlock [
+	| sem result |
+
+	(self isRunning not 
+		or: [ self isInCallback ]) 
+		ifTrue: [ ^ aBlock value ].
+
+	sem := Semaphore new.
+	GIdle uniqueInstance idleAddFull: [ 
+		result := aBlock ensure: [ sem signal ] ].
+	sem wait.
+
+	^ result
+]
+
+{ #category : #'private primitives' }
 GtkMainRunLoop >> gtkMain [
+
 	self ffiCall: #(void gtk_main ())
 ]
 
-{ #category : #'private installing' }
+{ #category : #'private primitives' }
 GtkMainRunLoop >> gtkMainQuit [
+
 	self ffiCall: #(void gtk_main_quit ())
 ]
 
 { #category : #'private installing' }
 GtkMainRunLoop >> installRunLoop [
 
-	[ self gtkMain ]
+	process := [ self gtkMain ]
 		forkAt: Processor lowIOPriority 
 		named: 'GtkRunLoop'
+]
+
+{ #category : #accessing }
+GtkMainRunLoop >> isDeferring [
+
+	^ self isInCallback
+]
+
+{ #category : #accessing }
+GtkMainRunLoop >> naturalRunner [
+	"Answer the 'natural' FFI client to run Gtk.
+	 When using this run loop, gtk_main needs to be running in the main thread which means
+	 the VM is running in secondary thread. This means ultimately that every Gtk call needs 
+	 to be send to the main thread."
+
+	^ TFMainThreadRunner uniqueInstance
 ]
 
 { #category : #running }
 GtkMainRunLoop >> spawnNewRunLoop [
 
-	self flag: #TODO. "This is like this for now waiting for a test of using a nested gtk_main"
-	^ GtkPollingRunLoop basicNew initialize 
+	^ self class basicNew initialize 
 		start;
 		yourself
 ]
@@ -38,4 +74,10 @@ GtkMainRunLoop >> spawnNewRunLoop [
 { #category : #'private installing' }
 GtkMainRunLoop >> uninstallRunLoop [
 	
+	self defer: [ self gtkMainQuit ].
+	
+	process ifNil: [ ^ self ].
+	"No need to do this since quitting gtk main will cause the process to end"
+	"process terminate."
+	process := nil
 ]

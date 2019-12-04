@@ -28,7 +28,7 @@ GObject class >> finalizeResourceData: handle [
 	(self instanceIsObject: handle) 
 		ifTrue: [ 
 			GtkFinalizeSignal emitTarget: self handle: handle.
-			self objectUnref: handle ]
+			GtkRunLoop defer: [ self objectUnref: handle ] ]
 		ifFalse: [
 			GtkZombieSignal emitTarget: self handle: handle ].
 	handle beNull

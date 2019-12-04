@@ -57,8 +57,8 @@ GtkPanedAdapter >> calculatePercentAtDirectionOf: aWidget extent: aPoint [
 	^ (pos * layout position) asInteger
 ]
 
-{ #category : #building }
-GtkPanedAdapter >> layout: aLayout [
+{ #category : #private }
+GtkPanedAdapter >> doLayout: aLayout [
 
 	layout := aLayout.	
 	widget := aLayout direction newWidgetOn: self.
@@ -66,6 +66,7 @@ GtkPanedAdapter >> layout: aLayout [
 		pos < 1 
 			ifTrue: [ self setPositionDeferred: aLayout position to: widget ]
 			ifFalse: [ self setPosition: aLayout position to: widget ] ].
+	widget wideHandle: true.
 	widget show.
 ]
 

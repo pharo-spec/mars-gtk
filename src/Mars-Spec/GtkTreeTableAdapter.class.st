@@ -56,7 +56,7 @@ GtkTreeTableAdapter >> addLevelTo: item parent: iter [
 ]
 
 { #category : #building }
-GtkTreeTableAdapter >> addLevelsUpTo: aPath to: gtkWidget [	
+GtkTreeTableAdapter >> addLevelsUpTo: aPath to: gtkWidget [
 	| segments |	
 		
 	segments := OrderedCollection new.
@@ -72,6 +72,7 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 
+	gtkWidget enableSearch: self presenter isSearchEnabled.
 	self recreateStore: gtkWidget generateColumns: true.
 	self configureInitialState: gtkWidget.
 	self connectToGtkSignals: gtkWidget.
@@ -205,6 +206,12 @@ GtkTreeTableAdapter >> fillStore: store with: aCollection [
 			into: store ]
 ]
 
+{ #category : #accessing }
+GtkTreeTableAdapter >> firstSelectedPath [
+	
+	^ self innerWidgetDo: [ :w | w selection selectedPath ]
+]
+
 { #category : #private }
 GtkTreeTableAdapter >> initialize [
 
@@ -216,6 +223,13 @@ GtkTreeTableAdapter >> initialize [
 GtkTreeTableAdapter >> isLevelAddedFor: item [
 
 	^ levelsAdded includes: item
+]
+
+{ #category : #testing }
+GtkTreeTableAdapter >> isNonEditableRow: aRow column: aColumn [ 
+	"no rows are directly editable in a component list (they can be 
+	 if defined like that in the inner presenters, but it is handled different)"
+	^ true
 ]
 
 { #category : #private }
@@ -279,7 +293,8 @@ GtkTreeTableAdapter >> recreateStore: gtkTreeView	generateColumns: doesGenerateC
 { #category : #updating }
 GtkTreeTableAdapter >> refreshList [
 
-	self innerWidget model: (self newStoreFrom: self model items)
+	self innerWidgetDo: [ :w | 
+		w model: (self newStoreFrom: self presenter items) ]
 ]
 
 { #category : #private }
@@ -305,11 +320,19 @@ GtkTreeTableAdapter >> selectItemIn: gtkWidget path: aPath [
 ]
 
 { #category : #accessing }
+GtkTreeTableAdapter >> selectPath: aPath [
+
+	self innerWidgetDo: [ :w |
+		aPath 
+			ifNotEmpty: [ w selection selectPath: aPath ]
+			ifEmpty: [ w selection unselectAll ] ]
+]
+
+{ #category : #accessing }
 GtkTreeTableAdapter >> selectedItem [
 	| selectedPath |
 	
-	selectedPath := self innerWidget selection selectedPath.
-
+	selectedPath := self firstSelectedPath.
 	selectedPath ifNil: [ ^ nil ].
 	selectedPath ifEmpty: [ ^ nil ].
 
@@ -319,7 +342,7 @@ GtkTreeTableAdapter >> selectedItem [
 { #category : #accessing }
 GtkTreeTableAdapter >> selectedPaths [
 	
-	^ self innerWidget allSelected
+	^ self innerWidgetDo: [ :w | w allSelected ]
 ]
 
 { #category : #private }
@@ -342,18 +365,21 @@ GtkTreeTableAdapter >> storeClass [
 
 { #category : #private }
 GtkTreeTableAdapter >> takeKeyboardFocus [
-	| needToCleanUP |
+
+	self innerWidgetDo: [ :w |
+		| needToCleanUP |
 	
-	needToCleanUP := self presenter selection isEmpty.
-	self flag: #hack.
-	"GTK has an issue when giving the focus to a List. When it gives the focus selects the first element"
-	needToCleanUP 
-		ifTrue: [ 
-			self disconnectSelectionEventsOf: self innerWidget during: [ 
-				self doTakeKeyboardFocus.
-				self innerWidget selection unselectAll ] ]
-		ifFalse: [ 
-			self doTakeKeyboardFocus ]
+		needToCleanUP := self presenter selection isEmpty.
+		self flag: #hack.
+		"GTK has an issue when giving the focus to a List. When it gives 
+		 the focus selects the first element"
+		needToCleanUP 
+			ifTrue: [ 
+				self disconnectSelectionEventsOf: w during: [ 
+					self doTakeKeyboardFocus.
+					w selection unselectAll ] ]
+			ifFalse: [ 
+				self doTakeKeyboardFocus ] ]
 ]
 
 { #category : #building }
@@ -366,8 +392,9 @@ GtkTreeTableAdapter >> updatePresenterSelection [
 { #category : #building }
 GtkTreeTableAdapter >> updateSelectionOf: gtkWidget [
 
-	self model selection selectedPaths do: [ :selectedPath | 
-		self selectItemIn: gtkWidget path: selectedPath ]
+	GtkRunLoop defer: [ 
+		self presenter selection selectedPaths 
+			do: [ :selectedPath | self selectItemIn: gtkWidget path: selectedPath ] ]
 ]
 
 { #category : #building }

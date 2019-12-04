@@ -15,7 +15,6 @@ Class {
 	#instVars : [
 		'#session',
 		'#running',
-		'#executing',
 		'#inCallback => ProcessLocalSlot'
 	],
 	#classVars : [
@@ -31,6 +30,36 @@ Class {
 }
 
 { #category : #accessing }
+GtkRunLoop class >> activateDeferVerification [
+	<script>
+
+	TFCalloutAPI activateTraceWith: [ :sender |
+		 self current isDeferring ifFalse: [ 
+			((sender methodClass = GtkRunLoop) 
+				or: [ (sender methodClass name beginsWith: 'Gtk') not ]) 
+				ifFalse: [ Stdio stdout << sender printString; crlf  ] ] ]
+]
+
+{ #category : #accessing }
+GtkRunLoop class >> activateDeferVerification2 [
+	<script>
+
+	TFCalloutAPI activateTraceWith: [ :sender |
+		 "self current isDeferring ifFalse: [" 
+			((sender methodClass = GtkRunLoop) 
+				or: [ (sender methodClass name beginsWith: 'Gtk') not ]) 
+				ifFalse: [ Stdio stdout << sender printString; crlf  ] ] "]"
+]
+
+{ #category : #accessing }
+GtkRunLoop class >> bestStrategyClass [
+
+	^ Smalltalk vm isRunningInWorkerThread 
+		ifTrue: [ GtkMainRunLoop ]
+		ifFalse: [ GtkPollingRunLoop ]
+]
+
+{ #category : #accessing }
 GtkRunLoop class >> current [
 	^ Current ifNil: [ Current := self defaultRunLoopClass uniqueInstance ]
 ]
@@ -39,6 +68,13 @@ GtkRunLoop class >> current [
 GtkRunLoop class >> current: aRunLoop [
 	Current ifNotNil: [ Current stop ].
 	Current := aRunLoop
+]
+
+{ #category : #accessing }
+GtkRunLoop class >> deactivateDeferVerification [
+	<script>
+
+	TFCalloutAPI resetTrace
 ]
 
 { #category : #private }
@@ -59,6 +95,11 @@ GtkRunLoop class >> install [
 	self = GtkRunLoop ifTrue: [ 
 		self error: 'I''m an abstract class. You need to install one of my subclasses.' ].
 	^ self current: self uniqueInstance
+]
+
+{ #category : #testing }
+GtkRunLoop class >> isDeferring [
+	
 ]
 
 { #category : #'instance creation' }
@@ -86,6 +127,7 @@ GtkRunLoop >> callbackEnter [
 
 { #category : #private }
 GtkRunLoop >> checkSession [
+
 	^ session == Smalltalk session
 ]
 
@@ -93,14 +135,6 @@ GtkRunLoop >> checkSession [
 GtkRunLoop >> defer: aBlock [
 
 	^ aBlock value
-]
-
-{ #category : #private }
-GtkRunLoop >> doNotOverlap: aBlock [
-	executing ifTrue: [ ^ self ].
-	executing := true.
-	aBlock ensure: [ executing := false ]
-
 ]
 
 { #category : #private }
@@ -114,14 +148,19 @@ GtkRunLoop >> getEventsPending [
 GtkRunLoop >> initialize [
 	
 	self class initializeSlots: self. 
-	super initialize.
 	running := false.
-	executing := false
+	super initialize
 ]
 
 { #category : #'private installing' }
 GtkRunLoop >> installRunLoop [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtkRunLoop >> isDeferring [
+
+	^ false
 ]
 
 { #category : #testing }
@@ -132,6 +171,7 @@ GtkRunLoop >> isInCallback [
 
 { #category : #testing }
 GtkRunLoop >> isRunning [
+
 	^ running
 ]
 
@@ -142,13 +182,20 @@ GtkRunLoop >> mainIterationDo: blocking [
 		ffiCall: #( void gtk_main_iteration_do ( gboolean blocking ) )
 ]
 
+{ #category : #accessing }
+GtkRunLoop >> naturalRunner [
+	"Answer the 'natural' FFI client to run Gtk."
+
+	^ TFSameThreadRunner uniqueInstance
+]
+
 { #category : #private }
 GtkRunLoop >> processEvents [
-	self doNotOverlap: [
-		[ (self isRunning and: [ self checkSession ])
-			ifTrue: [ self getEventsPending ]
-			ifFalse: [ false ] ]
-		whileTrue: [ self mainIterationDo: false ] ]
+
+	[ (self isRunning and: [ self checkSession ])
+		ifTrue: [ self getEventsPending ]
+		ifFalse: [ false ] ]
+	whileTrue: [ self mainIterationDo: false ]
 ]
 
 { #category : #running }
@@ -159,19 +206,21 @@ GtkRunLoop >> spawnNewRunLoop [
 
 { #category : #running }
 GtkRunLoop >> start [
+
 	self isRunning ifTrue: [ ^ self ].
 	
-	running := true.
 	session := Smalltalk session. 
+	running := true.
 	self installRunLoop.
+	
 ]
 
 { #category : #running }
 GtkRunLoop >> stop [ 
+
 	self isRunning ifFalse: [ ^ self ].
 	self uninstallRunLoop.	
 	running := false
-
 ]
 
 { #category : #'private installing' }

@@ -46,39 +46,11 @@ GtkWindowAdapter >> addModelTo: gtkWindow [
 
 { #category : #accessing }
 GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
-	| gtkBox |
-
-	self connectToGtkSignals: gtkWindow.
-	self addDefaultKeyBindings: gtkWindow.
-
-	"add window properties"
-	self model initialExtent
-		ifNotNil: [ :extent | gtkWindow resize: extent ].
-	self model initialPosition
-		ifNotNil: [ :position | gtkWindow moveTo: position ].
-
-	"inner contents of window"
-	gtkBox := GtkBox newVertical.
-	gtkBox show.
-	"menu bar"
-	self model hasMenu
-		ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
-	"tool bar"
-	self model hasToolbar
-		ifTrue: [ self addToolBarTo: gtkBox ].
-	"infoArea"
-	gtkBox
-		packStart: (infoArea := GtkInfoArea new)
-		expand: false
-		fill: false
-		padding: 0.
-	"contents"
-	gtkBox packStart: (self contentWidget: aSpec).
-	"status bar"
-	self model hasStatusBar
-		ifTrue: [ self addStatusBarTo: gtkBox ].
-	"... and add all that to window"
-	self add: gtkBox toWindow: gtkWindow
+	
+	GtkRunLoop defer: [ 
+		self 
+			deferredAddPresenterIn: gtkWindow 
+			withSpecLayout: aSpec ]
 ]
 
 { #category : #private }
@@ -147,9 +119,10 @@ GtkWindowAdapter >> centered [
 GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [ 
 	| bounds position |	
 
-	bounds := aWindowPresenter adapter widget bounds.
-	position := bounds topLeft + ((bounds extent - self widget size) // 2).
-	self widget moveTo: position		
+	self widgetDo: [ :w |
+		bounds := aWindowPresenter adapter widget bounds.
+		position := bounds topLeft + ((bounds extent - w size) // 2).
+		w moveTo: position ]
 ]
 
 { #category : #accessing }
@@ -183,6 +156,51 @@ GtkWindowAdapter >> contentWidget: aSpec [
 	^ self model presenter buildWithSpecLayout: aSpec
 ]
 
+{ #category : #private }
+GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
+	| gtkBox |
+
+	self connectToGtkSignals: gtkWindow.
+	self addDefaultKeyBindings: gtkWindow.
+
+	"add window properties"
+	self model initialExtent
+		ifNotNil: [ :extent | gtkWindow resize: extent ].
+	self model initialPosition
+		ifNotNil: [ :position | gtkWindow moveTo: position ].
+
+	"inner contents of window"
+	gtkBox := GtkBox newVertical.
+	gtkBox show.
+	"menu bar"
+	self model hasMenu
+		ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
+	"tool bar"
+	self model hasToolbar
+		ifTrue: [ self addToolBarTo: gtkBox ].
+	"infoArea"
+	gtkBox
+		packStart: (infoArea := GtkInfoArea new)
+		expand: false
+		fill: false
+		padding: 0.
+	"contents"
+	gtkBox packStart: (self contentWidget: aSpec).
+	"status bar"
+	self model hasStatusBar
+		ifTrue: [ self addStatusBarTo: gtkBox ].
+	"... and add all that to window"
+	self add: gtkBox toWindow: gtkWindow
+]
+
+{ #category : #accessing }
+GtkWindowAdapter >> delete [
+
+	self widgetDo: [ :w | 
+		w delete. 
+		self presenter application windowClosed: self ]
+]
+
 { #category : #building }
 GtkWindowAdapter >> newWidget [
 
@@ -207,13 +225,14 @@ GtkWindowAdapter >> notifyInfo: aSpecNotification [
 GtkWindowAdapter >> open [
 
 	self widgetDo: [ :w | 
-		w show.
-		w present.
+		GtkRunLoop defer: [ 
+			w show.
+			w present ].
 		self announceOpened ].
 ]
 
 { #category : #accessing }
 GtkWindowAdapter >> title: aString [ 
 
-	^ self widgetDo: [ :this | this title: aString ]
+	self widgetDo: [ :w | w title: aString ]
 ]
