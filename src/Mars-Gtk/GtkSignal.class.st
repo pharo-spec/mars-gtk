@@ -5,8 +5,7 @@ Class {
 	#name : #GtkSignal,
 	#superclass : #BeaconSignal,
 	#classVars : [
-		'ActiveFilter',
-		'FilteredSignals'
+		'ActiveFilter'
 	],
 	#category : #'Mars-Gtk-Signal'
 }
