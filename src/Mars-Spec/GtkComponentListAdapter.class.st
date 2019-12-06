@@ -41,7 +41,10 @@ GtkComponentListAdapter >> addModelTo: gtkListBox [
 	
 	gtkListBox connectSelectedRowsChanged: [ 
 		self backendUpdatingDo: [
-			self presenter selection selectIndexes: self innerWidget selectedIndexes ] ]
+			self presenter selection selectIndexes: self innerWidget selectedIndexes ] ].
+	
+	self model contextMenu 
+		ifNotNil: [ :menu | self addMenu: menu to: gtkListBox ]
 ]
 
 { #category : #private }
@@ -131,6 +134,17 @@ GtkComponentListAdapter >> selectIndex: rowIndex [
 GtkComponentListAdapter >> selectedIndexes [
 
 	^ self innerWidget selectedIndexes
+]
+
+{ #category : #private }
+GtkComponentListAdapter >> showMenu: aValuable event: event [
+
+	self innerWidgetDo: [ :w |
+		| row |
+		row := w getRowAtY: event y.
+		row ifNotNil: [ 
+			w selectRow: row ].
+		super showMenu: aValuable event: event ]
 ]
 
 { #category : #building }

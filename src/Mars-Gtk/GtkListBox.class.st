@@ -83,6 +83,12 @@ GtkListBox >> connectSelectedRowsChanged: aBlock [
 		do: [ :box :user_data | aBlock value ]
 ]
 
+{ #category : #accessing }
+GtkListBox >> getRowAtY: y [
+
+	self ffiCall: #(GtkListBoxRow *gtk_list_box_get_row_at_y (self, gint y))
+]
+
 { #category : #private }
 GtkListBox >> getSelectedRow [
 	"Answer void* because I use it as address, to find the row I already have, and I do not want 

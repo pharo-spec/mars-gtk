@@ -50,11 +50,7 @@ GtkAdapter >> addKeyBindingsTo: gtkWidget [
 GtkAdapter >> addMenu: aValuable to: gtkWidget [
 
 	gtkWidget connectRightClicked: [ :event |
-		lastShownMenu := self buildMenu: aValuable value.
-		lastShownMenu 
-			connectDestroy: [ lastShownMenu := nil ];
-			showAll;
-			popupAtPointer: event.
+		self showMenu: aValuable event: event.
 		true ]
 ]
 
@@ -286,6 +282,16 @@ GtkAdapter >> setBalloonText: aString [
 	
 	self innerWidgetDo: [ :w | 
 		w tooltipText: aString ]
+]
+
+{ #category : #private }
+GtkAdapter >> showMenu: aValuable event: event [
+	
+	lastShownMenu := self buildMenu: aValuable value.
+	lastShownMenu 
+		connectDestroy: [ lastShownMenu := nil ];
+		showAll;
+		popupAtPointer: event.
 ]
 
 { #category : #protocol }
