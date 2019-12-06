@@ -27,7 +27,8 @@ Class {
 	#classTraits : 'GtkTDisconnectSelectionEvents classTrait + GtkTHaveWrappingScrollBars classTrait + GtkTSortableColumns classTrait',
 	#instVars : [
 		'levelsAdded',
-		'objectCache'
+		'objectCache',
+		'defaultColumn'
 	],
 	#category : #'Mars-Spec-Adapter-Table'
 }
@@ -73,6 +74,7 @@ GtkTreeTableAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 
 	gtkWidget enableSearch: self presenter isSearchEnabled.
+	
 	self recreateStore: gtkWidget generateColumns: true.
 	self configureInitialState: gtkWidget.
 	self connectToGtkSignals: gtkWidget.
@@ -95,6 +97,12 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 GtkTreeTableAdapter >> columnCount [
 	
 	^ self innerWidget model numberOfColumns
+]
+
+{ #category : #'private accessing' }
+GtkTreeTableAdapter >> columns [
+
+	^ self presenter columns ifEmpty: [ { self defaultColumn } ]
 ]
 
 { #category : #building }
@@ -155,13 +163,20 @@ GtkTreeTableAdapter >> connectToSpecEvents: gtkWidget [
 			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
 ]
 
+{ #category : #'private accessing' }
+GtkTreeTableAdapter >> defaultColumn [
+			
+	^ defaultColumn ifNil: [ 
+		defaultColumn := SpStringTableColumn evaluated: #asString ]
+]
+
 { #category : #building }
 GtkTreeTableAdapter >> doAddRow: anObject index: rowIndex into: store [
 	| gtkRow filler |
 	
 	gtkRow := store appendNew.
 	filler := GtkTableRowFiller new
-		columns: self model columns;
+		columns: self columns;
 		gtkRow: gtkRow;
 		row: anObject;
 		rowIndex: rowIndex;
@@ -170,7 +185,7 @@ GtkTreeTableAdapter >> doAddRow: anObject index: rowIndex into: store [
 	GtkTableRowFillerCache 
 		value: self objectCache
 		during: [ 		
-			self model columns do: [ :eachColumn | 
+			self columns do: [ :eachColumn | 
 				filler visit: eachColumn ] ].
 
 	^ gtkRow
@@ -182,12 +197,10 @@ GtkTreeTableAdapter >> doRecreateColumns: gtkTreeView [
 
 	gtkTreeView removeAllColumns.
 
-	columnBuilder := self newColumnBuilderOn: self presenter.
+	columnBuilder := self newColumnBuilder.
 	columnBuilder view: gtkTreeView. 
 
-	self presenter columns 
-		do: [ :each | columnBuilder visit: each ].
-
+	self columns do: [ :each | columnBuilder visit: each ]
 ]
 
 { #category : #private }
@@ -245,11 +258,11 @@ GtkTreeTableAdapter >> markLevelAddedFor: item [
 ]
 
 { #category : #'private factory' }
-GtkTreeTableAdapter >> newColumnBuilderOn: aTreeTablePresenter [
+GtkTreeTableAdapter >> newColumnBuilder [
 
 	^ GtkTreeTableColumnBuilder new 
-		model: aTreeTablePresenter;
-		columns: aTreeTablePresenter columns;
+		model: self presenter;
+		columns: self columns;
 		yourself
 ]
 
@@ -258,7 +271,7 @@ GtkTreeTableAdapter >> newStore [
 	| typeCollector |
 
 	typeCollector := GtkTableColumnTypeCollector new.
-	self model columns collect: [ :each | 
+	self columns collect: [ :each | 
 		typeCollector visit: each ].
 	^ self storeClass newColumnTypes: typeCollector types
 ]
