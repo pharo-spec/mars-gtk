@@ -83,25 +83,25 @@ GList >> first [
 { #category : #'as yet unclassified' }
 GList >> free [
 
-	self ffiCall: #(void g_list_free(self))
+	self ffiCall: #(void g_list_free(self)) module: GLibLibrary
 ]
 
 { #category : #'as yet unclassified' }
 GList >> freeFull: aNotifyCallback [
 
-	self ffiCall: #(void g_list_free_full(self, GCallback aNotifyCallback))
+	self ffiCall: #(void g_list_free_full(self, GCallback aNotifyCallback)) module: GLibLibrary
 ]
 
 { #category : #private }
 GList >> gListAppend: data [
 
-	^ self ffiCall: #(void *g_list_append (self, gpointer data))
+	^ self ffiCall: #(void *g_list_append (self, gpointer data)) module: GLibLibrary
 ]
 
 { #category : #private }
 GList >> gListFirst [
 
-	^ self ffiCall: #(void *g_list_append (self))
+	^ self ffiCall: #(void *g_list_append (self)) module: GLibLibrary
 ]
 
 { #category : #'accessing structure variables' }
