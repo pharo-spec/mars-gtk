@@ -46,7 +46,7 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 	self model shortcut ifNotNil: [ :shortcut | 
 		self addAcceleratorShortcut: shortcut to: gtkWidget ].
 	"enabled?"
-	gtkWidget sensitive: self model isEnabled.
+	gtkWidget sensitive: self model isEnabled value.
 
 	"action"
 	self model action
