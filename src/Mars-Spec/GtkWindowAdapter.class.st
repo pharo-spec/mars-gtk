@@ -18,6 +18,12 @@ GtkWindowAdapter >> addDefaultKeyBindings: gtkWindow [
 	
 	self flag: #TODO. "In fact, this thingy needs to came from a configuration. Here is just 
 	hardcoded crap."
+
+	self flag: #TODO. "On Windows, the setting of the key bindings prevents text fields to be 
+		filled from keyboard so we need to fileter-out this platform for now, sorry."
+	
+	Smalltalk os isWindows ifTrue: [ ^ self ].
+	
 	self 
 		bindKeyCombination: $w command mac | $w control win | $w control unix 
 		toAction: [ self closeFromKeyboard ]
