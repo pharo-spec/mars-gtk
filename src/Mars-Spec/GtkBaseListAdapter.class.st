@@ -27,6 +27,12 @@ GtkBaseListAdapter >> isNonEditableRow: aRow column: aColumn [
 	^ (innerWidget columns at: aColumn) isEditable not
 ]
 
+{ #category : #'widget API' }
+GtkBaseListAdapter >> refreshWidgetList [
+
+	self refreshList
+]
+
 { #category : #testing }
 GtkBaseListAdapter >> selectedIndexes [
 	^ innerWidget selection allSelected collect: #first as: Array
