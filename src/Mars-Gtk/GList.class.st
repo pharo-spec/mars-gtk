@@ -74,6 +74,12 @@ GList >> data: anObject [
 	handle pointerAt: OFFSET_DATA put: anObject getHandle.
 ]
 
+{ #category : #resources }
+GList >> ffiLibrary [ 
+    ^ GLibLibrary 
+
+]
+
 { #category : #accessing }
 GList >> first [
 
