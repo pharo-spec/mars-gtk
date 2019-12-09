@@ -66,6 +66,12 @@ GtkListBox >> bindModel: aListModel [
 ]
 
 { #category : #signaling }
+GtkListBox >> connectRowActivated: aBlock [ 
+	
+	^ (GListBoxRowActivatedCallback do: aBlock) connectTo: self
+]
+
+{ #category : #signaling }
 GtkListBox >> connectRowSelected: aBlock [
 
 	self 

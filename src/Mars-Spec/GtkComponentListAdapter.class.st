@@ -42,6 +42,9 @@ GtkComponentListAdapter >> addModelTo: gtkListBox [
 	gtkListBox connectSelectedRowsChanged: [ 
 		self backendUpdatingDo: [
 			self presenter selection selectIndexes: self innerWidget selectedIndexes ] ].
+
+	gtkListBox connectRowActivated: [ :row | 
+		self doActivateRow: row ].
 	
 	self model contextMenu 
 		ifNotNil: [ :menu | self addMenu: menu to: gtkListBox ]
@@ -53,6 +56,14 @@ GtkComponentListAdapter >> disconnectSelectionEventsOf: aWidget during: aBlock [
 	aWidget 
 		disconnectAll: #('row-selected' 'selected-rows-changed')
 		during: aBlock
+]
+
+{ #category : #private }
+GtkComponentListAdapter >> doActivateRow: rowHandle [
+	| row |
+
+	row := self innerWidget findChildByHandle: rowHandle.
+	self presenter doActivateAtIndex: (self innerWidget children indexOf: row)
 ]
 
 { #category : #protocol }
