@@ -33,6 +33,12 @@ GtkListBox class >> new [
 ]
 
 { #category : #accessing }
+GtkListBox >> activateOnSingleClick: single [
+
+	self ffiCall: #(void gtk_list_box_set_activate_on_single_click (self, gboolean single))
+]
+
+{ #category : #accessing }
 GtkListBox >> add: aWidget [ 
 	^ super add: aWidget asListBoxRow
 ]
@@ -115,6 +121,12 @@ GtkListBox >> insert: aWidget at: position [
 	self keepWidget: row.
 	self basicInsert: row at: position.
 	^ row
+]
+
+{ #category : #accessing }
+GtkListBox >> isActivateOnSingleClick [
+
+	^ self ffiCall: #(gboolean gtk_list_box_get_activate_on_single_click (self))
 ]
 
 { #category : #convenience }

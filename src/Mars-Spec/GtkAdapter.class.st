@@ -65,7 +65,7 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	self presenter styles 
 		do: [ :each | gtkWidget addClass: each ].
 	
-	gtkWidget sensitive: self presenter isEnabled value.
+	gtkWidget sensitive: self presenter isEnabled.
 	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
 	self presenter whenEnabledChangedDo: [ gtkWidget sensitive: self presenter isEnabled ].
 	

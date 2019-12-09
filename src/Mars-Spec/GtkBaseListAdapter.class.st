@@ -10,9 +10,10 @@ Class {
 GtkBaseListAdapter >> addModelTo: gtkList [
 
 	super addModelTo: gtkList.
+	gtkList activateOnSingleClick: self presenter activatesOnSingleClick.
 	gtkList enableSearch: self presenter isSearchEnabled.
 	self presenter contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: gtkList ]
+		self addMenu: menu to: gtkList ].
 ]
 
 { #category : #testing }
