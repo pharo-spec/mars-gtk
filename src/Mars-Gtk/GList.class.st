@@ -74,6 +74,12 @@ GList >> data: anObject [
 	handle pointerAt: OFFSET_DATA put: anObject getHandle.
 ]
 
+{ #category : #resources }
+GList >> ffiLibrary [ 
+    ^ GLibLibrary 
+
+]
+
 { #category : #accessing }
 GList >> first [
 
@@ -83,25 +89,25 @@ GList >> first [
 { #category : #'as yet unclassified' }
 GList >> free [
 
-	self ffiCall: #(void g_list_free(self)) module: GLibLibrary
+	self ffiCall: #(void g_list_free(self))
 ]
 
 { #category : #'as yet unclassified' }
 GList >> freeFull: aNotifyCallback [
 
-	self ffiCall: #(void g_list_free_full(self, GCallback aNotifyCallback)) module: GLibLibrary
+	self ffiCall: #(void g_list_free_full(self, GCallback aNotifyCallback))
 ]
 
 { #category : #private }
 GList >> gListAppend: data [
 
-	^ self ffiCall: #(void *g_list_append (self, gpointer data)) module: GLibLibrary
+	^ self ffiCall: #(void *g_list_append (self, gpointer data))
 ]
 
 { #category : #private }
 GList >> gListFirst [
 
-	^ self ffiCall: #(void *g_list_append (self)) module: GLibLibrary
+	^ self ffiCall: #(void *g_list_append (self))
 ]
 
 { #category : #'accessing structure variables' }
