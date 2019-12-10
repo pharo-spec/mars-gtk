@@ -16,8 +16,8 @@ GtkWindowAdapter >> add: gtkBox toWindow: gtkWindow [
 { #category : #'private building' }
 GtkWindowAdapter >> addDefaultKeyBindings: gtkWindow [
 	
-	self flag: #TODO. "In fact, this thingy needs to came from a configuration. Here is just 
-	hardcoded crap."
+	self flag: #TODO. "In fact, this thingy needs to came from a configuration. 
+	Here is just hardcoded crap."
 	self 
 		bindKeyCombination: $w command mac | $w control win | $w control unix 
 		toAction: [ self closeFromKeyboard ]
@@ -138,6 +138,16 @@ GtkWindowAdapter >> closeFromKeyboard [
 
 	self announceWillClose.
 	self presenter close
+]
+
+{ #category : #private }
+GtkWindowAdapter >> configureKeyBindings: gtkWindow [
+		
+	dispatcher := GtkKMDispatcher on: self presenter.
+	gtkWindow connectKeyPressEvent: [ :event |
+		(self handleKeyEvent: event)
+			ifTrue: [ true ]
+			ifFalse: [ gtkWindow propagateKeyEvent: event ] ].
 ]
 
 { #category : #'private building' }

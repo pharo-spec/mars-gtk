@@ -225,6 +225,12 @@ GtkWindow >> present [
 ]
 
 { #category : #accessing }
+GtkWindow >> propagateKeyEvent: event [
+
+	^ self ffiCall: #(gboolean gtk_window_propagate_key_event (self, GdkEventKey *event))
+]
+
+{ #category : #accessing }
 GtkWindow >> removeAcceleratorGroup: anAcceleratorGroup [
 
 	(acceleratorGroups includes: anAcceleratorGroup) ifFalse: [ ^ self ].
