@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkMenuButtonAdapter,
 	#superclass : #GtkBaseButtonAdapter,
+	#instVars : [
+		'menuWidget'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -12,7 +15,11 @@ GtkMenuButtonAdapter >> addModelTo: gtkButton [
 		connect: 'button-press-event'
 		signature: #(gboolean (void *widget, void *event, void *data))
 		do: [ :w :event :data | 
+			| widgetGravity menuGravity |
 			self updateMenu.
+			widgetGravity := GdkGravity GDK_GRAVITY_SOUTH_EAST.
+			menuGravity := GdkGravity GDK_GRAVITY_NORTH_EAST.
+			(GtkMenuButton fromHandle: w) menuPopup: menuWidget widgetGravity: widgetGravity menuGravity: menuGravity. 
 			false ]
 	
 ]
@@ -21,9 +28,10 @@ GtkMenuButtonAdapter >> addModelTo: gtkButton [
 GtkMenuButtonAdapter >> buildMenu: menuPresenter [
 
 	menuPresenter owner: self presenter.
-	^ SpBindings
+	menuWidget := SpBindings
 		value: self presenter application adapterBindings
-		during: [ menuPresenter buildWithSpec ]
+		during: [ menuPresenter buildWithSpec ].
+	^ menuWidget
 ]
 
 { #category : #updating }
