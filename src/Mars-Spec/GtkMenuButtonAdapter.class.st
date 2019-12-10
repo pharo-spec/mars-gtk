@@ -17,8 +17,8 @@ GtkMenuButtonAdapter >> addModelTo: gtkButton [
 		do: [ :w :event :data | 
 			| widgetGravity menuGravity |
 			self updateMenu.
-			widgetGravity := GdkGravity GDK_GRAVITY_SOUTH_EAST.
-			menuGravity := GdkGravity GDK_GRAVITY_NORTH_EAST.
+			widgetGravity := GdkGravity GDK_GRAVITY_SOUTH_WEST.
+			menuGravity := GdkGravity GDK_GRAVITY_NORTH_WEST.
 			(GtkMenuButton fromHandle: w) menuPopup: menuWidget widgetGravity: widgetGravity menuGravity: menuGravity. 
 			false ]
 	
