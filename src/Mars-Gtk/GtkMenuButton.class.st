@@ -131,6 +131,12 @@ GtkMenuButton >> menuModel: aMenuModel [
 	self ffiCall: #(void gtk_menu_button_set_menu_model (self, GtkMenu *aMenuModel))
 ]
 
+{ #category : #private }
+GtkMenuButton >> menuPopup: aMenu widgetGravity: widgetGavity menuGravity: menuGravity [
+
+	^ self ffiCall: #(void gtk_menu_popup_at_widget (GtkMenu *aMenu, self, GdkGravity widgetGavity, GdkGravity menuGravity, NULL))
+]
+
 { #category : #accessing }
 GtkMenuButton >> popOver [
 
