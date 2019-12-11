@@ -4,7 +4,7 @@ Extension { #name : #GdkPixbuf }
 GdkPixbuf class >> newForm: aForm [
 
 	^ self 
-		newFromSurface: (AthensCairoSurface fromForm: aForm) 
+		newFromSurface: aForm asAthensSurface
 		width: aForm width asInteger
 		height: aForm height asInteger
 ]
