@@ -38,6 +38,11 @@ GtkWindow class >> new [
 	^ (self windowNew: GTK_WINDOW_TOPLEVEL) initialize
 ]
 
+{ #category : #'instance creation' }
+GtkWindow class >> newPopup [
+	^ (self windowNew: GTK_WINDOW_POPUP) initialize
+]
+
 { #category : #private }
 GtkWindow class >> windowNew: type [ 
 
