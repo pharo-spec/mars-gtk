@@ -258,6 +258,13 @@ GtkWindow >> resizeWidth: width height: height [
 	^ self ffiCall: #(void gtk_window_resize (self, gint width, gint height))
 ]
 
+{ #category : #geometry }
+GtkWindow >> scaleFactor [
+	"See https://developer.gnome.org/gdk3/stable/gdk3-Windows.html#gdk-window-get-scale-factor"
+
+	^ self ffiCall: #(gint gdk_window_get_scale_factor (self))
+]
+
 { #category : #private }
 GtkWindow >> setPosition: position [
 	"This is how it will be positioned WHEN showing (not after)"
