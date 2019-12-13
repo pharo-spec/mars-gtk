@@ -16,6 +16,12 @@ SpecGtkBackend >> adapterBindingsClass [
 	^ GtkAdapterBindings
 ]
 
+{ #category : #accessing }
+SpecGtkBackend >> defer: aBlock [ 
+
+	GtkRunLoop defer: aBlock
+]
+
 { #category : #initialization }
 SpecGtkBackend >> initialize [ 
 	
