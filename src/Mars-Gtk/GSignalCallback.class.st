@@ -67,6 +67,13 @@ GSignalCallback >> signalName [
 	^ self subclassResponsibility
 ]
 
+{ #category : #printing }
+GSignalCallback >> tfPrintString [  
+
+	^ String streamContents: [ :stream |
+		stream << self signalName << ':' << super tfPrintString ]
+]
+
 { #category : #evaluating }
 GSignalCallback >> valueWithArguments: args [
 	"chain linked callbacks, answer last result (ideally, there are just one callback, 
