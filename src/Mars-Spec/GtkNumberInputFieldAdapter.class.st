@@ -39,10 +39,9 @@ GtkNumberInputFieldAdapter >> refreshText [
 { #category : #accessing }
 GtkNumberInputFieldAdapter >> setText: aStringOrNumber to: gtkWidget [
 
-	^ aStringOrNumber isString 
-		ifFalse: [ aStringOrNumber ]
-		ifTrue: [ (Number readFrom: aStringOrNumber ifFail: [ 0.0 ]) asFloat ].
-	
+	gtkWidget value: (aStringOrNumber isString 
+		ifTrue: [ (Number readFrom: aStringOrNumber ifFail: [ 0.0 ]) asFloat ]
+		ifFalse: [ aStringOrNumber ])
 ]
 
 { #category : #building }
