@@ -49,8 +49,8 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 	gtkWidget sensitive: self model isEnabled value.
 
 	"action"
-	self model action
-		ifNotNil: [ :actionBlock | gtkWidget connectActivate: actionBlock ].
+	self model action ifNotNil: [ :actionBlock |
+		gtkWidget connectActivate: actionBlock ].
 
 	"submenu"
 	self model subMenu

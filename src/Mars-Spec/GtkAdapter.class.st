@@ -116,7 +116,7 @@ GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 GtkAdapter >> buildMenu: aMenuPresenter [
 
 	^ aMenuPresenter 
-		owner: self model;
+		owner: self presenter;
 		buildWithSpec
 ]
 

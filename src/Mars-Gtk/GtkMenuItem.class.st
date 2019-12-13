@@ -42,7 +42,7 @@ GtkMenuItem class >> newLabel: aString [
 { #category : #signaling }
 GtkMenuItem >> connectActivate: aBlock [
 
-	self connect: 'activate' do: aBlock
+	(GActivateCallback do: aBlock) connectTo: self
 ]
 
 { #category : #accessing }
