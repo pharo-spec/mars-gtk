@@ -11,9 +11,22 @@ GtkBaseListAdapter >> addModelTo: gtkList [
 
 	super addModelTo: gtkList.
 	gtkList activateOnSingleClick: self presenter activatesOnSingleClick.
-	gtkList enableSearch: self presenter isSearchEnabled.
+	self addSearchTo: gtkList.
 	self presenter contextMenu ifNotNil: [ :menu |
 		self addMenu: menu to: gtkList ].
+]
+
+{ #category : #building }
+GtkBaseListAdapter >> addSearchTo: gtkList [
+	
+	self presenter isSearchEnabled ifFalse: [ ^ self ].
+	
+	gtkList enableSearch: true.
+	gtkList hasCustomSearch ifTrue: [   
+		gtkList searchFunction: [ :key :column :iter |
+			self presenter 
+				performSearch: (self presenter itemAtPath: iter toPathArray)
+				matching: key ] ]
 ]
 
 { #category : #testing }
