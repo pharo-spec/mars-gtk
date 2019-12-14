@@ -94,14 +94,14 @@ GtkTreeTableAdapter >> addRow: anObject index: index into: store [
 ]
 
 { #category : #building }
-GtkTreeTableAdapter >> addSearchTo: gtkWidget [
-	self flag: #TODO. "This method is same as GtkBaseListAdapter>>addSearchTo:. It needs to be unified."
+GtkTreeTableAdapter >> addSearchTo: gtkTreeView [
 
 	self presenter isSearchEnabled ifFalse: [ ^ self ].
 	
-	gtkWidget enableSearch: true.
-	gtkWidget hasCustomSearch ifTrue: [
-		gtkWidget searchFunction: [ :key :column :iter |
+	gtkTreeView enableSearch: true.
+	self presenter hasCustomSearch ifTrue: [
+		gtkTreeView searchFunction: [ :key :column :iter |
+			iter store: gtkTreeView model.
 			self presenter 
 				performSearch: (self presenter itemAtPath: iter toPathArray) 
 				matching: key ] ]

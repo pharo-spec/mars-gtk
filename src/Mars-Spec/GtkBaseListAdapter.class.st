@@ -17,15 +17,16 @@ GtkBaseListAdapter >> addModelTo: gtkList [
 ]
 
 { #category : #building }
-GtkBaseListAdapter >> addSearchTo: gtkList [
+GtkBaseListAdapter >> addSearchTo: gtkTreeView [
 	
 	self presenter isSearchEnabled ifFalse: [ ^ self ].
 	
-	gtkList enableSearch: true.
-	gtkList hasCustomSearch ifTrue: [   
-		gtkList searchFunction: [ :key :column :iter |
+	gtkTreeView enableSearch: true.
+	self presenter hasCustomSearch ifTrue: [
+		gtkTreeView searchFunction: [ :key :column :iter |
+			iter store: gtkTreeView model.
 			self presenter 
-				performSearch: (self presenter itemAtPath: iter toPathArray)
+				performSearch: (self presenter itemAt: iter toPathArray first)
 				matching: key ] ]
 ]
 
