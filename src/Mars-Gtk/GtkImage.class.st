@@ -16,7 +16,7 @@ Class {
 { #category : #private }
 GtkImage class >> basicNewEmpty [
 
-	^ self ffiCall: #(GtkImage * gtk_image_new ())
+	^ self ffiCall: #(GtkImage *gtk_image_new ())
 ]
 
 { #category : #accessing }
@@ -30,6 +30,12 @@ GtkImage class >> gType [
 GtkImage class >> imageNewFromIconName: iconNameString size: aSize [
 
 	^ self ffiCall: #(GtkImage *gtk_image_new_from_icon_name (String iconNameString, GtkIconSize aSize))
+]
+
+{ #category : #private }
+GtkImage class >> imageNewFromPixbuf: pixbuf [ 
+
+	^ self ffiCall: #(GtkImage *gtk_image_new_from_pixbuf (GdkPixbuf *pixbuf))
 ]
 
 { #category : #private }
@@ -47,12 +53,6 @@ GtkImage class >> new [
 GtkImage class >> newEmpty [
 
 	^ self basicNewEmpty initialize
-]
-
-{ #category : #'instance creation' }
-GtkImage class >> newForm: aForm [
-
-	^ self newMorph: aForm asMorph
 ]
 
 { #category : #'instance creation' }
@@ -113,11 +113,9 @@ GtkImage class >> newIconNamed: aString size: aSize [
 ]
 
 { #category : #'instance creation' }
-GtkImage class >> newMorph: anImageMorph [
+GtkImage class >> newPixbuf: aGdkPixbuf [ 
 
-	| surf |
-	surf := self surfaceFor: anImageMorph.
-	^ (self imageNewFromSurface: surf) initialize
+	^ (self imageNewFromPixbuf: aGdkPixbuf) initialize
 ]
 
 { #category : #private }
@@ -139,6 +137,12 @@ GtkImage >> asGdkPixbuf [
 	^ self ffiCall: #(GdkPixbuf* gtk_image_get_pixbuf (self))
 ]
 
+{ #category : #converting }
+GtkImage >> asGtkImage [
+
+	^ self
+]
+
 { #category : #accessing }
 GtkImage >> clear [
 	
@@ -148,5 +152,5 @@ GtkImage >> clear [
 { #category : #converting }
 GtkImage >> setFromGdkPixbuf: pixbuf [
 
-	^ self ffiCall: #(void gtk_image_set_from_pixbuf(self, GdkPixbuf* pixbuf))
+	^ self ffiCall: #(void gtk_image_set_from_pixbuf(self, GdkPixbuf *pixbuf))
 ]

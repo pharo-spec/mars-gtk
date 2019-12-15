@@ -62,7 +62,7 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 	| gtkBox |
 	
 	gtkBox := (GtkBox newHorizontalSpacing: self class defaultSpacing)
-		packStart: (GtkImage newForm: self model icon) 
+		packStart: self model icon asGtkImage 
 			expand: false 
 			fill: false 
 			padding: 0;

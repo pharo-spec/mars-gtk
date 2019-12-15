@@ -29,7 +29,7 @@ GtkBaseButtonAdapter >> updateIcon [
 	self widgetDo: [ :w |
 		w
 			alwaysShowImage;
-			image: (GtkImage newForm: self model icon) ]
+			image: self model icon asGtkImage ]
 ]
 
 { #category : #updating }

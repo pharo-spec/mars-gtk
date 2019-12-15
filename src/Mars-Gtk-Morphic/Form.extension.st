@@ -11,3 +11,9 @@ Form >> asGdkPixbuf [
 
 	^ GdkPixbuf newForm: self
 ]
+
+{ #category : #'*Mars-Gtk-Morphic' }
+Form >> asGtkImage [
+
+	^ GtkImage newPixbuf: self asGdkPixbuf 
+]

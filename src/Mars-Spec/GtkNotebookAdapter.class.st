@@ -59,7 +59,7 @@ GtkNotebookAdapter >> buildLabelForTab: aPage [
 	label := GtkLabel newLabel: aPage title asString.
 	aPage icon ifNotNil: [ :icon |
 		label := GtkBox newHorizontal
-			packStart: (GtkImage newForm: icon)
+			packStart: icon asGtkImage
 				expand: false 
 				fill: false 
 				padding: 0;
