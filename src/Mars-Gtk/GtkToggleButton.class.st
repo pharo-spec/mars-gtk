@@ -70,7 +70,7 @@ GtkToggleButton >> drawIndicator: aBoolean [
 	^ self ffiCall: #(void gtk_toggle_button_set_mode (self, gboolean aBoolean))
 ]
 
-{ #category : #testing }
+{ #category : #private }
 GtkToggleButton >> getActive [
 
 	^ self isActive
