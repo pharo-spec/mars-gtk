@@ -61,8 +61,8 @@ GtkAccelLabel >> accelLabelSetAccelKey: accelerator_key modifiers: accelerator_m
 GtkAccelLabel >> accelerator: aShortcut [
 	| charValue modifiers |
 
-	charValue := aShortcut character key asciiValue.
-	modifiers := aShortcut modifier asGdkModifierType.
+	charValue := aShortcut currentCharacter.
+	modifiers := aShortcut platformModifier asGdkModifierType.
 	
 	self 
 		accelLabelSetAccelKey: charValue 

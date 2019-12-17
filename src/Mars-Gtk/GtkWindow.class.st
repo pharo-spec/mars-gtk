@@ -40,6 +40,7 @@ GtkWindow class >> new [
 
 { #category : #'instance creation' }
 GtkWindow class >> newPopup [
+
 	^ (self windowNew: GTK_WINDOW_POPUP) initialize
 ]
 
