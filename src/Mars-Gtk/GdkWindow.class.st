@@ -25,6 +25,13 @@ GdkWindow class >> gType [
 ]
 
 { #category : #accessing }
+GdkWindow >> beep [
+
+	"Emits a short beep associated to window in the appropriate display, if supported. Otherwise, emits a short beep on the display just as gdk_display_beep()."
+	self ffiCall: #(void gdk_window_beep (GdkWindow * self))
+]
+
+{ #category : #accessing }
 GdkWindow >> cursor: cursor [
 
 	"Use #cursor: to store the cursor in the object"
