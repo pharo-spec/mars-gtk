@@ -107,6 +107,12 @@ GtkWindowAdapter >> announceWillClose [
 ]
 
 { #category : #accessing }
+GtkWindowAdapter >> beep [
+
+	self widgetDo: [ :w | w beep ].
+]
+
+{ #category : #accessing }
 GtkWindowAdapter >> centered [
 	
 	self widgetDo: [ :w | 

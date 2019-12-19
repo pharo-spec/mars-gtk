@@ -80,6 +80,12 @@ GtkWindow >> beNotModal [
 	self modal: false
 ]
 
+{ #category : #accessing }
+GtkWindow >> beep [ 
+
+	self gdkWindow beep
+]
+
 { #category : #geometry }
 GtkWindow >> bounds [
 
