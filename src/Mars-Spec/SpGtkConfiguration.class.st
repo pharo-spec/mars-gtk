@@ -26,6 +26,13 @@ SpGtkConfiguration >> addCSSProviderFromString: aString [
 	(GtkCssProvider newFromString: aString) addForApplicationToDefaultScreen
 ]
 
+{ #category : #configuring }
+SpGtkConfiguration >> configure: anApplication [
+
+	GtkRunLoop defer: [
+		super configure: anApplication ]
+]
+
 { #category : #private }
 SpGtkConfiguration >> installTheme: aString [
 
