@@ -2,7 +2,9 @@ Class {
 	#name : #GtkWindowAdapter,
 	#superclass : #GtkAdapter,
 	#instVars : [
-		'infoArea'
+		'infoArea',
+		'initialized',
+		'deferredActions'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -21,6 +23,13 @@ GtkWindowAdapter >> addDefaultKeyBindings: gtkWindow [
 	self 
 		bindKeyCombination: $w command mac | $w control win | $w control unix 
 		toAction: [ self closeFromKeyboard ]
+]
+
+{ #category : #'private deferring' }
+GtkWindowAdapter >> addDeferredAction: aBlock [
+
+	deferredActions ifNil: [ deferredActions := #() ].
+	deferredActions := deferredActions copyWith: aBlock
 ]
 
 { #category : #'private building' }
@@ -47,10 +56,11 @@ GtkWindowAdapter >> addModelTo: gtkWindow [
 { #category : #accessing }
 GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 	
+	initialized := false.
 	GtkRunLoop defer: [ 
-		self 
-			deferredAddPresenterIn: gtkWindow 
-			withSpecLayout: aSpec ]
+		self deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec.
+		initialized := true.
+		self processDeferredActions ]
 ]
 
 { #category : #private }
@@ -115,20 +125,25 @@ GtkWindowAdapter >> beep [
 { #category : #accessing }
 GtkWindowAdapter >> centered [
 	
-	self widgetDo: [ :w | 
-		w isVisible 
-			ifTrue: [ w moveToCenter ]
-			ifFalse: [ w center ] ]
+	self deferAction: [ 
+		self widgetDo: [ :w | 
+			w isVisible 
+				ifTrue: [ w hide; center; show ]
+				ifFalse: [ w center ] ] ]
 ]
 
 { #category : #accessing }
-GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [ 
+GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [
 	| bounds position |	
 
-	self widgetDo: [ :w |
-		bounds := aWindowPresenter adapter widget bounds.
-		position := bounds topLeft + ((bounds extent - w size) // 2).
-		w moveTo: position ]
+	self deferAction: [
+		self widgetDo: [ :w | | isVisible |
+			isVisible := w isVisible.
+			isVisible ifTrue:[ w hide ].
+			bounds := aWindowPresenter adapter widget bounds.
+			position := bounds topLeft + ((bounds extent - w size) // 2).
+			w moveTo: position.
+			isVisible ifTrue:[ w show ] ] ]
 ]
 
 { #category : #accessing }
@@ -172,6 +187,14 @@ GtkWindowAdapter >> contentWidget: aSpec [
 	^ self model presenter buildWithSpecLayout: aSpec
 ]
 
+{ #category : #'private deferring' }
+GtkWindowAdapter >> deferAction: aBlock [ 
+
+	initialized
+		ifTrue: [ aBlock value ]
+		ifFalse: [ self addDeferredAction: aBlock ]
+]
+
 { #category : #private }
 GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
 	| gtkBox |
@@ -181,7 +204,10 @@ GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
 
 	"add window properties"
 	self model initialExtent
-		ifNotNil: [ :extent | gtkWindow resize: extent ].
+		ifNotNil: [ :extent |
+			gtkWindow 
+				defaultSize: extent;
+				resize: extent ].
 	self model initialPosition
 		ifNotNil: [ :position | gtkWindow moveTo: position ].
 
@@ -217,6 +243,13 @@ GtkWindowAdapter >> delete [
 		self presenter application windowClosed: self ]
 ]
 
+{ #category : #testing }
+GtkWindowAdapter >> initialize [
+
+	initialized := false.
+	super initialize
+]
+
 { #category : #building }
 GtkWindowAdapter >> newWidget [
 
@@ -245,6 +278,14 @@ GtkWindowAdapter >> open [
 			w show.
 			w present ].
 		self announceOpened ].
+]
+
+{ #category : #'private deferring' }
+GtkWindowAdapter >> processDeferredActions [
+
+	deferredActions ifNil: [ ^ self ].
+	deferredActions do: #value.
+	deferredActions := nil
 ]
 
 { #category : #accessing }
