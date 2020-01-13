@@ -210,7 +210,7 @@ GdkEventKey >> is_modifier: anObject [
 { #category : #compatibility }
 GdkEventKey >> keyCharacter [
 
-	^ Character value: self keyValue
+	^ Character value: (self toInternalValue: self keyValue)
 ]
 
 { #category : #private }
@@ -310,6 +310,16 @@ GdkEventKey >> time [
 GdkEventKey >> time: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TIME put: anObject
+]
+
+{ #category : #compatibility }
+GdkEventKey >> toInternalValue: aKeyValue [ 
+
+	self flag: #TODO. "Map some keycodes into its internal representation (maybe wrong, review later)"
+	aKeyValue = KEY_Escape ifTrue: [ ^ 27 ].
+	aKeyValue = KEY_Tab ifTrue: [ ^ 9 ].
+	
+	^ aKeyValue
 ]
 
 { #category : #'accessing structure variables' }

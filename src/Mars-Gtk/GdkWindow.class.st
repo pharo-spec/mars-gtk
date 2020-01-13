@@ -45,6 +45,12 @@ GdkWindow >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GdkWindow >> opacity: opacity [
+
+	self ffiCall: #(void gdk_window_set_opacity (self, gdouble opacity))
+]
+
+{ #category : #accessing }
 GdkWindow >> positionOfDevice: device [
 	| xBuffer yBuffer |
 	

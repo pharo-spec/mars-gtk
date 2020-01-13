@@ -21,10 +21,29 @@ GtkDialogWindowAdapter >> add: gtkBox toWindow: gtkDialog [
 	gtkDialog defaultResponse: self model buttons size
 ]
 
+{ #category : #'private building' }
+GtkDialogWindowAdapter >> addDefaultKeyBindings: gtkWindow [
+
+	super addDefaultKeyBindings: gtkWindow.
+	self 
+		bindKeyCombination: Character escape asKeyCombination 
+			toAction: [ self closeFromKeyboard ];
+		bindKeyCombination: $s platformMeta 
+			toAction: [ self defaultFromKeyboard ]
+]
+
 { #category : #accessing }
 GtkDialogWindowAdapter >> close [
 
 	self widgetDo: [ :w | w respond ]
+]
+
+{ #category : #'private building' }
+GtkDialogWindowAdapter >> defaultFromKeyboard [
+
+	self presenter 
+		executeDefaultAction;
+		beOk
 ]
 
 { #category : #private }
