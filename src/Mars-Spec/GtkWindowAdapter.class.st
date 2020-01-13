@@ -21,7 +21,7 @@ GtkWindowAdapter >> addDefaultKeyBindings: gtkWindow [
 	self flag: #TODO. "In fact, this thingy needs to came from a configuration. 
 	Here is just hardcoded crap."
 	self 
-		bindKeyCombination: $w platformMeta 
+		bindKeyCombination: $w command mac | $w control win | $w control unix 
 		toAction: [ self closeFromKeyboard ]
 ]
 

@@ -28,7 +28,7 @@ GtkDialogWindowAdapter >> addDefaultKeyBindings: gtkWindow [
 	self 
 		bindKeyCombination: Character escape asKeyCombination 
 			toAction: [ self closeFromKeyboard ];
-		bindKeyCombination: $s platformMeta 
+		bindKeyCombination: $s command mac | $s control win | $s control unix
 			toAction: [ self defaultFromKeyboard ]
 ]
 
