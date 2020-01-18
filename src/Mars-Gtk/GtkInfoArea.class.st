@@ -12,6 +12,10 @@ can be used as any GtkBox.
 Class {
 	#name : #GtkInfoArea,
 	#superclass : #GtkBox,
+	#instVars : [
+		'removeTime',
+		'showTime'
+	],
 	#category : #'Mars-Gtk-Widget-Display'
 }
 
@@ -19,6 +23,18 @@ Class {
 GtkInfoArea class >> boxNewOrientation: orientation spacing: spacing [
 
 	^ self ffiCall: #(GtkInfoArea *gtk_box_new (GtkOrientation orientation, gint spacing))
+]
+
+{ #category : #private }
+GtkInfoArea class >> defaultRemoveTime [
+
+	^ 1 seconds
+]
+
+{ #category : #private }
+GtkInfoArea class >> defaultShowTime [
+
+	^ 5 seconds
 ]
 
 { #category : #'instance creation' }
@@ -49,16 +65,14 @@ GtkInfoArea >> addError: aString [
 
 { #category : #accessing }
 GtkInfoArea >> addInfo: aString [
-
-	self 
-		addMessage: aString 
-		type: #beInfo
+	
+	self addMessage: aString type: #beInfo
 ]
 
 { #category : #private }
 GtkInfoArea >> addMessage: aString type: aSelector [
 
-	self 
+	^ self 
 		addWidget: (GtkLabel newLabel: aString) 
 		type: aSelector
 ]
@@ -81,8 +95,7 @@ GtkInfoArea >> addWarning: aString [
 
 { #category : #private }
 GtkInfoArea >> addWidget: aWidget type: aSelector [
-
-		| infoBar |
+	| infoBar |
 
 	infoBar := GtkInfoBar new. 
 	infoBar perform: aSelector.
@@ -92,10 +105,51 @@ GtkInfoArea >> addWidget: aWidget type: aSelector [
 		expand: false
 		fill: false
 		padding: 0.
+	infoBar connectHide: [ 
+		self remove: infoBar.
+		infoBar destroy ].
 	infoBar connectResponse: [ :id | infoBar hide ].
-	infoBar connectHide: [ self remove: infoBar ].
+
+	self setupFadeOut: infoBar.
 	
 	self 
 		packStart: infoBar expand: false fill: false padding: 0; 
-		showAll
+		showAll.
+
+	^ infoBar
+]
+
+{ #category : #accessing }
+GtkInfoArea >> removeTime [
+
+	^ removeTime ifNil: [ self class defaultRemoveTime ]
+]
+
+{ #category : #accessing }
+GtkInfoArea >> removeTime: aDuration [
+
+	removeTime := aDuration
+]
+
+{ #category : #private }
+GtkInfoArea >> setupFadeOut: infoBar [
+
+	[ 
+		self showTime wait.
+		GtkRunLoop defer: [ infoBar hide ].
+		self removeTime wait.
+		GtkRunLoop defer: [ infoBar destroy ] ] 
+	asTask schedule: TKTNewProcessTaskRunner new
+]
+
+{ #category : #accessing }
+GtkInfoArea >> showTime [
+
+	^ showTime ifNil:[ self class defaultShowTime ]
+]
+
+{ #category : #accessing }
+GtkInfoArea >> showTime: aDuration [
+
+	showTime := aDuration
 ]
