@@ -14,6 +14,7 @@ BaselineOfMars >> baseline: spec [
 			self spec2: spec.
 			self threadedffi: spec.
 			self beacon: spec.
+			self taskit: spec.
 			
 			spec postLoadDoIt: #postLoad.
 
@@ -75,6 +76,14 @@ BaselineOfMars >> spec2: spec [
 
 	spec baseline: 'Spec2' with: [ 
 		spec repository: 'github://pharo-spec/Spec' ]
+]
+
+{ #category : #'external projects' }
+BaselineOfMars >> taskit: spec [
+
+	spec 
+		baseline: 'TaskIt' 
+		with: [ spec repository: 'github://sbragagnolo/taskit' ]
 ]
 
 { #category : #'external projects' }
