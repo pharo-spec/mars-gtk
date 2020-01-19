@@ -29,6 +29,12 @@ GtkCellRendererToggle >> active: setting [
 	self ffiCall: #(void gtk_cell_renderer_toggle_set_active (self, gboolean setting))
 ]
 
+{ #category : #signaling }
+GtkCellRendererToggle >> connectToggled: aBlock [
+
+	(GCellRendererToggledCallback do: aBlock) connectTo: self
+]
+
 { #category : #testing }
 GtkCellRendererToggle >> isActivatable [
 

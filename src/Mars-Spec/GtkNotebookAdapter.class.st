@@ -22,21 +22,23 @@ GtkNotebookAdapter >> addModelTo: gtkWidget [
 
 	"I add contents to fist page because this will shown anyway (and like this I allow
 	 the layout to act correctly)"
-	self presenter pages ifNotEmpty: [ 
-		self presenter selectedPage ifNil: [ self presenter selectedPageIndex: 1 ].
-		self addContentPage: (gtkWidget pageWithData: self model selectedPage) ].
-	self presenter whenSelectedPageChangedDo: [ :page | 
-		self selectPage: page ].
+	self presenter pages
+		ifNotEmpty: [ self presenter selectedPage
+				ifNil: [ self presenter selectPageIndex: 1 ].
+			self
+				addContentPage: (gtkWidget pageWithData: self model selectedPage) ].
+	self presenter
+		whenSelectedPageChangedDo: [ :page | self selectPage: page ].
 
 	"get when page changed"
-	gtkWidget connectSwitchPage: [ :aPage |
-		self addContentPage: aPage.
-		self backendUpdatingDo: [
-			self presenter selectPage: aPage data ] ].
+	gtkWidget
+		connectSwitchPage: [ :aPage | 
+			self addContentPage: aPage.
+			self backendUpdatingDo: [ self presenter selectPage: aPage data ] ].
 
 	"get when model changed"
-	self presenter whenPagesChangedDo: [ :pages | 
-		self updatePagesWith: pages ]
+	self presenter
+		whenPagesChangedDo: [ :pages | self updatePagesWith: pages ]
 ]
 
 { #category : #building }

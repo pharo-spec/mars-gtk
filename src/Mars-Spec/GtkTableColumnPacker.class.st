@@ -43,6 +43,27 @@ GtkTableColumnPacker >> column: anObject [
 	column := anObject
 ]
 
+{ #category : #private }
+GtkTableColumnPacker >> doToggle: pathString column: aTableColumn [
+	| path iter item store status | 
+
+	path := (GtkTreePath newFromString: pathString) autoRelease.
+	store := builder view model.
+
+	item := builder model itemAtPath: path toArray.
+	status := aTableColumn readObject: item.
+	
+	iter := store iteratorFromPath: path.
+	iter 
+		atColumnIndex: (builder columnIndexOf: aTableColumn) 
+		setBoolean: status not.
+	
+	(status 
+		ifTrue: [ aTableColumn onDesactivation ]
+		ifFalse: [ aTableColumn onActivation ])
+		ifNotNil: [ :aValuable | aValuable cull: item ]
+]
+
 { #category : #accessing }
 GtkTableColumnPacker >> expand: aBoolean [
 
@@ -100,6 +121,7 @@ GtkTableColumnPacker >> visitCheckboxColumn: aTableColumn [
 	| renderer |
 
 	renderer := self newToggleRenderer.
+	renderer connectToggled: [ :pathString | self doToggle: pathString column: aTableColumn ].
 	self addRendererPropertiesTo: renderer column: aTableColumn.
 	column packStart: renderer expand: self isExpand.
 	column 
