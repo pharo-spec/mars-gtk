@@ -11,7 +11,8 @@ GtkTTableAccessing >> addColumn: aTableColumn to: aGtkTreeView [
 	| addColumnVisitor |
 	
 	addColumnVisitor := GtkTableColumnBuilder new
-		columns: self model columns;
+		model: self presenter;
+		columns: self presenter columns;
 		view: aGtkTreeView;
 		yourself.
 		
