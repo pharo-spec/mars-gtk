@@ -68,7 +68,7 @@ GSignalCallback >> signalName [
 ]
 
 { #category : #printing }
-GSignalCallback >> tfPrintString [  
+GSignalCallback >> tfPrintString [
 
 	^ String streamContents: [ :stream |
 		stream << self signalName << ':' << super tfPrintString ]
