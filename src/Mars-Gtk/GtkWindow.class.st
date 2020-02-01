@@ -166,6 +166,12 @@ GtkWindow >> gravity: gravity [
 	^ self ffiCall: #(void gtk_window_set_gravity (self, GdkGravity gravity))
 ]
 
+{ #category : #private }
+GtkWindow >> iconify [
+
+	self ffiCall: #(void gtk_window_iconify (self))
+]
+
 { #category : #initialization }
 GtkWindow >> initialize [
 
@@ -192,6 +198,12 @@ GtkWindow >> isModal [
 GtkWindow >> isResizable [
 
 	^ self ffiCall: #(gboolean gtk_window_get_resizable (self))
+]
+
+{ #category : #private }
+GtkWindow >> maximize [
+
+	self ffiCall: #(void gtk_window_maximize (self))
 ]
 
 { #category : #private }
