@@ -33,7 +33,8 @@ GtkMorphicEventHandler class >> createSymbolCharacterMapping [
 	 	KEY_Page_Up . Character pageUp.
 	 	KEY_Page_Down . Character pageDown.
 	 	KEY_Delete. Character delete.
-		
+		"Dead characters"		
+		KEY_dead_circumflex. $^.
 		"OSK_KP_0 . $0.
 	 	OSK_KP_1 . $1.
 	 	OSK_KP_2 . $2.
