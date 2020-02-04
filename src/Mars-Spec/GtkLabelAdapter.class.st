@@ -10,7 +10,8 @@ GtkLabelAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 	
 	gtkWidget label: self model label.
-	self model whenLabelChangedDo: [  gtkWidget label: self model label ].
+	self model whenLabelChangedDo: [ 
+		gtkWidget label: self model label ].
 ]
 
 { #category : #accessing }

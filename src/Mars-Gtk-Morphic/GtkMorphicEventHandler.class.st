@@ -136,7 +136,7 @@ GtkMorphicEventHandler >> mapSymbolToKeyValue: symbol [
 
 	^ self class 
 		symbolCharacterMappingAt: symbol 
-		ifAbsent: [ 
+		ifAbsent: [
 			symbol = KEY_VoidSymbol
 				ifTrue: [ nil ]
 				ifFalse: [ symbol ] ]
