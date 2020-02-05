@@ -33,6 +33,18 @@ GtkToolButton class >> toolButtonNew: icon_widget label: label [
 		const gchar *label))
 ]
 
+{ #category : #'as yet unclassified' }
+GtkToolButton >> iconWidget [
+
+	self ffiCall: #(GtkWidget *gtk_tool_button_get_icon_widget (self))
+]
+
+{ #category : #'as yet unclassified' }
+GtkToolButton >> iconWidget: icon_widget [
+
+	self ffiCall: #(void gtk_tool_button_set_icon_widget (self, GtkWidget *icon_widget))
+]
+
 { #category : #accessing }
 GtkToolButton >> label [
 	^ self ffiCall: #(const gchar *gtk_tool_button_get_label (self))

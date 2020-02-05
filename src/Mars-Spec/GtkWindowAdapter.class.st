@@ -250,6 +250,18 @@ GtkWindowAdapter >> initialize [
 	super initialize
 ]
 
+{ #category : #'spec protocol' }
+GtkWindowAdapter >> maximize [
+
+	self widgetDo: [ :w | w maximize ]
+]
+
+{ #category : #'spec protocol' }
+GtkWindowAdapter >> minimize [
+
+	self widgetDo: [ :w | w iconify ]
+]
+
 { #category : #building }
 GtkWindowAdapter >> newWidget [
 

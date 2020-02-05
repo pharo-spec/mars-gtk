@@ -29,7 +29,7 @@ GtkTableColumnBuilder >> columnEdited: aTableColumn path: path text: text [
 	iter := self store iteratorFromString: path.
 	iter 
 		at: (self columnIndexOf: aTableColumn) 
-		putString: node stringValue
+		putString: (aTableColumn readObject: node)
 ]
 
 { #category : #accessing }
@@ -69,6 +69,12 @@ GtkTableColumnBuilder >> newColumnPackerFor: column [
 GtkTableColumnBuilder >> nodeFromPath: path [
 	
 	^ self model itemAt: 	((path substrings: ':') first asNumber + 1)
+]
+
+{ #category : #private }
+GtkTableColumnBuilder >> store [
+
+	^ self view model
 ]
 
 { #category : #accessing }

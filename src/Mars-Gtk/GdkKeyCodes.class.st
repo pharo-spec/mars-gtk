@@ -41,6 +41,7 @@ Class {
 		'KEY_Undo',
 		'KEY_Up',
 		'KEY_VoidSymbol',
+		'KEY_dead_circumflex',
 		'KEY_script_switch'
 	],
 	#category : #'Mars-Gtk-Base-Events'
@@ -87,4 +88,5 @@ GdkKeyCodes class >> initialize [
 	KEY_script_switch := 16rff7e.
 	KEY_Num_Lock := 16rff7f.
 
+	KEY_dead_circumflex := 16rFE52
 ]

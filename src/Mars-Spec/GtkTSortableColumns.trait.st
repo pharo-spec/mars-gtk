@@ -10,9 +10,12 @@ Trait {
 GtkTSortableColumns >> addSortableColumn: aColumn at: index sortableId: sortableId to: gtkTreeView [
 	| gtkColumn sortFunction |
 
+	sortFunction := aColumn sortFunction.
 	gtkColumn := gtkTreeView columnAt: index.
 	gtkColumn sortColumnId: sortableId.
-	sortFunction := aColumn sortFunction.
+
+	sortFunction ifNil: [ ^ self ].
+
 	gtkTreeView model
 		connectSortColumnChanged: [ sortFunction := sortFunction reversed ];
 		sortBy: [ :itA :itB | 

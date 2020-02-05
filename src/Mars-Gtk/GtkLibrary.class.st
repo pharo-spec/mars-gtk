@@ -107,7 +107,12 @@ GtkLibrary >> unix32LibraryName [
 
 { #category : #'accessing platform' }
 GtkLibrary >> unix64LibraryName [ 
-	^ '/usr/lib/x86_64-linux-gnu/libgtk-3.so.0'
+
+	^ #(
+	'/usr/lib/x86_64-linux-gnu/libgtk-3.so.0' 
+	'/usr/lib/libgtk-3.so')
+	detect: [ :each | each asFileReference exists ]
+	ifNone: [ self error: 'I cannot find libgtk-3.so.0' ]
 ]
 
 { #category : #accessing }
