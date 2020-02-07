@@ -166,6 +166,12 @@ GtkWindow >> gravity: gravity [
 	^ self ffiCall: #(void gtk_window_set_gravity (self, GdkGravity gravity))
 ]
 
+{ #category : #testing }
+GtkWindow >> hasTopLevelFocus [
+
+	^ self ffiCall: #(gboolean gtk_window_has_toplevel_focus (self))
+]
+
 { #category : #private }
 GtkWindow >> iconify [
 
@@ -180,6 +186,12 @@ GtkWindow >> initialize [
 	self application registerWindow: self.
 	"I need to ensure the handle is nil when destroy, to prevent double free"
 	self connectDestroy: [ self windowDestroyed ]
+]
+
+{ #category : #testing }
+GtkWindow >> isActive [
+
+	^ self ffiCall: #(gboolean gtk_window_is_active (self))
 ]
 
 { #category : #testing }

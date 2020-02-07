@@ -251,6 +251,12 @@ GtkWindowAdapter >> initialize [
 ]
 
 { #category : #'spec protocol' }
+GtkWindowAdapter >> isTopWindow [
+
+	^ self widgetDo: [ :w | w hasTopLevelFocus ]
+]
+
+{ #category : #'spec protocol' }
 GtkWindowAdapter >> maximize [
 
 	self widgetDo: [ :w | w maximize ]
