@@ -19,6 +19,7 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
 			basicAdd: aPresenter 
 			constraints: constraints 
 			to: gtkWidget.
+		childWidget show.
 		"I'm keeping a reference to aPresenter into the built widget because in some cases 
 		 it can be GC (in case of the on-the-fly creation, for example). 
 		 Now this can be a real bad idea :)"

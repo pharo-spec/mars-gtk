@@ -64,7 +64,15 @@ GtkBoxAdapter >> doLayout: aLayout [
 	model whenVisibleChangedDo: [ 	
 		model isVisible 
 			ifTrue: [ widget show ] 
-			ifFalse: [ widget hide ]].
+			ifFalse: [ widget hide ] ].
+		
+	aLayout whenChildrenAddedDo: [ :ann |
+		self
+			add: ann child
+			constraints: (aLayout constraintsFor: ann child) ].	
+			
+	aLayout whenChildrenRemovedDo: [ :ann |
+		self remove: ann child ].
 
 	widget 
 		homogeneous: aLayout isHomogeneous;
@@ -99,5 +107,5 @@ GtkBoxAdapter >> remove: aPresenter [
 { #category : #'accessing - children' }
 GtkBoxAdapter >> removeAll [
 
-	self widgetDo: #removeAll
+	self widgetDo: [ :w | w removeAll ]
 ]
