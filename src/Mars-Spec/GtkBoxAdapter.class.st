@@ -78,9 +78,3 @@ GtkBoxAdapter >> newVertical [
 
 	^ GtkBox newVertical
 ]
-
-{ #category : #'accessing - children' }
-GtkBoxAdapter >> removeAll [
-
-	self widgetDo: [ :w | w removeAll ]
-]

@@ -169,12 +169,6 @@ GtkMillerAdapter >> remove: aPresenter [
 			self scrollToShowLastPage ] ]
 ]
 
-{ #category : #removing }
-GtkMillerAdapter >> removeAll [
-
-	self widgetDo: #removeAll
-]
-
 { #category : #private }
 GtkMillerAdapter >> scrollToShowLastPage [
 

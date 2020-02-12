@@ -230,7 +230,9 @@ GtkWidget >> connectEvent: aBlock [
 		connect: 'event' 
 		signature: #(gboolean (void *widget, void *event, gpointer user_data))
 		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent newConcreteFromHandle: event) ]
+			(GdkEvent newConcreteFromHandle: event) 
+				ifNotNil: [ :concreteEvent | aBlock value: concreteEvent ]
+				ifNil: [ ('NULL event received for widget: ', widget printString) crTrace ] ]
 ]
 
 { #category : #signaling }

@@ -76,6 +76,30 @@ GtkLayoutAdapter >> doLayout: aLayout [
 	self subclassResponsibility
 ]
 
+{ #category : #private }
+GtkLayoutAdapter >> ensureAllChildrenAreRetained [
+	
+	self widget children do: [ :each |
+		self ensureRetained: each ]
+]
+
+{ #category : #private }
+GtkLayoutAdapter >> ensureRetained: aWidget [
+	"When removing a widget from a container, GTK3 will decrement the reference count, 
+	 maybe causing a GC of the widget removed. Since we don't know what will happen with this 
+	 widget after removal (maybe is kept for later), we increment the reference count and 
+	 we mark the object for autoRelease (ensuring it *will* be collected when no references 
+	 in the image remains)"
+
+	"If it is already marked for release means the object reference is also already incresed. 
+	 We skip that condition to ensure we do not have more extas 'objectRef' than what we want 
+	 (we want just one)"
+	aWidget isMarkedForAutoRelease ifTrue: [ ^ self ].
+	aWidget 
+		objectRef;
+		autoRelease
+]
+
 { #category : #protocol }
 GtkLayoutAdapter >> layout: aLayout [
 
@@ -85,9 +109,19 @@ GtkLayoutAdapter >> layout: aLayout [
 
 { #category : #removing }
 GtkLayoutAdapter >> remove: aPresenter [
-
+	| widgetToRemove |
+	
+	widgetToRemove := aPresenter adapter widget.
+	self ensureRetained: widgetToRemove.
 	^ self widgetDo: [ :w | 
-		w remove: aPresenter adapter widget ]
+		w remove: widgetToRemove ]
+]
+
+{ #category : #'accessing - children' }
+GtkLayoutAdapter >> removeAll [
+
+	self ensureAllChildrenAreRetained.
+	self widgetDo: [ :w | w removeAll ]
 ]
 
 { #category : #protocol }
