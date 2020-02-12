@@ -47,6 +47,23 @@ GtkLayoutAdapter >> buildWithSpec: aSpec [
 ]
 
 { #category : #private }
+GtkLayoutAdapter >> connectToEvents: aLayout [
+
+	self presenter whenVisibleChangedDo: [ 	
+		self presenter isVisible 
+			ifTrue: [ widget show ] 
+			ifFalse: [ widget hide ] ].
+		
+	aLayout whenChildrenAddedDo: [ :ann |
+		self 
+			add: ann child
+			constraints: (aLayout constraintsFor: ann child) ].	
+			
+	aLayout whenChildrenRemovedDo: [ :ann |
+		self remove: ann child ]
+]
+
+{ #category : #private }
 GtkLayoutAdapter >> doLayout: aLayout [
 
 	self subclassResponsibility
@@ -57,6 +74,13 @@ GtkLayoutAdapter >> layout: aLayout [
 
 	GtkRunLoop defer: [ 
 		self doLayout: aLayout ]
+]
+
+{ #category : #removing }
+GtkLayoutAdapter >> remove: aPresenter [
+
+	^ self widgetDo: [ :w | 
+		w remove: aPresenter adapter widget ]
 ]
 
 { #category : #protocol }

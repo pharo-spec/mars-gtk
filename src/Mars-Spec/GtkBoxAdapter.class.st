@@ -61,18 +61,7 @@ GtkBoxAdapter >> doLayout: aLayout [
 	"build of widget was differed up to here (to know what is the direction)"
 	widget := aLayout direction newWidgetOn: self.
 
-	model whenVisibleChangedDo: [ 	
-		model isVisible 
-			ifTrue: [ widget show ] 
-			ifFalse: [ widget hide ] ].
-		
-	aLayout whenChildrenAddedDo: [ :ann |
-		self
-			add: ann child
-			constraints: (aLayout constraintsFor: ann child) ].	
-			
-	aLayout whenChildrenRemovedDo: [ :ann |
-		self remove: ann child ].
+	self connectToEvents: aLayout. 
 
 	widget 
 		homogeneous: aLayout isHomogeneous;
@@ -95,13 +84,6 @@ GtkBoxAdapter >> newHorizontal [
 GtkBoxAdapter >> newVertical [
 
 	^ GtkBox newVertical
-]
-
-{ #category : #'accessing - children' }
-GtkBoxAdapter >> remove: aPresenter [
-
-	^ self widgetDo: [ :w | 
-		w remove: aPresenter adapter widget ]
 ]
 
 { #category : #'accessing - children' }

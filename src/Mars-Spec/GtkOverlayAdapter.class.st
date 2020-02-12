@@ -31,5 +31,6 @@ GtkOverlayAdapter >> buildWidget [
 GtkOverlayAdapter >> doLayout: aLayout [
 
 	widget := GtkOverlay new.
+	self connectToEvents: aLayout. 
 	widget showAll.
 ]

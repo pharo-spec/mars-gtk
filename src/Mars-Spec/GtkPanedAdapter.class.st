@@ -62,12 +62,15 @@ GtkPanedAdapter >> doLayout: aLayout [
 
 	layout := aLayout.	
 	widget := aLayout direction newWidgetOn: self.
+
+	self connectToEvents: aLayout. 
+
 	aLayout position ifNotNil: [ :pos |
 		pos < 1 
 			ifTrue: [ self setPositionDeferred: aLayout position to: widget ]
 			ifFalse: [ self setPosition: aLayout position to: widget ] ].
 	widget wideHandle: true.
-	widget show.
+	widget show
 ]
 
 { #category : #factory }

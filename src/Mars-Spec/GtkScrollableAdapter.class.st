@@ -32,5 +32,6 @@ GtkScrollableAdapter >> buildWidget [
 GtkScrollableAdapter >> doLayout: aLayout [
 
 	widget := GtkScrolledWindow new.
+	self connectToEvents: aLayout. 
 	widget show
 ]

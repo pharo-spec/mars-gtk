@@ -47,6 +47,9 @@ GtkGridAdapter >> doLayout: aLayout [
 	
 	layout := aLayout.
 	widget := GtkGrid new.
+	
+	self connectToEvents: aLayout. 
+	
 	self widgetDo: [ :w |
 		w 
 			borderWidth: aLayout borderWidth;
