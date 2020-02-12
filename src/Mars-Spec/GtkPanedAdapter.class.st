@@ -39,13 +39,6 @@ GtkPanedAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	^ gtkWidget
 ]
 
-{ #category : #building }
-GtkPanedAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
 { #category : #private }
 GtkPanedAdapter >> calculatePercentAtDirectionOf: aWidget extent: aPoint [
 	| pos |

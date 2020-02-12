@@ -42,13 +42,6 @@ GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	^ gtkWidget
 ]
 
-{ #category : #building }
-GtkBoxAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
 { #category : #testing }
 GtkBoxAdapter >> childrenWidgets [
 	
@@ -68,7 +61,7 @@ GtkBoxAdapter >> doLayout: aLayout [
 		spacing: aLayout spacing;
 		borderWidth: aLayout borderWidth.
 		
-	model isVisible 
+	self presenter isVisible 
 		ifTrue: [ widget show ] 
 		ifFalse: [ widget hide ].
 	

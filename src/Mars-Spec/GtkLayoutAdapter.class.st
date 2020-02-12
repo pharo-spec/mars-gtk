@@ -33,6 +33,13 @@ GtkLayoutAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
 ]
 
 { #category : #building }
+GtkLayoutAdapter >> buildWidget [
+	"We defer this until layout: (because then I will know what I have to create)"
+	
+	^ nil
+]
+
+{ #category : #building }
 GtkLayoutAdapter >> buildWithSpec [
 	"This provides some polymorphism with regular presenters to allow composition of layouts."
 	

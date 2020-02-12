@@ -36,12 +36,6 @@ GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	^ gtkWidget
 ]
 
-{ #category : #building }
-GtkGridAdapter >> buildWidget [
-
-	^ nil
-]
-
 { #category : #private }
 GtkGridAdapter >> doLayout: aLayout [
 	

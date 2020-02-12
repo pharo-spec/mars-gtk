@@ -21,13 +21,6 @@ GtkScrollableAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWid
 	^ gtkWidget
 ]
 
-{ #category : #building }
-GtkScrollableAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
 { #category : #private }
 GtkScrollableAdapter >> doLayout: aLayout [
 

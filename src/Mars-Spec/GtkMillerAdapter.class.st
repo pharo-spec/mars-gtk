@@ -56,13 +56,6 @@ GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget 
 	^ gtkWidget
 ]
 
-{ #category : #building }
-GtkMillerAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
 { #category : #private }
 GtkMillerAdapter >> childrenWidgets [
 	

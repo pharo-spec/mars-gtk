@@ -20,13 +20,6 @@ GtkOverlayAdapter >> basicAdd: aPresenter constraints: constraints to: aWidget [
 	^ aWidget
 ]
 
-{ #category : #building }
-GtkOverlayAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
 { #category : #private }
 GtkOverlayAdapter >> doLayout: aLayout [
 
