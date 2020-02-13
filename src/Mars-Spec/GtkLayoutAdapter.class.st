@@ -92,7 +92,7 @@ GtkLayoutAdapter >> ensureRetained: aWidget [
 	 in the image remains)"
 
 	"If it is already marked for release means the object reference is also already incresed. 
-	 We skip that condition to ensure we do not have more extas 'objectRef' than what we want 
+	 We skip that condition to ensure we do not have more 'objectRef' than those we want 
 	 (we want just one)"
 	aWidget isMarkedForAutoRelease ifTrue: [ ^ self ].
 	aWidget 
