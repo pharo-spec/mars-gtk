@@ -1,9 +1,6 @@
 Class {
 	#name : #GtkGridAdapter,
 	#superclass : #GtkLayoutAdapter,
-	#instVars : [
-		'layout'
-	],
 	#category : #'Mars-Spec-Layout-Grid'
 }
 
@@ -22,24 +19,8 @@ GtkGridAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
-GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
-	| childWidget |
-
-	childWidget := aPresenter buildWithSpec: constraints spec.
-	childWidget data: aPresenter.
-	self addConstraits: constraints toChild: childWidget.
-	gtkWidget 
-		attach: childWidget 
-		at: constraints position 
-		span: constraints span.
-		
-	^ gtkWidget
-]
-
-{ #category : #private }
-GtkGridAdapter >> doLayout: aLayout [
+GtkGridAdapter >> applyLayout: aLayout [
 	
-	layout := aLayout.
 	widget := GtkGrid new.
 	
 	self connectToEvents: aLayout. 
@@ -52,4 +33,19 @@ GtkGridAdapter >> doLayout: aLayout [
 			columnHomogeneous: aLayout isColumnHomogeneous;
 			rowHomogeneous: aLayout isRowHomogeneous;
 			show ]
+]
+
+{ #category : #private }
+GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
+	| childWidget |
+
+	childWidget := aPresenter buildWithSpec: constraints spec.
+	childWidget data: aPresenter.
+	self addConstraits: constraints toChild: childWidget.
+	gtkWidget 
+		attach: childWidget 
+		at: constraints position 
+		span: constraints span.
+		
+	^ gtkWidget
 ]

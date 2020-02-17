@@ -2,7 +2,6 @@ Class {
 	#name : #GtkMillerAdapter,
 	#superclass : #GtkLayoutAdapter,
 	#instVars : [
-		'layout',
 		'innerWidget',
 		'lastExtent',
 		'lastPageSize'
@@ -42,6 +41,26 @@ GtkMillerAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
+GtkMillerAdapter >> applyLayout: aLayout [
+
+	"build of widget was differed up to here (to know what is the direction)"
+	innerWidget := layout direction newWidgetOn: self.
+
+	innerWidget 
+		homogeneous: true;
+		spacing: aLayout spacing;
+		borderWidth: aLayout borderWidth;
+		show.
+		
+	widget := GtkScrolledWindow newWidget: innerWidget.
+	widget connectSizeAllocate: [ :aRect | self recalculatePages ].
+		
+	self toggleVisible: model isVisible.
+	model whenVisibleChangedDo: [ 	
+		self toggleVisible: model isVisible ]
+]
+
+{ #category : #private }
 GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
@@ -60,28 +79,6 @@ GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget 
 GtkMillerAdapter >> childrenWidgets [
 	
 	^ innerWidget children
-]
-
-{ #category : #private }
-GtkMillerAdapter >> doLayout: aLayout [
-
-	layout := aLayout.
-	
-	"build of widget was differed up to here (to know what is the direction)"
-	innerWidget := layout direction newWidgetOn: self.
-
-	innerWidget 
-		homogeneous: true;
-		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth;
-		show.
-		
-	widget := GtkScrolledWindow newWidget: innerWidget.
-	widget connectSizeAllocate: [ :aRect | self recalculatePages ].
-		
-	self toggleVisible: model isVisible.
-	model whenVisibleChangedDo: [ 	
-		self toggleVisible: model isVisible ]
 ]
 
 { #category : #private }

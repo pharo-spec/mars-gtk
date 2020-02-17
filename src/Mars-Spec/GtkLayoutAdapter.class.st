@@ -1,6 +1,10 @@
 Class {
 	#name : #GtkLayoutAdapter,
 	#superclass : #GtkAdapter,
+	#instVars : [
+		'layout',
+		'changeLayoutSubscription'
+	],
 	#category : #'Mars-Spec-Layout-Base'
 }
 
@@ -24,6 +28,12 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
 		 it can be GC (in case of the on-the-fly creation, for example). 
 		 Now this can be a real bad idea :)"
 		childWidget data: aPresenter  ]
+]
+
+{ #category : #private }
+GtkLayoutAdapter >> applyLayout: aLayout [
+
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -71,9 +81,10 @@ GtkLayoutAdapter >> connectToEvents: aLayout [
 ]
 
 { #category : #private }
-GtkLayoutAdapter >> doLayout: aLayout [
+GtkLayoutAdapter >> deferredLayout: aLayout [
 
-	self subclassResponsibility
+	layout := aLayout.
+	self applyLayout: aLayout
 ]
 
 { #category : #private }
@@ -91,20 +102,37 @@ GtkLayoutAdapter >> ensureRetained: aWidget [
 	 we mark the object for autoRelease (ensuring it *will* be collected when no references 
 	 in the image remains)"
 
-	"If it is already marked for release means the object reference is also already incresed. 
-	 We skip that condition to ensure we do not have more 'objectRef' than those we want 
-	 (we want just one)"
-	aWidget isMarkedForAutoRelease ifTrue: [ ^ self ].
-	aWidget 
-		objectRef;
-		autoRelease
+	aWidget markForAutoRelease
 ]
 
 { #category : #protocol }
 GtkLayoutAdapter >> layout: aLayout [
 
-	GtkRunLoop defer: [ 
-		self doLayout: aLayout ]
+	"thisContext shortDebugStackOn: (ZnNewLineWriterStream on: Stdio stdout).
+	Stdio stdout << '============='."
+	'OK' crTrace.
+	GtkRunLoop defer: [
+		self deferredLayout: aLayout ]
+]
+
+{ #category : #private }
+GtkLayoutAdapter >> rebuild [ 
+	| oldChildren |
+
+	oldChildren := widget children.
+	"keep old"
+	oldChildren do: [ :each | each objectRef ].
+	"hide"
+	widget hide.
+	"remove all"
+	widget removeAll.
+	"re-add all"
+	layout children do: [ :each |
+		self add: each constraints: (layout constraintsFor: each) ].
+	"show"
+	widget show.
+	"now dispose"
+	oldChildren do: [ :each | each objectUnref ].
 ]
 
 { #category : #removing }
@@ -129,6 +157,16 @@ GtkLayoutAdapter >> removeSubWidgets [
 
 	self widgetDo: [ :w |
 		w removeAll ]
+]
+
+{ #category : #accessing }
+GtkLayoutAdapter >> replaceLayoutWith: aLayout [
+	
+	self model adapter: (aLayout
+		buildAdapterFor: self model
+		bindings: self model application adapterBindings).
+		
+	self model owner adapter rebuild
 ]
 
 { #category : #protocol }

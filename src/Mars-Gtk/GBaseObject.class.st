@@ -45,12 +45,6 @@ GBaseObject >> initialize [
 ]
 
 { #category : #testing }
-GBaseObject >> isMarkedForAutoRelease [
-
-	^ self application resourceManager includesObject: self
-]
-
-{ #category : #testing }
 GBaseObject >> isValidHandle [ 
 
 	^ self class isValidHandle: self getHandle

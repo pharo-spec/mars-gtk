@@ -12,6 +12,14 @@ GtkScrollableAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
+GtkScrollableAdapter >> applyLayout: aLayout [
+
+	widget := GtkScrolledWindow new.
+	self connectToEvents: aLayout. 
+	widget show
+]
+
+{ #category : #private }
 GtkScrollableAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
@@ -19,12 +27,4 @@ GtkScrollableAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWid
 	gtkWidget add: childWidget.
 			
 	^ gtkWidget
-]
-
-{ #category : #private }
-GtkScrollableAdapter >> doLayout: aLayout [
-
-	widget := GtkScrolledWindow new.
-	self connectToEvents: aLayout. 
-	widget show
 ]

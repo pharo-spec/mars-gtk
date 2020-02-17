@@ -20,6 +20,25 @@ GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
+GtkBoxAdapter >> applyLayout: aLayout [
+
+	"build of widget was differed up to here (to know what is the direction)"
+	widget := aLayout direction newWidgetOn: self.
+
+	self connectToEvents: aLayout. 
+
+	widget 
+		homogeneous: aLayout isHomogeneous;
+		spacing: aLayout spacing;
+		borderWidth: aLayout borderWidth.
+		
+	self presenter isVisible 
+		ifTrue: [ widget show ] 
+		ifFalse: [ widget hide ].
+	
+]
+
+{ #category : #private }
 GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
@@ -46,25 +65,6 @@ GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 GtkBoxAdapter >> childrenWidgets [
 	
 	^ self widget children
-]
-
-{ #category : #private }
-GtkBoxAdapter >> doLayout: aLayout [
-
-	"build of widget was differed up to here (to know what is the direction)"
-	widget := aLayout direction newWidgetOn: self.
-
-	self connectToEvents: aLayout. 
-
-	widget 
-		homogeneous: aLayout isHomogeneous;
-		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth.
-		
-	self presenter isVisible 
-		ifTrue: [ widget show ] 
-		ifFalse: [ widget hide ].
-	
 ]
 
 { #category : #factory }
