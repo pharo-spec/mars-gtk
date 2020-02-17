@@ -108,9 +108,6 @@ GtkLayoutAdapter >> ensureRetained: aWidget [
 { #category : #protocol }
 GtkLayoutAdapter >> layout: aLayout [
 
-	"thisContext shortDebugStackOn: (ZnNewLineWriterStream on: Stdio stdout).
-	Stdio stdout << '============='."
-	'OK' crTrace.
 	GtkRunLoop defer: [
 		self deferredLayout: aLayout ]
 ]
