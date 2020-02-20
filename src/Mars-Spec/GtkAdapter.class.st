@@ -69,13 +69,19 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
 	self presenter whenEnabledChangedDo: [ gtkWidget sensitive: self presenter isEnabled ].
 	
+	self addVisibleSettingsTo: gtkWidget
+]
+
+{ #category : #building }
+GtkAdapter >> addVisibleSettingsTo: gtkWidget [
+
 	self presenter isVisible
 		ifTrue: [ gtkWidget show ]
 		ifFalse: [ gtkWidget hide ].
 	self presenter whenVisibleChangedDo: [ :aValuable |
 		aValuable value
 			ifTrue: [ gtkWidget show ]
-			ifFalse: [ gtkWidget hide ] ].
+			ifFalse: [ gtkWidget hide ] ]
 ]
 
 { #category : #'private cycle detection' }

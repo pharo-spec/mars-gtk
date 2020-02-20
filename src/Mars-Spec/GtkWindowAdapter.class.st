@@ -53,6 +53,11 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 		self processDeferredActions ]
 ]
 
+{ #category : #building }
+GtkWindowAdapter >> addVisibleSettingsTo: gtkWidget [
+	"windows fo not have visibility settings, they are shown or hide"
+]
+
 { #category : #private }
 GtkWindowAdapter >> announceClosed [
 
