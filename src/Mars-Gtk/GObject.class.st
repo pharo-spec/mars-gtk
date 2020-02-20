@@ -542,9 +542,26 @@ GObject >> isFloating [
 ]
 
 { #category : #testing }
+GObject >> isMarkedForAutoRelease [
+
+	^ self application resourceManager includesObject: self
+]
+
+{ #category : #testing }
 GObject >> isObject [
 
 	^ self instanceIsFundamentallyA: G_TYPE_OBJECT
+]
+
+{ #category : #'external resource management' }
+GObject >> markForAutoRelease [
+	"If it is already marked for release means the object reference is also already incresed. 
+	 We skip that condition to ensure we do not have more 'objectRef' than those we want 
+	 (we want just one)"
+
+	self isMarkedForAutoRelease ifTrue: [ ^ self ].
+	self objectRef.
+	self autoRelease
 ]
 
 { #category : #'private referencing' }

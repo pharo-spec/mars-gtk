@@ -20,6 +20,25 @@ GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
+GtkBoxAdapter >> applyLayout: aLayout [
+
+	"build of widget was differed up to here (to know what is the direction)"
+	widget := aLayout direction newWidgetOn: self.
+
+	self connectToEvents: aLayout. 
+
+	widget 
+		homogeneous: aLayout isHomogeneous;
+		spacing: aLayout spacing;
+		borderWidth: aLayout borderWidth.
+		
+	self presenter isVisible 
+		ifTrue: [ widget show ] 
+		ifFalse: [ widget hide ].
+	
+]
+
+{ #category : #private }
 GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
@@ -42,39 +61,10 @@ GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	^ gtkWidget
 ]
 
-{ #category : #building }
-GtkBoxAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
 { #category : #testing }
 GtkBoxAdapter >> childrenWidgets [
 	
 	^ self widget children
-]
-
-{ #category : #private }
-GtkBoxAdapter >> doLayout: aLayout [
-
-	"build of widget was differed up to here (to know what is the direction)"
-	widget := aLayout direction newWidgetOn: self.
-
-	model whenVisibleChangedDo: [ 	
-		model isVisible 
-			ifTrue: [ widget show ] 
-			ifFalse: [ widget hide ]].
-
-	widget 
-		homogeneous: aLayout isHomogeneous;
-		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth.
-		
-	model isVisible 
-		ifTrue: [ widget show ] 
-		ifFalse: [ widget hide ].
-	
 ]
 
 { #category : #factory }
@@ -87,17 +77,4 @@ GtkBoxAdapter >> newHorizontal [
 GtkBoxAdapter >> newVertical [
 
 	^ GtkBox newVertical
-]
-
-{ #category : #'accessing - children' }
-GtkBoxAdapter >> remove: aPresenter [
-
-	^ self widgetDo: [ :w | 
-		w remove: aPresenter adapter widget ]
-]
-
-{ #category : #'accessing - children' }
-GtkBoxAdapter >> removeAll [
-
-	self widgetDo: #removeAll
 ]

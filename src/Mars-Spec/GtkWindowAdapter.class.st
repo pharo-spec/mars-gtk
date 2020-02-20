@@ -4,7 +4,12 @@ Class {
 	#instVars : [
 		'infoArea',
 		'initialized',
-		'deferredActions'
+		'deferredActions',
+		'contentBox',
+		'menuBar',
+		'toolbar',
+		'statusBar',
+		'content'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -32,21 +37,6 @@ GtkWindowAdapter >> addDeferredAction: aBlock [
 	deferredActions := deferredActions copyWith: aBlock
 ]
 
-{ #category : #'private building' }
-GtkWindowAdapter >> addMenuTo: gtkBox window: gtkWindow [
-	| gtkMenuBar |
-	
-	gtkMenuBar := self model menu buildWithSpec.
-	gtkBox 
-		packStart: gtkMenuBar 
-		expand: false 
-		fill: false 
-		padding: 0.
-
-	self model menu shortcutGroup ifNotNil: [ :accelGroup | 
-		gtkWindow addAcceleratorGroup: accelGroup ]
-]
-
 { #category : #building }
 GtkWindowAdapter >> addModelTo: gtkWindow [
 	"model is not added here but in #addPresenterIn:withSpecLayout:. 
@@ -63,28 +53,9 @@ GtkWindowAdapter >> addPresenterIn: gtkWindow withSpecLayout: aSpec [
 		self processDeferredActions ]
 ]
 
-{ #category : #private }
-GtkWindowAdapter >> addStatusBarTo: gtkBox [
-	| gtkStatusBar |
-	
-	gtkStatusBar := self model statusBar buildWithSpec.
-	gtkBox 
-		packStart: gtkStatusBar 
-		expand: false 
-		fill: false 
-		padding: 0	
-]
-
-{ #category : #private }
-GtkWindowAdapter >> addToolBarTo: gtkBox [
-	| gtkToolBar |
-	
-	gtkToolBar := self model toolBar buildWithSpec.
-	gtkBox 
-		packStart: gtkToolBar 
-		expand: false 
-		fill: false 
-		padding: 0
+{ #category : #building }
+GtkWindowAdapter >> addVisibleSettingsTo: gtkWidget [
+	"windows fo not have visibility settings, they are shown or hide"
 ]
 
 { #category : #private }
@@ -181,10 +152,11 @@ GtkWindowAdapter >> connectToGtkSignals: gtkWindow [
 		connectSizeAllocate: [ :aRect | self announceResized: aRect extent ]
 ]
 
-{ #category : #private }
-GtkWindowAdapter >> contentWidget: aSpec [
+{ #category : #'private building' }
+GtkWindowAdapter >> contentWithSpecLayout: aSpec [
 
-	^ self model presenter buildWithSpecLayout: aSpec
+	^ content ifNil: [ 
+		content := self model presenter buildWithSpecLayout: aSpec ]
 ]
 
 { #category : #'private deferring' }
@@ -197,7 +169,6 @@ GtkWindowAdapter >> deferAction: aBlock [
 
 { #category : #private }
 GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
-	| gtkBox |
 
 	self connectToGtkSignals: gtkWindow.
 	self addDefaultKeyBindings: gtkWindow.
@@ -211,28 +182,13 @@ GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
 	self model initialPosition
 		ifNotNil: [ :position | gtkWindow moveTo: position ].
 
+
 	"inner contents of window"
-	gtkBox := GtkBox newVertical.
-	gtkBox show.
-	"menu bar"
-	self model hasMenu
-		ifTrue: [ self addMenuTo: gtkBox window: gtkWindow ].
-	"tool bar"
-	self model hasToolbar
-		ifTrue: [ self addToolBarTo: gtkBox ].
-	"infoArea"
-	gtkBox
-		packStart: (infoArea := GtkInfoArea new)
-		expand: false
-		fill: false
-		padding: 0.
-	"contents"
-	gtkBox packStart: (self contentWidget: aSpec).
-	"status bar"
-	self model hasStatusBar
-		ifTrue: [ self addStatusBarTo: gtkBox ].
-	"... and add all that to window"
-	self add: gtkBox toWindow: gtkWindow
+	contentBox := GtkBox newVertical.
+	self populateContent: contentBox spec: aSpec window: gtkWindow.
+	contentBox show.
+
+	self add: contentBox toWindow: gtkWindow
 ]
 
 { #category : #accessing }
@@ -241,6 +197,12 @@ GtkWindowAdapter >> delete [
 	self widgetDo: [ :w | 
 		w delete. 
 		self presenter application windowClosed: self ]
+]
+
+{ #category : #'private building' }
+GtkWindowAdapter >> infoArea [
+
+	^ infoArea ifNil: [ infoArea := GtkInfoArea new ]
 ]
 
 { #category : #testing }
@@ -260,6 +222,16 @@ GtkWindowAdapter >> isTopWindow [
 GtkWindowAdapter >> maximize [
 
 	self widgetDo: [ :w | w maximize ]
+]
+
+{ #category : #'private building' }
+GtkWindowAdapter >> menuBarAccelInstalledOn: gtkWindow [
+	
+	^ menuBar ifNil: [ 
+		menuBar := self model menu buildWithSpec.
+		self presenter menu shortcutGroup 
+			ifNotNil: [ :accelGroup | gtkWindow addAcceleratorGroup: accelGroup  ].
+		menuBar ]
 ]
 
 { #category : #'spec protocol' }
@@ -298,16 +270,80 @@ GtkWindowAdapter >> open [
 		self announceOpened ].
 ]
 
+{ #category : #'private building' }
+GtkWindowAdapter >> populateContent: gtkBox spec: aSpec window: gtkWindow [
+
+	"menu bar"
+	self model hasMenu ifTrue: [ 
+		gtkBox 
+			packStart: (self menuBarAccelInstalledOn: gtkWindow) 
+			expand: false 
+			fill: false 
+			padding: 0 ].
+	"tool bar"
+	self model hasToolbar ifTrue: [ 
+		gtkBox 
+			packStart: self toolbar 
+			expand: false 
+			fill: false 
+			padding: 0 ].
+	"infoArea"
+	contentBox
+		packStart: self infoArea
+		expand: false
+		fill: false
+		padding: 0.
+	"contents"
+	gtkBox packStart: (self contentWithSpecLayout: aSpec).
+	"status bar"
+	self model hasStatusBar ifTrue: [ 
+		gtkBox 
+			packStart: self statusBar 
+			expand: false 
+			fill: false 
+			padding: 0 ]
+]
+
 { #category : #'private deferring' }
 GtkWindowAdapter >> processDeferredActions [
 
 	deferredActions ifNil: [ ^ self ].
-	deferredActions do: #value.
+	deferredActions do: [ :each | each value ].
 	deferredActions := nil
+]
+
+{ #category : #building }
+GtkWindowAdapter >> rebuild [
+
+	contentBox hide.
+	contentBox children do: [ :each | each markForAutoRelease ].
+	contentBox removeAll.
+	content := self model presenter adapter widget.
+	
+	self 
+		populateContent: contentBox 
+		spec: nil
+		window: self widget.
+		
+	contentBox show
+]
+
+{ #category : #'private building' }
+GtkWindowAdapter >> statusBar [
+
+	^ statusBar ifNil: [ statusBar := self model statusBar buildWithSpec ]
+
 ]
 
 { #category : #accessing }
 GtkWindowAdapter >> title: aString [ 
 
 	self widgetDo: [ :w | w title: (aString ifNotNil: [ :theString | theString valueForPresenter: self presenter]) ]
+]
+
+{ #category : #'private building' }
+GtkWindowAdapter >> toolbar [ 
+
+	^ toolbar ifNil: [ toolbar  := self model toolBar buildWithSpec ]
+
 ]

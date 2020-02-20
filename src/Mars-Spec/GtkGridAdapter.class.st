@@ -1,9 +1,6 @@
 Class {
 	#name : #GtkGridAdapter,
 	#superclass : #GtkLayoutAdapter,
-	#instVars : [
-		'layout'
-	],
 	#category : #'Mars-Spec-Layout-Grid'
 }
 
@@ -22,6 +19,23 @@ GtkGridAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
+GtkGridAdapter >> applyLayout: aLayout [
+	
+	widget := GtkGrid new.
+	
+	self connectToEvents: aLayout. 
+	
+	self widgetDo: [ :w |
+		w 
+			borderWidth: aLayout borderWidth;
+			columnSpacing: aLayout columnSpacing;
+			rowSpacing: aLayout rowSpacing;
+			columnHomogeneous: aLayout isColumnHomogeneous;
+			rowHomogeneous: aLayout isRowHomogeneous;
+			show ]
+]
+
+{ #category : #private }
 GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 	| childWidget |
 
@@ -34,25 +48,4 @@ GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 		span: constraints span.
 		
 	^ gtkWidget
-]
-
-{ #category : #building }
-GtkGridAdapter >> buildWidget [
-
-	^ nil
-]
-
-{ #category : #private }
-GtkGridAdapter >> doLayout: aLayout [
-	
-	layout := aLayout.
-	widget := GtkGrid new.
-	self widgetDo: [ :w |
-		w 
-			borderWidth: aLayout borderWidth;
-			columnSpacing: aLayout columnSpacing;
-			rowSpacing: aLayout rowSpacing;
-			columnHomogeneous: aLayout isColumnHomogeneous;
-			rowHomogeneous: aLayout isRowHomogeneous;
-			show ]
 ]

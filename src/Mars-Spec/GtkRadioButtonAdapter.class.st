@@ -9,6 +9,7 @@ GtkRadioButtonAdapter >> addAssociatedTo: gtkWidget [
 	| current |
 	
 	self presenter associatedRadioButtons ifEmpty: [ ^ self ].
+	
 	current := gtkWidget.
 	self presenter associatedRadioButtons do: [ :each |  
 		each withWidgetDo: [ :w | 
@@ -27,9 +28,11 @@ GtkRadioButtonAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 	
-	gtkWidget label: self getLabelText.
-	gtkWidget active: self presenter state.
+  gtkWidget label: self getLabelText.
+
 	self addAssociatedTo: gtkWidget.
+	self presenter isInitialStateSet 
+		ifTrue: [ gtkWidget active: self presenter state ].
 	
 	gtkWidget connectToggled: [ self presenter state: self state ].
 	

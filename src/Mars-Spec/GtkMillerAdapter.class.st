@@ -2,7 +2,6 @@ Class {
 	#name : #GtkMillerAdapter,
 	#superclass : #GtkLayoutAdapter,
 	#instVars : [
-		'layout',
 		'innerWidget',
 		'lastExtent',
 		'lastPageSize'
@@ -42,38 +41,8 @@ GtkMillerAdapter >> addConstraits: constraints toChild: childWidget [
 ]
 
 { #category : #private }
-GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
-	| childWidget |
+GtkMillerAdapter >> applyLayout: aLayout [
 
-	childWidget := aPresenter buildWithSpec: constraints spec.
-	self addConstraits: constraints toChild: childWidget.
-	gtkWidget 
-		packStart: childWidget 
-		expand: true
-		fill: true
-		padding: 0.
-			
-	^ gtkWidget
-]
-
-{ #category : #building }
-GtkMillerAdapter >> buildWidget [
-	"We defer this until layout: (because then I will know what I have to create)"
-	
-	^ nil
-]
-
-{ #category : #private }
-GtkMillerAdapter >> childrenWidgets [
-	
-	^ innerWidget children
-]
-
-{ #category : #private }
-GtkMillerAdapter >> doLayout: aLayout [
-
-	layout := aLayout.
-	
 	"build of widget was differed up to here (to know what is the direction)"
 	innerWidget := layout direction newWidgetOn: self.
 
@@ -89,6 +58,27 @@ GtkMillerAdapter >> doLayout: aLayout [
 	self toggleVisible: model isVisible.
 	model whenVisibleChangedDo: [ 	
 		self toggleVisible: model isVisible ]
+]
+
+{ #category : #private }
+GtkMillerAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
+	| childWidget |
+
+	childWidget := aPresenter buildWithSpec: constraints spec.
+	self addConstraits: constraints toChild: childWidget.
+	gtkWidget 
+		packStart: childWidget 
+		expand: true
+		fill: true
+		padding: 0.
+			
+	^ gtkWidget
+]
+
+{ #category : #private }
+GtkMillerAdapter >> childrenWidgets [
+	
+	^ innerWidget children
 ]
 
 { #category : #private }
@@ -174,12 +164,6 @@ GtkMillerAdapter >> remove: aPresenter [
 			w remove: childWidget.
 			self recalculatePages.
 			self scrollToShowLastPage ] ]
-]
-
-{ #category : #removing }
-GtkMillerAdapter >> removeAll [
-
-	self widgetDo: #removeAll
 ]
 
 { #category : #private }
