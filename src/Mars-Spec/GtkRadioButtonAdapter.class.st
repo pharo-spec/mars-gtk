@@ -27,20 +27,26 @@ GtkRadioButtonAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 	
-	gtkWidget label: self model label.
-	gtkWidget active: self model state.
+	gtkWidget label: self getLabelText.
+	gtkWidget active: self presenter state.
 	self addAssociatedTo: gtkWidget.
 	
-	gtkWidget connectToggled: [ self model state: self state ].
+	gtkWidget connectToggled: [ self presenter state: self state ].
 	
-	self model whenLabelChangedDo: [ gtkWidget label: self model label ].
-	self model whenChangedDo: [ gtkWidget active: self model state ]
+	self model whenLabelChangedDo: [ gtkWidget label: self getLabelText ].
+	self model whenChangedDo: [ gtkWidget active: self presenter state ]
 ]
 
 { #category : #emulating }
 GtkRadioButtonAdapter >> clicked [
 	
 	widget clicked
+]
+
+{ #category : #updating }
+GtkRadioButtonAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
 ]
 
 { #category : #accessing }
