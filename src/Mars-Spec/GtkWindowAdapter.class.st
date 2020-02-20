@@ -309,5 +309,5 @@ GtkWindowAdapter >> processDeferredActions [
 { #category : #accessing }
 GtkWindowAdapter >> title: aString [ 
 
-	self widgetDo: [ :w | w title: aString ]
+	self widgetDo: [ :w | w title: (aString ifNotNil: [ :theString | theString valueForPresenter: self presenter]) ]
 ]
