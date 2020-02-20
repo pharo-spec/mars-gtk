@@ -37,7 +37,7 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 			self model text: gtkEntry text ] ]
 ]
 
-{ #category : #factory }
+{ #category : #private }
 GtkTextInputFieldAdapter >> getPlaceholderText [
 
 	^ self presenter placeholder ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
