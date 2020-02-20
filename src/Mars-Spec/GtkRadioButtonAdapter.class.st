@@ -43,7 +43,7 @@ GtkRadioButtonAdapter >> clicked [
 	widget clicked
 ]
 
-{ #category : #updating }
+{ #category : #private }
 GtkRadioButtonAdapter >> getLabelText [
 
 	^ self presenter label ifNotNil: [ :aString | aString valueForPresenter: self presenter ]

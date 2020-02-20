@@ -26,7 +26,7 @@ GtkCheckBoxAdapter >> clicked [
 	widget clicked
 ]
 
-{ #category : #updating }
+{ #category : #private }
 GtkCheckBoxAdapter >> getLabelText [
 
 	^ self presenter label ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
