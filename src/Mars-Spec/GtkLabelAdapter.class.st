@@ -23,7 +23,7 @@ GtkLabelAdapter >> getText [
 { #category : #accessing }
 GtkLabelAdapter >> label [
 
-	^ widget label
+	^ self getText
 ]
 
 { #category : #factory }

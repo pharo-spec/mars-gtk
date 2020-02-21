@@ -42,8 +42,3 @@ PangoFontDescription >> familyName: family [
 
 	^ self ffiCall: #(void pango_font_description_set_family(self, String family))
 ]
-
-{ #category : #initialization }
-PangoFontDescription >> initialize [
-	self autoRelease
-]
