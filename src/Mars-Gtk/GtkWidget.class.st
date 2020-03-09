@@ -702,6 +702,13 @@ GtkWidget >> sensitive: sensitive [
 ]
 
 { #category : #private }
+GtkWidget >> setSizeRequestWidth: width height: height [
+	
+	self
+		ffiCall: #(void gtk_widget_set_size_request #(self , gint width , gint height))
+]
+
+{ #category : #private }
 GtkWidget >> setTooltipText: text [
 
 	^ self ffiCall: #(void gtk_widget_set_tooltip_text (self, const gchar *text))
