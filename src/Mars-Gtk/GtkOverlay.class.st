@@ -49,3 +49,9 @@ GtkOverlay >> basicAddOverlay: aWidget [
 
 	^ self ffiCall: #(void gtk_overlay_add_overlay (self, GtkWidget *aWidget))
 ]
+
+{ #category : #adding }
+GtkOverlay >> setOverlayPassThrougth: boolean child: aChild [
+
+	^ self ffiCall: #(void gtk_overlay_set_overlay_pass_through (self, GtkWidget *aChild, gboolean boolean))
+]
