@@ -118,7 +118,7 @@ GtkTextStyleVisitor >> styleAST: ast [
 	self reset.
 	context := (Smalltalk compiler compilationContextClass new
 		class: contextClass;
-		forSyntaxHighlighting: true;
+		"forSyntaxHighlighting: true;"
 		requestor: nil;
 		yourself).
 	ast methodNode compilationContext: context.

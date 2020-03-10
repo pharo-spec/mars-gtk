@@ -36,6 +36,13 @@ GtkBaseListAdapter >> columns [
 	^ innerWidget columns
 ]
 
+{ #category : #'as yet unclassified' }
+GtkBaseListAdapter >> elementAt: index [
+	self flag: #TODO. "Fix properly"
+
+	^ self presenter items at: index
+]
+
 { #category : #testing }
 GtkBaseListAdapter >> isNonEditableRow: aRow column: aColumn [
 	

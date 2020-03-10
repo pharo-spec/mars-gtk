@@ -8,7 +8,7 @@ Class {
 	#name : #GtkPharoSourceCompletionProvider,
 	#superclass : #GObject,
 	#instVars : [
-		'completionClass',
+		'completionEngine',
 		'iconsCache'
 	],
 	#pools : [
@@ -87,12 +87,14 @@ GtkPharoSourceCompletionProvider class >> new [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> activateProposal: proposal iter: iter [
-	| word |
+	| word textToInsert |
 	
 	word := self currentWord: iter in: iter buffer.
 	word ifNil: [ ^ false ].
+	
 	self flag: #TODO. "Decide if we add a space at the end is a decision that can be configurable"
-	iter buffer insertTextAtCursor: ((proposal label allButFirst: word size) copyWith: Character space).
+	textToInsert := (proposal label allButFirst: word size) copyWith: Character space.
+	iter buffer insertTextAtCursor: textToInsert.
  
 	^ true
 ]
@@ -104,10 +106,13 @@ GtkPharoSourceCompletionProvider >> activation [
 ]
 
 { #category : #accessing }
-GtkPharoSourceCompletionProvider >> completionClass: aClass [
-	"The class in which we execute the completion (it can be nil)"
+GtkPharoSourceCompletionProvider >> completionEngine [
+	^ completionEngine
+]
 
-	completionClass := aClass
+{ #category : #accessing }
+GtkPharoSourceCompletionProvider >> completionEngine: anObject [
+	completionEngine := anObject
 ]
 
 { #category : #private }
@@ -115,17 +120,17 @@ GtkPharoSourceCompletionProvider >> completionEntriesFor: iter [
 	| completionContext word textBuffer |
 
 	textBuffer := iter buffer.
-	completionContext := CompletionContext
-		controller: nil
-		class: completionClass
-		source: textBuffer text
-		position: iter offset.
-
 	word := self currentWord: iter in: textBuffer.
 	word ifNil: [ ^ #() ].
 
+	completionContext := CoCompletionContext
+		engine: self completionEngine
+		class: self completionEngine completionClass
+		source: textBuffer text
+		position: iter offset.
 	completionContext narrowWith: word.
-	^ completionContext model entries
+
+	^ completionContext entries
 ]
 
 { #category : #private }
@@ -153,7 +158,7 @@ GtkPharoSourceCompletionProvider >> iconAt: icon ifAbsentPut: aBlock [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> match: context [
-	
+
 	^ true
 ]
 
@@ -165,12 +170,15 @@ GtkPharoSourceCompletionProvider >> name [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> populate: context [
-	| proposals iter |
+	| proposals iter entries |
 
 	(iter := context iter) ifNil: [ ^ self ].
 
+	entries := self completionEntriesFor: iter.
+	entries ifEmpty: [ ^ self ].
+
 	proposals := GList new.
-	(self completionEntriesFor: iter) do: [ :each |
+	entries do: [ :each |
 		proposals := proposals append: (self toItem: each) ].
 	
 	context 
