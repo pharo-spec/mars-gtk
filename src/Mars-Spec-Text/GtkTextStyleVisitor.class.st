@@ -152,17 +152,24 @@ GtkTextStyleVisitor >> styleCloseParenthese: aMessageNode [
 { #category : #styling }
 GtkTextStyleVisitor >> styleExpression: aString [
 
-	self styleAST: (RBParser parseFaultyExpression: aString).
+	
+	[ self styleAST: (RBParser parseFaultyExpression: aString) ]
+	on: OCUndeclaredVariableWarning 
+	do: [ :w | "Since this is a parse to add styling, do not react to undeclared warning" ].
 	^ self tags
 ]
 
 { #category : #styling }
 GtkTextStyleVisitor >> styleMethod: aString [
-	| ast |
 
-	ast := RBParser parseFaultyMethod: aString.
-	ast isParseError ifTrue: [ ^ self styleExpression: aString ].
-	self styleAST: ast.
+	[  
+		| ast |
+		ast := RBParser parseFaultyMethod: aString.
+		ast isParseError ifTrue: [ ^ self styleExpression: aString ].
+		self styleAST: ast ]
+	on: OCUndeclaredVariableWarning 
+	do: [ :w | "Since this is a parse to add styling, do not react to undeclared warning" ].
+
 	^ self tags
 ]
 
