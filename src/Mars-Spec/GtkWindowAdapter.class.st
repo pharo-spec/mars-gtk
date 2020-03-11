@@ -205,7 +205,7 @@ GtkWindowAdapter >> infoArea [
 	^ infoArea ifNil: [ infoArea := GtkInfoArea new ]
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
 GtkWindowAdapter >> initialize [
 
 	initialized := false.

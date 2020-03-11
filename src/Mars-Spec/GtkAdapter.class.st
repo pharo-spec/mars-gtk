@@ -175,7 +175,7 @@ GtkAdapter >> enabled: aBoolean [
 		w sensitive: aBoolean ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'GTInspector-Extensions' }
 GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 	"Do nothing at the moment"
 ]
@@ -204,7 +204,7 @@ GtkAdapter >> helpText [
 	^ self innerWidget tooltipText
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
 GtkAdapter >> initialize [
 
 	super initialize.
