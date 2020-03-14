@@ -48,6 +48,9 @@ GtkAbstractTextAdapter >> populatePopup: menuWidget [
 	
 	lastShownMenu := menuWidget.
 	newMenu := self buildMenu: menuPresenter.
+	newMenu children ifEmpty: [ ^ self ].
+	
+	menuWidget addFirst: GtkSeparatorMenuItem new show.
 	newMenu children reverseDo: [ :each |
 		each objectRef.
 		newMenu remove: each.

@@ -192,6 +192,15 @@ GtkAdapter >> handleKeyEvent: event [
 	^ false
 ]
 
+{ #category : #protocol }
+GtkAdapter >> hasKeyboardFocus [
+	| focus |
+	
+	focus := false.
+	self innerWidgetDo: [ :w | focus := w isFocus ].
+	^ focus
+]
+
 { #category : #testing }
 GtkAdapter >> hasWidget [
 
