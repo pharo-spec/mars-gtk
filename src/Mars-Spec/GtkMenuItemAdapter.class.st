@@ -57,6 +57,12 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 		ifNotNil: [ :menuPresenter | gtkWidget submenu: menuPresenter buildWithSpec ]
 ]
 
+{ #category : #'as yet unclassified' }
+GtkMenuItemAdapter >> getNameText [
+
+	^ self presenter name ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
+]
+
 { #category : #building }
 GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 	| gtkBox |
@@ -66,7 +72,7 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 			expand: false 
 			fill: false 
 			padding: 0;
-		packStart: (GtkLabel newLabel: self model name);
+		packStart: (GtkLabel newLabel: self getNameText);
 		yourself.
 		
 	self model shortcut ifNotNil: [ :shortcut |

@@ -66,7 +66,7 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 		do: [ :each | gtkWidget addClass: each ].
 	
 	gtkWidget sensitive: self presenter isEnabled value.
-	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
+	self presenter help ifNotNil: [ gtkWidget tooltipText: self getHelpText ].
 	self presenter whenEnabledChangedDo: [ gtkWidget sensitive: self presenter isEnabled ].
 	
 	self addVisibleSettingsTo: gtkWidget
@@ -173,6 +173,12 @@ GtkAdapter >> enabled: aBoolean [
 
 	self widgetDo: [ :w |
 		w sensitive: aBoolean ]
+]
+
+{ #category : #private }
+GtkAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
 ]
 
 { #category : #'GTInspector-Extensions' }
@@ -287,7 +293,7 @@ GtkAdapter >> rightClicked [
 GtkAdapter >> setBalloonText: aString [ 
 	
 	self innerWidgetDo: [ :w | 
-		w tooltipText: aString ]
+		w tooltipText: self getHelpText ]
 ]
 
 { #category : #private }
