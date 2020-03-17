@@ -21,6 +21,17 @@ GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 ]
 
 { #category : #building }
+GtkCodeAdapter >> addSourceCompletionProviderTo: gtkSourceView [
+
+	gtkSourceView completion
+		showHeaders: false;
+		showIcons: true;
+		addProvider: (completionProvider := GtkPharoSourceCompletionProvider new
+			completionEngine: self completionEngine;
+			yourself)
+]
+
+{ #category : #building }
 GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 	
 	self flag: #TODO. "Find a better way to validate this"
@@ -37,12 +48,8 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 		infiniteUndoLevels;
 		highlightMatchingBrackets: true.
 		
-	gtkSourceView completion
-		showHeaders: false;
-		showIcons: true;
-		addProvider: (completionProvider := GtkPharoSourceCompletionProvider new
-			completionClass: self behavior;
-			yourself)
+	self completionEngine ifNotNil: [
+		self addSourceCompletionProviderTo: gtkSourceView ]
 ]
 
 { #category : #building }
@@ -84,7 +91,7 @@ GtkCodeAdapter >> applyStyleTo: textBuffer [
 { #category : #'api-shout' }
 GtkCodeAdapter >> behavior [
 
-	^ self model behavior
+	^ self presenter behavior
 ]
 
 { #category : #building }
@@ -101,6 +108,24 @@ GtkCodeAdapter >> classOrMetaClass: aClass [
 
 	self applyStyleTo: self innerWidget textBuffer.
 	self updateCompletionProvider	
+]
+
+{ #category : #'api-shout' }
+GtkCodeAdapter >> completionEngine [
+
+	^ self presenter completionEngine
+]
+
+{ #category : #'api-shout' }
+GtkCodeAdapter >> doItContext [ 
+
+	^ self presenter doItContext
+]
+
+{ #category : #'api-shout' }
+GtkCodeAdapter >> doItReceiver [
+
+	^ self presenter doItReceiver
 ]
 
 { #category : #'private-shout' }
