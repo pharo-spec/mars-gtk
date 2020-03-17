@@ -9,15 +9,21 @@ GtkLabelAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 	
-	gtkWidget label: self model label.
-	self model whenLabelChangedDo: [ 
-		gtkWidget label: self model label ].
+	gtkWidget label: self getText.
+	self presenter whenLabelChangedDo: [ 
+		gtkWidget label: self getText ].
+]
+
+{ #category : #accessing }
+GtkLabelAdapter >> getText [
+
+	^ self presenter label valueForPresenter: self presenter
 ]
 
 { #category : #accessing }
 GtkLabelAdapter >> label [
 
-	^ widget label
+	^ self getText
 ]
 
 { #category : #factory }

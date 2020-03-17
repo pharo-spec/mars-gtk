@@ -9,7 +9,7 @@ GtkCheckBoxAdapter >> addModelTo: gtkWidget [
 
 	super addModelTo: gtkWidget.
 	
-	gtkWidget label: self presenter label.
+	gtkWidget label: self getLabelText.
 	gtkWidget active: self presenter state.
 	
 	gtkWidget connectToggled: [
@@ -26,6 +26,12 @@ GtkCheckBoxAdapter >> clicked [
 	widget clicked
 ]
 
+{ #category : #private }
+GtkCheckBoxAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
+]
+
 { #category : #accessing }
 GtkCheckBoxAdapter >> state [
 	
@@ -36,7 +42,7 @@ GtkCheckBoxAdapter >> state [
 GtkCheckBoxAdapter >> updateLabel [
 
 	self widgetDo: [ :w |
-		w label: self presenter label ]
+		w label: self getLabelText ]
 ]
 
 { #category : #updating }
