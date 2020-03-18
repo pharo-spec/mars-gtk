@@ -178,7 +178,7 @@ GtkAdapter >> enabled: aBoolean [
 { #category : #private }
 GtkAdapter >> getHelpText [
 
-	^ self presenter help ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #'GTInspector-Extensions' }

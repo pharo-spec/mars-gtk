@@ -49,7 +49,7 @@ GtkRadioButtonAdapter >> clicked [
 { #category : #private }
 GtkRadioButtonAdapter >> getLabelText [
 
-	^ self presenter label ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
+	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #accessing }

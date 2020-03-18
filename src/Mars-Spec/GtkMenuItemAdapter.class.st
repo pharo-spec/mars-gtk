@@ -60,7 +60,7 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 { #category : #'as yet unclassified' }
 GtkMenuItemAdapter >> getNameText [
 
-	^ self presenter name ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
+	^ self presenter name ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #building }
