@@ -25,6 +25,12 @@ GBaseObject class >> isValidHandle: handle [
 	^ handle notNil and: [ handle isNull not ]
 ]
 
+{ #category : #'instance creation' }
+GBaseObject class >> null [
+
+	^ self fromHandle: ExternalAddress null
+]
+
 { #category : #accessing }
 GBaseObject >> application [
 
