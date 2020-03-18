@@ -1,23 +1,20 @@
 Class {
 	#name : #GtkToolBarButtonAdapter,
-	#superclass : #GtkAdapter,
+	#superclass : #GtkToolBarBaseButtonAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #private }
+{ #category : #building }
 GtkToolBarButtonAdapter >> addModelTo: gtkToolButton [
 	
-	"Show all to ensure icons are shown if they are not"
-	gtkToolButton showAll.
-	gtkToolButton 
-		tooltipText: self model help;
-		connectClicked: self model action
+	super addModelTo: gtkToolButton.
+	gtkToolButton connectClicked: self presenter action	
 ]
 
 { #category : #building }
 GtkToolBarButtonAdapter >> newWidget [
 	
 	^ GtkToolButton 
-		newForm: self model icon 
-		label: self model label
+		newForm: self presenter icon 
+		label: self presenter label
 ]
