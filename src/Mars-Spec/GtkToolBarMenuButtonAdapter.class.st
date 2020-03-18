@@ -11,7 +11,7 @@ Class {
 GtkToolBarMenuButtonAdapter >> addModelTo: gtkToolButton [
 
 	super addModelTo: gtkToolButton.
-
+	gtkToolButton connectClicked: self presenter action.
 	self updateMenuTo: gtkToolButton.
 	gtkToolButton connectShowMenu: [ self updateMenu ]
 ]
@@ -27,22 +27,18 @@ GtkToolBarMenuButtonAdapter >> buildMenu: menuPresenter [
 ]
 
 { #category : #accessing }
-GtkToolBarMenuButtonAdapter >> defaultIcon [
-		
-	^ GtkImage fromHandle: ExternalAddress null
-]
-
-{ #category : #accessing }
 GtkToolBarMenuButtonAdapter >> icon [
 
-	^ self presenter icon ifNil: [ self defaultIcon ]
+	^ self presenter icon 
+		ifNotNil: [ :icon | icon asGtkImage ]
+		ifNil: [ GtkImage null ]
 ]
 
 { #category : #building }
 GtkToolBarMenuButtonAdapter >> newWidget [
 	
 	^ GtkMenuToolButton 
-		newForm: self icon 
+		newIcon: self icon 
 		label: (self presenter label ifNil: [ '' ])
 ]
 

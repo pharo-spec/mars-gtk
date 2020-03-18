@@ -21,9 +21,9 @@ GtkToolBarBaseButtonAdapter >> addModelTo: gtkToolButton [
 
 { #category : #accessing }
 GtkToolBarBaseButtonAdapter >> icon [ 
-
+'Ok' crTrace.
 	^ self presenter icon
-		ifNotNil: [ :icon | icon asGtkImage ]
+		ifNotNil: [ :icon | icon asGtkImage show ]
 		ifNil: [ GtkImage null ]
 ]
 
@@ -36,7 +36,7 @@ GtkToolBarBaseButtonAdapter >> updateIcon [
 
 { #category : #updating }
 GtkToolBarBaseButtonAdapter >> updateLabel [ 
-
-	self widgetDo: [ :w |
+'LBL' crTrace.
+	self widgetDo: [ :w | 
 		w label: self presenter label ]
 ]
