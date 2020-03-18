@@ -16,7 +16,7 @@ GtkAbstractListAdapter >> doRefreshList: gtkWidget [
 GtkAbstractListAdapter >> elementAt: index [
 	self flag: #TODO. "Fix properly"
 
-	^ self presenter listItems at: index
+	^ self presenter items at: index
 ]
 
 { #category : #private }

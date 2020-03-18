@@ -16,8 +16,8 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 	
 	super addModelTo: gtkEntry.
 
-	self model placeholder ifNotNil: [ :text | gtkEntry placeHolderText: (text valueForPresenter: self presenter) asString ].
-	self model whenPlaceholderChangedDo: [ :text | gtkEntry placeHolderText: (text valueForPresenter: self presenter) asString ].
+	self model placeholder ifNotNil: [ :text | gtkEntry placeHolderText: (text localizedForPresenter: self presenter) asString ].
+	self model whenPlaceholderChangedDo: [ :text | gtkEntry placeHolderText: (text localizedForPresenter: self presenter) asString ].
 	
 	gtkEntry maxLength: self model maxLength.
 	self model whenMaxLengthChangedDo: [ gtkEntry maxLength: self model maxLength ].
@@ -40,7 +40,7 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 { #category : #private }
 GtkTextInputFieldAdapter >> getPlaceholderText [
 
-	^ self presenter placeholder ifNotNil: [ :aString | aString valueForPresenter: self presenter ]
+	^ self presenter placeholder ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #testing }
