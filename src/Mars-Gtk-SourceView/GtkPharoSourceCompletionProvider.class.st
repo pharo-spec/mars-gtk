@@ -105,6 +105,12 @@ GtkPharoSourceCompletionProvider >> activation [
 	^ GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE value
 ]
 
+{ #category : #private }
+GtkPharoSourceCompletionProvider >> cleanWord: aString [
+	"remove cascade and end of sentence"
+	^ aString reject: [ :each | #(; .) includes: each  ]
+]
+
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> completionEngine [
 	^ completionEngine
@@ -141,10 +147,14 @@ GtkPharoSourceCompletionProvider >> currentWord: iter in: textBuffer [
 	line := (textBuffer 
 		textStart: start 
 		end: iter
-		includeHiddenChars: false).
-	(line isEmpty or: [ Character separators includes: line last ]) 
+		includeHiddenChars: false)
+		trimRight.
+	(line isEmpty 
+		or: [ (Character separators includes: line last)
+		or: [ line endsWith: ':=' ] ]) 
 		ifTrue: [ ^ nil ].
-	^ line substrings last
+	
+	^ self cleanWord: line substrings last
 ]
 
 { #category : #private }

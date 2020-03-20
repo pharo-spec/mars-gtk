@@ -113,17 +113,9 @@ GtkTextStyleVisitor >> resolveStyleFor: aRBVariableNode [
 
 { #category : #styling }
 GtkTextStyleVisitor >> styleAST: ast [
-	| context |
 
 	self reset.
-	context := (Smalltalk compiler compilationContextClass new
-		class: contextClass;
-		"forSyntaxHighlighting: true;"
-		requestor: nil;
-		yourself).
-	ast methodNode compilationContext: context.
 	ast doSemanticAnalysis.
-
 	ast acceptVisitor: self
 ]
 
@@ -151,24 +143,32 @@ GtkTextStyleVisitor >> styleCloseParenthese: aMessageNode [
 
 { #category : #styling }
 GtkTextStyleVisitor >> styleExpression: aString [
+	| ast |
 
+	ast := self class compiler
+		source: aString;
+		noPattern: true;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		requestor: nil;
+		parse.				
+
+	self styleAST: ast.
 	
-	[ self styleAST: (RBParser parseFaultyExpression: aString) ]
-	on: OCUndeclaredVariableWarning 
-	do: [ :w | "Since this is a parse to add styling, do not react to undeclared warning" ].
 	^ self tags
 ]
 
 { #category : #styling }
 GtkTextStyleVisitor >> styleMethod: aString [
+	| ast |
 
-	[  
-		| ast |
-		ast := RBParser parseFaultyMethod: aString.
-		ast isParseError ifTrue: [ ^ self styleExpression: aString ].
-		self styleAST: ast ]
-	on: OCUndeclaredVariableWarning 
-	do: [ :w | "Since this is a parse to add styling, do not react to undeclared warning" ].
+	ast := (contextClass ifNil: [ self class ]) compiler
+		source: aString;
+		noPattern: true;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		requestor: nil;
+		parse.				
+
+	self styleAST: ast.
 
 	^ self tags
 ]

@@ -78,11 +78,11 @@ GtkCodeAdapter >> applyFullStyleTo: textBuffer [
 { #category : #visiting }
 GtkCodeAdapter >> applyStyleTo: textBuffer [
 
-	self model hasSyntaxHighlight ifFalse: [ ^ self ].
+	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
 
 	textBuffer removeAllTags.
 	self behavior 
-		ifNotNil: [ :aBehavior | 
+		ifNotNil: [ :aBehavior |
 			self setMethodText: textBuffer text class: aBehavior toBuffer: textBuffer ]
 		ifNil: [ 
 			self setExpressionText: textBuffer text toBuffer: textBuffer ]
