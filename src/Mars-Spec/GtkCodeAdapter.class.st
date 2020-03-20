@@ -132,6 +132,7 @@ GtkCodeAdapter >> doItReceiver [
 GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
 
 	(GtkTextStyleVisitor new 
+		requestor: self presenter;
 		styleExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
@@ -140,7 +141,8 @@ GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [
 { #category : #'private-shout' }
 GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [ 
 
-	(GtkTextStyleVisitor new 
+	(GtkTextStyleVisitor new
+		requestor: self presenter; 
 		contextClass: aClass;
 		styleMethod: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].

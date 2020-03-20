@@ -6,6 +6,7 @@ Class {
 	#instVars : [
 		'parentheseLevel',
 		'bracketLevel',
+		'requestor',
 		'contextClass',
 		'tags'
 	],
@@ -90,6 +91,12 @@ GtkTextStyleVisitor >> methodOrBlockTempStyleFor: aRBTemporaryNode [
 		ifFalse: [ #tempVar ]
 ]
 
+{ #category : #accessing }
+GtkTextStyleVisitor >> requestor: anObject [
+
+	requestor := anObject
+]
+
 { #category : #private }
 GtkTextStyleVisitor >> reset [
 	
@@ -145,11 +152,11 @@ GtkTextStyleVisitor >> styleCloseParenthese: aMessageNode [
 GtkTextStyleVisitor >> styleExpression: aString [
 	| ast |
 
-	ast := self class compiler
+	ast := (contextClass ifNil: [ UndefinedObject ]) compiler
 		source: aString;
 		noPattern: true;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: nil;
+		requestor: requestor;
 		parse.				
 
 	self styleAST: ast.
@@ -161,11 +168,11 @@ GtkTextStyleVisitor >> styleExpression: aString [
 GtkTextStyleVisitor >> styleMethod: aString [
 	| ast |
 
-	ast := (contextClass ifNil: [ self class ]) compiler
+	ast := (contextClass ifNil: [ UndefinedObject ]) compiler
 		source: aString;
 		noPattern: true;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: nil;
+		requestor: requestor;
 		parse.				
 
 	self styleAST: ast.
