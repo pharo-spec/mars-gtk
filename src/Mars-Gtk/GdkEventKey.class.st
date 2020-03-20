@@ -112,6 +112,12 @@ GdkEventKey class >> internalMapAt: aCode ifAbsentOrNil: aBlock [
 	^ aBlock value
 ]
 
+{ #category : #private }
+GdkEventKey class >> modMask [
+
+	^ self ffiCall: #(uint32 gtk_accelerator_get_default_mod_mask (void))
+]
+
 { #category : #'instance creation' }
 GdkEventKey class >> newKeyPress [
 
@@ -174,6 +180,12 @@ GdkEventKey >> asKeyCombination [
 GdkEventKey >> character [
 
 	^ self keyCharacter
+]
+
+{ #category : #accessing }
+GdkEventKey >> description [ 
+
+	^ self string readStringUTF8
 ]
 
 { #category : #'accessing structure variables' }
@@ -273,7 +285,15 @@ GdkEventKey >> keyCharacter [
 	^ Character value: (self toInternalValue: self keyValue)
 ]
 
-{ #category : #private }
+{ #category : #accessing }
+GdkEventKey >> keySymbol [
+
+	^ self state = 0 
+		ifTrue: [ self keyValue ]
+		ifFalse: [ self keyValue & (self state & self class modMask)  ] 
+]
+
+{ #category : #accessing }
 GdkEventKey >> keyValue [
 
 	^ keyValue ifNil: [ keyValue := self keyval ]
