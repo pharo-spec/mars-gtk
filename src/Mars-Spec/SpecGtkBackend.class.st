@@ -1,7 +1,7 @@
 Class {
 	#name : #SpecGtkBackend,
 	#superclass : #SpApplicationBackend,
-	#category : #'Mars-Gtk-Backend'
+	#category : #'Mars-Spec-Backend'
 }
 
 { #category : #accessing }
