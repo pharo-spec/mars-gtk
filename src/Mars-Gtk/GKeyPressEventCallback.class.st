@@ -19,6 +19,12 @@ Class {
 	#category : #'Mars-Gtk-Base-Callbacks'
 }
 
+{ #category : #signalling }
+GKeyPressEventCallback class >> signalName [
+
+	^ 'key-press-event'
+]
+
 { #category : #accessing }
 GKeyPressEventCallback >> do: aBlock [
 
@@ -29,7 +35,7 @@ GKeyPressEventCallback >> do: aBlock [
 { #category : #accessing }
 GKeyPressEventCallback >> signalName [
 
-	^ 'key-press-event'
+	^ self class signalName
 ]
 
 { #category : #accessing }

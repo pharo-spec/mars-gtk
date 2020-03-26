@@ -1,6 +1,9 @@
 Class {
 	#name : #GtkTextInputFieldAdapter,
 	#superclass : #GtkAbstractTextAdapter,
+	#pools : [
+		'GdkKeyCodes'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -8,7 +11,8 @@ Class {
 GtkTextInputFieldAdapter >> accept [ 
 	
 	self widgetDo: [ :w | 
-		self model text: w text ]
+		self presenter text: w text ].
+	self presenter actionPerformed
 ]
 
 { #category : #building }
@@ -16,31 +20,62 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 	
 	super addModelTo: gtkEntry.
 
-	self model placeholder ifNotNil: [ :text | gtkEntry placeHolderText: (text localizedForPresenter: self presenter) asString ].
-	self model whenPlaceholderChangedDo: [ :text | gtkEntry placeHolderText: (text localizedForPresenter: self presenter) asString ].
+	self presenter placeholder ifNotNil: [ :text | 
+		gtkEntry placeHolderText: (text localizedForPresenter: self presenter) asString ].
+	self presenter whenPlaceholderChangedDo: [ :text | 
+		gtkEntry placeHolderText: (text localizedForPresenter: self presenter) asString ].
 	
 	gtkEntry maxLength: self model maxLength.
-	self model whenMaxLengthChangedDo: [ gtkEntry maxLength: self model maxLength ].
+	self model whenMaxLengthChangedDo: [ gtkEntry maxLength: self presenter maxLength ].
 	
-	self model isPassword ifTrue: [ 
+	self presenter isPassword ifTrue: [ 
 		gtkEntry bePassword.
 		gtkEntry visibility: false. ].
 	
-	self model whenPasswordChangedDo: [ :isPassword | 
+	self presenter whenPasswordChangedDo: [ :isPassword | 
 		isPassword
 			ifFalse: [ gtkEntry beForAnyCharacter ]
 			ifTrue: [ gtkEntry bePassword ].
 		gtkEntry visibility: isPassword not ].
 	
-	self model autoAccept ifTrue: [ 
+	self presenter autoAccept ifTrue: [ 
 		gtkEntry connectChanged: [ 
-			self model text: gtkEntry text ] ]
+			self model text: gtkEntry text ] ].
+	
+	self presenter acceptOnCR ifTrue: [ 
+		self ensureWidgetListenToKeyEvent: gtkEntry ].
+	self presenter whenAcceptOnCRChangedDo: [ :bool |
+		bool ifTrue: [ 
+			self ensureWidgetListenToKeyEvent: gtkEntry ] ]
+]
+
+{ #category : #private }
+GtkTextInputFieldAdapter >> ensureWidgetListenToKeyEvent: aWidget [
+	
+	aWidget 
+		detectCallbackBySignal: GKeyPressEventCallback signalName
+		ifFound:  [ :aCallback | ^ self ]
+		ifNone: [  ].
+	
+	aWidget connectKeyPressEvent: [ :event | 
+		self handleKeyEvent: event ]
 ]
 
 { #category : #private }
 GtkTextInputFieldAdapter >> getPlaceholderText [
 
 	^ self presenter placeholder ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
+{ #category : #private }
+GtkTextInputFieldAdapter >> handleKeyEvent: event [
+
+	self presenter acceptOnCR ifTrue: [ 
+		event keyValue = KEY_Return ifTrue: [ 
+			self accept.
+			^ true ] ].
+
+	^ super handleKeyEvent: event
 ]
 
 { #category : #testing }
