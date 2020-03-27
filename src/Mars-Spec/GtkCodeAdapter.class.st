@@ -128,6 +128,13 @@ GtkCodeAdapter >> doItReceiver [
 	^ self presenter doItReceiver
 ]
 
+{ #category : #private }
+GtkCodeAdapter >> hasSyntaxHighlightEnabled [
+	"this is used just for testing"
+	
+	^ self presenter hasSyntaxHighlight
+]
+
 { #category : #'private-shout' }
 GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
 
