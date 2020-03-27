@@ -73,7 +73,7 @@ GtkWindowAdapter >> announceOpened [
 { #category : #private }
 GtkWindowAdapter >> announceResized: aPoint [
 
-	self presenter announcer announce: (WindowResizing new
+	self presenter announcer announce: (SpWindowResizing new
 		window: self presenter;
 		newSize: aPoint;	
 		yourself)	
