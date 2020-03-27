@@ -168,7 +168,12 @@ GtkLayoutAdapter >> replaceLayoutWith: aLayout [
 
 { #category : #protocol }
 GtkLayoutAdapter >> takeKeyboardFocus [
+	| presenters |
 
-	self presenter presentersInFocusOrder 
-		ifNotEmpty: [ :presenters | presenters first takeKeyboardFocus ]
+	presenters := self presenter presentersInFocusOrder.
+	presenters ifNil: [ ^ self ]. 
+		
+	presenters 
+		detect: [ :each | each canTakeKeyboardFocus ]
+		ifFound: [ :aPresenter | aPresenter takeKeyboardFocus ]
 ]
