@@ -7,19 +7,15 @@ Class {
 	#category : #'Mars-Spec-Adapter'
 }
 
-{ #category : #visiting }
-GtkTextInputFieldAdapter >> accept [ 
-	
-	self widgetDo: [ :w | 
-		self presenter text: w text ].
-	self presenter actionPerformed
-]
-
 { #category : #building }
 GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 	
 	super addModelTo: gtkEntry.
 
+	"sync presenter text and gtk"
+	gtkEntry connectChanged: [ 
+		self presenter text: gtkEntry text ].
+	
 	self presenter placeholder ifNotNil: [ :text | 
 		gtkEntry placeHolderText: (text localizedForPresenter: self presenter) asString ].
 	self presenter whenPlaceholderChangedDo: [ :text | 
@@ -37,45 +33,13 @@ GtkTextInputFieldAdapter >> addModelTo: gtkEntry [
 			ifFalse: [ gtkEntry beForAnyCharacter ]
 			ifTrue: [ gtkEntry bePassword ].
 		gtkEntry visibility: isPassword not ].
-	
-	self presenter autoAccept ifTrue: [ 
-		gtkEntry connectChanged: [ 
-			self model text: gtkEntry text ] ].
-	
-	self presenter acceptOnCR ifTrue: [ 
-		self ensureWidgetListenToKeyEvent: gtkEntry ].
-	self presenter whenAcceptOnCRChangedDo: [ :bool |
-		bool ifTrue: [ 
-			self ensureWidgetListenToKeyEvent: gtkEntry ] ]
-]
 
-{ #category : #private }
-GtkTextInputFieldAdapter >> ensureWidgetListenToKeyEvent: aWidget [
-	
-	aWidget 
-		detectCallbackBySignal: GKeyPressEventCallback signalName
-		ifFound:  [ :aCallback | ^ self ]
-		ifNone: [  ].
-	
-	aWidget connectKeyPressEvent: [ :event | 
-		self handleKeyEvent: event ]
 ]
 
 { #category : #private }
 GtkTextInputFieldAdapter >> getPlaceholderText [
 
 	^ self presenter placeholder ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
-]
-
-{ #category : #private }
-GtkTextInputFieldAdapter >> handleKeyEvent: event [
-
-	self presenter acceptOnCR ifTrue: [ 
-		event keyValue = KEY_Return ifTrue: [ 
-			self accept.
-			^ true ] ].
-
-	^ super handleKeyEvent: event
 ]
 
 { #category : #testing }
