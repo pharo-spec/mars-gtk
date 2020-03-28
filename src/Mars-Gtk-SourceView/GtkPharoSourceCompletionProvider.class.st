@@ -11,6 +11,9 @@ Class {
 		'completionEngine',
 		'iconsCache'
 	],
+	#classVars : [
+		'Separators'
+	],
 	#pools : [
 		'GtkSourceCompletionActivation'
 	],
@@ -50,11 +53,11 @@ GtkPharoSourceCompletionProvider class >> gDefineCompletionProviderInterface: in
 		get_interactive_delay: (GCallback 
 			signature: #(gint (void *provider)) 
 			block: [ :provider | -1 ]);
-		match: (GCallback 
+		"match: (GCallback 
 			signature: #(gboolean (void *provider, void *context))
 			block: [ :provider :context | 
-				(self gInstance: provider) match: (GtkSourceCompletionContext fromHandle: context) ]);
-		match: (GCallback 
+				(self gInstance: provider) match: (GtkSourceCompletionContext fromHandle: context) ]);"
+		get_start_iter: (GCallback 
 			signature: #(gboolean (void *provider, void *context, void *proposal, void *iter))
 			block: [ :provider :context :proposal :iter | 
 				(self gInstance: provider) 
@@ -85,6 +88,12 @@ GtkPharoSourceCompletionProvider class >> new [
 	^ (GClass gDefinitionAt: self) new
 ]
 
+{ #category : #private }
+GtkPharoSourceCompletionProvider class >> separators [
+
+	^ Separators ifNil: [ Separators := Character separators, Character specialCharacters ]
+]
+
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> activateProposal: proposal iter: iter [
 	| word textToInsert |
@@ -108,6 +117,7 @@ GtkPharoSourceCompletionProvider >> activation [
 { #category : #private }
 GtkPharoSourceCompletionProvider >> cleanWord: aString [
 	"remove cascade and end of sentence"
+
 	^ aString reject: [ :each | #(; .) includes: each  ]
 ]
 
@@ -144,14 +154,14 @@ GtkPharoSourceCompletionProvider >> currentWord: iter in: textBuffer [
 	| start line |
 		
 	start := iter copyInMemory lineOffset: 0.
-	line := (textBuffer 
+	line := textBuffer 
 		textStart: start 
 		end: iter
-		includeHiddenChars: false)
-		trimRight.
+		includeHiddenChars: false.
+	line ifNil: [ ^ nil ].
+	
 	(line isEmpty 
-		or: [ (Character separators includes: line last)
-		or: [ line endsWith: ':=' ] ]) 
+		or: [ self class separators includes: line last ]) 
 		ifTrue: [ ^ nil ].
 	
 	^ self cleanWord: line substrings last
@@ -169,6 +179,7 @@ GtkPharoSourceCompletionProvider >> iconAt: icon ifAbsentPut: aBlock [
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> match: context [
 
+	self flag: 'This is actually not used. Is here for documentation only'.
 	^ true
 ]
 
@@ -182,17 +193,19 @@ GtkPharoSourceCompletionProvider >> name [
 GtkPharoSourceCompletionProvider >> populate: context [
 	| proposals iter entries |
 
-	(iter := context iter) ifNil: [ ^ self ].
-
-	entries := self completionEntriesFor: iter.
-	entries ifEmpty: [ ^ self ].
+	iter := context iter.
+	entries := iter 
+		ifNotNil: [ self completionEntriesFor: iter ]
+		ifNil: [ #() ].
 
 	proposals := GList new.
-	entries do: [ :each |
-		proposals := proposals append: (self toItem: each) ].
+	entries ifNotEmpty: [ 
+		entries do: [ :each |
+			proposals := proposals append: (self toItem: each) ].
+		proposals := proposals first autoRelease ].
 	
 	context 
-		addProposals: proposals first autoRelease
+		addProposals: proposals
 		provider: self 
 		finished: true
 ]
@@ -205,6 +218,12 @@ GtkPharoSourceCompletionProvider >> priority [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
+	| word |
+
+	word := self 
+		currentWord: iter
+		in: iter buffer.
+	word ifNil: [ ^ false ].
 
 	^ true
 ]
