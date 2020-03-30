@@ -140,6 +140,7 @@ GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 
 	self innerWidgetDo: [ :w | | pop endIter |
 		pop := (self presenter instantiate: SpPopoverPresenter)
+			bePositionRight;
 			presenter: aPresenter;
 			buildWithSpec;
 			yourself.

@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/stable/GtkPopover.html
 Class {
 	#name : #GtkPopover,
 	#superclass : #GtkBin,
+	#instVars : [
+		'defaultWidget'
+	],
 	#pools : [
 		'GtkPositionType'
 	],
@@ -77,13 +80,20 @@ GtkPopover >> beRelativeTo: aWidget [
 { #category : #accessing }
 GtkPopover >> defaultWidget [
 
-	^ self ffiCall: #(GtkWidget *gtk_popover_get_default_widget (self))
+	^ defaultWidget ifNil: [ defaultWidget := self getDefaultWidget ]
 ]
 
 { #category : #accessing }
 GtkPopover >> defaultWidget: aWidget [
 
-	^ self ffiCall: #(void gtk_popover_set_default_widget (self, GtkWidget *aWidget))
+	defaultWidget := aWidget.
+	self setDefaultWidget: aWidget
+]
+
+{ #category : #private }
+GtkPopover >> getDefaultWidget [
+
+	^ self ffiCall: #(GtkWidget *gtk_popover_get_default_widget (self))
 ]
 
 { #category : #testing }
@@ -132,6 +142,12 @@ GtkPopover >> preferredPosition: position [
 GtkPopover >> relativeWidget [
 
 	^ self ffiCall: #(GtkWidget *gtk_popover_get_relative_to (self))
+]
+
+{ #category : #private }
+GtkPopover >> setDefaultWidget: aWidget [
+
+	^ self ffiCall: #(void gtk_popover_set_default_widget (self, GtkWidget *aWidget))
 ]
 
 { #category : #private }
