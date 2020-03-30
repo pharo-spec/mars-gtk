@@ -135,6 +135,22 @@ GtkCodeAdapter >> hasSyntaxHighlightEnabled [
 	^ self presenter hasSyntaxHighlight
 ]
 
+{ #category : #api }
+GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
+
+	self innerWidgetDo: [ :w | | pop endIter |
+		pop := (self presenter instantiate: SpPopoverPresenter)
+			presenter: aPresenter;
+			buildWithSpec;
+			yourself.
+
+		endIter := w textBuffer 
+			selectionIteratorsDo: [ :start :end | end ] 
+			ifNone: [ nil ].
+		 
+		pop popupPointingTo: (w iterLocation: endIter) ]
+]
+
 { #category : #'private-shout' }
 GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
 
