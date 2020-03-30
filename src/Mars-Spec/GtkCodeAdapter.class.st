@@ -2,7 +2,8 @@ Class {
 	#name : #GtkCodeAdapter,
 	#superclass : #GtkTextAdapter,
 	#instVars : [
-		'completionProvider'
+		'completionProvider',
+		'lastPopover'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -138,8 +139,8 @@ GtkCodeAdapter >> hasSyntaxHighlightEnabled [
 { #category : #api }
 GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 
-	self innerWidgetDo: [ :w | | pop endIter |
-		pop := (self presenter instantiate: SpPopoverPresenter)
+	self innerWidgetDo: [ :w | | endIter |
+		lastPopover := (self presenter instantiate: SpPopoverPresenter)
 			bePositionRight;
 			presenter: aPresenter;
 			buildWithSpec;
@@ -149,7 +150,8 @@ GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 			selectionIteratorsDo: [ :start :end | end ] 
 			ifNone: [ nil ].
 		 
-		pop popupPointingTo: (w iterLocation: endIter) ]
+		lastPopover popupPointingTo: (w iterLocation: endIter).
+		lastPopover takeKeyboardFocus ]
 ]
 
 { #category : #'private-shout' }
