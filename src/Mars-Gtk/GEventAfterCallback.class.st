@@ -1,8 +1,26 @@
+"
+The “event-after” signal
+
+void
+user_function (GtkWidget *widget,
+               GdkEvent  *event,
+               gpointer   user_data)
+
+After the emission of the “event” signal and (optionally) the second more specific signal, ::event-after will be emitted regardless of the previous two signals handlers return values.
+
+https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-event-after
+"
 Class {
 	#name : #GEventAfterCallback,
 	#superclass : #GManagedSignalCallback,
 	#category : #'Mars-Gtk-Base-Callbacks'
 }
+
+{ #category : #accessing }
+GEventAfterCallback class >> signalName [
+
+	^ 'event-after'
+]
 
 { #category : #accessing }
 GEventAfterCallback >> do: aBlock [
@@ -15,12 +33,6 @@ GEventAfterCallback >> do: aBlock [
 			on: Error 
 			fork: [ :e | e pass ]
 			return: [ false ] ]
-]
-
-{ #category : #accessing }
-GEventAfterCallback >> signalName [
-
-	^ 'event-after'
 ]
 
 { #category : #accessing }

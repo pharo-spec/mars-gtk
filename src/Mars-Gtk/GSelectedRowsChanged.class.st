@@ -14,15 +14,15 @@ Class {
 }
 
 { #category : #accessing }
-GSelectedRowsChanged >> do: aBlock [ 
+GSelectedRowsChanged class >> signalName [
 
-	^ super do: [ :box :user_data | aBlock value ]
+	^ 'selected-rows-changed'
 ]
 
 { #category : #accessing }
-GSelectedRowsChanged >> signalName [
+GSelectedRowsChanged >> do: aBlock [ 
 
-	^ 'selected-rows-changed'
+	^ super do: [ :box :user_data | aBlock value ]
 ]
 
 { #category : #accessing }

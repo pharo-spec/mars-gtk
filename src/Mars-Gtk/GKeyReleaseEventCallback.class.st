@@ -22,16 +22,16 @@ Class {
 }
 
 { #category : #accessing }
+GKeyReleaseEventCallback class >> signalName [
+
+	^ 'key-release-event'
+]
+
+{ #category : #accessing }
 GKeyReleaseEventCallback >> do: aBlock [
 
 	super do: [ :widget :event :aData |
 		aBlock value: (GdkEventKey fromHandle: event) ]
-]
-
-{ #category : #accessing }
-GKeyReleaseEventCallback >> signalName [
-
-	^ 'key-release-event'
 ]
 
 { #category : #accessing }

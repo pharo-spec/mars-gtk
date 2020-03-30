@@ -14,15 +14,15 @@ Class {
 }
 
 { #category : #accessing }
+GActivateCallback class >> signalName [
+
+	^ 'activate'
+]
+
+{ #category : #accessing }
 GActivateCallback >> do: aBlock [
 
 	self 
 		signature: self signature 
 		block: [ :widget :user_data | aBlock value ]
-]
-
-{ #category : #accessing }
-GActivateCallback >> signalName [
-
-	^ 'activate'
 ]

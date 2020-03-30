@@ -31,16 +31,16 @@ Class {
 }
 
 { #category : #accessing }
+GtkAdjustmentValueChangedCallback class >> signalName [
+
+	^ 'value-changed'
+]
+
+{ #category : #accessing }
 GtkAdjustmentValueChangedCallback >> do: aBlock [
 
 	super do: [ :adjustment :user_data |
 		aBlock value: (GtkAdjustment fromHandle: adjustment) ]
-]
-
-{ #category : #accessing }
-GtkAdjustmentValueChangedCallback >> signalName [
-
-	^ 'value_changed'
 ]
 
 { #category : #accessing }

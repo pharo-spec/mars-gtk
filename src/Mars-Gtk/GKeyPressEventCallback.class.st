@@ -33,12 +33,6 @@ GKeyPressEventCallback >> do: aBlock [
 ]
 
 { #category : #accessing }
-GKeyPressEventCallback >> signalName [
-
-	^ self class signalName
-]
-
-{ #category : #accessing }
 GKeyPressEventCallback >> signature [
 
 	^ #(gboolean (void *widget, void* event, void *aData))

@@ -17,18 +17,18 @@ Class {
 }
 
 { #category : #accessing }
+GRowActivatedCallback class >> signalName [
+
+	^ 'row-activated'
+]
+
+{ #category : #accessing }
 GRowActivatedCallback >> do: aBlock [ 
 
 	^ self
 		signature: self signature
 		block: [ :treeView :pathHandle :columnHandle :userData | 
 			aBlock cull: (GtkTreePath fromHandle: pathHandle) ]
-]
-
-{ #category : #accessing }
-GRowActivatedCallback >> signalName [
-
-	^ 'row-activated'
 ]
 
 { #category : #accessing }
