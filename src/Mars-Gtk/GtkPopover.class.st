@@ -17,7 +17,13 @@ GtkPopover class >> gType [
 	^ self ffiCall: #(gsize gtk_popover_get_type())
 ]
 
-{ #category : #private }
+{ #category : #'instance creation' }
+GtkPopover class >> new [
+
+	^ self newRelativeTo: GtkWidget null
+]
+
+{ #category : #'instance creation' }
 GtkPopover class >> newRelativeTo: aWidget [
 
 	^ (self popoverNewRelativeTo: aWidget) initialize
@@ -29,25 +35,25 @@ GtkPopover class >> popoverNewRelativeTo: aWidget [
 	^ self ffiCall: #(GtkPopover *gtk_popover_new (GtkWidget *aWidget))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> beModal [
 
 	self modal: true
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> beRelativeTo: aWidget [
 
 	^ self ffiCall: #(void gtk_popover_set_relative_to (self, GtkWidget *aWidget))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> defaultWidget [
 
 	^ self ffiCall: #(GtkWidget *gtk_popover_get_default_widget (self))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> defaultWidget: aWidget [
 
 	^ self ffiCall: #(void gtk_popover_set_default_widget (self, GtkWidget *aWidget))
@@ -65,32 +71,44 @@ GtkPopover >> modal: modal [
 	^ self ffiCall: #(void gtk_popover_set_modal (self, gboolean modal))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
+GtkPopover >> pointingTo: aRect [
+
+	self setPointingTo: aRect asGdkRectangle
+]
+
+{ #category : #accessing }
 GtkPopover >> popdown [
 
 	^ self ffiCall: #(void gtk_popover_popdown (self))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> popup [
 
 	^ self ffiCall: #(void gtk_popover_popup (self))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> preferredPosition [
 
 	^ self ffiCall: #(GtkPositionType gtk_popover_get_position (self))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> preferredPosition: aPosition [
 
 	^ self ffiCall: #(void gtk_popover_set_position (self, GtkPositionType position))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> relativeWidget [
 
 	^ self ffiCall: #(GtkWidget *gtk_popover_get_relative_to (self))
+]
+
+{ #category : #private }
+GtkPopover >> setPointingTo: rect [
+
+	^ self ffiCall: #(void gtk_popover_set_pointing_to (self, const GdkRectangle *rect))
 ]
