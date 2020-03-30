@@ -7,6 +7,9 @@ https://developer.gnome.org/gtk3/stable/GtkPopover.html
 Class {
 	#name : #GtkPopover,
 	#superclass : #GtkBin,
+	#pools : [
+		'GtkPositionType'
+	],
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
@@ -39,6 +42,30 @@ GtkPopover class >> popoverNewRelativeTo: aWidget [
 GtkPopover >> beModal [
 
 	self modal: true
+]
+
+{ #category : #accessing }
+GtkPopover >> bePositionBottom [
+
+	self preferredPosition: GTK_POS_BOTTOM
+]
+
+{ #category : #accessing }
+GtkPopover >> bePositionLeft [
+
+	self preferredPosition: GTK_POS_LEFT
+]
+
+{ #category : #accessing }
+GtkPopover >> bePositionRight [
+
+	self preferredPosition: GTK_POS_RIGHT
+]
+
+{ #category : #accessing }
+GtkPopover >> bePositionTop [
+
+	self preferredPosition: GTK_POS_TOP
 ]
 
 { #category : #accessing }
@@ -96,7 +123,7 @@ GtkPopover >> preferredPosition [
 ]
 
 { #category : #accessing }
-GtkPopover >> preferredPosition: aPosition [
+GtkPopover >> preferredPosition: position [
 
 	^ self ffiCall: #(void gtk_popover_set_position (self, GtkPositionType position))
 ]
