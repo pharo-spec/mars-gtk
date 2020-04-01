@@ -18,8 +18,10 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 
 	super addModelTo: gtkTextView.
 
+	gtkTextView editable: self presenter isEditable.
+	self presenter whenEditableChangedDo: [ :value | self setEditable: value ].
 	gtkTextView beWrapWord.
-	gtkTextView textBuffer connectChanged: [ 
+	gtkTextView textBuffer connectChanged: [
 		self updatePresenterText: gtkTextView text ]
 
 ]
@@ -28,6 +30,12 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 GtkTextAdapter >> bufferClass [
 
 	^ GtkTextBuffer
+]
+
+{ #category : #private }
+GtkTextAdapter >> setEditable: aBoolean [ 
+
+	self innerWidgetDo: [ :w | w editable: aBoolean ]
 ]
 
 { #category : #building }
