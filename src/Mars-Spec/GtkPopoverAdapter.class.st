@@ -8,7 +8,7 @@ Class {
 GtkPopoverAdapter >> addModelTo: gtkPopover [
 
 	gtkPopover add: self presenterWidget showAll.	
-	gtkPopover beRelativeTo: self presenter owner adapter innerWidget. 
+	gtkPopover beRelativeTo: self presenter relativeTo adapter innerWidget. 
 	gtkPopover beModal.
 	self setPopoverPositionTo: gtkPopover.
 	

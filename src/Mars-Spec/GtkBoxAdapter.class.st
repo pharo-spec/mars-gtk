@@ -57,7 +57,7 @@ GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 				expand: constraints isExpand 
 				fill: constraints isFill 
 				padding: constraints padding ].
-			
+
 	^ gtkWidget
 ]
 
