@@ -202,6 +202,7 @@ GtkPharoSourceCompletionProvider >> populate: context [
 	entries ifNotEmpty: [ 
 		entries do: [ :each |
 			proposals := proposals append: (self toItem: each) ].
+		"Ensure the list will be pointing to first element (and ensure it will be released)"
 		proposals := proposals first autoRelease ].
 	
 	context 
