@@ -286,7 +286,7 @@ GtkTextBuffer >> removeAllTagsFrom: start to: end [
 		const GtkTextIter *end))
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing selection' }
 GtkTextBuffer >> selectFrom: start to: end [
 	| startIter endIter |
 
@@ -295,7 +295,7 @@ GtkTextBuffer >> selectFrom: start to: end [
 	self selectRangeInsert: startIter bound: endIter
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing selection' }
 GtkTextBuffer >> selectLineAt: offset [
 	| start end |
 	
@@ -308,7 +308,7 @@ GtkTextBuffer >> selectLineAt: offset [
 	self selectRangeInsert: start bound: end
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing selection' }
 GtkTextBuffer >> selectLineAtCursor [
 
 	self selectLineAt: self cursorPosition
@@ -323,18 +323,25 @@ GtkTextBuffer >> selectRangeInsert: ins bound: bound [
 		const GtkTextIter *bound))
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing selection' }
 GtkTextBuffer >> selection [ 
+	"answer an interval of current selection"
+
+	^ self 
+		selectionIteratorsDo: [ :start :end | start offset to: end offset ] 
+		ifNone: [ nil ]
+]
+
+{ #category : #'accessing selection' }
+GtkTextBuffer >> selectionIteratorsDo: aBlock ifNone: noneBlock [
 	"answer an interval of current selection"
 	| start end |
 
 	start := GtkTextIter new.
 	end := GtkTextIter new.
 	^ (self getSelectionBoundsStart: start end: end)
-		ifTrue: [ start offset to: end offset ]
-		ifFalse: [ nil ]
-	
-	
+		ifTrue: [ aBlock value: start value: end ]
+		ifFalse: noneBlock	
 ]
 
 { #category : #private }

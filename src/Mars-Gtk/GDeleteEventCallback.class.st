@@ -15,18 +15,18 @@ Class {
 }
 
 { #category : #accessing }
+GDeleteEventCallback class >> signalName [
+
+	^ 'delete-event'
+]
+
+{ #category : #accessing }
 GDeleteEventCallback >> do: aBlock [
 	
 	self
 		signature: self signature
 		block: [ :widget :event :aData | 
 			aBlock cull: (GdkEvent fromHandle: event) ]
-]
-
-{ #category : #accessing }
-GDeleteEventCallback >> signalName [
-
-	^ 'delete-event'
 ]
 
 { #category : #accessing }

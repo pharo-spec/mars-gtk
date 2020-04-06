@@ -34,7 +34,7 @@ GCallback >> basicValueWithArguments: args [
 				runLoop := GtkRunLoop current spawnNewRunLoop.
 				e defaultAction ] ]
 		ensure: [ 
-			runLoop ifNotNil: #stop.
+			runLoop ifNotNil: [ runLoop stop ].
 			finished ifFalse: [ 
 				^ self returnOnError ] ]
 ]

@@ -15,18 +15,18 @@ Class {
 }
 
 { #category : #accessing }
+GListBoxRowActivatedCallback class >> signalName [
+
+	^ 'row-activated'
+]
+
+{ #category : #accessing }
 GListBoxRowActivatedCallback >> do: aBlock [ 
 
 	^ self
 		signature: self signature
 		block: [ :box :row :user_data | 
 			aBlock cull: row ]
-]
-
-{ #category : #accessing }
-GListBoxRowActivatedCallback >> signalName [
-
-	^ 'row-activated'
 ]
 
 { #category : #accessing }

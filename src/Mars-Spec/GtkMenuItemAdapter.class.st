@@ -39,22 +39,28 @@ GtkMenuItemAdapter >> addAcceleratorShortcutLabel: shortcut to: gtkBox [
 GtkMenuItemAdapter >> addModelTo: gtkWidget [
 	"label (and icon if there)"
 
-	self model icon
+	self presenter icon
 		ifNotNil: [ gtkWidget add: (self menuLabelWithIconAndAccelFor: gtkWidget) ]
-		ifNil: [ gtkWidget label: self model name ].
+		ifNil: [ gtkWidget label: self presenter name ].
 	"accel"
-	self model shortcut ifNotNil: [ :shortcut | 
+	self presenter shortcut ifNotNil: [ :shortcut | 
 		self addAcceleratorShortcut: shortcut to: gtkWidget ].
 	"enabled?"
-	gtkWidget sensitive: self model isEnabled value.
+	gtkWidget sensitive: self presenter isEnabled value.
 
 	"action"
-	self model action ifNotNil: [ :actionBlock |
+	self presenter action ifNotNil: [ :actionBlock |
 		gtkWidget connectActivate: actionBlock ].
 
 	"submenu"
-	self model subMenu
+	self presenter subMenu
 		ifNotNil: [ :menuPresenter | gtkWidget submenu: menuPresenter buildWithSpec ]
+]
+
+{ #category : #'as yet unclassified' }
+GtkMenuItemAdapter >> getNameText [
+
+	^ self presenter name ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #building }
@@ -66,7 +72,7 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 			expand: false 
 			fill: false 
 			padding: 0;
-		packStart: (GtkLabel newLabel: self model name);
+		packStart: (GtkLabel newLabel: self getNameText);
 		yourself.
 		
 	self model shortcut ifNotNil: [ :shortcut |

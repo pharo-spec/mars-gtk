@@ -6,6 +6,7 @@ Class {
 	#instVars : [
 		'parentheseLevel',
 		'bracketLevel',
+		'requestor',
 		'contextClass',
 		'tags'
 	],
@@ -90,6 +91,12 @@ GtkTextStyleVisitor >> methodOrBlockTempStyleFor: aRBTemporaryNode [
 		ifFalse: [ #tempVar ]
 ]
 
+{ #category : #accessing }
+GtkTextStyleVisitor >> requestor: anObject [
+
+	requestor := anObject
+]
+
 { #category : #private }
 GtkTextStyleVisitor >> reset [
 	
@@ -113,17 +120,9 @@ GtkTextStyleVisitor >> resolveStyleFor: aRBVariableNode [
 
 { #category : #styling }
 GtkTextStyleVisitor >> styleAST: ast [
-	| context |
 
 	self reset.
-	context := (Smalltalk compiler compilationContextClass new
-		class: contextClass;
-		forSyntaxHighlighting: true;
-		requestor: nil;
-		yourself).
-	ast methodNode compilationContext: context.
 	ast doSemanticAnalysis.
-
 	ast acceptVisitor: self
 ]
 
@@ -151,8 +150,17 @@ GtkTextStyleVisitor >> styleCloseParenthese: aMessageNode [
 
 { #category : #styling }
 GtkTextStyleVisitor >> styleExpression: aString [
+	| ast |
 
-	self styleAST: (RBParser parseFaultyExpression: aString).
+	ast := (contextClass ifNil: [ UndefinedObject ]) compiler
+		source: aString;
+		noPattern: true;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		requestor: requestor;
+		parse.				
+
+	self styleAST: ast.
+	
 	^ self tags
 ]
 
@@ -160,9 +168,15 @@ GtkTextStyleVisitor >> styleExpression: aString [
 GtkTextStyleVisitor >> styleMethod: aString [
 	| ast |
 
-	ast := RBParser parseFaultyMethod: aString.
-	ast isParseError ifTrue: [ ^ self styleExpression: aString ].
+	ast := (contextClass ifNil: [ UndefinedObject ]) compiler
+		source: aString;
+		noPattern: true;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		requestor: requestor;
+		parse.				
+
 	self styleAST: ast.
+
 	^ self tags
 ]
 

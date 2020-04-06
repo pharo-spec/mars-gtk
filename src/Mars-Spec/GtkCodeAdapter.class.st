@@ -2,7 +2,8 @@ Class {
 	#name : #GtkCodeAdapter,
 	#superclass : #GtkTextAdapter,
 	#instVars : [
-		'completionProvider'
+		'completionProvider',
+		'lastPopover'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -18,6 +19,17 @@ GtkCodeAdapter >> addModelTo: gtkTextView [
 GtkCodeAdapter >> addMonospaceStyleFor: gtkTextView [
 	
 	gtkTextView styleContext addClass: 'code'
+]
+
+{ #category : #building }
+GtkCodeAdapter >> addSourceCompletionProviderTo: gtkSourceView [
+
+	gtkSourceView completion
+		showHeaders: false;
+		showIcons: true;
+		addProvider: (completionProvider := GtkPharoSourceCompletionProvider new
+			completionEngine: self completionEngine;
+			yourself)
 ]
 
 { #category : #building }
@@ -37,12 +49,8 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 		infiniteUndoLevels;
 		highlightMatchingBrackets: true.
 		
-	gtkSourceView completion
-		showHeaders: false;
-		showIcons: true;
-		addProvider: (completionProvider := GtkPharoSourceCompletionProvider new
-			completionClass: self behavior;
-			yourself)
+	self completionEngine ifNotNil: [
+		self addSourceCompletionProviderTo: gtkSourceView ]
 ]
 
 { #category : #building }
@@ -71,11 +79,11 @@ GtkCodeAdapter >> applyFullStyleTo: textBuffer [
 { #category : #visiting }
 GtkCodeAdapter >> applyStyleTo: textBuffer [
 
-	self model hasSyntaxHighlight ifFalse: [ ^ self ].
+	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
 
 	textBuffer removeAllTags.
 	self behavior 
-		ifNotNil: [ :aBehavior | 
+		ifNotNil: [ :aBehavior |
 			self setMethodText: textBuffer text class: aBehavior toBuffer: textBuffer ]
 		ifNil: [ 
 			self setExpressionText: textBuffer text toBuffer: textBuffer ]
@@ -84,7 +92,7 @@ GtkCodeAdapter >> applyStyleTo: textBuffer [
 { #category : #'api-shout' }
 GtkCodeAdapter >> behavior [
 
-	^ self model behavior
+	^ self presenter behavior
 ]
 
 { #category : #building }
@@ -103,10 +111,61 @@ GtkCodeAdapter >> classOrMetaClass: aClass [
 	self updateCompletionProvider	
 ]
 
+{ #category : #'api-shout' }
+GtkCodeAdapter >> completionEngine [
+
+	^ self presenter completionEngine
+]
+
+{ #category : #'api-shout' }
+GtkCodeAdapter >> doItContext [ 
+
+	^ self presenter doItContext
+]
+
+{ #category : #'api-shout' }
+GtkCodeAdapter >> doItReceiver [
+
+	^ self presenter doItReceiver
+]
+
+{ #category : #private }
+GtkCodeAdapter >> hasSyntaxHighlightEnabled [
+	"this is used just for testing"
+	
+	^ self presenter hasSyntaxHighlight
+]
+
+{ #category : #api }
+GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
+
+	self innerWidgetDo: [ :w | | endIter |
+		lastPopover := self presenter newPopover
+			bePositionRight;
+			presenter: aPresenter;
+			buildWithSpec;
+			yourself.
+
+		endIter := w textBuffer 
+			selectionIteratorsDo: [ :start :end | end ] 
+			ifNone: [ nil ].
+		 
+		"15@0 is a magic number to place the popover where I want. Not cool, but hard to 
+		 do better :( "
+		lastPopover popupPointingTo: ((w iterLocation: endIter) translateBy: (15@0)).
+		lastPopover takeKeyboardFocus ]
+]
+
+{ #category : #'as yet unclassified' }
+GtkCodeAdapter >> notify: aString at: aNumber in: anObject [
+	self flag: #TODO. "What to do here?"
+]
+
 { #category : #'private-shout' }
 GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
 
 	(GtkTextStyleVisitor new 
+		requestor: self presenter;
 		styleExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
@@ -115,7 +174,8 @@ GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [
 { #category : #'private-shout' }
 GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [ 
 
-	(GtkTextStyleVisitor new 
+	(GtkTextStyleVisitor new
+		requestor: self presenter; 
 		contextClass: aClass;
 		styleMethod: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].

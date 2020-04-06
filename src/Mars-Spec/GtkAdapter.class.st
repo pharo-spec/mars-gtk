@@ -66,16 +66,22 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 		do: [ :each | gtkWidget addClass: each ].
 	
 	gtkWidget sensitive: self presenter isEnabled value.
-	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
+	self presenter help ifNotNil: [ gtkWidget tooltipText: self getHelpText ].
 	self presenter whenEnabledChangedDo: [ gtkWidget sensitive: self presenter isEnabled ].
 	
+	self addVisibleSettingsTo: gtkWidget
+]
+
+{ #category : #building }
+GtkAdapter >> addVisibleSettingsTo: gtkWidget [
+
 	self presenter isVisible
 		ifTrue: [ gtkWidget show ]
 		ifFalse: [ gtkWidget hide ].
 	self presenter whenVisibleChangedDo: [ :aValuable |
 		aValuable value
 			ifTrue: [ gtkWidget show ]
-			ifFalse: [ gtkWidget hide ] ].
+			ifFalse: [ gtkWidget hide ] ]
 ]
 
 { #category : #'private cycle detection' }
@@ -169,7 +175,13 @@ GtkAdapter >> enabled: aBoolean [
 		w sensitive: aBoolean ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+GtkAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
+{ #category : #'GTInspector-Extensions' }
 GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 	"Do nothing at the moment"
 ]
@@ -186,6 +198,15 @@ GtkAdapter >> handleKeyEvent: event [
 	^ false
 ]
 
+{ #category : #protocol }
+GtkAdapter >> hasKeyboardFocus [
+	| focus |
+	
+	focus := false.
+	self innerWidgetDo: [ :w | focus := w isFocus ].
+	^ focus
+]
+
 { #category : #testing }
 GtkAdapter >> hasWidget [
 
@@ -198,7 +219,7 @@ GtkAdapter >> helpText [
 	^ self innerWidget tooltipText
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
 GtkAdapter >> initialize [
 
 	super initialize.
@@ -281,7 +302,7 @@ GtkAdapter >> rightClicked [
 GtkAdapter >> setBalloonText: aString [ 
 	
 	self innerWidgetDo: [ :w | 
-		w tooltipText: aString ]
+		w tooltipText: self getHelpText ]
 ]
 
 { #category : #private }

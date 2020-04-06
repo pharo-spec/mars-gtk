@@ -89,10 +89,7 @@ GtkListBox >> connectRowSelected: aBlock [
 { #category : #signaling }
 GtkListBox >> connectSelectedRowsChanged: aBlock [
 
-	self 
-		connect: 'selected-rows-changed' 
-		signature: #(void (void *box, void *user_data))
-		do: [ :box :user_data | aBlock value ]
+	(GSelectedRowsChanged do: aBlock) connectTo: self
 ]
 
 { #category : #accessing }

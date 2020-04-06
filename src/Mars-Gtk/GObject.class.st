@@ -283,11 +283,11 @@ GObject >> disconnectAll: aCollection during: aBlock [
 	
 	matching := callbacks select: [ :each | aCollection includes: each signalName ].
 	matching do: [ :each | | numberDisconnected |
+		numberDisconnected := self disconnectCallback: each.
 		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 
 		needed, or we model better the verification of error" 
-		numberDisconnected := self disconnectCallback: each.
-		self assert: numberDisconnected = 1 ].
-	aBlock ensure: [ 
+		"self assert: numberDisconnected = 1" ].
+	aBlock ensure: [
 		matching do: [ :each |
 			self connectSignal: each ] ]
 ]
@@ -542,9 +542,26 @@ GObject >> isFloating [
 ]
 
 { #category : #testing }
+GObject >> isMarkedForAutoRelease [
+
+	^ self application resourceManager includesObject: self
+]
+
+{ #category : #testing }
 GObject >> isObject [
 
 	^ self instanceIsFundamentallyA: G_TYPE_OBJECT
+]
+
+{ #category : #'external resource management' }
+GObject >> markForAutoRelease [
+	"If it is already marked for release means the object reference is also already incresed. 
+	 We skip that condition to ensure we do not have more 'objectRef' than those we want 
+	 (we want just one)"
+
+	self isMarkedForAutoRelease ifTrue: [ ^ self ].
+	self objectRef.
+	self autoRelease
 ]
 
 { #category : #'private referencing' }

@@ -226,21 +226,13 @@ GtkWidget >> connectEnterNotify: aBlock [
 { #category : #signaling }
 GtkWidget >> connectEvent: aBlock [
 
-	^ self 
-		connect: 'event' 
-		signature: #(gboolean (void *widget, void *event, gpointer user_data))
-		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent newConcreteFromHandle: event) ]
+	(GEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
 GtkWidget >> connectEventAfter: aBlock [
 
-	^ self 
-		connect: 'event-after' 
-		signature: #(gboolean (void *widget, void *event, gpointer user_data))
-		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent newConcreteFromHandle: event) ]
+	(GEventAfterCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }

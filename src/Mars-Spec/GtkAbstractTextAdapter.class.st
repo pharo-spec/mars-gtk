@@ -16,7 +16,7 @@ GtkAbstractTextAdapter >> addModelTo: gtkWidget [
 
 	super addModelTo: gtkWidget.
 	self addTextTo: gtkWidget. 
-	self model whenTextChangedDo: [ :text | 
+	self presenter whenTextChangedDo: [ :text | 
 		self setText: text to: gtkWidget ].
 	gtkWidget connectPopulatePopup: [ :menuWidget |
 		self populatePopup: menuWidget  ]
@@ -36,7 +36,7 @@ GtkAbstractTextAdapter >> insert: aString at: positionIndex [
 	self innerWidgetDo: [ :w |
 		w textBuffer 
 			insertText: aString 
-			at: positionIndex - 1 ]
+			at: positionIndex ]
 ]
 
 { #category : #building }
@@ -48,9 +48,14 @@ GtkAbstractTextAdapter >> populatePopup: menuWidget [
 	
 	lastShownMenu := menuWidget.
 	newMenu := self buildMenu: menuPresenter.
+	newMenu children ifEmpty: [ ^ self ].
+	
+	menuWidget addFirst: GtkSeparatorMenuItem new show.
 	newMenu children reverseDo: [ :each |
+		each objectRef.
 		newMenu remove: each.
 		menuWidget addFirst: each.
+		each objectUnref.
 		each show ]
 ]
 
@@ -69,17 +74,17 @@ GtkAbstractTextAdapter >> rightClicked [
 { #category : #selection }
 GtkAbstractTextAdapter >> selectAll [
 	
-	self widgetDo: #selectAll
+	self innerWidgetDo: [ :w | w selectAll ]
 ]
 
-{ #category : #'spec protocol' }
+{ #category : #selection }
 GtkAbstractTextAdapter >> selectLine [
 
 	self innerWidgetDo: [ :w | 
 		w textBuffer selectLineAtCursor ]
 ]
 
-{ #category : #'spec protocol' }
+{ #category : #selection }
 GtkAbstractTextAdapter >> selection [ 
 
 	^ self innerWidget 
@@ -92,7 +97,7 @@ GtkAbstractTextAdapter >> selection [
 			1 to: 0 ]
 ]
 
-{ #category : #'spec protocol' }
+{ #category : #selection }
 GtkAbstractTextAdapter >> setSelectionFromModel: aSelection [
  
 	self innerWidgetDo: [ :w | 

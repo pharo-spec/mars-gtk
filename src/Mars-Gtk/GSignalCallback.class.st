@@ -17,6 +17,12 @@ Class {
 	#category : #'Mars-Gtk-Base-Callbacks'
 }
 
+{ #category : #signalling }
+GSignalCallback class >> signalName [
+
+	^ self subclassResponsibility
+]
+
 { #category : #evaluating }
 GSignalCallback >> basicValueWithArguments: args [
 
@@ -64,7 +70,7 @@ GSignalCallback >> registerId: anObject [
 { #category : #accessing }
 GSignalCallback >> signalName [
 
-	^ self subclassResponsibility
+	^ self class signalName
 ]
 
 { #category : #printing }

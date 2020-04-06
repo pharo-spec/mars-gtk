@@ -20,16 +20,16 @@ Class {
 }
 
 { #category : #accessing }
+GDrawCallback class >> signalName [
+
+	^ 'draw'
+]
+
+{ #category : #accessing }
 GDrawCallback >> do: aBlock [
 
 	^ super do: [ :widget :cr :payload |
 		aBlock value: cr  ]
-]
-
-{ #category : #accessing }
-GDrawCallback >> signalName [
-
-	^ 'draw'
 ]
 
 { #category : #accessing }

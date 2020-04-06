@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #accessing }
-GHideCallback >> signalName [
+GHideCallback class >> signalName [
 
 	^ 'hide'
 ]

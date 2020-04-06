@@ -6,6 +6,9 @@ https://developer.gnome.org/gtk3/stable/GtkToolButton.html
 Class {
 	#name : #GtkToolButton,
 	#superclass : #GtkToolItem,
+	#instVars : [
+		'iconWidget'
+	],
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
@@ -33,16 +36,29 @@ GtkToolButton class >> toolButtonNew: icon_widget label: label [
 		const gchar *label))
 ]
 
-{ #category : #'as yet unclassified' }
-GtkToolButton >> iconWidget [
+{ #category : #'private primitives' }
+GtkToolButton >> gtkIconWidget [
 
-	self ffiCall: #(GtkWidget *gtk_tool_button_get_icon_widget (self))
+	self ffiCall: #(GtkImage *gtk_tool_button_get_icon_widget (self))
 ]
 
-{ #category : #'as yet unclassified' }
-GtkToolButton >> iconWidget: icon_widget [
+{ #category : #'private primitives' }
+GtkToolButton >> gtkIconWidget: icon_widget [
 
-	self ffiCall: #(void gtk_tool_button_set_icon_widget (self, GtkWidget *icon_widget))
+	self ffiCall: #(void gtk_tool_button_set_icon_widget (self, GtkImage *icon_widget))
+]
+
+{ #category : #accessing }
+GtkToolButton >> iconWidget [
+
+	iconWidget ifNil: [ iconWidget := self gtkIconWidget ]
+]
+
+{ #category : #accessing }
+GtkToolButton >> iconWidget: aGtkWidget [
+
+	iconWidget := aGtkWidget.
+	self gtkIconWidget: iconWidget
 ]
 
 { #category : #accessing }

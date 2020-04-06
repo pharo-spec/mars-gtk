@@ -45,16 +45,32 @@ GtkScrolledWindow >> hAdjustment: adjustment [
 	^ self ffiCall: #(void gtk_scrolled_window_set_hadjustment (self, GtkAdjustment *adjustment))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 GtkScrolledWindow >> isKineticScrolling [
 
 	^ self ffiCall: #(gboolean gtk_scrolled_window_get_kinetic_scrolling(self))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkScrolledWindow >> kineticScrolling: kinetic_scrolling [
 
 	^ self ffiCall: #(void gtk_scrolled_window_set_kinetic_scrolling (self, gboolean kinetic_scrolling))
+]
+
+{ #category : #accessing }
+GtkScrolledWindow >> propagateNaturalHeight: propagate [
+
+	^ self ffiCall: #(void gtk_scrolled_window_set_propagate_natural_height(
+		self,
+		gboolean propagate))
+]
+
+{ #category : #accessing }
+GtkScrolledWindow >> propagateNaturalWidth: propagate [
+
+	^ self ffiCall: #(void gtk_scrolled_window_set_propagate_natural_width(
+		self,
+		gboolean propagate))
 ]
 
 { #category : #accessing }

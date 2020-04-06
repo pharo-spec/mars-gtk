@@ -5,17 +5,17 @@ Class {
 }
 
 { #category : #accessing }
+GCellRendererToggledCallback class >> signalName [
+
+	^ 'toggled'
+]
+
+{ #category : #accessing }
 GCellRendererToggledCallback >> do: aBlock [
 
 	self 
 		signature: self signature
 		block: [ :widget :path :user_data | aBlock value: path ]
-]
-
-{ #category : #accessing }
-GCellRendererToggledCallback >> signalName [
-
-	^ 'toggled'
 ]
 
 { #category : #accessing }

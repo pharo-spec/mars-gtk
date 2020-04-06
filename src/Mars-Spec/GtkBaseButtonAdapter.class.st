@@ -18,6 +18,12 @@ GtkBaseButtonAdapter >> addModelTo: gtkButton [
 	model whenIconChangedDo: [ self updateIcon ]
 ]
 
+{ #category : #updating }
+GtkBaseButtonAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
 { #category : #accessing }
 GtkBaseButtonAdapter >> icon [
 	^ widget image
@@ -29,19 +35,19 @@ GtkBaseButtonAdapter >> updateIcon [
 	self widgetDo: [ :w |
 		w
 			alwaysShowImage;
-			image: self model icon asGtkImage ]
+			image: self presenter icon asGtkImage ]
 ]
 
 { #category : #updating }
 GtkBaseButtonAdapter >> updateLabel [
 
 	self widgetDo: [ :w | 
-		w label: self presenter label asString ]
+		w label: self getLabelText ]
 ]
 
 { #category : #updating }
 GtkBaseButtonAdapter >> updateTooltip [
 
 	self widgetDo: [ :w | 
-		w tooltipText: self presenter help ]
+		w tooltipText: self getHelpText ]
 ]
