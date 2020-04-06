@@ -21,9 +21,7 @@ GtkPopoverAdapter >> addModelTo: gtkPopover [
 { #category : #building }
 GtkPopoverAdapter >> buildWidget [
 	
-	^ super buildWidget 
-		markForAutoRelease;
-		canFocus: true
+	^ super buildWidget markForAutoRelease
 ]
 
 { #category : #api }

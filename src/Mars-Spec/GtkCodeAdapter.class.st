@@ -140,7 +140,7 @@ GtkCodeAdapter >> hasSyntaxHighlightEnabled [
 GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 
 	self innerWidgetDo: [ :w | | endIter |
-		lastPopover := (self presenter instantiate: SpPopoverPresenter)
+		lastPopover := self presenter newPopover
 			bePositionRight;
 			presenter: aPresenter;
 			buildWithSpec;
