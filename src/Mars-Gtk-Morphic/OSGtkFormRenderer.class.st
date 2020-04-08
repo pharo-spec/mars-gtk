@@ -11,6 +11,14 @@ Class {
 	#category : #'Mars-Gtk-Morphic'
 }
 
+{ #category : #accessing }
+OSGtkFormRenderer >> backendWindow: aWindowHandle [
+
+	super backendWindow: aWindowHandle.
+	self ensureEventHandler.
+	self ensureFormView
+]
+
 { #category : #'updating screen' }
 OSGtkFormRenderer >> deferUpdatesWhile: aBlock [
 
@@ -22,7 +30,7 @@ OSGtkFormRenderer >> ensureEventHandler [
 	"ensure we use the correct event handler"
 		
 	formView eventHandler: (GtkMorphicEventHandler new 
-		morphicWorld: self window osWindow eventHandler morphicWorld;
+		morphicWorld: backendWindow osWindow eventHandler morphicWorld;
 		yourself).
 
 ]
@@ -31,7 +39,7 @@ OSGtkFormRenderer >> ensureEventHandler [
 OSGtkFormRenderer >> ensureFormView [
 	"ensure window contains a world morph view"
 	
-	self window gtkWindow
+	backendWindow gtkWindow
 		removeAll;
 		add: formView.
 		
@@ -65,7 +73,7 @@ OSGtkFormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 	| intersection windowExtent |
 
 	allDamage ifEmpty: [ ^ self ].
-	windowExtent := window extent.
+	windowExtent := backendWindow extent.
 
 	allDamage
 		do: [ :rectangle | 
@@ -79,12 +87,4 @@ OSGtkFormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 OSGtkFormRenderer >> updateRectangle: aRect [
 
 	formView invalidateRect: aRect
-]
-
-{ #category : #accessing }
-OSGtkFormRenderer >> window: aWindowHandle [
-
-	super window: aWindowHandle.
-	self ensureEventHandler.
-	self ensureFormView
 ]
