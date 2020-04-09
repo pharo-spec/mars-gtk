@@ -22,7 +22,7 @@ GtkRichTextAdapter >> addTextTo: gtkTextView [
 { #category : #building }
 GtkRichTextAdapter >> applyStyleTo: gtkTextView [
 	| tags |
-	tags := PRGtkTextGeneratingVisitor new 
+	tags := GtkTextStyleTagsVisitor new 
 		styleProvider: self model styleAttributes;
 		styleDocument: self model renderTree. 
 	tags do: [ :each | each acceptTextBuffer: gtkTextView textBuffer ]
