@@ -3,8 +3,8 @@ I'm a window handle for Gtk3.
 my handle is a GtkWindow
 "
 Class {
-	#name : #OSGtkWindowHandle,
-	#superclass : #OSWindowHandle,
+	#name : #OSGtkBackendWindow,
+	#superclass : #OSBackendWindow,
 	#instVars : [
 		'gtkWindow',
 		'world',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OSGtkWindowHandle class >> newAttributes: attributes [
+OSGtkBackendWindow class >> newAttributes: attributes [
 
 	^ self basicNew 
 		initializeAttributes: attributes;
@@ -23,31 +23,31 @@ OSGtkWindowHandle class >> newAttributes: attributes [
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> bounds: newBounds [
+OSGtkBackendWindow >> bounds: newBounds [
 
 	gtkWindow bounds: newBounds
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> clipboardText [
+OSGtkBackendWindow >> clipboardText [
 	
 	^ GtkClipboard forSelection waitForText
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> clipboardText: aString [
+OSGtkBackendWindow >> clipboardText: aString [
 
 	GtkClipboard forSelection text: aString
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> destroy [
+OSGtkBackendWindow >> destroy [
 
 	gtkWindow destroy
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> extent [
+OSGtkBackendWindow >> extent [
 	| size |
 
 	self ifWindowIsNotValid: [ ^ 0@0 ].
@@ -57,39 +57,39 @@ OSGtkWindowHandle >> extent [
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> extent: newExtent [
+OSGtkBackendWindow >> extent: newExtent [
 
 	GtkRunLoop defer: [ gtkWindow resize: newExtent ]
 ]
 
 { #category : #private }
-OSGtkWindowHandle >> gtkWindow [ 
+OSGtkBackendWindow >> gtkWindow [ 
 	"to be used by OSGtkFormRenderer to add the form view instance."
 	
 	^ gtkWindow
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> hide [
+OSGtkBackendWindow >> hide [
 
 	gtkWindow hide
 ]
 
 { #category : #private }
-OSGtkWindowHandle >> ifWindowIsNotValid: aBlock [
+OSGtkBackendWindow >> ifWindowIsNotValid: aBlock [
 
 	gtkWindow getHandle isNull ifTrue: aBlock
 ]
 
 { #category : #initialization }
-OSGtkWindowHandle >> initialize [
+OSGtkBackendWindow >> initialize [
 
 	super initialize.
 	self initializeCursorMap
 ]
 
 { #category : #initialization }
-OSGtkWindowHandle >> initializeAttributes: attributes [
+OSGtkBackendWindow >> initializeAttributes: attributes [
 
 	self initialize.
 	self initializeWindowAttributes: attributes.
@@ -97,7 +97,7 @@ OSGtkWindowHandle >> initializeAttributes: attributes [
 ]
 
 { #category : #initialization }
-OSGtkWindowHandle >> initializeCursorMap [
+OSGtkBackendWindow >> initializeCursorMap [
 	"this is a map of cursors from morphic to existing gtk cursors. 
 	 they will be used to not always use the morphic ones, which is not what we want (unless 
 	 specified)"
@@ -124,7 +124,7 @@ OSGtkWindowHandle >> initializeCursorMap [
 ]
 
 { #category : #initialization }
-OSGtkWindowHandle >> initializeWindowAttributes: attributes [
+OSGtkBackendWindow >> initializeWindowAttributes: attributes [
 
 	gtkWindow := GtkWindow new.
 	gtkWindow 
@@ -139,13 +139,13 @@ OSGtkWindowHandle >> initializeWindowAttributes: attributes [
 ]
 
 { #category : #testing }
-OSGtkWindowHandle >> isValid [
+OSGtkBackendWindow >> isValid [
 	
 	^ gtkWindow getHandle isNull not
 ]
 
 { #category : #private }
-OSGtkWindowHandle >> newCursorFromForm: cursorForm [
+OSGtkBackendWindow >> newCursorFromForm: cursorForm [
 	| newCursor |
 
 	GtkRunLoop defer: [ 
@@ -154,67 +154,67 @@ OSGtkWindowHandle >> newCursorFromForm: cursorForm [
 ]
 
 { #category : #factory }
-OSGtkWindowHandle >> newFormRenderer: aForm [
+OSGtkBackendWindow >> newFormRenderer: aForm [
 
 	GtkRunLoop defer: [ 
 		renderer := OSGtkFormRenderer new
 			form: aForm;
-			window: self;
+			backendWindow: self;
 			yourself ].
 		
 	^ renderer
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> position [
+OSGtkBackendWindow >> position [
 
 	self ifWindowIsNotValid: [ ^ 0@0 ].
 	^ gtkWindow position
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> position: newPosition [
+OSGtkBackendWindow >> position: newPosition [
 
 	gtkWindow moveTo: newPosition
 	
 ]
 
 { #category : #private }
-OSGtkWindowHandle >> quitSession [
+OSGtkBackendWindow >> quitSession [
 
 	UIManager default 
 		defer: [ WorldState quitSession ]
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> raise [
+OSGtkBackendWindow >> raise [
 
 	GtkRunLoop defer: [ self gtkWindow present ]
 ]
 
 { #category : #private }
-OSGtkWindowHandle >> resetKeyboardFocus [
+OSGtkBackendWindow >> resetKeyboardFocus [
 		
-	ActiveHand ifNil: [ ^ self ].
-	lastKeyboardFocus := ActiveHand keyboardFocus.
-	ActiveHand keyboardFocus: nil
+	self currentHand ifNil: [ ^ self ].
+	lastKeyboardFocus := self currentHand keyboardFocus.
+	self currentHand keyboardFocus: nil
 ]
 
 { #category : #private }
-OSGtkWindowHandle >> restoreKeyboardFocus [
+OSGtkBackendWindow >> restoreKeyboardFocus [
 
 	(gtkWindow isNil 
 		or: [ lastKeyboardFocus isNil 
-		or: [ ActiveHand isNil ] ])
+		or: [ self currentHand isNil ] ])
 		ifTrue: [ ^ self ].
 	
-	[ ActiveHand keyboardFocus: lastKeyboardFocus ]
+	[ self currentHand keyboardFocus: lastKeyboardFocus ]
 	ensure: [ 
 		lastKeyboardFocus := nil ]
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> setMouseCursor: cursorForm mask: maskForm [
+OSGtkBackendWindow >> setMouseCursor: cursorForm mask: maskForm [
 	| cursor |
 	
 	cursor := gtkCursorMap 
@@ -226,32 +226,32 @@ OSGtkWindowHandle >> setMouseCursor: cursorForm mask: maskForm [
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> show [
+OSGtkBackendWindow >> show [
 
 	gtkWindow showAll
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> title [
+OSGtkBackendWindow >> title [
 
 	^ gtkWindow title
 	
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> title: aTitle [
+OSGtkBackendWindow >> title: aTitle [
 
 	gtkWindow title: aTitle
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> world [
+OSGtkBackendWindow >> world [
 	
 	^ world
 ]
 
 { #category : #accessing }
-OSGtkWindowHandle >> world: aWorldMorph [
+OSGtkBackendWindow >> world: aWorldMorph [
 	
 	world := aWorldMorph
 ]
