@@ -42,6 +42,7 @@ curl https://get.pharo.org/64/80+vmHeadlessLatest | bash
 
 ## Installing in your image
 
+### On Windows
 You need to install it from the command line since you do not have the Playground in the UI:
 ```
 ./PharoConsole.exe '.\Pharo.image' eval --save " Metacello new
@@ -54,3 +55,43 @@ You need to install it from the command line since you do not have the Playgroun
 ```
 
 Then you will need to restart your image to let Gtk3 to take over the event loop.
+
+### On macOS
+
+Open your image using `./pharo-ui Pharo.image` and evaluate:
+```Smalltalk
+ Metacello new
+        repository: 'github://pharo-spec/mars-gtk';
+        baseline: 'Mars';
+        onConflict: [ :e | e useIncoming ];
+        onUpgrade: [ :e | e useIncoming ];
+        ignoreImage;
+        load
+```
+After the execution, save the image, and quit.
+
+If you open the image using `./pharo-ui Pharo.image`, the image should give the feeling of being significantly slower. This is because the Gtk event loop is running. You can verify this by opening the process browser: you should see a line begining with `(70) GtkRunLoop`.
+
+## A first example
+
+The following code should open a small UI:
+
+```Smalltalk
+app := SpApplication new 
+  useBackend: #Gtk;
+  yourself.
+
+(app new: SpLabelPresenter) 
+  label: 'Hello, Gtk3';
+  openWithSpec
+```
+
+## Current status
+
+Currently, only the low-level infrastructure is supported. Tools building based on solely Spec2/Gtk are under way. Be patient.
+
+
+
+
+
+
