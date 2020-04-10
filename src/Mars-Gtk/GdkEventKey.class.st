@@ -10,7 +10,6 @@ Class {
 	#classTraits : 'TGdkEventState classTrait',
 	#instVars : [
 		'keyValue',
-		'wasHandled',
 		'position'
 	],
 	#classVars : [

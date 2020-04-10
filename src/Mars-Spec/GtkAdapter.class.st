@@ -268,6 +268,62 @@ GtkAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
 		false ]
 ]
 
+{ #category : #'event installing' }
+GtkAdapter >> installKeyDownEvent: anEvent to: aWidget [
+
+	aWidget connectKeyPressEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installKeyUpEvent: anEvent to: aWidget [
+
+	aWidget connectKeyReleaseEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseDownEvent: anEvent to: aWidget [
+
+	aWidget connectButtonPressEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseEnterEvent: anEvent to: aWidget [
+
+	aWidget connectEnterNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseLeaveEvent: anEvent to: aWidget [
+
+	aWidget connectLeaveNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseMoveEvent: anEvent to: aWidget [
+
+	aWidget connectMotionNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseUpEvent: anEvent to: aWidget [
+
+	aWidget connectButtonReleaseEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
 { #category : #'private cycle detection' }
 GtkAdapter >> isBackendUpdating [
 
