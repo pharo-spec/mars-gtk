@@ -133,7 +133,7 @@ GtkAdapter >> buildWidget [
 	gtkWidget := self newWidget.
 	self addSettingsTo: gtkWidget.
 	self addKeyBindingsTo: gtkWidget.
-	self addEventsTo: self widget.
+	self addEventsTo: gtkWidget.
 	self addModelTo: gtkWidget.
 	^ self wrapWidget: gtkWidget
 ]
@@ -255,13 +255,17 @@ GtkAdapter >> installEvent: anEvent [
 { #category : #'event installing' }
 GtkAdapter >> installGotFocusEvent: anEvent to: aWidget [
 
-	aWidget connectFocusInEvent: anEvent action
+	aWidget connectFocusInEvent: [
+		anEvent action value. 
+		false ]
 ]
 
 { #category : #'event installing' }
 GtkAdapter >> installLostFocusEvent: anEvent to: aWidget [
 
-	aWidget connectFocusOutEvent: anEvent action
+	aWidget connectFocusOutEvent: [ 
+		anEvent action value. 
+		false ]
 ]
 
 { #category : #'private cycle detection' }
