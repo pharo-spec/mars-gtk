@@ -253,17 +253,17 @@ GtkAdapter >> installEvent: anEvent [
 ]
 
 { #category : #'event installing' }
-GtkAdapter >> installGotFocusEvent: anEvent to: aWidget [
+GtkAdapter >> installFocusLostEvent: anEvent to: aWidget [
 
-	aWidget connectFocusInEvent: [
+	aWidget connectFocusOutEvent: [ 
 		anEvent action value. 
 		false ]
 ]
 
 { #category : #'event installing' }
-GtkAdapter >> installLostFocusEvent: anEvent to: aWidget [
+GtkAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
 
-	aWidget connectFocusOutEvent: [ 
+	aWidget connectFocusInEvent: [
 		anEvent action value. 
 		false ]
 ]
