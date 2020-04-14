@@ -74,7 +74,7 @@ GtkAbstractTextAdapter >> rightClicked [
 { #category : #selection }
 GtkAbstractTextAdapter >> selectAll [
 	
-	self innerWidgetDo: [ :w | w selectAll ]
+	self innerWidgetDo: [ :w | w textBuffer selectAll ]
 ]
 
 { #category : #selection }
