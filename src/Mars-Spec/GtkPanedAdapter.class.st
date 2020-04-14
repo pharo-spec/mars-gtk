@@ -15,6 +15,11 @@ GtkPanedAdapter >> addConstraits: constraints toChild: childWidget [
 	^ childWidget
 ]
 
+{ #category : #accessing }
+GtkPanedAdapter >> addWidgetAlignment: constraints to: gtkWidget [
+	"do nothing (it does not seems to have sense here)"
+]
+
 { #category : #private }
 GtkPanedAdapter >> applyLayout: aLayout [
 
