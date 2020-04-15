@@ -72,6 +72,12 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	self addVisibleSettingsTo: gtkWidget
 ]
 
+{ #category : #protocol }
+GtkAdapter >> addStyle: aStyle [
+
+	self innerWidgetDo: [ :w | w addClass: aStyle ]
+]
+
 { #category : #building }
 GtkAdapter >> addVisibleSettingsTo: gtkWidget [
 
@@ -364,6 +370,12 @@ GtkAdapter >> layout: aSpecLayoutFrame [
 GtkAdapter >> newWidget [
 
 	^ self widgetClass new
+]
+
+{ #category : #protocol }
+GtkAdapter >> removeStyle: aStyle [
+
+	self innerWidgetDo: [ :w | w removeClass: aStyle ]
 ]
 
 { #category : #emulating }
