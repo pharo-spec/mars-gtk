@@ -34,10 +34,8 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
 { #category : #accessing }
 GtkLayoutAdapter >> addWidgetAlignment: constraints to: gtkWidget [
 
- 	layout vAlign
-		ifNotNil: [ :align | gtkWidget vAlign: align asGtkAlign ].
- 	layout hAlign 
-		ifNotNil: [ :align | gtkWidget hAlign: align asGtkAlign ]
+ 	"for the moment, just Box Layout implements alignment. 
+	 keep this empty but ready for the future :)"
 ]
 
 { #category : #private }
