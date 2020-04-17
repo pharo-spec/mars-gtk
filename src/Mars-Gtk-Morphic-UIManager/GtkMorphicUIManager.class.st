@@ -53,8 +53,7 @@ GtkMorphicUIManager >> debugProcess: process context: context label: title fullV
 		[ 
 			Smalltalk tools debugger 
 				openOn: debugSession 
-				withFullView: bool 
-				andNotification: notificationString ] 
+				withFullView: bool ] 
 		on: Error 
 		do: [ :ex | debugSession signalDebuggerError: ex ] 
 	].
@@ -67,4 +66,23 @@ GtkMorphicUIManager >> debugProcess: process context: context label: title fullV
 GtkMorphicUIManager >> debugSessionClass [
 
 	^ GtkDebugSession
+]
+
+{ #category : #debug }
+GtkMorphicUIManager >> handleCallbackExceptionsWith: exceptionHandler during: aBlock [
+	"Let it pass, the UI manager will take care about"
+
+	aBlock value
+]
+
+{ #category : #'ui requests' }
+GtkMorphicUIManager >> unhandledErrorDefaultAction: anException [
+
+	Stdio stdout << '==='; lf.
+	"thisContext shortDebugStackOn: (ZnNewLineWriterStream on: Stdio stdout)."
+	Stdio stdout << 'IN CALLBACK: ' << GtkRunLoop current isInCallback printString; lf.
+	Stdio stdout << 'UI THREAD: ' << (GtkRunLoop current callerProcess = self uiProcess) printString; lf.
+	Stdio stdout << '==='; lf.
+	
+	anException debug
 ]
