@@ -179,6 +179,6 @@ GtkQuartzCairoSurface >> rectangleToCGRect: aRect [
 	rect at: 2 put: aRect top.
 	rect at: 3 put: aRect width.
 	rect at: 4 put: aRect height.
-	Stdio stdout << rect getHandle printString; lf.
+
 	^ rect getHandle
 ]

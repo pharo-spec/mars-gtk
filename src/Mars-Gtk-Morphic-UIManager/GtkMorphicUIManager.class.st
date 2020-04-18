@@ -74,15 +74,3 @@ GtkMorphicUIManager >> handleCallbackExceptionsWith: exceptionHandler during: aB
 
 	aBlock value
 ]
-
-{ #category : #'ui requests' }
-GtkMorphicUIManager >> unhandledErrorDefaultAction: anException [
-
-	Stdio stdout << '==='; lf.
-	"thisContext shortDebugStackOn: (ZnNewLineWriterStream on: Stdio stdout)."
-	Stdio stdout << 'IN CALLBACK: ' << GtkRunLoop current isInCallback printString; lf.
-	Stdio stdout << 'UI THREAD: ' << (GtkRunLoop current callerProcess = self uiProcess) printString; lf.
-	Stdio stdout << '==='; lf.
-	
-	anException debug
-]

@@ -132,9 +132,7 @@ GtkDebugSession >> stopRunLoop [
 
 	runLoop ifNil: [ ^ self ].
 	runLoop stop.
-	runLoop := nil.
-	
-	Stdio stdout << 'STOP'; lf.
+	runLoop := nil
 ]
 
 { #category : #private }
@@ -160,7 +158,6 @@ GtkDebugSession >> stopUIProcess [
 GtkDebugSession >> terminate [
 
 	self stopRunLoop.
-	Stdio stdout << 'TERMINATE'; lf.	
 	super terminate.
 
 ]
