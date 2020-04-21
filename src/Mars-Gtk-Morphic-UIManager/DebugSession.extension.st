@@ -13,14 +13,3 @@ DebugSession class >> sessionClass [
 
 	^ UIManager default debugSessionClass
 ]
-
-{ #category : #'*Mars-Gtk-Morphic-UIManager' }
-DebugSession >> spanNewSession [
-
-	^ (self class 
-			named: self name 
-			on: self interruptedProcess 
-			startedAt: self interruptedContext)
-		errorWasInUIProcess: self errorWasInUIProcess;
-		yourself
-]
