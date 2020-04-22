@@ -73,7 +73,6 @@ GtkDebugSession >> resumeProcess [
 				ifTrue: [ 
 					self newUIProcess ifNotNil: [ 
 						(self oldUIProcess == self newUIProcess) ifFalse: [ 
-							'TRUE' crTrace.
 							UIManager default resumeUIProcess: self oldUIProcess ] ].
 					interruptedProcess resume ]
 				ifFalse: [ 
