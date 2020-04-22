@@ -97,7 +97,7 @@ GtkDebugSession >> runLoop: aRunLoop [
 	runLoop := aRunLoop
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkDebugSession >> spanNewSession [
 
 	^ super spanNewSession

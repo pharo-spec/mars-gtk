@@ -13,13 +13,15 @@ GtkMorphicUIManager class >> activate [
 { #category : #accessing }
 GtkMorphicUIManager class >> isActiveManager [
 
-	^ false
+	^ true
 ]
 
 { #category : #testing }
 GtkMorphicUIManager class >> isValidForCurrentSystemConfiguration [
-
-	^ false
+	
+	^ Smalltalk isHeadless 
+		and: [ Smalltalk isInteractiveGraphic
+		and: [ OSWindowDriver driverClass = OSGtkDriver ] ]
 ]
 
 { #category : #debug }
