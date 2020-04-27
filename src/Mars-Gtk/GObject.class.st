@@ -377,6 +377,12 @@ GObject >> disconnectMatchedMask: mask
       gpointer aData)) module: GObjectLibrary
 ]
 
+{ #category : #signaling }
+GObject >> emitSignalByName: detailed_signal [
+
+	self ffiCall: #(void g_signal_emit_by_name (self, const gchar *detailed_signal))
+]
+
 { #category : #'private primitives' }
 GObject >> gFree: aPointer [
 
