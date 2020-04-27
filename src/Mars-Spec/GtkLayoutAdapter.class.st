@@ -20,7 +20,7 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
  
 	self widgetDo: [ :gtkWidget | | childWidget |
 		childWidget := self 
-			basicAdd: aPresenter 
+			basicAdd: aPresenter asPresenter
 			constraints: constraints 
 			to: gtkWidget.
 		self addWidgetAlignment: constraints to: childWidget.
