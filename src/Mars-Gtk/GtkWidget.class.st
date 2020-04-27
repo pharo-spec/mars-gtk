@@ -13,6 +13,21 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #accessing }
+GtkWidget class >> bindingSet [
+	"Binding set gives access to the bindings of a class. 
+	 It is possible to use it to override the default keybindings defined. 
+	 For example, this is how you map a context menu popup to <meta+t>: 
+	
+	 GtkTextView bindingSet
+	 	addSignal: $t asciiValue 
+	 	modifiers: GdkModifierType GDK_META_MASK
+	 	signal: 'popup-menu'.
+	"
+
+	^ self gtkBindingSetByClass: self gClass
+]
+
 { #category : #'library path' }
 GtkWidget class >> ffiLibraryName [
 	^ GtkLibrary
@@ -34,6 +49,7 @@ GtkWidget class >> fromHandle: handle [
 
 { #category : #accessing }
 GtkWidget class >> gClassSize [
+	"hardcoded. I took the size by executing sizeof in a C program"
 
 	^ 824
 ]
@@ -49,6 +65,12 @@ GtkWidget class >> gType [
 	"This method was automatically generated"
 
 	^ self ffiCall: #(gsize gtk_widget_get_type())
+]
+
+{ #category : #private }
+GtkWidget class >> gtkBindingSetByClass: object_class [
+
+	^ self ffiCall: #(GtkBindingSet *gtk_binding_set_by_class (gpointer object_class))
 ]
 
 { #category : #private }

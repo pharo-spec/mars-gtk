@@ -35,7 +35,14 @@ GObject class >> finalizeResourceData: handle [
 ]
 
 { #category : #accessing }
+GObject class >> gClass [
+
+	^ self gTypeClassPeek: self gType
+]
+
+{ #category : #accessing }
 GObject class >> gClassSize [
+	"hardcoded. I took the size by executing sizeof in a C program"
 
 	^ 136
 ]
@@ -59,6 +66,12 @@ GObject class >> gType [
 	 that's why we use its mapped type: gsize"
 
 	^ self ffiCall: #(gsize g_object_get_type()) module: GObjectLibrary 
+]
+
+{ #category : #private }
+GObject class >> gTypeClassPeek: type [
+
+	self ffiCall: #(gpointer g_type_class_ref (gsize type))
 ]
 
 { #category : #utils }
