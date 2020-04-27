@@ -595,7 +595,7 @@ GObject >> registerCallback: aCallback [
 	callbacks ifNil: [ callbacks := Set new ].
 	callbacks add: aCallback.
 	
-	Stdio stdout << aCallback thunk printString << ':' << aCallback tfPrintString; lf
+	"Stdio stdout << aCallback thunk printString << ':' << aCallback tfPrintString; lf"
 ]
 
 { #category : #'private signaling' }
