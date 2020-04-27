@@ -20,7 +20,7 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
  
 	self widgetDo: [ :gtkWidget | | childWidget |
 		childWidget := self 
-			basicAdd: aPresenter asPresenter
+			basicAdd: aPresenter
 			constraints: constraints 
 			to: gtkWidget.
 		self addWidgetAlignment: constraints to: childWidget.
@@ -28,7 +28,7 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
 		"I'm keeping a reference to aPresenter into the built widget because in some cases 
 		 it can be GC (in case of the on-the-fly creation, for example). 
 		 Now this can be a real bad idea :)"
-		childWidget data: aPresenter  ]
+		childWidget data: aPresenter ]
 ]
 
 { #category : #accessing }
