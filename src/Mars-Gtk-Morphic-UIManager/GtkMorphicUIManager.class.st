@@ -13,13 +13,15 @@ GtkMorphicUIManager class >> activate [
 { #category : #accessing }
 GtkMorphicUIManager class >> isActiveManager [
 
-	^ false
+	^ true
 ]
 
 { #category : #testing }
 GtkMorphicUIManager class >> isValidForCurrentSystemConfiguration [
-
-	^ false
+	
+	^ Smalltalk isHeadless 
+		and: [ Smalltalk isInteractiveGraphic
+		and: [ OSWindowDriver driverClass = OSGtkDriver ] ]
 ]
 
 { #category : #debug }
@@ -53,8 +55,7 @@ GtkMorphicUIManager >> debugProcess: process context: context label: title fullV
 		[ 
 			Smalltalk tools debugger 
 				openOn: debugSession 
-				withFullView: bool 
-				andNotification: notificationString ] 
+				withFullView: bool ] 
 		on: Error 
 		do: [ :ex | debugSession signalDebuggerError: ex ] 
 	].
@@ -67,4 +68,11 @@ GtkMorphicUIManager >> debugProcess: process context: context label: title fullV
 GtkMorphicUIManager >> debugSessionClass [
 
 	^ GtkDebugSession
+]
+
+{ #category : #debug }
+GtkMorphicUIManager >> handleCallbackExceptionsWith: exceptionHandler during: aBlock [
+	"Let it pass, the UI manager will take care about"
+
+	aBlock value
 ]

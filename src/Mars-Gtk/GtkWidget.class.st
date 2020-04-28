@@ -260,6 +260,12 @@ GtkWidget >> connectKeyPressEvent: aBlock [
 ]
 
 { #category : #signaling }
+GtkWidget >> connectKeyReleaseEvent: aBlock [
+
+	^ (GKeyReleaseEventCallback do: aBlock) connectTo: self
+]
+
+{ #category : #signaling }
 GtkWidget >> connectLeaveNotify: aBlock [
 	"connects to motion_notify_event signal.
 	 aBlock needs to answer a boolean to stop or not event propagation"

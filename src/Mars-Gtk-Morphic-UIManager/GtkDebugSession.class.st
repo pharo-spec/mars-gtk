@@ -96,7 +96,7 @@ GtkDebugSession >> runLoop: aRunLoop [
 	runLoop := aRunLoop
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GtkDebugSession >> spanNewSession [
 
 	^ super spanNewSession
@@ -114,11 +114,15 @@ GtkDebugSession >> spawnNewRunLoop [
 
 { #category : #keepAlive }
 GtkDebugSession >> stopKeepingAlive: anObjectThatNoLongerWantsToKeepMeAlive [
-
+	
+	self objectsThatWantToKeepMeAlive
+		remove: anObjectThatNoLongerWantsToKeepMeAlive
+		ifAbsent: [ "It's a weak collection, its elements can be nilled by the garbage collector at any time if they are not referenced elsewhere, so it can happen not to find the object to remove because it has already been nilled"
+			 ].
 
 	self stopRunLoop.
 	self stopUIProcess.
-	super stopKeepingAlive: anObjectThatNoLongerWantsToKeepMeAlive.
+	self terminate
 
 ]
 
@@ -153,5 +157,6 @@ GtkDebugSession >> stopUIProcess [
 GtkDebugSession >> terminate [
 
 	self stopRunLoop.
-	super terminate
+	super terminate.
+
 ]

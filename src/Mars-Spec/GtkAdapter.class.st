@@ -72,6 +72,12 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	self addVisibleSettingsTo: gtkWidget
 ]
 
+{ #category : #protocol }
+GtkAdapter >> addStyle: aStyle [
+
+	self innerWidgetDo: [ :w | w addClass: aStyle ]
+]
+
 { #category : #building }
 GtkAdapter >> addVisibleSettingsTo: gtkWidget [
 
@@ -133,6 +139,7 @@ GtkAdapter >> buildWidget [
 	gtkWidget := self newWidget.
 	self addSettingsTo: gtkWidget.
 	self addKeyBindingsTo: gtkWidget.
+	self addEventsTo: gtkWidget.
 	self addModelTo: gtkWidget.
 	^ self wrapWidget: gtkWidget
 ]
@@ -244,6 +251,85 @@ GtkAdapter >> innerWidgetDo: aBlock [
 		aBlock value: self innerWidget ]
 ]
 
+{ #category : #'event installing' }
+GtkAdapter >> installEvent: anEvent [
+
+	self widgetDo: [ :w |
+		anEvent installOn: self target: w ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installFocusLostEvent: anEvent to: aWidget [
+
+	aWidget connectFocusOutEvent: [ 
+		anEvent action value. 
+		false ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
+
+	aWidget connectFocusInEvent: [
+		anEvent action value. 
+		false ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installKeyDownEvent: anEvent to: aWidget [
+
+	aWidget connectKeyPressEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installKeyUpEvent: anEvent to: aWidget [
+
+	aWidget connectKeyReleaseEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseDownEvent: anEvent to: aWidget [
+
+	aWidget connectButtonPressEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseEnterEvent: anEvent to: aWidget [
+
+	aWidget connectEnterNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseLeaveEvent: anEvent to: aWidget [
+
+	aWidget connectLeaveNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseMoveEvent: anEvent to: aWidget [
+
+	aWidget connectMotionNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseUpEvent: anEvent to: aWidget [
+
+	aWidget connectButtonReleaseEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
 { #category : #'private cycle detection' }
 GtkAdapter >> isBackendUpdating [
 
@@ -284,6 +370,12 @@ GtkAdapter >> layout: aSpecLayoutFrame [
 GtkAdapter >> newWidget [
 
 	^ self widgetClass new
+]
+
+{ #category : #protocol }
+GtkAdapter >> removeStyle: aStyle [
+
+	self innerWidgetDo: [ :w | w removeClass: aStyle ]
 ]
 
 { #category : #emulating }

@@ -19,6 +19,15 @@ GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 	^ childWidget
 ]
 
+{ #category : #accessing }
+GtkBoxAdapter >> addWidgetAlignment: constraints to: gtkWidget [
+
+ 	layout vAlign
+		ifNotNil: [ :align | gtkWidget vAlign: align asGtkAlign ].
+ 	layout hAlign 
+		ifNotNil: [ :align | gtkWidget hAlign: align asGtkAlign ]
+]
+
 { #category : #private }
 GtkBoxAdapter >> applyLayout: aLayout [
 

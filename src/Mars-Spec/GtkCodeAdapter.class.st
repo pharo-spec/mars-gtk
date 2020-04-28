@@ -40,7 +40,7 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 	  
 	self flag: #TODO. "All this needs to come from settings"
 	gtkSourceView 
-		showLineNumbers: true;
+		showLineNumbers: self presenter hasLineNumbers;
 		autoIndent: true;
 		indentOnTab: true;
 		tabWidth: 4.
@@ -50,7 +50,10 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 		highlightMatchingBrackets: true.
 		
 	self completionEngine ifNotNil: [
-		self addSourceCompletionProviderTo: gtkSourceView ]
+		self addSourceCompletionProviderTo: gtkSourceView ].
+	
+	self presenter whenLineNumbersChangedDo: [ :hasLineNumbers |
+		gtkSourceView showLineNumbers: hasLineNumbers ]
 ]
 
 { #category : #building }

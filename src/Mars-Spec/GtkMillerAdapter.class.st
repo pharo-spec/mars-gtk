@@ -22,7 +22,7 @@ GtkMillerAdapter >> add: aPresenter constraints: constraints [
 		| childWidget |
 		
 		childWidget := self 
-			basicAdd: aPresenter 
+			basicAdd: aPresenter
 			constraints: constraints 
 			to: innerWidget.
 		"I'm keeping a reference to aPresenter into the built widget because in some cases 

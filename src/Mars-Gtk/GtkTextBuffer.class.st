@@ -287,6 +287,14 @@ GtkTextBuffer >> removeAllTagsFrom: start to: end [
 ]
 
 { #category : #'accessing selection' }
+GtkTextBuffer >> selectAll [
+
+	self 
+		selectRangeInsert: self startIter 
+		bound: self endIter
+]
+
+{ #category : #'accessing selection' }
 GtkTextBuffer >> selectFrom: start to: end [
 	| startIter endIter |
 

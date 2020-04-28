@@ -6,10 +6,17 @@ Class {
 	#name : #GtkMainRunLoop,
 	#superclass : #GtkRunLoop,
 	#instVars : [
-		'process'
+		'process',
+		'callerProcess'
 	],
 	#category : #'Mars-Gtk-Base'
 }
+
+{ #category : #accessing }
+GtkMainRunLoop >> callerProcess [
+
+	^ callerProcess
+]
 
 { #category : #accessing }
 GtkMainRunLoop >> defer: aBlock [
@@ -19,10 +26,12 @@ GtkMainRunLoop >> defer: aBlock [
 		or: [ self isInCallback ]) 
 		ifTrue: [ ^ aBlock value ].
 
+	callerProcess := Processor activeProcess.
 	sem := Semaphore new.
 	GIdle uniqueInstance idleAddFull: [ 
 		result := aBlock ensure: [ sem signal ] ].
 	sem wait.
+	callerProcess := nil.
 
 	^ result
 ]
