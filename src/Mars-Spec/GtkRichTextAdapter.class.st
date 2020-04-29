@@ -30,9 +30,10 @@ GtkRichTextAdapter >> applyStyleTo: gtkTextView [
 
 { #category : #building }
 GtkRichTextAdapter >> setText: text to: gtkWidget [
+	
 	super 
-		setText: (self model contentProvider plaintextFor: text) 
-		to: gtkWidget 
+		setText: self presenter plaintext 
+		to: gtkWidget
 ]
 
 { #category : #building }
