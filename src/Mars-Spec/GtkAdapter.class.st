@@ -36,6 +36,16 @@ GtkAdapter >> adapt: aPresenter [
 ]
 
 { #category : #building }
+GtkAdapter >> addContextMenuKeyBindings: gtkWidget [
+	
+	self flag: #TODO. "Take this from a configuration"
+	self 
+		bindKeyCombination: $t command mac | $t control unix | $t control win
+		toAction: [ self showContextMenu ]
+		inWidget: gtkWidget
+]
+
+{ #category : #building }
 GtkAdapter >> addKeyBindingsTo: gtkWidget [
 
 	self presenter contextKeyBindings ifNotNil: [ :aCategory | 
@@ -43,7 +53,8 @@ GtkAdapter >> addKeyBindingsTo: gtkWidget [
 		aCategory allEntries keymaps do: [ :each |
 			self 
 				bindKeyCombination: each shortcut
-				toAction: each action ] ]
+				toAction: each action
+				inWidget: gtkWidget ] ]
 ]
 
 { #category : #building }
@@ -115,12 +126,21 @@ GtkAdapter >> backendUpdatingDo: aBlock [
 { #category : #protocol }
 GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock [ 
 	
-	dispatcher ifNil: [ 
-		self widgetDo: [ :w |
-			self configureKeyBindings: w ] ].
-	
-	dispatcher 
+	self 
 		bindKeyCombination: aShortcut 
+		toAction: aBlock 
+		inWidget: self widget
+]
+
+{ #category : #private }
+GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock inWidget: gtkWidget [
+	
+	dispatcher ifNil: [ 
+		GtkRunLoop defer: [
+			self configureKeyBindings: gtkWidget ] ].
+
+	dispatcher 
+		bindKeyCombination: aShortcut
 		toAction: aBlock
 ]
 
@@ -146,11 +166,10 @@ GtkAdapter >> buildWidget [
 
 { #category : #private }
 GtkAdapter >> configureKeyBindings: gtkWidget [
-		
+
 	dispatcher := GtkKMDispatcher on: self presenter.
 	gtkWidget connectKeyPressEvent: [ :event |
-		self handleKeyEvent: event ].
-	
+		self handleKeyEvent: event ]
 ]
 
 { #category : #protocol }
@@ -398,6 +417,27 @@ GtkAdapter >> setBalloonText: aString [
 ]
 
 { #category : #private }
+GtkAdapter >> showContextMenu [
+
+	self presenter contextMenu ifNil: [ ^ self ].
+	self showMenu: self presenter contextMenu 
+		
+]
+
+{ #category : #private }
+GtkAdapter >> showMenu: aValuable [
+	
+	lastShownMenu := self buildMenu: aValuable value.
+	lastShownMenu 
+		connectDestroy: [ lastShownMenu := nil ];
+		showAll;
+		popupAtWidget: self widget
+			widgetAnchor: GdkGravity GDK_GRAVITY_CENTER
+			menuAnchor: GdkGravity GDK_GRAVITY_CENTER 
+			triggerEvent: (GdkEvent fromHandle: ExternalAddress null).
+]
+
+{ #category : #private }
 GtkAdapter >> showMenu: aValuable event: event [
 	
 	lastShownMenu := self buildMenu: aValuable value.
@@ -433,7 +473,7 @@ GtkAdapter >> updateMenu [
 			withCallbacksOfType: GSecondaryButtonPressEventCallback 
 			do: [ :each | existingCallbacks add: each ].
 			
-		menu := self model contextMenu. 
+		menu := self presenter contextMenu. 
 		menu ifNil: [ 
 			existingCallbacks do: [ :each | each disconnectFrom: w ].
 			^ self ].

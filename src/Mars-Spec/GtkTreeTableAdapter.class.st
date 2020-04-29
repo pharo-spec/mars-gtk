@@ -43,6 +43,13 @@ GtkTreeTableAdapter >> addChildrenFor: anObject into: gtkRow [
 			into: gtkRow ]
 ]
 
+{ #category : #building }
+GtkTreeTableAdapter >> addKeyBindingsTo: gtkWidget [
+
+	super addKeyBindingsTo: gtkWidget.
+	self addContextMenuKeyBindings: gtkWidget
+]
+
 { #category : #private }
 GtkTreeTableAdapter >> addLevelTo: item parent: iter [
 

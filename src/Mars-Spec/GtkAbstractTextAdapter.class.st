@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #building }
+GtkAbstractTextAdapter >> addKeyBindingsTo: gtkWidget [
+
+	super addKeyBindingsTo: gtkWidget.
+	self addContextMenuKeyBindings: gtkWidget
+]
+
+{ #category : #building }
 GtkAbstractTextAdapter >> addMenu: aValuable to: gtkWidget [ 
 	"for texts, this is solved with #populatePopup:, see there to follow 
 	 how it works."
@@ -110,6 +117,13 @@ GtkAbstractTextAdapter >> setSelectionFromModel: aSelection [
 GtkAbstractTextAdapter >> setText: aString to: gtkWidget [
 
 	gtkWidget text: aString asString
+]
+
+{ #category : #private }
+GtkAbstractTextAdapter >> showContextMenu [
+
+	self presenter contextMenu ifNil: [ ^ self ].
+	self innerWidgetDo: [ :w | w emitSignalByName: 'popup-menu' ]
 ]
 
 { #category : #accessing }

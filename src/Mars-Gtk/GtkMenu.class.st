@@ -48,6 +48,17 @@ GtkMenu >> popupAtPointer: trigger_event [
 ]
 
 { #category : #accessing }
+GtkMenu >> popupAtWidget: widget widgetAnchor: widget_anchor menuAnchor: menu_anchor triggerEvent: trigger_event [
+
+	self ffiCall: #(void gtk_menu_popup_at_widget (
+		self,
+		GtkWidget *widget,
+		GdkGravity widget_anchor,
+		GdkGravity menu_anchor,
+		GdkEvent *trigger_event))
+]
+
+{ #category : #accessing }
 GtkMenu >> reserveToggleSize: reserve_toggle_size [
 
 	self ffiCall: #(void gtk_menu_set_reserve_toggle_size (
