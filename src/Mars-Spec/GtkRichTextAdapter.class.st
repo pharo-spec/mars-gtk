@@ -5,22 +5,34 @@ Class {
 }
 
 { #category : #building }
-GtkRichTextAdapter >> setText: text to: gtkTextView [
-	| table gtkTag |
-	text isString ifTrue: [ ^ self ].
-	table := GtkTextTagTable new.
-	text runs values do: [ :v | | k |
-		k := v identityHash asString.
-		gtkTag := GtkTextTag newName: k.
-		v collect: [ :each | each acceptTag: gtkTag ].
-		table add: gtkTag ].
-	gtkTextView textBuffer: (self bufferClass newTable: table).
-	gtkTextView textBuffer connectChanged: [
-		self presenter text runs withStartStopAndValueDo: [ :start :stop :val |
-			(GtkTextStyleTag newName: val identityHash asString from: start to: stop) 
-				acceptTextBuffer: gtkTextView textBuffer ] ].
-	
-	super setText: text to: gtkTextView 
+GtkRichTextAdapter >> addTextTo: gtkTextView [
+	| tagTable styles |
+	tagTable := GtkTextTagTable new.
+	styles := self model styleAttributes. 
+	styles keysAndValuesDo: [ :name :attributes | | tag |
+		tag := GtkTextTag newName: name.
+		attributes do: [:attribute | attribute acceptTag: tag ].
+		tagTable add: tag].
+	gtkTextView textBuffer: (self bufferClass newTable: tagTable).
+	gtkTextView textBuffer connectChanged: [ 
+			self applyStyleTo: gtkTextView  ] .
+	super addTextTo: gtkTextView 
+]
+
+{ #category : #building }
+GtkRichTextAdapter >> applyStyleTo: gtkTextView [
+	| tags |
+	tags := GtkTextStyleTagsVisitor new 
+		styleProvider: self model styleAttributes;
+		styleDocument: self model renderTree. 
+	tags do: [ :each | each acceptTextBuffer: gtkTextView textBuffer ]
+]
+
+{ #category : #building }
+GtkRichTextAdapter >> setText: text to: gtkWidget [
+	super 
+		setText: (self model contentProvider plaintextFor: text) 
+		to: gtkWidget 
 ]
 
 { #category : #building }

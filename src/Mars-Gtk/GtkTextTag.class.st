@@ -71,12 +71,10 @@ GtkTextTag >> beUnderlined [
 
 { #category : #accessing }
 GtkTextTag >> fontFamily: family size: size weight: weight [ 
-	"is disabled for now as it crashes the vm"
-	
-	"self gObjectSet: 'family' toString: family.
+	self gObjectSet: 'family' toString: family.
 	self gObjectSet: 'size-set' toBoolean: true.
-	self gObjectSet: 'size-points' toInteger: size.
-	self gObjectSet: 'weight' toInteger: weight"
+	self gObjectSet: 'size-points' toDouble: size.
+	self gObjectSet: 'weight' toInteger: weight
 ]
 
 { #category : #accessing }
