@@ -42,11 +42,15 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 	self presenter icon
 		ifNotNil: [ gtkWidget add: (self menuLabelWithIconAndAccelFor: gtkWidget) ]
 		ifNil: [ gtkWidget label: self presenter name ].
+	self presenter whenNameChangedDo: [ self updateName ].
+	self presenter whenIconChangedDo: [ self updateIcon ].
+		
 	"accel"
 	self presenter shortcut ifNotNil: [ :shortcut | 
 		self addAcceleratorShortcut: shortcut to: gtkWidget ].
 	"enabled?"
 	gtkWidget sensitive: self presenter isEnabled value.
+	self whenEnabledChangedDo: [ self updateEnabled ].
 
 	"action"
 	self presenter action ifNotNil: [ :actionBlock |
@@ -57,7 +61,7 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 		ifNotNil: [ :menuPresenter | gtkWidget submenu: menuPresenter buildWithSpec ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private accessing' }
 GtkMenuItemAdapter >> getNameText [
 
 	^ self presenter name ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
