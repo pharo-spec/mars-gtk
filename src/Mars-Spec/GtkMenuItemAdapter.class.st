@@ -50,7 +50,6 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 		self addAcceleratorShortcut: shortcut to: gtkWidget ].
 	"enabled?"
 	gtkWidget sensitive: self presenter isEnabled value.
-	self whenEnabledChangedDo: [ self updateEnabled ].
 
 	"action"
 	self presenter action ifNotNil: [ :actionBlock |
