@@ -32,6 +32,13 @@ GtkTextAdapter >> bufferClass [
 	^ GtkTextBuffer
 ]
 
+{ #category : #'spec protocol' }
+GtkTextAdapter >> cursorPosition [
+	
+	^ self innerWidgetDo: [ :w |
+		w textBuffer cursorPositionAtLine ]
+]
+
 { #category : #private }
 GtkTextAdapter >> setEditable: aBoolean [ 
 

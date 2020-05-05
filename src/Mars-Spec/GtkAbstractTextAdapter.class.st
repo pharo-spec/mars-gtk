@@ -38,6 +38,12 @@ GtkAbstractTextAdapter >> addTextTo: gtkWidget [
 ]
 
 { #category : #'spec protocol' }
+GtkAbstractTextAdapter >> cursorPositionIndex [
+
+	^ self innerWidgetDo: [ :w | w cursorPosition ]
+]
+
+{ #category : #'spec protocol' }
 GtkAbstractTextAdapter >> insert: aString at: positionIndex [
 
 	self innerWidgetDo: [ :w |

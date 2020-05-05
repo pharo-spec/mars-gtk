@@ -133,6 +133,15 @@ GtkTextBuffer >> cursorPosition [
 ]
 
 { #category : #accessing }
+GtkTextBuffer >> cursorPositionAtLine [
+	| iter |
+	
+	iter := GtkTextIter new.
+	self offsetIter: iter pos: self cursorPosition.
+	^ (iter lineOffset + 1) @ (iter line + 1)
+]
+
+{ #category : #accessing }
 GtkTextBuffer >> deleteAll [ 
 
 	self 
