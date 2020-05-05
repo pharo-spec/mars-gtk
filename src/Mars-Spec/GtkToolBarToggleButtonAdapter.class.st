@@ -14,9 +14,14 @@ GtkToolBarToggleButtonAdapter >> addModelTo: gtkToolButton [
 
 { #category : #building }
 GtkToolBarToggleButtonAdapter >> newWidget [
+	| button  |
 	
-	^ GtkToggleToolButton new 
+	button := GtkToggleToolButton new 
 		label: self presenter label;
-		iconWidget: self presenter icon asGtkImage;
-		yourself
+		yourself.
+		
+	self presenter icon ifNotNil: [ :icon | 
+		button iconWidget: icon asGtkImage ].
+
+	^ button 
 ]
