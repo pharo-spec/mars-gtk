@@ -24,8 +24,8 @@ GtkTHaveWrappingScrollBars >> wrapWidget: gtkWidget [
 		propagateNaturalWidth: self presenter isPropagateNaturalWidth;
 		propagateNaturalHeight: self presenter isPropagateNaturalHeight.
 		
-	self presenter scrollBarStyles 
-		do: [ :each | wrapWidget addClass: each ].
+	self presenter scrollBarStyles ifNotNil: [ :styles |
+		styles do: [ :each | wrapWidget addClass: each ] ].
 	
 	^ wrapWidget
 ]
