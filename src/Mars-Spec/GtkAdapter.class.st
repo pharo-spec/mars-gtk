@@ -420,8 +420,7 @@ GtkAdapter >> setBalloonText: aString [
 GtkAdapter >> showContextMenu [
 
 	self presenter contextMenu ifNil: [ ^ self ].
-	self showMenu: self presenter contextMenu 
-		
+	self showMenu: self presenter contextMenu
 ]
 
 { #category : #private }
