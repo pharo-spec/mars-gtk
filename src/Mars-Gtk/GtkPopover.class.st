@@ -91,6 +91,12 @@ GtkPopover >> defaultWidget: aWidget [
 ]
 
 { #category : #private }
+GtkPopover >> getConstraintTo [
+
+	^ self ffiCall: #(GtkPopoverConstraint gtk_popover_get_constrain_to (self))
+]
+
+{ #category : #private }
 GtkPopover >> getDefaultWidget [
 
 	^ self ffiCall: #(GtkWidget *gtk_popover_get_default_widget (self))
@@ -142,6 +148,12 @@ GtkPopover >> preferredPosition: position [
 GtkPopover >> relativeWidget [
 
 	^ self ffiCall: #(GtkWidget *gtk_popover_get_relative_to (self))
+]
+
+{ #category : #private }
+GtkPopover >> setConstraintTo: constraint [
+
+	^ self ffiCall: #(void gtk_popover_set_constrain_to (self, GtkPopoverConstraint constraint))
 ]
 
 { #category : #private }
