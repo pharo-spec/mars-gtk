@@ -427,6 +427,18 @@ GtkWidget >> dragDestUnset [
 	^ self ffiCall: #(void gtk_drag_dest_unset #(self))
 ]
 
+{ #category : #accessing }
+GtkWidget >> events [
+	
+	self ffiCall: #(gint gtk_widget_get_events (self))
+]
+
+{ #category : #accessing }
+GtkWidget >> events: events [
+	
+	self ffiCall: #(void gtk_widget_set_events (self, gint events))
+]
+
 { #category : #'private deferring' }
 GtkWidget >> executeDeferredActions [
 

@@ -108,12 +108,6 @@ GtkDrawingArea >> eliotConnectSignal: signalName callback: aCallback data: aData
 ]
 
 { #category : #private }
-GtkDrawingArea >> events: events [
-	
-	self ffiCall: #(void gtk_widget_set_events (self, gint events))
-]
-
-{ #category : #private }
 GtkDrawingArea >> extent: aPoint [
 	requestedSize := aPoint.
 	self setSizeRequestWidth: aPoint x height: aPoint y
