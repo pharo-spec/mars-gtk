@@ -14,9 +14,7 @@ GtkPopoverAdapter >> addModelTo: gtkPopover [
 	self setPopoverPositionTo: gtkPopover.
 	
 	self presenter whenPresenterChangedDo: [
-		gtkPopover 
-			removeAll;
-			add: self presenterWidget showAll ]
+		self replaceChildPresenterOn: gtkPopover ]
 ]
 
 { #category : #building }
@@ -50,6 +48,21 @@ GtkPopoverAdapter >> popupPointingTo: aRectangle [
 GtkPopoverAdapter >> presenterWidget [
 
 	^ self presenter presenter buildWithSpec
+]
+
+{ #category : #building }
+GtkPopoverAdapter >> rebuild [
+	
+	self widgetDo: [ :w |
+		self replaceChildPresenterOn: w ]
+]
+
+{ #category : #private }
+GtkPopoverAdapter >> replaceChildPresenterOn: gtkPopover [
+
+	gtkPopover 
+		removeAll;
+		add: self presenterWidget showAll
 ]
 
 { #category : #building }

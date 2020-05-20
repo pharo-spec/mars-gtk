@@ -336,6 +336,9 @@ GtkAdapter >> installMouseLeaveEvent: anEvent to: aWidget [
 { #category : #'event installing' }
 GtkAdapter >> installMouseMoveEvent: anEvent to: aWidget [
 
+	"Ensure this widget will answer to motion-notify-event (many widgets do not have 
+	 this suscription)"
+	aWidget events: aWidget events | GdkEventMask GDK_POINTER_MOTION_MASK value.
 	aWidget connectMotionNotify: [ :event |
 		anEvent action value: event.
 		event wasHandled ]

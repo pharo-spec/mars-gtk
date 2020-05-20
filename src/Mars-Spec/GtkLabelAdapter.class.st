@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkLabelAdapter,
-	#superclass : #GtkAdapter,
+	#superclass : #GtkMiscAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -10,8 +10,8 @@ GtkLabelAdapter >> addModelTo: gtkWidget [
 	super addModelTo: gtkWidget.
 	
 	gtkWidget label: self getText.
-	self presenter whenLabelChangedDo: [ 
-		gtkWidget label: self getText ].
+	self presenter whenLabelChangedDo: [
+		self innerWidgetDo: [ :w | w label: self getText ] ].
 ]
 
 { #category : #accessing }
