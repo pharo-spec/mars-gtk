@@ -97,6 +97,12 @@ GtkMillerAdapter >> doScrollToShowLastPage [
 	self widget vAdjustment value: pos y
 ]
 
+{ #category : #'private accessing' }
+GtkMillerAdapter >> innerWidget [
+
+	^ innerWidget
+]
+
 { #category : #factory }
 GtkMillerAdapter >> newHorizontal [
 
