@@ -115,6 +115,12 @@ GtkContainer >> hasChildren [
 	^ self children notEmpty
 ]
 
+{ #category : #testing }
+GtkContainer >> includes: aWidget [
+
+	^ self children includes: aWidget
+]
+
 { #category : #initialization }
 GtkContainer >> initialize [
 

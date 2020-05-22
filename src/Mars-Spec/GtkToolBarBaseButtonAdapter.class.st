@@ -27,6 +27,22 @@ GtkToolBarBaseButtonAdapter >> icon [
 		ifNil: [ GtkImage null ]
 ]
 
+{ #category : #private }
+GtkToolBarBaseButtonAdapter >> ownerWidget [
+	
+	"A horrible way to get the widget of the owner. 
+	 It may fail at any pont :("
+	^ self presenter owner adapter widget
+]
+
+{ #category : #updating }
+GtkToolBarBaseButtonAdapter >> updateEnabled [
+
+	"It it is not included in owner, it will be collected by GTK, causing a crash"
+	(self ownerWidget includes: self widget) ifFalse: [ ^ self ].
+	super updateEnabled
+]
+
 { #category : #updating }
 GtkToolBarBaseButtonAdapter >> updateIcon [ 
 

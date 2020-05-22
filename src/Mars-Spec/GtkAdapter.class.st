@@ -78,7 +78,8 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 	
 	gtkWidget sensitive: self presenter isEnabled value.
 	self presenter help ifNotNil: [ gtkWidget tooltipText: self getHelpText ].
-	self presenter whenEnabledChangedDo: [ gtkWidget sensitive: self presenter isEnabled ].
+	self presenter whenEnabledChangedDo: [ 
+		self backendUpdatingDo: [ self updateEnabled ] ].
 	
 	self addVisibleSettingsTo: gtkWidget
 ]
@@ -462,6 +463,12 @@ GtkAdapter >> update: aSymbol with: anArray [
 	self 
 		perform: aSymbol 
 		withArguments: anArray
+]
+
+{ #category : #updating }
+GtkAdapter >> updateEnabled [
+	
+	self widgetDo: [ :w | w sensitive: self presenter isEnabled value ]
 ]
 
 { #category : #updating }
