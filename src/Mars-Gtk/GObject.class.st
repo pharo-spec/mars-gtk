@@ -295,12 +295,10 @@ GObject >> disconnectAll: aCollection during: aBlock [
 		^ self ].
 	
 	matching := callbacks select: [ :each | aCollection includes: each signalName ].
-	matching do: [ :each | | numberDisconnected |
-		numberDisconnected := self disconnectCallback: each.
-		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 
-		needed, or we model better the verification of error" 
-		"self assert: numberDisconnected = 1" ].
+	"disconnect"
+	matching do: [ :each | self disconnectCallback: each ].
 	aBlock ensure: [
+		"connect again"
 		matching do: [ :each |
 			self connectSignal: each ] ]
 ]

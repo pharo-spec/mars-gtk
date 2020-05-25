@@ -168,12 +168,14 @@ GtkTextStyleVisitor >> styleExpression: aString [
 GtkTextStyleVisitor >> styleMethod: aString [
 	| ast |
 
+contextClass crTrace.
 	ast := (contextClass ifNil: [ UndefinedObject ]) compiler
 		source: aString;
-		noPattern: true;
+		noPattern: false;
+		requestor: nil;
+		failBlock: [ ^nil ];
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: requestor;
-		parse.				
+		parse.	
 
 	self styleAST: ast.
 

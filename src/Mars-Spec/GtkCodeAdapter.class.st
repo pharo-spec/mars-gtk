@@ -3,7 +3,8 @@ Class {
 	#superclass : #GtkTextAdapter,
 	#instVars : [
 		'completionProvider',
-		'lastPopover'
+		'lastPopover',
+		'userAction'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -75,6 +76,12 @@ GtkCodeAdapter >> addTextTo: gtkTextView [
 { #category : #visiting }
 GtkCodeAdapter >> applyFullStyleTo: textBuffer [
 
+	"If I am in an user action, I will not do anything now, just register for change (it 
+	 will be executed later)."
+	self userActionDo: [ :anUserAction | 
+		anUserAction registerChange.
+		^ self ].
+
 	textBuffer userActionDuring: [ 
 		self applyStyleTo: textBuffer ]
 ]
@@ -82,10 +89,15 @@ GtkCodeAdapter >> applyFullStyleTo: textBuffer [
 { #category : #visiting }
 GtkCodeAdapter >> applyStyleTo: textBuffer [
 
-	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
+	"thisContext shortDebugStackOn: (ZnNewLineWriterStream on: Stdio stdout).
+	Stdio stdout << '======='; lf.
+	Stdio stdout << self presenter text asString; lf."
+	'UPDATING' crTrace.
 
+	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
+	self presenter text ifEmpty: [ ^ self ].
 	textBuffer removeAllTags.
-	self behavior 
+	self behavior
 		ifNotNil: [ :aBehavior |
 			self setMethodText: textBuffer text class: aBehavior toBuffer: textBuffer ]
 		ifNil: [ 
@@ -96,6 +108,14 @@ GtkCodeAdapter >> applyStyleTo: textBuffer [
 GtkCodeAdapter >> behavior [
 
 	^ self presenter behavior
+]
+
+{ #category : #'private-shout' }
+GtkCodeAdapter >> behaviorOrReceiverClass [
+
+	self presenter behavior ifNotNil: [ :aBehavior | ^ aBehavior ].
+	self presenter doItReceiver ifNotNil: [ :anObject | ^ anObject class ].
+	^ nil
 ]
 
 { #category : #building }
@@ -110,7 +130,8 @@ GtkCodeAdapter >> bufferClass [
 GtkCodeAdapter >> classOrMetaClass: aClass [
 	"I will take the behavior from model, I just need to fire a refresh"
 
-	self applyStyleTo: self innerWidget textBuffer.
+	self innerWidgetDo: [ :w | 
+		self applyFullStyleTo: w textBuffer ].
 	self updateCompletionProvider	
 ]
 
@@ -132,7 +153,7 @@ GtkCodeAdapter >> doItReceiver [
 	^ self presenter doItReceiver
 ]
 
-{ #category : #private }
+{ #category : #api }
 GtkCodeAdapter >> hasSyntaxHighlightEnabled [
 	"this is used just for testing"
 	
@@ -169,6 +190,7 @@ GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [
 
 	(GtkTextStyleVisitor new 
 		requestor: self presenter;
+		contextClass: self behaviorOrReceiverClass;
 		styleExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
@@ -178,11 +200,18 @@ GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [
 GtkCodeAdapter >> setMethodText: aString class: aClass toBuffer: textBuffer [ 
 
 	(GtkTextStyleVisitor new
-		requestor: self presenter; 
+		requestor: self; 
 		contextClass: aClass;
 		styleMethod: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
+]
+
+{ #category : #building }
+GtkCodeAdapter >> setText: aString to: gtkWidget [
+
+	super setText: aString to: gtkWidget.
+	self userActionDo: [ :action | action registerChange ]
 ]
 
 { #category : #private }
@@ -195,7 +224,28 @@ GtkCodeAdapter >> textWithStyle [
 GtkCodeAdapter >> updateCompletionProvider [	
 	
 	completionProvider ifNotNil: [ :p | 
-		p completionClass: self behavior ]
+		p completionEngine completionClass: self behavior ]
+]
+
+{ #category : #private }
+GtkCodeAdapter >> userActionDo: aBlock [
+
+	userAction ifNil: [ ^ self ].
+	aBlock value: userAction
+]
+
+{ #category : #api }
+GtkCodeAdapter >> userActionDuring: aBlock [
+
+	userAction := GtkCodeUserAction new.
+	self innerWidgetDo: [ :w |
+		w textBuffer 
+			disconnect: GChangedCallback signalName 
+			during: [ 
+				w textBuffer userActionDuring: aBlock.
+				userAction hasChanged ifTrue: [
+					userAction := nil.
+					self applyFullStyleTo: w textBuffer ] ] ].
 ]
 
 { #category : #building }
