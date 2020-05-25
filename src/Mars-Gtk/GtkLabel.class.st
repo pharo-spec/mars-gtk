@@ -93,6 +93,12 @@ GtkLabel >> label: aString [
 ]
 
 { #category : #accessing }
+GtkLabel >> mnemonicWidget: widget [
+
+	self ffiCall: #(void gtk_label_set_mnemonic_widget (self, GtkWidget *widget))
+]
+
+{ #category : #accessing }
 GtkLabel >> text [
 	
 	^ self basicText
@@ -102,4 +108,22 @@ GtkLabel >> text [
 GtkLabel >> text: str [
 	
 	self basicText: str
+]
+
+{ #category : #accessing }
+GtkLabel >> textWithMnemonic: str [
+
+	self ffiCall: #(void gtk_label_set_text_with_mnemonic (self, const gchar *str))
+]
+
+{ #category : #testing }
+GtkLabel >> useUnderline [
+
+	self ffiCall: #(gboolean gtk_label_get_use_underline (self))
+]
+
+{ #category : #accessing }
+GtkLabel >> useUnderline: setting [
+
+	self ffiCall: #(void gtk_label_set_use_underline (self, gboolean setting))
 ]

@@ -41,7 +41,11 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 
 	self presenter icon
 		ifNotNil: [ gtkWidget add: (self menuLabelWithIconAndAccelFor: gtkWidget) ]
-		ifNil: [ gtkWidget label: self presenter name ].
+		ifNil: [ 
+			(self presenter name includes: $_) 
+				ifTrue: [ gtkWidget useUnderline: true ].
+			gtkWidget label: self presenter name ].
+	
 	self presenter whenNameChangedDo: [ self updateName ].
 	self presenter whenIconChangedDo: [ self updateIcon ].
 		
@@ -69,17 +73,26 @@ GtkMenuItemAdapter >> getNameText [
 
 { #category : #building }
 GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
-	| gtkBox |
+	| gtkBox gtkLabel |
 	
 	gtkBox := (GtkBox newHorizontalSpacing: self class defaultSpacing)
-		packStart: (self model icon value ifNil: [ self iconNamed: #blank ]) asGtkImage
+		packStart: (self presenter icon value ifNil: [ self iconNamed: #blank ]) asGtkImage
 			expand: false 
 			fill: false 
 			padding: 0;
-		packStart: (GtkLabel newLabel: self getNameText);
+		packStart: (gtkLabel := GtkLabel new);
 		yourself.
-		
-	self model shortcut ifNotNil: [ :shortcut |
+
+	(self presenter name includes: $_)
+		ifTrue: [ 
+			gtkLabel 
+				useUnderline: true;
+				textWithMnemonic: self presenter name;
+				mnemonicWidget: gtkWidget ]
+		ifFalse: [ 
+			gtkLabel label: self presenter name ].		
+
+	self presenter shortcut ifNotNil: [ :shortcut |
 		self addAcceleratorShortcutLabel: shortcut to: gtkBox ].
 		
 	gtkBox showAll.
