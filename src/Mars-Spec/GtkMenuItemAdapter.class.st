@@ -63,7 +63,8 @@ GtkMenuItemAdapter >> addModelTo: gtkWidget [
 { #category : #'private accessing' }
 GtkMenuItemAdapter >> getNameText [
 
-	^ self presenter name ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+	^ self presenter name ifNotNil: [ :aString | 
+		aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #building }
@@ -71,7 +72,7 @@ GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
 	| gtkBox |
 	
 	gtkBox := (GtkBox newHorizontalSpacing: self class defaultSpacing)
-		packStart: (self model icon value ifNil: [self iconNamed: #blank]) asGtkImage
+		packStart: (self model icon value ifNil: [ self iconNamed: #blank ]) asGtkImage
 			expand: false 
 			fill: false 
 			padding: 0;
@@ -95,6 +96,27 @@ GtkMenuItemAdapter >> shortcutGroup [
 		group := GtkAccelGroup new.
 		root shortcutGroup: group.
 		group ]
+]
+
+{ #category : #'private updating' }
+GtkMenuItemAdapter >> updateIcon [
+
+	self innerWidgetDo: [ :w |
+		w hasChildren ifTrue: [ w removeAll ].
+		w add: (self menuLabelWithIconAndAccelFor: w) ].
+]
+
+{ #category : #'private updating' }
+GtkMenuItemAdapter >> updateName [
+
+	self innerWidgetDo: [ :w |
+		"if it has children it means it already has a component with icon"
+		w hasChildren 
+			ifTrue: [ 
+				w removeAll.
+				w add: (self menuLabelWithIconAndAccelFor: w) ]
+			ifFalse: [
+				w label: self presenter name ] ].
 ]
 
 { #category : #accessing }
