@@ -25,6 +25,7 @@ BaselineOfMars >> baseline: spec [
 				package: 'Mars-Gtk-SourceView' with: [ spec requires: #('Mars-Gtk') ];
 				package: 'Mars-Gtk-Morphic' with: [ spec requires: #('Mars-Gtk') ];
 				"spec"
+				package: 'Mars-Spec-Frame';
 				package: 'Mars-Spec-Text' with: [ spec requires: 'Mars-Gtk' ];
 				package: 'Mars-Spec-Keybindings' with: [ spec requires: 'Mars-Gtk' ];
 				package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Text' 'Mars-Spec-Keybindings') ];
