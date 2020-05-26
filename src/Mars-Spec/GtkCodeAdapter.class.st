@@ -89,11 +89,6 @@ GtkCodeAdapter >> applyFullStyleTo: textBuffer [
 { #category : #visiting }
 GtkCodeAdapter >> applyStyleTo: textBuffer [
 
-	"thisContext shortDebugStackOn: (ZnNewLineWriterStream on: Stdio stdout).
-	Stdio stdout << '======='; lf.
-	Stdio stdout << self presenter text asString; lf."
-	'UPDATING' crTrace.
-
 	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
 	self presenter text ifEmpty: [ ^ self ].
 	textBuffer removeAllTags.
