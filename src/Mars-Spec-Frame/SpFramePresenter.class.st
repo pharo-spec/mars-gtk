@@ -1,3 +1,19 @@
+"
+! SpFramePresenter
+
+A frame presenter decorates a content presenter with a frame and an optional label.
+
+""""IMPORTANT:"""" For the time being, this component is just present with the Gtk backend.
+
+[[[language=Smalltalk
+SpFramePresenter new 
+	label: 'A label';
+	presenter: (SpLabelPresenter new 
+		label: 'Some content (any presenter)';
+		yourself);
+	openWithSpec
+]]]
+"
 Class {
 	#name : #SpFramePresenter,
 	#superclass : #SpAbstractWidgetPresenter,
