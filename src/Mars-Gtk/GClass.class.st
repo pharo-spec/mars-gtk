@@ -25,9 +25,8 @@ new
 
 	^ (GClass gDefinitionAt: self) new
 	
-There are several examples in the system that does this: GtkSourceCompletionProvider, GtkDataSource. 
+There are several examples in the system that does this like *class:GtkPharoSourceCompletionProvider*. 
 You can check at them as examples.
- 
 
 "
 Class {

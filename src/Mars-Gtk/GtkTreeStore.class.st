@@ -24,6 +24,18 @@ GtkTreeStore class >> basicNewWithNumberOfColumns: aNumber andTypes: anExternalA
 ]
 
 { #category : #accessing }
+GtkTreeStore class >> gClassSize [
+
+	^ 168
+]
+
+{ #category : #accessing }
+GtkTreeStore class >> gSize [
+
+	^ 32
+]
+
+{ #category : #accessing }
 GtkTreeStore class >> gType [ 
 	"This method was automatically generated"
 
@@ -34,6 +46,12 @@ GtkTreeStore class >> gType [
 GtkTreeStore class >> gtkTreeStoreNewWithNumberOfColums: numberoOfColumns andTypes: types [
 
 	^ self ffiCall: #(GtkTreeStore * gtk_tree_store_newv (gint numberoOfColumns, oop types))
+]
+
+{ #category : #common }
+GtkTreeStore class >> init: iface [
+
+	^ self ffiCall: #(void gtk_tree_store_tree_model_init (GtkTreeModelIface *iface))
 ]
 
 { #category : #iterating }

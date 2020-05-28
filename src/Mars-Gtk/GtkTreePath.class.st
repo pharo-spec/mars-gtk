@@ -56,6 +56,12 @@ GtkTreePath class >> treePathNewFromString: path [
 	^ self ffiCall: #(GtkTreePath *gtk_tree_path_new_from_string (const gchar *path))
 ]
 
+{ #category : #accessing }
+GtkTreePath >> appendIndex: index [
+
+	^ self ffiCall: #(void gtk_tree_path_append_index (self, gint index))
+]
+
 { #category : #private }
 GtkTreePath >> basicFree [
 
@@ -83,7 +89,7 @@ GtkTreePath >> firstChild [
 	^ path
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GtkTreePath >> free [
 
 	self basicFree.
