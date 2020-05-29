@@ -1,5 +1,5 @@
 Class {
-	#name : #GtkTreeDataSource,
+	#name : #GtkTreeDataStore,
 	#superclass : #GtkTreeStore,
 	#instVars : [
 		'roots',
@@ -15,13 +15,13 @@ Class {
 }
 
 { #category : #accessing }
-GtkTreeDataSource class >> gClass [
+GtkTreeDataStore class >> gClass [
 
 	^ GClass gClassAt: self
 ]
 
 { #category : #accessing }
-GtkTreeDataSource class >> gDefine: gClass [
+GtkTreeDataStore class >> gDefine: gClass [
 
 	gClass parent: GtkTreeStore.
 	gClass
@@ -30,7 +30,7 @@ GtkTreeDataSource class >> gDefine: gClass [
 ]
 
 { #category : #accessing }
-GtkTreeDataSource class >> gDefineTreeStoreInterface: iface [
+GtkTreeDataStore class >> gDefineTreeStoreInterface: iface [
 
 	iface get_flags: (GCallback 
 		signature: #("GtkTreeModelFlags"gint (void *tree_model)) 
@@ -92,44 +92,44 @@ GtkTreeDataSource class >> gDefineTreeStoreInterface: iface [
 ]
 
 { #category : #accessing }
-GtkTreeDataSource class >> gInstance: handle [
+GtkTreeDataStore class >> gInstance: handle [
 
 	^ self gClass findInstance: handle
 ]
 
 { #category : #accessing }
-GtkTreeDataSource class >> new [
+GtkTreeDataStore class >> new [
 
 	^ (GClass gDefinitionAt: self) new
 ]
 
 { #category : #private }
-GtkTreeDataSource >> assertNotNull: anObject ifFail: aBlock [ 
+GtkTreeDataStore >> assertNotNull: anObject ifFail: aBlock [ 
 
 	(anObject isNil or: [ anObject getHandle isNull ]) ifTrue: aBlock
 ]
 
 { #category : #accessing }
-GtkTreeDataSource >> children: aBlock [
+GtkTreeDataStore >> children: aBlock [
 
 	children := aBlock
 ]
 
 { #category : #accessing }
-GtkTreeDataSource >> childrenFor: element [
+GtkTreeDataStore >> childrenFor: element [
 
 	children ifNil: [ ^ #() ].
 	^ children value: element
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> getColumnType: index [
+GtkTreeDataStore >> getColumnType: index [
 
 	^ G_TYPE_STRING
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> getFlags [
+GtkTreeDataStore >> getFlags [
 	"GTK_TREE_MODEL_LIST_ONLY in case of a simple list (which is not the case in the experiment)"
 	
 	^ GTK_TREE_MODEL_ITERS_PERSIST value
@@ -137,7 +137,7 @@ GtkTreeDataSource >> getFlags [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> getIter: path iter: iter [
+GtkTreeDataStore >> getIter: path iter: iter [
 
 	self assertNotNull: path ifFail: [ ^ false ].
 	
@@ -151,13 +151,13 @@ GtkTreeDataSource >> getIter: path iter: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> getNColumns [
+GtkTreeDataStore >> getNColumns [
 
 	^ 1
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> getPath: iter [
+GtkTreeDataStore >> getPath: iter [
 	| path |
 
 	self assertNotNull: iter ifFail: [ ^ ExternalAddress null ].
@@ -168,7 +168,7 @@ GtkTreeDataSource >> getPath: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> getValue: iter column: column value: gValue [
+GtkTreeDataStore >> getValue: iter column: column value: gValue [
 	| path item |
 
 	self assertNotNull: iter ifFail: [ ^ self ].
@@ -183,7 +183,7 @@ GtkTreeDataSource >> getValue: iter column: column value: gValue [
 ]
 
 { #category : #accessing }
-GtkTreeDataSource >> initialize [
+GtkTreeDataStore >> initialize [
 
 	super initialize.
 	stamp := 16rFFFF atRandom
@@ -191,7 +191,7 @@ GtkTreeDataSource >> initialize [
 ]
 
 { #category : #private }
-GtkTreeDataSource >> itemAt: index of: anArray then: path [
+GtkTreeDataStore >> itemAt: index of: anArray then: path [
 	"dives into elements of tree to find the one that corresponds to path"
 	| element |
 	
@@ -208,7 +208,7 @@ GtkTreeDataSource >> itemAt: index of: anArray then: path [
 ]
 
 { #category : #private }
-GtkTreeDataSource >> itemAtPath: path [
+GtkTreeDataStore >> itemAtPath: path [
 	| pathArray |
 
 	self assertNotNull: path ifFail:  [ ^ nil ].
@@ -221,7 +221,7 @@ GtkTreeDataSource >> itemAtPath: path [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> iterChildren: parent iter: iter [
+GtkTreeDataStore >> iterChildren: parent iter: iter [
 	| path |
 	
 	self assertNotNull: parent ifFail: [ ^ false ].
@@ -241,7 +241,7 @@ GtkTreeDataSource >> iterChildren: parent iter: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> iterHasChild: iter [
+GtkTreeDataStore >> iterHasChild: iter [
 	| item path |
 
 	children ifNil: [ ^ false ].
@@ -256,7 +256,7 @@ GtkTreeDataSource >> iterHasChild: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> iterNChildren: iter [
+GtkTreeDataStore >> iterNChildren: iter [
 	| item path |
 
 	children ifNil: [ ^ 0 ].
@@ -272,7 +272,7 @@ GtkTreeDataSource >> iterNChildren: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> iterNext: iter [
+GtkTreeDataStore >> iterNext: iter [
 	| path |
 
 	self assertNotNull: iter ifFail:  [ ^ false ].	
@@ -292,7 +292,7 @@ GtkTreeDataSource >> iterNext: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> iterNthChild: parent number: n iter: iter [
+GtkTreeDataStore >> iterNthChild: parent number: n iter: iter [
 	| path |
 
 	self assertNotNull: parent ifFail: [ ^ false ].
@@ -309,7 +309,7 @@ GtkTreeDataSource >> iterNthChild: parent number: n iter: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataSource >> iterParent: child iter: iter [
+GtkTreeDataStore >> iterParent: child iter: iter [
 	| path |
 
 	self assertNotNull: child ifFail: [ ^ false ].
@@ -327,19 +327,19 @@ GtkTreeDataSource >> iterParent: child iter: iter [
 ]
 
 { #category : #private }
-GtkTreeDataSource >> pathFromIter: iter [
+GtkTreeDataStore >> pathFromIter: iter [
 
 	^ GtkTreePath fromHandle: iter user_data
 ]
 
 { #category : #accessing }
-GtkTreeDataSource >> roots [
+GtkTreeDataStore >> roots [
 
 	^ roots
 ]
 
 { #category : #accessing }
-GtkTreeDataSource >> roots: aCollection [
+GtkTreeDataStore >> roots: aCollection [
 
 	roots := aCollection
 ]
