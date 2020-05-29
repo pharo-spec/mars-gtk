@@ -1,3 +1,10 @@
+"
+! GtkTreeDataStore
+
+A data store is a special implementation of a tree store that will provide data directly from the image (otherwise, with a ==GtkTreeStore== you need to provide elements ''before'', which is time consuming and not very friendly to calculate properties).
+
+Plesse, notice that the usage of a ==GtkTreeDataStore== is not magical and it will not solve all size/time to load problems, since ==GtkTreeView== fetches all elements in a leaf before showing it (meaning that if you have 10k elements in a list, it will take time to be filled).
+"
 Class {
 	#name : #GtkTreeDataStore,
 	#superclass : #GtkTreeStore,
@@ -132,8 +139,7 @@ GtkTreeDataStore >> getColumnType: index [
 GtkTreeDataStore >> getFlags [
 	"GTK_TREE_MODEL_LIST_ONLY in case of a simple list (which is not the case in the experiment)"
 	
-	^ GTK_TREE_MODEL_ITERS_PERSIST value
-
+	^ GTK_TREE_MODEL_ITERS_PERSIST value "| GTK_TREE_MODEL_LIST_ONLY value"
 ]
 
 { #category : #'accessing store' }
