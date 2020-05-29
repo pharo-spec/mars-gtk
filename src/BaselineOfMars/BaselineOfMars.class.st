@@ -24,6 +24,7 @@ BaselineOfMars >> baseline: spec [
 				package: 'Mars-Gtk' with: [ spec requires: #('ThreadedFFI' 'Beacon' 'Mars-Pango') ];
 				package: 'Mars-Gtk-SourceView' with: [ spec requires: #('Mars-Gtk') ];
 				package: 'Mars-Gtk-Morphic' with: [ spec requires: #('Mars-Gtk') ];
+				package: 'Mars-Gtk-Morphic-UIManager' with: [ spec requires: #('Mars-Gtk-Morphic') ];
 				"spec"
 				package: 'Mars-Spec-Frame';
 				package: 'Mars-Spec-Text' with: [ spec requires: 'Mars-Gtk' ];
