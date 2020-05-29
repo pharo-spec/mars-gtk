@@ -201,6 +201,12 @@ GtkWindow >> isDecorated [
 ]
 
 { #category : #testing }
+GtkWindow >> isMaximized [
+
+	^ self ffiCall: #(gboolean gtk_window_is_maximized (self))
+]
+
+{ #category : #testing }
 GtkWindow >> isModal [ 
 
 	^ self ffiCall: #(gboolean gtk_window_get_modal (self))

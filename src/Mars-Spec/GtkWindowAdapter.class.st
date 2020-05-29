@@ -9,7 +9,8 @@ Class {
 		'menuBar',
 		'toolbar',
 		'statusBar',
-		'content'
+		'content',
+		'minimized'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -41,6 +42,10 @@ GtkWindowAdapter >> addDeferredAction: aBlock [
 GtkWindowAdapter >> addModelTo: gtkWindow [
 	"model is not added here but in #addPresenterIn:withSpecLayout:. 
 	 Spec windows may have just ONE presenter"
+	
+	gtkWindow connectWindowStateEvent: [ :event | 
+		minimized := event new_window_state = GdkWindowState GDK_WINDOW_STATE_ICONIFIED.
+		false  ]
 ]
 
 { #category : #accessing }
@@ -209,7 +214,21 @@ GtkWindowAdapter >> infoArea [
 GtkWindowAdapter >> initialize [
 
 	initialized := false.
+	minimized := false.
 	super initialize
+]
+
+{ #category : #'spec protocol' }
+GtkWindowAdapter >> isMaximized [
+
+	self widgetDo: [ :w | ^ w isMaximized ].
+	^ false
+]
+
+{ #category : #'spec protocol' }
+GtkWindowAdapter >> isMinimized [
+
+	^ minimized
 ]
 
 { #category : #'spec protocol' }

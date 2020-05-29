@@ -353,6 +353,12 @@ GtkWidget >> connectUnmap: aBlock [
 		do: aBlock
 ]
 
+{ #category : #signaling }
+GtkWidget >> connectWindowStateEvent: aBlock [
+
+	(GWindowStateCallback do: aBlock) connectTo: self	
+]
+
 { #category : #accessing }
 GtkWidget >> contextMenu: aGtkMenu [
 	"sets all needed to show a context menu. 

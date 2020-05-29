@@ -11,7 +11,6 @@ Class {
 	#instVars : [
 		'roots',
 		'children',
-		'orderedItems',
 		'stamp'
 	],
 	#pools : [
