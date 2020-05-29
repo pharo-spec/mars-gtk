@@ -25,8 +25,8 @@ GdkEventWindowState class >> fieldsDesc [
   	GdkEventType type;
   	"GdkWindow *"void *window;
   	gint8 send_event;
-  	GdkWindowState changed_mask;
-	GdkWindowState new_window_state
+  	"GdkWindowState"gint changed_mask;
+	"GdkWindowState"gint new_window_state
 	)
 ]
 
@@ -39,25 +39,25 @@ GdkEventWindowState class >> isType: aType [
 { #category : #'accessing structure variables' }
 GdkEventWindowState >> changed_mask [
 	"This method was automatically generated"
-	^GdkWindowState fromInteger: (handle unsignedLongAt: OFFSET_CHANGED_MASK)
+	^handle signedLongAt: OFFSET_CHANGED_MASK
 ]
 
 { #category : #'accessing structure variables' }
 GdkEventWindowState >> changed_mask: anObject [
 	"This method was automatically generated"
-	handle unsignedLongAt: OFFSET_CHANGED_MASK put: anObject value
+	handle signedLongAt: OFFSET_CHANGED_MASK put: anObject
 ]
 
 { #category : #'accessing structure variables' }
 GdkEventWindowState >> new_window_state [
 	"This method was automatically generated"
-	^GdkWindowState fromInteger: (handle unsignedLongAt: OFFSET_NEW_WINDOW_STATE)
+	^handle signedLongAt: OFFSET_NEW_WINDOW_STATE
 ]
 
 { #category : #'accessing structure variables' }
 GdkEventWindowState >> new_window_state: anObject [
 	"This method was automatically generated"
-	handle unsignedLongAt: OFFSET_NEW_WINDOW_STATE put: anObject value
+	handle signedLongAt: OFFSET_NEW_WINDOW_STATE put: anObject
 ]
 
 { #category : #'accessing structure variables' }

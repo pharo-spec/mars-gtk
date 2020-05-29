@@ -12,6 +12,9 @@ Class {
 		'content',
 		'minimized'
 	],
+	#pools : [
+		'GdkWindowState'
+	],
 	#category : #'Mars-Spec-Adapter'
 }
 
@@ -44,7 +47,7 @@ GtkWindowAdapter >> addModelTo: gtkWindow [
 	 Spec windows may have just ONE presenter"
 	
 	gtkWindow connectWindowStateEvent: [ :event | 
-		minimized := event new_window_state = GdkWindowState GDK_WINDOW_STATE_ICONIFIED.
+		minimized := (event new_window_state & GDK_WINDOW_STATE_ICONIFIED value) = GDK_WINDOW_STATE_ICONIFIED value.
 		false  ]
 ]
 
@@ -220,9 +223,10 @@ GtkWindowAdapter >> initialize [
 
 { #category : #'spec protocol' }
 GtkWindowAdapter >> isMaximized [
+	| maximized |
 
-	self widgetDo: [ :w | ^ w isMaximized ].
-	^ false
+	maximized := self widgetDo: [ :w | w isMaximized ].
+	^ maximized ifNil: [ false ]
 ]
 
 { #category : #'spec protocol' }
