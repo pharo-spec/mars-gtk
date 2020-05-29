@@ -74,10 +74,10 @@ GtkTreePath >> copy [
 	^ self ffiCall: #(GtkTreePath *gtk_tree_path_copy (self))
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GtkTreePath >> down [ 
 
-	^ self ffiCall: #(void gtk_tree_path_down (self))
+	^ self ffiCall: #(gboolean gtk_tree_path_down (self))
 ]
 
 { #category : #accessing }
@@ -96,16 +96,16 @@ GtkTreePath >> free [
 	handle beNull
 ]
 
-{ #category : #accessing }
-GtkTreePath >> moveNext [
+{ #category : #private }
+GtkTreePath >> getIndicesWithDepth: depth [
 
-	^ self ffiCall: #(void gtk_tree_path_next (self))
+	^ self ffiCall: #(gint *gtk_tree_path_get_indices_with_depth (self, gint *depth))
 ]
 
 { #category : #accessing }
-GtkTreePath >> movePrev [
+GtkTreePath >> next [
 
-	^ self ffiCall: #(gboolean gtk_tree_path_prev (self))
+	^ self ffiCall: #(gboolean gtk_tree_path_next (self))
 ]
 
 { #category : #accessing }
@@ -117,11 +117,21 @@ GtkTreePath >> parent [
 	^ path
 ]
 
+{ #category : #accessing }
+GtkTreePath >> prev [
+
+	^ self ffiCall: #(gboolean gtk_tree_path_prev (self))
+]
+
 { #category : #converting }
 GtkTreePath >> toArray [
-
-	^ (self toString substrings: ':')
-		collect: [ :each | each asNumber + 1 ]
+	| indices depth |
+	
+	depth := FFIInt32 newBuffer.
+	indices := self getIndicesWithDepth: depth.
+	^ Array streamContents: [ :stream |
+		1 to: (depth signedLongAt: 1) do: [ :index |
+			stream nextPut: (indices signedLongAt: (((index - 1) * FFIInt32 externalTypeSize) + 1)) + 1 ] ].
 ]
 
 { #category : #private }
@@ -130,8 +140,8 @@ GtkTreePath >> toString [
 	^ self ffiCall: #(gchar *gtk_tree_path_to_string (self))
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GtkTreePath >> up [ 
 
-	^ self ffiCall: #(void gtk_tree_path_up (self))
+	^ self ffiCall: #(gboolean gtk_tree_path_up (self))
 ]
