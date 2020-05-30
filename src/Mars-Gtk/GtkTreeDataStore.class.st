@@ -129,6 +129,14 @@ GtkTreeDataStore >> childrenFor: element [
 	^ childrenBlock value: element
 ]
 
+{ #category : #initialization }
+GtkTreeDataStore >> finalize [
+
+	"free paths dictionary"
+	paths size printToStdout.
+	paths valuesDo: [ :each | each free ]
+]
+
 { #category : #'accessing store' }
 GtkTreeDataStore >> getColumnType: index [
 
@@ -138,7 +146,7 @@ GtkTreeDataStore >> getColumnType: index [
 { #category : #'accessing store' }
 GtkTreeDataStore >> getFlags [
 	"GTK_TREE_MODEL_LIST_ONLY in case of a simple list (which is not the case in the experiment)"
-	
+
 	^ GTK_TREE_MODEL_ITERS_PERSIST value "| GTK_TREE_MODEL_LIST_ONLY value"
 ]
 
@@ -147,13 +155,17 @@ GtkTreeDataStore >> getIter: path iter: iter [
 	| item iterPath |
 
 	self assertNotNull: path ifFail: [ ^ false ].
-	
-	iter stamp: stamp.
 
-	item := self itemAtPath: path.
-	item ifNil: [ ^ false ].
-	
-	iterPath := paths at: item ifAbsentPut: [ path copy ].
+	item := self itemAtPath: path ifAbsent: [ ^ false ].
+	item printToStdout.
+	iterPath := self 
+		pathAtItem: item
+		ifAbsentPut: [ 
+			'PUT' printToStdout.
+			path copy ].
+	iterPath printToStdout.
+
+	iter stamp: stamp.
 	iter user_data: iterPath.
 	iter user_data2: ExternalAddress null.
 	iter user_data3: ExternalAddress null.
@@ -169,15 +181,14 @@ GtkTreeDataStore >> getNColumns [
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> getPath: iter [
-	| path iterPath |
+	| path |
 
 	self assertNotNull: iter ifFail: [ ^ ExternalAddress null ].
 	self assertNotNull: iter user_data ifFail: [ ^ ExternalAddress null ].
 
 	path := GtkTreePath fromHandle: iter user_data. 
-	iterPath := paths at: (self itemAtPath: path) ifAbsentPut: [ path copy ].
-
-	^ iterPath getHandle
+	"This will be released by the caller"
+	^ path copy getHandle
 ]
 
 { #category : #'accessing store' }
@@ -188,8 +199,10 @@ GtkTreeDataStore >> getValue: iter column: column value: gValue [
 	self assertNotNull: iter user_data ifFail: [ ^ self ].
 
 	path := self pathFromIter: iter.
-	item := self itemAtPath: path.
-	item ifNil: [ ^ self ].
+	path getHandle printToStdout.
+	item := self 
+		itemAtPath: path 
+		ifAbsent: [ ^ self ].
 
 	gValue init: (self getColumnType: column).
 	gValue setString: item asString
@@ -200,8 +213,8 @@ GtkTreeDataStore >> initialize [
 
 	super initialize.
 	paths := Dictionary new.
-	stamp := 16rFFFF atRandom
-	
+	stamp := 16rFFFF atRandom.
+	self finalizationRegistry add: self 
 ]
 
 { #category : #private }
@@ -234,26 +247,33 @@ GtkTreeDataStore >> itemAtPath: path [
 		then: pathArray allButFirst
 ]
 
+{ #category : #private }
+GtkTreeDataStore >> itemAtPath: path ifAbsent: aBlock [
+	
+	^ (self itemAtPath: path) ifNil: aBlock
+]
+
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterChildren: parent iter: iter [
 	| path item itemChildren iterPath |
-	
+
 	self assertNotNull: parent ifFail: [ ^ false ].
 	self assertNotNull: parent user_data ifFail: [ ^ false ].
 	
 	path := self pathFromIter: parent.
-	item := self itemAtPath: path.
-	item ifNil: [ ^ false ].
+	item := self 
+		itemAtPath: path 
+		ifAbsent: [ ^ false ].
 	
 	itemChildren := self childrenFor: item.
 	itemChildren ifEmpty: [ ^ false ].
 	
-	iterPath := paths 
-		at: itemChildren first 
+	iterPath := self 
+		pathAtItem: itemChildren first 
 		ifAbsentPut: [ | childPath |
 			childPath := path copy.
-			path down ifFalse: [ 
-				path free.
+			childPath down ifFalse: [ 
+				childPath free.
 				^ false ].
 			childPath ]. 
 		
@@ -272,8 +292,7 @@ GtkTreeDataStore >> iterHasChild: iter [
 	self assertNotNull: iter user_data ifFail: [ ^ false ].
 
 	path := self pathFromIter: iter.
-	item := self itemAtPath: path.
-	item ifNil: [ ^ false ].
+	item := self itemAtPath: path ifAbsent: [ ^ false ].
 	
 	^ (self childrenFor: item) notEmpty
 ]
@@ -289,7 +308,7 @@ GtkTreeDataStore >> iterNChildren: iter [
 	path := self pathFromIter: iter.
 	path toArray ifEmpty: [ ^ self roots size ].
 	
-	item := self itemAtPath: path.
+	item := self itemAtPath: path ifAbsent: [ ^ 0 ].
 	^ (self childrenFor: item) size
 ]
 
@@ -303,15 +322,15 @@ GtkTreeDataStore >> iterNext: iter [
 	path := self pathFromIter: iter.
 
 	path := path copy.
-	path next ifFalse: [ ^ false ].
+	path next ifFalse: [ path free. ^ false ].
 	
-	item := self itemAtPath: path.
-	item ifNil: [ ^ false ].
-	
-	iterPath := paths 
-		at: item 
-		ifPresent: [ :aPath | path free. aPath  ]
-		ifAbsentPut: [ path ].
+	item := self itemAtPath: path ifAbsent: [ path free. ^ false ].
+	iterPath := self pathAtItem: item.
+	iterPath 
+		ifNotNil: [ path free "I will not need this" ]
+		ifNil: [
+			iterPath := path.
+			self pathAtItem: item put: iterPath ].
 	
 	iter stamp: stamp. 
 	iter user_data: iterPath.
@@ -349,20 +368,63 @@ GtkTreeDataStore >> iterNthChild: parent number: n iter: iter [
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterParent: child iter: iter [
-	| path |
+	| path item iterPath |
 
 	self assertNotNull: child ifFail: [ ^ false ].
 	self assertNotNull: child user_data ifFail: [ ^ false ].
 	
 	path := self pathFromIter: child.
-	self flag: #TODO. "This is leaking"
+
 	path := path copy.
-	path up ifFalse: [ ^ false ].
+	path up ifFalse: [ 
+		path free.
+		^ false ].
 	
+	item := self 
+		itemAtPath: path 
+		ifAbsent: [ 
+			path free.
+			^ false ].
+
+	iterPath := self pathAtItem: item.
+	iterPath 
+		ifNotNil: [ path free. "I will not need this" ]
+		ifNil: [ 
+			iterPath := path.
+			self pathAtItem: item put: iterPath ]. 
+		 
 	iter stamp: stamp. 
-	iter user_data: path.
+	iter user_data: iterPath.
 
 	^ true
+]
+
+{ #category : #private }
+GtkTreeDataStore >> pathAtItem: item [
+
+	^ self pathAtItem: item ifAbsent: [ nil ]
+]
+
+{ #category : #private }
+GtkTreeDataStore >> pathAtItem: item ifAbsent: aBlock [
+
+	^ paths 
+		at: item 
+		ifAbsent: aBlock
+]
+
+{ #category : #private }
+GtkTreeDataStore >> pathAtItem: item ifAbsentPut: aBlock [
+
+	^ paths 
+		at: item 
+		ifAbsentPut: aBlock
+]
+
+{ #category : #private }
+GtkTreeDataStore >> pathAtItem: item put: aPath [ 
+
+	paths at: item put: aPath
 ]
 
 { #category : #private }
