@@ -10,8 +10,9 @@ Class {
 	#superclass : #GtkTreeStore,
 	#instVars : [
 		'roots',
-		'children',
-		'stamp'
+		'stamp',
+		'paths',
+		'childrenBlock'
 	],
 	#pools : [
 		'GType',
@@ -118,14 +119,14 @@ GtkTreeDataStore >> assertNotNull: anObject ifFail: aBlock [
 { #category : #accessing }
 GtkTreeDataStore >> children: aBlock [
 
-	children := aBlock
+	childrenBlock := aBlock
 ]
 
 { #category : #accessing }
 GtkTreeDataStore >> childrenFor: element [
 
-	children ifNil: [ ^ #() ].
-	^ children value: element
+	childrenBlock ifNil: [ ^ #() ].
+	^ childrenBlock value: element
 ]
 
 { #category : #'accessing store' }
@@ -143,12 +144,17 @@ GtkTreeDataStore >> getFlags [
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> getIter: path iter: iter [
+	| item iterPath |
 
 	self assertNotNull: path ifFail: [ ^ false ].
 	
 	iter stamp: stamp.
-	self flag: #TODO. "This will leak. Is like there to test"
-	iter user_data: path copy.
+
+	item := self itemAtPath: path.
+	item ifNil: [ ^ false ].
+	
+	iterPath := paths at: item ifAbsentPut: [ path copy ].
+	iter user_data: iterPath.
 	iter user_data2: ExternalAddress null.
 	iter user_data3: ExternalAddress null.
 	 
@@ -163,13 +169,15 @@ GtkTreeDataStore >> getNColumns [
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> getPath: iter [
-	| path |
+	| path iterPath |
 
 	self assertNotNull: iter ifFail: [ ^ ExternalAddress null ].
 	self assertNotNull: iter user_data ifFail: [ ^ ExternalAddress null ].
 
 	path := GtkTreePath fromHandle: iter user_data. 
-	^ path copy getHandle
+	iterPath := paths at: (self itemAtPath: path) ifAbsentPut: [ path copy ].
+
+	^ iterPath getHandle
 ]
 
 { #category : #'accessing store' }
@@ -187,10 +195,11 @@ GtkTreeDataStore >> getValue: iter column: column value: gValue [
 	gValue setString: item asString
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GtkTreeDataStore >> initialize [
 
 	super initialize.
+	paths := Dictionary new.
 	stamp := 16rFFFF atRandom
 	
 ]
@@ -227,20 +236,29 @@ GtkTreeDataStore >> itemAtPath: path [
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterChildren: parent iter: iter [
-	| path |
+	| path item itemChildren iterPath |
 	
 	self assertNotNull: parent ifFail: [ ^ false ].
 	self assertNotNull: parent user_data ifFail: [ ^ false ].
 	
 	path := self pathFromIter: parent.
-	path ifNil: [ ^ false ].
+	item := self itemAtPath: path.
+	item ifNil: [ ^ false ].
 	
-	self flag: #TODO. "This is leaking"
-	path := path copy.
-	path down ifFalse: [ ^ false ].
+	itemChildren := self childrenFor: item.
+	itemChildren ifEmpty: [ ^ false ].
 	
+	iterPath := paths 
+		at: itemChildren first 
+		ifAbsentPut: [ | childPath |
+			childPath := path copy.
+			path down ifFalse: [ 
+				path free.
+				^ false ].
+			childPath ]. 
+		
 	iter stamp: stamp. 
-	iter user_data: path.
+	iter user_data: iterPath.
 	
 	^ true
 ]
@@ -249,7 +267,7 @@ GtkTreeDataStore >> iterChildren: parent iter: iter [
 GtkTreeDataStore >> iterHasChild: iter [
 	| item path |
 
-	children ifNil: [ ^ false ].
+	childrenBlock ifNil: [ ^ false ].
 	self assertNotNull: iter ifFail: [ ^ false ].
 	self assertNotNull: iter user_data ifFail: [ ^ false ].
 
@@ -264,12 +282,11 @@ GtkTreeDataStore >> iterHasChild: iter [
 GtkTreeDataStore >> iterNChildren: iter [
 	| item path |
 
-	children ifNil: [ ^ 0 ].
+	childrenBlock ifNil: [ ^ 0 ].
 	self assertNotNull: iter ifFail: [ ^ 0 ].
 	self assertNotNull: iter user_data ifFail: [ ^ 0 ].
 
 	path := self pathFromIter: iter.
-	('NCHILDREN PATH: {1}' format: { path toArray }) printToStdout.
 	path toArray ifEmpty: [ ^ self roots size ].
 	
 	item := self itemAtPath: path.
@@ -278,37 +295,54 @@ GtkTreeDataStore >> iterNChildren: iter [
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterNext: iter [
-	| path |
+	| path item iterPath |
 
 	self assertNotNull: iter ifFail:  [ ^ false ].	
 	self assertNotNull: iter user_data ifFail:  [ ^ false ].	
 
 	path := self pathFromIter: iter.
-	self flag: #TODO. "This is leaking"
+
 	path := path copy.
 	path next ifFalse: [ ^ false ].
 	
-	(self itemAtPath: path) ifNil: [ ^ false ].
+	item := self itemAtPath: path.
+	item ifNil: [ ^ false ].
+	
+	iterPath := paths 
+		at: item 
+		ifPresent: [ :aPath | path free. aPath  ]
+		ifAbsentPut: [ path ].
 	
 	iter stamp: stamp. 
-	iter user_data: path.
+	iter user_data: iterPath.
 
 	^ true
 ]
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterNthChild: parent number: n iter: iter [
-	| path |
+	| path childNumber item itemChildren iterPath |
 
 	self assertNotNull: parent ifFail: [ ^ false ].
 	self assertNotNull: parent user_data ifFail: [ ^ false ].
 	
 	path := self pathFromIter: parent.
-	self flag: #TODO. "This is leaking"
-	path := path copy appendIndex: n + 1.
+	item := self itemAtPath: path.
+	item ifNil: [ ^ false ].
+
+	childNumber := n + 1. "n is zero based"	
+	itemChildren := self childrenFor: item.
+	itemChildren size < childNumber ifTrue: [ ^ false ].
+	
+	iterPath := paths 
+		at: (itemChildren at: childNumber) 
+		ifAbsentPut: [ | childPath |
+			childPath := path copy.
+			childPath appendIndex: n.
+			childPath ]. 
 	
 	iter stamp: stamp. 
-	iter user_data: path.
+	iter user_data: iterPath.
 
 	^ true
 ]
