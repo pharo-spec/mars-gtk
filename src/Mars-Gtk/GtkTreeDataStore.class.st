@@ -133,7 +133,6 @@ GtkTreeDataStore >> childrenFor: element [
 GtkTreeDataStore >> finalize [
 
 	"free paths dictionary"
-	paths size printToStdout.
 	paths valuesDo: [ :each | each free ]
 ]
 
@@ -157,13 +156,9 @@ GtkTreeDataStore >> getIter: path iter: iter [
 	self assertNotNull: path ifFail: [ ^ false ].
 
 	item := self itemAtPath: path ifAbsent: [ ^ false ].
-	item printToStdout.
 	iterPath := self 
 		pathAtItem: item
-		ifAbsentPut: [ 
-			'PUT' printToStdout.
-			path copy ].
-	iterPath printToStdout.
+		ifAbsentPut: [ path copy ].
 
 	iter stamp: stamp.
 	iter user_data: iterPath.
@@ -199,7 +194,6 @@ GtkTreeDataStore >> getValue: iter column: column value: gValue [
 	self assertNotNull: iter user_data ifFail: [ ^ self ].
 
 	path := self pathFromIter: iter.
-	path getHandle printToStdout.
 	item := self 
 		itemAtPath: path 
 		ifAbsent: [ ^ self ].
