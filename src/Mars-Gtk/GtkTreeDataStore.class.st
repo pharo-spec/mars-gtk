@@ -12,7 +12,8 @@ Class {
 		'roots',
 		'stamp',
 		'paths',
-		'childrenBlock'
+		'childrenBlock',
+		'children'
 	],
 	#pools : [
 		'GType',
@@ -126,7 +127,9 @@ GtkTreeDataStore >> children: aBlock [
 GtkTreeDataStore >> childrenFor: element [
 
 	childrenBlock ifNil: [ ^ #() ].
-	^ childrenBlock value: element
+	^ children
+		at: element 
+		ifAbsentPut: [ childrenBlock value: element ]
 ]
 
 { #category : #initialization }
@@ -206,7 +209,8 @@ GtkTreeDataStore >> getValue: iter column: column value: gValue [
 GtkTreeDataStore >> initialize [
 
 	super initialize.
-	paths := Dictionary new.
+	paths := IdentityDictionary new.
+	children := IdentityDictionary new.
 	stamp := 16rFFFF atRandom.
 	self finalizationRegistry add: self 
 ]
