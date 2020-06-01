@@ -48,6 +48,7 @@ GdkPixbuf class >> newFromSurface: surface x: x y: y width: width height: height
 
 { #category : #converting }
 GdkPixbuf >> asGdkPixbuf [
+
 	^ self
 ]
 

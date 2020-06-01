@@ -13,7 +13,9 @@ Class {
 		'stamp',
 		'paths',
 		'childrenBlock',
-		'children'
+		'children',
+		'images',
+		'columns'
 	],
 	#pools : [
 		'GType',
@@ -111,6 +113,13 @@ GtkTreeDataStore class >> new [
 	^ (GClass gDefinitionAt: self) new
 ]
 
+{ #category : #accessing }
+GtkTreeDataStore >> addColumn: aColumn [
+
+	aColumn store: self.
+	columns add: aColumn
+]
+
 { #category : #private }
 GtkTreeDataStore >> assertNotNull: anObject ifFail: aBlock [ 
 
@@ -132,17 +141,31 @@ GtkTreeDataStore >> childrenFor: element [
 		ifAbsentPut: [ childrenBlock value: element ]
 ]
 
+{ #category : #accessing }
+GtkTreeDataStore >> columns [
+
+	^ columns
+]
+
+{ #category : #accessing }
+GtkTreeDataStore >> columns: aCollection [
+
+	columns := aCollection
+]
+
 { #category : #initialization }
 GtkTreeDataStore >> finalize [
 
 	"free paths dictionary"
-	paths valuesDo: [ :each | each free ]
+	paths valuesDo: [ :each | each free ].
+	"free images dictionary"
+	images valuesDo: [ :each | each free ]	
 ]
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> getColumnType: index [
 
-	^ G_TYPE_STRING
+	^ (columns at: (index + 1)) gType
 ]
 
 { #category : #'accessing store' }
@@ -174,7 +197,7 @@ GtkTreeDataStore >> getIter: path iter: iter [
 { #category : #'accessing store' }
 GtkTreeDataStore >> getNColumns [
 
-	^ 1
+	^ columns size
 ]
 
 { #category : #'accessing store' }
@@ -190,8 +213,8 @@ GtkTreeDataStore >> getPath: iter [
 ]
 
 { #category : #'accessing store' }
-GtkTreeDataStore >> getValue: iter column: column value: gValue [
-	| path item |
+GtkTreeDataStore >> getValue: iter column: columnNumber value: gValue [
+	| path item column |
 
 	self assertNotNull: iter ifFail: [ ^ self ].
 	self assertNotNull: iter user_data ifFail: [ ^ self ].
@@ -201,18 +224,29 @@ GtkTreeDataStore >> getValue: iter column: column value: gValue [
 		itemAtPath: path 
 		ifAbsent: [ ^ self ].
 
-	gValue init: (self getColumnType: column).
-	gValue setString: item asString
+	column := columns at: (columnNumber + 1).
+	gValue init: column gType.
+	column setValueOf: item to: gValue.
+]
+
+{ #category : #'private cache' }
+GtkTreeDataStore >> imageAt: anObject ifAbsentPut: aBlock [
+
+	^ images 
+		at: anObject
+		ifAbsentPut: aBlock
 ]
 
 { #category : #initialization }
 GtkTreeDataStore >> initialize [
 
 	super initialize.
+	stamp := 16rFFFF atRandom.
 	paths := IdentityDictionary new.
 	children := IdentityDictionary new.
-	stamp := 16rFFFF atRandom.
-	self finalizationRegistry add: self 
+	images := Dictionary new.
+	columns := OrderedCollection new.
+	self finalizationRegistry add: self
 ]
 
 { #category : #private }
@@ -397,13 +431,13 @@ GtkTreeDataStore >> iterParent: child iter: iter [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : #'private cache' }
 GtkTreeDataStore >> pathAtItem: item [
 
 	^ self pathAtItem: item ifAbsent: [ nil ]
 ]
 
-{ #category : #private }
+{ #category : #'private cache' }
 GtkTreeDataStore >> pathAtItem: item ifAbsent: aBlock [
 
 	^ paths 
@@ -411,7 +445,7 @@ GtkTreeDataStore >> pathAtItem: item ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #private }
+{ #category : #'private cache' }
 GtkTreeDataStore >> pathAtItem: item ifAbsentPut: aBlock [
 
 	^ paths 
@@ -419,7 +453,7 @@ GtkTreeDataStore >> pathAtItem: item ifAbsentPut: aBlock [
 		ifAbsentPut: aBlock
 ]
 
-{ #category : #private }
+{ #category : #'private cache' }
 GtkTreeDataStore >> pathAtItem: item put: aPath [ 
 
 	paths at: item put: aPath

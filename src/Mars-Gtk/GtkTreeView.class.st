@@ -76,7 +76,9 @@ GtkTreeView >> appendPixbufColumn: columnIndex [
 	renderer := GtkCellRendererPixbuf new.
 	self appendColumn: (GtkTreeViewColumn new
 		packStart: renderer expand: false;
-		addAttribute: 'pixbuf' column: columnIndex renderer: renderer)
+		addAttribute: 'pixbuf' 
+			column: columnIndex 
+			renderer: renderer)
 ]
 
 { #category : #'convenience columns' }

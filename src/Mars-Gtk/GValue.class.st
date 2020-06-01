@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : #accessing }
+GValue >> getObject: v_object [ 
+
+	^ self ffiCall: #(gpointer g_value_get_object (self))
+]
+
+{ #category : #accessing }
 GValue >> init: g_type [
 
 	self ffiCall: #(void *g_value_init (self, gsize g_type))
@@ -43,6 +49,12 @@ GValue >> setInt: v_int [
 GValue >> setLong: v_long [
 
 	self ffiCall: #(void g_value_set_long (self, glong v_long))
+]
+
+{ #category : #accessing }
+GValue >> setObject: v_object [ 
+
+	^ self ffiCall: #(void g_value_set_object (self, gpointer v_object))
 ]
 
 { #category : #accessing }
