@@ -58,7 +58,14 @@ OSGtkFormRenderer >> form: aForm [
 OSGtkFormRenderer >> initialize [
 
 	super initialize.
-	formView := GtkFormView new
+	formView := GtkFormView new.
+	GtkApplication current registerShutdown: self
+]
+
+{ #category : #initialization }
+OSGtkFormRenderer >> prepareToShutdown [ 
+
+	formView disconnectAll
 ]
 
 { #category : #'updating screen' }

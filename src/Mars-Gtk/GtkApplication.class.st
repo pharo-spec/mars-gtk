@@ -6,6 +6,7 @@ Class {
 	#instVars : [
 		'runLoop',
 		'windowRegistry',
+		'shutdownRegistry',
 		'resourceManager'
 	],
 	#classVars : [
@@ -59,7 +60,8 @@ GtkApplication class >> shutDown: quitting [
 
 	Current ifNil: [ ^ self ].
 	Current shutDown: quitting.
-
+	"WARNING: Do not NIL Current! This is needed to keep track of the open windows (otherwise 
+	 they will be closed/will crash/will put you in a world of suffering."
 ]
 
 { #category : #'system startup' }
@@ -107,6 +109,7 @@ GtkApplication >> initialize [
 
 	super initialize.
 	windowRegistry := Set new.
+	shutdownRegistry := Set new.
 	runLoop := self ensureRunLoop
 ]
 
@@ -114,6 +117,17 @@ GtkApplication >> initialize [
 GtkApplication >> isRunning [ 
 
 	^ runLoop isRunning
+]
+
+{ #category : #registry }
+GtkApplication >> registerShutdown: anObject [
+	"Some objects need special shutdown action *before* going out. 
+	 (This is the case, for example, of the GtkFormView used in OSGtkFormRenderer).
+	 You can subscribe those objects here, and they will be called *before* shutting down 
+	 the run loop.
+	 BEWARE: object needs to implement #prepareForShutdown methiod"
+
+	shutdownRegistry add: anObject
 ]
 
 { #category : #registry }
@@ -142,6 +156,11 @@ GtkApplication >> run [
 GtkApplication >> shutDown: quitting [
 	
 	self isRunning ifFalse: [ ^ self ].
+	quitting ifTrue: [
+		"process shutdown *before* shutting down runloop, because actions may need 
+		 some gtk side actions"
+		runLoop defer: [ 
+			shutdownRegistry do: [ :each | each prepareToShutdown ] ] ].
 	runLoop stop
 ]
 
