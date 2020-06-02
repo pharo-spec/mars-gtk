@@ -203,7 +203,9 @@ GClass >> findInstance: handle [
 { #category : #'private primitives' }
 GClass >> gInternStaticString: string [
 
-	^ self ffiCall: #(void *g_intern_static_string (const gchar *string))
+	^ self 
+		ffiCall: #(void *g_intern_static_string (const gchar *string))
+		module: GLibLibrary
 ]
 
 { #category : #'private primitives' }
