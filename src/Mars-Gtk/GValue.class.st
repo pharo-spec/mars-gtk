@@ -9,6 +9,18 @@ Class {
 	#category : #'Mars-Gtk-Misc'
 }
 
+{ #category : #'library path' }
+GValue class >> ffiLibraryName [
+
+	^ GObjectLibrary
+]
+
+{ #category : #'library path' }
+GValue >> ffiLibraryName [
+
+	^ self class ffiLibraryName
+]
+
 { #category : #accessing }
 GValue >> getObject: v_object [ 
 
