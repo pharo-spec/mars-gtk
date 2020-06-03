@@ -18,5 +18,5 @@ GtkTreeDataPixbufColumn >> setValueOf: item to: gValue [
 	gValue setObject: (self store
 		imageAt: image 
 		ifAbsentPut: [ image asGdkPixbuf ])
-		 getHandle
+		getHandle
 ]

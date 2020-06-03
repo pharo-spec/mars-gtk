@@ -159,7 +159,7 @@ GtkTreeDataStore >> finalize [
 	"free paths dictionary"
 	paths valuesDo: [ :each | each free ].
 	"free images dictionary"
-	images valuesDo: [ :each | each free ]	
+	images valuesDo: [ :each | each free ]
 ]
 
 { #category : #'accessing store' }
