@@ -45,7 +45,7 @@ GtkTypes class >> initialize [
 	GQuark := #guint32.
 	GType := #gsize.
 	gssize := #long.
-	gsize := #ulong.
+	gsize := #FFISizeT.
 	
 	gunichar := #guint32.
 ]

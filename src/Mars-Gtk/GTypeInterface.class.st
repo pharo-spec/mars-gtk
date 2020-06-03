@@ -22,23 +22,23 @@ GTypeInterface class >> fieldsDesc [
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_instance_type [
 	"This method was automatically generated"
-	^handle platformUnsignedLongAt: OFFSET_G_INSTANCE_TYPE
+	^handle platformSizeTAt: OFFSET_G_INSTANCE_TYPE
 ]
 
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_instance_type: anObject [
 	"This method was automatically generated"
-	^handle platformUnsignedLongAt: OFFSET_G_INSTANCE_TYPE put: anObject
+	^handle platformSizeTAt: OFFSET_G_INSTANCE_TYPE put: anObject
 ]
 
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_type [
 	"This method was automatically generated"
-	^handle platformUnsignedLongAt: OFFSET_G_TYPE
+	^handle platformSizeTAt: OFFSET_G_TYPE
 ]
 
 { #category : #'accessing structure variables' }
 GTypeInterface >> g_type: anObject [
 	"This method was automatically generated"
-	^handle platformUnsignedLongAt: OFFSET_G_TYPE put: anObject
+	^handle platformSizeTAt: OFFSET_G_TYPE put: anObject
 ]
