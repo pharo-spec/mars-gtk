@@ -255,7 +255,7 @@ GtkTreeDataStore >> itemAt: index of: anArray then: path [
 	| element |
 	
 	anArray size < index ifTrue: [ ^ nil ].
-	element := anArray at: index.
+	element := anArray at: index ifAbsent: [ ^ nil ].
 	^ path 
 		ifNotEmpty: [ 
 			self 
@@ -353,9 +353,7 @@ GtkTreeDataStore >> iterNext: iter [
 
 	path := self pathFromIter: iter.
 
-	path := path copy.
-	path next ifFalse: [ path free. ^ false ].
-	
+	path := path copy next.
 	item := self itemAtPath: path ifAbsent: [ path free. ^ false ].
 	iterPath := self pathAtItem: item.
 	iterPath 

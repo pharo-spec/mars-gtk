@@ -105,7 +105,7 @@ GtkTreePath >> getIndicesWithDepth: depth [
 { #category : #accessing }
 GtkTreePath >> next [
 
-	^ self ffiCall: #(gboolean gtk_tree_path_next (self))
+	^ self ffiCall: #(void gtk_tree_path_next (self))
 ]
 
 { #category : #accessing }
