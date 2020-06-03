@@ -77,7 +77,7 @@ GtkTreePath >> copy [
 { #category : #accessing }
 GtkTreePath >> down [ 
 
-	^ self ffiCall: #(gboolean gtk_tree_path_down (self))
+	^ self ffiCall: #(void gtk_tree_path_down (self))
 ]
 
 { #category : #accessing }
