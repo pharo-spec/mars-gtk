@@ -85,7 +85,7 @@ GtkTreeModelIface class >> gType [
 
 	^ self 
 		ffiCall: #(gsize gtk_tree_model_get_type())
-		module: GtkSourceViewLibrary
+		module: GtkLibrary
 ]
 
 { #category : #'accessing structure variables' }
