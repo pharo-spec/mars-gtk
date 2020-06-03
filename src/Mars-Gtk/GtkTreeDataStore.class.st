@@ -302,12 +302,7 @@ GtkTreeDataStore >> iterChildren: parent iter: iter [
 	
 	iterPath := self 
 		pathAtItem: itemChildren first 
-		ifAbsentPut: [ | childPath |
-			childPath := path copy.
-			childPath down ifFalse: [ 
-				childPath free.
-				^ false ].
-			childPath ]. 
+		ifAbsentPut: [ path copy  ]. 
 		
 	iter stamp: stamp. 
 	iter user_data: iterPath.
