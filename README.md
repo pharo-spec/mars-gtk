@@ -10,6 +10,8 @@ To simplify the process we created a VM bundled with all the DLL and resources n
 
 You can get it from: http://files.pharo.org/vm/pharo-spur64-headless/win/latest-win64-GTK.zip
 
+NOTE: If you are running under cygwin subsystem, remember to `chmod +x *`. Libraries have to be executable!
+
 Then, you can just download a new Pharo 9.0 image: 
 
 ```
