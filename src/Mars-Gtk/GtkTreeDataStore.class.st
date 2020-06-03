@@ -15,7 +15,8 @@ Class {
 		'childrenBlock',
 		'children',
 		'images',
-		'columns'
+		'columns',
+		'isList'
 	],
 	#pools : [
 		'GType',
@@ -127,6 +128,12 @@ GtkTreeDataStore >> assertNotNull: anObject ifFail: aBlock [
 ]
 
 { #category : #accessing }
+GtkTreeDataStore >> beList [
+
+	isList := true
+]
+
+{ #category : #accessing }
 GtkTreeDataStore >> children: aBlock [
 
 	childrenBlock := aBlock
@@ -171,8 +178,12 @@ GtkTreeDataStore >> getColumnType: index [
 { #category : #'accessing store' }
 GtkTreeDataStore >> getFlags [
 	"GTK_TREE_MODEL_LIST_ONLY in case of a simple list (which is not the case in the experiment)"
+	| flags |
 
-	^ GTK_TREE_MODEL_ITERS_PERSIST value "| GTK_TREE_MODEL_LIST_ONLY value"
+	flags := GTK_TREE_MODEL_ITERS_PERSIST value.
+	isList ifTrue: [ 
+		 flags := flags | GTK_TREE_MODEL_LIST_ONLY value ].
+	^ flags
 ]
 
 { #category : #'accessing store' }
@@ -242,6 +253,7 @@ GtkTreeDataStore >> initialize [
 
 	super initialize.
 	stamp := 16rFFFF atRandom.
+	isList := false.
 	paths := IdentityDictionary new.
 	children := IdentityDictionary new.
 	images := Dictionary new.
