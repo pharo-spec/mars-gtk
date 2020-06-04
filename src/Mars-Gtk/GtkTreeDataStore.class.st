@@ -22,7 +22,7 @@ Class {
 		'GType',
 		'GtkTreeModelFlags'
 	],
-	#category : #'Mars-Gtk-Widget-Tree-Store'
+	#category : #'Mars-Gtk-Widget-Tree'
 }
 
 { #category : #accessing }
@@ -53,7 +53,7 @@ GtkTreeDataStore class >> gDefineTreeStoreInterface: iface [
 		signature: #(gsize (void *tree_model, gint index)) 
 		block: [ :tree_model :index | (self gInstance: tree_model) getColumnType: index ]).
 	iface get_iter: (GCallback 
-		signature: #("gboolean"gint (void *tree_model, void *iter, void *path)) 
+		signature: #(gboolean (void *tree_model, void *iter, void *path)) 
 		block: [ :tree_model :iter :path | 
 			(self gInstance: tree_model) 
 				getIter: (GtkTreePath fromHandle: path) 
@@ -70,17 +70,17 @@ GtkTreeDataStore class >> gDefineTreeStoreInterface: iface [
 				column: column 
 				value: (GValue fromHandle: value) ]).
 	iface iter_next: (GCallback 
-		signature: #("gboolean"gint (void *tree_model, void *iter)) 
+		signature: #(gboolean (void *tree_model, void *iter)) 
 		block: [ :tree_model :iter |
 			(self gInstance: tree_model) iterNext: (GtkTreeIter fromHandle: iter) ]).
 	iface iter_children: (GCallback 
-		signature: #("gboolean"gint (void *tree_model, void *iter, void *parent)) 
+		signature: #(gboolean (void *tree_model, void *iter, void *parent)) 
 		block: [ :tree_model :iter :parent | 
 			(self gInstance: tree_model) 
 				iterChildren: (GtkTreeIter fromHandle: parent) 
 				iter: (GtkTreeIter fromHandle: iter) ]).
 	iface iter_has_child: (GCallback 
-		signature: #("gboolean"gint (void *tree_model, void *iter)) 
+		signature: #(gboolean (void *tree_model, void *iter)) 
 		block: [ :tree_model :iter | 
 			(self gInstance: tree_model) iterHasChild: (GtkTreeIter fromHandle: iter) ]).
 	iface iter_n_children: (GCallback
@@ -88,14 +88,14 @@ GtkTreeDataStore class >> gDefineTreeStoreInterface: iface [
 		block: [ :tree_model :iter | 
 			(self gInstance: tree_model) iterNChildren: (GtkTreeIter fromHandle: iter) ]).
 	iface iter_nth_child: (GCallback 
-		signature: #("gboolean"gint (void *tree_model, void *iter, void *parent, gint n)) 
+		signature: #(gboolean (void *tree_model, void *iter, void *parent, gint n)) 
 		block: [ :tree_model :iter :parent :n | 
 			(self gInstance: tree_model) 
 				iterNthChild: (GtkTreeIter fromHandle: parent) 
 				number: n 
 				iter: (GtkTreeIter fromHandle: iter) ]).
 	iface iter_parent: (GCallback 
-		signature: #("gboolean"gint (void *tree_model, void *iter, void *child)) 
+		signature: #(gboolean (void *tree_model, void *iter, void *child)) 
 		block: [ :tree_model :iter :child | 
 			(self gInstance: tree_model) 
 				iterParent: (GtkTreeIter fromHandle: child) 
@@ -190,9 +190,9 @@ GtkTreeDataStore >> getFlags [
 GtkTreeDataStore >> getIter: path iter: iter [
 	| item iterPath |
 
-	self assertNotNull: path ifFail: [ ^ 0 ].
+	self assertNotNull: path ifFail: [ ^ false ].
 
-	item := self itemAtPath: path ifAbsent: [ ^ 0 ].
+	item := self itemAtPath: path ifAbsent: [ ^ false ].
 	iterPath := self 
 		pathAtItem: item
 		ifAbsentPut: [ path copy ].
@@ -202,7 +202,7 @@ GtkTreeDataStore >> getIter: path iter: iter [
 	iter user_data2: ExternalAddress null.
 	iter user_data3: ExternalAddress null.
 	 
-	^ 1
+	^ true
 ]
 
 { #category : #'accessing store' }
@@ -301,16 +301,16 @@ GtkTreeDataStore >> itemAtPath: path ifAbsent: aBlock [
 GtkTreeDataStore >> iterChildren: parent iter: iter [
 	| path item itemChildren iterPath |
 
-	self assertNotNull: parent ifFail: [ ^ 0 ].
-	self assertNotNull: parent user_data ifFail: [ ^ 0 ].
+	self assertNotNull: parent ifFail: [ ^ false ].
+	self assertNotNull: parent user_data ifFail: [ ^ false ].
 	
 	path := self pathFromIter: parent.
 	item := self 
 		itemAtPath: path 
-		ifAbsent: [ ^ 0 ].
+		ifAbsent: [ ^ false ].
 	
 	itemChildren := self childrenFor: item.
-	itemChildren ifEmpty: [ ^ 0 ].
+	itemChildren ifEmpty: [ ^ false ].
 	
 	iterPath := self 
 		pathAtItem: itemChildren first 
@@ -319,23 +319,21 @@ GtkTreeDataStore >> iterChildren: parent iter: iter [
 	iter stamp: stamp. 
 	iter user_data: iterPath.
 	
-	^ 1
+	^ true
 ]
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterHasChild: iter [
 	| item path |
 
-	childrenBlock ifNil: [ ^ 0 ].
-	self assertNotNull: iter ifFail: [ ^ 0 ].
-	self assertNotNull: iter user_data ifFail: [ ^ 0 ].
+	childrenBlock ifNil: [ ^ false ].
+	self assertNotNull: iter ifFail: [ ^ false ].
+	self assertNotNull: iter user_data ifFail: [ ^ false ].
 
 	path := self pathFromIter: iter.
-	item := self itemAtPath: path ifAbsent: [ ^ 0 ].
+	item := self itemAtPath: path ifAbsent: [ ^ false ].
 	
-	^ (self childrenFor: item) 
-		ifNotEmpty: [ 1 ] 
-		ifEmpty: [ 0 ]
+	^ (self childrenFor: item) notEmpty
 ]
 
 { #category : #'accessing store' }
@@ -357,15 +355,15 @@ GtkTreeDataStore >> iterNChildren: iter [
 GtkTreeDataStore >> iterNext: iter [
 	| path item iterPath |
 
-	self assertNotNull: iter ifFail:  [ ^ 0 ].	
-	self assertNotNull: iter user_data ifFail:  [ ^ 0 ].	
+	self assertNotNull: iter ifFail:  [ ^ false ].	
+	self assertNotNull: iter user_data ifFail:  [ ^ false ].	
 
 	path := self pathFromIter: iter.
 	path := path copy next.
 	item := self itemAtPath: path ifAbsent: [ nil].
 	item ifNil: [
 		path free.
-		^ 0 ].
+		^ false ].
 	iterPath := self pathAtItem: item.
 	iterPath 
 		ifNotNil: [ path free "I will not need this" ]
@@ -376,23 +374,23 @@ GtkTreeDataStore >> iterNext: iter [
 	iter stamp: stamp. 
 	iter user_data: iterPath.
 
-	^ 1
+	^ true
 ]
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterNthChild: parent number: n iter: iter [
 	| path childNumber item itemChildren iterPath |
 
-	self assertNotNull: parent ifFail: [ ^ 0 ].
-	self assertNotNull: parent user_data ifFail: [ ^ 0 ].
+	self assertNotNull: parent ifFail: [ ^ false ].
+	self assertNotNull: parent user_data ifFail: [ ^ false ].
 	
 	path := self pathFromIter: parent.
 	item := self itemAtPath: path.
-	item ifNil: [ ^ 0 ].
+	item ifNil: [ ^ false ].
 
 	childNumber := n + 1. "n is zero based"	
 	itemChildren := self childrenFor: item.
-	itemChildren size < childNumber ifTrue: [ ^ 0 ].
+	itemChildren size < childNumber ifTrue: [ ^ false ].
 	
 	iterPath := paths 
 		at: (itemChildren at: childNumber) 
@@ -404,28 +402,28 @@ GtkTreeDataStore >> iterNthChild: parent number: n iter: iter [
 	iter stamp: stamp. 
 	iter user_data: iterPath.
 
-	^ 1
+	^ true
 ]
 
 { #category : #'accessing store' }
 GtkTreeDataStore >> iterParent: child iter: iter [
 	| path item iterPath |
 
-	self assertNotNull: child ifFail: [ ^ 0 ].
-	self assertNotNull: child user_data ifFail: [ ^ 0 ].
+	self assertNotNull: child ifFail: [ ^ false ].
+	self assertNotNull: child user_data ifFail: [ ^ false ].
 	
 	path := self pathFromIter: child.
 
 	path := path copy.
 	path up ifFalse: [ 
 		path free.
-		^ 0 ].
+		^ false ].
 	
 	item := self 
 		itemAtPath: path 
 		ifAbsent: [ 
 			path free.
-			^ 0 ].
+			^ false ].
 
 	iterPath := self pathAtItem: item.
 	iterPath 
@@ -437,7 +435,7 @@ GtkTreeDataStore >> iterParent: child iter: iter [
 	iter stamp: stamp. 
 	iter user_data: iterPath.
 
-	^ 1
+	^ true
 ]
 
 { #category : #'private cache' }
