@@ -22,7 +22,7 @@ Class {
 		'GType',
 		'GtkTreeModelFlags'
 	],
-	#category : #'Mars-Gtk-Widget-Tree'
+	#category : #'Mars-Gtk-Widget-Tree-Store'
 }
 
 { #category : #accessing }

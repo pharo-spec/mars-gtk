@@ -22,6 +22,12 @@ GValue >> ffiLibraryName [
 ]
 
 { #category : #accessing }
+GValue >> getBoolean [ 
+
+	^ self ffiCall: #(gboolean g_value_set_boolean (self))
+]
+
+{ #category : #accessing }
 GValue >> getObject: v_object [ 
 
 	^ self ffiCall: #(gpointer g_value_get_object (self))
@@ -31,6 +37,12 @@ GValue >> getObject: v_object [
 GValue >> init: g_type [
 
 	self ffiCall: #(void *g_value_init (self, gsize g_type))
+]
+
+{ #category : #accessing }
+GValue >> setBoolean: v_boolean [ 
+
+	^ self ffiCall: #(void g_value_set_boolean (self, gboolean v_boolean))
 ]
 
 { #category : #accessing }
