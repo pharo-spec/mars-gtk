@@ -140,6 +140,13 @@ GtkWindowAdapter >> closeFromKeyboard [
 	self presenter close
 ]
 
+{ #category : #accessing }
+GtkWindowAdapter >> closeFromSignal [
+
+	self announceWillClose.
+	self presenter windowClosed
+]
+
 { #category : #private }
 GtkWindowAdapter >> configureKeyBindings: gtkWindow [
 		
@@ -156,7 +163,7 @@ GtkWindowAdapter >> connectToGtkSignals: gtkWindow [
 	"add close events (delete is sent before)"
 	gtkWindow 
 		connectDeleteEvent: [ self announceWillClose. false ];
-		connectHide: [ self announceClosed ];
+		connectHide: [ self closeFromSignal ];
 		connectSizeAllocate: [ :aRect | self announceResized: aRect extent ]
 ]
 
