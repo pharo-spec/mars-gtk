@@ -7,8 +7,8 @@ https://developer.gnome.org/gtk3/stable/GtkTreeStore.html
 Class {
 	#name : #GtkTreeStore,
 	#superclass : #GtkBaseStore,
-	#traits : 'GtkTreeSortable',
-	#classTraits : 'GtkTreeSortable classTrait',
+	#traits : 'GtkTTreeSortable',
+	#classTraits : 'GtkTTreeSortable classTrait',
 	#pools : [
 		'GType'
 	],
@@ -69,6 +69,13 @@ GtkTreeStore >> getString: buffer column: column iter: iter [
 		gint column,
 		void **buffer,
 		gint -1))
+]
+
+{ #category : #'as yet unclassified' }
+GtkTreeStore >> initialize [
+
+	self initializeTTreeSortable.
+	super initialize.
 ]
 
 { #category : #testing }
