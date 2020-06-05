@@ -13,6 +13,9 @@ Class {
 GtkTableAdapter >> addModelTo: gtkTreeView [
 		
 	super addModelTo: gtkTreeView.
+	
+	gtkTreeView connectDestroy: [ 
+		gtkTreeView model roots: #() ].
 		
 	gtkTreeView headersVisible: self model isShowingColumnHeaders.
 
@@ -60,9 +63,10 @@ GtkTableAdapter >> appendAddedColumns [
 		columns := self presenter columns.  
 		(columns last: (columns size - w columns size)) 
 			do: [ :aTableColumn | 
-				self 
-					addColumn: aTableColumn 
-					to: w ] ]
+				self addColumn: aTableColumn to: w.
+				GtkTableDataStoreColumnCollector new 
+					store: w model;
+					visit: aTableColumn ] ]
 ]
 
 { #category : #building }

@@ -18,5 +18,5 @@ GtkTreeDataStringColumn >> gType [
 { #category : #accessing }
 GtkTreeDataStringColumn >> setValueOf: item to: gValue [
 
-	gValue setString: (self readObject: item)
+	gValue setString: (self readObject: item) asString
 ]

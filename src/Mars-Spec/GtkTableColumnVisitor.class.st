@@ -97,6 +97,13 @@ GtkTableColumnVisitor >> visit: aTableColumn [
 ]
 
 { #category : #visiting }
+GtkTableColumnVisitor >> visitAll: aCollection [
+
+	aCollection do: [ :each |
+		self visit: each ]
+]
+
+{ #category : #visiting }
 GtkTableColumnVisitor >> visitCheckboxColumn: aTableColumn [
 ]
 
