@@ -15,7 +15,13 @@ GtkListAdapter >> addModelTo: gtkList [
 
 	super addModelTo: gtkList.
 
-	self model selection isMultipleSelection 
+	"Reset the model before destroying will prevent an annoying behaviour from GtkTreeView: 
+	 it iterates the nodes when destroying the view (no idea why, probably to give you a 
+	 chance to free what you put in user_data)"
+	gtkList connectDestroy: [ 
+		gtkList model roots: #() ].
+
+	self presenter selection isMultipleSelection 
 		ifTrue: [ gtkList beMultipleSelectionMode ]
 		ifFalse: [ gtkList beSingleSelectionMode ].
 
@@ -48,38 +54,21 @@ GtkListAdapter >> isShowColumnHeaders [
 ]
 
 { #category : #private }
-GtkListAdapter >> modelItemsAsDisplay [
-	
-	^ self presenter model items 
-		collect: [ :each | (self presenter display value: each) asString ]
-]
-
-{ #category : #private }
 GtkListAdapter >> newTreeStore [
+	| store |
 
-	self presenter hasIcons 
-		ifFalse: [ ^ GtkTreeStore newStrings: self modelItemsAsDisplay ].
+	store := GtkTreeDataStore new.
+	store beList.
+	
+	self presenter hasIcons ifTrue: [ 
+		store addColumn: (GtkTreeDataPixbufColumn evaluated: [ :item | 
+			self presenter iconFor: item ]) ].
 		
-	^ self newTreeStoreWithIcons
-]
-
-{ #category : #private }
-GtkListAdapter >> newTreeStoreWithIcons [
-	| store pixbufCache |
-
-	"a cache to not create extra pixbufs if they are not needed"	
-	pixbufCache := IdentityDictionary new.
-	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF.  GType G_TYPE_STRING }.
-	self presenter items do: [ :each | 
-		| icon |
-		
-		icon := self presenter iconFor: each.
-		store appendNew
-			at: 0 putObject: (pixbufCache 
-				at: icon 
-				ifAbsentPut: [ GdkPixbuf newForm: icon ]);
-			at: 1 putString: (self presenter displayValueOf: each) ].
-
+	store addColumn: (GtkTreeDataStringColumn evaluated: [ :item |
+		(self presenter displayValueFor: item) asString ]).
+	
+	store roots: self presenter items.
+	
 	^ store
 ]
 
