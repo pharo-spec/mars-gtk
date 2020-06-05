@@ -310,9 +310,9 @@ GtkTreeView >> model [
 { #category : #accessing }
 GtkTreeView >> model: aListStore [
 
-	listStore ifNotNil: [ listStore objectUnref ].
+	listStore ifNotNil: [ 
+		listStore prepareToDisconnect ].
 	listStore := aListStore.
-	
 	self setModel: aListStore
 ]
 

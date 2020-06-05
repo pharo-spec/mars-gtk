@@ -7,7 +7,7 @@ See *method:GtkTreeStore#registerForFinalize*
 "
 Class {
 	#name : #GtkTreeDataStoreExecutor,
-	#superclass : #GtkTreeStore,
+	#superclass : #Object,
 	#instVars : [
 		'dictionaryList'
 	],

@@ -102,3 +102,10 @@ GtkBaseStore >> iteratorFromString: aString [
 	
 	^ iter
 ]
+
+{ #category : #private }
+GtkBaseStore >> prepareToDisconnect [
+	"Subclasses of *class:GtkBaseStore* maybe need some extra work when being disconnected from 
+	 its owner *class:GtkTreeView*. 
+	 Override this in case you need it."
+]

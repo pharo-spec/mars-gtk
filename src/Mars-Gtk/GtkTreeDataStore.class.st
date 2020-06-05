@@ -476,6 +476,15 @@ GtkTreeDataStore >> pathFromIter: iter [
 	^ GtkTreePath fromHandle: iter user_data
 ]
 
+{ #category : #private }
+GtkTreeDataStore >> prepareToDisconnect [
+	"When destroying a model, Gtk will try to iterate all root elements on it. 
+	 In case of large lists this may be an expensive task.
+	 This method will reset all roots, so we do not have undesirable cycles"
+	
+	self roots: #()
+]
+
 { #category : #initialization }
 GtkTreeDataStore >> registerForFinalize [
 	
