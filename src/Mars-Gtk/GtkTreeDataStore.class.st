@@ -4,6 +4,18 @@
 A data store is a special implementation of a tree store that will provide data directly from the image (otherwise, with a ==GtkTreeStore== you need to provide elements ''before'', which is time consuming and not very friendly to calculate properties).
 
 Plesse, notice that the usage of a ==GtkTreeDataStore== is not magical and it will not solve all size/time to load problems, since ==GtkTreeView== fetches all elements in a leaf before showing it (meaning that if you have 10k elements in a list, it will take time to be filled).
+
+!! A note about large lists
+
+When using a data store with large amounts of data, it will still take some time to fill the list (I have test 1.7s with 10k items, which is probably not good).
+Still, while maybe this is acceptable, it is still a problem the fact that when a GtkTreeView is destroyed it iterates all nodes created (maybe to give a change to users to free what they stored in user_data?), and it also makes a call to ==#iterNext:== for each element.
+This also consumes time and we do not want that.
+To fix this, best approach I found is to empty the items of the store when destroying the widget.
+
+[[[language=Smalltalk
+gtkTreeView connectDestroy: [ 
+	gtkTreeView model roots: #() ]
+]]]
 "
 Class {
 	#name : #GtkTreeDataStore,
