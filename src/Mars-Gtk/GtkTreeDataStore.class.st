@@ -22,7 +22,7 @@ Class {
 		'GType',
 		'GtkTreeModelFlags'
 	],
-	#category : #'Mars-Gtk-Widget-Tree'
+	#category : #'Mars-Gtk-Widget-Tree-Store'
 }
 
 { #category : #accessing }
@@ -160,15 +160,6 @@ GtkTreeDataStore >> columns: aCollection [
 	columns := aCollection
 ]
 
-{ #category : #initialization }
-GtkTreeDataStore >> finalize [
-
-	"free paths dictionary"
-	paths valuesDo: [ :each | each free ].
-	"free images dictionary"
-	images valuesDo: [ :each | each free ]
-]
-
 { #category : #'accessing store' }
 GtkTreeDataStore >> getColumnType: index [
 
@@ -258,7 +249,8 @@ GtkTreeDataStore >> initialize [
 	children := IdentityDictionary new.
 	images := Dictionary new.
 	columns := OrderedCollection new.
-	self finalizationRegistry add: self
+	
+	self registerForFinalize
 ]
 
 { #category : #private }
@@ -470,6 +462,18 @@ GtkTreeDataStore >> pathAtItem: item put: aPath [
 GtkTreeDataStore >> pathFromIter: iter [
 
 	^ GtkTreePath fromHandle: iter user_data
+]
+
+{ #category : #initialization }
+GtkTreeDataStore >> registerForFinalize [
+	
+	"I use 'stamp' and not self because I do not want the shallow copy of an external store, 
+	 and stamp is a single number that will be collected along with it"
+	self finalizationRegistry
+		add: stamp
+		executor: (GtkTreeDataStoreExecutor new 
+			dictionaryList: { paths. children };
+			yourself)	
 ]
 
 { #category : #accessing }
