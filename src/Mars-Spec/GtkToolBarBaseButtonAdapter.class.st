@@ -1,11 +1,11 @@
 Class {
-	#name : #GtkToolBarBaseButtonAdapter,
+	#name : #GtkToolbarBaseButtonAdapter,
 	#superclass : #GtkAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #building }
-GtkToolBarBaseButtonAdapter >> addModelTo: gtkToolButton [
+GtkToolbarBaseButtonAdapter >> addModelTo: gtkToolButton [
 	
 	"Show all to ensure icons are shown if they are not"
 	gtkToolButton showAll.
@@ -20,7 +20,7 @@ GtkToolBarBaseButtonAdapter >> addModelTo: gtkToolButton [
 ]
 
 { #category : #accessing }
-GtkToolBarBaseButtonAdapter >> icon [ 
+GtkToolbarBaseButtonAdapter >> icon [ 
 
 	^ self presenter icon
 		ifNotNil: [ :icon | icon asGtkImage show ]
@@ -28,7 +28,7 @@ GtkToolBarBaseButtonAdapter >> icon [
 ]
 
 { #category : #private }
-GtkToolBarBaseButtonAdapter >> ownerWidget [
+GtkToolbarBaseButtonAdapter >> ownerWidget [
 	
 	"A horrible way to get the widget of the owner. 
 	 It may fail at any pont :("
@@ -36,7 +36,7 @@ GtkToolBarBaseButtonAdapter >> ownerWidget [
 ]
 
 { #category : #updating }
-GtkToolBarBaseButtonAdapter >> updateEnabled [
+GtkToolbarBaseButtonAdapter >> updateEnabled [
 
 	"It it is not included in owner, it will be collected by GTK, causing a crash"
 	(self ownerWidget includes: self widget) ifFalse: [ ^ self ].
@@ -44,14 +44,14 @@ GtkToolBarBaseButtonAdapter >> updateEnabled [
 ]
 
 { #category : #updating }
-GtkToolBarBaseButtonAdapter >> updateIcon [ 
+GtkToolbarBaseButtonAdapter >> updateIcon [ 
 
 	self widgetDo: [ :w |
 		w iconWidget: self icon ]
 ]
 
 { #category : #updating }
-GtkToolBarBaseButtonAdapter >> updateLabel [ 
+GtkToolbarBaseButtonAdapter >> updateLabel [ 
 
 	self widgetDo: [ :w | 
 		w label: self presenter label ]

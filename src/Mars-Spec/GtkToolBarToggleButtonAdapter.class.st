@@ -1,11 +1,11 @@
 Class {
-	#name : #GtkToolBarToggleButtonAdapter,
-	#superclass : #GtkToolBarBaseButtonAdapter,
+	#name : #GtkToolbarToggleButtonAdapter,
+	#superclass : #GtkToolbarBaseButtonAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #building }
-GtkToolBarToggleButtonAdapter >> addModelTo: gtkToolButton [
+GtkToolbarToggleButtonAdapter >> addModelTo: gtkToolButton [
 	
 	super addModelTo: gtkToolButton.
 
@@ -13,7 +13,7 @@ GtkToolBarToggleButtonAdapter >> addModelTo: gtkToolButton [
 ]
 
 { #category : #building }
-GtkToolBarToggleButtonAdapter >> newWidget [
+GtkToolbarToggleButtonAdapter >> newWidget [
 	| button  |
 	
 	button := GtkToggleToolButton new 

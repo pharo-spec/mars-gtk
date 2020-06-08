@@ -1,6 +1,6 @@
 Class {
-	#name : #GtkToolBarMenuButtonAdapter,
-	#superclass : #GtkToolBarBaseButtonAdapter,
+	#name : #GtkToolbarMenuButtonAdapter,
+	#superclass : #GtkToolbarBaseButtonAdapter,
 	#instVars : [
 		'menuWidget'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #private }
-GtkToolBarMenuButtonAdapter >> addModelTo: gtkToolButton [
+GtkToolbarMenuButtonAdapter >> addModelTo: gtkToolButton [
 
 	super addModelTo: gtkToolButton.
 	gtkToolButton connectClicked: self presenter action.
@@ -17,7 +17,7 @@ GtkToolBarMenuButtonAdapter >> addModelTo: gtkToolButton [
 ]
 
 { #category : #building }
-GtkToolBarMenuButtonAdapter >> buildMenu: menuPresenter [
+GtkToolbarMenuButtonAdapter >> buildMenu: menuPresenter [
 
 	menuPresenter owner: self presenter.
 	menuWidget := SpBindings
@@ -27,7 +27,7 @@ GtkToolBarMenuButtonAdapter >> buildMenu: menuPresenter [
 ]
 
 { #category : #accessing }
-GtkToolBarMenuButtonAdapter >> icon [
+GtkToolbarMenuButtonAdapter >> icon [
 
 	^ self presenter icon 
 		ifNotNil: [ :icon | icon asGtkImage ]
@@ -35,7 +35,7 @@ GtkToolBarMenuButtonAdapter >> icon [
 ]
 
 { #category : #building }
-GtkToolBarMenuButtonAdapter >> newWidget [
+GtkToolbarMenuButtonAdapter >> newWidget [
 	
 	^ GtkMenuToolButton 
 		newIcon: self icon 
@@ -43,13 +43,13 @@ GtkToolBarMenuButtonAdapter >> newWidget [
 ]
 
 { #category : #updating }
-GtkToolBarMenuButtonAdapter >> updateMenu [
+GtkToolbarMenuButtonAdapter >> updateMenu [
 
 	self widgetDo: [ :w | self updateMenuTo: w ]
 ]
 
 { #category : #updating }
-GtkToolBarMenuButtonAdapter >> updateMenuTo: aWidget [
+GtkToolbarMenuButtonAdapter >> updateMenuTo: aWidget [
 
 	self presenter menu ifNotNil: [ :aValuable |
 		aValuable value ifNotNil: [ :aMenu |

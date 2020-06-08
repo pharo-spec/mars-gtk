@@ -1,38 +1,38 @@
 Class {
-	#name : #GtkToolBarAdapter,
+	#name : #GtkToolbarAdapter,
 	#superclass : #GtkAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #building }
-GtkToolBarAdapter >> addModelTo: gtkToolBar [
+GtkToolbarAdapter >> addModelTo: gtkToolbar [
 
-	super addModelTo: gtkToolBar.
+	super addModelTo: gtkToolbar.
 
-	self model isDisplayModeIcons ifTrue: [ gtkToolBar beIcons ].
-	self model isDisplayModeText ifTrue: [ gtkToolBar beText ].
-	self model isDisplayModeBoth ifTrue: [ gtkToolBar beBoth ].
+	self model isDisplayModeIcons ifTrue: [ gtkToolbar beIcons ].
+	self model isDisplayModeText ifTrue: [ gtkToolbar beText ].
+	self model isDisplayModeBoth ifTrue: [ gtkToolbar beBoth ].
 
-	self model whenItemsChangeDo: [ self updateItems: gtkToolBar ].
+	self model whenItemsChangeDo: [ self updateItems: gtkToolbar ].
 
-	self updateItems: gtkToolBar 
+	self updateItems: gtkToolbar 
 ]
 
 { #category : #testing }
-GtkToolBarAdapter >> hasButtonWithLabel: aString [ 
+GtkToolbarAdapter >> hasButtonWithLabel: aString [ 
 	
 	^ self widget children anySatisfy: [ :e | 
 		(e isKindOf: GtkToolButton) and: [ e label = aString ] ]
 ]
 
 { #category : #building }
-GtkToolBarAdapter >> needsSeparator [
+GtkToolbarAdapter >> needsSeparator [
 
 	^ self model leftItems isNotEmpty and: [self model rightItems isNotEmpty]
 ]
 
 { #category : #building }
-GtkToolBarAdapter >> numberOfItems [
+GtkToolbarAdapter >> numberOfItems [
 
 	^ self needsSeparator
 		ifTrue: [ self widget size - 1 ]
@@ -40,22 +40,22 @@ GtkToolBarAdapter >> numberOfItems [
 ]
 
 { #category : #building }
-GtkToolBarAdapter >> updateItems: gtkToolBar [ 
+GtkToolbarAdapter >> updateItems: gtkToolbar [ 
 
-	gtkToolBar removeAll.
+	gtkToolbar removeAll.
 
-	self model leftItems do: [ :each | gtkToolBar add: each buildWithSpec ].
+	self model leftItems do: [ :each | gtkToolbar add: each buildWithSpec ].
 
 	self needsSeparator ifTrue: [ 
-		gtkToolBar add: (GtkSeparatorToolItem new 
+		gtkToolbar add: (GtkSeparatorToolItem new 
 			show;
 			yourself) ].
 
-	self model rightItems reverseDo: [ :each | gtkToolBar add: each buildWithSpec ]
+	self model rightItems reverseDo: [ :each | gtkToolbar add: each buildWithSpec ]
 ]
 
 { #category : #building }
-GtkToolBarAdapter >> widgetClass [
+GtkToolbarAdapter >> widgetClass [
 
 	^ GtkToolbar
 ]
