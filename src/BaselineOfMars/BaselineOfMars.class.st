@@ -41,7 +41,9 @@ BaselineOfMars >> baseline: spec [
 BaselineOfMars >> beacon: spec [
 
 	spec baseline: 'Beacon' with: [ 
-		spec repository: 'github://pharo-project/pharo-beacon/repository' ]
+		spec 
+			repository: 'github://pharo-project/pharo-beacon/repository';
+			loads: #('Core' 'Beacon-SerializingLoggers' 'Beacon-File' 'Beacon-Zinc') ]
 ]
 
 { #category : #doits }
@@ -85,7 +87,10 @@ BaselineOfMars >> taskit: spec [
 
 	spec 
 		baseline: 'TaskIt' 
-		with: [ spec repository: 'github://sbragagnolo/taskit' ]
+		with: [ 
+			spec 
+				repository: 'github://pharo-contributions/taskit';
+				loads: #('minimal') ]
 ]
 
 { #category : #'external projects' }
