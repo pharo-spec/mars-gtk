@@ -78,7 +78,7 @@ BaselineOfMars >> recompileStructures [
 { #category : #'external projects' }
 BaselineOfMars >> spec2: spec [
 
-	spec baseline: 'Spec2' with: [ 
+	spec baseline: 'SpecCore' with: [ 
 		spec repository: 'github://pharo-spec/Spec' ]
 ]
 
