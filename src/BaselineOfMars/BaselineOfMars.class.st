@@ -11,7 +11,9 @@ BaselineOfMars >> baseline: spec [
 	spec
 		for: #common
 		do: [ 
-			self spec2: spec.
+			self spec: spec.
+			self specCode: spec.
+			self specMorphic: spec.
 			self threadedffi: spec.
 			self beacon: spec.
 			self taskit: spec.
@@ -22,19 +24,35 @@ BaselineOfMars >> baseline: spec [
 				"core"
 				package: 'Mars-Pango';
 				package: 'Mars-Gtk' with: [ spec requires: #('ThreadedFFI' 'Beacon' 'Mars-Pango') ];
+				"code"
 				package: 'Mars-Gtk-SourceView' with: [ spec requires: #('Mars-Gtk') ];
+				"morphic"
 				package: 'Mars-Gtk-Morphic' with: [ spec requires: #('Mars-Gtk') ];
 				package: 'Mars-Gtk-Morphic-UIManager' with: [ spec requires: #('Mars-Gtk-Morphic') ];
 				"spec"
-				package: 'Mars-Spec-Frame';
-				package: 'Mars-Spec-Text' with: [ spec requires: 'Mars-Gtk' ];
-				package: 'Mars-Spec-Keybindings' with: [ spec requires: 'Mars-Gtk' ];
+				package: 'Mars-Spec-Frame' with: [ spec requires: #('SpecCore') ];
+				package: 'Mars-Spec-Text' with: [ spec requires: #('Mars-Gtk') ];
+				package: 'Mars-Spec-Keybindings' with: [ spec requires: #('Mars-Gtk') ];
 				package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Text' 'Mars-Spec-Keybindings') ];
-				package: 'Mars-Gtk-Morphic-Adapter' with: [ spec requires: #('Mars-Gtk-Morphic' 'Mars-Spec') ];
+				"spec-code"
+				package: 'Mars-Spec-Code' with: [ spec requires: #('SpecCode' 'Mars-Spec' 'Mars-Spec-Text') ];
+				"spec-morphic"
+				package: 'Mars-Gtk-Morphic-Adapter' with: [ spec requires: #('SpecMorphic' 'Mars-Gtk-Morphic' 'Mars-Spec') ];
 				"testing"
 				package: 'Mars-GtkBackendTests' with: [ spec requires: 'Mars-Spec' ];
 				package: 'Mars-Gtk-Tests' with: [ spec requires: 'Mars-Gtk' ];
-				package: 'Mars-Gtk-Morphic-Tests' with: [ spec requires: 'Mars-Gtk-Morphic' ] ]
+				"testing morphic"
+				package: 'Mars-Gtk-Morphic-Tests' with: [ spec requires: 'Mars-Gtk-Morphic' ] ].
+		
+		spec group: 'Core' with: #('SpecCore' 'Mars-Pango' 'Mars-Gtk' 'Mars-Spec-Frame' 'Mars-Spec-Text' 'Mars-Spec-Keybindings' 'Mars-Spec').
+		spec group: 'Code' with: #('Mars-Gtk-SourceView' 'Mars-Spec-Code').	
+		spec group: 'Morphic' with: #('Mars-Gtk-Morphic' 'Mars-Gtk-Morphic-UIManager' 'Mars-Gtk-Morphic-Adapter').
+		spec group: 'Tests' with: #('Mars-GtkBackendTests' 'Mars-Gtk-Tests').
+		spec group: 'MorphicTests' with: #('Mars-Gtk-Morphic-Tests').
+		
+		spec group: 'Base' with: #('Core' 'Code').
+		
+		spec group: 'default' with: #('Base' 'Tests' 'Morphic' 'MorphicTests')
 ]
 
 { #category : #'external projects' }
@@ -76,10 +94,31 @@ BaselineOfMars >> recompileStructures [
 ]
 
 { #category : #'external projects' }
-BaselineOfMars >> spec2: spec [
+BaselineOfMars >> spec: spec [
 
 	spec baseline: 'SpecCore' with: [ 
-		spec repository: 'github://pharo-spec/Spec' ]
+		spec 
+			repository: 'github://pharo-spec/Spec';
+			loads: 'Core' ]
+]
+
+{ #category : #'external projects' }
+BaselineOfMars >> specCode: spec [
+
+	spec baseline: 'SpecCode' with: [ 
+		spec 
+			repository: 'github://pharo-spec/Spec';
+			className: 'BaselineOfSpecCore';
+			loads: 'Code' ]
+]
+
+{ #category : #'external projects' }
+BaselineOfMars >> specMorphic: spec [
+
+	spec baseline: 'SpecMorphic' with: [ 
+		spec 
+			repository: 'github://pharo-spec/Spec';
+			className: 'BaselineOfSpec2' ]
 ]
 
 { #category : #'external projects' }
