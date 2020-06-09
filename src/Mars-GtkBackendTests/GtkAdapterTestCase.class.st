@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkAdapterTestCase,
-	#superclass : #SpTest,
+	#superclass : #SpBaseTest,
 	#instVars : [
 		'app'
 	],
