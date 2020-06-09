@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Gtk-Morphic-Adapter'
 }
 
 { #category : #'instance creation' }

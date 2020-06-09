@@ -6,7 +6,7 @@ Class {
 		'lastPopover',
 		'userAction'
 	],
-	#category : #'Mars-Spec-Adapter'
+	#category : #'Mars-Spec-Code'
 }
 
 { #category : #building }

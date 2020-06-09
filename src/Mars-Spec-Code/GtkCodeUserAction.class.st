@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'registerChange'
 	],
-	#category : #'Mars-Spec-Adapter-Code'
+	#category : #'Mars-Spec-Code'
 }
 
 { #category : #testing }
