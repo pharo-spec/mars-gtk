@@ -31,11 +31,10 @@ BaselineOfMars >> baseline: spec [
 				package: 'Mars-Gtk-Morphic-UIManager' with: [ spec requires: #('Mars-Gtk-Morphic') ];
 				"spec"
 				package: 'Mars-Spec-Frame' with: [ spec requires: #('SpecCore') ];
-				package: 'Mars-Spec-Text' with: [ spec requires: #('Mars-Gtk') ];
 				package: 'Mars-Spec-Keybindings' with: [ spec requires: #('Mars-Gtk') ];
-				package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Text' 'Mars-Spec-Keybindings') ];
+				package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Keybindings') ];
 				"spec-code"
-				package: 'Mars-Spec-Code' with: [ spec requires: #('SpecCode' 'Mars-Spec' 'Mars-Spec-Text') ];
+				package: 'Mars-Spec-Code' with: [ spec requires: #('SpecCode' 'Mars-Spec') ];
 				"spec-morphic"
 				package: 'Mars-Gtk-Morphic-Adapter' with: [ spec requires: #('SpecMorphic' 'Mars-Gtk-Morphic' 'Mars-Spec') ];
 				"testing"
@@ -44,7 +43,7 @@ BaselineOfMars >> baseline: spec [
 				"testing morphic"
 				package: 'Mars-Gtk-Morphic-Tests' with: [ spec requires: 'Mars-Gtk-Morphic' ] ].
 		
-		spec group: 'Core' with: #('SpecCore' 'Mars-Pango' 'Mars-Gtk' 'Mars-Spec-Frame' 'Mars-Spec-Text' 'Mars-Spec-Keybindings' 'Mars-Spec').
+		spec group: 'Core' with: #('SpecCore' 'Mars-Pango' 'Mars-Gtk' 'Mars-Spec-Frame' 'Mars-Spec-Keybindings' 'Mars-Spec').
 		spec group: 'Code' with: #('Mars-Gtk-SourceView' 'Mars-Spec-Code').	
 		spec group: 'Morphic' with: #('Mars-Gtk-Morphic' 'Mars-Gtk-Morphic-UIManager' 'Mars-Gtk-Morphic-Adapter').
 		spec group: 'Tests' with: #('Mars-GtkBackendTests' 'Mars-Gtk-Tests').
