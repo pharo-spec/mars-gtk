@@ -374,6 +374,6 @@ GtkWindowAdapter >> title: aString [
 { #category : #'private building' }
 GtkWindowAdapter >> toolbar [ 
 
-	^ toolbar ifNil: [ toolbar  := self model toolBar buildWithSpec ]
+	^ toolbar ifNil: [ toolbar  := self presenter toolbar buildWithSpec ]
 
 ]
