@@ -135,5 +135,7 @@ BaselineOfMars >> taskit: spec [
 BaselineOfMars >> threadedffi: spec [
 
 	spec baseline: 'ThreadedFFI' with: [ 
-		spec repository: 'github://pharo-project/threadedFFI-Plugin' ]
+		spec 
+			repository: 'github://pharo-project/threadedFFI-Plugin';
+			loads: 'Core' ]
 ]
