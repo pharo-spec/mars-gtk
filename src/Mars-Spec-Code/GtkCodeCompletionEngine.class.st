@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkCodeCompletionEngine,
-	#superclass : #AbstractCompletionEngine,
+	#superclass : #Object,
 	#instVars : [
 		'scripting',
 		'completionClass',
