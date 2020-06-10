@@ -29,7 +29,7 @@ GtkCodeAdapter >> addSourceCompletionProviderTo: gtkSourceView [
 		showHeaders: false;
 		showIcons: true;
 		addProvider: (completionProvider := GtkPharoSourceCompletionProvider new
-			completionEngine: self completionEngine;
+			completionEngine: (self newCompletionEngine: self presenter interactionModel);
 			yourself)
 ]
 
@@ -50,7 +50,7 @@ GtkCodeAdapter >> addSourceFeaturesTo: gtkSourceView [
 		infiniteUndoLevels;
 		highlightMatchingBrackets: true.
 		
-	self completionEngine ifNotNil: [
+	self presenter interactionModel ifNotNil: [
 		self addSourceCompletionProviderTo: gtkSourceView ].
 	
 	self presenter whenLineNumbersChangedDo: [ :hasLineNumbers |
@@ -131,12 +131,6 @@ GtkCodeAdapter >> classOrMetaClass: aClass [
 ]
 
 { #category : #'api-shout' }
-GtkCodeAdapter >> completionEngine [
-
-	^ self presenter completionEngine
-]
-
-{ #category : #'api-shout' }
 GtkCodeAdapter >> doItContext [ 
 
 	^ self presenter doItContext
@@ -173,6 +167,23 @@ GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 		 do better :( "
 		lastPopover popupPointingTo: ((w iterLocation: endIter) translateBy: (15@0)).
 		lastPopover takeKeyboardFocus ]
+]
+
+{ #category : #api }
+GtkCodeAdapter >> interactionModel: anInteractionModel [
+
+	self classOrMetaClass: anInteractionModel behavior
+]
+
+{ #category : #'instance creation' }
+GtkCodeAdapter >> newCompletionEngine: anInteractionModel [
+
+	^ GtkCodeCompletionEngine new 
+		scripting: anInteractionModel isForScripting;
+		doItRequestor: anInteractionModel;
+		doItContext: anInteractionModel doItContext;
+		completionClass: anInteractionModel selectedClassOrMetaClass;
+		yourself
 ]
 
 { #category : #'as yet unclassified' }
