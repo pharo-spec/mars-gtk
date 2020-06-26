@@ -36,7 +36,7 @@ GtkSourceViewLibrary >> runner [
 { #category : #'accessing platform' }
 GtkSourceViewLibrary >> unix64LibraryName [ 
 
-	^ '/usr/lib/x86_64-linux-gnu/libgtksourceview-3.0.so.1'
+	^ FFIUnix64LibraryFinder findLibrary: 'libgtksourceview-4.so'
 ]
 
 { #category : #'accessing platform' }
