@@ -87,6 +87,7 @@ GtkTreeTableAdapter >> columns [
 GtkTreeTableAdapter >> configureInitialState: gtkWidget [
 
 	gtkWidget headersVisible: self presenter isShowingColumnHeaders.
+	gtkWidget activateOnSingleClick: self presenter activatesOnSingleClick.
 	
 	self presenter selection isMultipleSelection 
 		ifTrue: [ gtkWidget beMultipleSelectionMode ]
