@@ -9,8 +9,7 @@ Class {
 	#superclass : #GObject,
 	#instVars : [
 		'completionEngine',
-		'iconsCache',
-		'theWord'
+		'iconsCache'
 	],
 	#classVars : [
 		'Separators'
@@ -194,15 +193,8 @@ GtkPharoSourceCompletionProvider >> name [
 GtkPharoSourceCompletionProvider >> populate: context [
 	| proposals iter entries |
 	
-thisContext method selector printToStdout.
-
 	iter := context iter.
-iter getHandle printToStdout.
-iter dummy1 printToStdout.
-	
-	theWord := self currentWord: iter in: iter buffer.
-	theWord printToStdout.
-	
+
 	entries := iter 
 		ifNotNil: [ self completionEntriesFor: iter ]
 		ifNil: [ #() ].
