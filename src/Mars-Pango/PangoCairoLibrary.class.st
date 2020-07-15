@@ -36,7 +36,8 @@ PangoCairoLibrary >> unix32LibraryName [
 { #category : #'accessing platform' }
 PangoCairoLibrary >> unix64LibraryName [ 
 
-	^ '/usr/lib/x86_64-linux-gnu/libpangocairo-1.0.so.0'
+	GtkLibrary isDebug ifTrue: [ ^ '/home/esteban/jhbuild/install/lib/libpangocairo-1.0.so' ]. 
+	^ FFIUnix64LibraryFinder findLibrary: 'libpangocairo-1.0.so'
 ]
 
 { #category : #'accessing platform' }

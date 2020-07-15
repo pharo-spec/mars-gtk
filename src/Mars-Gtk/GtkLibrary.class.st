@@ -108,11 +108,8 @@ GtkLibrary >> unix32LibraryName [
 { #category : #'accessing platform' }
 GtkLibrary >> unix64LibraryName [ 
 
-	^ #(
-	'/usr/lib/x86_64-linux-gnu/libgtk-3.so.0' 
-	'/usr/lib/libgtk-3.so')
-	detect: [ :each | each asFileReference exists ]
-	ifNone: [ self error: 'I cannot find libgtk-3.so.0' ]
+	self class isDebug ifTrue: [ ^ '/home/esteban/jhbuild/install/lib/libgtk-3.so' ]. 
+	^ FFIUnix64LibraryFinder findLibrary:  'libgtk-3.so'
 ]
 
 { #category : #accessing }

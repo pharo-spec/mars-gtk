@@ -34,3 +34,9 @@ FcLibrary >> runner [
 	
 	^ GtkLibrary naturalRunner
 ]
+
+{ #category : #'accessing platform' }
+FcLibrary >> unix64LibraryName [
+
+	^ FFIUnix64LibraryFinder findLibrary: 'libfontconfig.so.1'
+]
