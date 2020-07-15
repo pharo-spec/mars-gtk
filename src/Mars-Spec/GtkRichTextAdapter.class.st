@@ -13,7 +13,7 @@ GtkRichTextAdapter >> addTextTo: gtkTextView [
 		keysAndValuesDo: [ :name :value | 
 			| tag |
 			tag := GtkTextTag newName: name.
-			value do: [ :arg4 | arg4 acceptTag: tag ].
+			value do: [ :attribute | attribute acceptTag: tag ].
 			table add: tag ].
 	gtkTextView textBuffer: (self bufferClass newTable: table).
 	gtkTextView textBuffer connectChanged: [ self applyStyleTo: gtkTextView ].
@@ -26,7 +26,7 @@ GtkRichTextAdapter >> applyStyleTo: textBuffer [
 	visitor := GtkTextStyleTagsVisitor new.
 	visitor styleProvider: self model styleAttributes.
 	tags := visitor styleDocument: self model renderTree.
-	tags do: [ :arg2 | arg2 acceptTextBuffer: textBuffer textBuffer ]
+	tags do: [ :tag | tag acceptTextBuffer: textBuffer textBuffer ]
 ]
 
 { #category : #building }
