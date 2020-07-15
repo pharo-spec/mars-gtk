@@ -9,7 +9,8 @@ Class {
 	#superclass : #GObject,
 	#instVars : [
 		'completionEngine',
-		'iconsCache'
+		'iconsCache',
+		'theWord'
 	],
 	#classVars : [
 		'Separators'
@@ -97,7 +98,7 @@ GtkPharoSourceCompletionProvider class >> separators [
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> activateProposal: proposal iter: iter [
 	| word textToInsert |
-	
+
 	word := self currentWord: iter in: iter buffer.
 	word ifNil: [ ^ false ].
 	
@@ -192,8 +193,16 @@ GtkPharoSourceCompletionProvider >> name [
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> populate: context [
 	| proposals iter entries |
+	
+thisContext method selector printToStdout.
 
 	iter := context iter.
+iter getHandle printToStdout.
+iter dummy1 printToStdout.
+	
+	theWord := self currentWord: iter in: iter buffer.
+	theWord printToStdout.
+	
 	entries := iter 
 		ifNotNil: [ self completionEntriesFor: iter ]
 		ifNil: [ #() ].
@@ -203,12 +212,14 @@ GtkPharoSourceCompletionProvider >> populate: context [
 		entries do: [ :each |
 			proposals := proposals append: (self toItem: each) ].
 		"Ensure the list will be pointing to first element (and ensure it will be released)"
-		proposals := proposals first autoRelease ].
+		proposals := proposals first ].
 	
 	context 
 		addProposals: proposals
 		provider: self 
-		finished: true
+		finished: true.
+	
+	proposals free
 ]
 
 { #category : #accessing }
@@ -221,9 +232,13 @@ GtkPharoSourceCompletionProvider >> priority [
 GtkPharoSourceCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
 	| word |
 
-	word := self 
-		currentWord: iter
-		in: iter buffer.
+	(iter isNil or: [ iter isNull ]) ifTrue: [ ^ false ].
+	"I cannot use 'context iter' to get this value because apparently the function does 
+	 a kid of merge, more than fill it completely, and the source completion needs both: what 
+	 will be assigned and what is already there :("
+	(context getIter: iter) ifFalse: [ ^ false ].
+
+	word := self currentWord: iter in: iter buffer.
 	word ifNil: [ ^ false ].
 
 	^ true

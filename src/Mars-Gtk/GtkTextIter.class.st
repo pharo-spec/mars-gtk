@@ -8,6 +8,9 @@ WARNING: GtkTextIter is an opaque type that is, however, threat as a regular str
 Class {
 	#name : #GtkTextIter,
 	#superclass : #GtkStructure,
+	#instVars : [
+		'buffer'
+	],
 	#classVars : [
 		'OFFSET_DUMMY1',
 		'OFFSET_DUMMY10',
@@ -85,7 +88,7 @@ GtkTextIter >> basicTags [
 { #category : #accessing }
 GtkTextIter >> buffer [
 
-	^ self ffiCall: #(GtkTextBuffer *gtk_text_iter_get_buffer (self))
+	^ buffer ifNil: [ buffer := self getBuffer ]
 ]
 
 { #category : #'accessing structure variables' }
@@ -278,6 +281,12 @@ GtkTextIter >> forwardLines: count [
 GtkTextIter >> forwardToLineEnd [
 
 	^ self ffiCall: #(gboolean gtk_text_iter_forward_to_line_end (self))
+]
+
+{ #category : #private }
+GtkTextIter >> getBuffer [
+
+	^ self ffiCall: #(GtkTextBuffer *gtk_text_iter_get_buffer (self))
 ]
 
 { #category : #accessing }

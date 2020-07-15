@@ -86,13 +86,13 @@ GList >> first [
 	^ GList fromHandle: self gListFirst
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #finalization }
 GList >> free [
 
 	self ffiCall: #(void g_list_free(self))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #finalization }
 GList >> freeFull: aNotifyCallback [
 
 	self ffiCall: #(void g_list_free_full(self, GCallback aNotifyCallback))
