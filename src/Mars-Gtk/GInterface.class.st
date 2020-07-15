@@ -26,6 +26,13 @@ GInterface class >> fieldsDesc [
 	)
 ]
 
+{ #category : #'class initialization' }
+GInterface class >> initialize [
+
+	"Offset is always 1"
+	OFFSET_G_IFACE := 1
+]
+
 { #category : #'accessing structure variables' }
 GInterface >> g_iface [
 	"This method was automatically generated"
