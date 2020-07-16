@@ -56,10 +56,20 @@ GList class >> new [
 	^ self basicNew setHandle: ExternalAddress null
 ]
 
+{ #category : #'instance creation' }
+GList class >> newFromCollection: aCollection [
+	| list |
+	
+	list := self new.
+	aCollection do: [ :each | 
+		list := list append: each getHandle ].
+	^ list first
+]
+
 { #category : #accessing }
 GList >> append: aGObject [
 
-	^ GList fromHandle: (self gListAppend: aGObject getHandle)
+	^ self class fromHandle: (self gListAppend: aGObject getHandle)
 ]
 
 { #category : #'accessing structure variables' }
