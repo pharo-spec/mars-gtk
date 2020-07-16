@@ -113,16 +113,12 @@ GtkWindowAdapter >> centered [
 
 { #category : #accessing }
 GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [
-	| bounds position |	
 
 	self deferAction: [
-		self widgetDo: [ :w | | isVisible |
-			isVisible := w isVisible.
-			isVisible ifTrue:[ w hide ].
-			bounds := aWindowPresenter adapter widget bounds.
-			position := bounds topLeft + ((bounds extent - w size) // 2).
-			w moveTo: position.
-			isVisible ifTrue:[ w show ] ] ]
+		self widgetDo: [ :w | 
+			self 
+				deferredCenter: w 
+				relativeTo: aWindowPresenter ] ]
 ]
 
 { #category : #accessing }
@@ -204,6 +200,18 @@ GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
 	contentBox show.
 
 	self add: contentBox toWindow: gtkWindow
+]
+
+{ #category : #accessing }
+GtkWindowAdapter >> deferredCenter: gtkWindow relativeTo: aWindowPresenter [
+	| isVisible bounds position |
+	
+	isVisible := gtkWindow isVisible.
+	isVisible ifTrue:[ gtkWindow hide ].
+	bounds := aWindowPresenter adapter widget bounds.
+	position := bounds topLeft + ((bounds extent - gtkWindow size) // 2).
+	gtkWindow moveTo: position.
+	isVisible ifTrue: [ gtkWindow show ]
 ]
 
 { #category : #accessing }
