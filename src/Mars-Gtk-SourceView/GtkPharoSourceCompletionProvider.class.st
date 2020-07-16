@@ -191,7 +191,7 @@ GtkPharoSourceCompletionProvider >> name [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> populate: context [
-	| proposals iter entries |
+	| proposals iter entries items |
 	
 	iter := context iter.
 
@@ -199,19 +199,24 @@ GtkPharoSourceCompletionProvider >> populate: context [
 		ifNotNil: [ self completionEntriesFor: iter ]
 		ifNil: [ #() ].
 
-	proposals := GList new.
-	entries ifNotEmpty: [ 
-		entries do: [ :each |
-			proposals := proposals append: (self toItem: each) ].
-		"Ensure the list will be pointing to first element (and ensure it will be released)"
-		proposals := proposals first ].
+	proposals := entries 
+		ifNotEmpty: [ 
+			"I need to first collect items and later transfer them to the GList because th list 
+			 will keep just the handles and that can provoque a premature GC of the proposal (since 
+			 is marked for autoUnref), and the items needs to survive until after addProposals is 
+			 called."
+			items := entries collect: [ :each | self toItem: each ].
+			GList newFromCollection: items ]
+		ifEmpty: [
+			GList new ].
 	
 	context 
 		addProposals: proposals
 		provider: self 
 		finished: true.
 	
-	proposals free
+	"Free proposals"
+	proposals isNull ifFalse: [ proposals free ]
 ]
 
 { #category : #accessing }
