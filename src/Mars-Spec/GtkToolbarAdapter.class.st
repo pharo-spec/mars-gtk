@@ -8,7 +8,9 @@ Class {
 GtkToolbarAdapter >> addModelTo: gtkToolbar [
 
 	super addModelTo: gtkToolbar.
-
+	
+	gtkToolbar beIconSizeSmallToolbar.
+	
 	self model isDisplayModeIcons ifTrue: [ gtkToolbar beIcons ].
 	self model isDisplayModeText ifTrue: [ gtkToolbar beText ].
 	self model isDisplayModeBoth ifTrue: [ gtkToolbar beBoth ].
