@@ -45,7 +45,7 @@ GtkLeakFinder >> collectedWithInstancesCount [
 { #category : #private }
 GtkLeakFinder >> ensureLoggingSignals [
 	
-	self signals do: #resume
+	self signals do: [ :each | each traceSignal ]
 ]
 
 { #category : #initialize }
