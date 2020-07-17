@@ -92,25 +92,23 @@ GtkCodeAdapter >> applyStyleTo: textBuffer [
 	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
 	self presenter text ifEmpty: [ ^ self ].
 	textBuffer removeAllTags.
-	self behavior
-		ifNotNil: [ :aBehavior |
-			self setMethodText: textBuffer text class: aBehavior toBuffer: textBuffer ]
-		ifNil: [ 
-			self setExpressionText: textBuffer text toBuffer: textBuffer ]
+	(self isForScripting or: [ self behavior isNil ])
+		ifTrue: [
+			self 
+				setExpressionText: textBuffer text 
+				class: self behavior 
+				toBuffer: textBuffer  ]
+		ifFalse: [ 
+			self 
+				setMethodText: textBuffer text 
+				class: self behavior 
+				toBuffer: textBuffer ]
 ]
 
 { #category : #'api-shout' }
 GtkCodeAdapter >> behavior [
 
 	^ self presenter behavior
-]
-
-{ #category : #'private-shout' }
-GtkCodeAdapter >> behaviorOrReceiverClass [
-
-	self presenter behavior ifNotNil: [ :aBehavior | ^ aBehavior ].
-	self presenter doItReceiver ifNotNil: [ :anObject | ^ anObject class ].
-	^ nil
 ]
 
 { #category : #building }
@@ -175,6 +173,12 @@ GtkCodeAdapter >> interactionModel: anInteractionModel [
 	self classOrMetaClass: anInteractionModel behavior
 ]
 
+{ #category : #'api-shout' }
+GtkCodeAdapter >> isForScripting [
+
+	^ self presenter isForScripting
+]
+
 { #category : #'instance creation' }
 GtkCodeAdapter >> newCompletionEngine: anInteractionModel [
 
@@ -192,11 +196,11 @@ GtkCodeAdapter >> notify: aString at: aNumber in: anObject [
 ]
 
 { #category : #'private-shout' }
-GtkCodeAdapter >> setExpressionText: aString toBuffer: textBuffer [ 
+GtkCodeAdapter >> setExpressionText: aString class: aClass toBuffer: textBuffer [ 
 
 	(GtkTextStyleVisitor new 
-		requestor: self presenter;
-		contextClass: self behaviorOrReceiverClass;
+		requestor: self;
+		contextClass: aClass;
 		styleExpression: aString)
 		do: [ :each | each acceptTextBuffer: textBuffer ].
 
