@@ -35,6 +35,7 @@ BaselineOfMars >> baseline: spec [
 				package: 'Mars-Spec' with: [ spec requires: #('Mars-Gtk' 'Mars-Spec-Keybindings') ];
 				"spec-code"
 				package: 'Mars-Spec-Code' with: [ spec requires: #('SpecCode' 'Mars-Spec') ];
+				package: 'Mars-Spec-Pillar' with: [ spec requires: #('Mars-Spec') ];
 				"spec-morphic"
 				package: 'Mars-Gtk-Morphic-Adapter' with: [ spec requires: #('SpecMorphic' 'Mars-Gtk-Morphic' 'Mars-Spec') ];
 				"testing"
