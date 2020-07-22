@@ -125,6 +125,12 @@ GtkRunLoop >> callbackEnter [
 	inCallback := true
 ]
 
+{ #category : #accessing }
+GtkRunLoop >> callerProcess [
+
+	^ self subclassResponsibility
+]
+
 { #category : #private }
 GtkRunLoop >> checkSession [
 
