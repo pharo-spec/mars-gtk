@@ -67,9 +67,9 @@ BaselineOfMars >> beacon: spec [
 { #category : #doits }
 BaselineOfMars >> installGtkDriver [
 			
-	"Do not switch driver if we are in windows"
-	self flag: #TODO. "Hepefully temporal :)"
-	Smalltalk platform isWindows ifTrue: [ ^ self ]. 
+	"Do not switch driver if we are not in MacOS (it is not working there)"
+	self flag: #TODO. "Hopefully temporal :)"
+	Smalltalk platform isMacOS ifFalse: [ ^ self ]. 
 			
 	"If we installed OSGtkDriver, we want to use it as default"
 	Smalltalk globals
