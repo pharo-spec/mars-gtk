@@ -20,7 +20,11 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 
 	gtkTextView editable: self presenter isEditable.
 	self presenter whenEditableChangedDo: [ :value | self setEditable: value ].
-	gtkTextView beWrapWord.
+	
+	self setWrapWord: self presenter isWrapWord to: gtkTextView. 
+	self presenter whenWrapWordChangedDo: [ :value |
+		self setWrapWord: value to: gtkTextView ].
+	
 	gtkTextView textBuffer connectChanged: [
 		self updatePresenterText: gtkTextView text ]
 
@@ -50,6 +54,14 @@ GtkTextAdapter >> setText: aString to: gtkWidget [
 
 	self backendDetectCyclesDo: [
 		super setText: aString to: gtkWidget	]
+]
+
+{ #category : #private }
+GtkTextAdapter >> setWrapWord: value to: gtkTextView [
+
+	self presenter isWrapWord 
+		ifTrue: [ gtkTextView beWrapWord ]
+		ifFalse: [ gtkTextView beWrapNone ]
 ]
 
 { #category : #private }
