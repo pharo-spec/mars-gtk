@@ -161,9 +161,9 @@ GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 			selectionIteratorsDo: [ :start :end | end ] 
 			ifNone: [ nil ].
 		 
-		"15@0 is a magic number to place the popover where I want. Not cool, but hard to 
-		 do better :( "
-		lastPopover popupPointingTo: ((w iterLocation: endIter) translateBy: (15@0)).
+		"18@0 is a magic number to place the popover where I want. 
+		 Not cool, but hard to do better :( "
+		lastPopover popupPointingTo: ((w iterLocation: endIter) translateBy: (18@0)).
 		lastPopover takeKeyboardFocus ]
 ]
 
@@ -190,8 +190,9 @@ GtkCodeAdapter >> newCompletionEngine: anInteractionModel [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'interactive error protocol' }
 GtkCodeAdapter >> notify: aString at: aNumber in: anObject [
+	
 	self flag: #TODO. "What to do here?"
 ]
 
