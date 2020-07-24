@@ -237,6 +237,12 @@ GtkWindowAdapter >> initialize [
 ]
 
 { #category : #'spec protocol' }
+GtkWindowAdapter >> isDisplayed [ 
+
+	^ self widgetDo: [ :w | w isVisible ]
+]
+
+{ #category : #'spec protocol' }
 GtkWindowAdapter >> isMaximized [
 	| maximized |
 
