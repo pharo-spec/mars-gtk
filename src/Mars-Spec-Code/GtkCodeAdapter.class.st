@@ -159,8 +159,7 @@ GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 
 		endIter := w textBuffer 
 			selectionIteratorsDo: [ :start :end | end ] 
-			ifNone: [ nil ].
-		 
+			ifNone: [ w textBuffer offsetIter: w textBuffer cursorPosition ].
 		"18@0 is a magic number to place the popover where I want. 
 		 Not cool, but hard to do better :( "
 		lastPopover popupPointingTo: ((w iterLocation: endIter) translateBy: (18@0)).

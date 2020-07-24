@@ -115,7 +115,7 @@ GtkAbstractTextAdapter >> setSelectionFromModel: aSelection [
  
 	self innerWidgetDo: [ :w | 
 		w textBuffer 
-			selectFrom: aSelection first - 1
+			selectFrom: (aSelection first - 1)
 			to: aSelection last ]
 ]
 

@@ -278,6 +278,12 @@ GtkTextBuffer >> offsetIter: iter pos: char_offset [
 	
 ]
 
+{ #category : #'accessing selection' }
+GtkTextBuffer >> placeCursor: where [
+
+	self ffiCall: #(void gtk_text_buffer_place_cursor (self, const GtkTextIter *where))
+]
+
 { #category : #'accessing tags' }
 GtkTextBuffer >> removeAllTags [ 
 
@@ -308,6 +314,9 @@ GtkTextBuffer >> selectFrom: start to: end [
 	| startIter endIter |
 
 	startIter := self offsetIter: start.
+	start = end ifTrue: [ 
+		self placeCursor: startIter.
+		^ self ].
 	endIter := self offsetIter: end.
 	self selectRangeInsert: startIter bound: endIter
 ]
