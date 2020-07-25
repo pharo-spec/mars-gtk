@@ -78,6 +78,12 @@ GtkBox >> basicPackStart: child expand: expand fill: fill padding: padding [
 		guint padding))
 ]
 
+{ #category : #private }
+GtkBox >> basicReorderChild: child position: position [
+
+	^ self ffiCall: #(void gtk_box_reorder_child (self, GtkWidget *child, gint position))
+]
+
 { #category : #accessing }
 GtkBox >> homogeneous: homogeneous [
 	self ffiCall: #(void gtk_box_set_homogeneous (self, gboolean homogeneous)) 
@@ -128,6 +134,19 @@ GtkBox >> packStart: child expand: expand fill: fill padding: padding [
 GtkBox >> packStart: child padding: padding [
 
 	^ self packStart: child expand: true fill: true padding: padding
+]
+
+{ #category : #accessing }
+GtkBox >> reorderChild: aWidget position: position [
+
+	"re-sort children"
+	children := children copyWithout: aWidget.
+	children :=
+		(children first: position - 1), 
+		{ aWidget }, 
+		(children last: children size - position + 1).
+	"re-sort container"
+	self basicReorderChild: aWidget position: position - 1
 ]
 
 { #category : #accessing }

@@ -87,3 +87,15 @@ GtkBoxAdapter >> newVertical [
 
 	^ GtkBox newVertical
 ]
+
+{ #category : #accessing }
+GtkBoxAdapter >> replace: aPresenter with: otherPresenter withConstraints: constraints [
+	| index |
+	
+	index := widget children indexOf: aPresenter adapter widget.
+	self remove: aPresenter.
+	self add: otherPresenter constraints: constraints.
+	
+	self innerWidgetDo: [ :w |
+		w reorderChild: otherPresenter adapter widget position: index ]
+]
