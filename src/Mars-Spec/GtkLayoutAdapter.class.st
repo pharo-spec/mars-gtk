@@ -17,7 +17,8 @@ GtkLayoutAdapter class >> isAbstract [
 
 { #category : #accessing }
 GtkLayoutAdapter >> add: aPresenter constraints: constraints [
- 
+
+	aPresenter owner: self model. 
 	self widgetDo: [ :gtkWidget | | childWidget |
 		childWidget := self 
 			basicAdd: aPresenter

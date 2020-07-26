@@ -18,6 +18,7 @@ GtkMillerAdapter >> add: aPresenter [
 { #category : #private }
 GtkMillerAdapter >> add: aPresenter constraints: constraints [
 	
+	aPresenter owner: self model. 
 	self widgetDo: [ :w |
 		| childWidget |
 		
