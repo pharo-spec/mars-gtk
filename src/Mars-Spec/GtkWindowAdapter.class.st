@@ -69,7 +69,8 @@ GtkWindowAdapter >> addVisibleSettingsTo: gtkWidget [
 { #category : #private }
 GtkWindowAdapter >> announceClosed [
 
-	self presenter windowIsClosing
+	self presenter windowIsClosing.
+	self presenter windowClosed
 ]
 
 { #category : #private }
@@ -124,7 +125,6 @@ GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [
 { #category : #accessing }
 GtkWindowAdapter >> close [
 
-	self announceClosed.
 	self widgetDo: [ :w | 
 		w hide. 
 		w isAlive ifTrue: [ w destroy ] ]
