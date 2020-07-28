@@ -133,6 +133,14 @@ GtkTextBuffer >> cursorPosition [
 ]
 
 { #category : #accessing }
+GtkTextBuffer >> cursorPosition: index [
+	| indexIter |
+
+	indexIter := self offsetIter: index.
+	self placeCursor: indexIter
+]
+
+{ #category : #accessing }
 GtkTextBuffer >> cursorPositionAtLine [
 	| iter |
 	

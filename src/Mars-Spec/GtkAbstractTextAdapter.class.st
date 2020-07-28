@@ -40,7 +40,7 @@ GtkAbstractTextAdapter >> addTextTo: gtkWidget [
 { #category : #'spec protocol' }
 GtkAbstractTextAdapter >> cursorPositionIndex [
 
-	^ self innerWidgetDo: [ :w | w cursorPosition ]
+	^ self innerWidgetDo: [ :w | w textBuffer cursorPosition ]
 ]
 
 { #category : #'spec protocol' }
