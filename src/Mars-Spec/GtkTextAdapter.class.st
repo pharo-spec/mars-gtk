@@ -19,7 +19,8 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 	super addModelTo: gtkTextView.
 
 	gtkTextView editable: self presenter isEditable.
-	self presenter whenEditableChangedDo: [ :value | self setEditable: value ].
+	self presenter whenEditableChangedDo: [ :value | 
+		self setEditable: value ].
 	
 	self setWrapWord: self presenter isWrapWord to: gtkTextView. 
 	self presenter whenWrapWordChangedDo: [ :value |

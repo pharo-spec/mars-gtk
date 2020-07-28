@@ -178,7 +178,7 @@ GtkCodeAdapter >> isForScripting [
 	^ self presenter isForScripting
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'private factory' }
 GtkCodeAdapter >> newCompletionEngine: anInteractionModel [
 
 	^ GtkCodeCompletionEngine new 

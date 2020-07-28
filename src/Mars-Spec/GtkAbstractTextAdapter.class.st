@@ -56,8 +56,11 @@ GtkAbstractTextAdapter >> insert: aString at: positionIndex [
 GtkAbstractTextAdapter >> populatePopup: menuWidget [
 	| newMenu menuPresenter |
 	
-	menuPresenter := self model contextMenu value.
+	menuPresenter := self presenter contextMenu value.
 	menuPresenter ifNil: [ ^ self ].
+	self presenter hasEditionContextMenu ifTrue: [ 
+		self presenter editionContextMenu menuGroups do: [ :each |
+			menuPresenter addMenuGroup: each ] ].
 	
 	lastShownMenu := menuWidget.
 	newMenu := self buildMenu: menuPresenter.
