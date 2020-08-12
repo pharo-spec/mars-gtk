@@ -10,10 +10,10 @@ Class {
 	#classTraits : 'TGdkEventState classTrait',
 	#instVars : [
 		'keyValue',
-		'wasHandled',
 		'position'
 	],
 	#classVars : [
+		'InternalMap',
 		'OFFSET_GROUP',
 		'OFFSET_HARDWARE_KEYCODE',
 		'OFFSET_IS_MODIFIER',
@@ -33,6 +33,48 @@ Class {
 	#category : #'Mars-Gtk-Base-Events'
 }
 
+{ #category : #'private compatibility' }
+GdkEventKey class >> createInternalMap [
+
+	^ IdentityDictionary newFromPairs: { 
+	KEY_BackSpace. 				Character backspace asciiValue.
+	KEY_Tab. 						Character tab asciiValue.
+	KEY_Linefeed. 				Character lf asciiValue.
+	KEY_Clear. 					nil.
+	KEY_Return. 					Character cr asciiValue.
+	KEY_Pause. 					nil.
+	KEY_Scroll_Lock. 			nil.
+	KEY_Sys_Req. 				nil.
+	KEY_Escape. 					Character escape asciiValue.
+	KEY_Delete. 					Character delete asciiValue.
+	KEY_Home. 					Character home asciiValue.
+	KEY_Left. 					Character arrowLeft asciiValue.
+	KEY_Up. 						Character arrowUp asciiValue.
+	KEY_Right. 					Character arrowRight asciiValue.
+	KEY_Down.						Character arrowDown asciiValue.
+	KEY_Prior. 					nil.
+	KEY_Page_Up. 				Character pageUp asciiValue.
+	KEY_Next.						nil.
+	KEY_Page_Down.				Character pageDown asciiValue.
+	KEY_End. 						Character end asciiValue.
+	KEY_Begin.					Character home asciiValue.
+	KEY_Select.					nil.
+	KEY_Print.	 				nil.
+	KEY_Execute. 				nil.
+	KEY_Insert.					Character insert asciiValue.
+	KEY_Undo. 					nil.
+	KEY_Redo.						nil.
+	KEY_Menu.						nil.
+	KEY_Find.						nil.
+	KEY_Cancel. 					nil.
+	KEY_Help.						nil.
+	KEY_Break. 					nil.
+	KEY_Mode_switch. 			nil.
+	KEY_script_switch. 		nil.
+	KEY_Num_Lock. 				nil. 
+	}
+]
+
 { #category : #'field definition' }
 GdkEventKey class >> fieldsDesc [ 
 	"self rebuildFieldAccessors"
@@ -50,6 +92,29 @@ GdkEventKey class >> fieldsDesc [
   guint8 group;
   FFIUBit is_modifier	
 	)
+]
+
+{ #category : #'private compatibility' }
+GdkEventKey class >> internalMap [
+
+	^ InternalMap ifNil: [ InternalMap := self createInternalMap ]
+]
+
+{ #category : #'private compatibility' }
+GdkEventKey class >> internalMapAt: aCode ifAbsentOrNil: aBlock [
+	
+	self internalMap
+		at: aCode
+		ifPresent: [ :value | 
+			value ifNotNil: [ ^ value ] ].
+		
+	^ aBlock value
+]
+
+{ #category : #private }
+GdkEventKey class >> modMask [
+
+	^ self ffiCall: #(uint32 gtk_accelerator_get_default_mod_mask (void))
 ]
 
 { #category : #'instance creation' }
@@ -114,6 +179,12 @@ GdkEventKey >> asKeyCombination [
 GdkEventKey >> character [
 
 	^ self keyCharacter
+]
+
+{ #category : #accessing }
+GdkEventKey >> description [ 
+
+	^ self string readStringUTF8
 ]
 
 { #category : #'accessing structure variables' }
@@ -213,7 +284,15 @@ GdkEventKey >> keyCharacter [
 	^ Character value: (self toInternalValue: self keyValue)
 ]
 
-{ #category : #private }
+{ #category : #accessing }
+GdkEventKey >> keySymbol [
+
+	^ self state = 0 
+		ifTrue: [ self keyValue ]
+		ifFalse: [ self keyValue & (self state & self class modMask)  ] 
+]
+
+{ #category : #accessing }
 GdkEventKey >> keyValue [
 
 	^ keyValue ifNil: [ keyValue := self keyval ]
@@ -315,11 +394,9 @@ GdkEventKey >> time: anObject [
 { #category : #compatibility }
 GdkEventKey >> toInternalValue: aKeyValue [ 
 
-	self flag: #TODO. "Map some keycodes into its internal representation (maybe wrong, review later)"
-	aKeyValue = KEY_Escape ifTrue: [ ^ 27 ].
-	aKeyValue = KEY_Tab ifTrue: [ ^ 9 ].
-	
-	^ aKeyValue
+	^ self class 
+		internalMapAt: aKeyValue 
+		ifAbsentOrNil: [ aKeyValue ]
 ]
 
 { #category : #'accessing structure variables' }

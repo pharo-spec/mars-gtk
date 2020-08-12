@@ -3,6 +3,9 @@ Class {
 	#superclass : #FFICallback,
 	#traits : 'TGtkLibrary',
 	#classTraits : 'TGtkLibrary classTrait',
+	#instVars : [
+		'count'
+	],
 	#pools : [
 		'GtkTypes'
 	],
@@ -11,32 +14,21 @@ Class {
 
 { #category : #evaluating }
 GCallback >> basicValueWithArguments: args [
-	"This method is ugly because it has to solve three scenarios: 
-	1) everythign works ok (nor ensure or exception code is executed)
-	2) error happens and debugger is proceed (resuming normal execution)
-	3) error happens and debugger is closed (making current process to be terminated).
-	
-	Execute the callback making sure if we have to open a debugger: 
-		- the run loop continues working (we spawn a new one for that)
-		- we ensure a callback return (in case a debugger is closed without proceeding, the process 
-		  will be terminated, we put a return inside the ensure block to force that all calbacks 
-		  return)"
-	| result finished runLoop |
+	"This method is using a side effect of ensure (returning from it) in PURPOSE because I need to be 
+	 sure an answer is provided and the callback is returned when a debug session is aborted (the 
+	 debugger is closed without handling the exception). 
+	 So, when debug session terminates this process (See GtkDebugSession>>terminate), ensure blocks 
+	 are executed and this one will answer and return a value, allowing Gtk3 to continue working."
+	| result finished |
 
 	finished := false.
-	^ [
-			[	
-				result := block valueWithArguments: args. 
-	    		finished := true.
-	  	 		result ]
-			on: Exception
-			do: [ :e |
-				runLoop := GtkRunLoop current spawnNewRunLoop.
-				e defaultAction ] ]
-		ensure: [ 
-			runLoop ifNotNil: [ runLoop stop ].
-			finished ifFalse: [ 
-				^ self returnOnError ] ]
+	^ [ 
+		result := block valueWithArguments: args.
+		finished := true.
+		result ]
+	ensure: [ 
+		finished ifFalse: [
+			^ self returnOnError ] ]
 ]
 
 { #category : #evaluating }

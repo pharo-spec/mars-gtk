@@ -76,7 +76,9 @@ GtkTreeView >> appendPixbufColumn: columnIndex [
 	renderer := GtkCellRendererPixbuf new.
 	self appendColumn: (GtkTreeViewColumn new
 		packStart: renderer expand: false;
-		addAttribute: 'pixbuf' column: columnIndex renderer: renderer)
+		addAttribute: 'pixbuf' 
+			column: columnIndex 
+			renderer: renderer)
 ]
 
 { #category : #'convenience columns' }
@@ -308,9 +310,9 @@ GtkTreeView >> model [
 { #category : #accessing }
 GtkTreeView >> model: aListStore [
 
-	listStore ifNotNil: [ listStore objectUnref ].
+	listStore ifNotNil: [ 
+		listStore prepareToDisconnect ].
 	listStore := aListStore.
-	
 	self setModel: aListStore
 ]
 

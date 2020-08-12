@@ -69,9 +69,9 @@ GtkSignal class >> resetFilters [
 ]
 
 { #category : #'accessing filtering' }
-GtkSignal class >> resume [
+GtkSignal class >> traceSignal [
 	
-	self ensureTracingFilter removeTraceFor: self
+	self ensureTracingFilter trace: self
 ]
 
 { #category : #emitting }

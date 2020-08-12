@@ -53,7 +53,7 @@ TGdkEventState >> hasButton5Modifier [
 TGdkEventState >> hasCommandModifier [
 	"by testing, it seems that macOS command is being mapped to mod2"
 	
-	^ self hasMod2
+	^ self hasSuperModifier or: [ OSPlatform current isMacOS and: [ self hasMod2 ] ]
 ]
 
 { #category : #testing }

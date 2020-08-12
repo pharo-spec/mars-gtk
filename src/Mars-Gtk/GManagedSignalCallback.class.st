@@ -34,12 +34,6 @@ GManagedSignalCallback >> do: aBlock [
 ]
 
 { #category : #accessing }
-GManagedSignalCallback >> signalName [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
 GManagedSignalCallback >> signature [
 
 	^ #(void (void *widget, void *data))

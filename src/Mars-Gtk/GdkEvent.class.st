@@ -8,6 +8,9 @@ https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEvent
 Class {
 	#name : #GdkEvent,
 	#superclass : #GtkStructure,
+	#instVars : [
+		'wasHandled'
+	],
 	#pools : [
 		'GdkEventType'
 	],
@@ -147,6 +150,19 @@ GdkEvent >> resourceData [
 GdkEvent >> type [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #compatibility }
+GdkEvent >> wasHandled [
+	"this should be in package Mars-Gtk-Morphic but I need the instance variable"
+
+	^ wasHandled ifNil: [ wasHandled := false ]
+]
+
+{ #category : #compatibility }
+GdkEvent >> wasHandled: aBoolean [
+
+	^ wasHandled := aBoolean
 ]
 
 { #category : #'accessing structure variables' }

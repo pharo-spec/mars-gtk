@@ -36,6 +36,16 @@ GtkAdapter >> adapt: aPresenter [
 ]
 
 { #category : #building }
+GtkAdapter >> addContextMenuKeyBindings: gtkWidget [
+	
+	self flag: #TODO. "Take this from a configuration"
+	self 
+		bindKeyCombination: $t command mac | $t control unix | $t control win
+		toAction: [ self showContextMenu ]
+		inWidget: gtkWidget
+]
+
+{ #category : #building }
 GtkAdapter >> addKeyBindingsTo: gtkWidget [
 
 	self presenter contextKeyBindings ifNotNil: [ :aCategory | 
@@ -43,7 +53,8 @@ GtkAdapter >> addKeyBindingsTo: gtkWidget [
 		aCategory allEntries keymaps do: [ :each |
 			self 
 				bindKeyCombination: each shortcut
-				toAction: each action ] ]
+				toAction: each action
+				inWidget: gtkWidget ] ]
 ]
 
 { #category : #building }
@@ -66,10 +77,17 @@ GtkAdapter >> addSettingsTo: gtkWidget [
 		do: [ :each | gtkWidget addClass: each ].
 	
 	gtkWidget sensitive: self presenter isEnabled value.
-	self presenter help ifNotNil: [ gtkWidget tooltipText: self presenter help ].
-	self presenter whenEnabledChangedDo: [ gtkWidget sensitive: self presenter isEnabled ].
+	self presenter help ifNotNil: [ gtkWidget tooltipText: self getHelpText ].
+	self presenter whenEnabledChangedDo: [ 
+		self backendUpdatingDo: [ self updateEnabled ] ].
 	
 	self addVisibleSettingsTo: gtkWidget
+]
+
+{ #category : #protocol }
+GtkAdapter >> addStyle: aStyle [
+
+	self innerWidgetDo: [ :w | w addClass: aStyle ]
 ]
 
 { #category : #building }
@@ -109,12 +127,21 @@ GtkAdapter >> backendUpdatingDo: aBlock [
 { #category : #protocol }
 GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock [ 
 	
-	dispatcher ifNil: [ 
-		self widgetDo: [ :w |
-			self configureKeyBindings: w ] ].
-	
-	dispatcher 
+	self 
 		bindKeyCombination: aShortcut 
+		toAction: aBlock 
+		inWidget: self widget
+]
+
+{ #category : #private }
+GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock inWidget: gtkWidget [
+	
+	dispatcher ifNil: [ 
+		GtkRunLoop defer: [
+			self configureKeyBindings: gtkWidget ] ].
+
+	dispatcher 
+		bindKeyCombination: aShortcut
 		toAction: aBlock
 ]
 
@@ -133,17 +160,17 @@ GtkAdapter >> buildWidget [
 	gtkWidget := self newWidget.
 	self addSettingsTo: gtkWidget.
 	self addKeyBindingsTo: gtkWidget.
+	self addEventsTo: gtkWidget.
 	self addModelTo: gtkWidget.
 	^ self wrapWidget: gtkWidget
 ]
 
 { #category : #private }
 GtkAdapter >> configureKeyBindings: gtkWidget [
-		
+
 	dispatcher := GtkKMDispatcher on: self presenter.
 	gtkWidget connectKeyPressEvent: [ :event |
-		self handleKeyEvent: event ].
-	
+		self handleKeyEvent: event ]
 ]
 
 { #category : #protocol }
@@ -175,7 +202,13 @@ GtkAdapter >> enabled: aBoolean [
 		w sensitive: aBoolean ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+GtkAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
+{ #category : #'GTInspector-Extensions' }
 GtkAdapter >> gtInspectorPreviewIn: aGLMCompositePresentation [
 	"Do nothing at the moment"
 ]
@@ -192,6 +225,15 @@ GtkAdapter >> handleKeyEvent: event [
 	^ false
 ]
 
+{ #category : #protocol }
+GtkAdapter >> hasKeyboardFocus [
+	| focus |
+	
+	focus := false.
+	self innerWidgetDo: [ :w | focus := w isFocus ].
+	^ focus
+]
+
 { #category : #testing }
 GtkAdapter >> hasWidget [
 
@@ -204,7 +246,7 @@ GtkAdapter >> helpText [
 	^ self innerWidget tooltipText
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
 GtkAdapter >> initialize [
 
 	super initialize.
@@ -227,6 +269,88 @@ GtkAdapter >> innerWidgetDo: aBlock [
 	self hasWidget ifFalse: [ ^ nil ].
 	^ GtkRunLoop defer: [ 
 		aBlock value: self innerWidget ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installEvent: anEvent [
+
+	self widgetDo: [ :w |
+		anEvent installOn: self target: w ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installFocusLostEvent: anEvent to: aWidget [
+
+	aWidget connectFocusOutEvent: [ 
+		anEvent action value. 
+		false ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
+
+	aWidget connectFocusInEvent: [
+		anEvent action value. 
+		false ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installKeyDownEvent: anEvent to: aWidget [
+
+	aWidget connectKeyPressEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installKeyUpEvent: anEvent to: aWidget [
+
+	aWidget connectKeyReleaseEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseDownEvent: anEvent to: aWidget [
+
+	aWidget connectButtonPressEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseEnterEvent: anEvent to: aWidget [
+
+	aWidget connectEnterNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseLeaveEvent: anEvent to: aWidget [
+
+	aWidget connectLeaveNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseMoveEvent: anEvent to: aWidget [
+
+	"Ensure this widget will answer to motion-notify-event (many widgets do not have 
+	 this suscription)"
+	aWidget events: aWidget events | GdkEventMask GDK_POINTER_MOTION_MASK value.
+	aWidget connectMotionNotify: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
+]
+
+{ #category : #'event installing' }
+GtkAdapter >> installMouseUpEvent: anEvent to: aWidget [
+
+	aWidget connectButtonReleaseEvent: [ :event |
+		anEvent action value: event.
+		event wasHandled ]
 ]
 
 { #category : #'private cycle detection' }
@@ -271,6 +395,12 @@ GtkAdapter >> newWidget [
 	^ self widgetClass new
 ]
 
+{ #category : #protocol }
+GtkAdapter >> removeStyle: aStyle [
+
+	self innerWidgetDo: [ :w | w removeClass: aStyle ]
+]
+
 { #category : #emulating }
 GtkAdapter >> rightClicked [
 	
@@ -287,7 +417,27 @@ GtkAdapter >> rightClicked [
 GtkAdapter >> setBalloonText: aString [ 
 	
 	self innerWidgetDo: [ :w | 
-		w tooltipText: aString ]
+		w tooltipText: self getHelpText ]
+]
+
+{ #category : #private }
+GtkAdapter >> showContextMenu [
+
+	self presenter contextMenu ifNil: [ ^ self ].
+	self showMenu: self presenter contextMenu
+]
+
+{ #category : #private }
+GtkAdapter >> showMenu: aValuable [
+	
+	lastShownMenu := self buildMenu: aValuable value.
+	lastShownMenu 
+		connectDestroy: [ lastShownMenu := nil ];
+		showAll;
+		popupAtWidget: self widget
+			widgetAnchor: GdkGravity GDK_GRAVITY_CENTER
+			menuAnchor: GdkGravity GDK_GRAVITY_CENTER 
+			triggerEvent: (GdkEvent fromHandle: ExternalAddress null).
 ]
 
 { #category : #private }
@@ -316,6 +466,12 @@ GtkAdapter >> update: aSymbol with: anArray [
 ]
 
 { #category : #updating }
+GtkAdapter >> updateEnabled [
+	
+	self widgetDo: [ :w | w sensitive: self presenter isEnabled value ]
+]
+
+{ #category : #updating }
 GtkAdapter >> updateMenu [
 
 	self innerWidgetDo: [ :w |
@@ -326,7 +482,7 @@ GtkAdapter >> updateMenu [
 			withCallbacksOfType: GSecondaryButtonPressEventCallback 
 			do: [ :each | existingCallbacks add: each ].
 			
-		menu := self model contextMenu. 
+		menu := self presenter contextMenu. 
 		menu ifNil: [ 
 			existingCallbacks do: [ :each | each disconnectFrom: w ].
 			^ self ].

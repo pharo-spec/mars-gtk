@@ -19,6 +19,15 @@ GtkBoxAdapter >> addConstraits: constraints toChild: childWidget [
 	^ childWidget
 ]
 
+{ #category : #accessing }
+GtkBoxAdapter >> addWidgetAlignment: constraints to: gtkWidget [
+
+ 	layout vAlign
+		ifNotNil: [ :align | gtkWidget vAlign: align asGtkAlign ].
+ 	layout hAlign 
+		ifNotNil: [ :align | gtkWidget hAlign: align asGtkAlign ]
+]
+
 { #category : #private }
 GtkBoxAdapter >> applyLayout: aLayout [
 
@@ -57,7 +66,7 @@ GtkBoxAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 				expand: constraints isExpand 
 				fill: constraints isFill 
 				padding: constraints padding ].
-			
+
 	^ gtkWidget
 ]
 
@@ -77,4 +86,21 @@ GtkBoxAdapter >> newHorizontal [
 GtkBoxAdapter >> newVertical [
 
 	^ GtkBox newVertical
+]
+
+{ #category : #accessing }
+GtkBoxAdapter >> replace: aPresenter with: otherPresenter withConstraints: constraints [
+	| index |
+	
+	"preserve aPresenter widget (in case it will be used later)"
+	aPresenter adapter widget
+		objectRef;
+		autoRelease.
+	index := widget children indexOf: aPresenter adapter widget.
+	self remove: aPresenter.
+	
+	self add: otherPresenter constraints: constraints.
+	
+	self innerWidgetDo: [ :w |
+		w reorderChild: otherPresenter adapter widget position: index ]
 ]

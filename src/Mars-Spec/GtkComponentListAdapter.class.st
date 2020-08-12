@@ -76,6 +76,12 @@ GtkComponentListAdapter >> doTakeKeyboardFocus: gtkListBox [
 		grabFocus
 ]
 
+{ #category : #'as yet unclassified' }
+GtkComponentListAdapter >> elementAt: index [
+self flag: #TODO. "I need to fix this tomorrow"
+	^ self presenter items at: index
+]
+
 { #category : #'private accessing' }
 GtkComponentListAdapter >> innerWidget [
 
@@ -171,7 +177,11 @@ GtkComponentListAdapter >> update: gtkWidget with: aCollection [
 		self flag: #TODO. "WARNING. Rebuild presenters may keep value holders in 
 		weird status (also, it may prevent old adaptors to be collected, creating 
 		a leak)."
-		gtkWidget add: presenter buildWithSpec asListBoxRow ].
+		gtkWidget add: (presenter buildWithSpec asListBoxRow
+			activatable: presenter isActivatable;
+			selectable: presenter isSelectable;
+			yourself) ].
+
 	gtkWidget showAll
 ]
 

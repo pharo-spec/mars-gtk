@@ -35,7 +35,14 @@ GObject class >> finalizeResourceData: handle [
 ]
 
 { #category : #accessing }
+GObject class >> gClass [
+
+	^ self gTypeClassPeek: self gType
+]
+
+{ #category : #accessing }
 GObject class >> gClassSize [
+	"hardcoded. I took the size by executing sizeof in a C program"
 
 	^ 136
 ]
@@ -59,6 +66,12 @@ GObject class >> gType [
 	 that's why we use its mapped type: gsize"
 
 	^ self ffiCall: #(gsize g_object_get_type()) module: GObjectLibrary 
+]
+
+{ #category : #private }
+GObject class >> gTypeClassPeek: type [
+
+	self ffiCall: #(gpointer g_type_class_ref (gsize type))
 ]
 
 { #category : #utils }
@@ -282,12 +295,10 @@ GObject >> disconnectAll: aCollection during: aBlock [
 		^ self ].
 	
 	matching := callbacks select: [ :each | aCollection includes: each signalName ].
-	matching do: [ :each | | numberDisconnected |
-		self flag: #TODO. "I do not like this assertion. Or we remove it because is not 
-		needed, or we model better the verification of error" 
-		numberDisconnected := self disconnectCallback: each.
-		self assert: numberDisconnected = 1 ].
-	aBlock ensure: [ 
+	"disconnect"
+	matching do: [ :each | self disconnectCallback: each ].
+	aBlock ensure: [
+		"connect again"
 		matching do: [ :each |
 			self connectSignal: each ] ]
 ]
@@ -362,6 +373,12 @@ GObject >> disconnectMatchedMask: mask
 		"GClosure *" void *closure,
 		"FFICallback " void *func,
       gpointer aData)) module: GObjectLibrary
+]
+
+{ #category : #signaling }
+GObject >> emitSignalByName: detailed_signal [
+
+	self ffiCall: #(void g_signal_emit_by_name (self, const gchar *detailed_signal))
 ]
 
 { #category : #'private primitives' }
@@ -593,7 +610,9 @@ GObject >> referenceCount [
 GObject >> registerCallback: aCallback [
 
 	callbacks ifNil: [ callbacks := Set new ].
-	callbacks add: aCallback
+	callbacks add: aCallback.
+	
+	"Stdio stdout << aCallback thunk printString << ':' << aCallback tfPrintString; lf"
 ]
 
 { #category : #'private signaling' }

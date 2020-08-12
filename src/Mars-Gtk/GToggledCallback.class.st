@@ -14,15 +14,15 @@ Class {
 }
 
 { #category : #accessing }
+GToggledCallback class >> signalName [
+
+	^ 'toggled'
+]
+
+{ #category : #accessing }
 GToggledCallback >> do: aBlock [
 
 	self 
 		signature: self signature 
 		block: [ :widget :user_data | aBlock value ]
-]
-
-{ #category : #accessing }
-GToggledCallback >> signalName [
-
-	^ 'toggled'
 ]

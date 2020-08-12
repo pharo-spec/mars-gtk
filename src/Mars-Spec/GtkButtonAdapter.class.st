@@ -25,5 +25,5 @@ GtkButtonAdapter >> clicked [
 { #category : #factory }
 GtkButtonAdapter >> newWidget [ 
 	
-	^ GtkButton newLabel: self model label asString
+	^ GtkButton newLabel: self getLabelText 
 ]

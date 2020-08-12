@@ -18,11 +18,12 @@ GtkMillerAdapter >> add: aPresenter [
 { #category : #private }
 GtkMillerAdapter >> add: aPresenter constraints: constraints [
 	
+	aPresenter owner: self model. 
 	self widgetDo: [ :w |
 		| childWidget |
 		
 		childWidget := self 
-			basicAdd: aPresenter 
+			basicAdd: aPresenter
 			constraints: constraints 
 			to: innerWidget.
 		"I'm keeping a reference to aPresenter into the built widget because in some cases 
@@ -95,6 +96,12 @@ GtkMillerAdapter >> doScrollToShowLastPage [
 	
 	self widget hAdjustment value: pos x.
 	self widget vAdjustment value: pos y
+]
+
+{ #category : #'private accessing' }
+GtkMillerAdapter >> innerWidget [
+
+	^ innerWidget
 ]
 
 { #category : #factory }

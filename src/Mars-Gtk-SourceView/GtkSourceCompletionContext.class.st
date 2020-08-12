@@ -25,8 +25,10 @@ GtkSourceCompletionContext >> ffiLibraryName [
 	^ GtkSourceViewLibrary
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GtkSourceCompletionContext >> getIter: iter [
+	"Some times is needed to access directly this (otherwise it should be private).
+	 See senders to check it."
 	
 	^ self ffiCall: #(gboolean gtk_source_completion_context_get_iter(
 		self,

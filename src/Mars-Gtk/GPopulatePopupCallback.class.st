@@ -21,16 +21,16 @@ Class {
 }
 
 { #category : #accessing }
+GPopulatePopupCallback class >> signalName [
+
+	^ 'populate-popup'
+]
+
+{ #category : #accessing }
 GPopulatePopupCallback >> do: aBlock [ 
 
 	^ super do: [ :text :popup :user_data | 
 		aBlock value: (GtkMenu fromHandle: popup) ]
-]
-
-{ #category : #accessing }
-GPopulatePopupCallback >> signalName [
-
-	^ 'populate-popup'
 ]
 
 { #category : #accessing }

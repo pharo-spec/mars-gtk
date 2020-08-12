@@ -17,17 +17,26 @@ GtkLayoutAdapter class >> isAbstract [
 
 { #category : #accessing }
 GtkLayoutAdapter >> add: aPresenter constraints: constraints [
- 
+
+	aPresenter owner: self model. 
 	self widgetDo: [ :gtkWidget | | childWidget |
 		childWidget := self 
-			basicAdd: aPresenter 
+			basicAdd: aPresenter
 			constraints: constraints 
 			to: gtkWidget.
+		self addWidgetAlignment: constraints to: childWidget.
 		childWidget show.
 		"I'm keeping a reference to aPresenter into the built widget because in some cases 
 		 it can be GC (in case of the on-the-fly creation, for example). 
 		 Now this can be a real bad idea :)"
-		childWidget data: aPresenter  ]
+		childWidget data: aPresenter ]
+]
+
+{ #category : #accessing }
+GtkLayoutAdapter >> addWidgetAlignment: constraints to: gtkWidget [
+
+ 	"for the moment, just Box Layout implements alignment. 
+	 keep this empty but ready for the future :)"
 ]
 
 { #category : #private }
@@ -168,7 +177,12 @@ GtkLayoutAdapter >> replaceLayoutWith: aLayout [
 
 { #category : #protocol }
 GtkLayoutAdapter >> takeKeyboardFocus [
+	| presenters |
 
-	self presenter presentersInFocusOrder 
-		ifNotEmpty: [ :presenters | presenters first takeKeyboardFocus ]
+	presenters := self presenter presentersInFocusOrder.
+	presenters ifNil: [ ^ self ]. 
+		
+	presenters 
+		detect: [ :each | each canTakeKeyboardFocus ]
+		ifFound: [ :aPresenter | aPresenter takeKeyboardFocus ]
 ]

@@ -7,6 +7,13 @@ Class {
 }
 
 { #category : #building }
+GtkBaseListAdapter >> addKeyBindingsTo: gtkWidget [
+
+	super addKeyBindingsTo: gtkWidget.
+	self addContextMenuKeyBindings: gtkWidget
+]
+
+{ #category : #building }
 GtkBaseListAdapter >> addModelTo: gtkList [
 
 	super addModelTo: gtkList.

@@ -19,18 +19,18 @@ Class {
 }
 
 { #category : #accessing }
+GFocusOutEventCallback class >> signalName [
+
+	^ 'focus-out-event'
+]
+
+{ #category : #accessing }
 GFocusOutEventCallback >> do: aBlock [
 	
 	self
 		signature: self signature
 		block: [ :widget :event :aData | 
 			aBlock cull: (GdkEvent fromHandle: event) ]
-]
-
-{ #category : #accessing }
-GFocusOutEventCallback >> signalName [
-
-	^ 'focus-out-event'
 ]
 
 { #category : #accessing }

@@ -19,17 +19,17 @@ Class {
 	#category : #'Mars-Gtk-Base-Callbacks'
 }
 
+{ #category : #signalling }
+GKeyPressEventCallback class >> signalName [
+
+	^ 'key-press-event'
+]
+
 { #category : #accessing }
 GKeyPressEventCallback >> do: aBlock [
 
 	super do: [ :widget :event :aData |
 		aBlock value: (GdkEventKey fromHandle: event) ]
-]
-
-{ #category : #accessing }
-GKeyPressEventCallback >> signalName [
-
-	^ 'key-press-event'
 ]
 
 { #category : #accessing }

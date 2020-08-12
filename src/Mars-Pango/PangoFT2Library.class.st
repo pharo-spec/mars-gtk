@@ -35,7 +35,8 @@ PangoFT2Library >> unix32LibraryName [
 { #category : #'accessing platform' }
 PangoFT2Library >> unix64LibraryName [ 
 
-	^ '/usr/lib/x86_64-linux-gnu/libpangoft2-1.0.so.0'
+	GtkLibrary isDebug ifTrue: [ ^ '/home/esteban/jhbuild/install/lib/libpangoft2-1.0.so' ]. 
+	^ FFIUnix64LibraryFinder findLibrary: 'libpangoft2-1.0.so'
 ]
 
 { #category : #'accessing platform' }

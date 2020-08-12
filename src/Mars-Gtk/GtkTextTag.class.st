@@ -43,6 +43,41 @@ GtkTextTag >> asTextAttributeList [
 ]
 
 { #category : #accessing }
+GtkTextTag >> beBold [
+
+	self gObjectSet: 'weight' toInteger: 800
+]
+
+{ #category : #accessing }
+GtkTextTag >> beItalic [
+
+	self gObjectSet: 'style' toInteger: 2
+]
+
+{ #category : #accessing }
+GtkTextTag >> beStrikeThrough [
+
+	self gObjectSet: 'strikethrough' toBoolean: true
+]
+
+{ #category : #accessing }
+GtkTextTag >> beUnderlined [
+
+	"does not seem to have any effect"
+	self flag: #TODO.
+	
+	self gObjectSet: 'underline-set' toBoolean: true
+]
+
+{ #category : #accessing }
+GtkTextTag >> fontFamily: family size: size weight: weight [ 
+	self gObjectSet: 'family' toString: family.
+	self gObjectSet: 'size-set' toBoolean: true.
+	self gObjectSet: 'size-points' toDouble: size.
+	self gObjectSet: 'weight' toInteger: weight
+]
+
+{ #category : #accessing }
 GtkTextTag >> foreground [
 
 	^ Color fromHexString: (self gObjectGetString: 'foreground')
@@ -58,6 +93,14 @@ GtkTextTag >> foreground: aColor [
 GtkTextTag >> foregroundRGBA [
 
 	^ self gObjectGetHandle: 'foreground-rgba' as: GdkRGBA
+]
+
+{ #category : #accessing }
+GtkTextTag >> indent: anInteger [ 
+
+	"indent space is hard coded to 50 pixels. Should be calculated"
+	self flag: #TODO.
+	self gObjectSet: 'indent' toInteger: anInteger * 50
 ]
 
 { #category : #testing }

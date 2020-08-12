@@ -10,6 +10,26 @@ Class {
 	#category : #'Mars-Gtk-Utils'
 }
 
+{ #category : #'as yet unclassified' }
+GtkLeakFinder class >> startTraceLeaks [
+	<script>
+
+	GtkSignal filterAllSignalsExcept: { 
+		GtkCreateSignal. 
+		GtkDestroySignal. 
+		GtkFinalizeSignal }. 
+	self start. 
+	self instance inspect
+]
+
+{ #category : #'as yet unclassified' }
+GtkLeakFinder class >> stopTraceLeaks [
+	<script>
+
+	GtkSignal resetFilters.
+	self stop
+]
+
 { #category : #accessing }
 GtkLeakFinder >> collected [
 
@@ -25,7 +45,7 @@ GtkLeakFinder >> collectedWithInstancesCount [
 { #category : #private }
 GtkLeakFinder >> ensureLoggingSignals [
 	
-	self signals do: #resume
+	self signals do: [ :each | each traceSignal ]
 ]
 
 { #category : #initialize }

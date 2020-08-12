@@ -72,6 +72,7 @@ GtkTextView >> cursorVisible: setting [
 
 { #category : #accessing }
 GtkTextView >> editable: setting [
+
 	self ffiCall: #(void gtk_text_view_set_editable (self, gboolean setting))
 ]
 
@@ -85,6 +86,14 @@ GtkTextView >> getBuffer [
 GtkTextView >> imContextFilterKeypress: event [
 
 	^ self ffiCall: #(gboolean gtk_text_view_im_context_filter_keypress (self, GdkEventKey *event))
+
+{ #category : #private }
+GtkTextView >> getIterLocation: iter to: location [
+
+	^ self ffiCall: #(void gtk_text_view_get_iter_location (
+		self,const 
+		GtkTextIter *iter,
+		GdkRectangle *location))
 ]
 
 { #category : #testing }
@@ -98,6 +107,15 @@ GtkTextView >> isEditable [
 	"Returns the default editability of the GtkTextView. 
 	 Tags in the buffer may override this setting for some ranges of text."
 	self ffiCall: #(gboolean gtk_text_view_get_editable (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> iterLocation: iter [ 
+	| rect |
+	
+	rect := GdkRectangle new.
+	self getIterLocation: iter to: rect.
+	^ rect asRectangle
 ]
 
 { #category : #accessing }

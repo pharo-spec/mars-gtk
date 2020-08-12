@@ -39,37 +39,60 @@ GtkMenuItemAdapter >> addAcceleratorShortcutLabel: shortcut to: gtkBox [
 GtkMenuItemAdapter >> addModelTo: gtkWidget [
 	"label (and icon if there)"
 
-	self model icon
+	self presenter icon
 		ifNotNil: [ gtkWidget add: (self menuLabelWithIconAndAccelFor: gtkWidget) ]
-		ifNil: [ gtkWidget label: self model name ].
+		ifNil: [ 
+			(self presenter name includes: $_) 
+				ifTrue: [ gtkWidget useUnderline: true ].
+			gtkWidget label: self presenter name ].
+	
+	self presenter whenNameChangedDo: [ self updateName ].
+	self presenter whenIconChangedDo: [ self updateIcon ].
+		
 	"accel"
-	self model shortcut ifNotNil: [ :shortcut | 
+	self presenter shortcut ifNotNil: [ :shortcut | 
 		self addAcceleratorShortcut: shortcut to: gtkWidget ].
 	"enabled?"
-	gtkWidget sensitive: self model isEnabled value.
+	gtkWidget sensitive: self presenter isEnabled value.
 
 	"action"
-	self model action ifNotNil: [ :actionBlock |
+	self presenter action ifNotNil: [ :actionBlock |
 		gtkWidget connectActivate: actionBlock ].
 
 	"submenu"
-	self model subMenu
+	self presenter subMenu
 		ifNotNil: [ :menuPresenter | gtkWidget submenu: menuPresenter buildWithSpec ]
+]
+
+{ #category : #'private accessing' }
+GtkMenuItemAdapter >> getNameText [
+
+	^ self presenter name ifNotNil: [ :aString | 
+		aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #building }
 GtkMenuItemAdapter >> menuLabelWithIconAndAccelFor: gtkWidget [
-	| gtkBox |
+	| gtkBox gtkLabel |
 	
 	gtkBox := (GtkBox newHorizontalSpacing: self class defaultSpacing)
-		packStart: (self model icon value ifNil: [self iconNamed: #blank]) asGtkImage
+		packStart: (self presenter icon value ifNil: [ self iconNamed: #blank ]) asGtkImage
 			expand: false 
 			fill: false 
 			padding: 0;
-		packStart: (GtkLabel newLabel: self model name);
+		packStart: (gtkLabel := GtkLabel new);
 		yourself.
-		
-	self model shortcut ifNotNil: [ :shortcut |
+
+	(self presenter name includes: $_)
+		ifTrue: [ 
+			gtkLabel 
+				useUnderline: true;
+				textWithMnemonic: self presenter name;
+				mnemonicWidget: gtkWidget ]
+		ifFalse: [ 
+			gtkLabel label: self presenter name ].		
+
+	self presenter shortcut ifNotNil: [ :shortcut |
 		self addAcceleratorShortcutLabel: shortcut to: gtkBox ].
 		
 	gtkBox showAll.
@@ -86,6 +109,27 @@ GtkMenuItemAdapter >> shortcutGroup [
 		group := GtkAccelGroup new.
 		root shortcutGroup: group.
 		group ]
+]
+
+{ #category : #'private updating' }
+GtkMenuItemAdapter >> updateIcon [
+
+	self innerWidgetDo: [ :w |
+		w hasChildren ifTrue: [ w removeAll ].
+		w add: (self menuLabelWithIconAndAccelFor: w) ].
+]
+
+{ #category : #'private updating' }
+GtkMenuItemAdapter >> updateName [
+
+	self innerWidgetDo: [ :w |
+		"if it has children it means it already has a component with icon"
+		w hasChildren 
+			ifTrue: [ 
+				w removeAll.
+				w add: (self menuLabelWithIconAndAccelFor: w) ]
+			ifFalse: [
+				w label: self presenter name ] ].
 ]
 
 { #category : #accessing }

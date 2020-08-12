@@ -9,7 +9,11 @@ Class {
 		'menuBar',
 		'toolbar',
 		'statusBar',
-		'content'
+		'content',
+		'minimized'
+	],
+	#pools : [
+		'GdkWindowState'
 	],
 	#category : #'Mars-Spec-Adapter'
 }
@@ -23,11 +27,11 @@ GtkWindowAdapter >> add: gtkBox toWindow: gtkWindow [
 { #category : #'private building' }
 GtkWindowAdapter >> addDefaultKeyBindings: gtkWindow [
 	
-	self flag: #TODO. "In fact, this thingy needs to came from a configuration. 
-	Here is just hardcoded crap."
+	self flag: #TODO. "Take this from a configuration."
 	self 
 		bindKeyCombination: $w command mac | $w control win | $w control unix 
 		toAction: [ self closeFromKeyboard ]
+		inWidget: gtkWindow
 ]
 
 { #category : #'private deferring' }
@@ -41,6 +45,10 @@ GtkWindowAdapter >> addDeferredAction: aBlock [
 GtkWindowAdapter >> addModelTo: gtkWindow [
 	"model is not added here but in #addPresenterIn:withSpecLayout:. 
 	 Spec windows may have just ONE presenter"
+	
+	gtkWindow connectWindowStateEvent: [ :event | 
+		minimized := (event new_window_state & GDK_WINDOW_STATE_ICONIFIED value) = GDK_WINDOW_STATE_ICONIFIED value.
+		false  ]
 ]
 
 { #category : #accessing }
@@ -61,7 +69,8 @@ GtkWindowAdapter >> addVisibleSettingsTo: gtkWidget [
 { #category : #private }
 GtkWindowAdapter >> announceClosed [
 
-	self model windowIsClosing
+	self presenter windowIsClosing.
+	self presenter windowClosed
 ]
 
 { #category : #private }
@@ -73,7 +82,7 @@ GtkWindowAdapter >> announceOpened [
 { #category : #private }
 GtkWindowAdapter >> announceResized: aPoint [
 
-	self presenter announcer announce: (WindowResizing new
+	self presenter announcer announce: (SpWindowResizing new
 		window: self presenter;
 		newSize: aPoint;	
 		yourself)	
@@ -105,16 +114,12 @@ GtkWindowAdapter >> centered [
 
 { #category : #accessing }
 GtkWindowAdapter >> centeredRelativeTo: aWindowPresenter [
-	| bounds position |	
 
 	self deferAction: [
-		self widgetDo: [ :w | | isVisible |
-			isVisible := w isVisible.
-			isVisible ifTrue:[ w hide ].
-			bounds := aWindowPresenter adapter widget bounds.
-			position := bounds topLeft + ((bounds extent - w size) // 2).
-			w moveTo: position.
-			isVisible ifTrue:[ w show ] ] ]
+		self widgetDo: [ :w | 
+			self 
+				deferredCenter: w 
+				relativeTo: aWindowPresenter ] ]
 ]
 
 { #category : #accessing }
@@ -125,11 +130,17 @@ GtkWindowAdapter >> close [
 		w isAlive ifTrue: [ w destroy ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkWindowAdapter >> closeFromKeyboard [
 
-	self announceWillClose.
 	self presenter close
+]
+
+{ #category : #private }
+GtkWindowAdapter >> closeFromSignal [
+
+	self announceWillClose.
+	self announceClosed
 ]
 
 { #category : #private }
@@ -148,7 +159,7 @@ GtkWindowAdapter >> connectToGtkSignals: gtkWindow [
 	"add close events (delete is sent before)"
 	gtkWindow 
 		connectDeleteEvent: [ self announceWillClose. false ];
-		connectHide: [ self announceClosed ];
+		connectHide: [ self closeFromSignal ];
 		connectSizeAllocate: [ :aRect | self announceResized: aRect extent ]
 ]
 
@@ -192,6 +203,18 @@ GtkWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
 ]
 
 { #category : #accessing }
+GtkWindowAdapter >> deferredCenter: gtkWindow relativeTo: aWindowPresenter [
+	| isVisible bounds position |
+	
+	isVisible := gtkWindow isVisible.
+	isVisible ifTrue:[ gtkWindow hide ].
+	bounds := aWindowPresenter adapter widget bounds.
+	position := bounds topLeft + ((bounds extent - gtkWindow size) // 2).
+	gtkWindow moveTo: position.
+	isVisible ifTrue: [ gtkWindow show ]
+]
+
+{ #category : #accessing }
 GtkWindowAdapter >> delete [
 
 	self widgetDo: [ :w | 
@@ -205,11 +228,32 @@ GtkWindowAdapter >> infoArea [
 	^ infoArea ifNil: [ infoArea := GtkInfoArea new ]
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
 GtkWindowAdapter >> initialize [
 
 	initialized := false.
+	minimized := false.
 	super initialize
+]
+
+{ #category : #'spec protocol' }
+GtkWindowAdapter >> isDisplayed [ 
+
+	^ self widgetDo: [ :w | w isVisible ]
+]
+
+{ #category : #'spec protocol' }
+GtkWindowAdapter >> isMaximized [
+	| maximized |
+
+	maximized := self widgetDo: [ :w | w isMaximized ].
+	^ maximized ifNil: [ false ]
+]
+
+{ #category : #'spec protocol' }
+GtkWindowAdapter >> isMinimized [
+
+	^ minimized
 ]
 
 { #category : #'spec protocol' }
@@ -338,12 +382,12 @@ GtkWindowAdapter >> statusBar [
 { #category : #accessing }
 GtkWindowAdapter >> title: aString [ 
 
-	self widgetDo: [ :w | w title: aString ]
+	self widgetDo: [ :w | w title: (aString ifNotNil: [ :theString | theString localizedForPresenter: self presenter]) ]
 ]
 
 { #category : #'private building' }
 GtkWindowAdapter >> toolbar [ 
 
-	^ toolbar ifNil: [ toolbar  := self model toolBar buildWithSpec ]
+	^ toolbar ifNil: [ toolbar  := self presenter toolbar buildWithSpec ]
 
 ]

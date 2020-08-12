@@ -20,6 +20,12 @@ GtkPollingRunLoop class >> fps [
 ]
 
 { #category : #accessing }
+GtkPollingRunLoop >> callerProcess [
+
+	^ Processor activeProcess
+]
+
+{ #category : #accessing }
 GtkPollingRunLoop >> defer: aBlock [
 	| oldDefer |
 

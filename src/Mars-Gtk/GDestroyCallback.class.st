@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #accessing }
-GDestroyCallback >> signalName [
+GDestroyCallback class >> signalName [
 
 	^ 'destroy'
 ]

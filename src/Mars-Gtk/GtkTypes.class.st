@@ -31,7 +31,7 @@ Class {
 GtkTypes class >> initialize [
 	gchar 	:= #char.
 	gpointer := #'void *'.
-	gboolean := #Boolean.
+	gboolean := #FFIBoolean32.
 	gulong :=  #ulong.
 	gint := #int.
 	gint8 := #int8.
@@ -45,7 +45,7 @@ GtkTypes class >> initialize [
 	GQuark := #guint32.
 	GType := #gsize.
 	gssize := #long.
-	gsize := #ulong.
+	gsize := #FFISizeT.
 	
 	gunichar := #guint32.
 ]

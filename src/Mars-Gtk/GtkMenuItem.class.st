@@ -70,3 +70,15 @@ GtkMenuItem >> submenu: aSubmenu [
 	submenu := aSubmenu.
 	self menuItemSetSubmenu: aSubmenu
 ]
+
+{ #category : #testing }
+GtkMenuItem >> useUnderline [ 
+
+	^ self ffiCall: #(gboolean gtk_menu_item_get_use_underline (self))
+]
+
+{ #category : #accessing }
+GtkMenuItem >> useUnderline: setting [
+
+	self ffiCall: #(void gtk_menu_item_set_use_underline (self, gboolean setting))
+]

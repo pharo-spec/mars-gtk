@@ -26,14 +26,26 @@ GInterface class >> fieldsDesc [
 	)
 ]
 
+{ #category : #'class initialization' }
+GInterface class >> initialize [
+
+	"Offset is always 1"
+	OFFSET_G_IFACE := 1
+]
+
 { #category : #'accessing structure variables' }
 GInterface >> g_iface [
 	"This method was automatically generated"
-	^ GTypeInterface fromHandle: (handle referenceStructAt: OFFSET_G_IFACE length: GTypeInterface byteSize)
+	^ GTypeInterface fromHandle: (handle 
+		referenceStructAt: OFFSET_G_IFACE 
+		length: GTypeInterface byteSize)
 ]
 
 { #category : #'accessing structure variables' }
 GInterface >> g_iface: anObject [
 	"This method was automatically generated"
-	handle structAt: OFFSET_G_IFACE put: anObject getHandle length: GTypeInterface byteSize
+	handle 
+		structAt: OFFSET_G_IFACE 
+		put: anObject getHandle 
+		length: GTypeInterface byteSize
 ]

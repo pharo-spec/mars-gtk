@@ -8,8 +8,11 @@ Class {
 	#name : #GtkPharoSourceCompletionProvider,
 	#superclass : #GObject,
 	#instVars : [
-		'completionClass',
+		'completionEngine',
 		'iconsCache'
+	],
+	#classVars : [
+		'Separators'
 	],
 	#pools : [
 		'GtkSourceCompletionActivation'
@@ -50,11 +53,11 @@ GtkPharoSourceCompletionProvider class >> gDefineCompletionProviderInterface: in
 		get_interactive_delay: (GCallback 
 			signature: #(gint (void *provider)) 
 			block: [ :provider | -1 ]);
-		match: (GCallback 
+		"match: (GCallback 
 			signature: #(gboolean (void *provider, void *context))
 			block: [ :provider :context | 
-				(self gInstance: provider) match: (GtkSourceCompletionContext fromHandle: context) ]);
-		match: (GCallback 
+				(self gInstance: provider) match: (GtkSourceCompletionContext fromHandle: context) ]);"
+		get_start_iter: (GCallback 
 			signature: #(gboolean (void *provider, void *context, void *proposal, void *iter))
 			block: [ :provider :context :proposal :iter | 
 				(self gInstance: provider) 
@@ -85,14 +88,22 @@ GtkPharoSourceCompletionProvider class >> new [
 	^ (GClass gDefinitionAt: self) new
 ]
 
+{ #category : #private }
+GtkPharoSourceCompletionProvider class >> separators [
+
+	^ Separators ifNil: [ Separators := Character separators, Character specialCharacters ]
+]
+
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> activateProposal: proposal iter: iter [
-	| word |
-	
+	| word textToInsert |
+
 	word := self currentWord: iter in: iter buffer.
 	word ifNil: [ ^ false ].
+	
 	self flag: #TODO. "Decide if we add a space at the end is a decision that can be configurable"
-	iter buffer insertTextAtCursor: ((proposal label allButFirst: word size) copyWith: Character space).
+	textToInsert := (proposal label allButFirst: word size) copyWith: Character space.
+	iter buffer insertTextAtCursor: textToInsert.
  
 	^ true
 ]
@@ -103,11 +114,21 @@ GtkPharoSourceCompletionProvider >> activation [
 	^ GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE value
 ]
 
-{ #category : #accessing }
-GtkPharoSourceCompletionProvider >> completionClass: aClass [
-	"The class in which we execute the completion (it can be nil)"
+{ #category : #private }
+GtkPharoSourceCompletionProvider >> cleanWord: aString [
+	"remove cascade and end of sentence"
 
-	completionClass := aClass
+	^ aString reject: [ :each | #(; .) includes: each  ]
+]
+
+{ #category : #accessing }
+GtkPharoSourceCompletionProvider >> completionEngine [
+	^ completionEngine
+]
+
+{ #category : #accessing }
+GtkPharoSourceCompletionProvider >> completionEngine: anObject [
+	completionEngine := anObject
 ]
 
 { #category : #private }
@@ -115,17 +136,17 @@ GtkPharoSourceCompletionProvider >> completionEntriesFor: iter [
 	| completionContext word textBuffer |
 
 	textBuffer := iter buffer.
-	completionContext := CompletionContext
-		controller: nil
-		class: completionClass
-		source: textBuffer text
-		position: iter offset.
-
 	word := self currentWord: iter in: textBuffer.
 	word ifNil: [ ^ #() ].
 
+	completionContext := CoCompletionContext
+		engine: self completionEngine
+		class: self completionEngine completionClass
+		source: textBuffer text
+		position: iter offset.
 	completionContext narrowWith: word.
-	^ completionContext model entries
+
+	^ completionContext entries
 ]
 
 { #category : #private }
@@ -133,13 +154,17 @@ GtkPharoSourceCompletionProvider >> currentWord: iter in: textBuffer [
 	| start line |
 		
 	start := iter copyInMemory lineOffset: 0.
-	line := (textBuffer 
+	line := textBuffer 
 		textStart: start 
 		end: iter
-		includeHiddenChars: false).
-	(line isEmpty or: [ Character separators includes: line last ]) 
+		includeHiddenChars: false.
+	line ifNil: [ ^ nil ].
+	
+	(line isEmpty 
+		or: [ self class separators includes: line last ]) 
 		ifTrue: [ ^ nil ].
-	^ line substrings last
+	
+	^ self cleanWord: line substrings last
 ]
 
 { #category : #private }
@@ -153,7 +178,8 @@ GtkPharoSourceCompletionProvider >> iconAt: icon ifAbsentPut: aBlock [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> match: context [
-	
+
+	self flag: 'This is actually not used. Is here for documentation only'.
 	^ true
 ]
 
@@ -165,18 +191,32 @@ GtkPharoSourceCompletionProvider >> name [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> populate: context [
-	| proposals iter |
+	| proposals iter entries items |
+	
+	iter := context iter.
 
-	(iter := context iter) ifNil: [ ^ self ].
+	entries := iter 
+		ifNotNil: [ self completionEntriesFor: iter ]
+		ifNil: [ #() ].
 
-	proposals := GList new.
-	(self completionEntriesFor: iter) do: [ :each |
-		proposals := proposals append: (self toItem: each) ].
+	proposals := entries 
+		ifNotEmpty: [ 
+			"I need to first collect items and later transfer them to the GList because th list 
+			 will keep just the handles and that can provoque a premature GC of the proposal (since 
+			 is marked for autoUnref), and the items needs to survive until after addProposals is 
+			 called."
+			items := entries collect: [ :each | self toItem: each ].
+			GList newFromCollection: items ]
+		ifEmpty: [
+			GList new ].
 	
 	context 
-		addProposals: proposals first autoRelease
+		addProposals: proposals
 		provider: self 
-		finished: true
+		finished: true.
+	
+	"Free proposals"
+	proposals isNull ifFalse: [ proposals free ]
 ]
 
 { #category : #accessing }
@@ -187,6 +227,16 @@ GtkPharoSourceCompletionProvider >> priority [
 
 { #category : #accessing }
 GtkPharoSourceCompletionProvider >> startIterContext: context proposal: proposal iter: iter [
+	| word |
+
+	(iter isNil or: [ iter isNull ]) ifTrue: [ ^ false ].
+	"I cannot use 'context iter' to get this value because apparently the function does 
+	 a kid of merge, more than fill it completely, and the source completion needs both: what 
+	 will be assigned and what is already there :("
+	(context getIter: iter) ifFalse: [ ^ false ].
+
+	word := self currentWord: iter in: iter buffer.
+	word ifNil: [ ^ false ].
 
 	^ true
 ]

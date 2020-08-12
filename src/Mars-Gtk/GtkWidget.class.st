@@ -13,6 +13,21 @@ Class {
 	#category : #'Mars-Gtk-Widget'
 }
 
+{ #category : #accessing }
+GtkWidget class >> bindingSet [
+	"Binding set gives access to the bindings of a class. 
+	 It is possible to use it to override the default keybindings defined. 
+	 For example, this is how you map a context menu popup to <meta+t>: 
+	
+	 GtkTextView bindingSet
+	 	addSignal: $t asciiValue 
+	 	modifiers: GdkModifierType GDK_META_MASK
+	 	signal: 'popup-menu'.
+	"
+
+	^ self gtkBindingSetByClass: self gClass
+]
+
 { #category : #'library path' }
 GtkWidget class >> ffiLibraryName [
 	^ GtkLibrary
@@ -34,6 +49,7 @@ GtkWidget class >> fromHandle: handle [
 
 { #category : #accessing }
 GtkWidget class >> gClassSize [
+	"hardcoded. I took the size by executing sizeof in a C program"
 
 	^ 824
 ]
@@ -49,6 +65,12 @@ GtkWidget class >> gType [
 	"This method was automatically generated"
 
 	^ self ffiCall: #(gsize gtk_widget_get_type())
+]
+
+{ #category : #private }
+GtkWidget class >> gtkBindingSetByClass: object_class [
+
+	^ self ffiCall: #(GtkBindingSet *gtk_binding_set_by_class (gpointer object_class))
 ]
 
 { #category : #private }
@@ -226,21 +248,13 @@ GtkWidget >> connectEnterNotify: aBlock [
 { #category : #signaling }
 GtkWidget >> connectEvent: aBlock [
 
-	^ self 
-		connect: 'event' 
-		signature: #(gboolean (void *widget, void *event, gpointer user_data))
-		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent newConcreteFromHandle: event) ]
+	(GEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
 GtkWidget >> connectEventAfter: aBlock [
 
-	^ self 
-		connect: 'event-after' 
-		signature: #(gboolean (void *widget, void *event, gpointer user_data))
-		do: [ :widget :event :user_data | 
-			aBlock value: (GdkEvent newConcreteFromHandle: event) ]
+	(GEventAfterCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
@@ -265,6 +279,12 @@ GtkWidget >> connectHide: aBlock [
 GtkWidget >> connectKeyPressEvent: aBlock [
 
 	^ (GKeyPressEventCallback do: aBlock) connectTo: self
+]
+
+{ #category : #signaling }
+GtkWidget >> connectKeyReleaseEvent: aBlock [
+
+	^ (GKeyReleaseEventCallback do: aBlock) connectTo: self
 ]
 
 { #category : #signaling }
@@ -331,6 +351,12 @@ GtkWidget >> connectUnmap: aBlock [
 	self 
 		connect: 'unmap' 
 		do: aBlock
+]
+
+{ #category : #signaling }
+GtkWidget >> connectWindowStateEvent: aBlock [
+
+	(GWindowStateCallback do: aBlock) connectTo: self	
 ]
 
 { #category : #accessing }
@@ -407,7 +433,13 @@ GtkWidget >> dragDestUnset [
 	^ self ffiCall: #(void gtk_drag_dest_unset #(self))
 ]
 
-{ #category : #private }
+{ #category : #accessing }
+GtkWidget >> events [
+	
+	self ffiCall: #(gint gtk_widget_get_events (self))
+]
+
+{ #category : #accessing }
 GtkWidget >> events: events [
 	
 	self ffiCall: #(void gtk_widget_set_events (self, gint events))

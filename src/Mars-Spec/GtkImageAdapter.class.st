@@ -1,6 +1,6 @@
 Class {
 	#name : #GtkImageAdapter,
-	#superclass : #GtkAdapter,
+	#superclass : #GtkMiscAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 

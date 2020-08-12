@@ -1,11 +1,17 @@
 Class {
 	#name : #GtkAdapterTestCase,
-	#superclass : #SpTest,
+	#superclass : #SpBaseTest,
 	#instVars : [
 		'app'
 	],
 	#category : #'Mars-GtkBackendTests'
 }
+
+{ #category : #testing }
+GtkAdapterTestCase class >> isAbstract [
+
+	^ super isAbstract or: [ self = GtkAdapterTestCase ]
+]
 
 { #category : #running }
 GtkAdapterTestCase >> adapter [ 

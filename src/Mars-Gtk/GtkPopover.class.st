@@ -7,6 +7,12 @@ https://developer.gnome.org/gtk3/stable/GtkPopover.html
 Class {
 	#name : #GtkPopover,
 	#superclass : #GtkBin,
+	#instVars : [
+		'defaultWidget'
+	],
+	#pools : [
+		'GtkPositionType'
+	],
 	#category : #'Mars-Gtk-Widget-Toolbar'
 }
 
@@ -17,7 +23,13 @@ GtkPopover class >> gType [
 	^ self ffiCall: #(gsize gtk_popover_get_type())
 ]
 
-{ #category : #private }
+{ #category : #'instance creation' }
+GtkPopover class >> new [
+
+	^ self newRelativeTo: GtkWidget null
+]
+
+{ #category : #'instance creation' }
 GtkPopover class >> newRelativeTo: aWidget [
 
 	^ (self popoverNewRelativeTo: aWidget) initialize
@@ -29,28 +41,65 @@ GtkPopover class >> popoverNewRelativeTo: aWidget [
 	^ self ffiCall: #(GtkPopover *gtk_popover_new (GtkWidget *aWidget))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> beModal [
 
 	self modal: true
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
+GtkPopover >> bePositionBottom [
+
+	self preferredPosition: GTK_POS_BOTTOM
+]
+
+{ #category : #accessing }
+GtkPopover >> bePositionLeft [
+
+	self preferredPosition: GTK_POS_LEFT
+]
+
+{ #category : #accessing }
+GtkPopover >> bePositionRight [
+
+	self preferredPosition: GTK_POS_RIGHT
+]
+
+{ #category : #accessing }
+GtkPopover >> bePositionTop [
+
+	self preferredPosition: GTK_POS_TOP
+]
+
+{ #category : #accessing }
 GtkPopover >> beRelativeTo: aWidget [
 
 	^ self ffiCall: #(void gtk_popover_set_relative_to (self, GtkWidget *aWidget))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> defaultWidget [
 
-	^ self ffiCall: #(GtkWidget *gtk_popover_get_default_widget (self))
+	^ defaultWidget ifNil: [ defaultWidget := self getDefaultWidget ]
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> defaultWidget: aWidget [
 
-	^ self ffiCall: #(void gtk_popover_set_default_widget (self, GtkWidget *aWidget))
+	defaultWidget := aWidget.
+	self setDefaultWidget: aWidget
+]
+
+{ #category : #private }
+GtkPopover >> getConstraintTo [
+
+	^ self ffiCall: #(GtkPopoverConstraint gtk_popover_get_constrain_to (self))
+]
+
+{ #category : #private }
+GtkPopover >> getDefaultWidget [
+
+	^ self ffiCall: #(GtkWidget *gtk_popover_get_default_widget (self))
 ]
 
 { #category : #testing }
@@ -65,32 +114,56 @@ GtkPopover >> modal: modal [
 	^ self ffiCall: #(void gtk_popover_set_modal (self, gboolean modal))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
+GtkPopover >> pointingTo: aRect [
+
+	self setPointingTo: aRect asGdkRectangle
+]
+
+{ #category : #accessing }
 GtkPopover >> popdown [
 
 	^ self ffiCall: #(void gtk_popover_popdown (self))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> popup [
 
 	^ self ffiCall: #(void gtk_popover_popup (self))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> preferredPosition [
 
 	^ self ffiCall: #(GtkPositionType gtk_popover_get_position (self))
 ]
 
-{ #category : #specs }
-GtkPopover >> preferredPosition: aPosition [
+{ #category : #accessing }
+GtkPopover >> preferredPosition: position [
 
 	^ self ffiCall: #(void gtk_popover_set_position (self, GtkPositionType position))
 ]
 
-{ #category : #specs }
+{ #category : #accessing }
 GtkPopover >> relativeWidget [
 
 	^ self ffiCall: #(GtkWidget *gtk_popover_get_relative_to (self))
+]
+
+{ #category : #private }
+GtkPopover >> setConstraintTo: constraint [
+
+	^ self ffiCall: #(void gtk_popover_set_constrain_to (self, GtkPopoverConstraint constraint))
+]
+
+{ #category : #private }
+GtkPopover >> setDefaultWidget: aWidget [
+
+	^ self ffiCall: #(void gtk_popover_set_default_widget (self, GtkWidget *aWidget))
+]
+
+{ #category : #private }
+GtkPopover >> setPointingTo: rect [
+
+	^ self ffiCall: #(void gtk_popover_set_pointing_to (self, const GdkRectangle *rect))
 ]

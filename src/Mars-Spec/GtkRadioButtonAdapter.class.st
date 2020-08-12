@@ -28,14 +28,15 @@ GtkRadioButtonAdapter >> addModelTo: gtkWidget [
 	
 	super addModelTo: gtkWidget.
 	
-	gtkWidget label: self presenter label.
+  gtkWidget label: self getLabelText.
+
 	self addAssociatedTo: gtkWidget.
 	self presenter isInitialStateSet 
 		ifTrue: [ gtkWidget active: self presenter state ].
 	
 	gtkWidget connectToggled: [ self presenter state: self state ].
 	
-	self model whenLabelChangedDo: [ gtkWidget label: self presenter label ].
+	self model whenLabelChangedDo: [ gtkWidget label: self getLabelText ].
 	self model whenChangedDo: [ gtkWidget active: self presenter state ]
 ]
 
@@ -43,6 +44,12 @@ GtkRadioButtonAdapter >> addModelTo: gtkWidget [
 GtkRadioButtonAdapter >> clicked [
 	
 	widget clicked
+]
+
+{ #category : #private }
+GtkRadioButtonAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #accessing }

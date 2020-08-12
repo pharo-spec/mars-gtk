@@ -18,18 +18,18 @@ Class {
 }
 
 { #category : #accessing }
+GFocusInEventCallback class >> signalName [
+
+	^ 'focus-in-event'
+]
+
+{ #category : #accessing }
 GFocusInEventCallback >> do: aBlock [
 	
 	self
 		signature: self signature
 		block: [ :widget :event :aData | 
 			aBlock cull: (GdkEvent fromHandle: event) ]
-]
-
-{ #category : #accessing }
-GFocusInEventCallback >> signalName [
-
-	^ 'focus-in-event'
 ]
 
 { #category : #accessing }
