@@ -7,6 +7,12 @@ Trait {
 	#category : #'Mars-Gtk-Base-Events'
 }
 
+{ #category : #compatibility }
+TGdkEventState >> alt [
+
+	^ self hasAltModifier
+]
+
 { #category : #testing }
 TGdkEventState >> hasAltModifier [
 
