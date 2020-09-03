@@ -1,11 +1,11 @@
 Class {
-	#name : #GtkAthensStaticAdapter,
+	#name : #GtkAthensAdapter,
 	#superclass : #GtkAdapter,
 	#category : #'Mars-Spec-Adapter'
 }
 
 { #category : #building }
-GtkAthensStaticAdapter >> addModelTo: gtkWidget [
+GtkAthensAdapter >> addModelTo: gtkWidget [
 
 	super addModelTo: gtkWidget.
 	gtkWidget drawBlock: self presenter drawBlock.
@@ -19,12 +19,12 @@ GtkAthensStaticAdapter >> addModelTo: gtkWidget [
 ]
 
 { #category : #drawing }
-GtkAthensStaticAdapter >> redraw [
+GtkAthensAdapter >> redraw [
 
 	self widgetDo: #queueDraw
 ]
 
 { #category : #building }
-GtkAthensStaticAdapter >> widgetClass [
+GtkAthensAdapter >> widgetClass [
 	^ GtkBlockBasedDrawingArea 
 ]
