@@ -200,7 +200,7 @@ GtkTextBuffer >> insertIter: iter text: text [
 	^ self ffiCall: #(void gtk_text_buffer_insert (self,
                         GtkTextIter *iter,
                         const gchar *text,
-                        -1))
+                        gint -1))
 ]
 
 { #category : #'accessing mark' }
@@ -220,10 +220,11 @@ GtkTextBuffer >> insertMarkup: aString [
 { #category : #private }
 GtkTextBuffer >> insertMarkupIter: iter text: text [
 
-	^ self ffiCall: #(void gtk_text_buffer_insert_markup (self,
-                        GtkTextIter *iter,
-                        const gchar *text,
-                        -1))
+	^ self ffiCall: #(void gtk_text_buffer_insert_markup (
+		self,
+		GtkTextIter *iter,
+		const gchar *text,
+		gint -1))
 ]
 
 { #category : #accessing }
