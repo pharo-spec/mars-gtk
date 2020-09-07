@@ -79,7 +79,7 @@ GtkTextView >> editable: setting [
 { #category : #private }
 GtkTextView >> getBuffer [
 
-	self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
+	^ self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
 ]
 
 { #category : #private }

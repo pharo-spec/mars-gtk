@@ -28,7 +28,6 @@ GtkTextAdapter >> addModelTo: gtkTextView [
 	
 	gtkTextView textBuffer connectChanged: [
 		self updatePresenterText: gtkTextView text ]
-
 ]
 
 { #category : #building }

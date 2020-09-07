@@ -101,6 +101,12 @@ GtkBox >> packEnd: child [
 ]
 
 { #category : #accessing }
+GtkBox >> packEnd: child expand: aBoolean [
+
+	^ self packEnd: child expand: aBoolean fill: false padding: 0 
+]
+
+{ #category : #accessing }
 GtkBox >> packEnd: child expand: expand fill: fill padding: padding [
 
 	self keepWidget: child.
@@ -119,6 +125,12 @@ GtkBox >> packEnd: child padding: padding [
 GtkBox >> packStart: child [
 
 	^ self packStart: child expand: true fill: true padding: 0
+]
+
+{ #category : #accessing }
+GtkBox >> packStart: child expand: aBoolean [
+
+	^ self packStart: child expand: aBoolean fill: false padding: 0
 ]
 
 { #category : #accessing }
