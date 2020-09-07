@@ -103,7 +103,7 @@ GtkBox >> packEnd: child [
 { #category : #accessing }
 GtkBox >> packEnd: child expand: aBoolean [
 
-	^ self packEnd: child expand: aBoolean fill: false padding: 0 
+	^ self packEnd: child expand: aBoolean fill: aBoolean padding: 0 
 ]
 
 { #category : #accessing }
@@ -130,7 +130,7 @@ GtkBox >> packStart: child [
 { #category : #accessing }
 GtkBox >> packStart: child expand: aBoolean [
 
-	^ self packStart: child expand: aBoolean fill: false padding: 0
+	^ self packStart: child expand: aBoolean fill: aBoolean padding: 0
 ]
 
 { #category : #accessing }
