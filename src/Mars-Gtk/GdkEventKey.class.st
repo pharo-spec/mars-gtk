@@ -266,6 +266,12 @@ GdkEventKey >> isModifier [
 	^ (self is_modifier & 2r00000001) = 1
 ]
 
+{ #category : #testing }
+GdkEventKey >> isReturn [
+
+	^ self keyValue = KEY_Return
+]
+
 { #category : #'accessing structure variables' }
 GdkEventKey >> is_modifier [
 	"This method was automatically generated"
