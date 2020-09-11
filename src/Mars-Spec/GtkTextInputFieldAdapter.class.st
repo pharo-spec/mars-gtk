@@ -54,6 +54,12 @@ GtkTextInputFieldAdapter >> placeHolderText [
 	^ widget placeHolderText 
 ]
 
+{ #category : #selection }
+GtkTextInputFieldAdapter >> selectAll [
+	
+	self innerWidgetDo: [ :w | w selectAll ]
+]
+
 { #category : #visiting }
 GtkTextInputFieldAdapter >> text: aString [ 
 	
