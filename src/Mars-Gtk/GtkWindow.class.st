@@ -69,9 +69,21 @@ GtkWindow >> autoRelease [
 ]
 
 { #category : #accessing }
+GtkWindow >> beDecorated [
+
+	self decorated: true
+]
+
+{ #category : #accessing }
 GtkWindow >> beModal [
 
 	self modal: true
+]
+
+{ #category : #accessing }
+GtkWindow >> beNotDecorated [
+
+	self decorated: false
 ]
 
 { #category : #accessing }
@@ -121,10 +133,9 @@ GtkWindow >> cursor: aGdkCursor [
 	self gdkWindow cursor: cursor
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GtkWindow >> decorated: setting [
-	"https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-set-decorated
-	 This may not work all the time"
+
 	self ffiCall: #(void gtk_window_set_decorated (self, gboolean setting))
 ]
 
