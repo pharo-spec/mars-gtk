@@ -51,9 +51,10 @@ GtkDialogWindowAdapter >> defaultFromKeyboard [
 { #category : #private }
 GtkDialogWindowAdapter >> deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec [
 
-	gtkWindow showAll.
 	self model isCentered ifTrue: [ gtkWindow center ].
-	super deferredAddPresenterIn: gtkWindow withSpecLayout: aSpec	
+	super 
+		deferredAddPresenterIn: gtkWindow 
+		withSpecLayout: aSpec	
 ]
 
 { #category : #building }
@@ -69,7 +70,7 @@ GtkDialogWindowAdapter >> newWidget [
 GtkDialogWindowAdapter >> open [ 
 
 	^ self widgetDo: [ :w | 
-		w show.
+		w showAll.
 		self announceOpened.
 		w run ]
 ]
