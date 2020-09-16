@@ -53,8 +53,7 @@ GtkTreeTableAdapter >> addModelTo: gtkTreeView [
 	self recreateStore: gtkTreeView generateColumns: true.
 	self configureInitialState: gtkTreeView.
 	self connectToGtkSignals: gtkTreeView.
-	self connectToSpecEvents: gtkTreeView.
-	
+	self connectToSpecEvents: gtkTreeView
 ]
 
 { #category : #building }
@@ -111,6 +110,15 @@ GtkTreeTableAdapter >> connectToGtkSignals: gtkWidget [
 ]
 
 { #category : #building }
+GtkTreeTableAdapter >> connectToSpecColumnsChangedEventTo: gtkWidget [
+
+	self presenter whenColumnsChangedDo: [ 
+		self 
+			disconnectSelectionEventsOf: gtkWidget 
+			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
+]
+
+{ #category : #building }
 GtkTreeTableAdapter >> connectToSpecEvents: gtkWidget [
 
 	self presenter whenShowColumnHeadersChangedDo: [ 
@@ -132,10 +140,7 @@ GtkTreeTableAdapter >> connectToSpecEvents: gtkWidget [
 			disconnectSelectionEventsOf: gtkWidget 
 			during: [ self recreateStore: gtkWidget generateColumns: false ] ].
 
-	self presenter whenColumnsChangedDo: [ 
-		self 
-			disconnectSelectionEventsOf: gtkWidget 
-			during: [ self recreateStore: gtkWidget generateColumns: true ] ]
+	self connectToSpecColumnsChangedEventTo: gtkWidget
 ]
 
 { #category : #'private accessing' }
@@ -220,7 +225,7 @@ GtkTreeTableAdapter >> newTreeStoreFrom: items [
 	store := GtkTreeDataStore new.
 	GtkTableDataStoreColumnCollector new
 		store: store;
-		visitAll: self model columns.
+		visitAll: self columns.
 
 	store roots: items.
 	store children: self presenter children.

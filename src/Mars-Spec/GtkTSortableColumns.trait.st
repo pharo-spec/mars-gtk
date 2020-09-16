@@ -30,7 +30,7 @@ GtkTSortableColumns >> addSortableColumnsTo: gtkTreeView [
 	| nextSortableId |
 	
 	nextSortableId := 0.
-	self presenter columns withIndexDo: [ :each :index |
+	self columns withIndexDo: [ :each :index |
 		each isSortable ifTrue: [ 
 			self addSortableColumn: each at: index sortableId: nextSortableId to: gtkTreeView.
 			nextSortableId := nextSortableId + 1 ] ]
