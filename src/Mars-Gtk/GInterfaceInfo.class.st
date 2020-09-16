@@ -13,6 +13,11 @@ https://developer.gnome.org/gobject/stable/gobject-Type-Information.html#GInterf
 Class {
 	#name : #GInterfaceInfo,
 	#superclass : #GtkStructure,
+	#instVars : [
+		'interface_init',
+		'interface_finalize',
+		'interface_data'
+	],
 	#classVars : [
 		'OFFSET_INTERFACE_DATA',
 		'OFFSET_INTERFACE_FINALIZE',
@@ -41,6 +46,8 @@ GInterfaceInfo >> interface_data [
 { #category : #'accessing structure variables' }
 GInterfaceInfo >> interface_data: anObject [
 	"This method was automatically generated"
+	
+	interface_data := anObject.
 	handle pointerAt: OFFSET_INTERFACE_DATA put: anObject getHandle.
 ]
 
@@ -51,12 +58,14 @@ GInterfaceInfo >> interface_finalize [
 ]
 
 { #category : #'accessing structure variables' }
-GInterfaceInfo >> interface_finalize: anObject [
+GInterfaceInfo >> interface_finalize: aCallback [
 	"This method was automatically generated"
+	
+	interface_finalize := aCallback.
 	handle 
 		pointerAt: OFFSET_INTERFACE_FINALIZE
-		put: (anObject 
-			ifNotNil: [ anObject thunk asExternalAddress ]
+		put: (aCallback 
+			ifNotNil: [ aCallback thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -67,11 +76,13 @@ GInterfaceInfo >> interface_init [
 ]
 
 { #category : #'accessing structure variables' }
-GInterfaceInfo >> interface_init: anObject [
+GInterfaceInfo >> interface_init: aCallback [
 	"This method was automatically generated"
+	
+	interface_init := aCallback.
 	handle 
 		pointerAt: OFFSET_INTERFACE_INIT
-		put: (anObject 
-			ifNotNil: [ anObject thunk asExternalAddress ]
+		put: (aCallback 
+			ifNotNil: [ aCallback thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
