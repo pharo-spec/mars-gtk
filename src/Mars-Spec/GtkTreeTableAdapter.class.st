@@ -164,6 +164,21 @@ GtkTreeTableAdapter >> doRecreateStore: gtkTreeView [
 ]
 
 { #category : #accessing }
+GtkTreeTableAdapter >> expandPath: aPath [ 
+
+	self innerWidgetDo: [ :w | 
+		w expandToPath: aPath ]
+]
+
+{ #category : #accessing }
+GtkTreeTableAdapter >> expandRoots [ 
+
+	self innerWidgetDo: [ :w |
+		self presenter roots withIndexDo: [ :each :index |
+			w expandToPath: { index } ] ]
+]
+
+{ #category : #accessing }
 GtkTreeTableAdapter >> firstSelectedPath [
 	
 	^ self innerWidgetDo: [ :w | w selection selectedPath ]
