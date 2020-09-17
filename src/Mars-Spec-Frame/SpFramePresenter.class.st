@@ -1,18 +1,7 @@
 "
-! SpFramePresenter
+A frame presenter to decorate a content presenter with a frame and an optional label.
 
-A frame presenter decorates a content presenter with a frame and an optional label.
-
-""""IMPORTANT:"""" For the time being, this component is just present with the Gtk backend.
-
-[[[language=Smalltalk
-SpFramePresenter new 
-	label: 'A label';
-	presenter: (SpLabelPresenter new 
-		label: 'Some content (any presenter)';
-		yourself);
-	openWithSpec
-]]]
+**IMPORTANT:** For the time being, this component is just present with the Gtk backend.
 "
 Class {
 	#name : #SpFramePresenter,
@@ -30,10 +19,16 @@ SpFramePresenter class >> adapterName [
 	^ #FrameAdapter
 ]
 
+{ #category : #documentation }
+SpFramePresenter class >> documentExamplesProtocol [
+
+	^ #example
+]
+
 { #category : #example }
 SpFramePresenter class >> example [
 	
-	SpFramePresenter new 
+	^ self new 
 		application: (SpApplication new useBackend: #Gtk);
 		label: 'Test';
 		presenter: (SpLabelPresenter new 
