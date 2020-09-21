@@ -162,7 +162,7 @@ GClass >> addInterface: interfaceClass initialize: aBlock [
 
 { #category : #'private installing' }
 GClass >> addInterfaceGType: interfaceType initialize: initCallback [
-	| info originSize |
+	| info |
 
 	info := GInterfaceInfo new 
 		interface_init: initCallback;
@@ -259,9 +259,11 @@ GClass >> initialize [
 	instances := WeakIdentityValueDictionary new.
 	interfaces := OrderedDictionary new.
 	interfaceStructures := Set new.
-	self initialize: [ :instance | instance initialize ].
-	self classInitialize: [ :gclass | ].	
-	
+	"self initialize: [ :handle | 
+		In fact, I cannot do this because this is to initialize the instance in C side, 
+		 which does not seems to be needed (and I will execute my own #initialiaze method when 
+		 creating the instance fro the handle) ]."
+	self classInitialize: [ :gclass | ]
 ]
 
 { #category : #accessing }
@@ -347,9 +349,9 @@ GClass >> registerType [
 		gTypeRegisterStaticSimpleParent: parent gType
 		name: (self gInternStaticString: (name utf8Encoded copyWith: 0))
 		classSize: parent gClassSize
-		classInit: classInitialize
+		classInit: (classInitialize ifNil: [ GCallback new ])
 		instanceSize: parent gSize
-		instanceInit: initialize
+		instanceInit: (initialize ifNil: [ GCallback new ])
 		flags: 0
 ]
 
