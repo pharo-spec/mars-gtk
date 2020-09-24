@@ -13,6 +13,12 @@ SpGtkWidgetPresenter class >> adapterName [
 	^ #GtkWidgetAdapter
 ]
 
+{ #category : #documentation }
+SpGtkWidgetPresenter class >> documentFactoryMethodSelector [
+
+	^ #newGtkWidget
+]
+
 { #category : #accessing }
 SpGtkWidgetPresenter >> widget [
 	^ widget
