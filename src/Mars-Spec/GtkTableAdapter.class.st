@@ -69,6 +69,12 @@ GtkTableAdapter >> appendAddedColumns [
 					visit: aTableColumn ] ]
 ]
 
+{ #category : #testing }
+GtkTableAdapter >> columns [
+
+	^ self presenter columns
+]
+
 { #category : #building }
 GtkTableAdapter >> doRefreshList: gtkWidget [
 
