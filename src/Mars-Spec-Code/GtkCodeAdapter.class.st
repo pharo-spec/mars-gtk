@@ -90,7 +90,7 @@ GtkCodeAdapter >> applyFullStyleTo: textBuffer [
 GtkCodeAdapter >> applyStyleTo: textBuffer [
 
 	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
-	self presenter text ifEmpty: [ ^ self ].
+	self presenter text isEmptyOrNil ifTrue: [ ^ self ].
 	textBuffer removeAllTags.
 	(self isForScripting or: [ self behavior isNil ])
 		ifTrue: [
