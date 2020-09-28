@@ -6,6 +6,9 @@ https://developer.gnome.org/gtksourceview/stable/GtkSourceBuffer.html
 Class {
 	#name : #GtkSourceBuffer,
 	#superclass : #GtkTextBuffer,
+	#instVars : [
+		'language'
+	],
 	#category : #'Mars-Gtk-SourceView'
 }
 
@@ -44,6 +47,14 @@ GtkSourceBuffer >> canUndo [
 
 	^ self 
 		ffiCall: #(gboolean gtkgtk_source_buffer_can_undo(self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #private }
+GtkSourceBuffer >> getLanguage [
+
+	^ self 
+		ffiCall: #(GtkSourceLanguage *gtk_source_buffer_get_language (self)) 
 		module: GtkSourceViewLibrary
 ]
 
@@ -89,6 +100,19 @@ GtkSourceBuffer >> isImplicitTrailingNewline [
 ]
 
 { #category : #accessing }
+GtkSourceBuffer >> language [
+
+	^ language ifNil: [ language :=  self getLanguage ]
+]
+
+{ #category : #accessing }
+GtkSourceBuffer >> language: aLanguage [
+
+	language := aLanguage.
+	self setLanguage: language
+]
+
+{ #category : #accessing }
 GtkSourceBuffer >> maxUndoLevels: max_undo_levels [
 
 	^ self 
@@ -103,6 +127,14 @@ GtkSourceBuffer >> redo [
 
 	^ self 
 		ffiCall: #(void gtk_source_buffer_redo (self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #private }
+GtkSourceBuffer >> setLanguage: aLanguage [
+
+	^ self 
+		ffiCall: #(void gtk_source_buffer_set_language (self, GtkSourceLanguage *aLanguage)) 
 		module: GtkSourceViewLibrary
 ]
 
