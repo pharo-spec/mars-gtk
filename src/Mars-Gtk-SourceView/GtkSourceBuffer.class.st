@@ -21,6 +21,12 @@ GtkSourceBuffer class >> gType [
 ]
 
 { #category : #'instance creation' }
+GtkSourceBuffer class >> new [
+
+	^ self newTable: GObject null
+]
+
+{ #category : #'instance creation' }
 GtkSourceBuffer class >> newTable: table [
 
 	^ (self sourceBufferNew: table) initialize
