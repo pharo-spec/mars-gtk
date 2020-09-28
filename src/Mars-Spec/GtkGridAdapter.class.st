@@ -8,14 +8,15 @@ Class {
 GtkGridAdapter >> addConstraits: constraints toChild: childWidget [
 	"adds constraits by child."
 	
-	(layout rowConstraintsAt: constraints position y) ifNotNil: [ :c |
-		c expand ifNotNil: [ :expand | childWidget vExpand: expand ] ].
-		
-	(layout columnConstraintsAt: constraints position x) ifNotNil: [ :c |
-		c expand ifNotNil: [ :expand | childWidget hExpand: expand ] ].
+	(layout rowConstraintsAt: constraints row) ifNotNil: [ :c |
+		c expand ifNotNil: [ :expand | childWidget vExpand: expand ].
+		self basicApplyAlignmentTo: childWidget constraints: c ].
+
+	(layout columnConstraintsAt: constraints column) ifNotNil: [ :c |
+		c expand ifNotNil: [ :expand | childWidget hExpand: expand ].
+		self basicApplyAlignmentTo: childWidget constraints: c ].
 	
-	constraints hAlign ifNotNil: [ :hAlign | childWidget hAlign: hAlign asGtkAlign ].
-	constraints vAlign ifNotNil: [ :vAlign | childWidget vAlign: vAlign asGtkAlign ]
+	self basicApplyAlignmentTo: childWidget constraints: constraints
 ]
 
 { #category : #private }
@@ -48,4 +49,11 @@ GtkGridAdapter >> basicAdd: aPresenter constraints: constraints to: gtkWidget [
 		span: constraints span.
 		
 	^ gtkWidget
+]
+
+{ #category : #private }
+GtkGridAdapter >> basicApplyAlignmentTo: childWidget constraints: constraints [
+
+	constraints hAlign ifNotNil: [ :hAlign | childWidget hAlign: hAlign asGtkAlign ].
+	constraints vAlign ifNotNil: [ :vAlign | childWidget vAlign: vAlign asGtkAlign ]
 ]
