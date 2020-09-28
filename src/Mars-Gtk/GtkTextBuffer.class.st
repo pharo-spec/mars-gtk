@@ -51,8 +51,8 @@ GtkTextBuffer >> appendText: aString [
 GtkTextBuffer >> applyTagByName: aName start: start end: end [
 	| startIter endIter |
 	
-	startIter := self offsetIter: start.
-	endIter := self offsetIter: end.
+	startIter := self iterAtOffset: start.
+	endIter := self iterAtOffset: end.
 	self applyTagByName: aName startIter: startIter endIter: endIter
 	
 	
@@ -136,7 +136,7 @@ GtkTextBuffer >> cursorPosition [
 GtkTextBuffer >> cursorPosition: index [
 	| indexIter |
 
-	indexIter := self offsetIter: index.
+	indexIter := self iterAtOffset: index.
 	self placeCursor: indexIter
 ]
 
@@ -183,6 +183,15 @@ GtkTextBuffer >> endIter: iter [
 GtkTextBuffer >> endUserAction [
 	
 	self ffiCall: #(void gtk_text_buffer_end_user_action (self))
+]
+
+{ #category : #private }
+GtkTextBuffer >> getIter: iter atLine: line_number [ 
+
+	self ffiCall: #(void gtk_text_buffer_get_iter_at_line (
+		self,
+		GtkTextIter *iter, 
+		gint line_number))
 ]
 
 { #category : #private }
@@ -239,7 +248,7 @@ GtkTextBuffer >> insertText: aString [
 GtkTextBuffer >> insertText: aString at: offset [
 
 	self 
-		insertIter: (self offsetIter: offset)
+		insertIter: (self iterAtOffset: offset)
 		text: aString
 ]
 
@@ -247,6 +256,25 @@ GtkTextBuffer >> insertText: aString at: offset [
 GtkTextBuffer >> insertTextAtCursor: text [
 
 	^ self ffiCall: #(void gtk_text_buffer_insert_at_cursor (self, const gchar *text, -1))
+]
+
+{ #category : #accessing }
+GtkTextBuffer >> iterAtLine: lineNumber [
+	| iter |
+	
+	iter := GtkTextIter new.
+	self getIter: iter atLine: lineNumber.
+	^ iter
+]
+
+{ #category : #accessing }
+GtkTextBuffer >> iterAtOffset: offset [
+	| iter |
+	
+	iter := GtkTextIter new.
+	self offsetIter: iter pos: offset.
+	^ iter
+	
 ]
 
 { #category : #accessing }
@@ -268,16 +296,6 @@ GtkTextBuffer >> moveMark: mark to: where [
 		self,
 		GtkTextMark *mark,
 		const GtkTextIter *where))
-]
-
-{ #category : #private }
-GtkTextBuffer >> offsetIter: offset [
-	| iter |
-	
-	iter := GtkTextIter new.
-	self offsetIter: iter pos: offset.
-	^ iter
-	
 ]
 
 { #category : #private }
@@ -322,11 +340,11 @@ GtkTextBuffer >> selectAll [
 GtkTextBuffer >> selectFrom: start to: end [
 	| startIter endIter |
 
-	startIter := self offsetIter: start.
+	startIter := self iterAtOffset: start.
 	start = end ifTrue: [ 
 		self placeCursor: startIter.
 		^ self ].
-	endIter := self offsetIter: end.
+	endIter := self iterAtOffset: end.
 	self selectRangeInsert: startIter bound: endIter
 ]
 
@@ -334,10 +352,10 @@ GtkTextBuffer >> selectFrom: start to: end [
 GtkTextBuffer >> selectLineAt: offset [
 	| start end |
 	
-	start := self offsetIter: offset.
+	start := self iterAtOffset: offset.
 	start backwardChars: start lineOffset.
 
-	end := self offsetIter: offset.
+	end := self iterAtOffset: offset.
 	end forwardToLineEnd.
 		
 	self selectRangeInsert: start bound: end
@@ -415,8 +433,8 @@ GtkTextBuffer >> text: text [
 GtkTextBuffer >> textFrom: start to: end [
 	| startIter endIter |
 
-	startIter := self offsetIter: start.
-	endIter := self offsetIter: end.
+	startIter := self iterAtOffset: start.
+	endIter := self iterAtOffset: end.
 	^ self 
 		textStart: self startIter 
 		end: self endIter
