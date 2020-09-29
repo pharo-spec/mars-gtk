@@ -125,7 +125,19 @@ GtkTextView >> monospace: aBoolean [
 	^ self ffiCall: #(void gtk_text_view_set_monospace (self, gboolean aBoolean))
 ]
 
-{ #category : #private }
+{ #category : #accessing }
+GtkTextView >> placeCursorOnScreen [
+
+	^ self ffiCall: #(gboolean gtk_text_view_place_cursor_onscreen (self))
+]
+
+{ #category : #accessing }
+GtkTextView >> scrollMarkOnScreen: mark [
+
+	^ self ffiCall: #(void gtk_text_view_scroll_mark_onscreen (self, GtkTextMark *mark))
+]
+
+{ #category : #accessing }
 GtkTextView >> scrollToIter: iter withinMargin: within_margin useAlign: use_align xalign: xalign yalign: yalign [
 
 	^ self ffiCall: #(gboolean gtk_text_view_scroll_to_iter (
@@ -137,7 +149,7 @@ GtkTextView >> scrollToIter: iter withinMargin: within_margin useAlign: use_alig
       gdouble yalign))
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 GtkTextView >> scrollToMark: mark withinMargin: within_margin useAlign: use_align xalign: xalign yalign: yalign [
 
 	^ self ffiCall: #(gboolean gtk_text_view_scroll_to_mark (
