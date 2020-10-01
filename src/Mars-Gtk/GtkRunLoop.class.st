@@ -90,6 +90,12 @@ GtkRunLoop class >> defer: aBlock [
 ]
 
 { #category : #accessing }
+GtkRunLoop class >> forceDefer: aBlock [
+
+	^ GIdle uniqueInstance idleAddFull: aBlock
+]
+
+{ #category : #accessing }
 GtkRunLoop class >> install [
 
 	self = GtkRunLoop ifTrue: [ 
