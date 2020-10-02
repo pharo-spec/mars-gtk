@@ -59,7 +59,7 @@ GtkTableColumnPacker >> doToggle: pathString column: aTableColumn [
 		setBoolean: status not.
 	
 	(status 
-		ifTrue: [ aTableColumn onDesactivation ]
+		ifTrue: [ aTableColumn onDeactivation ]
 		ifFalse: [ aTableColumn onActivation ])
 		ifNotNil: [ :aValuable | aValuable cull: item ]
 ]
