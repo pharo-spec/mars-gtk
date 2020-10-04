@@ -135,37 +135,37 @@ GtkWidget >> basicGrabDefault [
 	self ffiCall: #(void gtk_widget_grab_default (self))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> beHAlignCenter [
 
 	self hAlign: GTK_ALIGN_CENTER
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> beHAlignEnd [
 
 	self hAlign: GTK_ALIGN_END
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> beHAlignStart [
 
 	self hAlign: GTK_ALIGN_START
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> beVAlignCenter [
 
 	self vAlign: GTK_ALIGN_CENTER
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> beVAlignEnd [
 
 	self vAlign: GTK_ALIGN_END
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> beVAlignStart [
 
 	self vAlign: GTK_ALIGN_START
@@ -539,17 +539,17 @@ GtkWidget >> gtInspectorDeferActionsIn: composite [
 		when: [ deferActions isEmptyOrNil not ]
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> hAlign [
 	^ self ffiCall: #(GtkAlign gtk_widget_get_halign (self))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> hAlign: align [
 	^ self ffiCall: #(void gtk_widget_set_halign (self, GtkAlign align))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> hExpand: expand [
 
 	self ffiCall: #(void gtk_widget_set_hexpand (self, gboolean expand))
@@ -607,16 +607,64 @@ GtkWidget >> isVisible [
 	^ self ffiCall: #(gboolean gtk_widget_is_visible (self))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> margin [
 
 	^ self gObjectGetInteger: 'margin'
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> margin: aNumber [
 
 	^ self gObjectSet: 'margin' toInteger: aNumber
+]
+
+{ #category : #geometry }
+GtkWidget >> marginBottom [
+
+	^ self ffiCall: #(gint gtk_widget_get_margin_bottom (self))
+]
+
+{ #category : #geometry }
+GtkWidget >> marginBottom: margin [
+
+	self ffiCall: #(void gtk_widget_set_margin_bottom (self, gint margin))
+]
+
+{ #category : #geometry }
+GtkWidget >> marginEnd [
+
+	^ self ffiCall: #(gint gtk_widget_get_margin_end (self))
+]
+
+{ #category : #geometry }
+GtkWidget >> marginEnd: margin [
+
+	self ffiCall: #(void gtk_widget_set_margin_end (self, gint margin))
+]
+
+{ #category : #geometry }
+GtkWidget >> marginStart [
+
+	^ self ffiCall: #(gint gtk_widget_get_margin_start (self))
+]
+
+{ #category : #geometry }
+GtkWidget >> marginStart: margin [
+
+	self ffiCall: #(void gtk_widget_set_margin_start (self, gint margin))
+]
+
+{ #category : #geometry }
+GtkWidget >> marginTop [
+
+	^ self ffiCall: #(gint gtk_widget_get_margin_top (self))
+]
+
+{ #category : #geometry }
+GtkWidget >> marginTop: margin [
+
+	self ffiCall: #(void gtk_widget_set_margin_top (self, gint margin))
 ]
 
 { #category : #accessing }
@@ -830,17 +878,17 @@ GtkWidget >> translateCoordinatesTo: dest_widget x: src_x y: src_y toX: dest_x t
  		gint *dest_y))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> vAlign [
 	^ self ffiCall: #(GtkAlign gtk_widget_get_valign (self))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> vAlign: align [
 	^ self ffiCall: #(void gtk_widget_set_valign (self, GtkAlign align))
 ]
 
-{ #category : #accessing }
+{ #category : #geometry }
 GtkWidget >> vExpand: expand [
 
 	self ffiCall: #(void gtk_widget_set_vexpand (self, gboolean expand))
