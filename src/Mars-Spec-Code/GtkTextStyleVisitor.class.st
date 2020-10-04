@@ -84,11 +84,11 @@ GtkTextStyleVisitor >> methodOrBlockTempDeclStyleFor: aSequenceNode [
 ]
 
 { #category : #private }
-GtkTextStyleVisitor >> methodOrBlockTempStyleFor: aRBTemporaryNode [ 
-	
-	^ aRBTemporaryNode isBlockVar
-		ifTrue: [ #blockTempVar ]
-		ifFalse: [ #tempVar ]
+GtkTextStyleVisitor >> methodOrBlockTempStyleFor: aRBTemporaryNode [
+
+	^ aRBTemporaryNode isDefinedByBlock
+		  ifTrue: [ #blockTempVar ]
+		  ifFalse: [ #tempVar ]
 ]
 
 { #category : #accessing }
