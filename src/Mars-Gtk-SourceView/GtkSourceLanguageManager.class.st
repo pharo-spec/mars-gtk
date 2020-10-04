@@ -9,6 +9,12 @@ Class {
 	#category : #'Mars-Gtk-SourceView'
 }
 
+{ #category : #'accessing languages' }
+GtkSourceLanguageManager class >> c [
+
+	^ self default languageWithId: 'c'
+]
+
 { #category : #'instance creation' }
 GtkSourceLanguageManager class >> default [
 
@@ -32,6 +38,12 @@ GtkSourceLanguageManager class >> gType [
 GtkSourceLanguageManager class >> getDefault [ 
 
 	^ self ffiCall: #(GtkSourceLanguageManager *gtk_source_language_manager_get_default())
+]
+
+{ #category : #'accessing languages' }
+GtkSourceLanguageManager class >> markdown [
+
+	^ self default languageWithId: 'markdown'
 ]
 
 { #category : #'library path' }
