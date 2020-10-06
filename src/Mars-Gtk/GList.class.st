@@ -6,13 +6,14 @@ https://developer.gnome.org/glib/stable/glib-Doubly-Linked-Lists.html
 
 This object hides a structure: 
 
+```
 struct _GList
 {
   gpointer data;
   GList *next;
   GList *prev;
 };
-
+```
 "
 Class {
 	#name : #GList,
@@ -72,6 +73,13 @@ GList >> append: aGObject [
 	^ self class fromHandle: (self gListAppend: aGObject getHandle)
 ]
 
+{ #category : #enumerating }
+GList >> collect: aBlock [ 
+
+	^ Array streamContents: [ :stream | 
+		self do: [ :each | stream nextPut: (aBlock value: each) ] ]
+]
+
 { #category : #'accessing structure variables' }
 GList >> data [
 	"This method was automatically generated"
@@ -82,6 +90,17 @@ GList >> data [
 GList >> data: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_DATA put: anObject getHandle.
+]
+
+{ #category : #enumerating }
+GList >> do: aBlock [
+	| node |
+	
+	node := self first.
+	[ node isNull ] 
+	whileFalse: [ 
+		aBlock value: node data.
+		node := node next ]
 ]
 
 { #category : #resources }
