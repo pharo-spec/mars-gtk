@@ -225,6 +225,12 @@ GtkAdapter >> handleKeyEvent: event [
 	^ false
 ]
 
+{ #category : #private }
+GtkAdapter >> hasContextMenu [
+	
+	^ self presenter contextMenu notNil
+]
+
 { #category : #protocol }
 GtkAdapter >> hasKeyboardFocus [
 	| focus |
@@ -423,7 +429,7 @@ GtkAdapter >> setBalloonText: aString [
 { #category : #private }
 GtkAdapter >> showContextMenu [
 
-	self presenter contextMenu ifNil: [ ^ self ].
+	self hasContextMenu ifFalse: [ ^ self ].
 	self showMenu: self presenter contextMenu
 ]
 
