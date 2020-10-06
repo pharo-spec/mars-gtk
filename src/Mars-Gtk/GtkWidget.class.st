@@ -672,7 +672,7 @@ GtkWidget >> overrideBackgroundColor: color [
 
 	^ self 
 		overrideBackgroundState: GTK_STATE_FLAG_NORMAL 
-		color: color gtkRGBA
+		color: color asGdkRGBA
 ]
 
 { #category : #private }

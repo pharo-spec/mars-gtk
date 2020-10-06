@@ -1,7 +1,7 @@
 Extension { #name : #Color }
 
 { #category : #'*Mars-Gtk' }
-Color >> gtkRGBA [
+Color >> asGdkRGBA [
 	^ GdkRGBA new 
 		red: self red;
 		green: self green;
