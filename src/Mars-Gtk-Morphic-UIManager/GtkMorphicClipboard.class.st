@@ -19,5 +19,5 @@ GtkMorphicClipboard >> clipboardText [
 { #category : #accessing }
 GtkMorphicClipboard >> clipboardText: aString [
 
-	GtkClipboard forSelection text: aString
+	GtkClipboard forSelection text: aString asString
 ]
