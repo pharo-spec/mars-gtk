@@ -1,3 +1,8 @@
+"
+GtkIconTheme — Looking up icons by name
+
+https://developer.gnome.org/gtk3/3.24/GtkIconTheme.html
+"
 Class {
 	#name : #GtkIconTheme,
 	#superclass : #GObject,
