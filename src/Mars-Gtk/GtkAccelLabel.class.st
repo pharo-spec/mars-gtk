@@ -65,7 +65,7 @@ GtkAccelLabel >> accelerator: aShortcut [
 	modifiers := aShortcut platformModifier asGdkModifierType.
 	
 	self 
-		accelLabelSetAccelKey: charValue 
+		accelLabelSetAccelKey: charValue asInteger
 		modifiers: modifiers
 ]
 

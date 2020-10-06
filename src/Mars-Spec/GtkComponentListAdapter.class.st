@@ -159,7 +159,7 @@ GtkComponentListAdapter >> showMenu: aValuable event: event [
 
 	self innerWidgetDo: [ :w |
 		| row |
-		row := w getRowAtY: event y.
+		row := w getRowAtY: event y asInteger.
 		row ifNotNil: [ 
 			w selectRow: row ].
 		super showMenu: aValuable event: event ]
