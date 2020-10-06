@@ -215,6 +215,14 @@ GtkSourceView >> isInsertSpacesInsteadOfTabs [
 ]
 
 { #category : #testing }
+GtkSourceView >> isShowLineMarks [
+
+	^ self 
+		ffiCall: #(gboolean gtk_source_view_get_show_line_marks (self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #testing }
 GtkSourceView >> isShowLineNumbers [
 
 	^ self 
@@ -227,6 +235,26 @@ GtkSourceView >> isShowRightMargin [
 
 	^ self 
 		ffiCall: #(gboolean gtk_source_view_get_show_right_margin (self))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceView >> setMarkAttributesForCategory: category attributes: attributes priority: priority [
+
+	^ self 
+		ffiCall: #(void gtk_source_view_set_mark_attributes (
+			self,
+			const gchar *category,
+			GtkSourceMarkAttributes *attributes,
+			gint priority))
+		module: GtkSourceViewLibrary
+]
+
+{ #category : #accessing }
+GtkSourceView >> showLineMarks: show [
+
+	^ self 
+		ffiCall: #(void gtk_source_view_set_show_line_marks (self, gboolean show))
 		module: GtkSourceViewLibrary
 ]
 

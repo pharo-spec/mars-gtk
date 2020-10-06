@@ -56,6 +56,18 @@ GtkSourceBuffer >> canUndo [
 		module: GtkSourceViewLibrary
 ]
 
+{ #category : #accessing }
+GtkSourceBuffer >> createSourceMarkNamed: name category: category where: where [
+
+	^ self 	
+		ffiCall: #(GtkSourceMark *gtk_source_buffer_create_source_mark (
+			self,
+			const gchar *name,
+			const gchar *category,
+			const GtkTextIter *where)) 
+		module: GtkSourceViewLibrary
+]
+
 { #category : #private }
 GtkSourceBuffer >> getLanguage [
 
