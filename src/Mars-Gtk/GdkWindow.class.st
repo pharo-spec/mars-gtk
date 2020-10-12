@@ -38,6 +38,12 @@ GdkWindow >> cursor: cursor [
 	self ffiCall: #(void gdk_window_set_cursor (self, GdkCursor *cursor))
 ]
 
+{ #category : #accessing }
+GdkWindow >> display [
+
+	^ self ffiCall: #(GdkDisplay *gdk_window_get_display (self))
+]
+
 { #category : #'library path' }
 GdkWindow >> ffiLibraryName [ 
 
