@@ -209,6 +209,14 @@ GClass >> gInternStaticString: string [
 ]
 
 { #category : #'private primitives' }
+GClass >> gInternStaticStringFromByteArray: byteArray [
+
+	^ self 
+		ffiCall: #(void *g_intern_static_string (ByteArray byteArray))
+		module: GLibLibrary
+]
+
+{ #category : #'private primitives' }
 GClass >> gObjectNew: object_type [
 
 	^ self ffiCall: #(void *g_object_new (gsize object_type, NULL))
@@ -344,10 +352,13 @@ GClass >> prepare: aBlock [
 
 { #category : #'private installing' }
 GClass >> registerType [
-
+	| utf8Name |
+	
+	utf8Name := name utf8Encoded copyWith: 0.
+	utf8Name pinInMemory.
 	^ self 
 		gTypeRegisterStaticSimpleParent: parent gType
-		name: (self gInternStaticString: (name utf8Encoded copyWith: 0))
+		name: (self gInternStaticStringFromByteArray: utf8Name)
 		classSize: parent gClassSize
 		classInit: (classInitialize ifNil: [ GCallback new ])
 		instanceSize: parent gSize

@@ -47,12 +47,12 @@ GtkAdjustment class >> newDefault [
 GtkAdjustment class >> newValue: value lower: lower upper: upper stepIncrement: step_increment pageIncrement: page_increment pageSize: page_size [
 
 	^ (self 
-		adjustementValue: value 
-		lower: lower 
-		upper: upper 
-		stepIncrement: step_increment 
-		pageIncrement: page_increment 
-		pageSize: page_size) 
+		adjustementValue: value asFloat 
+		lower: lower asFloat
+		upper: upper asFloat 
+		stepIncrement: step_increment asFloat 
+		pageIncrement: page_increment asFloat 
+		pageSize: page_size asFloat) 
 		initialize
 ]
 
