@@ -18,6 +18,14 @@ GdkPixbuf class >> gType [
 ]
 
 { #category : #private }
+GdkPixbuf class >> getFromFile: filename error: error [
+	
+	^ self ffiCall: #(GdkPixbuf *gdk_pixbuf_new_from_file (
+		const char *filename, 
+		"GError **"GError *error))
+]
+
+{ #category : #private }
 GdkPixbuf class >> getFromSurface: surface x: src_x y: src_y width: width height: height [
 	"https://developer.gnome.org/gdk3/stable/gdk3-Pixbufs.html#gdk-pixbuf-get-from-surface"
 	
@@ -27,6 +35,18 @@ GdkPixbuf class >> getFromSurface: surface x: src_x y: src_y width: width height
 		gint src_y,
 		gint width,
 		gint height)) module: GdkLibrary
+]
+
+{ #category : #'instance creation' }
+GdkPixbuf class >> newFromFile: filename [ 
+	| error pixbuf |
+
+	error := GError new.
+	pixbuf := self getFromFile: filename error: error.
+	error isOk ifFalse: [ 
+		GtkError signal: error messageString ].	
+	pixbuf initialize.
+	^ pixbuf
 ]
 
 { #category : #'instance creation' }
