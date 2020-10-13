@@ -8,7 +8,8 @@ Class {
 	#superclass : #GtkWidget,
 	#pools : [
 		'AthensCairoDefinitions',
-		'GtkIconSize'
+		'GtkIconSize',
+		'GtkImageType'
 	],
 	#category : #'Mars-Gtk-Widget-Display'
 }
@@ -133,8 +134,15 @@ GtkImage class >> surfaceFor: anImageMorph [
 GtkImage >> asGdkPixbuf [
 	"this will only work if the image it self is creared from a pixbuf. 
 	 Most of the time you are better going through GdkPixbuf creation methods."
+	| type |
 
-	^ self ffiCall: #(GdkPixbuf* gtk_image_get_pixbuf (self))
+	type := self imageType.
+	type == GTK_IMAGE_PIXBUF ifTrue: [ 
+		^ self getPixbuf ].
+	type == GTK_IMAGE_ICON_NAME ifTrue: [ 
+		^ GdkPixbuf newFromIconName: self iconName size: self iconSize ].
+	
+	^ nil
 ]
 
 { #category : #converting }
@@ -147,6 +155,38 @@ GtkImage >> asGtkImage [
 GtkImage >> clear [
 	
 	^ self ffiCall: #(void gtk_image_clear(self))
+]
+
+{ #category : #private }
+GtkImage >> getIconName: icon_name size: size [
+	
+	^ self ffiCall: #(void gtk_image_get_icon_name (self,
+                         "const gchar **"void *icon_name,
+                         "GtkIconSize *"void *size))
+]
+
+{ #category : #private }
+GtkImage >> getPixbuf [
+
+	^ self ffiCall: #(GdkPixbuf* gtk_image_get_pixbuf (self))
+]
+
+{ #category : #private }
+GtkImage >> iconName [
+
+	^ self gObjectGetString: 'icon-name'
+]
+
+{ #category : #private }
+GtkImage >> iconSize [
+
+	^ self gObjectGetInteger: 'icon-size'
+]
+
+{ #category : #private }
+GtkImage >> imageType [
+
+	^ self ffiCall: #(GtkImageType gtk_image_get_storage_type (self))
 ]
 
 { #category : #converting }

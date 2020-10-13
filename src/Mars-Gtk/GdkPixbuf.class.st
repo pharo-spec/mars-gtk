@@ -50,6 +50,14 @@ GdkPixbuf class >> newFromFile: filename [
 ]
 
 { #category : #'instance creation' }
+GdkPixbuf class >> newFromIconName: iconName size: size [
+
+	^ GtkIconTheme default 
+		loadIconName: iconName 
+		size: size
+]
+
+{ #category : #'instance creation' }
 GdkPixbuf class >> newFromSurface: aSurface width: width height: height [
 
 	^ self 

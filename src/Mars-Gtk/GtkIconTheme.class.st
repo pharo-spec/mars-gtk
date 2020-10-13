@@ -76,6 +76,29 @@ GtkIconTheme >> iconsInContext: aName [
 ]
 
 { #category : #accessing }
+GtkIconTheme >> loadIconName: iconName size: iconSize [ 
+	| pixbuf error |		
+
+	error := GError new.
+	pixbuf := self loadIconName: iconName size: iconSize flags: 0 error: error.
+	error isOk ifFalse: [ 
+		GtkError signal: error messageString ].	
+	pixbuf initialize.
+	^ pixbuf
+]
+
+{ #category : #private }
+GtkIconTheme >> loadIconName: icon_name size: size flags: flags error: error [ 
+
+	self ffiCall: #(GdkPixbuf *gtk_icon_theme_load_icon(
+		self, 
+		const gchar *icon_name,
+		gint size,
+		"GtkIconLookupFlags"gint flags,
+		"GError **"GError *error))
+]
+
+{ #category : #accessing }
 GtkIconTheme >> namesInContext: aString [
 
 	^ (GList fromHandle: (self getIconNames: aString)) collect: [ :data | data readStringUTF8 ]

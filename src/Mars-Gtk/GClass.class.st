@@ -209,10 +209,10 @@ GClass >> gInternStaticString: string [
 ]
 
 { #category : #'private primitives' }
-GClass >> gInternStaticStringFromByteArray: byteArray [
+GClass >> gInternStaticStringFromByteArray: string [
 
 	^ self 
-		ffiCall: #(void *g_intern_static_string (ByteArray byteArray))
+		ffiCall: #(void *g_intern_static_string (ByteArray string))
 		module: GLibLibrary
 ]
 
