@@ -82,6 +82,11 @@ GtkTextView >> getBuffer [
 	^ self ffiCall: #(GtkTextBuffer *gtk_text_view_get_buffer (self))
 ]
 
+{ #category : #accessing }
+GtkTextView >> imContextFilterKeypress: event [
+
+	^ self ffiCall: #(gboolean gtk_text_view_im_context_filter_keypress (self, GdkEventKey *event))
+
 { #category : #private }
 GtkTextView >> getIterLocation: iter to: location [
 

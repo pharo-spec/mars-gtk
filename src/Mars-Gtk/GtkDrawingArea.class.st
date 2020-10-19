@@ -148,10 +148,3 @@ GtkDrawingArea >> registerToAllEvents [
 
 	self events: GDK_ALL_EVENTS_MASK value
 ]
-
-{ #category : #private }
-GtkDrawingArea >> setSizeRequestWidth: width height: height [
-	
-	self
-		ffiCall: #(void gtk_widget_set_size_request #(self , gint width , gint height))
-]

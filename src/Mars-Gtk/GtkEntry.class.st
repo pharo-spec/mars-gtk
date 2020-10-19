@@ -169,6 +169,12 @@ GtkEntry >> g_utf8_to_ucs4: aString [
 	^ self ffiCall: #(gunichar g_utf8_get_char(String aString)) module: GLibLibrary
 ]
 
+{ #category : #private }
+GtkEntry >> imContextFilterKeypress: event [
+
+	^ self ffiCall: #(gboolean gtk_entry_im_context_filter_keypress (self, GdkEventKey *event))
+]
+
 { #category : #accessing }
 GtkEntry >> inputPurpose [
 	
